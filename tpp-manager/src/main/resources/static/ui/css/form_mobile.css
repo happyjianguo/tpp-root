@@ -1,0 +1,76 @@
+.layui-form{
+	display: block;
+}
+.layui-form-item {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.layui-input-block {
+	margin-left: 0;
+	width: 100%;
+}
+
+.layui-form-label {
+	width: 100px;
+	white-space: nowrap;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: right;
+}
+.formBox{
+	width: 100%;
+	/*overflow: hidden;*/
+}
+.line_4.form_box {
+	width: 24%;
+}
+.line_3.form_box {
+	width: 32.3%;
+}
+.line_2.form_box {
+	width: 49%;
+}
+.form_box{
+	/*float: left;*/
+	margin-bottom: 5px;
+	display: inline-block;
+	
+}
+.layui-inline {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+.layui-input-inline {
+	width: 100%;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+	.layui-form-item {
+		display: inherit;
+	}
+	.layui-form-item .layui-form-label {
+		/*width: 100%;*/
+		text-align: left;
+	}
+	.layui-input-block {
+		width: 100%;
+	}
+	.layui-inline {
+		display: inherit;
+	}
+	.form_box {
+		width: 100% !important;
+	}
+	.layui-form-select .layui-edge{
+		top: 75%;
+	}
+}

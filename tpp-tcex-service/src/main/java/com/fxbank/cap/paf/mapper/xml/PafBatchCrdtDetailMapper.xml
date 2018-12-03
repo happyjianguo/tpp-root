@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.cap.paf.mapper.PafBatchCrdtDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.cap.paf.entity.PafBatchCrdtDetail" >
+    <id column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+    <id column="seq_no" property="seqNo" jdbcType="VARCHAR" />
+    <result column="tx_amt" property="txAmt" jdbcType="DECIMAL" />
+    <result column="cr_acctno" property="crAcctno" jdbcType="VARCHAR" />
+    <result column="cr_acctname" property="crAcctname" jdbcType="VARCHAR" />
+    <result column="cr_chgno" property="crChgno" jdbcType="VARCHAR" />
+    <result column="cr_opnchgno" property="crOpnchgno" jdbcType="VARCHAR" />
+    <result column="cr_addr" property="crAddr" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="ref_acctno" property="refAcctno" jdbcType="VARCHAR" />
+    <result column="ref_seqno1" property="refSeqno1" jdbcType="VARCHAR" />
+    <result column="ref_seqno2" property="refSeqno2" jdbcType="VARCHAR" />
+    <result column="cap_amt" property="capAmt" jdbcType="DECIMAL" />
+    <result column="int_amt" property="intAmt" jdbcType="DECIMAL" />
+    <result column="tx_status" property="txStatus" jdbcType="VARCHAR" />
+    <result column="host_seqno" property="hostSeqno" jdbcType="VARCHAR" />
+    <result column="host_rspcode" property="hostRspcode" jdbcType="VARCHAR" />
+    <result column="host_rspmsg" property="hostRspmsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select batch_no, seq_no, tx_amt, cr_acctno, cr_acctname, cr_chgno, cr_opnchgno, cr_addr, 
+    summary, ref_acctno, ref_seqno1, ref_seqno2, cap_amt, int_amt, tx_status, host_seqno, 
+    host_rspcode, host_rspmsg
+    from paf_batch_crdt_detail
+  </select>
+  <select id="selectSeqNosByBatchNo" resultType="java.lang.String" >
+    select seq_no from paf_batch_crdt_detail where batch_no=#{batchNo}
+  </select>
+  <select id="selectSeqNosByParams" resultType="java.lang.String" >
+    select seq_no from paf_batch_crdt_detail where
+     batch_no=#{batchNo} and tx_status in 
+    <foreach item="item" index="index" collection="txStatus.split(',')" 
+    open="(" separator="," close=")">'${item}'</foreach>
+  </select>
+  <insert id="addList" parameterType="java.util.List" useGeneratedKeys="false">
+        INSERT ALL
+        <foreach item="item" index="index" collection="list">
+        INTO paf_batch_crdt_detail
+        (
+            batch_no, seq_no, tx_amt, cr_acctno, cr_acctname, cr_chgno, cr_opnchgno, cr_addr, 
+    summary, ref_acctno, ref_seqno1, ref_seqno2, cap_amt, int_amt, tx_status, host_seqno, 
+    host_rspcode, host_rspmsg
+        ) VALUES
+        (
+            #{item.batchNo, jdbcType=VARCHAR},
+            #{item.seqNo, jdbcType=VARCHAR},
+            #{item.txAmt, jdbcType=DECIMAL},
+            #{item.crAcctno, jdbcType=VARCHAR},
+            #{item.crAcctname, jdbcType=VARCHAR},
+            #{item.crChgno, jdbcType=VARCHAR},
+            #{item.crOpnchgno, jdbcType=VARCHAR},
+            #{item.crAddr, jdbcType=VARCHAR},
+            #{item.summary, jdbcType=VARCHAR},
+            #{item.refAcctno, jdbcType=VARCHAR},
+            #{item.refSeqno1, jdbcType=VARCHAR},
+            #{item.refSeqno2, jdbcType=VARCHAR},
+            #{item.capAmt, jdbcType=DECIMAL},
+            #{item.intAmt, jdbcType=DECIMAL},
+            #{item.txStatus, jdbcType=VARCHAR},
+            #{item.hostSeqno, jdbcType=VARCHAR},
+            #{item.hostRspcode, jdbcType=VARCHAR},
+            #{item.hostRspmsg, jdbcType=VARCHAR}
+        )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+    <insert id="addList2" parameterType="java.util.List" useGeneratedKeys="false">
+        INSERT INTO paf_batch_crdt_detail
+        (
+            batch_no, seq_no, tx_amt, cr_acctno, cr_acctname, cr_chgno, cr_opnchgno, cr_addr, 
+    summary, ref_acctno, ref_seqno1, ref_seqno2, cap_amt, int_amt, tx_status, host_seqno, 
+    host_rspcode, host_rspmsg
+        ) 
+         <foreach item="item" index="index" collection="list" separator="union all">
+        (select
+            #{item.batchNo, jdbcType=VARCHAR},
+            #{item.seqNo, jdbcType=VARCHAR},
+            #{item.txAmt, jdbcType=DECIMAL},
+            #{item.crAcctno, jdbcType=VARCHAR},
+            #{item.crAcctname, jdbcType=VARCHAR},
+            #{item.crChgno, jdbcType=VARCHAR},
+            #{item.crOpnchgno, jdbcType=VARCHAR},
+            #{item.crAddr, jdbcType=VARCHAR},
+            #{item.summary, jdbcType=VARCHAR},
+            #{item.refAcctno, jdbcType=VARCHAR},
+            #{item.refSeqno1, jdbcType=VARCHAR},
+            #{item.refSeqno2, jdbcType=VARCHAR},
+            #{item.capAmt, jdbcType=DECIMAL},
+            #{item.intAmt, jdbcType=DECIMAL},
+            #{item.txStatus, jdbcType=VARCHAR},
+            #{item.hostSeqno, jdbcType=VARCHAR},
+            #{item.hostRspcode, jdbcType=VARCHAR},
+            #{item.hostRspmsg, jdbcType=VARCHAR} from dual
+        )
+        </foreach>
+    </insert>
+     <update id="updateDetail" parameterType="com.fxbank.cap.paf.mapper.PafBatchCrdtDetailMapper">
+  update paf_batch_crdt_detail
+  <set>
+            <if test="detail.txStatus != null">tx_status=#{detail.txStatus},</if>
+            <if test="detail.hostSeqno != null">host_seqno=#{detail.hostSeqno},</if>
+            <if test="detail.hostRspcode != null">host_rspcode=#{detail.hostRspcode},</if>
+            <if test="detail.hostRspmsg != null">host_rspmsg=#{detail.hostRspmsg},</if>
+        </set>
+        where batch_no=#{detail.batchNo} 
+        and seq_no=#{detail.seqNo}
+        <if test="oldStatus != null"> and tx_status=#{oldStatus}</if>
+  </update>
+</mapper>

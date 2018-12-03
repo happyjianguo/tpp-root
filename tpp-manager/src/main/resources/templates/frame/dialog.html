@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width =device-width, initial-scale=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>JpAutoFramework</title>
+    <meta content="victor" name="author"/>
+    <script type="text/javascript">
+        function ApplicationSave() {
+            //具体保存操作
+            //需要返回值，保存成功，返回true，保存失败返回false
+
+        }
+    </script>
+
+</head >
+
+<body onload="load()" style="margin: auto">
+<form>
+    <table id="data" class="editorTable" style="margin: auto; margin-top: 50px; width: 80%;">
+        <tr style="display: none;">
+            <th> 编号 </th>
+            <td> <input type="text" readonly="readonly" id="ID" /></td>
+        </tr>
+        <tr>
+            <th> 项目名称 </th>
+            <td> <input type="text" id="Names"  /></td>
+        </tr>
+        <tr>
+            <th> 金额 </th>
+            <td> <input type="text" id="PRICE" /></td>
+        </tr>
+        <tr>
+            <th> 账目类型 </th>
+            <td>
+                <select type="text" id="ISOUT">
+                    <option value="0">支出</option>
+                    <option value="1">收入</option>
+                    <option value="2">信用卡消费</option>
+                    <option value="3">信用卡还款</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th> 日期 </th>
+            <td> <input type="text" id="Dates" /></td>
+        </tr>
+        <tr>
+            <th> 描述 </th>
+            <td>
+                <textarea rows="10" cols="38" id="Remark"></textarea>
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    function ApplicationSave(){
+        alert("调用编辑页的方法");
+    }
+</script>
+</body >
+</html >

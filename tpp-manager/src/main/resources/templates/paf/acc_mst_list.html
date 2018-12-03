@@ -1,0 +1,146 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>账户变动通知</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" type="text/css" th:href="@{../ui/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../ui/css/style.css}" />
+    <link rel="stylesheet" th:href="@{../ui/css/form_mobile.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../ui/css/table.css}"/>
+</head>
+
+<body>
+<div class="iconBox">
+    <div class="iconfont glyphiconSearch_mob"></div>
+</div>
+<div class="searchBox">
+    <form class="formBox layui-form" id="form" th:object="${data}">
+        <div class="form_box line_4">
+            <div class="layui-inline">
+                <label class="layui-form-label">公积金中心</label>
+                <div class="layui-input-inline ">
+                    <select name="centerNo" id="centerNo" th:field="*{centerNo}" lay-filter="reloadTable">
+                        <!--<option value="" ></option>-->
+                        <option th:each="c:${pafCenterInfoList}" th:value="${c.pafcNo}" th:text="${c.pafcName}" ></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form_box line_4">
+            <div class="layui-inline">
+                <label class="layui-form-label">主机流水号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="reference" id="reference" th:value="*{reference}"  class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="form_box line_4">
+            <div class="layui-inline">
+                <label class="layui-form-label">文件名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="fileName" id="fileName" th:value="*{fileName}"  class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="form_box line_4">
+            <div class="layui-inline">
+                <label class="layui-form-label">交易日期</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="tranDate" name="tranDate" th:value="*{tranDate}" placeholder="yyyyMMdd">
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <button class="layui-btn layui-btn-normal layui-btn-sm" id="query" onclick="operate('accMstList')">查询</button>
+</div>
+<div class="buttonBox" style="margin-top: 15px">
+    <button class="layui-btn" onclick="operate('pushAccMst')">重发</button>
+    <button class="layui-btn" onclick="operate('accMstFileList')">按文件重发</button>
+    <div id="table_box" lay-filter="table_box">
+        <!--表格盒子-->
+    </div>
+</div>
+
+
+<!--<div id="laypages"></div>-->
+
+
+<script th:src="@{../ui/jquery/jquery.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{../ui/layui/layui.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{../ui/jquery/jquery-ui.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{../ui/js/commons.js}"></script>
+<script th:src="@{../ui/js/Ui_table.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{../ui/js/newForm.js}" type="text/javascript" charset="utf-8"></script>
+<script th:src="@{../system/paf/paf.js}" type="text/javascript" charset="utf-8"></script>
+<!--绑定table数据-->
+<!--<script type="text/html" id="barEdit">-->
+    <!--<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>-->
+    <!--<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>-->
+    <!--<a class="layui-btn layui-btn-xs" lay-event="permission">权限分配</a>-->
+    <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>-->
+<!--</script>-->
+<script type="text/javascript" th:inline="javascript">
+    var table=null;
+    layui.use('table', function(){
+        table = layui.table;
+        table.render({
+            elem: '#table_box',
+            url:'../paf/accMstListData?centerNo='+$("#centerNo").val()+"&reference="+$("#reference").val()+"&fileName="+$("#fileName").val()+"&tranDate="+$("#tranDate").val(),
+            isSortBox:true,
+            editor:false,
+            cellMinWidth:170,
+            cols: [
+                [
+                    {type:'checkbox'},
+                    {field:'centerNo', title:'公积金中心编号'}
+                    ,{field:'acctNo', title: '账号',width:'200'}
+                    ,{field:'reference', title: '主机流水号',width:'250'}
+                    ,{field:'narrative', title: '摘要',width:'300'}
+                    ,{field:'othAcctNo', title: '对手账号',width:'200'}
+                    ,{field:'othAcctName', title: '对手户名',width:'300'}
+                    ,{field:'tranAmt', title: '金额'}
+                    ,{field:'tranDate', title: '交易日期'}
+                    ,{field:'tranTime', title: '交易时间'}
+                    ,{field:'fileName', title: '上送文件',width:'450'}
+
+                ]
+            ],
+            page: true
+
+
+        });
+
+        // //监听工具条
+        // table.on('tool(table_box)', function(obj){
+        //     var data = obj.data;
+        //     if(obj.event === 'detail'){
+        //         operate('read',data.id);
+        //     } else if(obj.event === 'del'){
+        //         operate('del',data.id);
+        //     } else if(obj.event === 'edit'){
+        //         operate('edit',data.id);
+        //     }else if(obj.event==='permission'){
+        //         operate('permission',data.id);
+        //     }
+        // });
+    });
+
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+
+        //常规用法
+        laydate.render({
+            elem: '#tranDate'
+            ,format: 'yyyyMMdd'
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.cap.paf.mapper.PafSingleCrdtMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.cap.paf.entity.PafSingleCrdt" >
+    <id column="plat_date" property="platDate" jdbcType="INTEGER" />
+    <id column="plat_trace" property="platTrace" jdbcType="INTEGER" />
+    <result column="tx_brno" property="txBrno" jdbcType="VARCHAR" />
+    <result column="plat_time" property="platTime" jdbcType="INTEGER" />
+    <result column="up_brno" property="upBrno" jdbcType="VARCHAR" />
+    <result column="log_id" property="logId" jdbcType="VARCHAR" />
+    <result column="log_dev" property="logDev" jdbcType="VARCHAR" />
+    <result column="snd_date" property="sndDate" jdbcType="VARCHAR" />
+    <result column="snd_time" property="sndTime" jdbcType="VARCHAR" />
+    <result column="snd_seqno" property="sndSeqno" jdbcType="VARCHAR" />
+    <result column="snd_unitno" property="sndUnitno" jdbcType="VARCHAR" />
+    <result column="snd_node" property="sndNode" jdbcType="VARCHAR" />
+    <result column="rcv_node" property="rcvNode" jdbcType="VARCHAR" />
+    <result column="bdc_date" property="bdcDate" jdbcType="VARCHAR" />
+    <result column="bdc_time" property="bdcTime" jdbcType="VARCHAR" />
+    <result column="bdc_seqno" property="bdcSeqno" jdbcType="VARCHAR" />
+    <result column="cus_no" property="cusNo" jdbcType="VARCHAR" />
+    <result column="opr_no" property="oprNo" jdbcType="VARCHAR" />
+    <result column="tx_status" property="txStatus" jdbcType="VARCHAR" />
+    <result column="cap_seqno" property="capSeqno" jdbcType="VARCHAR" />
+    <result column="cap_hostcode" property="capHostcode" jdbcType="VARCHAR" />
+    <result column="cap_hostmsg" property="capHostmsg" jdbcType="VARCHAR" />
+    <result column="int_seqno" property="intSeqno" jdbcType="VARCHAR" />
+    <result column="int_hostcode" property="intHostcode" jdbcType="VARCHAR" />
+    <result column="int_hostmsg" property="intHostmsg" jdbcType="VARCHAR" />
+    <result column="curr_no" property="currNo" jdbcType="VARCHAR" />
+    <result column="curr_iden" property="currIden" jdbcType="VARCHAR" />
+    <result column="settle_type" property="settleType" jdbcType="VARCHAR" />
+    <result column="bus_type" property="busType" jdbcType="VARCHAR" />
+    <result column="de_acctno" property="deAcctno" jdbcType="VARCHAR" />
+    <result column="de_acctname" property="deAcctname" jdbcType="VARCHAR" />
+    <result column="de_acctclass" property="deAcctclass" jdbcType="VARCHAR" />
+    <result column="cap_amt" property="capAmt" jdbcType="DECIMAL" />
+    <result column="de_intacctno" property="deIntacctno" jdbcType="VARCHAR" />
+    <result column="de_intacctname" property="deIntacctname" jdbcType="VARCHAR" />
+    <result column="de_intacctclass" property="deIntacctclass" jdbcType="VARCHAR" />
+    <result column="de_intcracct" property="deIntcracct" jdbcType="VARCHAR" />
+    <result column="int_amt" property="intAmt" jdbcType="DECIMAL" />
+    <result column="cr_acctno" property="crAcctno" jdbcType="VARCHAR" />
+    <result column="cr_acctname" property="crAcctname" jdbcType="VARCHAR" />
+    <result column="cr_acctclass" property="crAcctclass" jdbcType="VARCHAR" />
+    <result column="cr_bankclass" property="crBankclass" jdbcType="VARCHAR" />
+    <result column="cr_bankname" property="crBankname" jdbcType="VARCHAR" />
+    <result column="cr_chgno" property="crChgno" jdbcType="VARCHAR" />
+    <result column="amt" property="amt" jdbcType="DECIMAL" />
+    <result column="ref_acctno" property="refAcctno" jdbcType="VARCHAR" />
+    <result column="ref_seqno1" property="refSeqno1" jdbcType="VARCHAR" />
+    <result column="ref_seqno2" property="refSeqno2" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select plat_date, plat_trace, tx_brno, plat_time, up_brno, log_id, log_dev, snd_date, 
+    snd_time, snd_seqno, snd_unitno, snd_node, rcv_node, bdc_date, bdc_time, bdc_seqno, 
+    cus_no, opr_no, tx_status, cap_seqno, cap_hostcode, cap_hostmsg, int_seqno, int_hostcode, 
+    int_hostmsg, curr_no, curr_iden, settle_type, bus_type, de_acctno, de_acctname, de_acctclass, 
+    cap_amt, de_intacctno, de_intacctname, de_intacctclass, de_intcracct, int_amt, cr_acctno, 
+    cr_acctname, cr_acctclass, cr_bankclass, cr_bankname, cr_chgno, amt, ref_acctno, 
+    ref_seqno1, ref_seqno2, summary, remark
+    from paf_single_crdt
+  </select>
+</mapper>
