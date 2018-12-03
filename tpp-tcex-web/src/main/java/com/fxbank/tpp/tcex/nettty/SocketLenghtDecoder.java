@@ -24,7 +24,7 @@ import redis.clients.jedis.Jedis;
 public class SocketLenghtDecoder extends ByteToMessageDecoder {
 
 	private static Logger logger = LoggerFactory.getLogger(SocketLenghtDecoder.class);
-	private static final String COMMON_PREFIX = "paf_common.";
+	private static final String COMMON_PREFIX = "tcex_common.";
 
 	private static final int HEADERLENGTH = 16;
 

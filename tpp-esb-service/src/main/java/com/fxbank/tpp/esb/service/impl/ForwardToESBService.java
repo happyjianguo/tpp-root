@@ -25,7 +25,7 @@ public class ForwardToESBService implements IForwardToESBService {
 
 	private static Logger logger = LoggerFactory.getLogger(ForwardToESBService.class);
 	
-	private static final String serviceKey = "paf_common.esb_cip_url";
+	private static final String serviceKey = "tcex_common.esb_cip_url";
 	
 	@Resource
 	private MyJedis myJedis;

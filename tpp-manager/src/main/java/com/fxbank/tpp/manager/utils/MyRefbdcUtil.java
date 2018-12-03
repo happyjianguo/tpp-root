@@ -16,7 +16,7 @@ import redis.clients.jedis.Jedis;
 public class MyRefbdcUtil {
 	private static Logger logger = LoggerFactory.getLogger(MyRefbdcUtil.class);
 	
-	private static final String COMMON_PREFIX = "paf_common.";
+	private static final String COMMON_PREFIX = "tcex_common.";
 	
 	@Resource
 	private MyJedis myJedis;
@@ -77,7 +77,7 @@ public class MyRefbdcUtil {
 	
 	public static void main(String[] args) throws Exception{
 		String encryptSessionKey = "18f0d82e01dc930ec02b21ba7d0b51349564dad4897ac83a51f53e132b8abfb1a80cc385bd963e6a96026e8cc698deb2f1d663609d5c2c120a01d611d623f530e96b5f9fea2c0243944198105af5e03ac9b620ae40da50d742f1e8ed6d1736c780865dfa31bd331ee7474c30f3fae012787a3868f914d84d217ee6f7e0b48776";
-		byte[] sessionKey = RefbdcUtil.decryptSessionKey("D:\\paf_key", encryptSessionKey);
+		byte[] sessionKey = RefbdcUtil.decryptSessionKey("D:\\tcex_key", encryptSessionKey);
 		System.out.println(sessionKey);
 	}
 }

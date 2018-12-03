@@ -164,7 +164,7 @@
 
         注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
      -->
-    <table tableName="paf_batch_crdt_detail" 
+    <table tableName="tcex***" 
     	enableInsert="false"
     	enableUpdateByPrimaryKey="false"
     	enableSelectByPrimaryKey="false"

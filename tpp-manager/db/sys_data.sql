@@ -20,11 +20,6 @@ INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id,
 INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('3', '角色管理', 'menu', 'role/list', 'roleInfo:view', '1', '0/1', '0', 'ui/images/image1.jpg');
 INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('4', '菜单管理', 'menu', 'permission/list', '2222', '1', '0/1', '0', 'ui/images/image1.jpg');
 INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('5', '部门管理', 'menu', 'depart/list', 'depart:view', '1', '0/1', '0', 'ui/images/image1.jpg');
-INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('8', '公积金业务操作', 'menu', '442', '442', '0', '0', '0', 'ui/images/image1.jpg');
-INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('9', '签到签退', 'menu', 'paf/loginOut', '7', '8', '0/8', '0', 'ui/images/image1.jpg');
-INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('10', '签约账户通知', 'menu', 'paf/list', 'paf:acclist', '8', '0/8', '0', 'ui/images/image1.jpg');
-INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('11', 'redis刷新', 'menu', 'config/redis_refresh', 'redisRefresh:view', '1', '0/1', '0', 'ui/images/image1.jpg');
-INSERT INTO sys_permission (id, name, resource_type, url, permission, parent_id, parent_ids, available, img_url) VALUES ('12', '账户变动通知', 'menu', 'paf/accMstList', 'pafaccmstlist:view', '8', '0/8', '0', 'ui/images/image1.jpg');
 COMMIT;
 
 -- ----------------------------
