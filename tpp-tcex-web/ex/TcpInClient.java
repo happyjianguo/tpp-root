@@ -1,4 +1,4 @@
-package com.fxbank.cap.paf.ex;
+package com.fxbank.tpp.tcex.ex;
 
 //1.1. 签到请求代码示例
 public class TcpInClient {	

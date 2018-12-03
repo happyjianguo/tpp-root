@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.manager.mapper.SysRolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.manager.entity.SysRolePermission" >
+    <result column="permission_id" property="permissionId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select permission_id, role_id
+    from sys_role_permission
+  </select>
+
+  <resultMap id="PermissionResultMap" type="com.fxbank.tpp.manager.entity.SysPermission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="resource_type" property="resourceType" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="permission" property="permission" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+    <result column="available" property="available" jdbcType="TINYINT" />
+  </resultMap>
+
+  <select id="selectPermissionList" resultMap="PermissionResultMap" >
+    select id, name, resource_type, url, permission, parent_id, parent_ids, available
+    from sys_permission
+  </select>
+
+
+</mapper>

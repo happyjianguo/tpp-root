@@ -1,4 +1,4 @@
-package com.fxbank.cap.paf.ex;
+package com.fxbank.tpp.tcex.ex;
 
 public class Error {
 	private InputStream is ;
