@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
-import com.fxbank.tpp.tcex.constant.TCEX;
 
 /** 
 * @ClassName: TcexTradeExecuteException 
@@ -15,10 +14,8 @@ import com.fxbank.tpp.tcex.constant.TCEX;
 */
 public class TcexTradeExecuteException extends SysTradeExecuteException {
 	
-	private static final long serialVersionUID = 2915820465784358202L;
+	public final static String TCEX_E_10001 = "TCEX_E_10001";
 
-	public final static String TCEX_E_10001 = TCEX.BANK_CODE+"10001";
-	
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 		private static final long serialVersionUID = -8667135437237760216L;

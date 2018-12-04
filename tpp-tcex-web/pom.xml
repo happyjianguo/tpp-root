@@ -26,50 +26,6 @@
 			<artifactId>tpp-esb-api</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>bcprov-jdk15on</groupId>
-			<artifactId>bcprov-jdk15on</artifactId>
-			<version>147</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/bcprov-jdk15on-147.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/commons-codec-1.4.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>refbdcutil</groupId>
-			<artifactId>refbdcutil</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/refbdcutil.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>dom4j</groupId>
-			<artifactId>dom4j</artifactId>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/dom4j-1.6.1.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>ESBFileAPI</groupId>
-			<artifactId>ESBFileAPI</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/ESBFileAPI.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/log4j-1.2.8.jar</systemPath>
-		</dependency>
 	</dependencies>
 
 	<build>
