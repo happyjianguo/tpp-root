@@ -25,15 +25,11 @@
 			<groupId>cn.highsucess</groupId>
 			<artifactId>connPool</artifactId>
 			<version>1.1</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/hisuConnPoolAPI.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov</artifactId>
 			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/bcprov-ext-jdk15on-154.jar</systemPath>
 		</dependency>
 	</dependencies>
 
