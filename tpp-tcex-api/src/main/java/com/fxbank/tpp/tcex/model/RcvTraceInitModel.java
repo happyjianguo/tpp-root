@@ -61,11 +61,9 @@ public class RcvTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
 	private String txTel; //交易柜员
 	
-	@NotNull(message = "chk_tel复核员不能为空")
 	@Size(max = 30,message = "chk_tel复核员最大长度是30")
 	private String chkTel; //复核员
 	
-	@NotNull(message = "auth_tel授权员不能为空")
 	@Size(max = 30,message = "auth_tel授权员最大长度是30")
 	private String authTel; //授权员
 	

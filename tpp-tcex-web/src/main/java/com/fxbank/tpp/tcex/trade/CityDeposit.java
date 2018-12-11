@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
+import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
@@ -91,16 +92,17 @@ public class CityDeposit implements TradeExecutionStrategy {
 		
 		
 		
-		return null;
+		return repDto;
 	}
 	private void initRecord(REQ_TS001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
 		REQ_TS001.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_SYS_HEAD reqSysHead = reqDto.getReqSysHead();
 		
 		RcvTraceInitModel record = new RcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
 		record.setSourceType(reqBody.getChnl());
-		record.setTxBranch(record.getTxBranch());
+		record.setTxBranch(reqSysHead.getBranchId());
 		//现转标志 0现金1转账
 		record.setTxInd(reqBody.getTxInd());
 		//通存通兑
@@ -113,9 +115,9 @@ public class CityDeposit implements TradeExecutionStrategy {
 		record.setPayeeAcno(reqBody.getPayeeAcc());
 		record.setPayeeName(reqBody.getPayeeName());
 		record.setHostState("0");
-		record.setTxTel(record.getTxTel());
-		record.setChkTel(record.getChkTel());
-		record.setAuthTel(record.getAuthTel());
+		record.setTxTel(reqSysHead.getUserId());
+		//record.setChkTel();
+		//record.setAuthTel();
 		record.setInfo(reqBody.getInfo());
 		rcvTraceService.rcvTraceInit(record);
 	}
