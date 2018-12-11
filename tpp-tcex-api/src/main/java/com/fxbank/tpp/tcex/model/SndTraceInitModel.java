@@ -10,17 +10,17 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 
 /** 
-* @ClassName: RcvTraceInitModel 
-* @Description: 接收日志流水表登记模型
+* @ClassName: SndTraceInitModel 
+* @Description: 发送流水表登记模型 
 * @author Duzhenduo
-* @date 2018年12月11日 下午1:36:48 
+* @date 2018年12月11日 下午1:38:29 
 *  
 */
-public class RcvTraceInitModel extends ModelBase implements Serializable{
+public class SndTraceInitModel extends ModelBase implements Serializable{
 	
 	private static final long serialVersionUID = 4985529026950360461L;
 	
-	public RcvTraceInitModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public SndTraceInitModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 	@NotNull(message = "source_type交易渠道不能为空")
