@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxbank.tpp.tcex.mapper.TppRcvTraceLogMapper">
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.tcex.entity.TppRcvTraceLog">
+    <id column="plat_date" jdbcType="INTEGER" property="platDate" />
+    <id column="plat_trace" jdbcType="INTEGER" property="platTrace" />
+    <result column="plat_time" jdbcType="INTEGER" property="platTime" />
+    <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+    <result column="tx_branch" jdbcType="VARCHAR" property="txBranch" />
+    <result column="tx_ind" jdbcType="VARCHAR" property="txInd" />
+    <result column="dc_flag" jdbcType="VARCHAR" property="dcFlag" />
+    <result column="tx_amt" jdbcType="DECIMAL" property="txAmt" />
+    <result column="host_date" jdbcType="INTEGER" property="hostDate" />
+    <result column="host_traceno" jdbcType="VARCHAR" property="hostTraceno" />
+    <result column="payer_acno" jdbcType="VARCHAR" property="payerAcno" />
+    <result column="payer_name" jdbcType="VARCHAR" property="payerName" />
+    <result column="payee_acno" jdbcType="VARCHAR" property="payeeAcno" />
+    <result column="payee_name" jdbcType="VARCHAR" property="payeeName" />
+    <result column="town_branch" jdbcType="VARCHAR" property="townBranch" />
+    <result column="town_date" jdbcType="INTEGER" property="townDate" />
+    <result column="town_traceno" jdbcType="VARCHAR" property="townTraceno" />
+    <result column="check_flag" jdbcType="VARCHAR" property="checkFlag" />
+    <result column="host_state" jdbcType="VARCHAR" property="hostState" />
+    <result column="town_state" jdbcType="VARCHAR" property="townState" />
+    <result column="tx_tel" jdbcType="VARCHAR" property="txTel" />
+    <result column="chk_tel" jdbcType="VARCHAR" property="chkTel" />
+    <result column="auth_tel" jdbcType="VARCHAR" property="authTel" />
+    <result column="print" jdbcType="VARCHAR" property="print" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select plat_date, plat_trace, plat_time, source_type, tx_branch, tx_ind, dc_flag, 
+    tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
+    town_branch, town_date, town_traceno, check_flag, host_state, town_state, tx_tel, 
+    chk_tel, auth_tel, print, info
+    from tpp_rcv_trace_log
+  </select>
+</mapper>
