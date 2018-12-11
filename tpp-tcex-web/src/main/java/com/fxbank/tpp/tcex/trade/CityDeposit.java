@@ -1,5 +1,7 @@
 package com.fxbank.tpp.tcex.trade;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -15,6 +17,10 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS001;
+import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
+import com.fxbank.tpp.tcex.service.IRcvTraceService;
+
+import redis.clients.jedis.Jedis;
 /**
  * 商行通存业务
  * @author liye
@@ -31,6 +37,9 @@ public class CityDeposit implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
+	
+	@Reference(version = "1.0.0")
+	private IRcvTraceService rcvTraceService;
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -44,6 +53,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 		
 		//插入流水表
 		boolean b = true;
+		initRecord(reqDto);
 		
 		if(b) {
 			//核心记账：由商行核心将客户存入金额转至头寸。
@@ -82,6 +92,32 @@ public class CityDeposit implements TradeExecutionStrategy {
 		
 		
 		return null;
+	}
+	private void initRecord(REQ_TS001 reqDto) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
+		
+		REQ_TS001.REQ_BODY reqBody = reqDto.getReqBody();
+		
+		RcvTraceInitModel record = new RcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
+		record.setSourceType(reqBody.getChnl());
+		record.setTxBranch(record.getTxBranch());
+		//现转标志 0现金1转账
+		record.setTxInd(reqBody.getTxInd());
+		//通存通兑
+		record.setDcFlag("0");
+		record.setTxAmt(reqBody.getTxAmt());
+		if("1".equals(reqBody.getTxInd())) {
+		record.setPayerAcno(reqBody.getPayerAcc());
+		record.setPayerName(reqBody.getPayerName());
+		}
+		record.setPayeeAcno(reqBody.getPayeeAcc());
+		record.setPayeeName(reqBody.getPayeeName());
+		record.setHostState("0");
+		record.setTxTel(record.getTxTel());
+		record.setChkTel(record.getChkTel());
+		record.setAuthTel(record.getAuthTel());
+		record.setInfo(reqBody.getInfo());
+		rcvTraceService.rcvTraceInit(record);
 	}
 
 }
