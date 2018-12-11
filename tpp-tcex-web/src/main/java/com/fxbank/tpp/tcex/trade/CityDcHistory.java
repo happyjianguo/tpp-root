@@ -21,9 +21,9 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelPage;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS004;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS004.REP_BODY.T;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS004;
 
 
@@ -53,33 +53,33 @@ public class CityDcHistory extends TradeBase implements TradeExecutionStrategy {
 		REQ_TS004.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_TS004 repDto = new REP_TS004();
 		REP_TS004.REP_BODY repBody = repDto.getRepBody();
-		REP_TS004.REP_BODY.T t = repBody.new T();
+		REP_TS004.TMSG t = repDto.new TMSG();
 		t.setPlatDate("20181206");
 		t.setPlatTraceno("45551");
 		t.setDcFlag("1");
 		t.setChnl("cdf");
 		t.setTownBrno("3243");
-		t.setHostTraceno("");
-		t.setHostDate("");
-		t.setOurState("");
-		t.setTownState("");
-		t.setChkState("");
-		t.setTxAmt("");
-		t.setTxInd("");
-		t.setPayeeAcno("");
-		t.setPayeeName("");
-		t.setPayerAcno("");
-		t.setPayerName("");
-		t.setTxTel("");
-		t.setChkTel("");
-		t.setAuthTel("");
-		t.setPrint("");
-		t.setInfo("");
-		List<REP_TS004.REP_BODY.T> list = repBody.getaT();
+		t.setHostTraceno("1");
+		t.setHostDate("1");
+		t.setOurState("1");
+		t.setTownState("1");
+		t.setChkState("1");
+		t.setTxAmt("1");
+		t.setTxInd("1");
+		t.setPayeeAcno("1");
+		t.setPayeeName("1");
+		t.setPayerAcno("1");
+		t.setPayerName("1");
+		t.setTxTel("1");
+		t.setChkTel("1");
+		t.setAuthTel("1");
+		t.setPrint("1");
+		t.setInfo("1");
+		List<REP_TS004.TMSG> list = new ArrayList<>();
 		list.add(t);
+		repBody.setArrayMsg(list);
+		
 		return repDto;
 	}
-
-	
 
 }
