@@ -1,64 +1,61 @@
-package com.fxbank.tpp.esb.model.ses;
-
-import java.io.Serializable;
+package com.fxbank.tpp.tcex.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.model.ESB_BASE;
-import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
-import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
-
+import com.fxbank.cip.base.dto.REQ_APP_HEAD;
+import com.fxbank.cip.base.dto.REQ_BASE;
+import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TS002 
-* @Description: 商行通兑村镇 
-* @author Duzhenduo
-* @date 2018年12月11日 下午2:04:30 
+* @ClassName: REQ_TR003
+* @Description: 村镇通存记账确认
+* @author zhouyongwei zyw_unix@126.com
+* @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class ESB_REQ_TS002 extends ESB_BASE {
+public class REQ_TESTTS002 extends REQ_BASE {
 	
-	private static final long serialVersionUID = -813981987125918717L;
-
-	public ESB_REQ_TS002(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
-		super(mylog, sysDate, sysTime, sysTraceno);
+	@JSONField(name = "APP_HEAD")
+	private REQ_APP_HEAD reqAppHead;
+	
+	@JSONField(name = "SYS_HEAD")
+	private REQ_SYS_HEAD reqSysHead;
+	
+	@JSONField(name = "BODY")
+	private REQ_BODY reqBody;
+	
+	public REQ_TESTTS002(){
+		super.txDesc = "村镇通存记账确认";
 	}
 
-	@JSONField(name = "APP_HEAD")
-	private ESB_REQ_APP_HEAD reqAppHead = new ESB_REQ_APP_HEAD();
-
-	@JSONField(name = "SYS_HEAD")
-	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TESTTS0", "02");
-	@JSONField(name = "BODY")
-	private REQ_BODY reqBody = new REQ_BODY();
-
-	public ESB_REQ_APP_HEAD getReqAppHead() {
+	public REQ_APP_HEAD getReqAppHead() {
 		return reqAppHead;
 	}
 
-	public void setReqAppHead(ESB_REQ_APP_HEAD reqAppHead) {
+	public void setReqAppHead(REQ_APP_HEAD reqAppHead) {
 		this.reqAppHead = reqAppHead;
 	}
 
-	public ESB_REQ_SYS_HEAD getReqSysHead() {
+
+	public REQ_SYS_HEAD getReqSysHead() {
 		return reqSysHead;
 	}
 
-	public void setReqSysHead(ESB_REQ_SYS_HEAD reqSysHead) {
+
+	public void setReqSysHead(REQ_SYS_HEAD reqSysHead) {
 		this.reqSysHead = reqSysHead;
 	}
+
 
 	public REQ_BODY getReqBody() {
 		return reqBody;
 	}
 
+
 	public void setReqBody(REQ_BODY reqBody) {
 		this.reqBody = reqBody;
 	}
 
-	public class REQ_BODY implements Serializable{
-
-		private static final long serialVersionUID = -8415585719972566411L;
+	public class REQ_BODY {
 
 		@JSONField(name = "PAYER_NAME")
 		private String payerName;	//付款人名称
@@ -159,6 +156,7 @@ public class ESB_REQ_TS002 extends ESB_BASE {
 			IDno = iDno;
 		}
 
+		
 	
 	}
 }

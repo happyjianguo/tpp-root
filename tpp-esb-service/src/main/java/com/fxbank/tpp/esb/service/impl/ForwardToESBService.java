@@ -27,6 +27,8 @@ public class ForwardToESBService implements IForwardToESBService {
 	private static Logger logger = LoggerFactory.getLogger(ForwardToESBService.class);
 	
 	private static final String serviceKey = "tcex_common.esb_cip_url";
+	private static final String townServiceKey = "tcex_common.esb_town_url";
+	
 	
 	@Resource
 	private MyJedis myJedis;
@@ -105,9 +107,8 @@ public class ForwardToESBService implements IForwardToESBService {
 	public <T> T sendToTown(ESB_BASE esbModel,Object macData,Class<T> clazz) throws SysTradeExecuteException {
 		String url ;
 		try(Jedis jedis=myJedis.connect()){
-			url = jedis.get(serviceKey);
+			url = jedis.get(townServiceKey);
 		}
-		url = "http://127.0.0.1:7000/tpp/tcex/city.do";
 		logger.info("ESB服务地址：" + url);
 		if (url == null) {
 			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000001);
