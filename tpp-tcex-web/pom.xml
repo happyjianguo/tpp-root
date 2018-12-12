@@ -26,6 +26,20 @@
 			<artifactId>tpp-esb-api</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>ESBFileAPI</groupId>
+			<artifactId>ESBFileAPI</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/ESBFileAPI.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
+    		<artifactId>commons-net</artifactId>
+			<version>3.1</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/commons-net-3.1.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>

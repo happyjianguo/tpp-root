@@ -17,6 +17,8 @@ import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS002;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
+import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
+import com.fxbank.tpp.tcex.service.IRcvTraceService;
 /**
  * 村镇冲正业务
  * @author liye
@@ -31,6 +33,9 @@ public class TownReversal implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
+	
+	@Reference(version = "1.0.0")
+	private IRcvTraceService rcvTraceService;
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -41,25 +46,18 @@ public class TownReversal implements TradeExecutionStrategy {
 		String platTraceno = reqDto.getReqBody().getPlatTraceno();
 
 		//调用核心冲正接口
+		String hostState = "";
 		
-		RcvTraceInitModel record = new RcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
+		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
+		record.setPlatDate(Integer.parseInt(platDate));
+		record.setPlatTrace(Integer.parseInt(platTraceno));
+		record.setHostState(hostState);
+		rcvTraceService.rcvTraceUpd(record);
 		
 		REP_TR004 repDto = new REP_TR004();
-		repDto.getRepBody().setSts("1");
-		
-		String lsh = ""; //渠道流水号
-		
-		//插入流水表
-		boolean b = true;
-		if(b) {
-			//调用核心接口进行冲正
-			
-			//更新流水表核心记账状态
-			
-		}else {
-			throw new SysTradeExecuteException("1111");
-		}
-		return null;
+		repDto.getRepBody().setSts(hostState);
+
+		return repDto;
 	}
 	
 //	村镇发来张

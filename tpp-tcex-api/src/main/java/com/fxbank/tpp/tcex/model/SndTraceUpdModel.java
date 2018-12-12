@@ -23,23 +23,18 @@ public class SndTraceUpdModel extends ModelBase implements Serializable{
 	public SndTraceUpdModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
-	@NotNull(message = "source_type交易渠道不能为空")
 	@Size(max = 20,message = "source_type交易渠道最大长度是20")
 	private String sourceType; //交易渠道
 	
-	@NotNull(message = "tx_branch交易机构不能为空")
 	@Size(max = 20,message = "tx_branch交易机构最大长度是20")
 	private String txBranch; //交易机构
 	
-	@NotNull(message = "tx_ind现转标志不能为空")
 	@Size(max = 10,message = "tx_ind现转标志最大长度是10")
 	private String txInd; //现转标志
 	
-	@NotNull(message = "dc_flag通存通兑标志不能为空")
 	@Size(max = 10,message = "dc_flag通存通兑标志最大长度是10")
 	private String dcFlag; //通存通兑标志
 	
-	@NotNull(message = "tx_amt交易金额不能为空")
 	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
 	private String txAmt;//交易金额
 	
@@ -49,22 +44,18 @@ public class SndTraceUpdModel extends ModelBase implements Serializable{
 	@Size(max = 100,message = "payer_name付款人户名最大长度是100")
 	private String payerName; //付款人户名
 	
-	@NotNull(message = "payee_acno收款人账户不能为空")
 	@Size(max = 50,message = "payee_acno收款人账户最大长度是50")
 	private String payeeAcno; //收款人账户
 	
-	@NotNull(message = "payee_name收款人户名不能为空")
 	@Size(max = 100,message = "payee_name收款人户名最大长度是100")
 	private String payeeName; //收款人户名
 	
 	@Size(max = 20,message = "town_branch村镇机构最大长度是20")
 	private String townBranch; //村镇机构
 	
-	@NotNull(message = "host_state核心记账状态不能为空")
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; //核心记账状态
 	
-	@NotNull(message = "tx_tel交易柜员不能为空")
 	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
 	private String txTel; //交易柜员
 	
@@ -79,6 +70,24 @@ public class SndTraceUpdModel extends ModelBase implements Serializable{
 	
 	@Size(max = 255,message = "info摘要最大长度是255")
 	private String info; //摘要
+	
+    private Integer platDate; //渠道日期
+
+    private Integer platTrace;//渠道流水
+
+    private Integer platTime;//交易时间
+
+    private Integer hostDate;//核心日期
+
+    private String hostTraceno;//核心流水
+
+    private Integer townDate;//村镇日期
+
+    private String townTraceno;//村镇流水
+
+    private String checkFlag;//对账标志
+
+    private String townState;//村镇记账状态
 
 	public String getSourceType() {
 		return sourceType;
@@ -206,6 +215,78 @@ public class SndTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+
+	public Integer getPlatDate() {
+		return platDate;
+	}
+
+	public void setPlatDate(Integer platDate) {
+		this.platDate = platDate;
+	}
+
+	public Integer getPlatTrace() {
+		return platTrace;
+	}
+
+	public void setPlatTrace(Integer platTrace) {
+		this.platTrace = platTrace;
+	}
+
+	public Integer getPlatTime() {
+		return platTime;
+	}
+
+	public void setPlatTime(Integer platTime) {
+		this.platTime = platTime;
+	}
+
+	public Integer getHostDate() {
+		return hostDate;
+	}
+
+	public void setHostDate(Integer hostDate) {
+		this.hostDate = hostDate;
+	}
+
+	public String getHostTraceno() {
+		return hostTraceno;
+	}
+
+	public void setHostTraceno(String hostTraceno) {
+		this.hostTraceno = hostTraceno;
+	}
+
+	public Integer getTownDate() {
+		return townDate;
+	}
+
+	public void setTownDate(Integer townDate) {
+		this.townDate = townDate;
+	}
+
+	public String getTownTraceno() {
+		return townTraceno;
+	}
+
+	public void setTownTraceno(String townTraceno) {
+		this.townTraceno = townTraceno;
+	}
+
+	public String getCheckFlag() {
+		return checkFlag;
+	}
+
+	public void setCheckFlag(String checkFlag) {
+		this.checkFlag = checkFlag;
+	}
+
+	public String getTownState() {
+		return townState;
+	}
+
+	public void setTownState(String townState) {
+		this.townState = townState;
 	}
 	
 }

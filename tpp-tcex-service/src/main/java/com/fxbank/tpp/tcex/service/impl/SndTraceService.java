@@ -58,8 +58,8 @@ public class SndTraceService implements ISndTraceService{
 	@Override
 	public void sndTraceUpd(@Valid SndTraceUpdModel record) throws SysTradeExecuteException {
 		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(record.getSysDate());
-		tppSndTraceLog.setPlatTrace(record.getSysTraceno());
+		tppSndTraceLog.setPlatDate(record.getPlatDate());
+		tppSndTraceLog.setPlatTrace(record.getPlatTrace());
 		tppSndTraceLog.setHostState(record.getHostState());
 		
 		tppSndTraceLogMapper.updateByPrimaryKeySelective(tppSndTraceLog);
