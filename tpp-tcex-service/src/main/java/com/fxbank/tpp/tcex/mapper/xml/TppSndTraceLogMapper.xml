@@ -35,4 +35,24 @@
     chk_tel, auth_tel, print, info
     from tpp_snd_trace_log
   </select>
+  <select id="selectSndTrace" resultMap="BaseResultMap">
+    select * from tpp_snd_trace_log
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="txBrno != null and txBrno != ''">
+        and tx_branch = #{txBrno}
+      </if>
+      <if test="minAmt != null and minAmt != ''">
+        and tx_amt <![CDATA[ >= ]]> #{minAmt}
+      </if>
+      <if test="maxAmt != null and maxAmt != ''">
+        and tx_amt <![CDATA[ <= ]]> #{maxAmt}
+      </if>
+      <if test="begDate != null and begDate != ''">
+        and plat_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and plat_date <![CDATA[ <= ]]> #{endDate}
+      </if>
+    </trim>
+  </select>
 </mapper>

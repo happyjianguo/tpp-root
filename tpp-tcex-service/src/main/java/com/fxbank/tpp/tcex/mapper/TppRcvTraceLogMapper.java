@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TppRcvTraceLogMapper extends MyMapper<TppRcvTraceLog> {
     List<TppRcvTraceLog> selectAll();
+    List<TppRcvTraceLog> selectRcvTrace(String begDate,String endDate,String minAmt,String maxAmt,String txBrno);
 }

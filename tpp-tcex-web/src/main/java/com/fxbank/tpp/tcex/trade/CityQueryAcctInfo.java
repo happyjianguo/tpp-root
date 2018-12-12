@@ -16,14 +16,14 @@ import com.fxbank.tpp.tcex.dto.esb.REQ_TSK01;
 
 
 /**
- * @ClassName: TS001
- * @Description: 商行通存村镇业务
+ * @ClassName: TSK01
+ * @Description: 商行通兑快捷查询村镇账户信息
  * @author 
  * @date 2018年4月3日 下午3:46:30
  * 
  */
 @Service("REQ_TSK01")
-public class CityQueryAcctInfo implements TradeExecutionStrategy {
+public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
 
@@ -37,14 +37,37 @@ public class CityQueryAcctInfo implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
+		
+		/**
+		 * 
 		REQ_TSK01 reqDto = (REQ_TSK01) dto;
 		REQ_TSK01.REQ_BODY reqBody = reqDto.getReqBody();
+		String payerAcno = reqBody.getPayerAcno();
+		//请求村镇账户信息接口，反馈结果写入REP_TSK01
 		REP_TSK01 repDto = new REP_TSK01();
 		REP_TSK01.REP_BODY repBody = repDto.getRepBody();
-		String payerAcno = reqBody.getPayerAcno();
 		repBody.setPayerAcno(payerAcno);
 		repBody.setPayerName("测试");
-		repBody.setAcnoSeq("");
+		repBody.setAcnoSeq("1");
+		repBody.setBal("1000.00");
+		
+		**/
+		
+		//测试用
+		REP_TSK01 repDto = tstInterface(dto);
+		return repDto;
+	}
+
+	private REP_TSK01 tstInterface(DataTransObject dto) {
+		REQ_TSK01 reqDto = (REQ_TSK01) dto;
+		REQ_TSK01.REQ_BODY reqBody = reqDto.getReqBody();
+		String payerAcno = reqBody.getPayerAcno();
+		
+		REP_TSK01 repDto = new REP_TSK01();
+		REP_TSK01.REP_BODY repBody = repDto.getRepBody();
+		repBody.setPayerAcno(payerAcno);
+		repBody.setPayerName("测试");
+		repBody.setAcnoSeq("1");
 		repBody.setBal("1000.00");
 		return repDto;
 	}

@@ -77,11 +77,13 @@ public class CityDcHistoryTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBegDate(sdf1.format(new Date()));
-		reqBody.setEndDate(sdf1.format(new Date()));
+//		reqBody.setBegDate(sdf1.format(new Date()));
+//		reqBody.setEndDate(sdf1.format(new Date()));
+		reqBody.setBegDate("20180901");
+		reqBody.setEndDate("20181206");
 		reqBody.setMinAmt("100.00");
 		reqBody.setMaxAmt("220000.00");
-		reqBody.setTxBrno("3243");
+		reqBody.setTxBrno("");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
