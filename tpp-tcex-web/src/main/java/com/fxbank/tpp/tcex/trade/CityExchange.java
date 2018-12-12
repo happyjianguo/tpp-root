@@ -51,7 +51,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		
 		//插入流水表
 		boolean b = true;
-		//initRecord(reqDto);
+		initRecord(reqDto);
 		if(b) {
 			//通知村镇记账
 			String rst = "";

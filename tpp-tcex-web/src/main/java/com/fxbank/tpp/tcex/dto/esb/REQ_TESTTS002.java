@@ -12,7 +12,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TOWN002 extends REQ_BASE {
+public class REQ_TESTTS002 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,7 +23,7 @@ public class REQ_TOWN002 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TOWN002(){
+	public REQ_TESTTS002(){
 		super.txDesc = "村镇通存记账确认";
 	}
 
@@ -57,49 +57,105 @@ public class REQ_TOWN002 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "BRNO")
-		private String brno;	//村镇记账机构
+		@JSONField(name = "PAYER_NAME")
+		private String payerName;	//付款人名称
 
-		@JSONField(name = "TOWN_DATE")
-		private String townDate;	//村镇日期
+		@JSONField(name = "PAYER_ACC")
+		private String payerAcc;	//付款人账号
 		
-		@JSONField(name = "TOWN_TRACENO")
-		private String townTraceno;		//村镇流水
+		@JSONField(name = "PAYER_PWD")
+		private String payerPwd;		//付款账户密码
 		
-		@JSONField(name = "DCFLAG")
-		private String dcFlag;		//通存通兑标志
+		@JSONField(name = "PLAT_DATE")
+		private String platDate;		//平台日期
+		
+		@JSONField(name = "PLAT_TRACENO")
+		private String platTraceno;		//平台流水
+		
+		@JSONField(name = "TX_AMT")
+		private String txAmt;		//交易金额
+		
+		@JSONField(name = "INFO")
+		private String info;		//摘要
+		
+		@JSONField(name = "ID_TYPE")
+		private String IDtype;      //证件类型
+		
+		@JSONField(name = "ID_NO")
+		private String IDno;        //证件号码
 
-		public String getBrno() {
-			return brno;
+		public String getPayerName() {
+			return payerName;
 		}
 
-		public void setBrno(String brno) {
-			this.brno = brno;
+		public void setPayerName(String payerName) {
+			this.payerName = payerName;
 		}
 
-		public String getTownDate() {
-			return townDate;
+		public String getPayerAcc() {
+			return payerAcc;
 		}
 
-		public void setTownDate(String townDate) {
-			this.townDate = townDate;
+		public void setPayerAcc(String payerAcc) {
+			this.payerAcc = payerAcc;
 		}
 
-		public String getTownTraceno() {
-			return townTraceno;
+		public String getPayerPwd() {
+			return payerPwd;
 		}
 
-		public void setTownTraceno(String townTraceno) {
-			this.townTraceno = townTraceno;
+		public void setPayerPwd(String payerPwd) {
+			this.payerPwd = payerPwd;
 		}
 
-		public String getDcFlag() {
-			return dcFlag;
+		public String getPlatDate() {
+			return platDate;
 		}
 
-		public void setDcFlag(String dcFlag) {
-			this.dcFlag = dcFlag;
+		public void setPlatDate(String platDate) {
+			this.platDate = platDate;
 		}
+
+		public String getPlatTraceno() {
+			return platTraceno;
+		}
+
+		public void setPlatTraceno(String platTraceno) {
+			this.platTraceno = platTraceno;
+		}
+
+		public String getTxAmt() {
+			return txAmt;
+		}
+
+		public void setTxAmt(String txAmt) {
+			this.txAmt = txAmt;
+		}
+
+		public String getInfo() {
+			return info;
+		}
+
+		public void setInfo(String info) {
+			this.info = info;
+		}
+
+		public String getIDtype() {
+			return IDtype;
+		}
+
+		public void setIDtype(String iDtype) {
+			IDtype = iDtype;
+		}
+
+		public String getIDno() {
+			return IDno;
+		}
+
+		public void setIDno(String iDno) {
+			IDno = iDno;
+		}
+
 		
 	
 	}
