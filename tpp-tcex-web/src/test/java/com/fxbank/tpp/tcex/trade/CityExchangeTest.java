@@ -24,34 +24,31 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS004;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS002;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TS002;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class CityDcHistoryTest {
+public class CityExchangeTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(CityDcHistoryTest.class);
+	private static Logger logger = LoggerFactory.getLogger(CityExchangeTest.class);
 	
 	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TS004 req ;
+	private REQ_TS002 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TS004.REQ_BODY reqBody ;
-	
-	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
-	static SimpleDateFormat sdf2=new SimpleDateFormat("HHmmss");
+	private REQ_TS002.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TS004();
+		req = new REQ_TS002();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("TS0");
-		reqSysHead.setSceneId("04");
+		reqSysHead.setSceneId("02");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -77,21 +74,30 @@ public class CityDcHistoryTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBegDate(sdf1.format(new Date()));
-		reqBody.setEndDate(sdf1.format(new Date()));
-		reqBody.setMinAmt("100.00");
-		reqBody.setMaxAmt("220000.00");
-		reqBody.setTxBrno("3243");
+		reqBody.setPayerName("张三");
+		reqBody.setPayerAcc("623166001015086827");
+		reqBody.setPayerPwd("Z2004944000010");
+		reqBody.setPayeeName("李四");
+		reqBody.setPayeeAcc("613166001015086828");
+		reqBody.setTxAmt("1000.00");
+		reqBody.setChnl("TCEX");
+		reqBody.setTxInd("1");
+		reqBody.setInfo("测试");
+		reqBody.setNoteType("2");
+		reqBody.setNoteNo("111");
+		reqBody.setIDtype("0");
+		reqBody.setIDno("211003199105271510");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
 		RequestBuilder request = MockMvcRequestBuilders.post(URL)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).content(reqContent);
 		MvcResult mvcResult = mockMvc.perform(request).andReturn();
+		
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TS004 rep = JsonUtil.toBean(repContent, REP_TS004.class);
+		REP_TS002 rep = JsonUtil.toBean(repContent, REP_TS002.class);
 	}
 	
 }

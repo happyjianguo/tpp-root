@@ -9,6 +9,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.tpp.tcex.entity.TppRcvTraceLog;
 import com.fxbank.tpp.tcex.mapper.TppRcvTraceLogMapper;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
+import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
 
 @Service(validation = "true", version = "1.0.0")
@@ -41,6 +42,23 @@ public class RcvTraceService implements IRcvTraceService{
 		tppRcvTraceLog.setInfo(record.getInfo());
 		
 		tppRcvTraceLogMapper.insertSelective(tppRcvTraceLog);
+	}
+
+	/** 
+	* @Title: rcvTraceUpd 
+	* @Description:更新核心记账状态 
+	* @param @param record
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public void rcvTraceUpd(@Valid RcvTraceUpdModel record) throws SysTradeExecuteException {
+		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
+		tppRcvTraceLog.setPlatDate(record.getSysDate());
+		tppRcvTraceLog.setPlatTrace(record.getSysTraceno());
+		tppRcvTraceLog.setHostState(record.getHostState());
+		tppRcvTraceLogMapper.updateByPrimaryKeySelective(tppRcvTraceLog);
+		
 	}
 
 }

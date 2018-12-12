@@ -32,7 +32,6 @@ public class CityDeposit implements TradeExecutionStrategy {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityDeposit.class);
 
-
 	@Resource
 	private LogPool logPool;
 	

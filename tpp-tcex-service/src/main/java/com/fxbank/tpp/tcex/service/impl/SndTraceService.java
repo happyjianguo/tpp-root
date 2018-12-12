@@ -9,6 +9,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.tpp.tcex.entity.TppSndTraceLog;
 import com.fxbank.tpp.tcex.mapper.TppSndTraceLogMapper;
 import com.fxbank.tpp.tcex.model.SndTraceInitModel;
+import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 import com.fxbank.tpp.tcex.service.ISndTraceService;
 
 @Service(validation = "true", version = "1.0.0")
@@ -41,6 +42,23 @@ public class SndTraceService implements ISndTraceService{
 		tppSndTraceLog.setInfo(record.getInfo());
 		
 		tppSndTraceLogMapper.insertSelective(tppSndTraceLog);
+	}
+
+	/** 
+	* @Title: sndTraceUpd 
+	* @Description: 更新核心记账状态
+	* @param @param record
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public void sndTraceUpd(@Valid SndTraceUpdModel record) throws SysTradeExecuteException {
+		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
+		tppSndTraceLog.setPlatDate(record.getSysDate());
+		tppSndTraceLog.setPlatTrace(record.getSysTraceno());
+		tppSndTraceLog.setHostState(record.getHostState());
+		
+		tppSndTraceLogMapper.updateByPrimaryKeySelective(tppSndTraceLog);
 	}
 
 }
