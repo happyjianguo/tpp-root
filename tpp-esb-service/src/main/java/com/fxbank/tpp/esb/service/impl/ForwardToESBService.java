@@ -107,6 +107,7 @@ public class ForwardToESBService implements IForwardToESBService {
 		try(Jedis jedis=myJedis.connect()){
 			url = jedis.get(serviceKey);
 		}
+		url = "http://127.0.0.1:7000/tpp/tcex/city.do";
 		logger.info("ESB服务地址：" + url);
 		if (url == null) {
 			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000001);

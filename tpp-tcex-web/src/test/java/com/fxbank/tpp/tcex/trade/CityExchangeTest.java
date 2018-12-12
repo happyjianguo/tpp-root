@@ -34,7 +34,7 @@ public class CityExchangeTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityExchangeTest.class);
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+	private static final String URL="http://57.25.8.158:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;

@@ -7,11 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_TS002;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS002;
@@ -49,18 +51,31 @@ public class CityExchange implements TradeExecutionStrategy {
 		
 		//插入流水表
 		boolean b = true;
-		initRecord(reqDto);
+		//initRecord(reqDto);
 		if(b) {
 			//通知村镇记账
 			String rst = "";
 			ESB_REQ_TS002 esbReq_TS002 = new ESB_REQ_TS002(myLog,dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
+			ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_TS002.getReqSysHead(),reqDto).setBranchId("22").setUserId("33").build();
+			esbReq_TS002.setReqSysHead(reqSysHead);
 			ESB_REQ_TS002.REQ_BODY esbReqBody_TS002 = esbReq_TS002.getReqBody();
+			esbReqBody_TS002.setPlatDate(reqDto.getSysDate().toString());
+			esbReqBody_TS002.setPlatTraceno(reqDto.getSysTraceno().toString());
+			esbReqBody_TS002.setTxAmt(reqBody.getTxAmt());
+			esbReqBody_TS002.setPayerName(reqBody.getPayerName());
+			esbReqBody_TS002.setPayerAcc(reqBody.getPayerAcc());
+			esbReqBody_TS002.setPayerPwd(reqBody.getPayerPwd());
+			esbReqBody_TS002.setIDtype(reqBody.getIDtype());
+			esbReqBody_TS002.setIDno(reqBody.getIDno());
+			esbReqBody_TS002.setIDno(reqBody.getInfo());
+			
 			ESB_REP_TS002 esbRep_TS002 =forwardToESBService.sendToTown(esbReq_TS002, esbReqBody_TS002, ESB_REP_TS002.class);
 			ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
-            
+			String brno = esbRepBody_TS002.getBrno();
+			String townDate = esbRepBody_TS002.getTownDate();
+			String townTraceNo = esbRepBody_TS002.getTownTraceno();
 			rst = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
 			//更新流水表村镇记账状态
-			
 			if(rst.equals("000000")) {
 				//核心记账：将金额从头寸中划至指定账户
 				rst = "";
