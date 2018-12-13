@@ -5,7 +5,7 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_30042000307 extends REP_BASE {
+public class REP_TEST_TCHK01 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,51 +50,6 @@ public class REP_30042000307 extends REP_BASE {
 
 
 	public class REP_BODY {
-		 @JSONField(name = "BASR_ACCT_NO")
-	     private String basrAcctNo;//账/卡号
-		 
-		 @JSONField(name = "ACCT_NAME")
-	     private String acctName;//账户姓名
-		 
-		 @JSONField(name = "ACCT_SQ_NO_T")
-	     private String acctSqNoT;//账户序号
-		 
-		 @JSONField(name = "BALANCE")
-	     private String balance;//账户余额
-
-		public String getBasrAcctNo() {
-			return basrAcctNo;
-		}
-
-		public void setBasrAcctNo(String basrAcctNo) {
-			this.basrAcctNo = basrAcctNo;
-		}
-
-		public String getAcctName() {
-			return acctName;
-		}
-
-		public void setAcctName(String acctName) {
-			this.acctName = acctName;
-		}
-
-		public String getAcctSqNoT() {
-			return acctSqNoT;
-		}
-
-		public void setAcctSqNoT(String acctSqNoT) {
-			this.acctSqNoT = acctSqNoT;
-		}
-
-		public String getBalance() {
-			return balance;
-		}
-
-		public void setBalance(String balance) {
-			this.balance = balance;
-		}
-		 
 		
-
 	}
 }

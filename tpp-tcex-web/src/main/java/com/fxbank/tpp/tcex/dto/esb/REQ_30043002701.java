@@ -58,7 +58,7 @@ public class REQ_30043002701 extends REQ_BASE {
 	public class REQ_BODY {
 
 		@JSONField(name = "START_DATE")
-		private String begDate;	//起始日期
+		private String startDate;	//起始日期
 
 		@JSONField(name = "END_DATE")
 		private String endDate;	//终止日期
@@ -70,7 +70,7 @@ public class REQ_30043002701 extends REQ_BASE {
 		private String maxAmt;		//最大金额
 		
 		@JSONField(name = "TRAN_BRANCH")
-		private String txBrno;		//交易机构
+		private String tranBranch;		//交易机构
 
 		@JSONField(name = "DEP_DRA_IND")
 		private String depDraInd;		//通存通兑标志
@@ -83,12 +83,12 @@ public class REQ_30043002701 extends REQ_BASE {
 			this.depDraInd = depDraInd;
 		}
 
-		public String getBegDate() {
-			return begDate;
+		public String getStartDate() {
+			return startDate;
 		}
 
-		public void setBegDate(String begDate) {
-			this.begDate = begDate;
+		public void setStartDate(String startDate) {
+			this.startDate = startDate;
 		}
 
 		public String getEndDate() {
@@ -115,16 +115,13 @@ public class REQ_30043002701 extends REQ_BASE {
 			this.maxAmt = maxAmt;
 		}
 
-		public String getTxBrno() {
-			return txBrno;
+		public String getTranBranch() {
+			return tranBranch;
 		}
 
-		public void setTxBrno(String txBrno) {
-			this.txBrno = txBrno;
+		public void setTranBranch(String tranBranch) {
+			this.tranBranch = tranBranch;
 		}
-		
 
-		
-	
 	}
 }

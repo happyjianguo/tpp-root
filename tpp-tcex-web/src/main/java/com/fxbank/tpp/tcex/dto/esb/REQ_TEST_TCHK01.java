@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_30012002001 
-* @Description: 商行村镇通存通兑业务对账
+* @ClassName: REQ_TEST_TCHK01
+* @Description: 村镇账户信息
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_30042001701 extends REQ_BASE {
+public class REQ_TEST_TCHK01 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_30042001701 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_30042001701(){
-		super.txDesc = "商行村镇通存通兑业务对账";
+	public REQ_TEST_TCHK01(){
+		super.txDesc = "模拟柜面通对账";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -57,19 +57,20 @@ public class REQ_30042001701 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "COLLATE_DT")
-		private String collateDt;	//对账日期
+		@JSONField(name = "FILE_NAME")
+		private String fileName;	//对账文件名
 
-		public String getCollateDt() {
-			return collateDt;
+		public String getFileName() {
+			return fileName;
 		}
 
-		public void setCollateDt(String collateDt) {
-			this.collateDt = collateDt;
+		public void setFileName(String fileName) {
+			this.fileName = fileName;
 		}
 
 
 
+		
 	
 	}
 }

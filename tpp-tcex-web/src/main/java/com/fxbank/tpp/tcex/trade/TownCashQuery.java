@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
@@ -19,6 +20,7 @@ import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
  * @author liye
  *
  */
+@Service("REQ_TR005")
 public class TownCashQuery implements TradeExecutionStrategy{
 	private static Logger logger = LoggerFactory.getLogger(CityDcHistory.class);
 

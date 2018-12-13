@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
@@ -15,7 +16,6 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS002;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
@@ -24,6 +24,7 @@ import com.fxbank.tpp.tcex.service.IRcvTraceService;
  * @author liye
  *
  */
+@Service("REQ_TR004")
 public class TownReversal implements TradeExecutionStrategy {
 	private static Logger logger = LoggerFactory.getLogger(CityDeposit.class);
 
@@ -46,11 +47,11 @@ public class TownReversal implements TradeExecutionStrategy {
 		String platTraceno = reqDto.getReqBody().getPlatTraceno();
 
 		//调用核心冲正接口
-		String hostState = "";
+		String hostState = "333";
 		
-		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
-		record.setPlatDate(Integer.parseInt(platDate));
-		record.setPlatTrace(Integer.parseInt(platTraceno));
+		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, Integer.parseInt(platDate), reqDto.getSysTime(),Integer.parseInt(platTraceno));
+//		record.setPlatDate(Integer.parseInt(platDate));
+//		record.setPlatTrace(Integer.parseInt(platTraceno));
 		record.setHostState(hostState);
 		rcvTraceService.rcvTraceUpd(record);
 		

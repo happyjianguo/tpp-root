@@ -47,7 +47,7 @@ public class CityCheckAcctTest {
 	public void init(){
 		req = new REQ_30042001701();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TCHK");
+		reqSysHead.setServiceId("300420017");
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
@@ -74,7 +74,7 @@ public class CityCheckAcctTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setChkDate("20181206");
+		reqBody.setCollateDt("20181206");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

@@ -47,8 +47,8 @@ public class CityQueryAcctInfoTest {
 	public void init(){
 		req = new REQ_30042000307();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TSK");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("300420003");
+		reqSysHead.setSceneId("07");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -74,7 +74,7 @@ public class CityQueryAcctInfoTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setPayerAcno("623166001015086827");
+		reqBody.setBasrAcctNo("623166001015086827");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
@@ -86,7 +86,7 @@ public class CityQueryAcctInfoTest {
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
 		REP_30042000307 rep = JsonUtil.toBean(repContent, REP_30042000307.class);
-		String bal = rep.getRepBody().getBal();
+		String bal = rep.getRepBody().getBalance();
 		logger.info("返回的余额["+bal+"]");
 		assertTrue(bal.length()>0);
 	}

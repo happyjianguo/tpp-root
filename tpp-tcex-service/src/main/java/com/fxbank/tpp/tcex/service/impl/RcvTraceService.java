@@ -121,5 +121,37 @@ public class RcvTraceService implements IRcvTraceService{
 		tppRcvTraceLogMapper.updateByPrimaryKeySelective(tppRcvTraceLog);
 		
 	}
+	
+	@Override
+	public RcvTraceQueryModel getConfirmTrace(MyLog myLog,String brno,String townDate,String townTraceno,String dcflag)throws SysTradeExecuteException {
+		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
+		tppRcvTraceLog.setTownBranch(brno);
+		tppRcvTraceLog.setTownDate(Integer.parseInt(townDate));
+		tppRcvTraceLog.setTownTraceno(townTraceno);
+		tppRcvTraceLog.setDcFlag(dcflag);
+		TppRcvTraceLog data = tppRcvTraceLogMapper.selectOne(tppRcvTraceLog);
+		RcvTraceQueryModel model = new RcvTraceQueryModel(myLog, tppRcvTraceLog.getPlatDate(), tppRcvTraceLog.getPlatTime(), tppRcvTraceLog.getPlatTrace());
+		model.setAuthTel(data.getAuthTel());
+		model.setCheckFlag(data.getCheckFlag());
+		model.setChkTel(data.getChkTel());
+		model.setDcFlag(data.getDcFlag());
+		model.setHostDate(data.getHostDate());
+		model.setHostState(data.getHostState());
+		model.setHostTraceno(data.getHostTraceno());
+		model.setInfo(data.getInfo());
+		model.setPayeeAcno(data.getPayeeAcno());
+		model.setPayeeName(data.getPayeeName());
+		model.setPayerAcno(data.getPayerAcno());
+		model.setPayerName(data.getPayerName());
+		model.setPlatDate(data.getPlatDate());
+		model.setPlatTime(data.getPlatTime());
+		model.setPlatTrace(data.getPlatTrace());
+		model.setSourceType(data.getSourceType());
+		model.setTownBranch(data.getTownBranch());
+		model.setTownDate(data.getTownDate());
+		model.setTownState(data.getTownState());
+		model.setTownTraceno(model.getTownTraceno());
+		return model;
+	}
 
 }

@@ -34,173 +34,236 @@ public class REP_30043002701 extends REP_BASE {
 
     public class TMSG{
 		@JSONField(name = "SYSTEM_DATE")
-        private String platDate;//平台日期
+        private String systemDate;//平台日期
+		
         @JSONField(name = "SYSTEM_REFERENCE")
-        private String platTraceno;//平台流水
+        private String systemReference;//平台流水
+        
         @JSONField(name = "DEP_DRA_IND")
-        private String dcFlag;//通存通兑标志
+        private String depDraInd;//通存通兑标志
+        
         @JSONField(name = "CHANNEL_TYPE")
-        private String chnl;//交易渠道
+        private String channelType;//交易渠道
+        
         @JSONField(name = "VILLAGE_BRNACH_ID")
-        private String townBrno;//村镇记账机构
+        private String villageBrnachId;//村镇记账机构
+        
         @JSONField(name = "HOST_SEQ_NO")
-        private String hostTraceno;//主机流水号
+        private String hostSeqNo;//主机流水号
+        
         @JSONField(name = "HOST_DT")
-        private String hostDate;//主机日期
+        private String hostDt;//主机日期
+        
         @JSONField(name = "CBS_TRAN_STS")
-        private String ourState;//核心记账状态
+        private String cbsTranSts;//核心记账状态
+        
         @JSONField(name = "VILLAGE_TRAN_STS")
-        private String townState;//村镇记账状态
+        private String villageTranSts;//村镇记账状态
+        
         @JSONField(name = "COLLATE_STS")
-        private String chkState;//对账状态
+        private String collateSts;//对账状态
+        
         @JSONField(name = "TRAN_AMT")
-        private String txAmt;//交易金额
+        private String tranAmt;//交易金额
+        
         @JSONField(name = "MFFLG")
-        private String txInd;//现转标志
+        private String mfflg;//现转标志
+        
         @JSONField(name = "PAYEE_ACCT_NO")
-        private String payeeAcno;//收款人账号
+        private String payeeAcctNo;//收款人账号
+        
         @JSONField(name = "PAYEE_ACCT_NAME")
-        private String payeeName;//收款人户名
+        private String payeeAcctName;//收款人户名
+        
         @JSONField(name = "PAYER_ACCT_NO")
-        private String payerAcno;//付款人账号
+        private String payerAcctNo;//付款人账号
+        
         @JSONField(name = "PAYER_NAME")
         private String payerName;//付款人户名
+        
         @JSONField(name = "OFFICER_ID")
-        private String txTel;//交易柜员
+        private String officerId;//交易柜员
+        
         @JSONField(name = "APPR_USER_ID")
-        private String chkTel;//复核员
+        private String apprUserId;//复核员
+        
         @JSONField(name = "AUTH_USER_ID")
-        private String authTel;//授权员
+        private String authUserId;//授权员
+        
         @JSONField(name = "PRINT_COUNT")
-        private String print;//打印次数
+        private String printCount;//打印次数
+        
         @JSONField(name = "NARRATIVE")
-        private String info;//摘要
-		public String getPlatDate() {
-			return platDate;
+        private String narrative;//摘要
+
+		public String getSystemDate() {
+			return systemDate;
 		}
-		public void setPlatDate(String platDate) {
-			this.platDate = platDate;
+
+		public void setSystemDate(String systemDate) {
+			this.systemDate = systemDate;
 		}
-		public String getPlatTraceno() {
-			return platTraceno;
+
+		public String getSystemReference() {
+			return systemReference;
 		}
-		public void setPlatTraceno(String platTraceno) {
-			this.platTraceno = platTraceno;
+
+		public void setSystemReference(String systemReference) {
+			this.systemReference = systemReference;
 		}
-		public String getDcFlag() {
-			return dcFlag;
+
+		public String getDepDraInd() {
+			return depDraInd;
 		}
-		public void setDcFlag(String dcFlag) {
-			this.dcFlag = dcFlag;
+
+		public void setDepDraInd(String depDraInd) {
+			this.depDraInd = depDraInd;
 		}
-		public String getChnl() {
-			return chnl;
+
+		public String getChannelType() {
+			return channelType;
 		}
-		public void setChnl(String chnl) {
-			this.chnl = chnl;
+
+		public void setChannelType(String channelType) {
+			this.channelType = channelType;
 		}
-		public String getTownBrno() {
-			return townBrno;
+
+		public String getVillageBrnachId() {
+			return villageBrnachId;
 		}
-		public void setTownBrno(String townBrno) {
-			this.townBrno = townBrno;
+
+		public void setVillageBrnachId(String villageBrnachId) {
+			this.villageBrnachId = villageBrnachId;
 		}
-		public String getHostTraceno() {
-			return hostTraceno;
+
+		public String getHostSeqNo() {
+			return hostSeqNo;
 		}
-		public void setHostTraceno(String hostTraceno) {
-			this.hostTraceno = hostTraceno;
+
+		public void setHostSeqNo(String hostSeqNo) {
+			this.hostSeqNo = hostSeqNo;
 		}
-		public String getHostDate() {
-			return hostDate;
+
+		public String getHostDt() {
+			return hostDt;
 		}
-		public void setHostDate(String hostDate) {
-			this.hostDate = hostDate;
+
+		public void setHostDt(String hostDt) {
+			this.hostDt = hostDt;
 		}
-		public String getOurState() {
-			return ourState;
+
+		public String getCbsTranSts() {
+			return cbsTranSts;
 		}
-		public void setOurState(String ourState) {
-			this.ourState = ourState;
+
+		public void setCbsTranSts(String cbsTranSts) {
+			this.cbsTranSts = cbsTranSts;
 		}
-		public String getTownState() {
-			return townState;
+
+		public String getVillageTranSts() {
+			return villageTranSts;
 		}
-		public void setTownState(String townState) {
-			this.townState = townState;
+
+		public void setVillageTranSts(String villageTranSts) {
+			this.villageTranSts = villageTranSts;
 		}
-		public String getChkState() {
-			return chkState;
+
+		public String getCollateSts() {
+			return collateSts;
 		}
-		public void setChkState(String chkState) {
-			this.chkState = chkState;
+
+		public void setCollateSts(String collateSts) {
+			this.collateSts = collateSts;
 		}
-		public String getTxAmt() {
-			return txAmt;
+
+		public String getTranAmt() {
+			return tranAmt;
 		}
-		public void setTxAmt(String txAmt) {
-			this.txAmt = txAmt;
+
+		public void setTranAmt(String tranAmt) {
+			this.tranAmt = tranAmt;
 		}
-		public String getTxInd() {
-			return txInd;
+
+		public String getMfflg() {
+			return mfflg;
 		}
-		public void setTxInd(String txInd) {
-			this.txInd = txInd;
+
+		public void setMfflg(String mfflg) {
+			this.mfflg = mfflg;
 		}
-		public String getPayeeAcno() {
-			return payeeAcno;
+
+		public String getPayeeAcctNo() {
+			return payeeAcctNo;
 		}
-		public void setPayeeAcno(String payeeAcno) {
-			this.payeeAcno = payeeAcno;
+
+		public void setPayeeAcctNo(String payeeAcctNo) {
+			this.payeeAcctNo = payeeAcctNo;
 		}
-		public String getPayeeName() {
-			return payeeName;
+
+		public String getPayeeAcctName() {
+			return payeeAcctName;
 		}
-		public void setPayeeName(String payeeName) {
-			this.payeeName = payeeName;
+
+		public void setPayeeAcctName(String payeeAcctName) {
+			this.payeeAcctName = payeeAcctName;
 		}
-		public String getPayerAcno() {
-			return payerAcno;
+
+		public String getPayerAcctNo() {
+			return payerAcctNo;
 		}
-		public void setPayerAcno(String payerAcno) {
-			this.payerAcno = payerAcno;
+
+		public void setPayerAcctNo(String payerAcctNo) {
+			this.payerAcctNo = payerAcctNo;
 		}
+
 		public String getPayerName() {
 			return payerName;
 		}
+
 		public void setPayerName(String payerName) {
 			this.payerName = payerName;
 		}
-		public String getTxTel() {
-			return txTel;
+
+		public String getOfficerId() {
+			return officerId;
 		}
-		public void setTxTel(String txTel) {
-			this.txTel = txTel;
+
+		public void setOfficerId(String officerId) {
+			this.officerId = officerId;
 		}
-		public String getChkTel() {
-			return chkTel;
+
+		public String getApprUserId() {
+			return apprUserId;
 		}
-		public void setChkTel(String chkTel) {
-			this.chkTel = chkTel;
+
+		public void setApprUserId(String apprUserId) {
+			this.apprUserId = apprUserId;
 		}
-		public String getAuthTel() {
-			return authTel;
+
+		public String getAuthUserId() {
+			return authUserId;
 		}
-		public void setAuthTel(String authTel) {
-			this.authTel = authTel;
+
+		public void setAuthUserId(String authUserId) {
+			this.authUserId = authUserId;
 		}
-		public String getPrint() {
-			return print;
+
+		public String getPrintCount() {
+			return printCount;
 		}
-		public void setPrint(String print) {
-			this.print = print;
+
+		public void setPrintCount(String printCount) {
+			this.printCount = printCount;
 		}
-		public String getInfo() {
-			return info;
+
+		public String getNarrative() {
+			return narrative;
 		}
-		public void setInfo(String info) {
-			this.info = info;
+
+		public void setNarrative(String narrative) {
+			this.narrative = narrative;
 		}
+        
       
     }
 

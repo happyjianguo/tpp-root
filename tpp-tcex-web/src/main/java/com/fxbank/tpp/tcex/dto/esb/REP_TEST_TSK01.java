@@ -5,7 +5,7 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_30042000307 extends REP_BASE {
+public class REP_TEST_TSK01 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,50 +50,50 @@ public class REP_30042000307 extends REP_BASE {
 
 
 	public class REP_BODY {
-		 @JSONField(name = "BASR_ACCT_NO")
-	     private String basrAcctNo;//账/卡号
-		 
-		 @JSONField(name = "ACCT_NAME")
-	     private String acctName;//账户姓名
-		 
-		 @JSONField(name = "ACCT_SQ_NO_T")
-	     private String acctSqNoT;//账户序号
-		 
-		 @JSONField(name = "BALANCE")
-	     private String balance;//账户余额
+		@JSONField(name = "PAYER_ACNO")
+		private String payerAcno;	//账/卡号
+		
+		@JSONField(name = "PAYER_NAME")
+		private String payerName;	//账户姓名
+		
+		@JSONField(name = "ACNO_SEQ")
+		private String acnoSeq;	//账户序号
+		
+		@JSONField(name = "BAL")
+		private String bal;	//账户余额
 
-		public String getBasrAcctNo() {
-			return basrAcctNo;
+		public String getPayerAcno() {
+			return payerAcno;
 		}
 
-		public void setBasrAcctNo(String basrAcctNo) {
-			this.basrAcctNo = basrAcctNo;
+		public void setPayerAcno(String payerAcno) {
+			this.payerAcno = payerAcno;
 		}
 
-		public String getAcctName() {
-			return acctName;
+		public String getPayerName() {
+			return payerName;
 		}
 
-		public void setAcctName(String acctName) {
-			this.acctName = acctName;
+		public void setPayerName(String payerName) {
+			this.payerName = payerName;
 		}
 
-		public String getAcctSqNoT() {
-			return acctSqNoT;
+		public String getAcnoSeq() {
+			return acnoSeq;
 		}
 
-		public void setAcctSqNoT(String acctSqNoT) {
-			this.acctSqNoT = acctSqNoT;
+		public void setAcnoSeq(String acnoSeq) {
+			this.acnoSeq = acnoSeq;
 		}
 
-		public String getBalance() {
-			return balance;
+		public String getBal() {
+			return bal;
 		}
 
-		public void setBalance(String balance) {
-			this.balance = balance;
+		public void setBal(String bal) {
+			this.bal = bal;
 		}
-		 
+
 		
 
 	}

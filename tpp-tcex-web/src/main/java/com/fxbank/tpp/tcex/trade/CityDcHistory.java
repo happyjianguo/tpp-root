@@ -52,24 +52,14 @@ public class CityDcHistory extends TradeBase implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		
-		/**
-		 * 
-		
-		*/
-		
-		//测试用
-		REP_30043002701 repDto = tst(myLog,dto);
-		return repDto;
-	}
-	private REP_30043002701 tst(MyLog myLog,DataTransObject dto) throws SysTradeExecuteException {
+
 		REQ_30043002701 reqDto = (REQ_30043002701) dto;
 		REQ_30043002701.REQ_BODY reqBody = reqDto.getReqBody();
-		String begDate = reqBody.getBegDate();//起始日期
+		String begDate = reqBody.getStartDate();//起始日期
 		String endDate = reqBody.getEndDate();//终止日期
 		String minAmt = reqBody.getMinAmt();//最小金额
 		String maxAmt = reqBody.getMaxAmt();//最大金额
-		String txBrno = reqBody.getTxBrno();//交易机构
+		String txBrno = reqBody.getTranBranch();//交易机构
 		String depDraInd = reqBody.getDepDraInd();//通存通兑标志
 
 		//获取往帐流水
@@ -83,56 +73,57 @@ public class CityDcHistory extends TradeBase implements TradeExecutionStrategy {
 		List<REP_30043002701.TMSG> list = new ArrayList<>();
 		for(RcvTraceQueryModel rcv : rcvTraceQueryModelList) {
 			REP_30043002701.TMSG t = repDto.new TMSG();
-			t.setPlatDate(rcv.getPlatDate()==null?"":rcv.getPlatDate().toString());
-			t.setPlatTraceno(rcv.getPlatTrace()==null?"":rcv.getPlatTrace().toString());
-			t.setDcFlag(rcv.getDcFlag());
-			t.setChnl(rcv.getSourceType());
-			t.setTownBrno(rcv.getTownBranch());
-			t.setHostTraceno(rcv.getHostTraceno());
-			t.setHostDate(rcv.getHostDate()==null?"":rcv.getHostDate().toString());
-			t.setOurState(rcv.getHostState());
-			t.setTownState(rcv.getTownState());
-			t.setChkState(rcv.getCheckFlag());
-			t.setTxAmt(rcv.getTxAmt()==null?"":rcv.getTxAmt().toString());
-			t.setTxInd(rcv.getTxInd());
-			t.setPayeeAcno(rcv.getPayeeAcno());
-			t.setPayeeName(rcv.getPayeeName());
-			t.setPayerAcno(rcv.getPayerAcno());
+			t.setSystemDate(rcv.getPlatDate()==null?"":rcv.getPlatDate().toString());
+			t.setSystemReference(rcv.getPlatTrace()==null?"":rcv.getPlatTrace().toString());
+			t.setDepDraInd(rcv.getDcFlag());
+			t.setChannelType(rcv.getSourceType());
+			t.setVillageBrnachId(rcv.getTownBranch());
+			t.setHostSeqNo(rcv.getHostTraceno());
+			t.setHostDt(rcv.getHostDate()==null?"":rcv.getHostDate().toString());
+			t.setCbsTranSts(rcv.getHostState());
+			t.setVillageTranSts(rcv.getTownState());
+			t.setCollateSts(rcv.getCheckFlag());
+			t.setTranAmt(rcv.getTxAmt()==null?"":rcv.getTxAmt().toString());
+			t.setMfflg(rcv.getTxInd());
+			t.setPayeeAcctNo(rcv.getPayeeAcno());
+			t.setPayeeAcctName(rcv.getPayeeName());
+			t.setPayerAcctNo(rcv.getPayerAcno());
 			t.setPayerName(rcv.getPayerName());
-			t.setTxTel(rcv.getTxTel());
-			t.setChkTel(rcv.getChkTel());
-			t.setAuthTel(rcv.getAuthTel());
-			t.setPrint(rcv.getPrint());
-			t.setInfo(rcv.getInfo());
+			t.setOfficerId(rcv.getTxTel());
+			t.setApprUserId(rcv.getChkTel());
+			t.setAuthUserId(rcv.getAuthTel());
+			t.setPrintCount(rcv.getPrint());
+			t.setNarrative(rcv.getInfo());
 			list.add(t);
 		}
 		for(SndTraceQueryModel rcv : sndTraceQueryModelList) {
 			REP_30043002701.TMSG t = repDto.new TMSG();
-			t.setPlatDate(rcv.getPlatDate()==null?"":rcv.getPlatDate().toString());
-			t.setPlatTraceno(rcv.getPlatTrace()==null?"":rcv.getPlatTrace().toString());
-			t.setDcFlag(rcv.getDcFlag());
-			t.setChnl(rcv.getSourceType());
-			t.setTownBrno(rcv.getTownBranch());
-			t.setHostTraceno(rcv.getHostTraceno());
-			t.setHostDate(rcv.getHostDate()==null?"":rcv.getHostDate().toString());
-			t.setOurState(rcv.getHostState());
-			t.setTownState(rcv.getTownState());
-			t.setChkState(rcv.getCheckFlag());
-			t.setTxAmt(rcv.getTxAmt()==null?"":rcv.getTxAmt().toString());
-			t.setTxInd(rcv.getTxInd());
-			t.setPayeeAcno(rcv.getPayeeAcno());
-			t.setPayeeName(rcv.getPayeeName());
-			t.setPayerAcno(rcv.getPayerAcno());
+			t.setSystemDate(rcv.getPlatDate()==null?"":rcv.getPlatDate().toString());
+			t.setSystemReference(rcv.getPlatTrace()==null?"":rcv.getPlatTrace().toString());
+			t.setDepDraInd(rcv.getDcFlag());
+			t.setChannelType(rcv.getSourceType());
+			t.setVillageBrnachId(rcv.getTownBranch());
+			t.setHostSeqNo(rcv.getHostTraceno());
+			t.setHostDt(rcv.getHostDate()==null?"":rcv.getHostDate().toString());
+			t.setCbsTranSts(rcv.getHostState());
+			t.setVillageTranSts(rcv.getTownState());
+			t.setCollateSts(rcv.getCheckFlag());
+			t.setTranAmt(rcv.getTxAmt()==null?"":rcv.getTxAmt().toString());
+			t.setMfflg(rcv.getTxInd());
+			t.setPayeeAcctNo(rcv.getPayeeAcno());
+			t.setPayeeAcctName(rcv.getPayeeName());
+			t.setPayerAcctNo(rcv.getPayerAcno());
 			t.setPayerName(rcv.getPayerName());
-			t.setTxTel(rcv.getTxTel());
-			t.setChkTel(rcv.getChkTel());
-			t.setAuthTel(rcv.getAuthTel());
-			t.setPrint(rcv.getPrint());
-			t.setInfo(rcv.getInfo());
+			t.setOfficerId(rcv.getTxTel());
+			t.setApprUserId(rcv.getChkTel());
+			t.setAuthUserId(rcv.getAuthTel());
+			t.setPrintCount(rcv.getPrint());
+			t.setNarrative(rcv.getInfo());
 			list.add(t);
 		}
 		repBody.setArrayMsg(list);
 		return repDto;
+	
 	}
 
 }

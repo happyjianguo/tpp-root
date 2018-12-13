@@ -24,34 +24,33 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_30043002701;
-import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
+import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class CityDcHistoryTest {
+public class TownReversalTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(CityDcHistoryTest.class);
+	private static Logger logger = LoggerFactory.getLogger(TownReversalTest.class);
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_30043002701 req ;
+	private REQ_TR004 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_30043002701.REQ_BODY reqBody ;
-	
-	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
-	static SimpleDateFormat sdf2=new SimpleDateFormat("HHmmss");
+	private REQ_TR004.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_30043002701();
+		req = new REQ_TR004();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300430027");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("TR0");
+		reqSysHead.setSceneId("04");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -77,24 +76,19 @@ public class CityDcHistoryTest {
 	@Test
 	public void payOk() throws Exception {
 		
-//		reqBody.setBegDate(sdf1.format(new Date()));
-//		reqBody.setEndDate(sdf1.format(new Date()));
-		reqBody.setStartDate("20180901");
-		reqBody.setEndDate("20181206");
-		reqBody.setMinAmt("100.00");
-		reqBody.setMaxAmt("220000.00");
-		reqBody.setTranBranch("");
-		reqBody.setDepDraInd("0");
+		reqBody.setPlatDate("20180928");
+		reqBody.setPlatTraceno("5099");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
 		RequestBuilder request = MockMvcRequestBuilders.post(URL)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).content(reqContent);
 		MvcResult mvcResult = mockMvc.perform(request).andReturn();
+		
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30043002701 rep = JsonUtil.toBean(repContent, REP_30043002701.class);
+		REP_TR004 rep = JsonUtil.toBean(repContent, REP_TR004.class);
 	}
 	
 }

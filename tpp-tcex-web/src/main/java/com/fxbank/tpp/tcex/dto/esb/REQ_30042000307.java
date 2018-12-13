@@ -58,14 +58,14 @@ public class REQ_30042000307 extends REQ_BASE {
 	public class REQ_BODY {
 
 		@JSONField(name = "BASR_ACCT_NO")
-		private String payerAcno;	//账/卡号
+		private String basrAcctNo;	//账/卡号
 
-		public String getPayerAcno() {
-			return payerAcno;
+		public String getBasrAcctNo() {
+			return basrAcctNo;
 		}
 
-		public void setPayerAcno(String payerAcno) {
-			this.payerAcno = payerAcno;
+		public void setBasrAcctNo(String basrAcctNo) {
+			this.basrAcctNo = basrAcctNo;
 		}
 
 	
