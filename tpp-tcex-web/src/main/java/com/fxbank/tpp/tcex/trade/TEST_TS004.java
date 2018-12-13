@@ -17,6 +17,7 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_TS002;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS002;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TESTTS002;
+import com.fxbank.tpp.tcex.dto.esb.REP_TESTTS004;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
 /**
@@ -24,8 +25,8 @@ import com.fxbank.tpp.tcex.service.IRcvTraceService;
  * @author liye
  *
  */
-@Service("REQ_TESTTS002")
-public class TEST_TS002 implements TradeExecutionStrategy {
+@Service("REQ_TESTTS004")
+public class TEST_TS004 implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(CityDeposit.class);
 
@@ -38,10 +39,8 @@ public class TEST_TS002 implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REP_TESTTS002 repDto = new REP_TESTTS002();
-		repDto.getRepBody().setBrno("1");
-		repDto.getRepBody().setTownDate("2");
-		repDto.getRepBody().setTownTraceno("3");
+		REP_TESTTS004 repDto = new REP_TESTTS004();
+		repDto.getRepBody().setSts("1");
 		return repDto;
 	}
 }

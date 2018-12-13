@@ -1,9 +1,7 @@
 package com.fxbank.tpp.esb.service.impl;
 
 import java.net.SocketTimeoutException;
-
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

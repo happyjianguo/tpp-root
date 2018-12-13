@@ -62,29 +62,6 @@ public class ESB_REP_TS004 extends ESB_BASE {
 		@JSONField(name = "STS")
 		private String sts;	//处理状态
 		
-		@JSONField(name = "TOWN_DATE")
-		private String townDate;	//村镇日期
-		
-		@JSONField(name = "TOWN_TRACENO")
-		private String townTraceno;	//村镇流水
-
-
-		public String getTownDate() {
-			return townDate;
-		}
-
-		public void setTownDate(String townDate) {
-			this.townDate = townDate;
-		}
-
-		public String getTownTraceno() {
-			return townTraceno;
-		}
-
-		public void setTownTraceno(String townTraceno) {
-			this.townTraceno = townTraceno;
-		}
-
 		public String getSts() {
 			return sts;
 		}

@@ -24,8 +24,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS002;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS002;
+import com.fxbank.tpp.tcex.dto.esb.REP_30041001001;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30041001001;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,16 +39,16 @@ public class CityExchangeTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TS002 req ;
+	private REQ_30041001001 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TS002.REQ_BODY reqBody ;
+	private REQ_30041001001.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TS002();
+		req = new REQ_30041001001();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TS0");
-		reqSysHead.setSceneId("02");
+		reqSysHead.setServiceId("300410010");
+		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -75,18 +75,18 @@ public class CityExchangeTest {
 	public void payOk() throws Exception {
 		
 		reqBody.setPayerName("张三");
-		reqBody.setPayerAcc("623166001015086827");
-		reqBody.setPayerPwd("Z2004944000010");
-		reqBody.setPayeeName("李四");
-		reqBody.setPayeeAcc("613166001015086828");
-		reqBody.setTxAmt("1000.00");
-		reqBody.setChnl("TCEX");
-		reqBody.setTxInd("1");
-		reqBody.setInfo("测试");
-		reqBody.setNoteType("2");
-		reqBody.setNoteNo("111");
-		reqBody.setIDtype("0");
-		reqBody.setIDno("211003199105271510");
+		reqBody.setPayerAcctNo("623166001015086827");
+		reqBody.setPayeeAcctName("Z2004944000010");
+		reqBody.setPayeeAcctName("李四");
+		reqBody.setPayeeAcctNo("613166001015086828");
+		reqBody.setTranAmt("1000.00");
+		reqBody.setChannelType("TCEX");
+		reqBody.setMfflg("1");
+		reqBody.setNarrative("测试");
+		reqBody.setDocClass("2");
+		reqBody.setVoucherNo("111");
+		reqBody.setDocumentType("0");
+		reqBody.setDocumentID("211003199105271510");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
@@ -97,7 +97,7 @@ public class CityExchangeTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TS002 rep = JsonUtil.toBean(repContent, REP_TS002.class);
+		REP_30041001001 rep = JsonUtil.toBean(repContent, REP_30041001001.class);
 	}
 	
 }

@@ -95,8 +95,8 @@ public class RcvTraceService implements IRcvTraceService{
 	@Override
 	public void rcvTraceUpd(@Valid RcvTraceUpdModel record) throws SysTradeExecuteException {
 		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
-		tppRcvTraceLog.setPlatDate(record.getPlatDate());
-		tppRcvTraceLog.setPlatTrace(record.getPlatTrace());
+		tppRcvTraceLog.setPlatDate(record.getSysDate());
+		tppRcvTraceLog.setPlatTrace(record.getSysTraceno());
 		tppRcvTraceLog.setHostState(record.getHostState());
 		tppRcvTraceLogMapper.updateByPrimaryKeySelective(tppRcvTraceLog);
 		
