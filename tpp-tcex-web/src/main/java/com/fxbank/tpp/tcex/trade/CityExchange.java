@@ -1,13 +1,9 @@
 package com.fxbank.tpp.tcex.trade;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
@@ -66,8 +62,6 @@ public class CityExchange implements TradeExecutionStrategy {
 		REQ_30041001001 reqDto = (REQ_30041001001) dto;
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30041001001 repDto = new REP_30041001001();
-		REP_30041001001.REP_BODY repBody = repDto.getRepBody();
-		
 		//插入流水表
 		boolean b = true;
 		initRecord(reqDto);
@@ -89,25 +83,22 @@ public class CityExchange implements TradeExecutionStrategy {
 			
 			ESB_REP_TS002 esbRep_TS002 =forwardToTownService.sendToTown(esbReq_TS002, esbReqBody_TS002, ESB_REP_TS002.class);
 			ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
-			String brno = esbRepBody_TS002.getBrno();
+			String townBrno = esbRepBody_TS002.getBrno();
 			Integer townDate = Integer.parseInt(esbRepBody_TS002.getTownDate());
 			String townTraceNo = esbRepBody_TS002.getTownTraceno();
 			String townState = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
-			updateTownRecord(reqDto, townDate, townTraceNo, townState);
+			updateTownRecord(reqDto,townBrno, townDate, townTraceNo, townState);
 			//更新流水表村镇记账状态
 			if("000000".equals(townState)) {
 				//核心记账：将金额从头寸中划至指定账户
 				//本金记账状态码
 				String hostCode = null;
-				//本金记账状态信息
-				String hostMsg = null;
 				//本金记账流水号
 				String hostSeqno = null;
 				//核心日期
 				String hostDate = null;
 				ESB_REP_30011000101 esbRep_30011000101 = innerCapCharge(reqDto);
 				hostCode = esbRep_30011000101.getRepSysHead().getRet().get(0).getRetCode();
-				hostMsg = esbRep_30011000101.getRepSysHead().getRet().get(0).getRetCode();
 				hostSeqno = esbRep_30011000101.getRepSysHead().getReference();
 				hostDate = esbRep_30011000101.getRepSysHead().getRunDate();
 				//更新流水表核心记账状态
@@ -133,7 +124,7 @@ public class CityExchange implements TradeExecutionStrategy {
 						ESB_REP_TS004.REP_BODY esbRepBody_TS004 = esbRep_TS004.getRepBody();
 						String sts = esbRepBody_TS004.getSts();
 						//更新流水表村镇记账状态
-						updateTownRecord(reqDto,townDate,townTraceNo,sts);
+						updateTownRecord(reqDto,townBrno,townDate,townTraceNo,sts);
 					}
 			}else {
 				throw new SysTradeExecuteException("1111");
@@ -235,9 +226,10 @@ public class CityExchange implements TradeExecutionStrategy {
 		rcvTraceService.rcvTraceUpd(record);
 		return record;
 	}
-	private RcvTraceUpdModel updateTownRecord(REQ_30041001001 reqDto,Integer townDate,String townTraceno,String townState) throws SysTradeExecuteException {
+	private RcvTraceUpdModel updateTownRecord(REQ_30041001001 reqDto,String townBrno,Integer townDate,String townTraceno,String townState) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
+		record.setTown_branch(townBrno);
 		record.setTownDate(townDate);	
 		record.setTownState(townState);
 		record.setTownTraceno(townTraceno);
