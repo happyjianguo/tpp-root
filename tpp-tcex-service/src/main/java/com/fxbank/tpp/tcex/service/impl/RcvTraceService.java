@@ -97,7 +97,27 @@ public class RcvTraceService implements IRcvTraceService{
 		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
 		tppRcvTraceLog.setPlatDate(record.getSysDate());
 		tppRcvTraceLog.setPlatTrace(record.getSysTraceno());
-		tppRcvTraceLog.setHostState(record.getHostState());
+		if(null != record.getHostState()) {
+		    tppRcvTraceLog.setHostState(record.getHostState());
+		}
+		if(null != record.getHostDate()) {
+			tppRcvTraceLog.setHostDate(record.getHostDate());
+		}
+		if(null != record.getHostTraceno()) {
+			tppRcvTraceLog.setHostTraceno(record.getHostTraceno());
+		}
+		if(null != record.getTownDate()) {
+			tppRcvTraceLog.setTownDate(record.getTownDate());
+		}
+		if(null != record.getTownBranch()) {
+			tppRcvTraceLog.setTownBranch(record.getTownBranch());
+		}
+		if(null != record.getTownState()) {
+			tppRcvTraceLog.setTownState(record.getTownState());
+		}
+		if(null != record.getTownTraceno()) {
+			tppRcvTraceLog.setTownTraceno(record.getTownTraceno());
+		}
 		tppRcvTraceLogMapper.updateByPrimaryKeySelective(tppRcvTraceLog);
 		
 	}

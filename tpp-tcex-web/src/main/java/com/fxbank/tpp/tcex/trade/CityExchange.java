@@ -97,7 +97,7 @@ public class CityExchange implements TradeExecutionStrategy {
 				String hostSeqno = null;
 				//核心日期
 				String hostDate = null;
-				ESB_REP_30011000101 esbRep_30011000101 = innerCapCharge(reqDto);
+				ESB_REP_30011000101 esbRep_30011000101 = innerCapCharge(reqDto,townBrno);
 				hostCode = esbRep_30011000101.getRepSysHead().getRet().get(0).getRetCode();
 				hostSeqno = esbRep_30011000101.getRepSysHead().getReference();
 				hostDate = esbRep_30011000101.getRepSysHead().getRunDate();
@@ -147,7 +147,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	* @return ESB_REP_30011000101    返回类型 
 	* @throws 
 	*/
-	private ESB_REP_30011000101 innerCapCharge(REQ_30041001001 reqDto) throws SysTradeExecuteException {
+	private ESB_REP_30011000101 innerCapCharge(REQ_30041001001 reqDto,String townBrno) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
@@ -155,8 +155,6 @@ public class CityExchange implements TradeExecutionStrategy {
         String txBrno = reqDto.getReqSysHead().getBranchId() ;
         //柜员号
     	String txTel = reqDto.getReqSysHead().getUserId();
-    	//村镇机构
-        String townBrno = "1001"; 
         //头寸
         String inAcno = null;
     	 try(Jedis jedis = myJedis.connect()){
@@ -229,7 +227,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	private RcvTraceUpdModel updateTownRecord(REQ_30041001001 reqDto,String townBrno,Integer townDate,String townTraceno,String townState) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
-		record.setTown_branch(townBrno);
+		record.setTownBranch(townBrno);
 		record.setTownDate(townDate);	
 		record.setTownState(townState);
 		record.setTownTraceno(townTraceno);

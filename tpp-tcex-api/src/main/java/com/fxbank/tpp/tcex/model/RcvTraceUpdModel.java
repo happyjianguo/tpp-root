@@ -22,7 +22,7 @@ public class RcvTraceUpdModel extends ModelBase implements Serializable{
 	public RcvTraceUpdModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
-	private String town_branch;//村镇机构 
+	private String townBranch;//村镇机构 
 	
     private Integer hostDate;//核心日期
     
@@ -94,12 +94,12 @@ public class RcvTraceUpdModel extends ModelBase implements Serializable{
 		this.hostState = hostState;
 	}
 
-	public String getTown_branch() {
-		return town_branch;
+	public String getTownBranch() {
+		return townBranch;
 	}
 
-	public void setTown_branch(String town_branch) {
-		this.town_branch = town_branch;
+	public void setTownBranch(String townBranch) {
+		this.townBranch = townBranch;
 	}
     
 }
