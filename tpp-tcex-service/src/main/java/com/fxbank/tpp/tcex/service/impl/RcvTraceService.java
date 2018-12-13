@@ -49,8 +49,8 @@ public class RcvTraceService implements IRcvTraceService{
 	}
 	
 	@Override
-	public List<RcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String txBrno) throws SysTradeExecuteException{
-		List<TppRcvTraceLog> tppRcvTraceList = tppRcvTraceLogMapper.selectRcvTrace(begDate, endDate, minAmt, maxAmt, txBrno);
+	public List<RcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String txBrno,String depDraInd) throws SysTradeExecuteException{
+		List<TppRcvTraceLog> tppRcvTraceList = tppRcvTraceLogMapper.selectRcvTrace(begDate, endDate, minAmt, maxAmt, txBrno,depDraInd);
 		List<RcvTraceQueryModel> rcvTraceInitModelList = new ArrayList<>();
 		for(TppRcvTraceLog tpp : tppRcvTraceList) {
 			RcvTraceQueryModel model = new RcvTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());

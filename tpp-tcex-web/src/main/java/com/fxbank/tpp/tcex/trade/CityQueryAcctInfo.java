@@ -14,8 +14,8 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_TSK01;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS002;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TSK01;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TSK01;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TSK01;
+import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
 
 
 /**
@@ -41,10 +41,10 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
-		REQ_TSK01 reqDto = (REQ_TSK01) dto;
-		REQ_TSK01.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_30042000307 reqDto = (REQ_30042000307) dto;
+		REQ_30042000307.REQ_BODY reqBody = reqDto.getReqBody();
 		String payerAcno = reqBody.getPayerAcno();
-		REP_TSK01 repDto = new REP_TSK01();
+		REP_30042000307 repDto = new REP_30042000307();
 		//请求村镇账户信息接口，反馈结果写入REP_TSK01
 		
 		ESB_REQ_TSK01 esbReq_tsk01 = new ESB_REQ_TSK01(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
@@ -52,7 +52,7 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		esbReqBody_tsk01.setPayerAcno(payerAcno);
 		ESB_REP_TSK01 esbRep_tsk01 = forwardToESBService.sendToTown(esbReq_tsk01, esbReqBody_tsk01, ESB_REP_TSK01.class);
 		if("000000".equals(esbRep_tsk01.getRepSysHead().getRet().get(0).getRetCode())) {
-			REP_TSK01.REP_BODY repBody = repDto.getRepBody();
+			REP_30042000307.REP_BODY repBody = repDto.getRepBody();
 			repBody.setPayerAcno(esbRep_tsk01.getRepBody().getPayerAcno());
 			repBody.setPayerName(esbRep_tsk01.getRepBody().getPayerName());
 			repBody.setAcnoSeq(esbRep_tsk01.getRepBody().getAcnoSeq());
@@ -66,13 +66,13 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		return repDto;
 	}
 
-	private REP_TSK01 tstInterface(DataTransObject dto) {
-		REQ_TSK01 reqDto = (REQ_TSK01) dto;
-		REQ_TSK01.REQ_BODY reqBody = reqDto.getReqBody();
+	private REP_30042000307 tstInterface(DataTransObject dto) {
+		REQ_30042000307 reqDto = (REQ_30042000307) dto;
+		REQ_30042000307.REQ_BODY reqBody = reqDto.getReqBody();
 		String payerAcno = reqBody.getPayerAcno();
 		
-		REP_TSK01 repDto = new REP_TSK01();
-		REP_TSK01.REP_BODY repBody = repDto.getRepBody();
+		REP_30042000307 repDto = new REP_30042000307();
+		REP_30042000307.REP_BODY repBody = repDto.getRepBody();
 		repBody.setPayerAcno(payerAcno);
 		repBody.setPayerName("测试");
 		repBody.setAcnoSeq("1");

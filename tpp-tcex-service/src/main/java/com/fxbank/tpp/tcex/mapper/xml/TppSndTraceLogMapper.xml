@@ -53,6 +53,9 @@
       <if test="endDate != null and endDate != ''">
         and plat_date <![CDATA[ <= ]]> #{endDate}
       </if>
+      <if test="depDraInd != null and depDraInd != ''">
+        and dc_flag = #{depDraInd}
+      </if>
     </trim>
   </select>
 </mapper>

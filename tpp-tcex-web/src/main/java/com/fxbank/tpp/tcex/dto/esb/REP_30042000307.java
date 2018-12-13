@@ -5,7 +5,7 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_TSK01 extends REP_BASE {
+public class REP_30042000307 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,13 +50,13 @@ public class REP_TSK01 extends REP_BASE {
 
 
 	public class REP_BODY {
-		 @JSONField(name = "PAYER_ACNO")
+		 @JSONField(name = "BASR_ACCT_NO")
 	     private String payerAcno;//账/卡号
-		 @JSONField(name = "PAYER_NAME")
+		 @JSONField(name = "ACCT_NAME")
 	     private String payerName;//账户姓名
-		 @JSONField(name = "ACNO_SEQ")
+		 @JSONField(name = "ACCT_SQ_NO_T")
 	     private String acnoSeq;//账户序号
-		 @JSONField(name = "BAL")
+		 @JSONField(name = "BALANCE")
 	     private String bal;//账户余额
 		public String getPayerAcno() {
 			return payerAcno;

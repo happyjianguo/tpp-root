@@ -12,7 +12,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TS004 extends REQ_BASE {
+public class REQ_30043002701 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,7 +23,7 @@ public class REQ_TS004 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TS004(){
+	public REQ_30043002701(){
 		super.txDesc = "商行通存村镇业务";
 	}
 
@@ -57,7 +57,7 @@ public class REQ_TS004 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "BEG_DATE")
+		@JSONField(name = "START_DATE")
 		private String begDate;	//起始日期
 
 		@JSONField(name = "END_DATE")
@@ -69,8 +69,19 @@ public class REQ_TS004 extends REQ_BASE {
 		@JSONField(name = "MAX_AMT")
 		private String maxAmt;		//最大金额
 		
-		@JSONField(name = "TX_BRNO")
+		@JSONField(name = "TRAN_BRANCH")
 		private String txBrno;		//交易机构
+
+		@JSONField(name = "DEP_DRA_IND")
+		private String depDraInd;		//通存通兑标志
+
+		public String getDepDraInd() {
+			return depDraInd;
+		}
+
+		public void setDepDraInd(String depDraInd) {
+			this.depDraInd = depDraInd;
+		}
 
 		public String getBegDate() {
 			return begDate;

@@ -24,8 +24,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS004;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS004;
+import com.fxbank.tpp.tcex.dto.esb.REP_30043002701;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,16 +39,16 @@ public class CityDcHistoryTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TS004 req ;
+	private REQ_30043002701 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TS004.REQ_BODY reqBody ;
+	private REQ_30043002701.REQ_BODY reqBody ;
 	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	static SimpleDateFormat sdf2=new SimpleDateFormat("HHmmss");
 	
 	@Before
 	public void init(){
-		req = new REQ_TS004();
+		req = new REQ_30043002701();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("TS0");
 		reqSysHead.setSceneId("04");
@@ -93,7 +93,7 @@ public class CityDcHistoryTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TS004 rep = JsonUtil.toBean(repContent, REP_TS004.class);
+		REP_30043002701 rep = JsonUtil.toBean(repContent, REP_30043002701.class);
 	}
 	
 }

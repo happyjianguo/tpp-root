@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface TppSndTraceLogMapper extends MyMapper<TppSndTraceLog> {
     List<TppSndTraceLog> selectAll();
-    List<TppSndTraceLog> selectSndTrace(String begDate,String endDate,String minAmt,String maxAmt,String txBrno);
+    List<TppSndTraceLog> selectSndTrace(String begDate,String endDate,String minAmt,String maxAmt,String txBrno,String depDraInd);
 
 }

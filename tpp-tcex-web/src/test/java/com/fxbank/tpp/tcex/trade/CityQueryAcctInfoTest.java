@@ -24,8 +24,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_TSK01;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TSK01;
+import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,13 +39,13 @@ public class CityQueryAcctInfoTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TSK01 req ;
+	private REQ_30042000307 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TSK01.REQ_BODY reqBody ;
+	private REQ_30042000307.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TSK01();
+		req = new REQ_30042000307();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("TSK");
 		reqSysHead.setSceneId("01");
@@ -85,7 +85,7 @@ public class CityQueryAcctInfoTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TSK01 rep = JsonUtil.toBean(repContent, REP_TSK01.class);
+		REP_30042000307 rep = JsonUtil.toBean(repContent, REP_30042000307.class);
 		String bal = rep.getRepBody().getBal();
 		logger.info("返回的余额["+bal+"]");
 		assertTrue(bal.length()>0);

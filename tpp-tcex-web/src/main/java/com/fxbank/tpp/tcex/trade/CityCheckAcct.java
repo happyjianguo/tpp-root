@@ -16,8 +16,8 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TCHK01;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TCHK01;
+import com.fxbank.tpp.tcex.dto.esb.REP_30042001701;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30042001701;
 /**
  * 商行村镇通存通兑业务对账
  * @author liye
@@ -36,7 +36,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_TCHK01 reqDto = (REQ_TCHK01)dto;
+		REQ_30042001701 reqDto = (REQ_30042001701)dto;
 		
 		//请求核心接口，获取对账文件
 		
@@ -44,7 +44,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		
 		//调用村镇接口，通知村镇对账
 		
-		REP_TCHK01 repDto = new REP_TCHK01();
+		REP_30042001701 repDto = new REP_30042001701();
 		
 		
 		

@@ -5,7 +5,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR003;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR003;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
 /**
  * 村镇存款确认业务
  * @author liye

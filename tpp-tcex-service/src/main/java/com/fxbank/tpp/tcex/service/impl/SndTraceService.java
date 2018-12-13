@@ -67,8 +67,8 @@ public class SndTraceService implements ISndTraceService{
 		
 	@Override
 	public List<SndTraceQueryModel> getSndTrace(MyLog myLog, String begDate, String endDate, String minAmt,
-			String maxAmt, String txBrno) throws SysTradeExecuteException {
-		List<TppSndTraceLog> tppSndTraceList = tppSndTraceLogMapper.selectSndTrace(begDate, endDate, minAmt, maxAmt, txBrno);
+			String maxAmt, String txBrno,String depDraInd) throws SysTradeExecuteException {
+		List<TppSndTraceLog> tppSndTraceList = tppSndTraceLogMapper.selectSndTrace(begDate, endDate, minAmt, maxAmt, txBrno,depDraInd);
 		List<SndTraceQueryModel> sndTraceQueryModelList = new ArrayList<>();
 		for(TppSndTraceLog tpp : tppSndTraceList) {
 			SndTraceQueryModel model = new SndTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());

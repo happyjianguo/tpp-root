@@ -16,6 +16,6 @@ public interface ISndTraceService {
 	
 	void sndTraceUpd(@Valid SndTraceUpdModel record) throws SysTradeExecuteException;
 	
-	public List<SndTraceQueryModel> getSndTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String txBrno) throws SysTradeExecuteException;
+	public List<SndTraceQueryModel> getSndTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String txBrno,String depDraInd) throws SysTradeExecuteException;
 
 }

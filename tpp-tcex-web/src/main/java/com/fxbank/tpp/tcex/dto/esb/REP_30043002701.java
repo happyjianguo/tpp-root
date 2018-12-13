@@ -7,7 +7,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 import java.util.List;
 
-public class REP_TS004 extends REP_BASE {
+public class REP_30043002701 extends REP_BASE {
 
     @JSONField(name = "APP_HEAD")
     private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -19,7 +19,7 @@ public class REP_TS004 extends REP_BASE {
     private REP_BODY repBody = new REP_BODY();
 
     public class REP_BODY{
-		@JSONField(name = "A_T")
+		@JSONField(name = "GC_TRAN_INFO_ARRAY")
         private List<TMSG> arrayMsg;//公积金账户信息数组
 		
 		public List<TMSG> getArrayMsg() {
@@ -33,47 +33,47 @@ public class REP_TS004 extends REP_BASE {
     }
 
     public class TMSG{
-		@JSONField(name = "PLAT_DATE")
+		@JSONField(name = "SYSTEM_DATE")
         private String platDate;//平台日期
-        @JSONField(name = "PLAT_TRACENO")
+        @JSONField(name = "SYSTEM_REFERENCE")
         private String platTraceno;//平台流水
-        @JSONField(name = "DCFLAG")
+        @JSONField(name = "DEP_DRA_IND")
         private String dcFlag;//通存通兑标志
-        @JSONField(name = "CHNL")
+        @JSONField(name = "CHANNEL_TYPE")
         private String chnl;//交易渠道
-        @JSONField(name = "TOWNBRNO")
+        @JSONField(name = "VILLAGE_BRNACH_ID")
         private String townBrno;//村镇记账机构
-        @JSONField(name = "HOST_TRACENO")
+        @JSONField(name = "HOST_SEQ_NO")
         private String hostTraceno;//主机流水号
-        @JSONField(name = "HOST_DATE")
+        @JSONField(name = "HOST_DT")
         private String hostDate;//主机日期
-        @JSONField(name = "OURSTATE")
+        @JSONField(name = "CBS_TRAN_STS")
         private String ourState;//核心记账状态
-        @JSONField(name = "TOWNSTATE")
+        @JSONField(name = "VILLAGE_TRAN_STS")
         private String townState;//村镇记账状态
-        @JSONField(name = "CHKSTATE")
+        @JSONField(name = "COLLATE_STS")
         private String chkState;//对账状态
-        @JSONField(name = "TX_AMT")
+        @JSONField(name = "TRAN_AMT")
         private String txAmt;//交易金额
-        @JSONField(name = "TX_IND")
+        @JSONField(name = "MFFLG")
         private String txInd;//现转标志
-        @JSONField(name = "PAYEE_ACNO")
+        @JSONField(name = "PAYEE_ACCT_NO")
         private String payeeAcno;//收款人账号
-        @JSONField(name = "PAYEE_NAME")
+        @JSONField(name = "PAYEE_ACCT_NAME")
         private String payeeName;//收款人户名
-        @JSONField(name = "PAYER_ACNO")
+        @JSONField(name = "PAYER_ACCT_NO")
         private String payerAcno;//付款人账号
         @JSONField(name = "PAYER_NAME")
         private String payerName;//付款人户名
-        @JSONField(name = "TX_TEL")
+        @JSONField(name = "OFFICER_ID")
         private String txTel;//交易柜员
-        @JSONField(name = "CHK_TEL")
+        @JSONField(name = "APPR_USER_ID")
         private String chkTel;//复核员
-        @JSONField(name = "AUTH_TEL")
+        @JSONField(name = "AUTH_USER_ID")
         private String authTel;//授权员
-        @JSONField(name = "PRINT")
+        @JSONField(name = "PRINT_COUNT")
         private String print;//打印次数
-        @JSONField(name = "INFO")
+        @JSONField(name = "NARRATIVE")
         private String info;//摘要
 		public String getPlatDate() {
 			return platDate;
