@@ -73,9 +73,9 @@ public class CityExchange implements TradeExecutionStrategy {
 		Integer townDate = Integer.parseInt(esbRepBody_TS002.getTownDate());
 		String townTraceNo = esbRepBody_TS002.getTownTraceno();
 		String townState = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
-		updateTownRecord(reqDto, townBrno, townDate, townTraceNo, townState);
 		// 更新流水表村镇记账状态
 		if ("000000".equals(townState)) {
+			updateTownRecord(reqDto, townBrno, townDate, townTraceNo, "1");
 			// 核心记账：将金额从头寸中划至指定账户
 			// 本金记账状态码
 			String hostCode = null;
@@ -88,7 +88,7 @@ public class CityExchange implements TradeExecutionStrategy {
 			hostSeqno = esbRep_30011000101.getRepSysHead().getReference();
 			hostDate = esbRep_30011000101.getRepSysHead().getRunDate();
 			// 更新流水表核心记账状态
-			updateHostRecord(reqDto, Integer.parseInt(hostDate), hostSeqno, hostCode);
+			updateHostRecord(reqDto, Integer.parseInt(hostDate), hostSeqno, "1");
 			if (!"000000".equals(hostCode)) {
 				// 多次查询核心，确认是否是延迟原因
 
@@ -96,10 +96,16 @@ public class CityExchange implements TradeExecutionStrategy {
 				ESB_REP_TS004 esbRep_TS004 = townCancel(reqDto, townDate, townTraceNo);
 				ESB_REP_TS004.REP_BODY esbRepBody_TS004 = esbRep_TS004.getRepBody();
 				String sts = esbRepBody_TS004.getSts();
-				// 更新流水表村镇记账状态
-				updateTownRecord(reqDto, townBrno, townDate, townTraceNo, sts);
+				// 更新流水表村镇记账状态,村镇冲正返回状态sts 1-成功2-失败
+				//村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
+				townState = "6";
+				if("1".equals(sts)) {
+					townState = "5";
+				}
+				updateTownRecord(reqDto, townBrno, townDate, townTraceNo, townState);
 			}
 		} else {
+			updateTownRecord(reqDto, townBrno, townDate, townTraceNo, "2");
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
 			myLog.error(logger, "村镇记账失败", e);
 			throw e;
