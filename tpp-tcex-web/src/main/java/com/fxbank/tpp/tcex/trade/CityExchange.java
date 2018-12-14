@@ -24,9 +24,9 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041001001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041001001;
-import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
-import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
-import com.fxbank.tpp.tcex.service.IRcvTraceService;
+import com.fxbank.tpp.tcex.model.SndTraceInitModel;
+import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
+import com.fxbank.tpp.tcex.service.ISndTraceService;
 
 import redis.clients.jedis.Jedis;
 /**
@@ -49,7 +49,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	private IForwardToTownService forwardToTownService;
 	
 	@Reference(version = "1.0.0")
-	private IRcvTraceService rcvTraceService;
+	private ISndTraceService sndTraceService;
 	
 	@Resource
 	private MyJedis myJedis;
@@ -194,7 +194,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
 		REQ_SYS_HEAD reqSysHead = reqDto.getReqSysHead();
 		
-		RcvTraceInitModel record = new RcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
+		SndTraceInitModel record = new SndTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
 		record.setSourceType(reqBody.getChannelType());
 		record.setTxBranch(reqSysHead.getBranchId());
 		//现转标志 0现金1转账
@@ -209,29 +209,30 @@ public class CityExchange implements TradeExecutionStrategy {
 		record.setPayerAcno(reqBody.getPayerAcctNo());
 		record.setPayerName(reqBody.getPayerName());
 		record.setHostState("0");
+		record.setTownState("0");
 		record.setTxTel(reqSysHead.getUserId());
 		//record.setChkTel();
 		//record.setAuthTel();
 		record.setInfo(reqBody.getNarrative());
-		rcvTraceService.rcvTraceInit(record);
+		sndTraceService.sndTraceInit(record);
 	}
-	private RcvTraceUpdModel updateHostRecord(REQ_30041001001 reqDto,Integer hostDate,String hostTraceno,String hostState) throws SysTradeExecuteException {
+	private SndTraceUpdModel updateHostRecord(REQ_30041001001 reqDto,Integer hostDate,String hostTraceno,String hostState) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
+		SndTraceUpdModel record = new SndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
 		record.setHostDate(hostDate);	
 		record.setHostState(hostState);
 		record.setHostTraceno(hostTraceno);
-		rcvTraceService.rcvTraceUpd(record);
+		sndTraceService.sndTraceUpd(record);
 		return record;
 	}
-	private RcvTraceUpdModel updateTownRecord(REQ_30041001001 reqDto,String townBrno,Integer townDate,String townTraceno,String townState) throws SysTradeExecuteException {
+	private SndTraceUpdModel updateTownRecord(REQ_30041001001 reqDto,String townBrno,Integer townDate,String townTraceno,String townState) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
+		SndTraceUpdModel record = new SndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
 		record.setTownBranch(townBrno);
 		record.setTownDate(townDate);	
 		record.setTownState(townState);
 		record.setTownTraceno(townTraceno);
-		rcvTraceService.rcvTraceUpd(record);
+		sndTraceService.sndTraceUpd(record);
 		return record;
 	}
 }

@@ -40,6 +40,7 @@ public class SndTraceService implements ISndTraceService{
 		tppSndTraceLog.setPayeeAcno(record.getPayeeAcno());
 		tppSndTraceLog.setPayeeName(record.getPayeeName());
 		tppSndTraceLog.setHostState(record.getHostState());
+		tppSndTraceLog.setTownState(record.getTownState());
 		tppSndTraceLog.setTxTel(record.getTxTel());
 		tppSndTraceLog.setChkTel(record.getChkTel());
 		tppSndTraceLog.setAuthTel(record.getAuthTel());

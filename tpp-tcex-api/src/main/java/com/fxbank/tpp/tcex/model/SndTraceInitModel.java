@@ -64,6 +64,10 @@ public class SndTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; //核心记账状态
 	
+	@NotNull(message = "town_state村镇记账状态不能为空")
+	@Size(max = 10,message = "town_state村镇记账状态最大长度是10")
+	private String townState; //村镇记账状态
+	
 	@NotNull(message = "tx_tel交易柜员不能为空")
 	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
 	private String txTel; //交易柜员
@@ -206,6 +210,14 @@ public class SndTraceInitModel extends ModelBase implements Serializable{
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+
+	public String getTownState() {
+		return townState;
+	}
+
+	public void setTownState(String townState) {
+		this.townState = townState;
 	}
 	
 }
