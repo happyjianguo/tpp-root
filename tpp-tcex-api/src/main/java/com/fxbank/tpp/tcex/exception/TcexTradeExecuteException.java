@@ -14,9 +14,11 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 */
 public class TcexTradeExecuteException extends SysTradeExecuteException {
 	
+	private static final long serialVersionUID = -8094410202484019310L;
 	public final static String TCEX_E_10001 = "TCEX_E_10001";
 	public final static String TCEX_E_10002 = "TCEX_E_10002";
 	public final static String TCEX_E_10003 = "TCEX_E_10003";
+	public final static String TCEX_E_10004 = "TCEX_E_10004";
 	public final static String TCEX_E_10009 = "TCEX_E_10009";
 
 
@@ -26,7 +28,8 @@ public class TcexTradeExecuteException extends SysTradeExecuteException {
 		{
 			put(TCEX_E_10001, "业务不支持");
 			put(TCEX_E_10002, "获取村镇账户信息失败");
-			put(TCEX_E_10002, "柜面通对账失败");
+			put(TCEX_E_10003, "柜面通对账失败");
+			put(TCEX_E_10004, "村镇记账失败");
 			put(TCEX_E_10009, "下载ESB文件失败");
 			
 		}
