@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
-import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
@@ -28,8 +27,6 @@ import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.SndTraceInitModel;
 import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 import com.fxbank.tpp.tcex.service.ISndTraceService;
-
-import redis.clients.jedis.Jedis;
 
 /**
  * 商行通兑业务
@@ -54,18 +51,16 @@ public class CityExchange implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private ISndTraceService sndTraceService;
 
-	@Resource
-	private MyJedis myJedis;
-
-	private static final String BRTEL_PREFIX = "tcex_branch.";
-
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_30041001001 reqDto = (REQ_30041001001) dto;
 		REP_30041001001 repDto = new REP_30041001001();
+		//村镇编号
+		String townID = reqDto.getReqBody().getBrnoFlag();
 		// 插入流水表
 		initRecord(reqDto);
+		myLog.info(logger, "商行通兑村镇登记成功，村镇机构"+townID+"付款账号"+reqDto.getReqBody().getPayerAcctNo());
 		// 通知村镇记账
 		ESB_REP_TS002 esbRep_TS002 = townCharge(reqDto);
 		ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
@@ -87,7 +82,12 @@ public class CityExchange implements TradeExecutionStrategy {
 			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 			hostSeqno = esbRep_30011000103.getRepBody().getReference();
 			hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
-			//
+			//开户机构
+			String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
+			//记账机构
+			String accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
+			//记账结果，00-已记账 01-已挂账
+			String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 			// 更新流水表核心记账状态
 			updateHostRecord(reqDto, Integer.parseInt(hostDate), hostSeqno, "1");
 			if (!"000000".equals(hostCode)) {
@@ -186,15 +186,12 @@ public class CityExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
+		//村镇编号
+		String townId = reqBody.getBrnoFlag();
 		// 交易机构
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
 		String txTel = reqDto.getReqSysHead().getUserId();
-		// 头寸
-		String inAcno = null;
-		try (Jedis jedis = myJedis.connect()) {
-			inAcno = jedis.get(BRTEL_PREFIX + townBrno + "_INACNO");
-		}
 
 		ESB_REQ_30011000103 esbReq_30011000103 = new ESB_REQ_30011000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
@@ -204,13 +201,13 @@ public class CityExchange implements TradeExecutionStrategy {
 
 		ESB_REQ_30011000103.REQ_BODY reqBody_30011000103 = esbReq_30011000103.getReqBody();
 		// 账号/卡号
-		reqBody_30011000103.setBaseAcctNo(inAcno);
+		reqBody_30011000103.setBaseAcctNo(reqBody.getPayerAcctNo());
 		//村镇机构号
 		reqBody_30011000103.setVillageBrnachId(townBrno);
-		//村镇标志
-		reqBody_30011000103.setVillageFlag("");
+		//村镇标志 1-于洪 2-铁岭 7-彰武 8-阜蒙
+		reqBody_30011000103.setVillageFlag(townId);
 		// 交易类型
-		reqBody_30011000103.setTranType("GJ03");
+		reqBody_30011000103.setTranType("LV04");
 		// 交易币种
 		reqBody_30011000103.setTranCcy("CNY");
 		// 交易金额

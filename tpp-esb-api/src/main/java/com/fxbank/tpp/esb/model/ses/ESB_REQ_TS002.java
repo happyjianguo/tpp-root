@@ -59,6 +59,9 @@ public class ESB_REQ_TS002 extends ESB_BASE {
 	public class REQ_BODY implements Serializable{
 
 		private static final long serialVersionUID = -8415585719972566411L;
+		
+		@JSONField(name = "BRNO_FLAG")
+		private String brnoFlag;    //村镇机构
 
 		@JSONField(name = "PAYER_NAME")
 		private String payerName;	//付款人名称
@@ -157,6 +160,14 @@ public class ESB_REQ_TS002 extends ESB_BASE {
 
 		public void setIDno(String iDno) {
 			IDno = iDno;
+		}
+
+		public String getBrnoFlag() {
+			return brnoFlag;
+		}
+
+		public void setBrnoFlag(String brnoFlag) {
+			this.brnoFlag = brnoFlag;
 		}
 
 	

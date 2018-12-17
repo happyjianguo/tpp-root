@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TR003
-* @Description: 村镇通存记账确认
+* @ClassName: REQ_TR002
+* @Description: 村镇通兑商行业务
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TESTTS002 extends REQ_BASE {
+public class REQ_TR002 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_TESTTS002 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TESTTS002(){
-		super.txDesc = "村镇通存记账确认";
+	public REQ_TR002(){
+		super.txDesc = "村镇通兑商行业务";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -60,32 +60,43 @@ public class REQ_TESTTS002 extends REQ_BASE {
 		@JSONField(name = "BRNO_FLAG")
 		private String brnoFlag;    //村镇机构
 
+		@JSONField(name = "TX_AMT")
+		private String txAmt;	//金额
+
 		@JSONField(name = "PAYER_NAME")
 		private String payerName;	//付款人名称
-
+		
 		@JSONField(name = "PAYER_ACC")
 		private String payerAcc;	//付款人账号
 		
 		@JSONField(name = "PAYER_PWD")
-		private String payerPwd;		//付款账户密码
-		
-		@JSONField(name = "PLAT_DATE")
-		private String platDate;		//平台日期
-		
-		@JSONField(name = "PLAT_TRACENO")
-		private String platTraceno;		//平台流水
-		
-		@JSONField(name = "TX_AMT")
-		private String txAmt;		//交易金额
-		
-		@JSONField(name = "INFO")
-		private String info;		//摘要
+		private String payerPwd;	//付款账户密码
 		
 		@JSONField(name = "ID_TYPE")
-		private String IDtype;      //证件类型
+		private String IDtype;	//证件类型
 		
 		@JSONField(name = "ID_NO")
-		private String IDno;        //证件号码
+		private String IDno;	//证件号码
+		
+		@JSONField(name = "INFO")
+		private String info;	//摘要
+		
+		@JSONField(name = "BRNO")
+		private String brno;	//村镇记账机构
+		
+		@JSONField(name = "TOWN_DATE")
+		private String townDate;	//村镇日期
+		
+		@JSONField(name = "TOWN_TRACENO")
+		private String townTraceNo;	//村镇流水
+
+		public String getTxAmt() {
+			return txAmt;
+		}
+
+		public void setTxAmt(String txAmt) {
+			this.txAmt = txAmt;
+		}
 
 		public String getPayerName() {
 			return payerName;
@@ -111,38 +122,6 @@ public class REQ_TESTTS002 extends REQ_BASE {
 			this.payerPwd = payerPwd;
 		}
 
-		public String getPlatDate() {
-			return platDate;
-		}
-
-		public void setPlatDate(String platDate) {
-			this.platDate = platDate;
-		}
-
-		public String getPlatTraceno() {
-			return platTraceno;
-		}
-
-		public void setPlatTraceno(String platTraceno) {
-			this.platTraceno = platTraceno;
-		}
-
-		public String getTxAmt() {
-			return txAmt;
-		}
-
-		public void setTxAmt(String txAmt) {
-			this.txAmt = txAmt;
-		}
-
-		public String getInfo() {
-			return info;
-		}
-
-		public void setInfo(String info) {
-			this.info = info;
-		}
-
 		public String getIDtype() {
 			return IDtype;
 		}
@@ -159,6 +138,38 @@ public class REQ_TESTTS002 extends REQ_BASE {
 			IDno = iDno;
 		}
 
+		public String getInfo() {
+			return info;
+		}
+
+		public void setInfo(String info) {
+			this.info = info;
+		}
+
+		public String getBrno() {
+			return brno;
+		}
+
+		public void setBrno(String brno) {
+			this.brno = brno;
+		}
+
+		public String getTownDate() {
+			return townDate;
+		}
+
+		public void setTownDate(String townDate) {
+			this.townDate = townDate;
+		}
+
+		public String getTownTraceNo() {
+			return townTraceNo;
+		}
+
+		public void setTownTraceNo(String townTraceNo) {
+			this.townTraceNo = townTraceNo;
+		}
+
 		public String getBrnoFlag() {
 			return brnoFlag;
 		}
@@ -166,8 +177,7 @@ public class REQ_TESTTS002 extends REQ_BASE {
 		public void setBrnoFlag(String brnoFlag) {
 			this.brnoFlag = brnoFlag;
 		}
-
 		
-	
+		
 	}
 }

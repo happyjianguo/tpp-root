@@ -58,6 +58,9 @@ public class REQ_30041001001 extends REQ_BASE {
 
 	public class REQ_BODY {
 
+		@JSONField(name = "BRNO_FLAG")
+		private String brnoFlag;    //村镇机构
+		
 		@JSONField(name = "PAYER_NAME")
 		private String payerName;	//付款人名称
 
@@ -199,6 +202,14 @@ public class REQ_30041001001 extends REQ_BASE {
 
 		public void setDocumentID(String documentID) {
 			this.documentID = documentID;
+		}
+
+		public String getBrnoFlag() {
+			return brnoFlag;
+		}
+
+		public void setBrnoFlag(String brnoFlag) {
+			this.brnoFlag = brnoFlag;
 		}
 
 		
