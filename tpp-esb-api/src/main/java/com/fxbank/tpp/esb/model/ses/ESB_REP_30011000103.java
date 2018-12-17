@@ -41,6 +41,8 @@ public class ESB_REP_30011000103 extends ESB_BASE {
 		private String accountingBranch;//记账机构
 		@JSONField(name = "BALANCE")
 		private String balance;//余额
+		@JSONField(name = "ACCT_RESULT")
+		private String acctResult;//记账结果
 		public String  getReference(){
 			return reference;
 		}
@@ -64,6 +66,12 @@ public class ESB_REP_30011000103 extends ESB_BASE {
 		}
 		public void setBalance(String balance){
 			this.balance = balance;
+		}
+		public String getAcctResult() {
+			return acctResult;
+		}
+		public void setAcctResult(String acctResult) {
+			this.acctResult = acctResult;
 		}
 		
 	}
