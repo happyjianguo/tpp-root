@@ -24,6 +24,8 @@ CREATE TABLE tpp_rcv_trace_log (
   chk_tel varchar(30)  COMMENT '复核员',
   auth_tel varchar(30)  COMMENT '授权员',
   print varchar(10)  COMMENT '打印次数',
-  info varchar(255)  COMMENT '摘要'
+  info varchar(255)  COMMENT '摘要',
+  ret_code varchar(20)  COMMENT '核心反馈响应码',
+  ret_msg varchar(200)  COMMENT '核心反馈响应信息'
 ) comment='村镇柜面通接收流水日志' ;
 ALTER TABLE tpp_rcv_trace_log ADD PRIMARY KEY tpp_rcv_trace_log (plat_date,plat_trace);
