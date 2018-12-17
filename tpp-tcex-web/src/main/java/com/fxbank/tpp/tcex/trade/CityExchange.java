@@ -14,10 +14,10 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000101;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_TS002;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_TS004;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000101;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS002;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS004;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -77,16 +77,17 @@ public class CityExchange implements TradeExecutionStrategy {
 		if ("000000".equals(townState)) {
 			updateTownRecord(reqDto, townBrno, townDate, townTraceNo, "1");
 			// 核心记账：将金额从头寸中划至指定账户
-			// 本金记账状态码
+			// 记账状态码
 			String hostCode = null;
-			// 本金记账流水号
+			// 记账流水号
 			String hostSeqno = null;
 			// 核心日期
 			String hostDate = null;
-			ESB_REP_30011000101 esbRep_30011000101 = innerCapCharge(reqDto, townBrno);
-			hostCode = esbRep_30011000101.getRepSysHead().getRet().get(0).getRetCode();
-			hostSeqno = esbRep_30011000101.getRepSysHead().getReference();
-			hostDate = esbRep_30011000101.getRepSysHead().getRunDate();
+			ESB_REP_30011000103 esbRep_30011000103 = innerCapCharge(reqDto, townBrno);
+			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
+			hostSeqno = esbRep_30011000103.getRepBody().getReference();
+			hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
+			//
 			// 更新流水表核心记账状态
 			updateHostRecord(reqDto, Integer.parseInt(hostDate), hostSeqno, "1");
 			if (!"000000".equals(hostCode)) {
@@ -177,10 +178,10 @@ public class CityExchange implements TradeExecutionStrategy {
 	* @param @param reqDto
 	* @param @param townBrno
 	* @param @throws SysTradeExecuteException    设定文件 
-	* @return ESB_REP_30011000101    返回类型 
+	* @return ESB_REP_30011000103    返回类型 
 	* @throws 
 	*/
-	private ESB_REP_30011000101 innerCapCharge(REQ_30041001001 reqDto, String townBrno)
+	private ESB_REP_30011000103 innerCapCharge(REQ_30041001001 reqDto, String townBrno)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
@@ -195,32 +196,30 @@ public class CityExchange implements TradeExecutionStrategy {
 			inAcno = jedis.get(BRTEL_PREFIX + townBrno + "_INACNO");
 		}
 
-		ESB_REQ_30011000101 esbReq_30011000101 = new ESB_REQ_30011000101(myLog, reqDto.getSysDate(),
+		ESB_REQ_30011000103 esbReq_30011000103 = new ESB_REQ_30011000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000101.getReqSysHead(), reqDto)
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000103.getReqSysHead(), reqDto)
 				.setBranchId(txBrno).setUserId(txTel).build();
-		esbReq_30011000101.setReqSysHead(reqSysHead);
+		esbReq_30011000103.setReqSysHead(reqSysHead);
 
-		ESB_REQ_30011000101.REQ_BODY reqBody_30011000101 = esbReq_30011000101.getReqBody();
+		ESB_REQ_30011000103.REQ_BODY reqBody_30011000103 = esbReq_30011000103.getReqBody();
 		// 账号/卡号
-		reqBody_30011000101.setBaseAcctNo(inAcno);
+		reqBody_30011000103.setBaseAcctNo(inAcno);
+		//村镇机构号
+		reqBody_30011000103.setVillageBrnachId(townBrno);
+		//村镇标志
+		reqBody_30011000103.setVillageFlag("");
 		// 交易类型
-		reqBody_30011000101.setTranType("GJ03");
+		reqBody_30011000103.setTranType("GJ03");
 		// 交易币种
-		reqBody_30011000101.setTranCcy("CNY");
+		reqBody_30011000103.setTranCcy("CNY");
 		// 交易金额
-		reqBody_30011000101.setTranAmt(reqBody.getTranAmt());
-		// 摘要
-		reqBody_30011000101.setNarrative(reqBody.getNarrative());
-		// 记账渠道类型
-		reqBody_30011000101.setChannelType(reqBody.getChannelType());
-		// 清算日期
-		reqBody_30011000101.setSettlementDate(reqDto.getSysDate().toString());
-		// 对账标识,Y-参与对账;N-不参与对账
-		reqBody_30011000101.setCollateFlag("Y");
-		ESB_REP_30011000101 esbRep_30011000101 = forwardToESBService.sendToESB(esbReq_30011000101, reqBody_30011000101,
-				ESB_REP_30011000101.class);
-		return esbRep_30011000101;
+		reqBody_30011000103.setTranAmt(reqBody.getTranAmt());
+		// 密码
+		reqBody_30011000103.setPassword(reqBody.getPayPassword());
+		ESB_REP_30011000103 esbRep_30011000103 = forwardToESBService.sendToESB(esbReq_30011000103, reqBody_30011000103,
+				ESB_REP_30011000103.class);
+		return esbRep_30011000103;
 	}
 	/** 
 	* @Title: initRecord 
