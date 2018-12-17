@@ -64,6 +64,10 @@ public class RcvTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; //核心记账状态
 	
+	@NotNull(message = "town_state村镇记账状态不能为空")
+	@Size(max = 10,message = "town_state村镇记账状态最大长度是10")
+	private String townState; //村镇记账状态
+	
 	@NotNull(message = "tx_tel交易柜员不能为空")
 	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
 	private String txTel; //交易柜员
@@ -79,6 +83,10 @@ public class RcvTraceInitModel extends ModelBase implements Serializable{
 	
 	@Size(max = 255,message = "info摘要最大长度是255")
 	private String info; //摘要
+	
+	private String townDate;//村镇日期
+	
+	private String townTraceNo;//村镇流水
 
 	public String getSourceType() {
 		return sourceType;
@@ -206,6 +214,30 @@ public class RcvTraceInitModel extends ModelBase implements Serializable{
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+
+	public String getTownState() {
+		return townState;
+	}
+
+	public void setTownState(String townState) {
+		this.townState = townState;
+	}
+
+	public String getTownDate() {
+		return townDate;
+	}
+
+	public void setTownDate(String townDate) {
+		this.townDate = townDate;
+	}
+
+	public String getTownTraceNo() {
+		return townTraceNo;
+	}
+
+	public void setTownTraceNo(String townTraceNo) {
+		this.townTraceNo = townTraceNo;
 	}
 	
 }

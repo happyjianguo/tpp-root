@@ -37,6 +37,10 @@ public class RcvTraceUpdModel extends ModelBase implements Serializable{
     private String checkFlag;//对账标志
 
     private String townState;//村镇记账状态
+    
+    private String retCode;//核心反馈响应码
+    
+    private String retMsg;//核心反馈响应信息
 
 	public Integer getHostDate() {
 		return hostDate;
@@ -100,6 +104,22 @@ public class RcvTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setTownBranch(String townBranch) {
 		this.townBranch = townBranch;
+	}
+
+	public String getRetCode() {
+		return retCode;
+	}
+
+	public void setRetCode(String retCode) {
+		this.retCode = retCode;
+	}
+
+	public String getRetMsg() {
+		return retMsg;
+	}
+
+	public void setRetMsg(String retMsg) {
+		this.retMsg = retMsg;
 	}
     
 }

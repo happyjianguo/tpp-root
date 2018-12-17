@@ -168,28 +168,28 @@ public class TppRcvTraceLog {
      * 核心反馈响应码
      */
     @Column(name = "ret_code")
-    private String ret_code;
+    private String retCode;
     
     /**
      * 核心反馈响应信息
      */
     @Column(name = "ret_msg")
-    private String ret_msg;
+    private String retMsg;
 
-    public String getRet_code() {
-		return ret_code;
+    public String getRetCode() {
+		return retCode;
 	}
 
-	public void setRet_code(String ret_code) {
-		this.ret_code = ret_code;
+	public void setRetCode(String retCode) {
+		this.retCode = retCode;
 	}
 
-	public String getRet_msg() {
-		return ret_msg;
+	public String getRetMsg() {
+		return retMsg;
 	}
 
-	public void setRet_msg(String ret_msg) {
-		this.ret_msg = ret_msg;
+	public void setRetMsg(String retMsg) {
+		this.retMsg = retMsg;
 	}
 
 	/**

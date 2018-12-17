@@ -59,9 +59,35 @@ public class SndTraceService implements ISndTraceService{
 	@Override
 	public void sndTraceUpd(@Valid SndTraceUpdModel record) throws SysTradeExecuteException {
 		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(record.getPlatDate());
-		tppSndTraceLog.setPlatTrace(record.getPlatTrace());
-		tppSndTraceLog.setHostState(record.getHostState());
+		tppSndTraceLog.setPlatDate(record.getSysDate());
+		tppSndTraceLog.setPlatTrace(record.getSysTraceno());
+		if(null != record.getHostState()) {
+		    tppSndTraceLog.setHostState(record.getHostState());
+		}
+		if(null != record.getHostDate()) {
+			tppSndTraceLog.setHostDate(record.getHostDate());
+		}
+		if(null != record.getHostTraceno()) {
+			tppSndTraceLog.setHostTraceno(record.getHostTraceno());
+		}
+		if(null != record.getTownDate()) {
+			tppSndTraceLog.setTownDate(record.getTownDate());
+		}
+		if(null != record.getTownBranch()) {
+			tppSndTraceLog.setTownBranch(record.getTownBranch());
+		}
+		if(null != record.getTownState()) {
+			tppSndTraceLog.setTownState(record.getTownState());
+		}
+		if(null != record.getTownTraceno()) {
+			tppSndTraceLog.setTownTraceno(record.getTownTraceno());
+		}
+		if(null != record.getRetCode()) {
+			tppSndTraceLog.setRetCode(record.getRetCode());
+		}
+		if(null != record.getRetMsg()) {
+			tppSndTraceLog.setRetMsg(record.getRetMsg());
+		}
 		
 		tppSndTraceLogMapper.updateByPrimaryKeySelective(tppSndTraceLog);
 	}
