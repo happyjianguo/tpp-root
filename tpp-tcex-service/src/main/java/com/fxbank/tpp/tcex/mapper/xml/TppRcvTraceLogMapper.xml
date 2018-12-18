@@ -27,14 +27,15 @@
     <result column="auth_tel" jdbcType="VARCHAR" property="authTel" />
     <result column="print" jdbcType="VARCHAR" property="print" />
     <result column="info" jdbcType="VARCHAR" property="info" />
-    <result column="ret_code" jdbcType="VARCHAR" property="ret_code" />
-    <result column="ret_msg" jdbcType="VARCHAR" property="ret_msg" />
+    <result column="ret_code" jdbcType="VARCHAR" property="retCode" />
+    <result column="ret_msg" jdbcType="VARCHAR" property="retMsg" />
+    <result column="town_flag" jdbcType="VARCHAR" property="townFlag" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap">
     select plat_date, plat_trace, plat_time, source_type, tx_branch, tx_ind, dc_flag, 
     tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
     town_branch, town_date, town_traceno, check_flag, host_state, town_state, tx_tel, 
-    chk_tel, auth_tel, print, info,ret_code,ret_msg
+    chk_tel, auth_tel, print, info,ret_code,ret_msg,town_flag
     from tpp_rcv_trace_log
   </select>
   <select id="selectRcvTrace" resultMap="BaseResultMap">

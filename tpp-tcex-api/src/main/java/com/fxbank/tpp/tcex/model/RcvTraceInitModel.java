@@ -87,6 +87,16 @@ public class RcvTraceInitModel extends ModelBase implements Serializable{
 	private String townDate;//村镇日期
 	
 	private String townTraceNo;//村镇流水
+	
+	private String townFlag;//村镇标志
+
+	public String getTownFlag() {
+		return townFlag;
+	}
+
+	public void setTownFlag(String townFlag) {
+		this.townFlag = townFlag;
+	}
 
 	public String getSourceType() {
 		return sourceType;

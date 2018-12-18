@@ -83,7 +83,7 @@ public class TownExchange implements TradeExecutionStrategy {
 
 		REQ_TR002.REQ_BODY reqBody = reqDto.getReqBody();
 		// 村镇编号
-		String townId = reqBody.getBrnoFlag();
+		String townFlag = reqBody.getBrnoFlag();
 		// 交易机构
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
@@ -101,7 +101,7 @@ public class TownExchange implements TradeExecutionStrategy {
 		// 村镇机构号
 		reqBody_30011000103.setVillageBrnachId(reqBody.getBrno());
 		// 村镇标志
-		reqBody_30011000103.setVillageFlag("");
+		reqBody_30011000103.setVillageFlag(townFlag);
 		// 交易类型
 		reqBody_30011000103.setTranType("LV02");
 		// 交易币种
@@ -138,6 +138,7 @@ public class TownExchange implements TradeExecutionStrategy {
 		record.setTownBranch(reqBody.getBrno());
 		record.setTownDate(reqBody.getTownDate());
 		record.setTownTraceNo(reqBody.getTownTraceNo());
+		record.setTownFlag(reqBody.getBrnoFlag());
 		// record.setChkTel();
 		// record.setAuthTel();
 		record.setInfo(reqBody.getInfo());

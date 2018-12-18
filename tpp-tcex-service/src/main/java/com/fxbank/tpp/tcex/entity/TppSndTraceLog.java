@@ -175,6 +175,20 @@ public class TppSndTraceLog {
      */
     @Column(name = "ret_msg")
     private String retMsg;
+    
+    /**
+     * 村镇标志
+     */
+    @Column(name = "town_flag")
+    private String townFlag;
+    
+    public String getTownFlag() {
+		return townFlag;
+	}
+
+	public void setTownFlag(String townFlag) {
+		this.townFlag = townFlag;
+	}
 
     public String getRetCode() {
 		return retCode;

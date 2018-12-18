@@ -51,6 +51,7 @@ public class RcvTraceService implements IRcvTraceService{
 		tppRcvTraceLog.setChkTel(record.getChkTel());
 		tppRcvTraceLog.setAuthTel(record.getAuthTel());
 		tppRcvTraceLog.setInfo(record.getInfo());
+		tppRcvTraceLog.setTownFlag(record.getTownFlag());
 		
 		tppRcvTraceLogMapper.insertSelective(tppRcvTraceLog);
 	}

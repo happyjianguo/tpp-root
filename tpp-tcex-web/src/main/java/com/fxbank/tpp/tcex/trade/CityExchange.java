@@ -56,21 +56,21 @@ public class CityExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_30041001001 reqDto = (REQ_30041001001) dto;
 		REP_30041001001 repDto = new REP_30041001001();
-		//村镇编号
-		String townID = reqDto.getReqBody().getBrnoFlag();
+		//村镇标志
+		String townFlag = reqDto.getReqBody().getBrnoFlag();
 		// 插入流水表
 		initRecord(reqDto);
-		myLog.info(logger, "商行通兑村镇登记成功，村镇机构"+townID+"付款账号"+reqDto.getReqBody().getPayerAcctNo());
+		myLog.info(logger, "商行通兑村镇登记成功，村镇机构"+townFlag+"付款账号"+reqDto.getReqBody().getPayerAcctNo());
 		// 通知村镇记账
 		ESB_REP_TS002 esbRep_TS002 = townCharge(reqDto);
 		ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
-		String townBrno = esbRepBody_TS002.getBrno();
+		String townBranch = esbRepBody_TS002.getBrno();
 		Integer townDate = Integer.parseInt(esbRepBody_TS002.getTownDate());
 		String townTraceNo = esbRepBody_TS002.getTownTraceno();
 		String townState = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
 		// 更新流水表村镇记账状态
 		if ("000000".equals(townState)) {
-			updateTownRecord(reqDto, townBrno, townDate, townTraceNo, "1");
+			updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "1");
 			// 核心记账：将金额从头寸中划至指定账户
 			// 记账状态码
 			String hostCode = null;
@@ -79,7 +79,7 @@ public class CityExchange implements TradeExecutionStrategy {
 			String hostSeqno = null;
 			// 核心日期
 			String hostDate = null;
-			ESB_REP_30011000103 esbRep_30011000103 = innerCapCharge(reqDto, townBrno);
+			ESB_REP_30011000103 esbRep_30011000103 = innerCapCharge(reqDto, townBranch);
 			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 		    hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
 			hostSeqno = esbRep_30011000103.getRepBody().getReference();
@@ -105,10 +105,10 @@ public class CityExchange implements TradeExecutionStrategy {
 				if("1".equals(sts)) {
 					townState = "5";
 				}
-				updateTownRecord(reqDto, townBrno, townDate, townTraceNo, townState);
+				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, townState);
 			}
 		} else {
-			updateTownRecord(reqDto, townBrno, townDate, townTraceNo, "2");
+			updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "2");
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
 			myLog.error(logger, "村镇记账失败", e);
 			throw e;
@@ -188,8 +188,8 @@ public class CityExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
-		//村镇编号
-		String townId = reqBody.getBrnoFlag();
+		//村镇标志
+		String townFlag = reqBody.getBrnoFlag();
 		// 交易机构
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
@@ -207,7 +207,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		//村镇机构号
 		reqBody_30011000103.setVillageBrnachId(townBrno);
 		//村镇标志 1-于洪 2-铁岭 7-彰武 8-阜蒙
-		reqBody_30011000103.setVillageFlag(townId);
+		reqBody_30011000103.setVillageFlag(townFlag);
 		// 交易类型
 		reqBody_30011000103.setTranType("LV04");
 		// 交易币种
@@ -252,6 +252,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		record.setHostState("0");
 		record.setTownState("0");
 		record.setTxTel(reqSysHead.getUserId());
+		record.setTownFlag(reqBody.getBrnoFlag());
 		// record.setChkTel();
 		// record.setAuthTel();
 		record.setInfo(reqBody.getNarrative());
