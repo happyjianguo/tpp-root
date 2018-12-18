@@ -1,20 +1,20 @@
 package com.fxbank.tpp.tcex.trade;
 
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -23,7 +23,11 @@ import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
+import com.fxbank.tpp.tcex.model.TownInfo;
+import com.fxbank.tpp.tcex.model.TownList;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
+
+import redis.clients.jedis.Jedis;
 
 /**
  * 村镇通兑业务
@@ -44,9 +48,14 @@ public class TownExchange implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private IForwardToTownService forwardToTownService;
+	
+	@Resource
+	private MyJedis myJedis;
 
 	@Reference(version = "1.0.0")
 	private IRcvTraceService rcvTraceService;
+	
+	private final static String COMMON_PREFIX = "tcex_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -64,7 +73,13 @@ public class TownExchange implements TradeExecutionStrategy {
 		String hostSeqno = null;
 		// 核心日期
 		String hostDate = null;
-		ESB_REP_30011000103 esbRep_30011000103 = innerCapCharge(reqDto);
+		ESB_REP_30011000103 esbRep_30011000103 = null;
+		try {
+		  esbRep_30011000103 = innerCapCharge(reqDto);
+		}catch(SysTradeExecuteException e) {
+			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg());
+			throw e;
+		}
 		hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 		hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
 		hostSeqno = esbRep_30011000103.getRepBody().getReference();
@@ -76,8 +91,8 @@ public class TownExchange implements TradeExecutionStrategy {
 		// 记账结果，00-已记账 01-已挂账
 		String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 		// 更新流水表核心记账状态
-	    updateHostRecord(reqDto, Integer.parseInt(hostDate), hostSeqno, "1",hostCode,hostMsg);
-		return repDto;
+	    updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg);
+	    return repDto;
 	}
 
 	private ESB_REP_30011000103 innerCapCharge(REQ_TR002 reqDto) throws SysTradeExecuteException {
@@ -101,9 +116,24 @@ public class TownExchange implements TradeExecutionStrategy {
 		// 账号/卡号
 		reqBody_30011000103.setBaseAcctNo(reqBody.getPayerAcc());
 		// 村镇机构号
-		reqBody_30011000103.setVillageBrnachId(reqBody.getBrno());
+		String jsonStrTownBranch = null;
+		try(Jedis jedis = myJedis.connect()){
+			jsonStrTownBranch = jedis.get(COMMON_PREFIX+"TOWN_LIST");
+        }
+		if(jsonStrTownBranch==null||jsonStrTownBranch.length()==0){
+			logger.error("渠道未配置["+COMMON_PREFIX + "TOWN_LIST"+"]");
+			throw new RuntimeException("渠道未配置["+COMMON_PREFIX + "TOWN_LIST"+"]");
+		}
+		TownList townList = JsonUtil.toBean(jsonStrTownBranch, TownList.class);
+        String townBranch = null;
+		for(TownInfo townInfo:townList.getData()){
+			if(townInfo.getTownFlag().equals(townFlag)) {
+				townBranch = townInfo.getTownBranch();
+			}
+		}
+		reqBody_30011000103.setVillageBrnachId(townBranch);
 		// 村镇标志
-		reqBody_30011000103.setVillageFlag(townFlag);
+		//reqBody_30011000103.setVillageFlag(townFlag);
 		// 交易类型
 		reqBody_30011000103.setTranType("LV02");
 		// 交易币种
@@ -147,12 +177,14 @@ public class TownExchange implements TradeExecutionStrategy {
 		rcvTraceService.rcvTraceInit(record);
 
 	}
-	private RcvTraceUpdModel updateHostRecord(REQ_TR002 reqDto, Integer hostDate, String hostTraceno,
+	private RcvTraceUpdModel updateHostRecord(REQ_TR002 reqDto, String hostDate, String hostTraceno,
 			String hostState,String retCode,String retMsg) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
-		record.setHostDate(hostDate);
+		if(!"".equals(hostDate)) {
+		record.setHostDate(Integer.parseInt(hostDate));
+		}
 		record.setHostState(hostState);
 		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
