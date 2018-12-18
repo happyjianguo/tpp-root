@@ -49,11 +49,9 @@ public class RcvTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 100,message = "payer_name付款人户名最大长度是100")
 	private String payerName; //付款人户名
 	
-	@NotNull(message = "payee_acno收款人账户不能为空")
 	@Size(max = 50,message = "payee_acno收款人账户最大长度是50")
 	private String payeeAcno; //收款人账户
 	
-	@NotNull(message = "payee_name收款人户名不能为空")
 	@Size(max = 100,message = "payee_name收款人户名最大长度是100")
 	private String payeeName; //收款人户名
 	

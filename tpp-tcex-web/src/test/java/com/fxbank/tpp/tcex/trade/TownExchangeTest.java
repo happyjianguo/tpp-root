@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,31 +23,33 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_30041001001;
-import com.fxbank.tpp.tcex.dto.esb.REQ_30041001001;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class CityExchangeTest {
+public class TownExchangeTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(CityExchangeTest.class);
+	private static Logger logger = LoggerFactory.getLogger(TownExchangeTest.class);
+	
+	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
 	private static final String URL="http://57.25.8.158:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_30041001001 req ;
+	private REQ_TR002 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_30041001001.REQ_BODY reqBody ;
+	private REQ_TR002.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_30041001001();
+		req = new REQ_TR002();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300410010");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("TR0");
+		reqSysHead.setSceneId("02");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -71,19 +75,17 @@ public class CityExchangeTest {
 	@Test
 	public void payOk() throws Exception {
 		
+		reqBody.setBrnoFlag("1");
+		reqBody.setTxAmt("1000.00");
 		reqBody.setPayerName("张三");
-		reqBody.setPayerAcctNo("623166001015086827");
-		reqBody.setPayeeAcctName("Z2004944000010");
-		reqBody.setPayeeAcctName("李四");
-		reqBody.setPayeeAcctNo("613166001015086828");
-		reqBody.setTranAmt("1000.00");
-		reqBody.setChannelType("TCEX");
-		reqBody.setMfflg("1");
-		reqBody.setNarrative("测试");
-		reqBody.setDocClass("2");
-		reqBody.setVoucherNo("111");
-		reqBody.setDocumentType("0");
-		reqBody.setDocumentID("211003199105271510");
+		reqBody.setPayerAcc("622126010004155270");
+		reqBody.setPayerPwd("123456");
+		reqBody.setIDtype("0");
+		reqBody.setIDno("2110031991");
+		reqBody.setInfo("商行账户在村镇取款");
+		reqBody.setBrno("10001");
+		reqBody.setTownDate(sdf1.format(new Date()));
+		reqBody.setTownTraceNo(UUID.randomUUID().toString().replace("-", "").substring(0, 15));
 		
 		String reqContent = JsonUtil.toJson(req);
 		
@@ -94,7 +96,7 @@ public class CityExchangeTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30041001001 rep = JsonUtil.toBean(repContent, REP_30041001001.class);
+		REP_TR002 rep = JsonUtil.toBean(repContent, REP_TR002.class);
 	}
 	
 }

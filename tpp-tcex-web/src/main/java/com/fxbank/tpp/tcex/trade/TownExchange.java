@@ -53,8 +53,10 @@ public class TownExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_TR002 reqDto = (REQ_TR002) dto;
 		REP_TR002 repDto = new REP_TR002();
+		REQ_TR002.REQ_BODY reqBody = reqDto.getReqBody();
 		// 插入流水表
 		initRecord(reqDto);
+		myLog.info(logger, "村镇通兑商行登记成功，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqDto.getReqBody().getPayerAcc());
 		// 记账状态码
 		String hostCode = null;
 		String hostMsg = null;
