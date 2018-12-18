@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.constant.CIP;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
@@ -44,6 +45,9 @@ public class CityExchange implements TradeExecutionStrategy {
 
 	@Resource
 	private LogPool logPool;
+	
+	@Resource
+	private MyJedis myJedis;
 
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
@@ -53,6 +57,8 @@ public class CityExchange implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private ISndTraceService sndTraceService;
+	
+	private final static String COMMON_PREFIX = "tcex_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -62,17 +68,24 @@ public class CityExchange implements TradeExecutionStrategy {
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
 		// 插入流水表
 		initRecord(reqDto);
-		myLog.info(logger, "商行通兑村镇登记成功，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqDto.getReqBody().getPayerAcctNo());
+		myLog.info(logger, "商行通兑村镇登记成功，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo());
 		// 通知村镇记账
-		ESB_REP_TS002 esbRep_TS002 = townCharge(reqDto);
+		ESB_REP_TS002 esbRep_TS002 = null;
+		try {
+		    esbRep_TS002 = townCharge(reqDto);
+		}catch(SysTradeExecuteException e) {
+			updateTownRecord(reqDto, "", "", "", "2");
+			throw e;
+		}
 		ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
 		String townBranch = esbRepBody_TS002.getBrno();
-		Integer townDate = Integer.parseInt(esbRepBody_TS002.getTownDate());
+		String townDate = esbRepBody_TS002.getTownDate();
 		String townTraceNo = esbRepBody_TS002.getTownTraceno();
 		String townState = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
 		// 更新流水表村镇记账状态
 		if ("000000".equals(townState)) {
 			updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "1");
+			myLog.info(logger, "商行通兑村镇村镇记账成功，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo());
 			// 核心记账：将金额从头寸中划至指定账户
 			// 记账状态码
 			String hostCode = null;
@@ -81,7 +94,13 @@ public class CityExchange implements TradeExecutionStrategy {
 			String hostSeqno = null;
 			// 核心日期
 			String hostDate = null;
-			ESB_REP_30011000103 esbRep_30011000103 = innerCapCharge(reqDto, townBranch);
+			ESB_REP_30011000103 esbRep_30011000103 = null;
+			try {
+			   esbRep_30011000103 = innerCapCharge(reqDto);
+			}catch(SysTradeExecuteException e) {
+				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg());
+				throw e;
+			}
 			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 			hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
 			hostSeqno = esbRep_30011000103.getRepBody().getReference();
@@ -93,7 +112,7 @@ public class CityExchange implements TradeExecutionStrategy {
 			// 记账结果，00-已记账 01-已挂账
 			String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 			// 更新流水表核心记账状态
-			updateHostRecord(reqDto, Integer.parseInt(hostDate), hostSeqno, "1", hostCode, hostMsg);
+			updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg);
 			if (!"000000".equals(hostCode)||"01".equals(acctResult)) {
 				// 多次查询核心，确认是否是延迟原因
 				ESB_REP_30043000101 esb_rep_30043000101=innerTranResult(reqDto);
@@ -106,7 +125,13 @@ public class CityExchange implements TradeExecutionStrategy {
 	                }
 				if(flag) {
 				// 村镇冲正
-				ESB_REP_TS004 esbRep_TS004 = townCancel(reqDto, townDate, townTraceNo);
+					ESB_REP_TS004 esbRep_TS004 = null;
+				try {	
+				 esbRep_TS004 = townCancel(reqDto, townDate, townTraceNo);
+				}catch(SysTradeExecuteException e) {
+					updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "2");
+					throw e;
+				}
 				ESB_REP_TS004.REP_BODY esbRepBody_TS004 = esbRep_TS004.getRepBody();
 				String sts = esbRepBody_TS004.getSts();
 				// 更新流水表村镇记账状态,村镇冲正返回状态sts 1-成功2-失败
@@ -114,6 +139,8 @@ public class CityExchange implements TradeExecutionStrategy {
 				townState = "6";
 				if ("1".equals(sts)) {
 					townState = "5";
+				}else if("2".equals(sts)) {
+					townState = "6";
 				}
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, townState);
 				}
@@ -132,7 +159,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	 *         townDate @param @param townTraceNo @param @throws
 	 *         SysTradeExecuteException 设定文件 @return ESB_REP_TS004 返回类型 @throws
 	 */
-	private ESB_REP_TS004 townCancel(REQ_30041001001 reqDto, Integer townDate, String townTraceNo)
+	private ESB_REP_TS004 townCancel(REQ_30041001001 reqDto, String townDate, String townTraceNo)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		ESB_REQ_TS004 esbReq_TS004 = new ESB_REQ_TS004(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
@@ -142,7 +169,7 @@ public class CityExchange implements TradeExecutionStrategy {
 				.build();
 		esbReq_TS004.setReqSysHead(reqTS004SysHead);
 		ESB_REQ_TS004.REQ_BODY esbReqBody_TS004 = esbReq_TS004.getReqBody();
-		esbReqBody_TS004.setPlatDate(townDate.toString());
+		esbReqBody_TS004.setPlatDate(townDate);
 		esbReqBody_TS004.setPlatTraceno(townTraceNo);
 		ESB_REP_TS004 esbRep_TS004 = forwardToTownService.sendToTown(esbReq_TS004, esbReqBody_TS004,
 				ESB_REP_TS004.class);
@@ -183,7 +210,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	 *         reqDto @param @param townBrno @param @throws SysTradeExecuteException
 	 *         设定文件 @return ESB_REP_30011000103 返回类型 @throws
 	 */
-	private ESB_REP_30011000103 innerCapCharge(REQ_30041001001 reqDto, String townBranch)
+	private ESB_REP_30011000103 innerCapCharge(REQ_30041001001 reqDto)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
@@ -205,7 +232,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		// 账号/卡号
 		reqBody_30011000103.setBaseAcctNo(reqBody.getPayerAcctNo());
 		// 村镇机构号
-		reqBody_30011000103.setVillageBrnachId(townBranch);
+		//reqBody_30011000103.setVillageBrnachId();
 		// 村镇标志 1-于洪 2-铁岭 7-彰武 8-阜蒙
 		reqBody_30011000103.setVillageFlag(townFlag);
 		// 交易类型
@@ -262,12 +289,14 @@ public class CityExchange implements TradeExecutionStrategy {
 	 *         hostState @param @throws SysTradeExecuteException 设定文件 @return
 	 *         SndTraceUpdModel 返回类型 @throws
 	 */
-	private SndTraceUpdModel updateHostRecord(REQ_30041001001 reqDto, Integer hostDate, String hostTraceno,
+	private SndTraceUpdModel updateHostRecord(REQ_30041001001 reqDto, String hostDate, String hostTraceno,
 			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		SndTraceUpdModel record = new SndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
-		record.setHostDate(hostDate);
+		if(!"".equals(hostDate)) {
+		record.setHostDate(Integer.parseInt(hostDate));
+		}
 		record.setHostState(hostState);
 		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
@@ -282,13 +311,15 @@ public class CityExchange implements TradeExecutionStrategy {
 	 *         townTraceno @param @param townState @param @throws
 	 *         SysTradeExecuteException 设定文件 @return SndTraceUpdModel 返回类型 @throws
 	 */
-	private SndTraceUpdModel updateTownRecord(REQ_30041001001 reqDto, String townBrno, Integer townDate,
+	private SndTraceUpdModel updateTownRecord(REQ_30041001001 reqDto, String townBrno, String townDate,
 			String townTraceno, String townState) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		SndTraceUpdModel record = new SndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		record.setTownBranch(townBrno);
-		record.setTownDate(townDate);
+		if(!"".equals(townDate)) {
+		record.setTownDate(Integer.parseInt(townDate));
+		}
 		record.setTownState(townState);
 		record.setTownTraceno(townTraceno);
 		sndTraceService.sndTraceUpd(record);
