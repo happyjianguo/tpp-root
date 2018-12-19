@@ -57,25 +57,12 @@ public class REQ_TR003 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "BRNO")
-		private String brno;	//村镇记账机构
-
 		@JSONField(name = "TOWN_DATE")
 		private String townDate;	//村镇日期
 		
 		@JSONField(name = "TOWN_TRACENO")
 		private String townTraceno;		//村镇流水
 		
-		@JSONField(name = "DCFLAG")
-		private String dcFlag;		//通存通兑标志
-
-		public String getBrno() {
-			return brno;
-		}
-
-		public void setBrno(String brno) {
-			this.brno = brno;
-		}
 
 		public String getTownDate() {
 			return townDate;
@@ -93,14 +80,6 @@ public class REQ_TR003 extends REQ_BASE {
 			this.townTraceno = townTraceno;
 		}
 
-		public String getDcFlag() {
-			return dcFlag;
-		}
-
-		public void setDcFlag(String dcFlag) {
-			this.dcFlag = dcFlag;
-		}
-		
 	
 	}
 }

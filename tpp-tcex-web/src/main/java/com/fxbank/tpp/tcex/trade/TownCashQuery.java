@@ -83,19 +83,21 @@ public class TownCashQuery implements TradeExecutionStrategy{
 		ESB_REQ_30013000801.REQ_BODY reqBody_30013000801 = esbReq_30013000801.getReqBody();
 		reqBody_30013000801.setVillageBrnachId(townBranch);
 		
-		REP_TR005 repDto = new REP_TR005();
 		ESB_REP_30013000801 esbRep_30013000801 = forwardToESBService.sendToESB(esbReq_30013000801, reqBody_30013000801, ESB_REP_30013000801.class);
-		String code = esbRep_30013000801.getRepSysHead().getRet().get(0).getRetCode();
-		String msg = esbRep_30013000801.getRepSysHead().getRet().get(0).getRetMsg();
-		if(code.equals("000000")) {
-			logger.info("头寸查询成功：机构码【"+townBranch+"】，余额【"+esbRep_30013000801.getRepBody().getBalance()+"】");
-			repDto.getRepBody().setBal(esbRep_30013000801.getRepBody().getBalance());
-		}else {
-			System.out.println("头寸查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
-			myLog.error(logger,"头寸查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
-			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10005);
-			throw e;
-		}
+
+		REP_TR005 repDto = new REP_TR005();
+		repDto.getRepBody().setBal(esbRep_30013000801.getRepBody().getBalance());
+		
+//		String code = esbRep_30013000801.getRepSysHead().getRet().get(0).getRetCode();
+//		String msg = esbRep_30013000801.getRepSysHead().getRet().get(0).getRetMsg();
+//		if(code.equals("000000")) {
+//			logger.info("头寸查询成功：机构码【"+townBranch+"】，余额【"+esbRep_30013000801.getRepBody().getBalance()+"】");
+//		}else {
+//			System.out.println("头寸查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
+//			myLog.error(logger,"头寸查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
+//			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10005);
+//			throw e;
+//		}
 		
 		return repDto;
 	}

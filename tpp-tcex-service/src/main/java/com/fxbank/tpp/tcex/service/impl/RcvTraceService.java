@@ -133,20 +133,18 @@ public class RcvTraceService implements IRcvTraceService{
 		if(null != record.getRetMsg()) {
 			tppRcvTraceLog.setRetMsg(record.getRetMsg());
 		}
-		if(null != record.getCheckFlag()) {
-			tppRcvTraceLog.setCheckFlag(record.getCheckFlag());
+		if(null != record.getHostBranch()) {
+			tppRcvTraceLog.setHostBranch(record.getHostBranch());
 		}
 		tppRcvTraceLogMapper.updateByPrimaryKeySelective(tppRcvTraceLog);
 		
 	}
 	
 	@Override
-	public RcvTraceQueryModel getConfirmTrace(MyLog myLog,String brno,String townDate,String townTraceno,String dcflag)throws SysTradeExecuteException {
+	public RcvTraceQueryModel getConfirmTrace(MyLog myLog,String townDate,String townTraceno)throws SysTradeExecuteException {
 		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
-		tppRcvTraceLog.setTownBranch(brno);
 		tppRcvTraceLog.setTownDate(Integer.parseInt(townDate));
 		tppRcvTraceLog.setTownTraceno(townTraceno);
-		tppRcvTraceLog.setDcFlag(dcflag);
 		TppRcvTraceLog data = tppRcvTraceLogMapper.selectOne(tppRcvTraceLog);
 		RcvTraceQueryModel model = new RcvTraceQueryModel(myLog, tppRcvTraceLog.getPlatDate(), tppRcvTraceLog.getPlatTime(), tppRcvTraceLog.getPlatTrace());
 		model.setAuthTel(data.getAuthTel());

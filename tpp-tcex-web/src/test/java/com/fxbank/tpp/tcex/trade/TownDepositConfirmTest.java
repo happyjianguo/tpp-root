@@ -80,8 +80,6 @@ public class TownDepositConfirmTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrno("0100");
-		reqBody.setDcFlag("1");
 		reqBody.setTownDate("20180928");
 		reqBody.setTownTraceno("123456");
 		

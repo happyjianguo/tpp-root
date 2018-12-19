@@ -18,7 +18,7 @@ public interface IRcvTraceService {
 	
 	public List<RcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag) throws SysTradeExecuteException;
 	
-	public RcvTraceQueryModel getConfirmTrace(MyLog myLog,String brno,String townDate,String townTraceno,String dcflag)throws SysTradeExecuteException;
+	public RcvTraceQueryModel getConfirmTrace(MyLog myLog,String townDate,String townTraceno)throws SysTradeExecuteException;
 
 	public List<RcvTraceQueryModel> getCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno, String date)throws SysTradeExecuteException;
 
