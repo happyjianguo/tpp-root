@@ -29,12 +29,13 @@ import com.fxbank.tpp.tcex.service.IRcvTraceService;
 
 import redis.clients.jedis.Jedis;
 
-/**
- * 村镇通存业务
- * 
- * @author liye
- *
- */
+/** 
+* @ClassName: TownDeposit 
+* @Description: 村镇通存商行
+* @author DuZhenduo
+* @date 2018年12月18日 下午2:50:42 
+*  
+*/
 @Service("REQ_TR001")
 public class TownDeposit implements TradeExecutionStrategy {
 
@@ -75,7 +76,7 @@ public class TownDeposit implements TradeExecutionStrategy {
 		String hostDate = null;
 		ESB_REP_30011000103 esbRep_30011000103 = null;
 		try {
-		  esbRep_30011000103 = innerCapCharge(reqDto);
+		  esbRep_30011000103 = hostCharge(reqDto);
 		}catch(SysTradeExecuteException e) {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
 			throw e;
@@ -94,8 +95,15 @@ public class TownDeposit implements TradeExecutionStrategy {
 	    updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
 	    return repDto;
 	}
-
-	private ESB_REP_30011000103 innerCapCharge(REQ_TR001 reqDto) throws SysTradeExecuteException {
+	/** 
+	* @Title: hostCharge 
+	* @Description: 核心记账
+	* @param reqDto
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return  ESB_REP_30011000103  返回类型 
+	* @throws 
+	*/
+	private ESB_REP_30011000103 hostCharge(REQ_TR001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
 		REQ_TR001.REQ_BODY reqBody = reqDto.getReqBody();
@@ -146,7 +154,14 @@ public class TownDeposit implements TradeExecutionStrategy {
 				ESB_REP_30011000103.class);
 		return esbRep_30011000103;
 	}
-
+	/** 
+	* @Title: initRecord 
+	* @Description: 交易登记
+	* @param reqDto
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return    返回类型 
+	* @throws 
+	*/
 	private void initRecord(REQ_TR001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
@@ -177,6 +192,20 @@ public class TownDeposit implements TradeExecutionStrategy {
 		rcvTraceService.rcvTraceInit(record);
 
 	}
+	/** 
+	* @Title: updateHostRecord 
+	* @Description: 更新核心记账状态
+	* @param reqDto
+	* @param hostDate 核心日期
+	* @param hostTraceno 核心流水号
+	* @param hostState 核心记账状态
+	* @param retCode 核心响应码
+	* @param retMsg 核心响应信息
+	* @param accounting_branch 核心记账机构
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return RcvTraceUpdModel   返回类型 
+	* @throws 
+	*/
 	private RcvTraceUpdModel updateHostRecord(REQ_TR001 reqDto, String hostDate, String hostTraceno,
 			String hostState,String retCode,String retMsg,String accounting_branch) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();

@@ -32,12 +32,13 @@ import com.fxbank.tpp.tcex.model.SndTraceInitModel;
 import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 import com.fxbank.tpp.tcex.service.ISndTraceService;
 
-/**
- * 商行通兑业务
- * 
- * @author liye
- *
- */
+/** 
+* @ClassName: CityExchange 
+* @Description: 商行通兑村镇
+* @author DuZhenduo
+* @date 2018年12月18日 下午2:50:42 
+*  
+*/
 @Service("REQ_30041001001")
 public class CityExchange implements TradeExecutionStrategy {
 
@@ -58,8 +59,6 @@ public class CityExchange implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private ISndTraceService sndTraceService;
 	
-	private final static String COMMON_PREFIX = "tcex_common.";
-
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
@@ -82,9 +81,10 @@ public class CityExchange implements TradeExecutionStrategy {
 		String townBranch = esbRepBody_TS002.getBrno();
 		String townDate = esbRepBody_TS002.getTownDate();
 		String townTraceNo = esbRepBody_TS002.getTownTraceno();
-		String townState = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
+		String townRetCode = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
 		// 更新流水表村镇记账状态
-		if ("000000".equals(townState)) {
+		//村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
+		if ("000000".equals(townRetCode)) {
 			updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "1");
 			myLog.info(logger, "商行通兑村镇村镇记账成功，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo());
 			// 核心记账：将金额从头寸中划至指定账户
@@ -97,11 +97,10 @@ public class CityExchange implements TradeExecutionStrategy {
 			String hostDate = null;
 			ESB_REP_30011000103 esbRep_30011000103 = null;
 			try {
-			   esbRep_30011000103 = innerCapCharge(reqDto);
+			   esbRep_30011000103 = hostCharge(reqDto);
 			}catch(SysTradeExecuteException e) {
 				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
 				myLog.error(logger, "商行通兑村镇核心记账失败，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo(), e);
-				throw e;
 			}
 			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 			hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
@@ -114,10 +113,11 @@ public class CityExchange implements TradeExecutionStrategy {
 			// 记账结果，00-已记账 01-已挂账
 			String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 			// 更新流水表核心记账状态
-			updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
-			if (!"000000".equals(hostCode)) {
+			if("000000".equals(hostCode)) {
+				updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
+			} else {
 				// 多次查询核心，确认是否是延迟原因
-				ESB_REP_30043000101 esb_rep_30043000101=innerTranResult(reqDto);
+				ESB_REP_30043000101 esb_rep_30043000101=hostTranResult(reqDto);
 				Boolean flag = true; 
 				if(esb_rep_30043000101!=null) {
 	                    String result=esb_rep_30043000101.getRepBody().getAcctResult();
@@ -126,25 +126,28 @@ public class CityExchange implements TradeExecutionStrategy {
 	                    }
 	                }
 				if(flag) {
+					updateHostRecord(reqDto, hostDate, hostSeqno, "2", hostCode, hostMsg,accounting_branch);
 				// 村镇冲正
 					ESB_REP_TS004 esbRep_TS004 = null;
 				try {	
 				 esbRep_TS004 = townCancel(reqDto, townDate, townTraceNo);
 				}catch(SysTradeExecuteException e) {
-					updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "2");
+					updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "6");
 					throw e;
 				}
 				ESB_REP_TS004.REP_BODY esbRepBody_TS004 = esbRep_TS004.getRepBody();
 				String sts = esbRepBody_TS004.getSts();
 				// 更新流水表村镇记账状态,村镇冲正返回状态sts 1-成功2-失败
 				// 村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
-				townState = "6";
+				String townState = "6";
 				if ("1".equals(sts)) {
 					townState = "5";
 				}else if("2".equals(sts)) {
 					townState = "6";
 				}
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, townState);
+				}else {
+					updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
 				}
 			}
 		} else {
@@ -156,11 +159,16 @@ public class CityExchange implements TradeExecutionStrategy {
 		return repDto;
 	}
 
-	/**
-	 * @Title: townCancel @Description: 村镇冲正 @param @param reqDto @param @param
-	 *         townDate @param @param townTraceNo @param @throws
-	 *         SysTradeExecuteException 设定文件 @return ESB_REP_TS004 返回类型 @throws
-	 */
+	/** 
+	* @Title: townCancel 
+	* @Description: 村镇撤销
+	* @param reqDto
+	* @param townDate 村镇日期
+	* @param townTraceNo 村镇流水号
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return ESB_REP_TS004    返回类型 
+	* @throws 
+	*/
 	private ESB_REP_TS004 townCancel(REQ_30041001001 reqDto, String townDate, String townTraceNo)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
@@ -178,10 +186,14 @@ public class CityExchange implements TradeExecutionStrategy {
 		return esbRep_TS004;
 	}
 
-	/**
-	 * @Title: townCharge @Description: 村镇记账 @param @param reqDto @param @throws
-	 *         SysTradeExecuteException 设定文件 @return ESB_REP_TS002 返回类型 @throws
-	 */
+	/** 
+	* @Title: townCharge 
+	* @Description: 村镇记账
+	* @param reqDto
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return ESB_REP_TS002    返回类型 
+	* @throws 
+	*/
 	private ESB_REP_TS002 townCharge(REQ_30041001001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		ESB_REQ_TS002 esbReq_TS002 = new ESB_REQ_TS002(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
@@ -207,12 +219,15 @@ public class CityExchange implements TradeExecutionStrategy {
 		return esbRep_TS002;
 	}
 
-	/**
-	 * @Title: innerCapCharge @Description: 行内核心记本金账务 @param @param
-	 *         reqDto @param @param townBrno @param @throws SysTradeExecuteException
-	 *         设定文件 @return ESB_REP_30011000103 返回类型 @throws
-	 */
-	private ESB_REP_30011000103 innerCapCharge(REQ_30041001001 reqDto)
+	/** 
+	* @Title: hostCharge 
+	* @Description: 核心记账
+	* @param reqDto
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return ESB_REP_30011000103    返回类型 
+	* @throws 
+	*/
+	private ESB_REP_30011000103 hostCharge(REQ_30041001001 reqDto)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
@@ -250,10 +265,14 @@ public class CityExchange implements TradeExecutionStrategy {
 		return esbRep_30011000103;
 	}
 
-	/**
-	 * @Title: initRecord @Description: 登记流水表 @param @param reqDto @param @throws
-	 *         SysTradeExecuteException 设定文件 @return @throws
-	 */
+	/** 
+	* @Title: initRecord 
+	* @Description: 交易登记
+	* @param reqDto
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return    返回类型 
+	* @throws 
+	*/
 	private void initRecord(REQ_30041001001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
@@ -285,12 +304,20 @@ public class CityExchange implements TradeExecutionStrategy {
 		sndTraceService.sndTraceInit(record);
 	}
 
-	/**
-	 * @Title: updateHostRecord @Description: 行内核心记本金账务 @param @param
-	 *         reqDto @param @param hostDate @param @param hostTraceno @param @param
-	 *         hostState @param @throws SysTradeExecuteException 设定文件 @return
-	 *         SndTraceUpdModel 返回类型 @throws
-	 */
+	/** 
+	* @Title: updateHostRecord 
+	* @Description: 更新核心记账状态
+	* @param reqDto
+	* @param hostDate 核心日期
+	* @param hostTraceno 核心流水号
+	* @param hostState 核心记账状态
+	* @param retCode 核心响应码
+	* @param retMsg 核心响应信息
+	* @param accounting_branch 核心记账机构
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return SndTraceUpdModel  返回类型 
+	* @throws 
+	*/
 	private SndTraceUpdModel updateHostRecord(REQ_30041001001 reqDto, String hostDate, String hostTraceno,
 			String hostState, String retCode, String retMsg,String accounting_branch) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
@@ -308,12 +335,18 @@ public class CityExchange implements TradeExecutionStrategy {
 		return record;
 	}
 
-	/**
-	 * @Title: updateTownRecord @Description: 行内核心记本金账务 @param @param
-	 *         reqDto @param @param townBrno @param @param townDate @param @param
-	 *         townTraceno @param @param townState @param @throws
-	 *         SysTradeExecuteException 设定文件 @return SndTraceUpdModel 返回类型 @throws
-	 */
+	/** 
+	* @Title: updateTownRecord 
+	* @Description: 更新村镇记账状态
+	* @param reqDto
+	* @param townBrno 村镇记账机构
+	* @param townDate 村镇日期
+	* @param townTraceno 村镇流水号
+	* @param townState 村镇记账状态
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return SndTraceUpdModel  返回类型 
+	* @throws 
+	*/
 	private SndTraceUpdModel updateTownRecord(REQ_30041001001 reqDto, String townBrno, String townDate,
 			String townTraceno, String townState) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
@@ -328,8 +361,15 @@ public class CityExchange implements TradeExecutionStrategy {
 		sndTraceService.sndTraceUpd(record);
 		return record;
 	}
-
-	private ESB_REP_30043000101 innerTranResult(REQ_30041001001 reqDto) throws SysTradeExecuteException {
+	/** 
+	* @Title: hostTranResult 
+	* @Description: 核心交易结果查询
+	* @param reqDto
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return ESB_REP_30043000101  返回类型 
+	* @throws 
+	*/
+	private ESB_REP_30043000101 hostTranResult(REQ_30041001001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
 		ESB_REQ_30043000101 esbReq_30043000101 = new ESB_REQ_30043000101(myLog, reqDto.getSysDate(),
