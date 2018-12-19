@@ -75,6 +75,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		    esbRep_TS002 = townCharge(reqDto);
 		}catch(SysTradeExecuteException e) {
 			updateTownRecord(reqDto, "", "", "", "2");
+			myLog.error(logger, "商行通兑村镇村镇记账失败，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo(), e);
 			throw e;
 		}
 		ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
@@ -99,6 +100,7 @@ public class CityExchange implements TradeExecutionStrategy {
 			   esbRep_30011000103 = innerCapCharge(reqDto);
 			}catch(SysTradeExecuteException e) {
 				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
+				myLog.error(logger, "商行通兑村镇核心记账失败，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo(), e);
 				throw e;
 			}
 			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
@@ -146,7 +148,7 @@ public class CityExchange implements TradeExecutionStrategy {
 				}
 			}
 		} else {
-			updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "2");
+			updateTownRecord(reqDto, "", "", "", "2");
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
 			myLog.error(logger, "村镇记账失败", e);
 			throw e;
