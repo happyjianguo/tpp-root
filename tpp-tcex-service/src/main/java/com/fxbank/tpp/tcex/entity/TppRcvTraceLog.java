@@ -182,7 +182,21 @@ public class TppRcvTraceLog {
     @Column(name = "town_flag")
     private String townFlag;
     
-    public String getTownFlag() {
+    /**
+     * 村镇机构
+     */
+    @Column(name = "host_branch")
+    private String hostBranch;
+    
+    public String getHostBranch() {
+		return hostBranch;
+	}
+
+	public void setHostBranch(String hostBranch) {
+		this.hostBranch = hostBranch;
+	}
+
+	public String getTownFlag() {
 		return townFlag;
 	}
 

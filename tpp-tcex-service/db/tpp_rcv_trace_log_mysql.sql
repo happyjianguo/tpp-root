@@ -14,7 +14,7 @@ CREATE TABLE tpp_rcv_trace_log (
   payer_name varchar(100)  COMMENT '付款人户名',
   payee_acno varchar(50)  COMMENT '收款人账户',
   payee_name varchar(100)  COMMENT '收款人户名',
-  town_branch varchar(20)  COMMENT '村镇机构',
+  town_branch varchar(20)  COMMENT '村镇记账机构',
   town_date int(11)  COMMENT '村镇日期',
   town_traceno varchar(20)  COMMENT '村镇流水',
   check_flag varchar(10)  COMMENT '对账标志',
@@ -27,6 +27,7 @@ CREATE TABLE tpp_rcv_trace_log (
   info varchar(255)  COMMENT '摘要',
   ret_code varchar(20)  COMMENT '核心反馈响应码',
   ret_msg varchar(200)  COMMENT '核心反馈响应信息',
-  town_flag varchar(5)  COMMENT '村镇标志'
+  town_flag varchar(5)  COMMENT '村镇标志',
+  host_branch varchar(20)  COMMENT '核心记账机构' 
 ) comment='村镇柜面通接收流水日志' ;
 ALTER TABLE tpp_rcv_trace_log ADD PRIMARY KEY tpp_rcv_trace_log (plat_date,plat_trace);

@@ -185,6 +185,20 @@ public class TppSndTraceLog {
     public String getTownFlag() {
 		return townFlag;
 	}
+    
+    /**
+     * 村镇机构
+     */
+    @Column(name = "host_branch")
+    private String hostBranch;
+    
+    public String getHostBranch() {
+		return hostBranch;
+	}
+
+	public void setHostBranch(String hostBranch) {
+		this.hostBranch = hostBranch;
+	}
 
 	public void setTownFlag(String townFlag) {
 		this.townFlag = townFlag;

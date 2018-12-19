@@ -27,6 +27,7 @@ CREATE TABLE tpp_snd_trace_log (
   info varchar(255)  COMMENT '摘要',
   ret_code varchar(20)  COMMENT '核心反馈响应码',
   ret_msg varchar(200)  COMMENT '核心反馈响应信息',
-  town_flag varchar(5)  COMMENT '村镇标志'
+  town_flag varchar(5)  COMMENT '村镇标志',
+  host_branch varchar(20)  COMMENT '核心记账机构'
 ) comment='村镇柜面通发送流水日志' ;
 ALTER TABLE tpp_snd_trace_log ADD PRIMARY KEY tpp_snd_trace_log (plat_date,plat_trace);

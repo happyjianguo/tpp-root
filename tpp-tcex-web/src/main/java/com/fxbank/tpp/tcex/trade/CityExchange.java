@@ -98,7 +98,7 @@ public class CityExchange implements TradeExecutionStrategy {
 			try {
 			   esbRep_30011000103 = innerCapCharge(reqDto);
 			}catch(SysTradeExecuteException e) {
-				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg());
+				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
 				throw e;
 			}
 			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
@@ -112,8 +112,8 @@ public class CityExchange implements TradeExecutionStrategy {
 			// 记账结果，00-已记账 01-已挂账
 			String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 			// 更新流水表核心记账状态
-			updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg);
-			if (!"000000".equals(hostCode)||"01".equals(acctResult)) {
+			updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
+			if (!"000000".equals(hostCode)) {
 				// 多次查询核心，确认是否是延迟原因
 				ESB_REP_30043000101 esb_rep_30043000101=innerTranResult(reqDto);
 				Boolean flag = true; 
@@ -290,7 +290,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	 *         SndTraceUpdModel 返回类型 @throws
 	 */
 	private SndTraceUpdModel updateHostRecord(REQ_30041001001 reqDto, String hostDate, String hostTraceno,
-			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
+			String hostState, String retCode, String retMsg,String accounting_branch) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		SndTraceUpdModel record = new SndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
@@ -301,6 +301,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
 		record.setRetMsg(retMsg);
+		record.setHostBranch(accounting_branch);
 		sndTraceService.sndTraceUpd(record);
 		return record;
 	}

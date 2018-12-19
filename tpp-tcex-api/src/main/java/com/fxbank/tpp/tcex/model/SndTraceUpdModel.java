@@ -91,6 +91,16 @@ public class SndTraceUpdModel extends ModelBase implements Serializable{
     private String retCode;//核心反馈响应码
     
     private String retMsg;//核心反馈响应信息
+    
+    private String hostBranch;//核心记账机构
+
+	public String getHostBranch() {
+		return hostBranch;
+	}
+
+	public void setHostBranch(String hostBranch) {
+		this.hostBranch = hostBranch;
+	}
 
 	public String getSourceType() {
 		return sourceType;
