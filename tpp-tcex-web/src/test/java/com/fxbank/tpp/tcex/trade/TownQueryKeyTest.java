@@ -1,10 +1,11 @@
 package com.fxbank.tpp.tcex.trade;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,39 +24,42 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
+import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR005;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
+import com.fxbank.tpp.tcex.dto.esb.REQ_KEY01;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class TownExchangeTest {
+public class TownQueryKeyTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(TownExchangeTest.class);
+	private static Logger logger = LoggerFactory.getLogger(TownCashQueryTest.class);
 	
-	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
-	
-	private static final String URL="http://57.25.8.158:7000/tcex/town.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TR002 req ;
+	private REQ_KEY01 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TR002.REQ_BODY reqBody ;
+	private REQ_KEY01.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TR002();
+		req = new REQ_KEY01();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TR0");
-		reqSysHead.setSceneId("02");
+		reqSysHead.setServiceId("KEY");
+		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("00001");
-		reqSysHead.setUserId("907004");
+		reqSysHead.setBranchId("BRANCH_ID");
+		reqSysHead.setUserId("USER_ID");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -75,17 +79,7 @@ public class TownExchangeTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrnoFlag("1");
-		reqBody.setTxAmt("1000.00");
-		reqBody.setPayerName("张三");
-		reqBody.setPayerAcc("622126010004155270");
-		reqBody.setPayerPwd("123456");
-		reqBody.setIDtype("0");
-		reqBody.setIDno("2110031991");
-		reqBody.setInfo("商行账户在村镇取款");
-		reqBody.setBrno("10001");
-		reqBody.setTownDate(sdf1.format(new Date()));
-		reqBody.setTownTraceNo(UUID.randomUUID().toString().replace("-", "").substring(0, 15));
+		reqBody.setKeyModel("1");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
@@ -96,7 +90,7 @@ public class TownExchangeTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR002 rep = JsonUtil.toBean(repContent, REP_TR002.class);
+		REP_TR005 rep = JsonUtil.toBean(repContent, REP_TR005.class);
 	}
 	
 }

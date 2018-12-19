@@ -23,15 +23,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR001;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR001;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class TownExchangeTest {
+public class TownDepositTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(TownExchangeTest.class);
+	private static Logger logger = LoggerFactory.getLogger(TownDepositTest.class);
 	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
@@ -40,16 +40,16 @@ public class TownExchangeTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TR002 req ;
+	private REQ_TR001 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TR002.REQ_BODY reqBody ;
+	private REQ_TR001.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TR002();
+		req = new REQ_TR001();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("TR0");
-		reqSysHead.setSceneId("02");
+		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -77,12 +77,9 @@ public class TownExchangeTest {
 		
 		reqBody.setBrnoFlag("1");
 		reqBody.setTxAmt("1000.00");
-		reqBody.setPayerName("张三");
-		reqBody.setPayerAcc("622126010004155270");
-		reqBody.setPayerPwd("123456");
-		reqBody.setIDtype("0");
-		reqBody.setIDno("2110031991");
-		reqBody.setInfo("商行账户在村镇取款");
+		reqBody.setPayeeName("张三");
+		reqBody.setPayeeAcc("622126010004155270");
+		reqBody.setInfo("商行账户在村镇存款");
 		reqBody.setBrno("10001");
 		reqBody.setTownDate(sdf1.format(new Date()));
 		reqBody.setTownTraceNo(UUID.randomUUID().toString().replace("-", "").substring(0, 15));
@@ -96,7 +93,7 @@ public class TownExchangeTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR002 rep = JsonUtil.toBean(repContent, REP_TR002.class);
+		REP_TR001 rep = JsonUtil.toBean(repContent, REP_TR001.class);
 	}
 	
 }
