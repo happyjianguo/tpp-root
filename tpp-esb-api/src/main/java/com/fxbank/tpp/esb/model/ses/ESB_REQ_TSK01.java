@@ -62,6 +62,9 @@ public class ESB_REQ_TSK01 extends ESB_BASE {
 
 		@JSONField(name = "PAYER_ACNO")
 		private String payerAcno;	//账/卡号
+		
+		@JSONField(name = "BRNO_FLAG")
+		private String brnoFlag;	//村镇机构
 
 		public String getPayerAcno() {
 			return payerAcno;
@@ -69,6 +72,14 @@ public class ESB_REQ_TSK01 extends ESB_BASE {
 
 		public void setPayerAcno(String payerAcno) {
 			this.payerAcno = payerAcno;
+		}
+
+		public String getBrnoFlag() {
+			return brnoFlag;
+		}
+
+		public void setBrnoFlag(String brnoFlag) {
+			this.brnoFlag = brnoFlag;
 		}
 		
 		

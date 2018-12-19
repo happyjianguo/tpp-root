@@ -13,10 +13,11 @@
     <result column="accountno" jdbcType="VARCHAR" property="accountno" />
     <result column="reversal" jdbcType="VARCHAR" property="reversal" />
     <result column="tx_status" jdbcType="VARCHAR" property="txStatus" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap">
     select plat_date, plat_trace, settle_date, settle_branch, host_date, host_traceno, 
-    ccy, tx_amt, accountno, reversal, tx_status
+    ccy, tx_amt, accountno, reversal, tx_status, direction
     from tpp_day_check_log
   </select>
 </mapper>

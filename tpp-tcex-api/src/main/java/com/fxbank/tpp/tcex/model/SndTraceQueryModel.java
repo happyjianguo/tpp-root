@@ -140,6 +140,18 @@ public class SndTraceQueryModel extends ModelBase implements Serializable{
      * 摘要
      */
     private String info;
+    
+    private String townFlag;
+    
+    
+
+   	public String getTownFlag() {
+   		return townFlag;
+   	}
+
+   	public void setTownFlag(String townFlag) {
+   		this.townFlag = townFlag;
+   	}
 
 	public Integer getPlatDate() {
 		return platDate;

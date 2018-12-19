@@ -83,8 +83,7 @@ public class CityDcHistoryTest {
 		reqBody.setEndDate("20181206");
 		reqBody.setMinAmt("100.00");
 		reqBody.setMaxAmt("220000.00");
-		reqBody.setTranBranch("");
-		reqBody.setDepDraInd("0");
+		reqBody.setBrnoFlag("1");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

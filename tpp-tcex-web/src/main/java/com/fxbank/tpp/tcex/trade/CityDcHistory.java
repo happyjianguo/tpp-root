@@ -59,14 +59,13 @@ public class CityDcHistory extends TradeBase implements TradeExecutionStrategy {
 		String endDate = reqBody.getEndDate();//终止日期
 		String minAmt = reqBody.getMinAmt();//最小金额
 		String maxAmt = reqBody.getMaxAmt();//最大金额
-		String txBrno = reqBody.getTranBranch();//交易机构
-		String depDraInd = reqBody.getDepDraInd();//通存通兑标志
+		String brnoFlag = reqBody.getBrnoFlag();//村镇机构
 
 		//获取往帐流水
-		List<RcvTraceQueryModel> rcvTraceQueryModelList = rcvTraceService.getRcvTrace(myLog, begDate, endDate, minAmt, maxAmt, txBrno,depDraInd);
+		List<RcvTraceQueryModel> rcvTraceQueryModelList = rcvTraceService.getRcvTrace(myLog, begDate, endDate, minAmt, maxAmt, brnoFlag);
 		
 		//获取来帐流水
-		List<SndTraceQueryModel> sndTraceQueryModelList = sndTraceService.getSndTrace(myLog, begDate, endDate, minAmt, maxAmt, txBrno,depDraInd);
+		List<SndTraceQueryModel> sndTraceQueryModelList = sndTraceService.getSndTrace(myLog, begDate, endDate, minAmt, maxAmt, brnoFlag);
 
 		REP_30043002701 repDto = new REP_30043002701();
 		REP_30043002701.REP_BODY repBody = repDto.getRepBody();

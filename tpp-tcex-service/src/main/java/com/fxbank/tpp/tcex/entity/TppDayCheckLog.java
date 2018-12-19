@@ -81,6 +81,21 @@ public class TppDayCheckLog {
     private String txStatus;
 
     /**
+     * 来往账标识
+     */
+    @Column(name = "direction")
+    private String direction;
+
+    
+    public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	/**
      * 渠道日期
      * @return plat_date 渠道日期
      */

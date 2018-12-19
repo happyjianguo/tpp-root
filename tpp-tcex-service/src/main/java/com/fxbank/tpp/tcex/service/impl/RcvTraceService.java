@@ -14,6 +14,7 @@ import com.fxbank.tpp.tcex.mapper.TppRcvTraceLogMapper;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
+import com.fxbank.tpp.tcex.model.RcvTraceRepModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
 
 @Service(validation = "true", version = "1.0.0")
@@ -57,8 +58,8 @@ public class RcvTraceService implements IRcvTraceService{
 	}
 	
 	@Override
-	public List<RcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String txBrno,String depDraInd) throws SysTradeExecuteException{
-		List<TppRcvTraceLog> tppRcvTraceList = tppRcvTraceLogMapper.selectRcvTrace(begDate, endDate, minAmt, maxAmt, txBrno,depDraInd);
+	public List<RcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag) throws SysTradeExecuteException{
+		List<TppRcvTraceLog> tppRcvTraceList = tppRcvTraceLogMapper.selectRcvTrace(begDate, endDate, minAmt, maxAmt, brnoFlag);
 		List<RcvTraceQueryModel> rcvTraceInitModelList = new ArrayList<>();
 		for(TppRcvTraceLog tpp : tppRcvTraceList) {
 			RcvTraceQueryModel model = new RcvTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());
@@ -132,6 +133,9 @@ public class RcvTraceService implements IRcvTraceService{
 		if(null != record.getRetMsg()) {
 			tppRcvTraceLog.setRetMsg(record.getRetMsg());
 		}
+		if(null != record.getCheckFlag()) {
+			tppRcvTraceLog.setCheckFlag(record.getCheckFlag());
+		}
 		tppRcvTraceLogMapper.updateByPrimaryKeySelective(tppRcvTraceLog);
 		
 	}
@@ -166,6 +170,150 @@ public class RcvTraceService implements IRcvTraceService{
 		model.setTownState(data.getTownState());
 		model.setTownTraceno(model.getTownTraceno());
 		return model;
+	}
+
+	@Override
+	public List<RcvTraceQueryModel> getCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
+			String date) throws SysTradeExecuteException {
+		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
+		tppRcvTraceLog.setPlatDate(Integer.parseInt(date));
+		tppRcvTraceLog.setCheckFlag("1");
+		List<TppRcvTraceLog> dataList = tppRcvTraceLogMapper.select(tppRcvTraceLog);
+		List<RcvTraceQueryModel> modelList = new ArrayList<>();
+		for(TppRcvTraceLog data : dataList) {
+			RcvTraceQueryModel model = new RcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
+			model.setAuthTel(data.getAuthTel());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setChkTel(data.getChkTel());
+			model.setDcFlag(data.getDcFlag());
+			model.setHostDate(data.getHostDate());
+			model.setHostState(data.getHostState());
+			model.setHostTraceno(data.getHostTraceno());
+			model.setInfo(data.getInfo());
+			model.setPayeeAcno(data.getPayeeAcno());
+			model.setPayeeName(data.getPayeeName());
+			model.setPayerAcno(data.getPayerAcno());
+			model.setPayerName(data.getPayerName());
+			model.setPlatDate(data.getPlatDate());
+			model.setPlatTime(data.getPlatTime());
+			model.setPlatTrace(data.getPlatTrace());
+			model.setSourceType(data.getSourceType());
+			model.setTownBranch(data.getTownBranch());
+			model.setTownDate(data.getTownDate());
+			model.setTownState(data.getTownState());
+			model.setTownTraceno(model.getTownTraceno());
+			modelList.add(model);
+		}
+		
+		return modelList;
+	}
+
+	@Override
+	public void replenishRcvTrace(RcvTraceRepModel record) throws SysTradeExecuteException{
+		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
+		tppRcvTraceLog.setPlatDate(record.getSysDate());
+		tppRcvTraceLog.setPlatTrace(record.getSysTraceno());
+		tppRcvTraceLog.setPlatTime(record.getSysTime());
+		tppRcvTraceLog.setSourceType(record.getSourceType());
+		tppRcvTraceLog.setTxBranch(record.getTxBranch());
+		tppRcvTraceLog.setTxInd(record.getTxInd());
+		tppRcvTraceLog.setDcFlag(record.getDcFlag());
+		tppRcvTraceLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
+		if("1".equals(record.getTxInd())) {
+		tppRcvTraceLog.setPayerAcno(record.getPayerAcno());
+		tppRcvTraceLog.setPayerName(record.getPayerName());
+		}
+		tppRcvTraceLog.setPayeeAcno(record.getPayeeAcno());
+		tppRcvTraceLog.setPayeeName(record.getPayeeName());
+		tppRcvTraceLog.setHostState(record.getHostState());
+		tppRcvTraceLog.setTownState(record.getTownState());
+		if(null != record.getTownDate()) {
+			tppRcvTraceLog.setTownDate(Integer.parseInt(record.getTownDate()));
+		}
+		if(null != record.getTownTraceNo()) {
+			tppRcvTraceLog.setTownTraceno(record.getTownTraceNo());
+		}
+		tppRcvTraceLog.setTxTel(record.getTxTel());
+		tppRcvTraceLog.setChkTel(record.getChkTel());
+		tppRcvTraceLog.setAuthTel(record.getAuthTel());
+		tppRcvTraceLog.setInfo(record.getInfo());
+		tppRcvTraceLog.setTownFlag(record.getTownFlag());
+		
+		tppRcvTraceLogMapper.insertSelective(tppRcvTraceLog);
+	}
+
+	@Override
+	public RcvTraceQueryModel getRcvTraceByKey(MyLog myLog, Integer sysTime, Integer sysTraceno, Integer sysDate,
+			Integer settleDate, Integer platTrace) throws SysTradeExecuteException {
+		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
+		tppRcvTraceLog.setPlatDate(settleDate);
+		tppRcvTraceLog.setPlatTrace(platTrace);
+		TppRcvTraceLog data = tppRcvTraceLogMapper.selectOne(tppRcvTraceLog);
+		RcvTraceQueryModel model = new RcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
+		if(data == null )model = null;
+		else {
+			model.setAuthTel(data.getAuthTel());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setChkTel(data.getChkTel());
+			model.setDcFlag(data.getDcFlag());
+			model.setHostDate(data.getHostDate());
+			model.setHostState(data.getHostState());
+			model.setHostTraceno(data.getHostTraceno());
+			model.setInfo(data.getInfo());
+			model.setPayeeAcno(data.getPayeeAcno());
+			model.setPayeeName(data.getPayeeName());
+			model.setPayerAcno(data.getPayerAcno());
+			model.setPayerName(data.getPayerName());
+			model.setPlatDate(data.getPlatDate());
+			model.setPlatTime(data.getPlatTime());
+			model.setPlatTrace(data.getPlatTrace());
+			model.setSourceType(data.getSourceType());
+			model.setTownBranch(data.getTownBranch());
+			model.setTownDate(data.getTownDate());
+			model.setTownState(data.getTownState());
+			model.setTownTraceno(model.getTownTraceno());
+		}
+		
+		return model;
+	}
+
+	@Override
+	public List<RcvTraceQueryModel> getUploadCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime,
+			Integer sysTraceno, String date) throws SysTradeExecuteException {
+		TppRcvTraceLog tppRcvTraceLog = new TppRcvTraceLog();
+		tppRcvTraceLog.setPlatDate(Integer.parseInt(date));
+		tppRcvTraceLog.setHostState("1");
+		
+		List<TppRcvTraceLog> dataList = tppRcvTraceLogMapper.select(tppRcvTraceLog);
+		List<RcvTraceQueryModel> modelList = new ArrayList<>();
+		for(TppRcvTraceLog data : dataList) {
+			RcvTraceQueryModel model = new RcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
+			model.setAuthTel(data.getAuthTel());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setChkTel(data.getChkTel());
+			model.setDcFlag(data.getDcFlag());
+			model.setHostDate(data.getHostDate());
+			model.setHostState(data.getHostState());
+			model.setHostTraceno(data.getHostTraceno());
+			model.setInfo(data.getInfo());
+			model.setPayeeAcno(data.getPayeeAcno());
+			model.setPayeeName(data.getPayeeName());
+			model.setPayerAcno(data.getPayerAcno());
+			model.setPayerName(data.getPayerName());
+			model.setPlatDate(data.getPlatDate());
+			model.setPlatTime(data.getPlatTime());
+			model.setPlatTrace(data.getPlatTrace());
+			model.setSourceType(data.getSourceType());
+			model.setTownBranch(data.getTownBranch());
+			model.setTownDate(data.getTownDate());
+			model.setTownState(data.getTownState());
+			model.setTownTraceno(data.getTownTraceno());
+			model.setTownFlag(data.getTownFlag());
+
+			modelList.add(model);
+		}
+		
+		return modelList;
 	}
 
 }

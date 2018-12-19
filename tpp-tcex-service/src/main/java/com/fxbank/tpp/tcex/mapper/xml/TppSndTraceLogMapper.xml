@@ -41,9 +41,6 @@
   <select id="selectSndTrace" resultMap="BaseResultMap">
     select * from tpp_snd_trace_log
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
-      <if test="txBrno != null and txBrno != ''">
-        and tx_branch = #{txBrno}
-      </if>
       <if test="minAmt != null and minAmt != ''">
         and tx_amt <![CDATA[ >= ]]> #{minAmt}
       </if>
@@ -56,8 +53,8 @@
       <if test="endDate != null and endDate != ''">
         and plat_date <![CDATA[ <= ]]> #{endDate}
       </if>
-      <if test="depDraInd != null and depDraInd != ''">
-        and dc_flag = #{depDraInd}
+      <if test='brnoFlag != null and brnoFlag != "" and brnoFlag != "0"'>
+        and town_flag = #{brnoFlag}
       </if>
     </trim>
   </select>

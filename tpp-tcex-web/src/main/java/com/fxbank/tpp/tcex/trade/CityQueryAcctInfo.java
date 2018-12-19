@@ -51,6 +51,7 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		REQ_30042000307 reqDto = (REQ_30042000307) dto;
 		REQ_30042000307.REQ_BODY reqBody = reqDto.getReqBody();
 		String payerAcno = reqBody.getBasrAcctNo();
+		String brnoFlag = reqBody.getBrnoFlag();
 		REP_30042000307 repDto = new REP_30042000307();
 		//请求村镇账户信息接口，反馈结果写入REP_TSK01
 		
@@ -59,6 +60,7 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		esbReq_tsk01.setReqSysHead(reqSysHead);
 		ESB_REQ_TSK01.REQ_BODY esbReqBody_tsk01 = esbReq_tsk01.getReqBody();
 		esbReqBody_tsk01.setPayerAcno(payerAcno);
+		esbReqBody_tsk01.setBrnoFlag(brnoFlag);
 		ESB_REP_TSK01 esbRep_tsk01 = forwardToTownService.sendToTown(esbReq_tsk01, esbReqBody_tsk01, ESB_REP_TSK01.class);
 		if("000000".equals(esbRep_tsk01.getRepSysHead().getRet().get(0).getRetCode())) {
 			REP_30042000307.REP_BODY repBody = repDto.getRepBody();
