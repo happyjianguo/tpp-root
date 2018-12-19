@@ -52,7 +52,6 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		REQ_30042000307.REQ_BODY reqBody = reqDto.getReqBody();
 		String payerAcno = reqBody.getBasrAcctNo();
 		String brnoFlag = reqBody.getBrnoFlag();
-		REP_30042000307 repDto = new REP_30042000307();
 		//请求村镇账户信息接口，反馈结果写入REP_TSK01
 		
 		ESB_REQ_TSK01 esbReq_tsk01 = new ESB_REQ_TSK01(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
@@ -62,37 +61,26 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		esbReqBody_tsk01.setPayerAcno(payerAcno);
 		esbReqBody_tsk01.setBrnoFlag(brnoFlag);
 		ESB_REP_TSK01 esbRep_tsk01 = forwardToTownService.sendToTown(esbReq_tsk01, esbReqBody_tsk01, ESB_REP_TSK01.class);
-		if("000000".equals(esbRep_tsk01.getRepSysHead().getRet().get(0).getRetCode())) {
-			REP_30042000307.REP_BODY repBody = repDto.getRepBody();
-			repBody.setBasrAcctNo(esbRep_tsk01.getRepBody().getPayerAcno());
-			repBody.setAcctName(esbRep_tsk01.getRepBody().getPayerName());
-			repBody.setAcctSqNoT(esbRep_tsk01.getRepBody().getAcnoSeq());
-			repBody.setBalance(esbRep_tsk01.getRepBody().getBal());
-		}else {
-			System.out.println("获取账户【"+payerAcno+"】信息失败: "+esbRep_tsk01.getRepSysHead().getRet().get(0).getRetMsg());
-			myLog.error(logger, "获取账户【"+payerAcno+"】信息失败: "+esbRep_tsk01.getRepSysHead().getRet().get(0).getRetMsg());
-			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10002);
-			throw e;
-		}
+
+
+		REP_30042000307 repDto = new REP_30042000307();
+		REP_30042000307.REP_BODY repBody = repDto.getRepBody();
+		repBody.setBasrAcctNo(esbRep_tsk01.getRepBody().getPayerAcno());
+		repBody.setAcctName(esbRep_tsk01.getRepBody().getPayerName());
+		repBody.setAcctSqNoT(esbRep_tsk01.getRepBody().getAcnoSeq());
+		repBody.setBalance(esbRep_tsk01.getRepBody().getBal());
 		
-		//测试用
-//		REP_TSK01 repDto = tstInterface(dto);
+//		if("000000".equals(esbRep_tsk01.getRepSysHead().getRet().get(0).getRetCode())) {
+//		}else {
+//			System.out.println("获取账户【"+payerAcno+"】信息失败: "+esbRep_tsk01.getRepSysHead().getRet().get(0).getRetMsg());
+//			myLog.error(logger, "获取账户【"+payerAcno+"】信息失败: "+esbRep_tsk01.getRepSysHead().getRet().get(0).getRetMsg());
+//			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10002);
+//			throw e;
+//		}
+		
 		return repDto;
 	}
 
-	private REP_30042000307 tstInterface(DataTransObject dto) {
-		REQ_30042000307 reqDto = (REQ_30042000307) dto;
-		REQ_30042000307.REQ_BODY reqBody = reqDto.getReqBody();
-		String payerAcno = reqBody.getBasrAcctNo();
-		
-		REP_30042000307 repDto = new REP_30042000307();
-		REP_30042000307.REP_BODY repBody = repDto.getRepBody();
-		repBody.setBasrAcctNo(payerAcno);
-		repBody.setAcctName("测试");
-		repBody.setAcctSqNoT("1");
-		repBody.setBalance("1000.00");
-		return repDto;
-	}
 
 	
 

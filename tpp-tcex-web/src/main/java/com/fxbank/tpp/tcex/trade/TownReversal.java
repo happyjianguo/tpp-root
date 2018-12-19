@@ -7,12 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000801;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
@@ -45,49 +51,37 @@ public class TownReversal implements TradeExecutionStrategy {
 		REQ_TR004 reqDto = (REQ_TR004) dto;
 		String platDate = reqDto.getReqBody().getPlatDate();
 		String platTraceno = reqDto.getReqBody().getPlatTraceno();
-
+		// 交易机构
+		String txBrno = reqDto.getReqSysHead().getBranchId();
+		// 柜员号
+		String txTel = reqDto.getReqSysHead().getUserId();
+		
 		//调用核心冲正接口
-		String hostState = "333";
+		ESB_REQ_30014000101 esbReq_30014000101 = new ESB_REQ_30014000101(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto)
+				.setBranchId(txBrno).setUserId(txTel).build();
+		esbReq_30014000101.setReqSysHead(reqSysHead);	
+		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
+		reqBody_30014000101.setChannelSeqNo(platTraceno);
+		reqBody_30014000101.setReversalReason("村镇【"+txBrno+"】柜面通发起冲正");
+		reqBody_30014000101.setEventType("");
+		
+		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101, ESB_REP_30014000101.class);
+		String code = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
+		String msg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
+		
+		logger.info("村镇【"+txBrno+"】柜面通冲正反馈码【"+code+"】，反馈信息【"+msg+"】");
 		
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, Integer.parseInt(platDate), reqDto.getSysTime(),Integer.parseInt(platTraceno));
-//		record.setPlatDate(Integer.parseInt(platDate));
-//		record.setPlatTrace(Integer.parseInt(platTraceno));
-		record.setHostState(hostState);
+		record.setHostState(code.equals("000000")?"5":(code.equals("@@@@")?"7":"6"));
+		record.setRetCode(code);
+		record.setRetMsg(msg);
 		rcvTraceService.rcvTraceUpd(record);
 		
 		REP_TR004 repDto = new REP_TR004();
-		repDto.getRepBody().setSts(hostState);
+		repDto.getRepBody().setSts(code.equals("000000")?"1":"2");
 
 		return repDto;
 	}
-	
-//	村镇发来张
-//    渠道发往帐
-//	private void initRecord(MyLog myLog,REQ_TR004 reqDto) throws SysTradeExecuteException {
-//		
-//		REQ_TR004.REQ_BODY reqBody = reqDto.getReqBody();
-//		REQ_SYS_HEAD reqSysHead = reqDto.getReqSysHead();
-//		
-//		RcvTraceInitModel record = new RcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),reqDto.getSysTraceno());
-//		record.setSourceType(reqBody.getChnl());
-//		record.setTxBranch(reqSysHead.getBranchId());
-//		//现转标志 0现金1转账
-//		record.setTxInd(reqBody.getTxInd());
-//		//通存通兑
-//		record.setDcFlag("1");
-//		record.setTxAmt(reqBody.getTxAmt());
-//		if("1".equals(reqBody.getTxInd())) {
-//		record.setPayeeAcno(reqBody.getPayerAcc());
-//		record.setPayeeName(reqBody.getPayerName());
-//		}
-//		record.setPayerAcno(reqBody.getPayeeAcc());
-//		record.setPayerName(reqBody.getPayeeName());
-//		record.setHostState("0");
-//		record.setTxTel(reqSysHead.getUserId());
-//		//record.setChkTel();
-//		//record.setAuthTel();
-//		record.setInfo(reqBody.getInfo());
-//		rcvTraceService.rcvTraceInit(record);
-//	}
 
 }
