@@ -6,8 +6,8 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TR003
-* @Description: 村镇通存记账确认
+* @ClassName: REQ_TESTTS004
+* @Description: 商行通兑村镇冲正
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
@@ -24,7 +24,7 @@ public class REQ_TESTTS004 extends REQ_BASE {
 	private REQ_BODY reqBody;
 	
 	public REQ_TESTTS004(){
-		super.txDesc = "村镇通存记账确认";
+		super.txDesc = "商行通兑村镇冲正";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
