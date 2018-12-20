@@ -73,12 +73,8 @@ public class CityExchangeTest {
 		
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcctNo("623166001015086827");
-		reqBody.setPayeeAcctName("Z2004944000010");
-		reqBody.setPayeeAcctName("李四");
-		reqBody.setPayeeAcctNo("613166001015086828");
 		reqBody.setTranAmt("1000.00");
 		reqBody.setChannelType("TCEX");
-		reqBody.setMfflg("1");
 		reqBody.setNarrative("测试");
 		reqBody.setDocClass("2");
 		reqBody.setVoucherNo("111");

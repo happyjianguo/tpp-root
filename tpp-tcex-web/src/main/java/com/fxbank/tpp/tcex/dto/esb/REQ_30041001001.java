@@ -70,20 +70,11 @@ public class REQ_30041001001 extends REQ_BASE {
 		@JSONField(name = "PAY_PASSWORD")
 		private String payPassword;		//付款账户密码
 		
-		@JSONField(name = "PAYEE_ACCT_NAME")
-		private String payeeAcctName;		//收款名称
-		
-		@JSONField(name = "PAYEE_ACCT_NO")
-		private String payeeAcctNo;		//收款账号
-		
 		@JSONField(name = "TRAN_AMT")
 		private String tranAmt;		//交易金额
 		
 		@JSONField(name = "CHANNEL_TYPE")
 		private String channelType;		//交易渠道
-		
-		@JSONField(name = "MFFLG")
-		private String mfflg;		//现转标志
 		
 		@JSONField(name = "NARRATIVE")
 		private String narrative;		//摘要
@@ -124,22 +115,6 @@ public class REQ_30041001001 extends REQ_BASE {
 			this.payPassword = payPassword;
 		}
 
-		public String getPayeeAcctName() {
-			return payeeAcctName;
-		}
-
-		public void setPayeeAcctName(String payeeAcctName) {
-			this.payeeAcctName = payeeAcctName;
-		}
-
-		public String getPayeeAcctNo() {
-			return payeeAcctNo;
-		}
-
-		public void setPayeeAcctNo(String payeeAcctNo) {
-			this.payeeAcctNo = payeeAcctNo;
-		}
-
 		public String getTranAmt() {
 			return tranAmt;
 		}
@@ -154,14 +129,6 @@ public class REQ_30041001001 extends REQ_BASE {
 
 		public void setChannelType(String channelType) {
 			this.channelType = channelType;
-		}
-
-		public String getMfflg() {
-			return mfflg;
-		}
-
-		public void setMfflg(String mfflg) {
-			this.mfflg = mfflg;
 		}
 
 		public String getNarrative() {

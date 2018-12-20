@@ -42,6 +42,7 @@ public class TEST_TS002 implements TradeExecutionStrategy {
 		repDto.getRepBody().setBrno("10001");
 		repDto.getRepBody().setTownDate(sdf1.format(new Date()));
 		repDto.getRepBody().setTownTraceno(UUID.randomUUID().toString().replace("-", "").substring(0, 15));
+		repDto.getRepBody().setBackTal("10000.00");
 		return repDto;
 	}
 }

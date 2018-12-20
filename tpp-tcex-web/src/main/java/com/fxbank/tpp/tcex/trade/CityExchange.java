@@ -64,17 +64,18 @@ public class CityExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_30041001001 reqDto = (REQ_30041001001) dto;
 		REP_30041001001 repDto = new REP_30041001001();
-		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
 		// 插入流水表
 		initRecord(reqDto);
-		myLog.info(logger, "商行通兑村镇登记成功，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo());
+		myLog.info(logger, "商行通兑村镇登记成功，渠道日期" + dto.getSysDate() + 
+				"渠道流水号" + dto.getSysTraceno());
 		// 通知村镇记账
 		ESB_REP_TS002 esbRep_TS002 = null;
 		try {
 		    esbRep_TS002 = townCharge(reqDto);
 		}catch(SysTradeExecuteException e) {
 			updateTownRecord(reqDto, "", "", "", "2");
-			myLog.error(logger, "商行通兑村镇村镇记账失败，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo(), e);
+			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
+					"渠道流水号" + dto.getSysTraceno(), e);
 			throw e;
 		}
 		ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
@@ -86,7 +87,8 @@ public class CityExchange implements TradeExecutionStrategy {
 		//村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 		if ("000000".equals(townRetCode)) {
 			updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "1");
-			myLog.info(logger, "商行通兑村镇村镇记账成功，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo());
+			myLog.info(logger, "商行通兑村镇村镇记账成功，渠道日期" + dto.getSysDate() + 
+					"渠道流水号" + dto.getSysTraceno());
 			// 核心记账：将金额从头寸中划至指定账户
 			// 记账状态码
 			String hostCode = null;
@@ -100,7 +102,8 @@ public class CityExchange implements TradeExecutionStrategy {
 			   esbRep_30011000103 = hostCharge(reqDto);
 			}catch(SysTradeExecuteException e) {
 				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
-				myLog.error(logger, "商行通兑村镇核心记账失败，村镇机构" + reqBody.getBrnoFlag() + "付款账号" + reqBody.getPayerAcctNo(), e);
+				myLog.error(logger, "商行通兑村镇核心记账失败，渠道日期" + dto.getSysDate() + 
+						"渠道流水号" + dto.getSysTraceno(), e);
 			}
 			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 			hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
@@ -153,7 +156,8 @@ public class CityExchange implements TradeExecutionStrategy {
 		} else {
 			updateTownRecord(reqDto, "", "", "", "2");
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
-			myLog.error(logger, "村镇记账失败", e);
+			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期"+dto.getSysDate()+
+					"渠道流水号"+dto.getSysTraceno(), e);
 			throw e;
 		}
 		return repDto;
@@ -247,7 +251,7 @@ public class CityExchange implements TradeExecutionStrategy {
 
 		ESB_REQ_30011000103.REQ_BODY reqBody_30011000103 = esbReq_30011000103.getReqBody();
 		// 账号/卡号
-		reqBody_30011000103.setBaseAcctNo(reqBody.getPayeeAcctNo());
+		//reqBody_30011000103.setBaseAcctNo(reqBody.getPayeeAcctNo());
 		// 村镇机构号
 		//reqBody_30011000103.setVillageBrnachId();
 		// 村镇标志 1-于洪 2-铁岭 7-彰武 8-阜蒙
@@ -284,14 +288,10 @@ public class CityExchange implements TradeExecutionStrategy {
 		record.setSourceType(reqBody.getChannelType());
 		record.setTxBranch(reqSysHead.getBranchId());
 		// 现转标志 0现金1转账
-		record.setTxInd(reqBody.getMfflg());
+		record.setTxInd("0");
 		// 通存通兑
 		record.setDcFlag("1");
 		record.setTxAmt(reqBody.getTranAmt());
-		if ("1".equals(reqBody.getMfflg())) {
-			record.setPayeeAcno(reqBody.getPayeeAcctNo());
-			record.setPayeeName(reqBody.getPayeeAcctName());
-		}
 		record.setPayerAcno(reqBody.getPayerAcctNo());
 		record.setPayerName(reqBody.getPayerName());
 		record.setHostState("0");

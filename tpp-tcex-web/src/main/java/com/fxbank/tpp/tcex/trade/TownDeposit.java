@@ -63,10 +63,10 @@ public class TownDeposit implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_TR001 reqDto = (REQ_TR001) dto;
 		REP_TR001 repDto = new REP_TR001();
-		REQ_TR001.REQ_BODY reqBody = reqDto.getReqBody();
 		// 插入流水表
 		initRecord(reqDto);
-		myLog.info(logger, "村镇通存商行登记成功，村镇机构" + reqBody.getBrnoFlag() + "收款账号" + reqDto.getReqBody().getPayeeAcc());
+		myLog.info(logger, "村镇通存商行登记成功，渠道日期" + dto.getSysDate() + 
+				"渠道流水号" + dto.getSysTraceno());
 		// 记账状态码
 		String hostCode = null;
 		String hostMsg = null;
@@ -79,6 +79,8 @@ public class TownDeposit implements TradeExecutionStrategy {
 		  esbRep_30011000103 = hostCharge(reqDto);
 		}catch(SysTradeExecuteException e) {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
+			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + dto.getSysDate() +
+					"渠道流水号"+dto.getSysTraceno(), e);
 			throw e;
 		}
 		hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
@@ -93,6 +95,8 @@ public class TownDeposit implements TradeExecutionStrategy {
 		String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 		// 更新流水表核心记账状态
 	    updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
+	    myLog.info(logger, "村镇通存商行核心记账成功，渠道日期" + dto.getSysDate() + 
+				"渠道流水号" + dto.getSysTraceno());
 	    return repDto;
 	}
 	/** 

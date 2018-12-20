@@ -58,6 +58,9 @@ public class REP_TESTTS002 extends REP_BASE {
 		
 		@JSONField(name = "TOWN_TRACENO")
 		private String townTraceno;	//村镇流水
+		
+		@JSONField(name = "BACK_TAL")
+		private String backTal; //取款后余额
 
 		public String getBrno() {
 			return brno;
@@ -81,6 +84,14 @@ public class REP_TESTTS002 extends REP_BASE {
 
 		public void setTownTraceno(String townTraceno) {
 			this.townTraceno = townTraceno;
+		}
+
+		public String getBackTal() {
+			return backTal;
+		}
+
+		public void setBackTal(String backTal) {
+			this.backTal = backTal;
 		}
 		
 
