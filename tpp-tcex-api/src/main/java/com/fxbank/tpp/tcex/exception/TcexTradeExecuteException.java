@@ -21,6 +21,8 @@ public class TcexTradeExecuteException extends SysTradeExecuteException {
 	public final static String TCEX_E_10004 = "TCEX_E_10004";
 	public final static String TCEX_E_10005 = "TCEX_E_10005";
 	public final static String TCEX_E_10006 = "TCEX_E_10006";
+	public final static String TCEX_E_10007 = "TCEX_E_10007";
+	public final static String TCEX_E_10008 = "TCEX_E_10008";
 	public final static String TCEX_E_10009 = "TCEX_E_10009";
 
 
@@ -34,6 +36,8 @@ public class TcexTradeExecuteException extends SysTradeExecuteException {
 			put(TCEX_E_10004, "村镇记账失败");
 			put(TCEX_E_10005, "村镇头寸查询失败");
 			put(TCEX_E_10006, "商行账户信息查询失败");
+			put(TCEX_E_10007, "村镇冲正失败");
+			put(TCEX_E_10008, "商行核心记账失败");
 			put(TCEX_E_10009, "下载ESB文件失败");
 			
 		}

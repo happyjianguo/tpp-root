@@ -21,6 +21,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR001;
+import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.model.TownInfo;
@@ -79,24 +80,33 @@ public class TownDeposit implements TradeExecutionStrategy {
 		  esbRep_30011000103 = hostCharge(reqDto);
 		}catch(SysTradeExecuteException e) {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
+			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
 			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + dto.getSysDate() +
-					"渠道流水号"+dto.getSysTraceno(), e);
-			throw e;
+					"渠道流水号"+dto.getSysTraceno(), e1);
+			throw e1;
 		}
 		hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 		hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
 		hostSeqno = esbRep_30011000103.getRepBody().getReference();
 		hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
 		// 开户机构
-		String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
+		//String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
 		// 记账机构
 		String accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
 		// 记账结果，00-已记账 01-已挂账
-		String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
+		//String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 		// 更新流水表核心记账状态
-	    updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
-	    myLog.info(logger, "村镇通存商行核心记账成功，渠道日期" + dto.getSysDate() + 
-				"渠道流水号" + dto.getSysTraceno());
+		if("000000".equals(hostCode)) {
+			updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
+			myLog.info(logger, "村镇通存商行核心记账成功，渠道日期" + dto.getSysDate() + 
+						"渠道流水号" + dto.getSysTraceno());		
+		}else {
+			updateHostRecord(reqDto, "", "", "2",hostCode,hostMsg,"");
+			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
+			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + dto.getSysDate() +
+					"渠道流水号"+dto.getSysTraceno(), e);
+			throw e;
+		}
 	    return repDto;
 	}
 	/** 

@@ -74,9 +74,10 @@ public class CityExchange implements TradeExecutionStrategy {
 		    esbRep_TS002 = townCharge(reqDto);
 		}catch(SysTradeExecuteException e) {
 			updateTownRecord(reqDto, "", "", "", "2");
+			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
 			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
-					"渠道流水号" + dto.getSysTraceno(), e);
-			throw e;
+					"渠道流水号" + dto.getSysTraceno(), e1);
+			throw e1;
 		}
 		ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
 		String townBranch = esbRepBody_TS002.getBrno();
@@ -97,60 +98,63 @@ public class CityExchange implements TradeExecutionStrategy {
 			String hostSeqno = null;
 			// 核心日期
 			String hostDate = null;
+			//记账机构
+			String accounting_branch = null;
 			ESB_REP_30011000103 esbRep_30011000103 = null;
 			try {
-			   esbRep_30011000103 = hostCharge(reqDto);
+			    esbRep_30011000103 = hostCharge(reqDto);
+			    hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
+				hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
+				hostSeqno = esbRep_30011000103.getRepBody().getReference();
+				hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
+				accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
+				// 开户机构
+				//String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
+				// 记账结果，00-已记账 01-已挂账
+				//String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 			}catch(SysTradeExecuteException e) {
 				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
 				myLog.error(logger, "商行通兑村镇核心记账失败，渠道日期" + dto.getSysDate() + 
 						"渠道流水号" + dto.getSysTraceno(), e);
 			}
-			hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
-			hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
-			hostSeqno = esbRep_30011000103.getRepBody().getReference();
-			hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
-			// 开户机构
-			String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
-			// 记账机构
-			String accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
-			// 记账结果，00-已记账 01-已挂账
-			String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 			// 更新流水表核心记账状态
 			if("000000".equals(hostCode)) {
 				updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
 			} else {
-				// 多次查询核心，确认是否是延迟原因
-				ESB_REP_30043000101 esb_rep_30043000101=hostTranResult(reqDto);
-				Boolean flag = true; 
-				if(esb_rep_30043000101!=null) {
-	                    String result=esb_rep_30043000101.getRepBody().getAcctResult();
-	                    if("00".equals(result)) {
-	                        flag = false;
-	                    }
-	                }
-				if(flag) {
-					updateHostRecord(reqDto, hostDate, hostSeqno, "2", hostCode, hostMsg,accounting_branch);
+				updateHostRecord(reqDto, "", "", "2", hostCode, hostMsg,"");
 				// 村镇冲正
-					ESB_REP_TS004 esbRep_TS004 = null;
+				ESB_REP_TS004 esbRep_TS004 = null;
+				//村镇冲正返回状态sts 1-成功2-失败
+				String sts = null;
+				String townCancelCode = null;
 				try {	
 				 esbRep_TS004 = townCancel(reqDto, townDate, townTraceNo);
+				 ESB_REP_TS004.REP_BODY esbRepBody_TS004 = esbRep_TS004.getRepBody();
+				 townCancelCode = esbRep_TS004.getRepSysHead().getRet().get(0).getRetCode();
+				 sts = esbRepBody_TS004.getSts();
 				}catch(SysTradeExecuteException e) {
 					updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "6");
-					throw e;
+					TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10007);
+					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + dto.getSysDate() + 
+							"渠道流水号" + dto.getSysTraceno(), e1);
+					throw e1;
 				}
-				ESB_REP_TS004.REP_BODY esbRepBody_TS004 = esbRep_TS004.getRepBody();
-				String sts = esbRepBody_TS004.getSts();
-				// 更新流水表村镇记账状态,村镇冲正返回状态sts 1-成功2-失败
+				// 更新流水表村镇记账状态
 				// 村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 				String townState = "6";
-				if ("1".equals(sts)) {
-					townState = "5";
-				}else if("2".equals(sts)) {
-					townState = "6";
+				if("000000".equals(townCancelCode)) {
+					if ("1".equals(sts)) {
+						townState = "5";
+						myLog.info(logger, "商行通兑村镇村镇冲正成功，渠道日期" + dto.getSysDate() + 
+								"渠道流水号" + dto.getSysTraceno());
+					}
 				}
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, townState);
-				}else {
-					updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
+				if("6".equals(townState)) {
+					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10007);
+					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + dto.getSysDate() + 
+							"渠道流水号" + dto.getSysTraceno());
+					throw e;
 				}
 			}
 		} else {
