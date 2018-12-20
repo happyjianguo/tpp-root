@@ -83,7 +83,7 @@ public class TownExchange implements TradeExecutionStrategy {
 		Integer platDate = null;
 		//平台流水
 		Integer platTraceNo = null;
-		//处理状态
+		//处理状态 1-成功2-失败
 		String sts = null;
 		try {
 		  esbRep_30011000103 = hostCharge(reqDto);
@@ -101,7 +101,7 @@ public class TownExchange implements TradeExecutionStrategy {
 			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
 			myLog.error(logger, "村镇通兑商行核心记账失败，渠道日期" + dto.getSysDate() +
 					"渠道流水号"+dto.getSysTraceno(), e1);
-			throw e1;
+			sts = "2";
 		}
 		platDate = reqDto.getSysDate();
 		platTraceNo = reqDto.getSysTraceno();
@@ -110,12 +110,13 @@ public class TownExchange implements TradeExecutionStrategy {
 			updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
 		    myLog.info(logger, "村镇通兑商行核心记账成功，渠道日期" + dto.getSysDate() + 
 					"渠道流水号" + dto.getSysTraceno());
+		    sts = "1";
 		}else {
 			updateHostRecord(reqDto, "", "", "2",hostCode,hostMsg,"");
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
 			myLog.error(logger, "村镇通兑商行核心记账失败，渠道日期" + dto.getSysDate() +
 					"渠道流水号"+dto.getSysTraceno(), e);
-			throw e;
+			sts = "2";
 		}
 		repBody.setPlatDate(platDate.toString());
 		repBody.setPlatTraceno(platTraceNo.toString());

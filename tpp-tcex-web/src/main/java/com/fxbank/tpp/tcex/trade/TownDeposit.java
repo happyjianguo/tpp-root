@@ -83,7 +83,7 @@ public class TownDeposit implements TradeExecutionStrategy {
 		Integer platDate = null;
 		//平台流水
 		Integer platTraceNo = null;
-		//处理状态
+		//处理状态 1-成功2-失败
 		String sts = null;
 		try {
 		  esbRep_30011000103 = hostCharge(reqDto);
