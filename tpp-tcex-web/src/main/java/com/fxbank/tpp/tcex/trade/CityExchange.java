@@ -208,6 +208,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		esbReq_TS002.setReqSysHead(reqSysHead);
 		ESB_REQ_TS002.REQ_BODY esbReqBody_TS002 = esbReq_TS002.getReqBody();
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
+		esbReqBody_TS002.setBrnoFlag(reqBody.getBrnoFlag());
 		esbReqBody_TS002.setPlatDate(reqDto.getSysDate().toString());
 		esbReqBody_TS002.setPlatTraceno(reqDto.getSysTraceno().toString());
 		esbReqBody_TS002.setTxAmt(reqBody.getTranAmt());
