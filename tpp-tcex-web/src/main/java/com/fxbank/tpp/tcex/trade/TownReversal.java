@@ -66,9 +66,17 @@ public class TownReversal implements TradeExecutionStrategy {
 		reqBody_30014000101.setReversalReason("村镇【"+txBrno+"】柜面通发起冲正");
 		reqBody_30014000101.setEventType("");
 		
-		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101, ESB_REP_30014000101.class);
-		String code = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
-		String msg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
+		String code="",msg="";
+		try {
+			ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101, ESB_REP_30014000101.class);
+			code = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
+			msg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
+		} catch (Exception e) {
+			code="error";
+			msg = e.getMessage();
+			System.out.println("村镇【"+txBrno+"】柜面通冲正失败:"+e);
+		}
+		
 		
 		logger.info("村镇【"+txBrno+"】柜面通冲正反馈码【"+code+"】，反馈信息【"+msg+"】");
 		

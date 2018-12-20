@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
@@ -39,6 +40,7 @@ import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
  * @author liye
  *
  */
+@Service("REQ_TR003")
 public class TownDepositConfirm implements TradeExecutionStrategy {
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
 
@@ -78,9 +80,12 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		BigDecimal txAmt = model.getTxAmt();
 		String payeeAcno = model.getPayeeAcno();
 		
+		
+		testHx(myLog,txBrno,txTel,platTrance,hostTrance,dto,reqDto);
+		
 		//登记超时
 		//调用核心接口确认该笔流水是否入账成功，若登记成功直接反馈，若三次查询都失败则调用核心接口重新登记，登记结果渠道不关心，存款确认反馈状态只有成功
-		
+		/**
 		//登记失败
 		//调用核心记账接口
 		String flag="0";
@@ -169,7 +174,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		record.setRetMsg(retMsg);
 		record.setHostBranch(hostBranch);
 		rcvTraceService.rcvTraceUpd(record);
-		
+		*/
 		REP_TR003 repDto = new REP_TR003();
 		repDto.getRepBody().setSts("1");
 		repDto.getRepBody().setPlatDate(platDate.toString());
@@ -177,6 +182,26 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		
 		return repDto;
 	}
+
+	private void testHx(MyLog myLog, String txBrno, String txTel, Integer platTrance, String hostTrance, DataTransObject dto, REQ_TR003 reqDto) throws SysTradeExecuteException {
+		//调用核心接口确认该笔流水是否入账成功,
+		ESB_REQ_30043000101 esbReq_30043000101 = new ESB_REQ_30043000101(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043000101.getReqSysHead(), reqDto)
+				.setBranchId(txBrno).setUserId(txTel).build();
+		esbReq_30043000101.setReqSysHead(reqSysHead);	
+		ESB_REQ_30043000101.REQ_BODY reqBody_30043000101 = esbReq_30043000101.getReqBody();
+		reqBody_30043000101.setChannelSeqNo(platTrance.toString());
+		reqBody_30043000101.setReference(hostTrance);
+		reqBody_30043000101.setChannelType("0");
+		try {
+			ESB_REP_30043000101 esbRep_30043000101 = forwardToESBService.sendToESB(esbReq_30043000101, reqBody_30043000101, ESB_REP_30043000101.class);
+			System.out.println("存款确认结果："+esbRep_30043000101.getRepBody().getAcctResult());
+		}catch (Exception e) {
+			System.out.println("存款确认："+e.getMessage());
+		}
+		
+	}
+	
 	
 
 }

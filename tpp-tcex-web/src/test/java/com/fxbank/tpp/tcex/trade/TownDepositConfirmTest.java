@@ -80,8 +80,8 @@ public class TownDepositConfirmTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setTownDate("20180928");
-		reqBody.setTownTraceno("123456");
+		reqBody.setTownDate("20181218");
+		reqBody.setTownTraceno("70a1df98c3b74f1");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
