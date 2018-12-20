@@ -64,6 +64,7 @@ public class TownExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_TR002 reqDto = (REQ_TR002) dto;
 		REP_TR002 repDto = new REP_TR002();
+		REP_TR002.REP_BODY repBody = repDto.getRepBody();
 		// 插入流水表
 		initRecord(reqDto);
 		myLog.info(logger, "村镇通兑商行登记成功，渠道日期" + dto.getSysDate() + 
@@ -75,9 +76,26 @@ public class TownExchange implements TradeExecutionStrategy {
 		String hostSeqno = null;
 		// 核心日期
 		String hostDate = null;
+		// 记账机构
+		String accounting_branch = null;
 		ESB_REP_30011000103 esbRep_30011000103 = null;
+		//平台日期
+		Integer platDate = null;
+		//平台流水
+		Integer platTraceNo = null;
+		//处理状态
+		String sts = null;
 		try {
 		  esbRep_30011000103 = hostCharge(reqDto);
+		  hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
+		  hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
+		  hostSeqno = esbRep_30011000103.getRepBody().getReference();
+		  hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
+		  accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
+		  // 开户机构
+		  //String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
+		  // 记账结果，00-已记账 01-已挂账
+		  //String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 		}catch(SysTradeExecuteException e) {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
 			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
@@ -85,16 +103,8 @@ public class TownExchange implements TradeExecutionStrategy {
 					"渠道流水号"+dto.getSysTraceno(), e1);
 			throw e1;
 		}
-		hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
-		hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
-		hostSeqno = esbRep_30011000103.getRepBody().getReference();
-		hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
-		// 开户机构
-		//String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
-		// 记账机构
-		String accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
-		// 记账结果，00-已记账 01-已挂账
-		//String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
+		platDate = reqDto.getSysDate();
+		platTraceNo = reqDto.getSysTraceno();
 		// 更新流水表核心记账状态
 		if("000000".equals(hostCode)) {
 			updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
@@ -107,6 +117,9 @@ public class TownExchange implements TradeExecutionStrategy {
 					"渠道流水号"+dto.getSysTraceno(), e);
 			throw e;
 		}
+		repBody.setPlatDate(platDate.toString());
+		repBody.setPlatTraceno(platTraceNo.toString());
+		repBody.setSts(sts);
 	    return repDto;
 	}
 
