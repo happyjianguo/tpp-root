@@ -52,10 +52,15 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		REQ_30042000307.REQ_BODY reqBody = reqDto.getReqBody();
 		String payerAcno = reqBody.getBasrAcctNo();
 		String brnoFlag = reqBody.getBrnoFlag();
+		// 交易机构
+		String txBrno = reqDto.getReqSysHead().getBranchId();
+		// 柜员号
+		String txTel = reqDto.getReqSysHead().getUserId();
+				
 		//请求村镇账户信息接口，反馈结果写入REP_TSK01
 		
 		ESB_REQ_TSK01 esbReq_tsk01 = new ESB_REQ_TSK01(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tsk01.getReqSysHead(),reqDto).setBranchId("22").setUserId("33").build();
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tsk01.getReqSysHead(),reqDto).setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_tsk01.setReqSysHead(reqSysHead);
 		ESB_REQ_TSK01.REQ_BODY esbReqBody_tsk01 = esbReq_tsk01.getReqBody();
 		esbReqBody_tsk01.setPayerAcno(payerAcno);
@@ -68,7 +73,7 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		repBody.setBasrAcctNo(esbRep_tsk01.getRepBody().getPayerAcno());
 		repBody.setAcctName(esbRep_tsk01.getRepBody().getPayerName());
 		repBody.setAcctSqNoT(esbRep_tsk01.getRepBody().getAcnoSeq());
-		repBody.setBalance(esbRep_tsk01.getRepBody().getBal());
+//		repBody.setBalance(esbRep_tsk01.getRepBody().getBal());
 		
 //		if("000000".equals(esbRep_tsk01.getRepSysHead().getRet().get(0).getRetCode())) {
 //		}else {
