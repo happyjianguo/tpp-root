@@ -36,10 +36,8 @@ public class SndTraceService implements ISndTraceService{
 		tppSndTraceLog.setTxInd(record.getTxInd());
 		tppSndTraceLog.setDcFlag(record.getDcFlag());
 		tppSndTraceLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
-		if("1".equals(record.getTxInd())) {
 		tppSndTraceLog.setPayerAcno(record.getPayerAcno());
 		tppSndTraceLog.setPayerName(record.getPayerName());
-		}
 		tppSndTraceLog.setPayeeAcno(record.getPayeeAcno());
 		tppSndTraceLog.setPayeeName(record.getPayeeName());
 		tppSndTraceLog.setHostState(record.getHostState());
