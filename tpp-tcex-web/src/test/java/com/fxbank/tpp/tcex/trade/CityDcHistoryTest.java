@@ -56,8 +56,8 @@ public class CityDcHistoryTest {
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("BRANCH_ID");
-		reqSysHead.setUserId("USER_ID");
+		reqSysHead.setBranchId("00001");
+		reqSysHead.setUserId("907004");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -83,7 +83,7 @@ public class CityDcHistoryTest {
 		reqBody.setEndDate("20181206");
 		reqBody.setMinAmt("100.00");
 		reqBody.setMaxAmt("220000.00");
-		reqBody.setBrnoFlag("1");
+		reqBody.setBrnoFlag("2");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
@@ -94,6 +94,7 @@ public class CityDcHistoryTest {
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
 		REP_30043002701 rep = JsonUtil.toBean(repContent, REP_30043002701.class);
+		System.out.println(rep.getRepBody().getArrayMsg().size());
 	}
 	
 }

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TppDayCheckLogMapper extends MyMapper<TppDayCheckLog> {
     List<TppDayCheckLog> selectAll();
+	void deleteAll(String direction);
 }

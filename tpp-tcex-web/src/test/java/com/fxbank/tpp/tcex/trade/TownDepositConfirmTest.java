@@ -59,8 +59,8 @@ public class TownDepositConfirmTest {
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("BRANCH_ID");
-		reqSysHead.setUserId("USER_ID");
+		reqSysHead.setBranchId("00001");
+		reqSysHead.setUserId("907004");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -80,8 +80,8 @@ public class TownDepositConfirmTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setTownDate("20181218");
-		reqBody.setTownTraceno("70a1df98c3b74f1");
+		reqBody.setTownDate("20181221");
+		reqBody.setTownTraceno("2ab280167fb3494");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

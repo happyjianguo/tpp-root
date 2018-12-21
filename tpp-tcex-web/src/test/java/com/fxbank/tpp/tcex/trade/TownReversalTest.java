@@ -55,8 +55,8 @@ public class TownReversalTest {
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("BRANCH_ID");
-		reqSysHead.setUserId("USER_ID");
+		reqSysHead.setBranchId("02002");
+		reqSysHead.setUserId("002241");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -76,8 +76,8 @@ public class TownReversalTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setPlatDate("20180928");
-		reqBody.setPlatTraceno("5099");
+		reqBody.setPlatDate("20180927");
+		reqBody.setPlatTraceno("5080");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

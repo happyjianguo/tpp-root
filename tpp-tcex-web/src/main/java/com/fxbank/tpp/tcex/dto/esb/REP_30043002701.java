@@ -32,7 +32,7 @@ public class REP_30043002701 extends REP_BASE {
 		
     }
 
-    public class TMSG{
+    public static class TMSG{
 		@JSONField(name = "SYSTEM_DATE")
         private String systemDate;//平台日期
 		

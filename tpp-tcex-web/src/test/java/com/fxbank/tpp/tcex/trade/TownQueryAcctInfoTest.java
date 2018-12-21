@@ -57,8 +57,8 @@ public class TownQueryAcctInfoTest {
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("BRANCH_ID");
-		reqSysHead.setUserId("USER_ID");
+		reqSysHead.setBranchId("00001");
+		reqSysHead.setUserId("907004");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -78,7 +78,7 @@ public class TownQueryAcctInfoTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setPayerAcno("613166001015086828");
+		reqBody.setPayerAcno("623166001015086827");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

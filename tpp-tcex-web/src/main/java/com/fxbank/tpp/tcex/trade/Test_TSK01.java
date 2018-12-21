@@ -37,7 +37,6 @@ public class Test_TSK01 extends TradeBase implements TradeExecutionStrategy {
 		repDto.getRepBody().setPayerAcno("623166001015086827");
 		repDto.getRepBody().setPayerName("张三");
 		repDto.getRepBody().setAcnoSeq("1");
-		repDto.getRepBody().setBal("50000");
 		
 		System.out.println("反馈报文："+JsonUtil.toJson(repDto));
 		System.out.println("模拟反馈村镇账户信息,REQ_TEST_TSK01结束");

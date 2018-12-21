@@ -20,4 +20,7 @@
     ccy, tx_amt, accountno, reversal, tx_status, direction
     from tpp_day_check_log
   </select>
+  <select id="deleteAll" >
+    delete from tpp_day_check_log where direction = #{direction}
+  </select>
 </mapper>

@@ -14,4 +14,6 @@ public interface IDayCheckLogService {
 	
 	List<DayCheckLogInitModel> getDayCheckLog(MyLog myLog,Integer sysTime, Integer sysTraceno,Integer platDate,String direction) throws SysTradeExecuteException;
 
+	void delete(String direction)throws SysTradeExecuteException; 
+
 }

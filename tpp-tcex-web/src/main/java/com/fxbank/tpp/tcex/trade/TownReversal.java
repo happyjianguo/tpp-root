@@ -23,6 +23,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
+import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
 /**
@@ -56,13 +57,17 @@ public class TownReversal implements TradeExecutionStrategy {
 		// 柜员号
 		String txTel = reqDto.getReqSysHead().getUserId();
 		
+		RcvTraceQueryModel model = rcvTraceService.getRcvTraceByKey(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno(),
+				Integer.parseInt(platDate), Integer.parseInt(platTraceno));
+		
 		//调用核心冲正接口
 		ESB_REQ_30014000101 esbReq_30014000101 = new ESB_REQ_30014000101(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto)
 				.setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
-		reqBody_30014000101.setChannelSeqNo(platTraceno);
+//		reqBody_30014000101.setChannelSeqNo(platTraceno);
+		reqBody_30014000101.setReference(model.getHostTraceno());
 		reqBody_30014000101.setReversalReason("村镇【"+txBrno+"】柜面通发起冲正");
 		reqBody_30014000101.setEventType("");
 		

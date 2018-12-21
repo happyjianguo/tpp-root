@@ -18,6 +18,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30043002701;
+import com.fxbank.tpp.tcex.dto.esb.REP_30043002701.TMSG;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.SndTraceQueryModel;
@@ -71,7 +72,7 @@ public class CityDcHistory extends TradeBase implements TradeExecutionStrategy {
 		REP_30043002701.REP_BODY repBody = repDto.getRepBody();
 		List<REP_30043002701.TMSG> list = new ArrayList<>();
 		for(RcvTraceQueryModel rcv : rcvTraceQueryModelList) {
-			REP_30043002701.TMSG t = repDto.new TMSG();
+			REP_30043002701.TMSG t = new TMSG();
 			t.setSystemDate(rcv.getPlatDate()==null?"":rcv.getPlatDate().toString());
 			t.setSystemReference(rcv.getPlatTrace()==null?"":rcv.getPlatTrace().toString());
 			t.setDepDraInd(rcv.getDcFlag());
@@ -96,7 +97,7 @@ public class CityDcHistory extends TradeBase implements TradeExecutionStrategy {
 			list.add(t);
 		}
 		for(SndTraceQueryModel rcv : sndTraceQueryModelList) {
-			REP_30043002701.TMSG t = repDto.new TMSG();
+			REP_30043002701.TMSG t = new TMSG();
 			t.setSystemDate(rcv.getPlatDate()==null?"":rcv.getPlatDate().toString());
 			t.setSystemReference(rcv.getPlatTrace()==null?"":rcv.getPlatTrace().toString());
 			t.setDepDraInd(rcv.getDcFlag());

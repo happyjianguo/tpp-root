@@ -167,6 +167,8 @@ public class RcvTraceService implements IRcvTraceService{
 		model.setTownDate(data.getTownDate());
 		model.setTownState(data.getTownState());
 		model.setTownTraceno(model.getTownTraceno());
+		model.setTxAmt(data.getTxAmt());
+		model.setTownFlag(data.getTownFlag());
 		return model;
 	}
 

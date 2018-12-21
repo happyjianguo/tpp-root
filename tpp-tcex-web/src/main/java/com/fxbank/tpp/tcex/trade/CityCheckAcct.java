@@ -83,6 +83,23 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 	private MyJedis myJedis;
 
 	private final static String COMMON_PREFIX = "tcex_common.";
+//	
+//	@Override
+//	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
+//		MyLog myLog = logPool.get();
+//		
+//		REQ_30042001701 reqDto = (REQ_30042001701)dto;
+//		//对账日期
+//		String date = reqDto.getReqBody().getCollateDt();
+//		// 交易机构
+//		String txBrno = reqDto.getReqSysHead().getBranchId();
+//		// 柜员号
+//		String txTel = reqDto.getReqSysHead().getUserId();
+//				
+//		REP_30042001701 repDto = new REP_30042001701();
+//		
+//		testHx(myLog, date, txBrno, txTel, dto);
+//	}
 	
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -98,9 +115,6 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				
 		REP_30042001701 repDto = new REP_30042001701();
 		
-		testHx(myLog, date, txBrno, txTel, dto);
-		
-		/**
 		//核对来账
 		List<DayCheckLogInitModel> rcvDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "I");
 		checkRcvLog(myLog, dto, rcvDayCheckLogList, date);
@@ -207,14 +221,13 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		ESB_REP_TCHK01 esbRep_tchk01 = forwardToTownService.sendToTown(esbReq_tchk01, esbReqBody_tchk01, ESB_REP_TCHK01.class);
 		if("000000".equals(esbRep_tchk01.getRepSysHead().getRet().get(0).getRetCode())) {
 			System.out.println("柜面通【"+date+"】对账成功:");
-			repDto.set
 		}else {
 			System.out.println("柜面通【\"+date+\"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
 			myLog.error(logger, "柜面通【\"+date+\"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
 			throw e;
 		}
-		*/
+
 		return repDto;
 	}
 	
@@ -463,6 +476,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		BufferedReader br = null;
 		myLog.info(logger, "账户变动信息入库开始");
 		try {
+			dayCheckLogService.delete(direction);
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(localFile)),"UTF-8"));
 			String lineTxt=null;
 			while ((lineTxt = br.readLine()) != null) {

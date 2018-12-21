@@ -66,4 +66,9 @@ public class DayCheckLogService implements IDayCheckLogService {
 		return dayCheckLogInitModelList;
 	}
 
+	@Override
+	public void delete(String direction) throws SysTradeExecuteException {
+		mapper.deleteAll(direction);
+	}
+
 }
