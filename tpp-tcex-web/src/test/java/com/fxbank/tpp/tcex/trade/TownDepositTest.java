@@ -52,7 +52,7 @@ public class TownDepositTest {
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
-		reqSysHead.setSourceType("301907");	//网联
+		reqSysHead.setSourceType("LV");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
 		reqSysHead.setBranchId("02002");
 		reqSysHead.setUserId("002241");
