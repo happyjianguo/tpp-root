@@ -34,10 +34,8 @@ public class RcvTraceService implements IRcvTraceService{
 		tppRcvTraceLog.setTxInd(record.getTxInd());
 		tppRcvTraceLog.setDcFlag(record.getDcFlag());
 		tppRcvTraceLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
-		if("1".equals(record.getTxInd())) {
 		tppRcvTraceLog.setPayerAcno(record.getPayerAcno());
 		tppRcvTraceLog.setPayerName(record.getPayerName());
-		}
 		tppRcvTraceLog.setPayeeAcno(record.getPayeeAcno());
 		tppRcvTraceLog.setPayeeName(record.getPayeeName());
 		tppRcvTraceLog.setHostState(record.getHostState());
@@ -47,6 +45,9 @@ public class RcvTraceService implements IRcvTraceService{
 		}
 		if(null != record.getTownTraceNo()) {
 			tppRcvTraceLog.setTownTraceno(record.getTownTraceNo());
+		}
+		if(null != record.getTownBranch()) {
+			tppRcvTraceLog.setTownBranch(record.getTownBranch());
 		}
 		tppRcvTraceLog.setTxTel(record.getTxTel());
 		tppRcvTraceLog.setChkTel(record.getChkTel());

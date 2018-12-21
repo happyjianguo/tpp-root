@@ -52,10 +52,10 @@ public class TownExchangeTest {
 		reqSysHead.setSceneId("02");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
-		reqSysHead.setSourceType("301907");	//网联
+		reqSysHead.setSourceType("LV");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("00001");
-		reqSysHead.setUserId("907004");
+		reqSysHead.setBranchId("02002");
+		reqSysHead.setUserId("002241");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -78,8 +78,8 @@ public class TownExchangeTest {
 		reqBody.setBrnoFlag("1");
 		reqBody.setTxAmt("1000.00");
 		reqBody.setPayerName("张三");
-		reqBody.setPayerAcc("622126010004155270");
-		reqBody.setPayerPwd("123456");
+		reqBody.setPayerAcc("623166000002485919");
+		reqBody.setPayerPwd("9227520302065DA7");
 		reqBody.setIDtype("0");
 		reqBody.setIDno("2110031991");
 		reqBody.setInfo("商行账户在村镇取款");

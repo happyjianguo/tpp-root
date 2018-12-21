@@ -48,10 +48,10 @@ public class CityExchangeTest {
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
-		reqSysHead.setSourceType("301907");	//网联
+		reqSysHead.setSourceType("LV");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("00001");
-		reqSysHead.setUserId("907004");
+		reqSysHead.setBranchId("02002");
+		reqSysHead.setUserId("002241");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -71,8 +71,10 @@ public class CityExchangeTest {
 	@Test
 	public void payOk() throws Exception {
 		
+		reqBody.setBrnoFlag("1");
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcctNo("623166001015086827");
+		reqBody.setPayPassword("");
 		reqBody.setTranAmt("1000.00");
 		reqBody.setChannelType("TCEX");
 		reqBody.setNarrative("测试");

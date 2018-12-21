@@ -17,8 +17,10 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
+import com.fxbank.tpp.esb.model.ses.PasswordModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -27,7 +29,6 @@ import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.model.TownInfo;
 import com.fxbank.tpp.tcex.model.TownList;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
-
 import redis.clients.jedis.Jedis;
 
 /** 
@@ -51,9 +52,12 @@ public class TownExchange implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private IForwardToTownService forwardToTownService;
 	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
+	
 	@Resource
 	private MyJedis myJedis;
-
+	
 	@Reference(version = "1.0.0")
 	private IRcvTraceService rcvTraceService;
 	
@@ -177,8 +181,16 @@ public class TownExchange implements TradeExecutionStrategy {
 		reqBody_30011000103.setTranCcy("CNY");
 		// 交易金额
 		reqBody_30011000103.setTranAmt(reqBody.getTxAmt());
+		PasswordModel passwordModel = new PasswordModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
+				reqDto.getSysTraceno());
+		passwordModel.setAcctNo(reqBody.getPayerAcc());
+		passwordModel.setPassword(reqBody.getPayerPwd());
+		passwordModel.setSourceType(reqDto.getSourceType());
+		passwordModel.setsPINKey(reqBody.getPayerAcc());
+		passwordModel = passwordService.transPin(passwordModel);
 		// 密码
-		reqBody_30011000103.setPassword(reqBody.getPayerPwd());
+		reqBody_30011000103.setPassword(passwordModel.getPassword());
+		
 		ESB_REP_30011000103 esbRep_30011000103 = forwardToESBService.sendToESB(esbReq_30011000103, reqBody_30011000103,
 				ESB_REP_30011000103.class);
 		return esbRep_30011000103;
