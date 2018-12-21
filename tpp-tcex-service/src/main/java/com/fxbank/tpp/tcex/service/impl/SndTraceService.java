@@ -74,6 +74,9 @@ public class SndTraceService implements ISndTraceService{
 		if(null != record.getHostTraceno()) {
 			tppSndTraceLog.setHostTraceno(record.getHostTraceno());
 		}
+		if(null != record.getHostBranch()) {
+			tppSndTraceLog.setHostBranch(record.getHostBranch());
+		}
 		if(null != record.getTownDate()) {
 			tppSndTraceLog.setTownDate(record.getTownDate());
 		}

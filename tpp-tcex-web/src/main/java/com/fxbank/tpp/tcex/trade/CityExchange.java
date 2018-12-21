@@ -119,6 +119,8 @@ public class CityExchange implements TradeExecutionStrategy {
 			}
 			// 更新流水表核心记账状态
 			if("000000".equals(hostCode)) {
+				myLog.info(logger, "商行通兑村镇核心记账成功，渠道日期" + dto.getSysDate() + 
+						"渠道流水号" + dto.getSysTraceno());
 				updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
 			} else {
 				updateHostRecord(reqDto, "", "", "2", hostCode, hostMsg,"");
