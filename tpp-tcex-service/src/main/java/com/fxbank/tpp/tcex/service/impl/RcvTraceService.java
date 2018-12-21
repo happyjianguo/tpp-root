@@ -48,6 +48,9 @@ public class RcvTraceService implements IRcvTraceService{
 		if(null != record.getTownTraceNo()) {
 			tppRcvTraceLog.setTownTraceno(record.getTownTraceNo());
 		}
+		if(null != record.getTownBranch()) {
+			tppRcvTraceLog.setTownBranch(record.getTownBranch());
+		}
 		tppRcvTraceLog.setTxTel(record.getTxTel());
 		tppRcvTraceLog.setChkTel(record.getChkTel());
 		tppRcvTraceLog.setAuthTel(record.getAuthTel());

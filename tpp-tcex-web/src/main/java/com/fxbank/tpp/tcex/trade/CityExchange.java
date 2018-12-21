@@ -256,7 +256,7 @@ public class CityExchange implements TradeExecutionStrategy {
 
 		ESB_REQ_30011000103.REQ_BODY reqBody_30011000103 = esbReq_30011000103.getReqBody();
 		// 账号/卡号
-		//reqBody_30011000103.setBaseAcctNo(reqBody.getPayeeAcctNo());
+		reqBody_30011000103.setBaseAcctNo(reqBody.getPayerAcctNo());
 		// 村镇机构号
 		//reqBody_30011000103.setVillageBrnachId();
 		// 村镇标志 1-于洪 2-铁岭 7-彰武 8-阜蒙
