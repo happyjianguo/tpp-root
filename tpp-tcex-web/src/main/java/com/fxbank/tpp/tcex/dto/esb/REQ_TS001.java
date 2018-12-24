@@ -57,14 +57,8 @@ public class REQ_TS001 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "PAYER_NAME")
-		private String payerName;	//付款人名称
-
-		@JSONField(name = "PAYER_ACC")
-		private String payerAcc;	//付款人账号
-		
-		@JSONField(name = "PAYER_PWD")
-		private String payerPwd;		//付款账户密码
+		@JSONField(name = "BRNO_FLAG")
+		private String brnoFlag;		//村镇机构
 		
 		@JSONField(name = "PAYEE_NAME")
 		private String payeeName;		//收款名称
@@ -90,28 +84,12 @@ public class REQ_TS001 extends REQ_BASE {
 		@JSONField(name = "NOTE_NO")
 		private String noteNo;		//凭证号码
 
-		public String getPayerName() {
-			return payerName;
+		public String getBrnoFlag() {
+			return brnoFlag;
 		}
 
-		public void setPayerName(String payerName) {
-			this.payerName = payerName;
-		}
-
-		public String getPayerAcc() {
-			return payerAcc;
-		}
-
-		public void setPayerAcc(String payerAcc) {
-			this.payerAcc = payerAcc;
-		}
-
-		public String getPayerPwd() {
-			return payerPwd;
-		}
-
-		public void setPayerPwd(String payerPwd) {
-			this.payerPwd = payerPwd;
+		public void setBrnoFlag(String brnoFlag) {
+			this.brnoFlag = brnoFlag;
 		}
 
 		public String getPayeeName() {

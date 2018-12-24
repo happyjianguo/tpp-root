@@ -66,30 +66,34 @@ public class CityExchange implements TradeExecutionStrategy {
 		REP_30041001001 repDto = new REP_30041001001();
 		// 插入流水表
 		initRecord(reqDto);
-		myLog.info(logger, "商行通兑村镇登记成功，渠道日期" + dto.getSysDate() + 
-				"渠道流水号" + dto.getSysTraceno());
+		myLog.info(logger, "商行通兑村镇登记成功，渠道日期" + reqDto.getSysDate() + 
+				"渠道流水号" + reqDto.getSysTraceno());
 		// 通知村镇记账
 		ESB_REP_TS002 esbRep_TS002 = null;
+		String townBranch = null;
+		String townDate = null;
+		String townTraceNo = null;
+		String townRetCode = null;
 		try {
 		    esbRep_TS002 = townCharge(reqDto);
+		    ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
+			townBranch = esbRepBody_TS002.getBrno();
+			townDate = esbRepBody_TS002.getTownDate();
+			townTraceNo = esbRepBody_TS002.getTownTraceno();
+			townRetCode = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
 		}catch(SysTradeExecuteException e) {
 			updateTownRecord(reqDto, "", "", "", "2");
 			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
-			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
-					"渠道流水号" + dto.getSysTraceno(), e1);
+			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期" + reqDto.getSysDate() + 
+					"渠道流水号" + reqDto.getSysTraceno(), e1);
 			throw e1;
 		}
-		ESB_REP_TS002.REP_BODY esbRepBody_TS002 = esbRep_TS002.getRepBody();
-		String townBranch = esbRepBody_TS002.getBrno();
-		String townDate = esbRepBody_TS002.getTownDate();
-		String townTraceNo = esbRepBody_TS002.getTownTraceno();
-		String townRetCode = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
 		// 更新流水表村镇记账状态
 		//村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 		if ("000000".equals(townRetCode)) {
 			updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "1");
-			myLog.info(logger, "商行通兑村镇村镇记账成功，渠道日期" + dto.getSysDate() + 
-					"渠道流水号" + dto.getSysTraceno());
+			myLog.info(logger, "商行通兑村镇村镇记账成功，渠道日期" + reqDto.getSysDate() + 
+					"渠道流水号" + reqDto.getSysTraceno());
 			// 核心记账：将金额从头寸中划至指定账户
 			// 记账状态码
 			String hostCode = null;
@@ -114,13 +118,13 @@ public class CityExchange implements TradeExecutionStrategy {
 				//String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 			}catch(SysTradeExecuteException e) {
 				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
-				myLog.error(logger, "商行通兑村镇核心记账失败，渠道日期" + dto.getSysDate() + 
-						"渠道流水号" + dto.getSysTraceno(), e);
+				myLog.error(logger, "商行通兑村镇核心记账失败，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno(), e);
 			}
 			// 更新流水表核心记账状态
 			if("000000".equals(hostCode)) {
-				myLog.info(logger, "商行通兑村镇核心记账成功，渠道日期" + dto.getSysDate() + 
-						"渠道流水号" + dto.getSysTraceno());
+				myLog.info(logger, "商行通兑村镇核心记账成功，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno());
 				updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
 			} else {
 				updateHostRecord(reqDto, "", "", "2", hostCode, hostMsg,"");
@@ -128,49 +132,49 @@ public class CityExchange implements TradeExecutionStrategy {
 				ESB_REP_TS004 esbRep_TS004 = null;
 				//村镇冲正返回状态sts 1-成功2-失败
 				String sts = null;
-				String townCancelCode = null;
+				String townReversalCode = null;
 				try {	
-				 esbRep_TS004 = townCancel(reqDto, townDate, townTraceNo);
+				 esbRep_TS004 = townReversal(reqDto, townDate, townTraceNo);
 				 ESB_REP_TS004.REP_BODY esbRepBody_TS004 = esbRep_TS004.getRepBody();
-				 townCancelCode = esbRep_TS004.getRepSysHead().getRet().get(0).getRetCode();
+				 townReversalCode = esbRep_TS004.getRepSysHead().getRet().get(0).getRetCode();
 				 sts = esbRepBody_TS004.getSts();
 				}catch(SysTradeExecuteException e) {
 					updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "6");
 					TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10007);
-					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno(), e1);
+					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e1);
 					throw e1;
 				}
 				// 更新流水表村镇记账状态
 				// 村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 				String townState = "6";
-				if("000000".equals(townCancelCode)) {
+				if("000000".equals(townReversalCode)) {
 					if ("1".equals(sts)) {
 						townState = "5";
-						myLog.info(logger, "商行通兑村镇村镇冲正成功，渠道日期" + dto.getSysDate() + 
-								"渠道流水号" + dto.getSysTraceno());
+						myLog.info(logger, "商行通兑村镇村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
+								"渠道流水号" + reqDto.getSysTraceno());
 					}
 				}
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, townState);
 				if("6".equals(townState)) {
 					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10007);
-					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno());
+					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno());
 					throw e;
 				}
 			}
 		} else {
 			updateTownRecord(reqDto, "", "", "", "2");
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
-			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期"+dto.getSysDate()+
-					"渠道流水号"+dto.getSysTraceno(), e);
+			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期"+reqDto.getSysDate()+
+					"渠道流水号"+reqDto.getSysTraceno(), e);
 			throw e;
 		}
 		return repDto;
 	}
 
 	/** 
-	* @Title: townCancel 
+	* @Title: townReversal 
 	* @Description: 村镇撤销
 	* @param reqDto
 	* @param townDate 村镇日期
@@ -179,7 +183,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	* @return ESB_REP_TS004    返回类型 
 	* @throws 
 	*/
-	private ESB_REP_TS004 townCancel(REQ_30041001001 reqDto, String townDate, String townTraceNo)
+	private ESB_REP_TS004 townReversal(REQ_30041001001 reqDto, String townDate, String townTraceNo)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		ESB_REQ_TS004 esbReq_TS004 = new ESB_REQ_TS004(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
