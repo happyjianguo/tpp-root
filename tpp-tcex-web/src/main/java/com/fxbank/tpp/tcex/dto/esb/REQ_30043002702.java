@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_30012002001 
-* @Description: 商行通存村镇业务
+* @ClassName: REQ_30012002002 
+* @Description: 村镇柜面通来账交易信息查询
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_30043002701 extends REQ_BASE {
+public class REQ_30043002702 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_30043002701 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_30043002701(){
-		super.txDesc = "村镇柜面通往账交易信息查询";
+	public REQ_30043002702(){
+		super.txDesc = "村镇柜面通来账交易信息查询";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {

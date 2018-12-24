@@ -7,7 +7,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 import java.util.List;
 
-public class REP_30043002701 extends REP_BASE {
+public class REP_30043002702 extends REP_BASE {
 
     @JSONField(name = "APP_HEAD")
     private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -20,19 +20,19 @@ public class REP_30043002701 extends REP_BASE {
 
     public class REP_BODY{
 		@JSONField(name = "GC_TRAN_INFO_ARRAY")
-        private List<TMSGS> arrayMsg;//公积金账户信息数组
+        private List<TMSGR> arrayMsg;//公积金账户信息数组
 		
-		public List<TMSGS> getArrayMsg() {
+		public List<TMSGR> getArrayMsg() {
 			return arrayMsg;
 		}
-		public void setArrayMsg(List<TMSGS> arrayMsg) {
+		public void setArrayMsg(List<TMSGR> arrayMsg) {
 			this.arrayMsg = arrayMsg;
 		}
 		
 		
     }
 
-    public static class TMSGS{
+    public static class TMSGR{
 		@JSONField(name = "SYSTEM_DATE")
         private String systemDate;//平台日期
 		

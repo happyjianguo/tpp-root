@@ -34,7 +34,7 @@ import redis.clients.jedis.Jedis;
  */
 @Service("REQ_TR005")
 public class TownCashQuery implements TradeExecutionStrategy{
-	private static Logger logger = LoggerFactory.getLogger(CityDcHistory.class);
+	private static Logger logger = LoggerFactory.getLogger(CitySndTraceQuery.class);
 
 
 	@Resource

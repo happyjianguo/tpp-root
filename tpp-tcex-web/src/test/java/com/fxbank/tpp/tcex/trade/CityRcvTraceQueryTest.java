@@ -1,6 +1,7 @@
 package com.fxbank.tpp.tcex.trade;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,38 +24,42 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.tcex.dto.esb.REP_30042001701;
-import com.fxbank.tpp.tcex.dto.esb.REQ_30042001701;
+import com.fxbank.tpp.tcex.dto.esb.REP_30043002701;
+import com.fxbank.tpp.tcex.dto.esb.REP_30043002702;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
+import com.fxbank.tpp.tcex.dto.esb.REQ_30043002702;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class CityCheckAcctTest {
-
+public class CityRcvTraceQueryTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(CitySndTraceQueryTest.class);
+	private static Logger logger = LoggerFactory.getLogger(CityRcvTraceQueryTest.class);
 	
 	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_30042001701 req ;
+	private REQ_30043002702 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_30042001701.REQ_BODY reqBody ;
+	private REQ_30043002702.REQ_BODY reqBody ;
+	
+	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
+	static SimpleDateFormat sdf2=new SimpleDateFormat("HHmmss");
 	
 	@Before
 	public void init(){
-		req = new REQ_30042001701();
+		req = new REQ_30043002702();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300420017");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("300430027");
+		reqSysHead.setSceneId("02");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("02002");
-		reqSysHead.setUserId("002241");
+		reqSysHead.setBranchId("00001");
+		reqSysHead.setUserId("907004");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
 		reqSysHead.setUserLang("CHINESE");
@@ -74,7 +79,13 @@ public class CityCheckAcctTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setCollateDt("20181206");
+//		reqBody.setBegDate(sdf1.format(new Date()));
+//		reqBody.setEndDate(sdf1.format(new Date()));
+		reqBody.setStartDate("20180901");
+		reqBody.setEndDate("20181206");
+		reqBody.setMinAmt("100.00");
+		reqBody.setMaxAmt("220000.00");
+		reqBody.setBrnoFlag("1");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
@@ -84,8 +95,8 @@ public class CityCheckAcctTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30042001701 rep = JsonUtil.toBean(repContent, REP_30042001701.class);
+		REP_30043002702 rep = JsonUtil.toBean(repContent, REP_30043002702.class);
+		System.out.println(rep.getRepBody().getArrayMsg().size());
 	}
 	
-
 }

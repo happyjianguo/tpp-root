@@ -30,9 +30,9 @@ import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class CityDcHistoryTest {
+public class CitySndTraceQueryTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(CityDcHistoryTest.class);
+	private static Logger logger = LoggerFactory.getLogger(CitySndTraceQueryTest.class);
 	
 	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
@@ -83,7 +83,7 @@ public class CityDcHistoryTest {
 		reqBody.setEndDate("20181206");
 		reqBody.setMinAmt("100.00");
 		reqBody.setMaxAmt("220000.00");
-		reqBody.setBrnoFlag("2");
+		reqBody.setBrnoFlag("0");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
