@@ -59,6 +59,17 @@ public class ESB_REQ_TS001 extends ESB_BASE {
 	public class REQ_BODY implements Serializable{
 
 		private static final long serialVersionUID = -8415585719972566411L;
+		
+		@JSONField(name = "BRNO_FLAG")
+		private String brnoFlag;    //村镇机构
+
+		public String getBrnoFlag() {
+			return brnoFlag;
+		}
+
+		public void setBrnoFlag(String brnoFlag) {
+			this.brnoFlag = brnoFlag;
+		}
 
 		@JSONField(name = "PLAT_DATE")
 		private String platDate;	//平台日期
