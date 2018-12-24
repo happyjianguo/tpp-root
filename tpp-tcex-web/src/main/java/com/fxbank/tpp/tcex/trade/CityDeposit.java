@@ -140,6 +140,9 @@ public class CityDeposit implements TradeExecutionStrategy {
 				
 			}
 			else{
+				updateTownRecord(reqDto, "", "", "", "2");
+				myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
+						"渠道流水号" + dto.getSysTraceno() );
 				//核心记账状态，0-登记，1-成功，2-失败，3-超时，5-冲正成功，6-冲正失败，7-冲正超时
 				ESB_REP_30014000101 esbRep_30014000101 = null;
 				String hostReversalCode = null;
