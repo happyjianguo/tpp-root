@@ -42,13 +42,21 @@ public class TEST_TS001 implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REP_TESTTS001 repDto = new REP_TESTTS001();
+		/**
 		List<REP_RET> list = new ArrayList<REP_RET>();
 		REP_RET ret = new REP_RET();
-		ret.setRetCode("1111");
-		ret.setRetMsg("1111");
+		ret.setRetCode("@@@@");
+		ret.setRetMsg("@@@@");
 		list.add(ret);
 		repDto.getRepSysHead().setRet(list);
 		repDto.getRepSysHead().setRetStatus("F");
+		**/
+			try {
+				Thread.sleep(60000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		repDto.getRepBody().setBrno("10001");
 		repDto.getRepBody().setTownDate(sdf1.format(new Date()));
 		repDto.getRepBody().setTownTraceno(UUID.randomUUID().toString().replace("-", "").substring(0, 15));

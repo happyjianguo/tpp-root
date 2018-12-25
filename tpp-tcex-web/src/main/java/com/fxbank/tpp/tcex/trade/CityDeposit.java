@@ -110,36 +110,39 @@ public class CityDeposit implements TradeExecutionStrategy {
 				townTraceNo = esbRepBody_TS001.getTownTraceno();
 				townRetCode = esbRep_TS001.getRepSysHead().getRet().get(0).getRetCode();
 			}catch(SysTradeExecuteException e) {
-				updateTownRecord(reqDto, "", "", "", "2");
-				myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
-						"渠道流水号" + dto.getSysTraceno(), e);
+				if("CIP_E_000004".equals(e.getRspCode())) {
+					updateTownRecord(reqDto, "", "", "", "3");
+					myLog.error(logger, "商行通存村镇村镇记账超时，渠道日期" + dto.getSysDate() + 
+							"渠道流水号" + dto.getSysTraceno(), e);
+					ESB_REP_TS003 esbRep_TS003 = null;
+					String confirmTownDate = null;
+					String confirmTownTraceNo = null;
+					try {
+					    esbRep_TS003 = townDepositConfirm(reqDto);
+					    confirmTownDate = esbRep_TS003.getRepBody().getTownDate();
+					    confirmTownTraceNo = esbRep_TS003.getRepBody().getTownTraceNo();
+					}catch(SysTradeExecuteException e1) {
+						myLog.error(logger, "商行通存村镇存款确认报错，渠道日期" + dto.getSysDate() + 
+								"渠道流水号" + dto.getSysTraceno(), e);
+					}
+					updateTownRecord(reqDto, "", confirmTownDate, confirmTownTraceNo, "4");
+					myLog.info(logger, "商行通存村镇存款确认，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno());
+					return repDto;
+				}else {
+					updateTownRecord(reqDto, "", "", "", "2");
+					myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
+							"渠道流水号" + dto.getSysTraceno(), e);
+				}
+				
+				
 			}
 			
 			//村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 			if("000000".equals(townRetCode)){
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "1");
 				myLog.info(logger, "商行通存村镇村镇记账成功，渠道日期" + dto.getSysDate() + "渠道流水号" + dto.getSysTraceno());				
-			}
-			else if("@@@@".equals(townRetCode)){
-				ESB_REP_TS003 esbRep_TS003 = null;
-				String confirmTownDate = null;
-				String confirmTownTraceNo = null;
-				try {
-				    esbRep_TS003 = townDepositConfirm(reqDto);
-				    confirmTownDate = esbRep_TS003.getRepBody().getTownDate();
-				    confirmTownTraceNo = esbRep_TS003.getRepBody().getTownTraceNo();
-				}catch(SysTradeExecuteException e) {
-					updateTownRecord(reqDto, "", "", "", "2");
-					myLog.error(logger, "商行通存村镇存款确认失败，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno(), e);
-					throw e;
-				}
-				updateTownRecord(reqDto, "", confirmTownDate, confirmTownTraceNo, "4");
-				myLog.info(logger, "商行通存村镇存款确认成功，渠道日期" + reqDto.getSysDate() + 
-						"渠道流水号" + reqDto.getSysTraceno());
-				
-			}
-			else{
+			}else{
 				updateTownRecord(reqDto, "", "", "", "2");
 				myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
 						"渠道流水号" + dto.getSysTraceno() );
