@@ -77,7 +77,7 @@ public class CityDepositTest {
 		
 		reqBody.setBrnoFlag("1");
 		reqBody.setPayeeAcctName("张三");
-		reqBody.setPayeeAcctNo("613166001015086828");
+		reqBody.setPayeeAcctNo("623166000000810480");
 		reqBody.setTranAmt("1000.00");
 		reqBody.setChannelType("TCEX");
 		reqBody.setNarrative("测试");

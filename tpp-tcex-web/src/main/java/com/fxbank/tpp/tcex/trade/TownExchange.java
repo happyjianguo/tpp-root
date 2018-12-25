@@ -52,9 +52,6 @@ public class TownExchange implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private IForwardToTownService forwardToTownService;
 	
-	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
-	
 	@Resource
 	private MyJedis myJedis;
 	
@@ -181,16 +178,10 @@ public class TownExchange implements TradeExecutionStrategy {
 		reqBody_30011000103.setTranCcy("CNY");
 		// 交易金额
 		reqBody_30011000103.setTranAmt(reqBody.getTxAmt());
-		PasswordModel passwordModel = new PasswordModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
-				reqDto.getSysTraceno());
-		passwordModel.setAcctNo(reqBody.getPayerAcc());
-		passwordModel.setPassword(reqBody.getPayerPwd());
-		passwordModel.setSourceType(reqDto.getSourceType());
-		passwordModel.setsPINKey(reqBody.getPayerAcc());
-		passwordModel = passwordService.transPin(passwordModel);
 		// 密码
-		reqBody_30011000103.setPassword(passwordModel.getPassword());
-		
+		reqBody_30011000103.setPassword(reqBody.getPayerPwd());
+		//N新核心O老核心
+		reqBody_30011000103.setNewCoreFlag("N");
 		ESB_REP_30011000103 esbRep_30011000103 = forwardToESBService.sendToESB(esbReq_30011000103, reqBody_30011000103,
 				ESB_REP_30011000103.class);
 		return esbRep_30011000103;

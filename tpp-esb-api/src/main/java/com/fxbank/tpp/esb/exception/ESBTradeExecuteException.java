@@ -17,7 +17,7 @@ public class ESBTradeExecuteException extends SysTradeExecuteException {
 		private static final long serialVersionUID = -6069828754523545158L;
 
 		{
-			put(ESB_E_000001, "调用加密平台转PIN失败");
+			put(ESB_E_000001, "调用加密平台加密失败");
 			
 			
 		}

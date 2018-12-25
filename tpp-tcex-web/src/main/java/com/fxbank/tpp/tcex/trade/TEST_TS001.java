@@ -50,13 +50,14 @@ public class TEST_TS001 implements TradeExecutionStrategy {
 		list.add(ret);
 		repDto.getRepSysHead().setRet(list);
 		repDto.getRepSysHead().setRetStatus("F");
-		**/
+		
 			try {
 				Thread.sleep(60000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			**/
 		repDto.getRepBody().setBrno("10001");
 		repDto.getRepBody().setTownDate(sdf1.format(new Date()));
 		repDto.getRepBody().setTownTraceno(UUID.randomUUID().toString().replace("-", "").substring(0, 15));

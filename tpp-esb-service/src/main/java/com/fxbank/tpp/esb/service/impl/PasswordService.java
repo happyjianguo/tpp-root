@@ -72,4 +72,29 @@ public class PasswordService implements IPasswordService {
 		return model;
 	}
 
+	/** 
+	* @Title: encryptPwd 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param @param model
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public String encryptPwd(MyLog myLog,String pwd) throws SysTradeExecuteException {
+		String password = null;
+		byte[] arbyte = pwd.getBytes();
+		try {
+			HisuTSSCAPIResult rzpkPwd = hisuTSSCAPI.encryptDataBySpecKeyBytes("CZBK", "czbkTotass", "RZPK",3, 0, null, arbyte, arbyte.length);
+			if (rzpkPwd.getErrCode() < 0) {
+				myLog.error(logger, "调用加密平台加密失败");
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000001);
+			}
+			pwd = rzpkPwd.getCipherText();
+		} catch (Exception e) {
+			myLog.error(logger, "调用加密平台加密失败", e);
+			throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000001);
+		}
+		return password;
+	}
 }

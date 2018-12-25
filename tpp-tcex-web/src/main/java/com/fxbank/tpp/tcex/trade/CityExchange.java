@@ -275,6 +275,8 @@ public class CityExchange implements TradeExecutionStrategy {
 		reqBody_30011000103.setTranAmt(reqBody.getTranAmt());
 		// 密码
 		reqBody_30011000103.setPassword(reqBody.getPayPassword());
+		//N新核心O老核心
+		reqBody_30011000103.setNewCoreFlag("N");
 		ESB_REP_30011000103 esbRep_30011000103 = forwardToESBService.sendToESB(esbReq_30011000103, reqBody_30011000103,
 				ESB_REP_30011000103.class);
 		return esbRep_30011000103;

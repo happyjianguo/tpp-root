@@ -43,6 +43,8 @@ public class ESB_REQ_30011000103 extends ESB_BASE {
 		private String tranAmt;//交易金额
 		@JSONField(name = "PASSWORD")
 		private String password;//密码
+		@JSONField(name = "NEW_CORE_FLAG")
+		private String newCoreFlag;//新核心标志
 		
 	public String  getBaseAcctNo(){
 			return baseAcctNo;
@@ -85,6 +87,12 @@ public class ESB_REQ_30011000103 extends ESB_BASE {
 		}
 		public void setPassword(String password){
 			this.password = password;
+		}
+		public String getNewCoreFlag() {
+			return newCoreFlag;
+		}
+		public void setNewCoreFlag(String newCoreFlag) {
+			this.newCoreFlag = newCoreFlag;
 		}
 		
 	}

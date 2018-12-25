@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +23,13 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
+import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.util.JsonUtil;
+import com.fxbank.tpp.esb.model.ses.PasswordModel;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
 
@@ -33,9 +40,15 @@ public class TownExchangeTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(TownExchangeTest.class);
 	
+	@Resource
+	private LogPool logPool;
+	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
 	private static final String URL="http://57.25.8.158:7000/tcex/town.do";
+	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -79,6 +92,8 @@ public class TownExchangeTest {
 		reqBody.setTxAmt("1000.00");
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcc("623166000002485919");
+		MyLog myLog = logPool.get();
+		passwordService.encryptPwd(myLog,"11111");
 		reqBody.setPayerPwd("9227520302065DA7");
 		reqBody.setIDtype("0");
 		reqBody.setIDno("2110031991");

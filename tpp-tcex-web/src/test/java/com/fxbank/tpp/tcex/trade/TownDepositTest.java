@@ -78,7 +78,7 @@ public class TownDepositTest {
 		reqBody.setBrnoFlag("1");
 		reqBody.setTxAmt("1000.00");
 		reqBody.setPayeeName("张三");
-		reqBody.setPayeeAcc("622126010004155270");
+		reqBody.setPayeeAcc("623166000000810480");
 		reqBody.setInfo("商行账户在村镇存款");
 		reqBody.setBrno("10001");
 		reqBody.setTownDate(sdf1.format(new Date()));
