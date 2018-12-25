@@ -130,8 +130,8 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 //						.setBranchId(txBrno).setUserId(txTel).build();
 //				esbReq_30043000101.setReqSysHead(reqSysHead);	
 //				ESB_REQ_30043000101.REQ_BODY reqBody_30043000101 = esbReq_30043000101.getReqBody();
-//				reqBody_30043000101.setChannelSeqNo(platTrance.toString());
-//				reqBody_30043000101.setReference();
+//				//reqBody_30043000101.setChannelSeqNo(platTrance.toString());
+//				reqBody_30043000101.setReference(hostTrance);
 //				reqBody_30043000101.setChannelType("LV");
 //				
 //				try {
@@ -139,7 +139,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 //					System.out.println("记账结果查询："+esbRep_30043000101.getRepBody().getAcctResult());
 //					retCode = esbRep_30043000101.getRepSysHead().getRet().get(0).getRetCode();
 //					retMsg = esbRep_30043000101.getRepSysHead().getRet().get(0).getRetMsg();
-//					if(esbRep_30043000101.getRepBody().getAcctResult().equals("00000")) {
+//					if(esbRep_30043000101.getRepBody().getAcctResult().equals("00")) {
 //						hostDate = esbRep_30043000101.getRepBody().getTranDate();
 //						hostTraceno = esbRep_30043000101.getRepBody().getReference();
 //						break;
@@ -237,12 +237,14 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 				.setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_30043000101.setReqSysHead(reqSysHead);	
 		ESB_REQ_30043000101.REQ_BODY reqBody_30043000101 = esbReq_30043000101.getReqBody();
-		reqBody_30043000101.setChannelSeqNo(platTrance.toString());
-//		reqBody_30043000101.setReference(hostTrance);
+//		reqBody_30043000101.setChannelSeqNo(platTrance.toString());
+		reqBody_30043000101.setReference(hostTrance);
 		reqBody_30043000101.setChannelType("LV");
 		try {
 			ESB_REP_30043000101 esbRep_30043000101 = forwardToESBService.sendToESB(esbReq_30043000101, reqBody_30043000101, ESB_REP_30043000101.class);
 			System.out.println("存款确认结果："+esbRep_30043000101.getRepBody().getAcctResult());
+			esbRep_30043000101.getRepBody().getChannelSeqNo();
+			esbRep_30043000101.getRepBody().getTranDate();
 		}catch (Exception e) {
 			System.out.println("存款确认："+e.getMessage());
 		}

@@ -52,7 +52,7 @@ public class TownCashQuery implements TradeExecutionStrategy{
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_TR005 reqDto = (REQ_TR005) dto;
-		String brno = reqDto.getReqSysHead().getBranchId();
+		String brno = reqDto.getReqBody().getBrnoFlag();
 		// 交易机构
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
@@ -74,7 +74,7 @@ public class TownCashQuery implements TradeExecutionStrategy{
 				townBranch = townInfo.getTownBranch();
 			}
 		}
-				
+		System.out.println("townBranch  = "+townBranch);
 		//调用核心接口查询头寸余额
 		ESB_REQ_30013000801 esbReq_30013000801 = new ESB_REQ_30013000801(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30013000801.getReqSysHead(), reqDto)
