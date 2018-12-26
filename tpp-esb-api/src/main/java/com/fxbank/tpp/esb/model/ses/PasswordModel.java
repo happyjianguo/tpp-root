@@ -15,8 +15,9 @@ public class PasswordModel extends ModelBase implements Serializable {
 
 	private String password;//密码
 	private String acctNo;// 账号
-	private String sourceType;//渠道类型
-	private String sPINKey;// 转PIN的源加密因子
+	private String keyValue;//工作密钥密文
+	private String checkValue;// 工作密钥校验值
+	private String keyModel;//申请密钥类型
 
 	public String getPassword() {
 		return password;
@@ -34,20 +35,29 @@ public class PasswordModel extends ModelBase implements Serializable {
 		this.acctNo = acctNo;
 	}
 
-	public String getsPINKey() {
-		return sPINKey;
+	public String getKeyValue() {
+		return keyValue;
 	}
 
-	public void setsPINKey(String sPINKey) {
-		this.sPINKey = sPINKey;
+	public void setKeyValue(String keyValue) {
+		this.keyValue = keyValue;
 	}
 
-	public String getSourceType() {
-		return sourceType;
+	public String getCheckValue() {
+		return checkValue;
 	}
 
-	public void setSourceType(String sourceType) {
-		this.sourceType = sourceType;
+	public void setCheckValue(String checkValue) {
+		this.checkValue = checkValue;
 	}
+
+	public String getKeyModel() {
+		return keyModel;
+	}
+
+	public void setKeyModel(String keyModel) {
+		this.keyModel = keyModel;
+	}
+
 
 }

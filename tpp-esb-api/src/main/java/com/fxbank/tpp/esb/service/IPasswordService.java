@@ -9,5 +9,7 @@ public interface IPasswordService {
 	
 	public PasswordModel encryptPwd(PasswordModel model) throws SysTradeExecuteException;
 	
+	public PasswordModel genKey(PasswordModel model) throws SysTradeExecuteException;
+	
 //	public MACModel calcMAC(MACModel model) throws SysTradeExecuteException;
 }
