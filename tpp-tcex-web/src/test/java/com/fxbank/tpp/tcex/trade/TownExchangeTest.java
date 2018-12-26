@@ -76,7 +76,7 @@ public class TownExchangeTest {
 		reqSysHead.setSystemId("301907");	//网联
 //		reqSysHead.setSystemId("302200");	//银联
 		reqSysHead.setCompany("COMPANY");
-		reqSysHead.setSourceBranchNo("CZBK|czbkTotass|RZPK");
+		reqSysHead.setSourceBranchNo("");
 		reqSysHead.setDestBranchNo("DEST_BRANCH_NO");
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());

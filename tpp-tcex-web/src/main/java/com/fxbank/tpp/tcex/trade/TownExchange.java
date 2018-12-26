@@ -99,10 +99,10 @@ public class TownExchange implements TradeExecutionStrategy {
 		  //String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 		}catch(SysTradeExecuteException e) {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
-			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
 			myLog.error(logger, "村镇通兑商行核心记账失败，渠道日期" + dto.getSysDate() +
-					"渠道流水号"+dto.getSysTraceno(), e1);
-			sts = "2";
+					"渠道流水号"+dto.getSysTraceno(), e);
+			//sts = "2";
+			throw e;
 		}
 		platDate = reqDto.getSysDate();
 		platTraceNo = reqDto.getSysTraceno();
@@ -143,7 +143,10 @@ public class TownExchange implements TradeExecutionStrategy {
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
 		String txTel = reqDto.getReqSysHead().getUserId();
-		String sourceBranchNo = reqDto.getReqSysHead().getSourceBranchNo();
+		String sourceBranchNo = null;
+		try(Jedis jedis = myJedis.connect()){
+			sourceBranchNo = jedis.get(COMMON_PREFIX+"LV");
+        }
 
 		ESB_REQ_30011000103 esbReq_30011000103 = new ESB_REQ_30011000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());

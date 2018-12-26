@@ -100,7 +100,8 @@ public class TownDeposit implements TradeExecutionStrategy {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
 			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + dto.getSysDate() +
 					"渠道流水号"+dto.getSysTraceno(), e);
-			sts = "2";
+			//sts = "2";
+			throw e;
 		}
 		platDate = reqDto.getSysDate();
 		platTraceNo = reqDto.getSysTraceno();
