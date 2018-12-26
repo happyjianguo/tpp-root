@@ -74,7 +74,7 @@ public class CityCheckAcctTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setCollateDt("20181222");
+		reqBody.setCollateDt("20181225");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

@@ -148,7 +148,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 //					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
 //					throw e;
 //				}
-//			}else if(model.getDcFlag().equals("0")) {
+//			}else if(model.getDcFlag().equals("1")) {
 //				//通兑
 //				//失败、超时
 //				if(!model.getHostState().equals("2")&&!model.getHostState().equals("3")) {
@@ -528,7 +528,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_50015000101.setReqSysHead(reqSysHead);
 		ESB_REQ_50015000101.REQ_BODY esbReqBody_50015000101 = esbReq_50015000101.getReqBody();
-		esbReqBody_50015000101.setChannelType("UC");
+		esbReqBody_50015000101.setChannelType("LV");
 		esbReqBody_50015000101.setStartDate(date);
 		esbReqBody_50015000101.setEndDate(date);
 		esbReqBody_50015000101.setDirection(direction);

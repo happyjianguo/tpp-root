@@ -295,6 +295,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		reqBody_30011000103.setTranCcy("CNY");
 		// 交易金额
 		reqBody_30011000103.setTranAmt(txAmt);
+		reqBody_30011000103.setNewCoreFlag("N");
 
 		try {
 			ESB_REP_30011000103 esbRep_30011000103 = forwardToESBService.sendToESB(esbReq_30011000103, reqBody_30011000103,
