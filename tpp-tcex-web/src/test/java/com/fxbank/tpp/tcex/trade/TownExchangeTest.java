@@ -76,7 +76,7 @@ public class TownExchangeTest {
 		reqSysHead.setSystemId("301907");	//网联
 //		reqSysHead.setSystemId("302200");	//银联
 		reqSysHead.setCompany("COMPANY");
-		reqSysHead.setSourceBranchNo("SOURCE_BRANCH_NO");
+		reqSysHead.setSourceBranchNo("CZBK|czbkTotass|RZPK");
 		reqSysHead.setDestBranchNo("DEST_BRANCH_NO");
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());
@@ -91,11 +91,11 @@ public class TownExchangeTest {
 		reqBody.setBrnoFlag("1");
 		reqBody.setTxAmt("1000.00");
 		reqBody.setPayerName("张三");
-		reqBody.setPayerAcc("623166000002485919");
+		reqBody.setPayerAcc("623166000000810480");
 		PasswordModel passwordModel = new PasswordModel(logPool.get(), 20181226, 10000,
 				1111);
-		passwordModel.setAcctNo("623166000002485919");
-		passwordModel.setPassword("1111");
+		passwordModel.setAcctNo("623166000000810480");
+		passwordModel.setPassword("147258");
 		passwordModel = passwordService.encryptPwd(passwordModel);	
 		reqBody.setPayerPwd(passwordModel.getPassword());
 		reqBody.setIDtype("0");

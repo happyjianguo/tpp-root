@@ -143,11 +143,12 @@ public class TownExchange implements TradeExecutionStrategy {
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
 		String txTel = reqDto.getReqSysHead().getUserId();
+		String sourceBranchNo = reqDto.getReqSysHead().getSourceBranchNo();
 
 		ESB_REQ_30011000103 esbReq_30011000103 = new ESB_REQ_30011000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000103.getReqSysHead(), reqDto)
-				.setBranchId(txBrno).setUserId(txTel).build();
+				.setBranchId(txBrno).setUserId(txTel).setSourceBranchNo(sourceBranchNo).build();
 		esbReq_30011000103.setReqSysHead(reqSysHead);
 
 		ESB_REQ_30011000103.REQ_BODY reqBody_30011000103 = esbReq_30011000103.getReqBody();
