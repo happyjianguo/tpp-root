@@ -92,9 +92,12 @@ public class TownExchangeTest {
 		reqBody.setTxAmt("1000.00");
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcc("623166000002485919");
-		MyLog myLog = logPool.get();
-		passwordService.encryptPwd(myLog,"11111");
-		reqBody.setPayerPwd("9227520302065DA7");
+		PasswordModel passwordModel = new PasswordModel(logPool.get(), 20181226, 10000,
+				1111);
+		passwordModel.setAcctNo("623166000002485919");
+		passwordModel.setPassword("1111");
+		passwordModel = passwordService.encryptPwd(passwordModel);	
+		reqBody.setPayerPwd(passwordModel.getPassword());
 		reqBody.setIDtype("0");
 		reqBody.setIDno("2110031991");
 		reqBody.setInfo("商行账户在村镇取款");

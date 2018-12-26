@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,8 +22,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
+import com.fxbank.tpp.esb.model.ses.PasswordModel;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041001001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041001001;
 
@@ -31,6 +38,9 @@ public class CityExchangeTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityExchangeTest.class);
 	
+	@Resource
+	private LogPool logPool;
+	
 	private static final String URL="http://57.25.8.158:7000/tcex/city.do";
 
 	@Autowired
@@ -39,6 +49,9 @@ public class CityExchangeTest {
 	private REQ_30041001001 req ;
 	private REQ_SYS_HEAD reqSysHead;
 	private REQ_30041001001.REQ_BODY reqBody ;
+	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
 	
 	@Before
 	public void init(){
@@ -74,7 +87,12 @@ public class CityExchangeTest {
 		reqBody.setBrnoFlag("1");
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcctNo("623166001015086827");
-		reqBody.setPayPassword("");
+		PasswordModel passwordModel = new PasswordModel(logPool.get(), 20181226, 10000,
+				1111);
+		passwordModel.setAcctNo("623166001015086827");
+		passwordModel.setPassword("1111");
+		passwordModel = passwordService.encryptPwd(passwordModel);
+		reqBody.setPayPassword(passwordModel.getPassword());
 		reqBody.setTranAmt("1000.00");
 		reqBody.setChannelType("TCEX");
 		reqBody.setNarrative("测试");

@@ -23,8 +23,10 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS002;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS004;
+import com.fxbank.tpp.esb.model.ses.PasswordModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041001001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041001001;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -58,6 +60,9 @@ public class CityExchange implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private ISndTraceService sndTraceService;
+	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
 	
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -224,7 +229,12 @@ public class CityExchange implements TradeExecutionStrategy {
 		esbReqBody_TS002.setTxAmt(reqBody.getTranAmt());
 		esbReqBody_TS002.setPayerName(reqBody.getPayerName());
 		esbReqBody_TS002.setPayerAcc(reqBody.getPayerAcctNo());
-		esbReqBody_TS002.setPayerPwd(reqBody.getPayPassword());
+		PasswordModel passwordModel = new PasswordModel(logPool.get(), reqDto.getSysDate(), 
+				reqDto.getSysTime(),reqDto.getSysTraceno());
+		passwordModel.setAcctNo(reqBody.getPayerAcctNo());
+		passwordModel.setPassword(reqBody.getPayPassword());
+		passwordModel = passwordService.transPin(passwordModel);
+		esbReqBody_TS002.setPayerPwd(passwordModel.getPassword());
 		esbReqBody_TS002.setIDtype(reqBody.getDocumentType());
 		esbReqBody_TS002.setIDno(reqBody.getDocumentID());
 		esbReqBody_TS002.setInfo(reqBody.getNarrative());
