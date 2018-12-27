@@ -86,10 +86,9 @@ public class CityDeposit implements TradeExecutionStrategy {
 			   accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
 			}catch(SysTradeExecuteException e) {
 				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
-				TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
-				myLog.error(logger, "商行通存业务核心记账失败，渠道日期" + dto.getSysDate() + 
-						"渠道流水号" + dto.getSysTraceno());
-				throw e1;
+				myLog.error(logger, "商行通存业务核心记账失败，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno());
+				throw e;
 			}
 		// 更新流水表核心记账状态
 		if("000000".equals(hostCode)) {
@@ -112,8 +111,8 @@ public class CityDeposit implements TradeExecutionStrategy {
 			}catch(SysTradeExecuteException e) {
 				if("CIP_E_000004".equals(e.getRspCode())) {
 					updateTownRecord(reqDto, "", "", "", "3");
-					myLog.error(logger, "商行通存村镇村镇记账超时，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno(), e);
+					myLog.error(logger, "商行通存村镇村镇记账超时，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e);
 					ESB_REP_TS003 esbRep_TS003 = null;
 					String confirmTownDate = null;
 					String confirmTownTraceNo = null;
@@ -122,8 +121,8 @@ public class CityDeposit implements TradeExecutionStrategy {
 					    confirmTownDate = esbRep_TS003.getRepBody().getTownDate();
 					    confirmTownTraceNo = esbRep_TS003.getRepBody().getTownTraceNo();
 					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "商行通存村镇存款确认报错，渠道日期" + dto.getSysDate() + 
-								"渠道流水号" + dto.getSysTraceno(), e);
+						myLog.error(logger, "商行通存村镇存款确认报错，渠道日期" + reqDto.getSysDate() + 
+								"渠道流水号" + reqDto.getSysTraceno(), e);
 					}
 					updateTownRecord(reqDto, "", confirmTownDate, confirmTownTraceNo, "4");
 					myLog.info(logger, "商行通存村镇存款确认，渠道日期" + reqDto.getSysDate() + 
@@ -131,8 +130,8 @@ public class CityDeposit implements TradeExecutionStrategy {
 					return repDto;
 				}else {
 					updateTownRecord(reqDto, "", "", "", "2");
-					myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno(), e);
+					myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e);
 				}
 				
 				
@@ -141,11 +140,12 @@ public class CityDeposit implements TradeExecutionStrategy {
 			//村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 			if("000000".equals(townRetCode)){
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "1");
-				myLog.info(logger, "商行通存村镇村镇记账成功，渠道日期" + dto.getSysDate() + "渠道流水号" + dto.getSysTraceno());				
+				myLog.info(logger, "商行通存村镇村镇记账成功，渠道日期" + reqDto.getSysDate() 
+				+ "渠道流水号" + reqDto.getSysTraceno());				
 			}else{
 				updateTownRecord(reqDto, "", "", "", "2");
-				myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + dto.getSysDate() + 
-						"渠道流水号" + dto.getSysTraceno() );
+				myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno() );
 				//核心记账状态，0-登记，1-成功，2-失败，3-超时，5-冲正成功，6-冲正失败，7-冲正超时
 				ESB_REP_30014000101 esbRep_30014000101 = null;
 				String hostReversalCode = null;
@@ -156,19 +156,19 @@ public class CityDeposit implements TradeExecutionStrategy {
 					hostReversalMsg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
 				}catch(SysTradeExecuteException e) {
 					updateHostRecord(reqDto, "", "", "6", e.getRspCode(), e.getRspMsg(),"");
-					myLog.error(logger, "商行通存村镇冲正失败，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno(), e);
+					myLog.error(logger, "商行通存村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e);
 					throw e;
 				}
 				if("000000".equals(hostReversalCode)) {
 					updateHostRecord(reqDto, hostDate, hostSeqno, "5", hostReversalCode, hostReversalMsg,"");
-					myLog.info(logger, "商行通存村镇冲正成功，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno());
+					myLog.info(logger, "商行通存村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno());
 				}else {
 					updateHostRecord(reqDto, hostDate, hostSeqno, "6", hostCode, hostMsg,"");
 					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10010);
-					myLog.error(logger, "商行通存村镇冲正失败，渠道日期" + dto.getSysDate() + 
-							"渠道流水号" + dto.getSysTraceno(),e);
+					myLog.error(logger, "商行通存村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(),e);
 					throw e;
 				}
 	
@@ -178,8 +178,8 @@ public class CityDeposit implements TradeExecutionStrategy {
 		} else {
 			updateHostRecord(reqDto, hostDate, hostSeqno, "2", hostCode, hostMsg,accounting_branch);
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
-			myLog.error(logger, "商行通兑村镇商行记账失败，渠道日期"+dto.getSysDate()+
-					"渠道流水号"+dto.getSysTraceno(), e);
+			myLog.error(logger, "商行通兑村镇商行记账失败，渠道日期"+reqDto.getSysDate()+
+					"渠道流水号"+reqDto.getSysTraceno(), e);
 			throw e;
 		}
 		return repDto;

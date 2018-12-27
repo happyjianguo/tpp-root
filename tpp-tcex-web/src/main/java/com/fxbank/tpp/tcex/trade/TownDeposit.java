@@ -65,10 +65,14 @@ public class TownDeposit implements TradeExecutionStrategy {
 		REQ_TR001 reqDto = (REQ_TR001) dto;
 		REP_TR001 repDto = new REP_TR001();
 		REP_TR001.REP_BODY repBody = repDto.getRepBody();
+		//平台日期
+		Integer platDate = reqDto.getSysDate();
+		//平台流水
+		Integer platTraceNo = reqDto.getSysTraceno();
 		// 插入流水表
 		initRecord(reqDto);
-		myLog.info(logger, "村镇通存商行登记成功，渠道日期" + dto.getSysDate() + 
-				"渠道流水号" + dto.getSysTraceno());
+		myLog.info(logger, "村镇通存商行登记成功，渠道日期" + platDate + 
+				"渠道流水号" + platTraceNo);
 		// 记账状态码
 		String hostCode = null;
 		String hostMsg = null;
@@ -79,10 +83,6 @@ public class TownDeposit implements TradeExecutionStrategy {
 		//记账机构
 		String accounting_branch = null;
 		ESB_REP_30011000103 esbRep_30011000103 = null;
-		//平台日期
-		Integer platDate = null;
-		//平台流水
-		Integer platTraceNo = null;
 		//处理状态 1-成功2-失败
 		String sts = null;
 		try {
@@ -98,24 +98,22 @@ public class TownDeposit implements TradeExecutionStrategy {
 		  //String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 		}catch(SysTradeExecuteException e) {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
-			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + dto.getSysDate() +
-					"渠道流水号"+dto.getSysTraceno(), e);
+			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + platDate +
+					"渠道流水号"+platTraceNo, e);
 			//sts = "2";
 			throw e;
 		}
-		platDate = reqDto.getSysDate();
-		platTraceNo = reqDto.getSysTraceno();
 		// 更新流水表核心记账状态
 		if("000000".equals(hostCode)) {
 			updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
-			myLog.info(logger, "村镇通存商行核心记账成功，渠道日期" + dto.getSysDate() + 
-						"渠道流水号" + dto.getSysTraceno());
+			myLog.info(logger, "村镇通存商行核心记账成功，渠道日期" + platDate + 
+						"渠道流水号" + platTraceNo);
 			sts = "1";
 		}else {
 			updateHostRecord(reqDto, "", "", "2",hostCode,hostMsg,"");
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
-			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + dto.getSysDate() +
-					"渠道流水号"+dto.getSysTraceno(), e);
+			myLog.error(logger, "村镇通存商行核心记账失败，渠道日期" + platDate +
+					"渠道流水号"+platTraceNo, e);
 			sts = "2";
 		}
 		repBody.setPlatDate(platDate.toString());

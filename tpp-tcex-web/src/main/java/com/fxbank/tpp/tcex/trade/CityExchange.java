@@ -88,10 +88,9 @@ public class CityExchange implements TradeExecutionStrategy {
 			townRetCode = esbRep_TS002.getRepSysHead().getRet().get(0).getRetCode();
 		}catch(SysTradeExecuteException e) {
 			updateTownRecord(reqDto, "", "", "", "2");
-			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10004);
 			myLog.error(logger, "商行通兑村镇村镇记账失败，渠道日期" + reqDto.getSysDate() + 
-					"渠道流水号" + reqDto.getSysTraceno(), e1);
-			throw e1;
+					"渠道流水号" + reqDto.getSysTraceno(), e);
+			throw e;
 		}
 		// 更新流水表村镇记账状态
 		//村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
@@ -145,10 +144,9 @@ public class CityExchange implements TradeExecutionStrategy {
 				 sts = esbRepBody_TS004.getSts();
 				}catch(SysTradeExecuteException e) {
 					updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "6");
-					TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10007);
 					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e1);
-					throw e1;
+							"渠道流水号" + reqDto.getSysTraceno(), e);
+					throw e;
 				}
 				// 更新流水表村镇记账状态
 				// 村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
