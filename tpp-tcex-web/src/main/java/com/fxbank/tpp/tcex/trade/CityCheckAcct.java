@@ -102,7 +102,6 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		return repDto;
 	}
 	
-//	@Override
 //	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 //		MyLog myLog = logPool.get();
 //		
@@ -171,7 +170,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 //			sb.append(model.getPlatDate()).append("|"); //平台日期
 //			sb.append(model.getPlatTrace()).append("|"); //平台流水
 //			sb.append(model.getDcFlag()).append("|"); //通存通兑标志
-//			sb.append("I").append("|");//来往账标志
+//			sb.append("I").append("|");//来账标志
 //			sb.append(model.getSourceType()).append("|");//交易渠道
 //			sb.append(model.getTownBranch()).append("|");//村镇记账机构
 //			sb.append(model.getTxAmt()).append("|");//交易金额
@@ -192,7 +191,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 //			sb.append(model.getPlatDate()).append("|"); //平台日期
 //			sb.append(model.getPlatTrace()).append("|"); //平台流水
 //			sb.append(model.getDcFlag()).append("|"); //通存通兑标志
-//			sb.append("O").append("|");//来往账标志
+//			sb.append("O").append("|");//往账标志
 //			sb.append(model.getSourceType()).append("|");//交易渠道
 //			sb.append(model.getTownBranch()).append("|");//村镇记账机构
 //			sb.append(model.getTxAmt()).append("|");//交易金额
@@ -233,7 +232,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 //	}
 	
 	private void testHx(MyLog myLog, String date, String txBrno, String txTel, DataTransObject dto) throws SysTradeExecuteException {
-		List<DayCheckLogInitModel> rcvDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "I");
+//		List<DayCheckLogInitModel> rcvDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "I");
 		//核对往帐
 		List<DayCheckLogInitModel> SndDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "O");
 		
@@ -490,7 +489,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 
                 DayCheckLogInitModel model = new DayCheckLogInitModel(myLog, sysDate,sysTime,sysTraceno);
                 model.setPlatDate(sysDate); //渠道日期
-                model.setPlatTrace(Integer.parseInt(array[0])); //渠道流水
+                model.setPlatTrace(Integer.parseInt(array[0].substring(14))); //渠道流水
                 model.setSettleDate(Integer.parseInt(array[1]));//清算日期
                 model.setSettleBranch(array[2]); //清算机构
                 model.setHostDate(Integer.parseInt(array[3])); //核心交易日期
@@ -522,10 +521,14 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		
 		
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(Integer.parseInt("00005389"));
+	}
 
 	private String getEsbCheckFile(MyLog myLog, String date, String txBrno, String txTel,DataTransObject dto,String direction) throws SysTradeExecuteException {
 		ESB_REQ_50015000101 esbReq_50015000101 = new ESB_REQ_50015000101(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).build();
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
 		esbReq_50015000101.setReqSysHead(reqSysHead);
 		ESB_REQ_50015000101.REQ_BODY esbReqBody_50015000101 = esbReq_50015000101.getReqBody();
 		esbReqBody_50015000101.setChannelType("LV");

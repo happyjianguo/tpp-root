@@ -77,7 +77,7 @@ public class TownReversalTest {
 	public void payOk() throws Exception {
 		
 		reqBody.setPlatDate("20180928");
-		reqBody.setPlatTraceno("5333");
+		reqBody.setPlatTraceno("5351");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
