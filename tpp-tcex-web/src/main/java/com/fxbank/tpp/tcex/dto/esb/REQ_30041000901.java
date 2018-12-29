@@ -58,8 +58,8 @@ public class REQ_30041000901 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "BRNO_FLAG")
-		private String brnoFlag;    //村镇机构
+		@JSONField(name = "VILLAGE_BRNACH_FLAG")
+		private String villageBrnachFlag;    //村镇机构
 				
 		@JSONField(name = "PAYEE_ACCT_NAME")
 		private String payeeAcctName;		//收款名称
@@ -139,13 +139,15 @@ public class REQ_30041000901 extends REQ_BASE {
 			this.voucherNo = voucherNo;
 		}
 
-		public String getBrnoFlag() {
-			return brnoFlag;
+		public String getVillageBrnachFlag() {
+			return villageBrnachFlag;
 		}
 
-		public void setBrnoFlag(String brnoFlag) {
-			this.brnoFlag = brnoFlag;
+		public void setVillageBrnachFlag(String villageBrnachFlag) {
+			this.villageBrnachFlag = villageBrnachFlag;
 		}
+
+		
 
 		
 	}

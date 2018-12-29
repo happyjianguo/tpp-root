@@ -79,7 +79,7 @@ public class TownQueryKeyTest {
 	@Test
 	public void payOk() throws Exception {
 		//获取两个工作密钥，一个是RZAK做mac的，一个是RZPK做pin的
-		reqBody.setKeyModel("RZPK");
+		reqBody.setKeyModel("RZAK");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

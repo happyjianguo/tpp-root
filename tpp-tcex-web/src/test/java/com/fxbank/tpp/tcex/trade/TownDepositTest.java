@@ -35,7 +35,7 @@ public class TownDepositTest {
 	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
-	private static final String URL="http://57.25.8.158:7000/tcex/town.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;

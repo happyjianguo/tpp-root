@@ -47,6 +47,8 @@ public class SndTraceService implements ISndTraceService{
 		tppSndTraceLog.setAuthTel(record.getAuthTel());
 		tppSndTraceLog.setInfo(record.getInfo());
 		tppSndTraceLog.setTownFlag(record.getTownFlag());
+		tppSndTraceLog.setPrint(record.getPrint());
+		tppSndTraceLog.setCheckFlag(record.getCheckFlag());
 		
 		tppSndTraceLogMapper.insertSelective(tppSndTraceLog);
 	}

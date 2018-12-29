@@ -199,15 +199,16 @@ public class CityDeposit implements TradeExecutionStrategy {
 		record.setTxAmt(reqBody.getTranAmt());
 		record.setTxInd("0");
 		record.setHostState("0");
-		record.setTownFlag(reqBody.getBrnoFlag());
+		record.setTownFlag(reqBody.getVillageBrnachFlag());
 		record.setTownState("0");
 		record.setTxTel(reqSysHead.getUserId());
-		record.setTownFlag(reqBody.getBrnoFlag());
 		record.setPayeeAcno(reqBody.getPayeeAcctNo());
 		record.setPayeeName(reqBody.getPayeeAcctName());
 		// record.setChkTel();
-		// record.setAuthTel();
+		record.setAuthTel(reqSysHead.getAuthUserId());
+		record.setPrint("0");
 		record.setInfo(reqBody.getNarrative());
+		record.setCheckFlag("1");
 		sndTraceService.sndTraceInit(record);
 	}
 	
@@ -217,7 +218,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 
 		REQ_30041000901.REQ_BODY reqBody = reqDto.getReqBody();
 		// 村镇标志
-		String townFlag = reqBody.getBrnoFlag();
+		String townFlag = reqBody.getVillageBrnachFlag();
 		// 交易机构
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
@@ -293,7 +294,7 @@ public class CityDeposit implements TradeExecutionStrategy {
         esbReqBody_TS001.setInfo(reqBody.getNarrative());
         esbReqBody_TS001.setPayeeAcc(reqBody.getPayeeAcctNo());
         esbReqBody_TS001.setPayeeName(reqBody.getPayeeAcctName());
-        esbReqBody_TS001.setBrnoFlag(reqBody.getBrnoFlag());
+        esbReqBody_TS001.setBrnoFlag(reqBody.getVillageBrnachFlag());
         
 		ESB_REP_TS001 esbRep_TS001 = forwardToTownService.sendToTown(esbReq_TS001, esbReqBody_TS001,
 				ESB_REP_TS001.class);

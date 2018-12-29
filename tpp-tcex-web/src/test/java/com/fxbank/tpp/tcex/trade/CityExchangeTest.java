@@ -41,7 +41,7 @@ public class CityExchangeTest {
 	@Resource
 	private LogPool logPool;
 	
-	private static final String URL="http://57.25.8.158:7000/tcex/city.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -76,6 +76,7 @@ public class CityExchangeTest {
 		reqSysHead.setDestBranchNo("DEST_BRANCH_NO");
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());
+		reqSysHead.setAuthUserId("999");
 		reqBody = req.new REQ_BODY(); 
 		req.setReqSysHead(reqSysHead);
 		req.setReqBody(reqBody);
@@ -84,7 +85,7 @@ public class CityExchangeTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrnoFlag("1");
+		reqBody.setVillageBrnachFlag("1");
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcctNo("623166001015086827");
 		PasswordModel passwordModel = new PasswordModel(logPool.get(), 20181226, 10000,

@@ -35,7 +35,7 @@ public class CityDepositTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityDepositTest.class);
 	
-	private static final String URL="http://57.25.8.158:7000/tcex/city.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -67,6 +67,7 @@ public class CityDepositTest {
 		reqSysHead.setDestBranchNo("DEST_BRANCH_NO");
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());
+		reqSysHead.setAuthUserId("999");
 		reqBody = req.new REQ_BODY(); 
 		req.setReqSysHead(reqSysHead);
 		req.setReqBody(reqBody);
@@ -75,7 +76,7 @@ public class CityDepositTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrnoFlag("1");
+		reqBody.setVillageBrnachFlag("1");
 		reqBody.setPayeeAcctName("张三");
 		reqBody.setPayeeAcctNo("623166000000810480");
 		reqBody.setTranAmt("1000.00");

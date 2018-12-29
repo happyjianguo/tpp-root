@@ -82,6 +82,8 @@ public class SndTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 255,message = "info摘要最大长度是255")
 	private String info; //摘要
 	
+	private String checkFlag;//对账标志
+	
 	private String townFlag;//村镇标志
 
 	public String getTownFlag() {
@@ -226,6 +228,14 @@ public class SndTraceInitModel extends ModelBase implements Serializable{
 
 	public void setTownState(String townState) {
 		this.townState = townState;
+	}
+
+	public String getCheckFlag() {
+		return checkFlag;
+	}
+
+	public void setCheckFlag(String checkFlag) {
+		this.checkFlag = checkFlag;
 	}
 	
 }

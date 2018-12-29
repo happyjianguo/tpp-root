@@ -221,7 +221,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		esbReq_TS002.setReqSysHead(reqSysHead);
 		ESB_REQ_TS002.REQ_BODY esbReqBody_TS002 = esbReq_TS002.getReqBody();
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
-		esbReqBody_TS002.setBrnoFlag(reqBody.getBrnoFlag());
+		esbReqBody_TS002.setBrnoFlag(reqBody.getVillageBrnachFlag());
 		esbReqBody_TS002.setPlatDate(reqDto.getSysDate().toString());
 		esbReqBody_TS002.setPlatTraceno(reqDto.getSysTraceno().toString());
 		esbReqBody_TS002.setTxAmt(reqBody.getTranAmt());
@@ -256,7 +256,7 @@ public class CityExchange implements TradeExecutionStrategy {
 
 		REQ_30041001001.REQ_BODY reqBody = reqDto.getReqBody();
 		// 村镇标志
-		String townFlag = reqBody.getBrnoFlag();
+		String townFlag = reqBody.getVillageBrnachFlag();
 		// 交易机构
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
@@ -318,9 +318,11 @@ public class CityExchange implements TradeExecutionStrategy {
 		record.setHostState("0");
 		record.setTownState("0");
 		record.setTxTel(reqSysHead.getUserId());
-		record.setTownFlag(reqBody.getBrnoFlag());
+		record.setTownFlag(reqBody.getVillageBrnachFlag());
 		// record.setChkTel();
-		// record.setAuthTel();
+		record.setAuthTel(reqSysHead.getAuthUserId());
+		record.setPrint("0");
+		record.setCheckFlag("1");
 		record.setInfo(reqBody.getNarrative());
 		sndTraceService.sndTraceInit(record);
 	}
