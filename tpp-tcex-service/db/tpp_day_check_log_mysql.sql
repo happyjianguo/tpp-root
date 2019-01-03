@@ -10,6 +10,7 @@ ccy  varchar(10)  COMMENT '交易币种' ,
 tx_amt  decimal(16,2)  COMMENT '交易金额' ,
 accountno  varchar(50)  COMMENT '交易账户' ,
 reversal  varchar(10)  COMMENT '冲正标志' ,
-tx_status  varchar(10)  COMMENT '交易状态；00-成功 02-冲正' 
+tx_status  varchar(10)  COMMENT '交易状态；00-成功 02-冲正',
+direction  varchar(1)  COMMENT '来往账标识'
 )comment='村镇柜面通日终对账日志' ;
 ALTER TABLE tpp_day_check_log ADD PRIMARY KEY tpp_day_check_log (plat_date,plat_trace);
