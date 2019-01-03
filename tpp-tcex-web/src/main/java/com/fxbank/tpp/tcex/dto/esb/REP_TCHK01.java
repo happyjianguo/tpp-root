@@ -5,7 +5,7 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_TESTTS003 extends REP_BASE {
+public class REP_TCHK01 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,40 +50,6 @@ public class REP_TESTTS003 extends REP_BASE {
 
 
 	public class REP_BODY {
-		@JSONField(name = "TOWN_DATE")
-		private String townDate;	//村镇日期
 		
-		@JSONField(name = "TOWN_TRACENO")
-		private String townTraceNo;	//村镇流水
-		
-		@JSONField(name = "STS")
-		private String sts;	//处理状态
-
-		public String getSts() {
-			return sts;
-		}
-
-		public void setSts(String sts) {
-			this.sts = sts;
-		}
-
-		public String getTownDate() {
-			return townDate;
-		}
-
-		public void setTownDate(String townDate) {
-			this.townDate = townDate;
-		}
-
-		public String getTownTraceNo() {
-			return townTraceNo;
-		}
-
-		public void setTownTraceNo(String townTraceNo) {
-			this.townTraceNo = townTraceNo;
-		}
-		
-
-
 	}
 }

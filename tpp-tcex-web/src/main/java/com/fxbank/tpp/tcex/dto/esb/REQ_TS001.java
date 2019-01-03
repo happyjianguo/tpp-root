@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_30012002001 
+* @ClassName: REQ_TESTTS001
 * @Description: 商行通存村镇业务
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
@@ -56,33 +56,70 @@ public class REQ_TS001 extends REQ_BASE {
 	}
 
 	public class REQ_BODY {
-
+		
 		@JSONField(name = "BRNO_FLAG")
-		private String brnoFlag;		//村镇机构
-		
+		private String brnoFlag;    //村镇机构
+
 		@JSONField(name = "PAYEE_NAME")
-		private String payeeName;		//收款名称
-		
+		private String payeeName;	//收款人名称
+
 		@JSONField(name = "PAYEE_ACC")
-		private String payeeAcc;		//收款账号
+		private String payeeAcc;	//收款人账号
+		
+		@JSONField(name = "PAYER_PWD")
+		private String payerPwd;		//付款账户密码
+		
+		@JSONField(name = "PLAT_DATE")
+		private String platDate;		//平台日期
+		
+		@JSONField(name = "PLAT_TRACENO")
+		private String platTraceno;		//平台流水
 		
 		@JSONField(name = "TX_AMT")
 		private String txAmt;		//交易金额
 		
-		@JSONField(name = "CHNL")
-		private String chnl;		//交易渠道
-		
-		@JSONField(name = "TXIND")
-		private String txInd;		//现转标志
-		
 		@JSONField(name = "INFO")
 		private String info;		//摘要
 		
-		@JSONField(name = "NOTE_TYPE")
-		private String noteType;		//凭证种类
-		
-		@JSONField(name = "NOTE_NO")
-		private String noteNo;		//凭证号码
+		public String getPayerPwd() {
+			return payerPwd;
+		}
+
+		public void setPayerPwd(String payerPwd) {
+			this.payerPwd = payerPwd;
+		}
+
+		public String getPlatDate() {
+			return platDate;
+		}
+
+		public void setPlatDate(String platDate) {
+			this.platDate = platDate;
+		}
+
+		public String getPlatTraceno() {
+			return platTraceno;
+		}
+
+		public void setPlatTraceno(String platTraceno) {
+			this.platTraceno = platTraceno;
+		}
+
+		public String getTxAmt() {
+			return txAmt;
+		}
+
+		public void setTxAmt(String txAmt) {
+			this.txAmt = txAmt;
+		}
+
+		public String getInfo() {
+			return info;
+		}
+
+		public void setInfo(String info) {
+			this.info = info;
+		}
 
 		public String getBrnoFlag() {
 			return brnoFlag;
@@ -106,54 +143,6 @@ public class REQ_TS001 extends REQ_BASE {
 
 		public void setPayeeAcc(String payeeAcc) {
 			this.payeeAcc = payeeAcc;
-		}
-
-		public String getTxAmt() {
-			return txAmt;
-		}
-
-		public void setTxAmt(String txAmt) {
-			this.txAmt = txAmt;
-		}
-
-		public String getChnl() {
-			return chnl;
-		}
-
-		public void setChnl(String chnl) {
-			this.chnl = chnl;
-		}
-
-		public String getTxInd() {
-			return txInd;
-		}
-
-		public void setTxInd(String txInd) {
-			this.txInd = txInd;
-		}
-
-		public String getInfo() {
-			return info;
-		}
-
-		public void setInfo(String info) {
-			this.info = info;
-		}
-
-		public String getNoteType() {
-			return noteType;
-		}
-
-		public void setNoteType(String noteType) {
-			this.noteType = noteType;
-		}
-
-		public String getNoteNo() {
-			return noteNo;
-		}
-
-		public void setNoteNo(String noteNo) {
-			this.noteNo = noteNo;
 		}
 
 		

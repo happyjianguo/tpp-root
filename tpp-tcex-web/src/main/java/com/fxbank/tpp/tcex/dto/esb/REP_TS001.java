@@ -50,7 +50,49 @@ public class REP_TS001 extends REP_BASE {
 
 
 	public class REP_BODY {
+		@JSONField(name = "BRNO")
+		private String brno;	//村镇记账机构
+		
+		@JSONField(name = "TOWN_DATE")
+		private String townDate;	//村镇日期
+		
+		@JSONField(name = "TOWN_TRACENO")
+		private String townTraceno;	//村镇流水
+		
+		@JSONField(name = "BACK_TAL")
+		private String backTal; //取款后余额
 
+		public String getBrno() {
+			return brno;
+		}
+
+		public void setBrno(String brno) {
+			this.brno = brno;
+		}
+
+		public String getTownDate() {
+			return townDate;
+		}
+
+		public void setTownDate(String townDate) {
+			this.townDate = townDate;
+		}
+
+		public String getTownTraceno() {
+			return townTraceno;
+		}
+
+		public void setTownTraceno(String townTraceno) {
+			this.townTraceno = townTraceno;
+		}
+
+		public String getBackTal() {
+			return backTal;
+		}
+
+		public void setBackTal(String backTal) {
+			this.backTal = backTal;
+		}
 		
 
 	}
