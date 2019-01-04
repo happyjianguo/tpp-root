@@ -16,11 +16,13 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000801;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
@@ -45,6 +47,9 @@ public class TownReversal implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IRcvTraceService rcvTraceService;
+	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -57,6 +62,12 @@ public class TownReversal implements TradeExecutionStrategy {
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
 		String txTel = reqDto.getReqSysHead().getUserId();
+		
+		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
+		byte[] macBytes = macDataStr.getBytes();
+		passwordService.verifyMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
+		myLog.info(logger, "村镇通存商行MAC校验成功，渠道日期" + platDate +  
+				"渠道流水号" + platTraceno);
 		
 //		RcvTraceQueryModel model = rcvTraceService.getRcvTraceByKey(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno(),
 //				Integer.parseInt(platDate), Integer.parseInt(platTraceno));

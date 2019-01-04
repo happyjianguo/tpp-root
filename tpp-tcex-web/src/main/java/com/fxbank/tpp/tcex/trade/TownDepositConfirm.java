@@ -25,6 +25,7 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR003;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR003;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -54,6 +55,9 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private IRcvTraceService rcvTraceService;
+
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
 	
 	@Resource
 	private MyJedis myJedis;
@@ -105,6 +109,12 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
 		String txTel = reqDto.getReqSysHead().getUserId();
+		
+		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
+		byte[] macBytes = macDataStr.getBytes();
+		passwordService.verifyMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
+		myLog.info(logger, "村镇通存商行MAC校验成功，渠道日期" + reqDto.getSysDate() +  
+				"渠道流水号" + reqDto.getSysTraceno());
 		
 		//自查流水状态
 		RcvTraceQueryModel model = rcvTraceService.getConfirmTrace(myLog,  townDate, townTraceno);

@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +24,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
@@ -40,6 +45,12 @@ public class TownReversalTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
+	
+	@Resource
+	private LogPool logPool;
 	
 	private REQ_TR004 req ;
 	private REQ_SYS_HEAD reqSysHead;
@@ -78,6 +89,10 @@ public class TownReversalTest {
 		
 		reqBody.setPlatDate("20180928");
 		reqBody.setPlatTraceno("5351");
+		
+		String macDataStr = JsonUtil.toJson(reqBody);
+		byte[] macBytes = macDataStr.getBytes();
+		reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		
 		String reqContent = JsonUtil.toJson(req);
 		
