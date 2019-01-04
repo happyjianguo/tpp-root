@@ -319,7 +319,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		record.setTownState("0");
 		record.setTxTel(reqSysHead.getUserId());
 		record.setTownFlag(reqBody.getVillageBrnachFlag());
-		// record.setChkTel();
+		record.setChkTel(reqSysHead.getApprUserId());
 		record.setAuthTel(reqSysHead.getAuthUserId());
 		record.setPrint("0");
 		record.setCheckFlag("1");

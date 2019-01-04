@@ -204,7 +204,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 		record.setTxTel(reqSysHead.getUserId());
 		record.setPayeeAcno(reqBody.getPayeeAcctNo());
 		record.setPayeeName(reqBody.getPayeeAcctName());
-		// record.setChkTel();
+		record.setChkTel(reqSysHead.getApprUserId());
 		record.setAuthTel(reqSysHead.getAuthUserId());
 		record.setPrint("0");
 		record.setInfo(reqBody.getNarrative());
