@@ -7,6 +7,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
+import com.fxbank.tpp.esb.common.TOWN;
 
 
 /** 
@@ -22,6 +23,8 @@ public class ESB_REQ_TS003 extends ESB_BASE {
 
 	public ESB_REQ_TS003(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
+		super.macEnable = true;
+		this.getReqSysHead().setMacValue(TOWN.macDeginId + "|" + TOWN.macNodeId + "|" + TOWN.macKeyModelId + "|" + TOWN.macPlaceHolder + "|");
 	}
 
 	@JSONField(name = "APP_HEAD")
