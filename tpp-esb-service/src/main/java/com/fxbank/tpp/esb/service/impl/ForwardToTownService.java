@@ -50,7 +50,7 @@ public class ForwardToTownService implements IForwardToTownService {
 		if(esbModel.isMacEnable()){	//需要生成MAC
 			String macDataStr = JsonUtil.toJson(macData);
 			byte[] macBytes = macDataStr.getBytes();
-			String mac = macService.calc(esbModel.getMylog(),macBytes);
+			String mac = macService.calcTOWN(esbModel.getMylog(),macBytes);
 			jsonReq = jsonReq.replaceFirst(TOWN.macPlaceHolder, mac);
 		}
 		logger.info("发送请求至Town：" + jsonReq);

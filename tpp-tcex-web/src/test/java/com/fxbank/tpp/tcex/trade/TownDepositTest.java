@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +23,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
+import com.fxbank.tpp.esb.common.TOWN;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR001;
 
@@ -40,6 +46,12 @@ public class TownDepositTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
+	
+	@Resource
+	private LogPool logPool;
+	
 	private REQ_TR001 req ;
 	private REQ_SYS_HEAD reqSysHead;
 	private REQ_TR001.REQ_BODY reqBody ;
@@ -48,8 +60,8 @@ public class TownDepositTest {
 	public void init(){
 		req = new REQ_TR001();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TR0");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("TR001");
+		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("LV");	//网联
@@ -83,6 +95,10 @@ public class TownDepositTest {
 		reqBody.setBrno("10001");
 		reqBody.setTownDate(sdf1.format(new Date()));
 		reqBody.setTownTraceNo(UUID.randomUUID().toString().replace("-", "").substring(0, 15));
+		
+		String macDataStr = JsonUtil.toJson(reqBody);
+		byte[] macBytes = macDataStr.getBytes();
+		reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		
 		String reqContent = JsonUtil.toJson(req);
 		

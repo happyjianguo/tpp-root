@@ -1,6 +1,7 @@
 package com.fxbank.tpp.esb.service;
 
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
+import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.esb.model.ses.PasswordModel;
 
 public interface IPasswordService {
@@ -11,5 +12,7 @@ public interface IPasswordService {
 	
 	public PasswordModel genKey(PasswordModel model) throws SysTradeExecuteException;
 	
-//	public MACModel calcMAC(MACModel model) throws SysTradeExecuteException;
+	public void verifyMac(MyLog myLog,byte[] dataToMAC,String mac) throws SysTradeExecuteException;
+
+	public String calcTOWN(MyLog myLog,byte[] dataToMAC) throws SysTradeExecuteException;
 }

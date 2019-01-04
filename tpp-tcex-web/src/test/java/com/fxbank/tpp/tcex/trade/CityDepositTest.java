@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS001;
@@ -35,10 +38,13 @@ public class CityDepositTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityDepositTest.class);
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+	private static final String URL="http://57.25.3.165:7100/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Resource
+	private LogPool logPool;
 	
 	private REQ_30041000901 req ;
 	private REQ_SYS_HEAD reqSysHead;
@@ -76,9 +82,9 @@ public class CityDepositTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setVillageBrnachFlag("1");
-		reqBody.setPayeeAcctName("张三");
-		reqBody.setPayeeAcctNo("623166000000810480");
+		reqBody.setVillageBrnachFlag("2");
+		reqBody.setPayeeAcctName("张三思");
+		reqBody.setPayeeAcctNo("2330210110000002014");
 		reqBody.setTranAmt("1000.00");
 		reqBody.setChannelType("TCEX");
 		reqBody.setNarrative("测试");

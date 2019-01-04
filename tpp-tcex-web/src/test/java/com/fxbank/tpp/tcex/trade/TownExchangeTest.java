@@ -105,6 +105,10 @@ public class TownExchangeTest {
 		reqBody.setTownDate(sdf1.format(new Date()));
 		reqBody.setTownTraceNo(UUID.randomUUID().toString().replace("-", "").substring(0, 15));
 		
+		String macDataStr = JsonUtil.toJson(reqBody);
+		byte[] macBytes = macDataStr.getBytes();
+		reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
+		
 		String reqContent = JsonUtil.toJson(req);
 		
 		RequestBuilder request = MockMvcRequestBuilders.post(URL)

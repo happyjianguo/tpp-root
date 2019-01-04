@@ -34,7 +34,7 @@ public class CityQueryAcctInfoTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfoTest.class);
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -74,8 +74,8 @@ public class CityQueryAcctInfoTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBasrAcctNo("623166001015086827");
-		reqBody.setBrnoFlag("1");
+		reqBody.setBasrAcctNo("2330210110000002014");
+		reqBody.setBrnoFlag("2");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

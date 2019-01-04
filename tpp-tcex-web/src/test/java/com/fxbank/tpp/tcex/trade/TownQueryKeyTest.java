@@ -37,9 +37,9 @@ import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
  @AutoConfigureMockMvc	
 public class TownQueryKeyTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(TownCashQueryTest.class);
+	private static Logger logger = LoggerFactory.getLogger(TownQueryKeyTest.class);
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -79,7 +79,7 @@ public class TownQueryKeyTest {
 	@Test
 	public void payOk() throws Exception {
 		//获取两个工作密钥，一个是RZAK做mac的，一个是RZPK做pin的
-		reqBody.setKeyModel("RZAK");
+		reqBody.setKeyModel("RZPK");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
