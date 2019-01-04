@@ -51,7 +51,7 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		REQ_30042000307 reqDto = (REQ_30042000307) dto;
 		REQ_30042000307.REQ_BODY reqBody = reqDto.getReqBody();
 		String payerAcno = reqBody.getBasrAcctNo();
-		String brnoFlag = reqBody.getBrnoFlag();
+		String brnoFlag = reqBody.getVillageBrnachFlag();
 		// 交易机构
 		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
