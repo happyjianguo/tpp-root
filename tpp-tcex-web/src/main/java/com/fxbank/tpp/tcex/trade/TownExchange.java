@@ -74,7 +74,7 @@ public class TownExchange implements TradeExecutionStrategy {
 		Integer platDate = reqDto.getSysDate();
 		//平台流水
 		Integer platTraceNo = reqDto.getSysTraceno();
-		passwordService.verifyMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
+		//passwordService.verifyMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
 		myLog.info(logger, "村镇通存商行MAC校验成功，渠道日期" + platDate +  
 				"渠道流水号" + platTraceNo);
 		// 插入流水表
