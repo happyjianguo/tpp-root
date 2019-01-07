@@ -7,7 +7,6 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REP_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REP_SYS_HEAD;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS004.REP_BODY;
 
 public class ESB_REP_TCHK01 extends ESB_BASE {
 

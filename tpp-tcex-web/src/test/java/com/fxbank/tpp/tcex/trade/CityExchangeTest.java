@@ -85,7 +85,7 @@ public class CityExchangeTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setVillageBrnachFlag("1");
+		reqBody.setVillageBrnachFlag("2");
 		reqBody.setPayerName("张三思");
 		reqBody.setPayerAcctNo("2330210110000002014");
 		PasswordModel passwordModel = new PasswordModel(logPool.get(), 20181226, 10000,

@@ -233,8 +233,8 @@ public class CityExchange implements TradeExecutionStrategy {
 		passwordModel.setPassword(reqBody.getPayPassword());
 		passwordModel = passwordService.transPin(passwordModel);
 		esbReqBody_TS002.setPayerPwd(passwordModel.getPassword());
-		esbReqBody_TS002.setIDtype(reqBody.getDocumentType());
-		esbReqBody_TS002.setIDno(reqBody.getDocumentID());
+		esbReqBody_TS002.setIdType(reqBody.getDocumentType());
+		esbReqBody_TS002.setIdNo(reqBody.getDocumentID());
 		esbReqBody_TS002.setInfo(reqBody.getNarrative());
 
 		ESB_REP_TS002 esbRep_TS002 = forwardToTownService.sendToTown(esbReq_TS002, esbReqBody_TS002,

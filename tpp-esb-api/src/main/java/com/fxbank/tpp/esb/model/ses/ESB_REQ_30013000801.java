@@ -6,7 +6,6 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
-import com.fxbank.tpp.esb.common.ESB;
 
 public class ESB_REQ_30013000801 extends ESB_BASE {
 

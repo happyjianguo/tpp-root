@@ -82,10 +82,10 @@ public class REQ_TS002 extends REQ_BASE {
 		private String info;		//摘要
 		
 		@JSONField(name = "ID_TYPE")
-		private String IDtype;      //证件类型
+		private String idType;      //证件类型
 		
 		@JSONField(name = "ID_NO")
-		private String IDno;        //证件号码
+		private String idNo;        //证件号码
 
 		public String getPayerName() {
 			return payerName;
@@ -143,22 +143,6 @@ public class REQ_TS002 extends REQ_BASE {
 			this.info = info;
 		}
 
-		public String getIDtype() {
-			return IDtype;
-		}
-
-		public void setIDtype(String iDtype) {
-			IDtype = iDtype;
-		}
-
-		public String getIDno() {
-			return IDno;
-		}
-
-		public void setIDno(String iDno) {
-			IDno = iDno;
-		}
-
 		public String getBrnoFlag() {
 			return brnoFlag;
 		}
@@ -166,6 +150,24 @@ public class REQ_TS002 extends REQ_BASE {
 		public void setBrnoFlag(String brnoFlag) {
 			this.brnoFlag = brnoFlag;
 		}
+
+		public String getIdType() {
+			return idType;
+		}
+
+		public void setIdType(String idType) {
+			this.idType = idType;
+		}
+
+		public String getIdNo() {
+			return idNo;
+		}
+
+		public void setIdNo(String idNo) {
+			this.idNo = idNo;
+		}
+
+	
 
 		
 	

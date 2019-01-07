@@ -88,10 +88,10 @@ public class ESB_REQ_TS002 extends ESB_BASE {
 		private String info;		//摘要
 		
 		@JSONField(name = "ID_TYPE")
-		private String IDtype;      //证件类型
+		private String idType;      //证件类型
 		
 		@JSONField(name = "ID_NO")
-		private String IDno;        //证件号码
+		private String idNo;        //证件号码
 
 		public String getPayerName() {
 			return payerName;
@@ -148,21 +148,21 @@ public class ESB_REQ_TS002 extends ESB_BASE {
 		public void setInfo(String info) {
 			this.info = info;
 		}
-
-		public String getIDtype() {
-			return IDtype;
+		
+		public String getIdType() {
+			return idType;
 		}
 
-		public void setIDtype(String iDtype) {
-			IDtype = iDtype;
+		public void setIdType(String idType) {
+			this.idType = idType;
 		}
 
-		public String getIDno() {
-			return IDno;
+		public String getIdNo() {
+			return idNo;
 		}
 
-		public void setIDno(String iDno) {
-			IDno = iDno;
+		public void setIdNo(String idNo) {
+			this.idNo = idNo;
 		}
 
 		public String getBrnoFlag() {
