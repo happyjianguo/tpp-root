@@ -81,7 +81,7 @@ public class TownCashQuery implements TradeExecutionStrategy{
 		//调用核心接口查询头寸余额
 		ESB_REQ_30013000801 esbReq_30013000801 = new ESB_REQ_30013000801(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30013000801.getReqSysHead(), reqDto)
-				.setBranchId(txBrno).setUserId(txTel).build();
+				.setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
 		esbReq_30013000801.setReqSysHead(reqSysHead);	
 		ESB_REQ_30013000801.REQ_BODY reqBody_30013000801 = esbReq_30013000801.getReqBody();
 		reqBody_30013000801.setVillageBrnachId(townBranch);

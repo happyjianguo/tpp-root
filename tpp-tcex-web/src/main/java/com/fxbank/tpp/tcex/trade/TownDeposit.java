@@ -227,6 +227,7 @@ public class TownDeposit implements TradeExecutionStrategy {
 		record.setTownDate(reqBody.getTownDate());
 		record.setTownTraceNo(reqBody.getTownTraceNo());
 		record.setTownFlag(reqBody.getBrnoFlag());
+		record.setCheckFlag("1");
 		// record.setChkTel();
 		// record.setAuthTel();
 		record.setInfo(reqBody.getInfo());
