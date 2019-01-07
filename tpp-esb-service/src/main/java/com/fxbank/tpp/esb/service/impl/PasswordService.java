@@ -61,12 +61,12 @@ public class PasswordService implements IPasswordService {
 					nodeId1, keyModelId1, acctNo, acctNo, password);
 			if (rzpkPwd.getErrCode() < 0) {
 				myLog.error(logger, "调用加密平台PIN转加密失败");
-				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000001);
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000001);
 			}
 			password = rzpkPwd.getPinBlock();
 		} catch (Exception e) {
 			myLog.error(logger, "调用加密平台PIN转加密失败", e);
-			throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000001);
+			throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000001);
 		}
 		model.setPassword(password);
 		return model;
@@ -101,12 +101,12 @@ public class PasswordService implements IPasswordService {
 					nodeId, keyModelId,acctNo,password);
 			if (rzpkPwd.getErrCode() < 0) {
 				myLog.error(logger, "调用加密平台ZPK加密明文PIN失败");
-				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000002);
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000002);
 			}
 			model.setPassword(rzpkPwd.getPinBlock());
 		} catch (Exception e) {
 			myLog.error(logger, "调用加密平台ZPK加密明文PIN失败", e);
-			throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000002);
+			throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000002);
 		}
 		return model;
 	}
@@ -145,13 +145,13 @@ public class PasswordService implements IPasswordService {
 					deginId1, nodeId1, keyModelId1);
 			if (rzpkPwd.getErrCode() < 0) {
 				myLog.error(logger, "调用加密平台工作密钥更新失败");
-				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000003);
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000003);
 			}
 			model.setKeyValue(rzpkPwd.getKeyValue());
 			model.setCheckValue(rzpkPwd.getCheckValue());
 		} catch (Exception e) {
 			myLog.error(logger, "调用加密平台工作密钥更新失败", e);
-			throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000003);
+			throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000003);
 		}
 		return model;
 	}
@@ -166,25 +166,25 @@ public class PasswordService implements IPasswordService {
 			String mac = macParameter[3];
 			if(!TOWN.macDeginId.equals(deginId)) {
 				myLog.error(logger, "调用加密平台MAC校验失败");
-				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000004);
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
 			}
 			if(!TOWN.macNodeId.equals(nodeId)) {
 				myLog.error(logger, "调用加密平台MAC校验失败");
-				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000004);
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
 			}
 			if(!TOWN.macKeyModelId.equals(keyModelId)) {
 				myLog.error(logger, "调用加密平台MAC校验失败");
-				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000004);
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
 			}
 			HisuTSSCAPIResult result = hisuTSSCAPI.verifyHashDataMACBySpecKeyBytes(TOWN.macDeginId, TOWN.macNodeId,
 					TOWN.macKeyModelId,1,2,dataToMAC,dataToMAC.length,mac);
 			if(result.getErrCode() < 0) {
 				myLog.error(logger, "调用加密平台MAC校验失败");
-				throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000004);
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
 			}
 		} catch (Exception e) {
 			myLog.error(logger, "调用加密平台MAC校验失败", e);
-			throw new ESBTradeExecuteException(ESBTradeExecuteException.ESB_E_000004);
+			throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
 		}
 	}
 	
