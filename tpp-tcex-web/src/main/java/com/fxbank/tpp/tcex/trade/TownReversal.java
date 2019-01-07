@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.constant.CIP;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
@@ -29,6 +30,8 @@ import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
+
+import redis.clients.jedis.Jedis;
 /**
  * 村镇冲正业务
  * @author liye
@@ -50,6 +53,11 @@ public class TownReversal implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IPasswordService passwordService;
+	
+	@Resource
+	private MyJedis myJedis;
+	
+	private final static String COMMON_PREFIX = "tcex_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -59,9 +67,15 @@ public class TownReversal implements TradeExecutionStrategy {
 		String platDate = reqDto.getReqBody().getPlatDate();
 		String platTraceno = reqDto.getReqBody().getPlatTraceno();
 		// 交易机构
-		String txBrno = reqDto.getReqSysHead().getBranchId();
+		String txBrno = null;
 		// 柜员号
-		String txTel = reqDto.getReqSysHead().getUserId();
+		String txTel = null;
+		String sourceBranchNo = null;
+		try(Jedis jedis = myJedis.connect()){
+			sourceBranchNo = jedis.get(COMMON_PREFIX+"LV");
+			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
+        }
 		
 		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
 		byte[] macBytes = macDataStr.getBytes();
@@ -91,7 +105,7 @@ public class TownReversal implements TradeExecutionStrategy {
 		} catch (Exception e) {
 			code="error";
 			msg = e.getMessage();
-			System.out.println("村镇【"+txBrno+"】柜面通冲正失败:"+e);
+			myLog.error(logger,"村镇【"+txBrno+"】柜面通冲正失败:",e);
 		}
 		
 		

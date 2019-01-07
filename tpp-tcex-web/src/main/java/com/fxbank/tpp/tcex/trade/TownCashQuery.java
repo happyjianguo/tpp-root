@@ -54,9 +54,13 @@ public class TownCashQuery implements TradeExecutionStrategy{
 		REQ_TR005 reqDto = (REQ_TR005) dto;
 		String brno = reqDto.getReqBody().getBrnoFlag();
 		// 交易机构
-		String txBrno = reqDto.getReqSysHead().getBranchId();
+		String txBrno = null;
 		// 柜员号
-		String txTel = reqDto.getReqSysHead().getUserId();
+		String txTel = null;
+		try(Jedis jedis = myJedis.connect()){
+			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
+        }
 		
 		// 村镇机构号
 		String jsonStrTownBranch = null;
@@ -74,7 +78,6 @@ public class TownCashQuery implements TradeExecutionStrategy{
 				townBranch = townInfo.getTownBranch();
 			}
 		}
-		System.out.println("townBranch  = "+townBranch);
 		//调用核心接口查询头寸余额
 		ESB_REQ_30013000801 esbReq_30013000801 = new ESB_REQ_30013000801(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30013000801.getReqSysHead(), reqDto)

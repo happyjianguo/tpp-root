@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
@@ -24,6 +25,8 @@ import com.fxbank.tpp.tcex.dto.esb.REP_TRK01;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TRK01;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 
+import redis.clients.jedis.Jedis;
+
 /**
  * 村镇通兑快捷查询账户信息
  * @author liye
@@ -37,8 +40,13 @@ public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 	@Resource
 	private LogPool logPool;
 	
+	@Resource
+	private MyJedis myJedis;
+	
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
+	
+	private final static String COMMON_PREFIX = "tcex_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -47,9 +55,13 @@ public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		REQ_TRK01 reqDto = (REQ_TRK01)dto;
 		String payerAcno = reqDto.getReqBody().getPayerAcno();
 		// 交易机构
-		String txBrno = reqDto.getReqSysHead().getBranchId();
+		String txBrno = null;
 		// 柜员号
-		String txTel = reqDto.getReqSysHead().getUserId();
+		String txTel = null;
+		try(Jedis jedis = myJedis.connect()){
+			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
+        }
 		
 		//请求核心获取账户信息
 		ESB_REQ_30013000201 esbReq_30013000201 = new ESB_REQ_30013000201(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());

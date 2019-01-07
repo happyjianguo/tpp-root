@@ -106,9 +106,13 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		String townDate = reqDto.getReqBody().getTownDate();//村镇日期
 		String townTraceno = reqDto.getReqBody().getTownTraceno();//村镇流水
 		// 交易机构
-		String txBrno = reqDto.getReqSysHead().getBranchId();
+		String txBrno = null;
 		// 柜员号
-		String txTel = reqDto.getReqSysHead().getUserId();
+		String txTel = null;
+		try(Jedis jedis = myJedis.connect()){
+			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
+        }
 		
 		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
 		byte[] macBytes = macDataStr.getBytes();
@@ -147,7 +151,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 				
 				try {
 					ESB_REP_30043000101 esbRep_30043000101 = forwardToESBService.sendToESB(esbReq_30043000101, reqBody_30043000101, ESB_REP_30043000101.class);
-					System.out.println("记账结果查询："+esbRep_30043000101.getRepBody().getAcctResult());
+					myLog.info(logger,"记账结果查询："+esbRep_30043000101.getRepBody().getAcctResult());
 					retCode = esbRep_30043000101.getRepSysHead().getRet().get(0).getRetCode();
 					retMsg = esbRep_30043000101.getRepSysHead().getRet().get(0).getRetMsg();
 					if(esbRep_30043000101.getRepBody().getAcctResult().equals("00")) {
@@ -158,7 +162,6 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 				}catch (Exception e) {
 					retCode="error";
 					retMsg = "渠道流水号【"+platTrance.toString()+"】单笔记账结果查询失败："+e.getMessage();
-					System.out.println("渠道流水号【"+platTrance.toString()+"】记账结果查询失败："+e.getMessage());
 					myLog.error(logger,"渠道流水号【"+platTrance.toString()+"】记账结果查询失败："+e.getMessage());
 				}
 				
@@ -167,7 +170,6 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		}else if(state.equals("2")){
 			flag="1";
 		}else {
-			System.out.println("渠道流水号【"+platTrance.toString()+"】记录的核心状态【"+state+"】不符合存款确认流程状态 ");
 			myLog.error(logger,"渠道流水号【"+platTrance.toString()+"】记录的核心状态【"+state+"】不符合存款确认流程状态 ");
 //			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10011);
 //			throw e;
@@ -223,7 +225,6 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 			}catch (Exception e) {
 				retCode="error";
 				retMsg = "渠道流水号【"+platTrance.toString()+"】统一记账失败："+e.getMessage();
-				System.out.println("渠道流水号【"+platTrance.toString()+"】统一记账失败："+e.getMessage());
 				myLog.error(logger,"渠道流水号【"+platTrance.toString()+"】统一记账失败："+e.getMessage());
 			}
 		}
@@ -254,17 +255,16 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		esbReq_30043000101.setReqSysHead(reqSysHead);	
 		ESB_REQ_30043000101.REQ_BODY reqBody_30043000101 = esbReq_30043000101.getReqBody();
 		String pt = String.format("%08d",platTrance);
-		System.out.println(pt);
 		reqBody_30043000101.setChannelSeqNo(CIP.SYSTEM_ID+platDate.toString()+pt);
 //		reqBody_30043000101.setReference(hostTrance);
 		reqBody_30043000101.setChannelType("LV");
 		try {
 			ESB_REP_30043000101 esbRep_30043000101 = forwardToESBService.sendToESB(esbReq_30043000101, reqBody_30043000101, ESB_REP_30043000101.class);
-			System.out.println("存款确认结果："+esbRep_30043000101.getRepBody().getAcctResult());
+			myLog.info(logger,"存款确认结果："+esbRep_30043000101.getRepBody().getAcctResult());
 			esbRep_30043000101.getRepBody().getChannelSeqNo();
 			esbRep_30043000101.getRepBody().getTranDate();
 		}catch (Exception e) {
-			System.out.println("存款确认："+e.getMessage());
+			myLog.error(logger,"存款确认：",e);
 		}
 		
 		
@@ -318,9 +318,9 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		try {
 			ESB_REP_30011000103 esbRep_30011000103 = forwardToESBService.sendToESB(esbReq_30011000103, reqBody_30011000103,
 					ESB_REP_30011000103.class);
-			System.out.println("存款确认记账成功");
+			myLog.info(logger,"存款确认记账成功");
 		}catch (Exception e) {
-			System.out.println("存款确认记账失败："+e.getMessage());
+			myLog.error(logger,"存款确认记账失败：",e);
 		}
 		
 	}
