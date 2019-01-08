@@ -41,7 +41,7 @@ public class TownDepositTest {
 	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -87,7 +87,7 @@ public class TownDepositTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrnoFlag("1");
+		reqBody.setBrnoFlag("2");
 		reqBody.setTxAmt("1000.00");
 		reqBody.setPayeeName("张三");
 		reqBody.setPayeeAcc("623166000000810480");

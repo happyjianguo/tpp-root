@@ -79,7 +79,7 @@ public class TownReversal implements TradeExecutionStrategy {
 		
 		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
 		byte[] macBytes = macDataStr.getBytes();
-		passwordService.verifyMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
+		//passwordService.verifyTownMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
 		myLog.info(logger, "村镇通存商行MAC校验成功，渠道日期" + platDate +  
 				"渠道流水号" + platTraceno);
 		

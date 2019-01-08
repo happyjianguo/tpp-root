@@ -10,6 +10,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.tpp.esb.common.ESB;
 import com.fxbank.tpp.esb.common.TOWN;
 import com.fxbank.tpp.esb.exception.ESBTradeExecuteException;
 import com.fxbank.tpp.esb.model.ses.PasswordModel;
@@ -157,7 +158,7 @@ public class PasswordService implements IPasswordService {
 	}
 
 	@Override
-	public void verifyMac(MyLog myLog, byte[] dataToMAC,String macValue) throws SysTradeExecuteException {
+	public void verifyTownMac(MyLog myLog, byte[] dataToMAC,String macValue) throws SysTradeExecuteException {
 		try {
 			String[] macParameter = macValue.split("\\|");
 			String deginId = macParameter[0];
@@ -188,6 +189,38 @@ public class PasswordService implements IPasswordService {
 		}
 	}
 	
+	@Override
+	public void verifyCityMac(MyLog myLog, byte[] dataToMAC,String macValue) throws SysTradeExecuteException {
+		try {
+			String[] macParameter = macValue.split("\\|");
+			String deginId = macParameter[0];
+			String nodeId = macParameter[1];
+			String keyModelId = macParameter[2];
+			String mac = macParameter[3];
+			if(!ESB.macDeginId.equals(deginId)) {
+				myLog.error(logger, "调用加密平台MAC校验失败");
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
+			}
+			if(!ESB.macNodeId.equals(nodeId)) {
+				myLog.error(logger, "调用加密平台MAC校验失败");
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
+			}
+			if(!ESB.macKeyModelId.equals(keyModelId)) {
+				myLog.error(logger, "调用加密平台MAC校验失败");
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
+			}
+			HisuTSSCAPIResult result = hisuTSSCAPI.verifyHashDataMACBySpecKeyBytes(ESB.macDeginId, ESB.macNodeId,
+					ESB.macKeyModelId,1,2,dataToMAC,dataToMAC.length,mac);
+			if(result.getErrCode() < 0) {
+				myLog.error(logger, "调用加密平台MAC校验失败");
+				throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
+			}
+		} catch (Exception e) {
+			myLog.error(logger, "调用加密平台MAC校验失败", e);
+			throw new ESBTradeExecuteException(ESBTradeExecuteException.TPP_E_000004);
+		}
+	}
+	
 	public String calcTOWN(MyLog myLog,byte[] dataToMAC) throws SysTradeExecuteException {
 		try {
 			HisuTSSCAPIResult result = hisuTSSCAPI.calculateHashDataMACBySpecKeyBytes(TOWN.macDeginId, TOWN.macNodeId,
@@ -197,6 +230,20 @@ public class PasswordService implements IPasswordService {
 				throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);
 			}
 			return TOWN.macDeginId+"|"+TOWN.macNodeId+"|"+TOWN.macKeyModelId+"|"+result.getMAC()+"|";
+		} catch (Exception e) {
+			myLog.error(logger, "调用加密平台计算MAC失败", e);
+			throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);
+		}
+	}
+	public String calcCITY(MyLog myLog,byte[] dataToMAC) throws SysTradeExecuteException {
+		try {
+			HisuTSSCAPIResult result = hisuTSSCAPI.calculateHashDataMACBySpecKeyBytes(ESB.macDeginId, ESB.macNodeId,
+					ESB.macKeyModelId, 1, 2, dataToMAC, dataToMAC.length);
+			if (result.getErrCode() < 0) {
+				myLog.error(logger, "调用加密平台计算MAC失败");
+				throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);
+			}
+			return ESB.macDeginId+"|"+ESB.macNodeId+"|"+ESB.macKeyModelId+"|"+result.getMAC()+"|";
 		} catch (Exception e) {
 			myLog.error(logger, "调用加密平台计算MAC失败", e);
 			throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);

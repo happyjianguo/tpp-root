@@ -38,7 +38,7 @@ public class TownQueryAcctInfoTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(TownQueryAcctInfoTest.class);
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -51,8 +51,8 @@ public class TownQueryAcctInfoTest {
 	public void init(){
 		req = new REQ_TRK01();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TRK");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("TRK01");
+		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -78,7 +78,7 @@ public class TownQueryAcctInfoTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setPayerAcno("623166001015086827");
+		reqBody.setPayerAcno("623166000000810480");
 		
 		String reqContent = JsonUtil.toJson(req);
 		
