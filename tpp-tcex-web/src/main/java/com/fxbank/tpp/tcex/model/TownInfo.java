@@ -12,6 +12,19 @@ public class TownInfo {
 
 	@JSONField(name = "TOWN_BRANCH")
 	private String townBranch;
+	
+	@JSONField(name = "CASH_BRANCH")
+	private String cashBranch;
+	
+	
+
+	public String getCashBranch() {
+		return cashBranch;
+	}
+
+	public void setCashBranch(String cashBranch) {
+		this.cashBranch = cashBranch;
+	}
 
 	public String getTownFlag() {
 		return townFlag;

@@ -75,7 +75,7 @@ public class TownCashQuery implements TradeExecutionStrategy{
         String townBranch = null;
 		for(TownInfo townInfo:townList.getData()){
 			if(townInfo.getTownFlag().equals(brno)) {
-				townBranch = townInfo.getTownBranch();
+				townBranch = townInfo.getCashBranch();
 			}
 		}
 		//调用核心接口查询头寸余额
