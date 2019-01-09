@@ -59,8 +59,8 @@ public class REP_30042000307 extends REP_BASE {
 		 @JSONField(name = "ACCT_SQ_NO_T")
 	     private String acctSqNoT;//账户序号
 		 
-//		 @JSONField(name = "BALANCE")
-//	     private String balance;//账户余额
+		 @JSONField(name = "BALANCE")
+	     private String balance;//账户余额
 
 		public String getBasrAcctNo() {
 			return basrAcctNo;
@@ -86,13 +86,13 @@ public class REP_30042000307 extends REP_BASE {
 			this.acctSqNoT = acctSqNoT;
 		}
 
-//		public String getBalance() {
-//			return balance;
-//		}
-//
-//		public void setBalance(String balance) {
-//			this.balance = balance;
-//		}
+		public String getBalance() {
+			return balance;
+		}
+
+		public void setBalance(String balance) {
+			this.balance = balance;
+		}
 		 
 		
 

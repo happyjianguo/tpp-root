@@ -73,7 +73,7 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		repBody.setBasrAcctNo(esbRep_tsk01.getRepBody().getPayerAcno());
 		repBody.setAcctName(esbRep_tsk01.getRepBody().getPayerName());
 		repBody.setAcctSqNoT(esbRep_tsk01.getRepBody().getAcnoSeq());
-//		repBody.setBalance(esbRep_tsk01.getRepBody().getBal());
+		repBody.setBalance(esbRep_tsk01.getRepBody().getBal());
 		
 //		if("000000".equals(esbRep_tsk01.getRepSysHead().getRet().get(0).getRetCode())) {
 //		}else {

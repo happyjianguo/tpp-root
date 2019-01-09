@@ -76,7 +76,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		Integer platDate = reqDto.getSysDate();
 		//平台流水
 		Integer platTraceNo = reqDto.getSysTraceno();
-		passwordService.verifyCityMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
+		//passwordService.verifyCityMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
 		myLog.info(logger, "商行通兑村镇MAC校验成功，渠道日期" + platDate +  
 				"渠道流水号" + platTraceNo);
 		// 插入流水表
@@ -137,6 +137,7 @@ public class CityExchange implements TradeExecutionStrategy {
 			}
 			// 更新流水表核心记账状态
 			if("000000".equals(hostCode)) {
+				repDto.getRepBody().setBalance(esbRep_TS002.getRepBody().getBackTal());
 				myLog.info(logger, "商行通兑村镇核心记账成功，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno());
 				updateHostRecord(reqDto, hostDate, hostSeqno, "1", hostCode, hostMsg,accounting_branch);
@@ -164,8 +165,10 @@ public class CityExchange implements TradeExecutionStrategy {
 				if("000000".equals(townReversalCode)) {
 					if ("1".equals(sts)) {
 						townState = "5";
-						myLog.info(logger, "商行通兑村镇村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
+						TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10012);
+						myLog.error(logger, "商行通兑村镇村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno());
+						throw e;
 					}
 				}
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, townState);

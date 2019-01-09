@@ -50,7 +50,16 @@ public class REP_30041001001 extends REP_BASE {
 
 
 	public class REP_BODY {
+		 @JSONField(name = "BALANCE")
+	     private String balance;//余额
 
+		public String getBalance() {
+			return balance;
+		}
+
+		public void setBalance(String balance) {
+			this.balance = balance;
+		}
 		
 
 	}

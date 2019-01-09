@@ -45,7 +45,7 @@ public class TownExchangeTest {
 	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
 	
 	@Reference(version = "1.0.0")
 	private IPasswordService passwordService;
@@ -88,7 +88,7 @@ public class TownExchangeTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrnoFlag("1");
+		reqBody.setBrnoFlag("2");
 		reqBody.setTxAmt("1.00");
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcc("623166000000810480");

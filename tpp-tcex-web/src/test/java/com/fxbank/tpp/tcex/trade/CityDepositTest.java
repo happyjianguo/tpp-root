@@ -24,9 +24,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS001;
@@ -38,13 +40,17 @@ public class CityDepositTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityDepositTest.class);
 	
-	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
+	//private static final String URL="http://57.25.3.165:7003/tcex/city.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Resource
 	private LogPool logPool;
+	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
 	
 	private REQ_30041000901 req ;
 	private REQ_SYS_HEAD reqSysHead;
@@ -82,14 +88,20 @@ public class CityDepositTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setVillageBrnachFlag("2");
+		
 		reqBody.setPayeeAcctName("张三思");
 		reqBody.setPayeeAcctNo("2330210110000002014");
-		reqBody.setTranAmt("1000.00");
-		reqBody.setChannelType("TCEX");
-		reqBody.setNarrative("测试");
-		reqBody.setDocClass("2");
-		reqBody.setVoucherNo("111");
+		reqBody.setTranAmt("100");
+		reqBody.setChannelType("TB");
+		reqBody.setNarrative("");
+		reqBody.setDocClass("1");
+		reqBody.setVoucherNo("30");
+		reqBody.setVillageBrnachFlag("2");
+		
+		String macDataStr = JsonUtil.toJson(reqBody);
+		 macDataStr = "{\"PAYEE_ACCT_NAME\":\"张三思\",\"PAYEE_ACCT_NO\":\"2330210110000002014\",\"TRAN_AMT\":\"100\",\"CHANNEL_TYPE\":\"TB\",\"NARRATIVE\":\"\",\"DOC_CLASS\":\"1\",\"VOUCHER_NO\":\"30\",\"VILLAGE_BRNACH_FLAG\":\"2\"}";
+		byte[] macBytes = macDataStr.getBytes();
+		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
 		
 		String reqContent = JsonUtil.toJson(req);
 		

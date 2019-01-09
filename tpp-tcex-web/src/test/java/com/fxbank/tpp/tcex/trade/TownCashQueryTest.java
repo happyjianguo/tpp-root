@@ -78,7 +78,7 @@ public class TownCashQueryTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrnoFlag("2");
+		reqBody.setBrnoFlag("1");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

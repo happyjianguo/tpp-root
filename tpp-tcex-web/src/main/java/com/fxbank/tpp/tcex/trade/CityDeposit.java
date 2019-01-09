@@ -72,7 +72,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 		Integer platDate = reqDto.getSysDate();
 		//平台流水
 		Integer platTraceNo = reqDto.getSysTraceno();
-		passwordService.verifyCityMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
+		//passwordService.verifyCityMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
 		myLog.info(logger, "商行通存村镇MAC校验成功，渠道日期" + platDate +  
 				"渠道流水号" + platTraceNo);
 		//插入流水表

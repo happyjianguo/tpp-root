@@ -26,6 +26,7 @@ public class TcexTradeExecuteException extends SysTradeExecuteException {
 	public final static String TCEX_E_10009 = "TCEX_E_10009";
 	public final static String TCEX_E_10010 = "TCEX_E_10010";
 	public final static String TCEX_E_10011 = "TCEX_E_10011";
+	public final static String TCEX_E_10012 = "TCEX_E_10012";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 		private static final long serialVersionUID = -8667135437237760216L;
@@ -42,6 +43,7 @@ public class TcexTradeExecuteException extends SysTradeExecuteException {
 			put(TCEX_E_10009, "下载ESB文件失败");
 			put(TCEX_E_10010, "商行冲正失败");
 			put(TCEX_E_10011, "村镇存款确认失败");
+			put(TCEX_E_10012, "村镇冲正成功");
 			
 		}
 	};

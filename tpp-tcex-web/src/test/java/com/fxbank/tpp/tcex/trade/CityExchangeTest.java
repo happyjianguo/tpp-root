@@ -102,6 +102,10 @@ public class CityExchangeTest {
 		reqBody.setDocumentType("0");
 		reqBody.setDocumentID("211003199105271510");
 		
+		String macDataStr = JsonUtil.toJson(reqBody);
+		byte[] macBytes = macDataStr.getBytes();
+		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
+		
 		String reqContent = JsonUtil.toJson(req);
 		
 		RequestBuilder request = MockMvcRequestBuilders.post(URL)
