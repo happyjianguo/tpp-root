@@ -113,13 +113,6 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
 			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
         }
-		
-		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
-		byte[] macBytes = macDataStr.getBytes();
-		//passwordService.verifyMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
-		myLog.info(logger, "村镇通存商行MAC校验成功，渠道日期" + reqDto.getSysDate() +  
-				"渠道流水号" + reqDto.getSysTraceno());
-		
 		//自查流水状态
 		RcvTraceQueryModel model = rcvTraceService.getConfirmTrace(myLog,  townDate, townTraceno);
 		String state = model.getHostState();

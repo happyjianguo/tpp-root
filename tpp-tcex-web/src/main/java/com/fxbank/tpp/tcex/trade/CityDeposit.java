@@ -66,15 +66,6 @@ public class CityDeposit implements TradeExecutionStrategy {
 	    MyLog myLog = logPool.get();
 		REQ_30041000901 reqDto = (REQ_30041000901) dto;
 		REP_30041000901 repDto = new REP_30041000901();
-		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
-		byte[] macBytes = macDataStr.getBytes();
-		//平台日期
-		Integer platDate = reqDto.getSysDate();
-		//平台流水
-		Integer platTraceNo = reqDto.getSysTraceno();
-		//passwordService.verifyCityMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
-		myLog.info(logger, "商行通存村镇MAC校验成功，渠道日期" + platDate +  
-				"渠道流水号" + platTraceNo);
 		//插入流水表
 		initRecord(reqDto);
 		myLog.info(logger, "商行通存村镇登记成功，渠道日期" + reqDto.getSysDate() + 
@@ -123,7 +114,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 				townTraceNo = esbRepBody_TS001.getTownTraceno();
 				townRetCode = esbRep_TS001.getRepSysHead().getRet().get(0).getRetCode();
 			}catch(SysTradeExecuteException e) {
-				if("CIP_E_000004".equals(e.getRspCode())) {
+				if("690052".equals(e.getRspCode())) {
 					updateTownRecord(reqDto, "", "", "", "3");
 					myLog.error(logger, "商行通存村镇村镇记账超时，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e);
@@ -176,8 +167,11 @@ public class CityDeposit implements TradeExecutionStrategy {
 				}
 				if("000000".equals(hostReversalCode)) {
 					updateHostRecord(reqDto, hostDate, hostSeqno, "5", hostReversalCode, hostReversalMsg,"");
-					myLog.info(logger, "商行通存村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
+					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10013);
+					myLog.error(logger, "商行通存村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno());
+					throw e;
+					
 				}else {
 					updateHostRecord(reqDto, hostDate, hostSeqno, "6", hostCode, hostMsg,"");
 					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10010);

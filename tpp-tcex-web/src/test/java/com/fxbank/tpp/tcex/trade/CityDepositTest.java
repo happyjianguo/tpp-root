@@ -40,8 +40,8 @@ public class CityDepositTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityDepositTest.class);
 	
-	//private static final String URL="http://57.25.3.165:7003/tcex/city.do";
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
+	//private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -99,7 +99,6 @@ public class CityDepositTest {
 		reqBody.setVillageBrnachFlag("2");
 		
 		String macDataStr = JsonUtil.toJson(reqBody);
-		 macDataStr = "{\"PAYEE_ACCT_NAME\":\"张三思\",\"PAYEE_ACCT_NO\":\"2330210110000002014\",\"TRAN_AMT\":\"100\",\"CHANNEL_TYPE\":\"TB\",\"NARRATIVE\":\"\",\"DOC_CLASS\":\"1\",\"VOUCHER_NO\":\"30\",\"VILLAGE_BRNACH_FLAG\":\"2\"}";
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
 		

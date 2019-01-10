@@ -68,15 +68,10 @@ public class TownExchange implements TradeExecutionStrategy {
 		REQ_TR002 reqDto = (REQ_TR002) dto;
 		REP_TR002 repDto = new REP_TR002();
 		REP_TR002.REP_BODY repBody = repDto.getRepBody();
-		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
-		byte[] macBytes = macDataStr.getBytes();
 		//平台日期
 		Integer platDate = reqDto.getSysDate();
 		//平台流水
 		Integer platTraceNo = reqDto.getSysTraceno();
-		//passwordService.verifyMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
-		myLog.info(logger, "村镇通存商行MAC校验成功，渠道日期" + platDate +  
-				"渠道流水号" + platTraceNo);
 		// 插入流水表
 		initRecord(reqDto);
 		myLog.info(logger, "村镇通兑商行登记成功，渠道日期" + dto.getSysDate() + 
