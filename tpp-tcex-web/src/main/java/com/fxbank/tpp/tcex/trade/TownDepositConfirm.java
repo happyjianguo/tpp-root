@@ -224,7 +224,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		 
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, platDate, dto.getSysTime(), platTrance);
 		record.setHostState("4");
-		if(null != hostDate && "".equals(hostDate))
+		if(null != hostDate && !"".equals(hostDate))
 			record.setHostDate(Integer.parseInt(hostDate));
 		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
