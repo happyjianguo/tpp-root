@@ -93,7 +93,6 @@ public class TownDeposit implements TradeExecutionStrategy {
 		ESB_REP_30011000103 esbRep_30011000103 = null;
 		//处理状态 1-成功2-失败
 		String sts = null;
-		/**
 		try {
 		 esbRep_30011000103 = hostCharge(reqDto);
 		  hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
@@ -112,10 +111,6 @@ public class TownDeposit implements TradeExecutionStrategy {
 			//sts = "2";
 			throw e;
 		}
-		**/
-		TcexTradeExecuteException e = new TcexTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
-		throw e;
-		/**
 		// 更新流水表核心记账状态
 		if("000000".equals(hostCode)) {
 			updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
@@ -133,7 +128,6 @@ public class TownDeposit implements TradeExecutionStrategy {
 		repBody.setPlatTraceno(platTraceNo.toString());
 		repBody.setSts(sts);
 		return repDto;
-		**/
 	}
 	/** 
 	* @Title: hostCharge 
