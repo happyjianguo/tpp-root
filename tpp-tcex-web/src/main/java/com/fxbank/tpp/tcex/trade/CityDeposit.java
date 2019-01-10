@@ -109,7 +109,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 				townTraceNo = esbRepBody_TS001.getTownTraceno();
 				townRetCode = esbRep_TS001.getRepSysHead().getRet().get(0).getRetCode();
 			}catch(SysTradeExecuteException e) {
-				if("690052".equals(e.getRspCode())) {
+				if("CIP_E_000004".equals(e.getRspCode())) {
 					updateTownRecord(reqDto, "", "", "", "3");
 					myLog.error(logger, "商行通存村镇村镇记账超时，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e);
