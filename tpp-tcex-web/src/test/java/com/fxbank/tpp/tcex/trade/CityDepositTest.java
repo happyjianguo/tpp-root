@@ -25,6 +25,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
@@ -40,8 +42,8 @@ public class CityDepositTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityDepositTest.class);
 	
-	//private static final String URL="http://57.25.3.165:7003/tcex/city.do";
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
+	//private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -102,8 +104,7 @@ public class CityDepositTest {
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
 		
-		String reqContent = JsonUtil.toJson(req);
-		
+		String reqContent = JSON.toJSONString(req);
 		RequestBuilder request = MockMvcRequestBuilders.post(URL)
 				.contentType(MediaType.APPLICATION_JSON_UTF8).content(reqContent);
 		MvcResult mvcResult = mockMvc.perform(request).andReturn();
