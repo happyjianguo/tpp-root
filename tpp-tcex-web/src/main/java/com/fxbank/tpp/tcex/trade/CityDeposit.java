@@ -24,7 +24,6 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS003;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
-import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041000901;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -56,9 +55,6 @@ public class CityDeposit implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private ISndTraceService sndTraceService;
 	
-	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
-
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 				
@@ -124,13 +120,14 @@ public class CityDeposit implements TradeExecutionStrategy {
 					    esbRep_TS003 = townDepositConfirm(reqDto);
 					    confirmTownDate = esbRep_TS003.getRepBody().getTownDate();
 					    confirmTownTraceNo = esbRep_TS003.getRepBody().getTownTraceNo();
+					    updateTownRecord(reqDto, "", confirmTownDate, confirmTownTraceNo, "4");
+					    myLog.info(logger, "商行通存村镇存款确认，渠道日期" + reqDto.getSysDate() + 
+								"渠道流水号" + reqDto.getSysTraceno());
 					}catch(SysTradeExecuteException e1) {
 						myLog.error(logger, "商行通存村镇存款确认报错，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e);
+						updateTownRecord(reqDto, "", "", "", "4");
 					}
-					updateTownRecord(reqDto, "", confirmTownDate, confirmTownTraceNo, "4");
-					myLog.info(logger, "商行通存村镇存款确认，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno());
 					return repDto;
 				}else {
 					updateTownRecord(reqDto, "", "", "", "2");
@@ -277,7 +274,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 		SndTraceUpdModel record = new SndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		record.setTownBranch(townBrno);
-		if(!"".equals(townDate)) {
+		if(null!=townDate&&!"".equals(townDate)) {
 		record.setTownDate(Integer.parseInt(townDate));
 		}
 		record.setTownState(townState);

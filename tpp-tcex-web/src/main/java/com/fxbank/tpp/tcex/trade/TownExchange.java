@@ -19,7 +19,6 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
-import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -50,9 +49,6 @@ public class TownExchange implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private IForwardToTownService forwardToTownService;
-	
-	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
 	
 	@Resource
 	private MyJedis myJedis;

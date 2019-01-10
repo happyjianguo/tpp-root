@@ -22,13 +22,10 @@ import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR003;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR003;
-import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.model.TownInfo;
@@ -37,7 +34,6 @@ import com.fxbank.tpp.tcex.service.IRcvTraceService;
 
 import redis.clients.jedis.Jedis;
 
-import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
 /**
  * 村镇存款确认业务
  * @author liye
@@ -56,9 +52,6 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private IRcvTraceService rcvTraceService;
 
-	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
-	
 	@Resource
 	private MyJedis myJedis;
 

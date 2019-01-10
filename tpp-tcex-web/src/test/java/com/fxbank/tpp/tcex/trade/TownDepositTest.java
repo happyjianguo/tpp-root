@@ -98,7 +98,7 @@ public class TownDepositTest {
 		
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
-		reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
+		//reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		
 		String reqContent = JsonUtil.toJson(req);
 		

@@ -45,12 +45,12 @@ public class PasswordService implements IPasswordService {
 		String keyModelId1 = "";
 		String encryptParameter = "";
 		try (Jedis jedis = myJedis.connect()) {
-			encryptParameter = jedis.get(COMMON_PREFIX + "LV");
+			encryptParameter = jedis.get(COMMON_PREFIX + "SOURCE");
 			String[] temp = encryptParameter.split("\\|");
 			deginId = temp[0];
 			nodeId = temp[1];
 			keyModelId = temp[2];
-			encryptParameter = jedis.get(COMMON_PREFIX + "HOST");
+			encryptParameter = jedis.get(COMMON_PREFIX + "DEST");
 			temp = encryptParameter.split("\\|");
 			deginId1 = temp[0];
 			nodeId1 = temp[1];
@@ -91,7 +91,7 @@ public class PasswordService implements IPasswordService {
 		String keyModelId = "";
 		String encryptParameter = "";
 		try (Jedis jedis = myJedis.connect()) {
-			encryptParameter = jedis.get(COMMON_PREFIX + "LV");
+			encryptParameter = jedis.get(COMMON_PREFIX + "HOST");
 			String[] temp = encryptParameter.split("\\|");
 			deginId = temp[0];
 			nodeId = temp[1];
