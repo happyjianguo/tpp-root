@@ -1,5 +1,8 @@
 package com.fxbank.tpp.tcex.trade;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +12,7 @@ import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
+import com.fxbank.cip.base.dto.REP_RET;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -89,8 +93,9 @@ public class TownDeposit implements TradeExecutionStrategy {
 		ESB_REP_30011000103 esbRep_30011000103 = null;
 		//处理状态 1-成功2-失败
 		String sts = null;
+		/**
 		try {
-		  esbRep_30011000103 = hostCharge(reqDto);
+		 esbRep_30011000103 = hostCharge(reqDto);
 		  hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 		  hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
 		  hostSeqno = esbRep_30011000103.getRepBody().getReference();
@@ -107,6 +112,10 @@ public class TownDeposit implements TradeExecutionStrategy {
 			//sts = "2";
 			throw e;
 		}
+		**/
+		TcexTradeExecuteException e = new TcexTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
+		throw e;
+		/**
 		// 更新流水表核心记账状态
 		if("000000".equals(hostCode)) {
 			updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
@@ -123,7 +132,8 @@ public class TownDeposit implements TradeExecutionStrategy {
 		repBody.setPlatDate(platDate.toString());
 		repBody.setPlatTraceno(platTraceNo.toString());
 		repBody.setSts(sts);
-	    return repDto;
+		return repDto;
+		**/
 	}
 	/** 
 	* @Title: hostCharge 

@@ -15,7 +15,6 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_TS002;
@@ -70,10 +69,6 @@ public class CityExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_30041001001 reqDto = (REQ_30041001001) dto;
 		REP_30041001001 repDto = new REP_30041001001();
-		//平台日期
-		Integer platDate = reqDto.getSysDate();
-		//平台流水
-		Integer platTraceNo = reqDto.getSysTraceno();
 		// 插入流水表
 		initRecord(reqDto);
 		myLog.info(logger, "商行通兑村镇登记成功，渠道日期" + reqDto.getSysDate() + 
