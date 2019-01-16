@@ -91,13 +91,12 @@ public class TS003Test {
 	public void payOk() throws Exception {
 		
 		
-		reqBody.setPlatDate("20190115");
-		reqBody.setPlatTraceno("128588");
+		reqBody.setPlatDate("20190116");
+		reqBody.setPlatTraceno("129180");
 		
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
-		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
-		String a = passwordService.calcTOWN(logPool.get(), "{\"PLAT_DATE\":\"20190115\",\"PLAT_TRACENO\":\"128588\"}".getBytes("UTF-8"));
+		reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		
 		String reqContent = JSON.toJSONString(req);
 		RequestBuilder request = MockMvcRequestBuilders.post(URL)

@@ -21,8 +21,8 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000801;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TRK01;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TRK01;
+import com.fxbank.tpp.tcex.dto.esb.REP_TRK001;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TRK001;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 
 import redis.clients.jedis.Jedis;
@@ -32,7 +32,7 @@ import redis.clients.jedis.Jedis;
  * @author liye
  *
  */
-@Service("REQ_TRK01")
+@Service("REQ_TRK001")
 public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrategy{
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
 
@@ -52,7 +52,7 @@ public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
-		REQ_TRK01 reqDto = (REQ_TRK01)dto;
+		REQ_TRK001 reqDto = (REQ_TRK001)dto;
 		String payerAcno = reqDto.getReqBody().getPayerAcno();
 		// 交易机构
 		String txBrno = null;
@@ -75,7 +75,7 @@ public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 //		String code = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetCode();
 //		String msg = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetMsg();
 		
-		REP_TRK01 repDto = new REP_TRK01();
+		REP_TRK001 repDto = new REP_TRK001();
 		repDto.getRepBody().setPayerAcno(esbRep_30013000201.getRepBody().getBaseAcctNo());
 		repDto.getRepBody().setPayerName(esbRep_30013000201.getRepBody().getAcctName());
 		repDto.getRepBody().setAcnoSeq(esbRep_30013000201.getRepBody().getAcctSeqNo());

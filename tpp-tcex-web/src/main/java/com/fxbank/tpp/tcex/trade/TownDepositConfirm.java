@@ -25,8 +25,8 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR003;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR003;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0013;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0013;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.model.TownInfo;
@@ -40,7 +40,7 @@ import redis.clients.jedis.Jedis;
  * @author liye
  *
  */
-@Service("REQ_TR003")
+@Service("REQ_TR0013")
 public class TownDepositConfirm implements TradeExecutionStrategy {
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
 
@@ -99,7 +99,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
-		REQ_TR003 reqDto = (REQ_TR003) dto;
+		REQ_TR0013 reqDto = (REQ_TR0013) dto;
 		String townDate = reqDto.getReqBody().getTownDate();//村镇日期
 		String townTraceno = reqDto.getReqBody().getTownTraceno();//村镇流水
 		// 交易机构
@@ -229,7 +229,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		record.setHostBranch(hostBranch);
 		rcvTraceService.rcvTraceUpd(record);
 
-		REP_TR003 repDto = new REP_TR003();
+		REP_TR0013 repDto = new REP_TR0013();
 		repDto.getRepBody().setSts("1");
 		repDto.getRepBody().setPlatDate(platDate.toString());
 		repDto.getRepBody().setPlatTraceno(platTrance.toString());
@@ -239,7 +239,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		return repDto;
 	}
 
-	private void testHx(MyLog myLog, String txBrno, String txTel, Integer platTrance, Integer platDate, String hostTrance, DataTransObject dto, REQ_TR003 reqDto) throws SysTradeExecuteException {
+	private void testHx(MyLog myLog, String txBrno, String txTel, Integer platTrance, Integer platDate, String hostTrance, DataTransObject dto, REQ_TR0013 reqDto) throws SysTradeExecuteException {
 		//调用核心接口确认该笔流水是否入账成功,
 		ESB_REQ_30043000101 esbReq_30043000101 = new ESB_REQ_30043000101(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043000101.getReqSysHead(), reqDto)
@@ -269,7 +269,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		
 	}
 	
-	private void testCharge(MyLog myLog, String txBrno, String txTel, Integer platTrance, String hostTrance, DataTransObject dto, REQ_TR003 reqDto,String townFlag,String payeeAcno,String txAmt) throws SysTradeExecuteException {
+	private void testCharge(MyLog myLog, String txBrno, String txTel, Integer platTrance, String hostTrance, DataTransObject dto, REQ_TR0013 reqDto,String townFlag,String payeeAcno,String txAmt) throws SysTradeExecuteException {
 		String jsonStrTownBranch = null;
 		try(Jedis jedis = myJedis.connect()){
 			jsonStrTownBranch = jedis.get(COMMON_PREFIX+"TOWN_LIST");

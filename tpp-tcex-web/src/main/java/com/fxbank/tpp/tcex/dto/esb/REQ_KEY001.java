@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TRK01
+* @ClassName: REQ_KEY01
 * @Description: 村镇通兑快捷查询账户信息
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TRK01 extends REQ_BASE {
+public class REQ_KEY001 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_TRK01 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TRK01(){
-		super.txDesc = "村镇通兑快捷查询账户信息";
+	public REQ_KEY001(){
+		super.txDesc = "工作密钥更新申请";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -57,17 +57,16 @@ public class REQ_TRK01 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "PAYER_ACNO")
-		private String payerAcno;	//账/卡号
+		@JSONField(name = "KEY_MODEL")
+		private String keyModel;	//申请密钥类型,默认：1
 
-		public String getPayerAcno() {
-			return payerAcno;
+		public String getKeyModel() {
+			return keyModel;
 		}
 
-		public void setPayerAcno(String payerAcno) {
-			this.payerAcno = payerAcno;
+		public void setKeyModel(String keyModel) {
+			this.keyModel = keyModel;
 		}
-
 
 	}
 }

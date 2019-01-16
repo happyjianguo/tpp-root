@@ -30,9 +30,9 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,16 +52,16 @@ public class TownReversalTest {
 	@Resource
 	private LogPool logPool;
 	
-	private REQ_TR004 req ;
+	private REQ_TR0014 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TR004.REQ_BODY reqBody ;
+	private REQ_TR0014.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TR004();
+		req = new REQ_TR0014();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TR0");
-		reqSysHead.setSceneId("04");
+		reqSysHead.setServiceId("TR0014");
+		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -103,7 +103,7 @@ public class TownReversalTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR004 rep = JsonUtil.toBean(repContent, REP_TR004.class);
+		REP_TR0014 rep = JsonUtil.toBean(repContent, REP_TR0014.class);
 	}
 	
 }

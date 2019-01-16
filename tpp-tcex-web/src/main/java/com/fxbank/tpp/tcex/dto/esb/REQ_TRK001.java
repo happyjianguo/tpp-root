@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TR003
-* @Description: 村镇通存记账确认
+* @ClassName: REQ_TRK01
+* @Description: 村镇通兑快捷查询账户信息
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TR003 extends REQ_BASE {
+public class REQ_TRK001 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_TR003 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TR003(){
-		super.txDesc = "村镇通存记账确认";
+	public REQ_TRK001(){
+		super.txDesc = "村镇通兑快捷查询账户信息";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -57,29 +57,17 @@ public class REQ_TR003 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "TOWN_DATE")
-		private String townDate;	//村镇日期
-		
-		@JSONField(name = "TOWN_TRACENO")
-		private String townTraceno;		//村镇流水
-		
+		@JSONField(name = "PAYER_ACNO")
+		private String payerAcno;	//账/卡号
 
-		public String getTownDate() {
-			return townDate;
+		public String getPayerAcno() {
+			return payerAcno;
 		}
 
-		public void setTownDate(String townDate) {
-			this.townDate = townDate;
+		public void setPayerAcno(String payerAcno) {
+			this.payerAcno = payerAcno;
 		}
 
-		public String getTownTraceno() {
-			return townTraceno;
-		}
 
-		public void setTownTraceno(String townTraceno) {
-			this.townTraceno = townTraceno;
-		}
-
-	
 	}
 }

@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_KEY01
-* @Description: 村镇通兑快捷查询账户信息
+* @ClassName: REQ_TR003
+* @Description: 村镇通存记账确认
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_KEY01 extends REQ_BASE {
+public class REQ_TR0013 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_KEY01 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_KEY01(){
-		super.txDesc = "工作密钥更新申请";
+	public REQ_TR0013(){
+		super.txDesc = "村镇通存记账确认";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -57,16 +57,29 @@ public class REQ_KEY01 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "KEY_MODEL")
-		private String keyModel;	//申请密钥类型,默认：1
+		@JSONField(name = "TOWN_DATE")
+		private String townDate;	//村镇日期
+		
+		@JSONField(name = "TOWN_TRACENO")
+		private String townTraceno;		//村镇流水
+		
 
-		public String getKeyModel() {
-			return keyModel;
+		public String getTownDate() {
+			return townDate;
 		}
 
-		public void setKeyModel(String keyModel) {
-			this.keyModel = keyModel;
+		public void setTownDate(String townDate) {
+			this.townDate = townDate;
 		}
 
+		public String getTownTraceno() {
+			return townTraceno;
+		}
+
+		public void setTownTraceno(String townTraceno) {
+			this.townTraceno = townTraceno;
+		}
+
+	
 	}
 }

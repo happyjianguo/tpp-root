@@ -25,11 +25,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
-import com.fxbank.tpp.tcex.dto.esb.REP_TRK01;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
+import com.fxbank.tpp.tcex.dto.esb.REP_TRK001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TRK01;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TRK001;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -38,20 +38,21 @@ public class TownQueryAcctInfoTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(TownQueryAcctInfoTest.class);
 	
-	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	//private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TRK01 req ;
+	private REQ_TRK001 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TRK01.REQ_BODY reqBody ;
+	private REQ_TRK001.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TRK01();
+		req = new REQ_TRK001();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TRK01");
+		reqSysHead.setServiceId("TRK001");
 		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
@@ -89,7 +90,7 @@ public class TownQueryAcctInfoTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TRK01 rep = JsonUtil.toBean(repContent, REP_TRK01.class);
+		REP_TRK001 rep = JsonUtil.toBean(repContent, REP_TRK001.class);
 	}
 	
 }

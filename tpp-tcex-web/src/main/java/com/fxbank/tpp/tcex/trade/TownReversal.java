@@ -24,8 +24,8 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
@@ -37,7 +37,7 @@ import redis.clients.jedis.Jedis;
  * @author liye
  *
  */
-@Service("REQ_TR004")
+@Service("REQ_TR0014")
 public class TownReversal implements TradeExecutionStrategy {
 	private static Logger logger = LoggerFactory.getLogger(CityDeposit.class);
 
@@ -63,7 +63,7 @@ public class TownReversal implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
-		REQ_TR004 reqDto = (REQ_TR004) dto;
+		REQ_TR0014 reqDto = (REQ_TR0014) dto;
 		String platDate = reqDto.getReqBody().getPlatDate();
 		String platTraceno = reqDto.getReqBody().getPlatTraceno();
 		// 交易机构
@@ -111,7 +111,7 @@ public class TownReversal implements TradeExecutionStrategy {
 		record.setRetMsg(msg);
 		rcvTraceService.rcvTraceUpd(record);
 		
-		REP_TR004 repDto = new REP_TR004();
+		REP_TR0014 repDto = new REP_TR0014();
 		repDto.getRepBody().setSts(code.equals("000000")?"1":"2");
 		String macDataStr = JsonUtil.toJson(repDto.getRepBody());
 		byte[] macBytes = macDataStr.getBytes();

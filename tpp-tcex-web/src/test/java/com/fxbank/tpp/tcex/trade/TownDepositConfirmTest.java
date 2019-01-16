@@ -30,12 +30,12 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR003;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0013;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR005;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR003;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0013;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
 
 @RunWith(SpringRunner.class)
@@ -56,16 +56,16 @@ public class TownDepositConfirmTest {
 	@Resource
 	private LogPool logPool;
 	
-	private REQ_TR003 req ;
+	private REQ_TR0013 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TR003.REQ_BODY reqBody ;
+	private REQ_TR0013.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TR003();
+		req = new REQ_TR0013();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TR0");
-		reqSysHead.setSceneId("03");
+		reqSysHead.setServiceId("TR0013");
+		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -107,7 +107,7 @@ public class TownDepositConfirmTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR003 rep = JsonUtil.toBean(repContent, REP_TR003.class);
+		REP_TR0013 rep = JsonUtil.toBean(repContent, REP_TR0013.class);
 	}
 	
 }

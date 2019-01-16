@@ -29,8 +29,8 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.common.TOWN;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR001;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR001;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0011;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0011;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,15 +52,15 @@ public class TownDepositTest {
 	@Resource
 	private LogPool logPool;
 	
-	private REQ_TR001 req ;
+	private REQ_TR0011 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TR001.REQ_BODY reqBody ;
+	private REQ_TR0011.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TR001();
+		req = new REQ_TR0011();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TR001");
+		reqSysHead.setServiceId("TR0011");
 		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
@@ -109,7 +109,7 @@ public class TownDepositTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR001 rep = JsonUtil.toBean(repContent, REP_TR001.class);
+		REP_TR0011 rep = JsonUtil.toBean(repContent, REP_TR0011.class);
 	}
 	
 }

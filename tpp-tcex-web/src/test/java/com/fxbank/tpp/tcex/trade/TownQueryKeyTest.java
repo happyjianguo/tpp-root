@@ -25,11 +25,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR005;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REQ_KEY01;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_KEY001;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
 
 @RunWith(SpringRunner.class)
@@ -39,21 +39,22 @@ public class TownQueryKeyTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(TownQueryKeyTest.class);
 	
-	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
-
+	//private static final String URL="http://57.25.3.165:7003/tcex/city.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
+	
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_KEY01 req ;
+	private REQ_KEY001 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_KEY01.REQ_BODY reqBody ;
+	private REQ_KEY001.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_KEY01();
+		req = new REQ_KEY001();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("KEY");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("KEY001");
+		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
@@ -79,7 +80,7 @@ public class TownQueryKeyTest {
 	@Test
 	public void payOk() throws Exception {
 		//获取两个工作密钥，一个是RZAK做mac的，一个是RZPK做pin的
-		reqBody.setKeyModel("RZPK");
+		reqBody.setKeyModel("RZAK");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

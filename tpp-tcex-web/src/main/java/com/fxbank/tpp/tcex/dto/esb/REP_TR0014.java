@@ -5,7 +5,7 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_TR001 extends REP_BASE {
+public class REP_TR0014 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,30 +50,8 @@ public class REP_TR001 extends REP_BASE {
 
 
 	public class REP_BODY {
-		@JSONField(name = "PLAT_DATE")
-		private String platDate;//平台日期
-
-		@JSONField(name = "PLAT_TRACENO")
-		private String platTraceno;//平台流水
-
 		@JSONField(name = "STS")
 		private String sts;//处理状态
-
-		public String getPlatDate() {
-			return platDate;
-		}
-
-		public void setPlatDate(String platDate) {
-			this.platDate = platDate;
-		}
-
-		public String getPlatTraceno() {
-			return platTraceno;
-		}
-
-		public void setPlatTraceno(String platTraceno) {
-			this.platTraceno = platTraceno;
-		}
 
 		public String getSts() {
 			return sts;

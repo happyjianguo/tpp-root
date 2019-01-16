@@ -5,7 +5,7 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_TR004 extends REP_BASE {
+public class REP_KEY001 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,17 +50,27 @@ public class REP_TR004 extends REP_BASE {
 
 
 	public class REP_BODY {
-		@JSONField(name = "STS")
-		private String sts;//处理状态
+		@JSONField(name = "KEY_VALUE")
+		private String keyValue;//工作密钥密文
 
-		public String getSts() {
-			return sts;
+		@JSONField(name = "CHK_KEY_VALUE")
+		private String chkKeyValue;//工作密钥校验值
+
+		public String getKeyValue() {
+			return keyValue;
 		}
 
-		public void setSts(String sts) {
-			this.sts = sts;
+		public void setKeyValue(String keyValue) {
+			this.keyValue = keyValue;
 		}
 
-		
+		public String getChkKeyValue() {
+			return chkKeyValue;
+		}
+
+		public void setChkKeyValue(String chkKeyValue) {
+			this.chkKeyValue = chkKeyValue;
+		}
+
 	}
 }

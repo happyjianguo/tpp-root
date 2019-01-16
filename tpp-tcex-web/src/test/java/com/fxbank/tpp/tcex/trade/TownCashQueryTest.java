@@ -25,10 +25,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR005;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
 
 @RunWith(SpringRunner.class)
@@ -38,7 +38,8 @@ public class TownCashQueryTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(TownCashQueryTest.class);
 	
-	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	//private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -78,7 +79,7 @@ public class TownCashQueryTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBrnoFlag("1");
+		reqBody.setBrnoFlag("7");
 		
 		String reqContent = JsonUtil.toJson(req);
 		

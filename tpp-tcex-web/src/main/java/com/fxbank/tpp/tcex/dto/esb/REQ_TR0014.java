@@ -12,7 +12,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TR004 extends REQ_BASE {
+public class REQ_TR0014 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,7 +23,7 @@ public class REQ_TR004 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TR004(){
+	public REQ_TR0014(){
 		super.txDesc = "村镇通兑冲正";
 	}
 

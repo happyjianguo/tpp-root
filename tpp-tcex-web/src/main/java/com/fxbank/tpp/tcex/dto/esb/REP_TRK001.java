@@ -5,7 +5,7 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_KEY01 extends REP_BASE {
+public class REP_TRK001 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,27 +50,50 @@ public class REP_KEY01 extends REP_BASE {
 
 
 	public class REP_BODY {
-		@JSONField(name = "KEY_VALUE")
-		private String keyValue;//工作密钥密文
+		@JSONField(name = "PAYER_ACNO")
+		private String payerAcno;//账/卡号
 
-		@JSONField(name = "CHK_KEY_VALUE")
-		private String chkKeyValue;//工作密钥校验值
+		@JSONField(name = "PAYER_NAME")
+		private String payerName;//账户姓名
 
-		public String getKeyValue() {
-			return keyValue;
+		@JSONField(name = "ACNO_SEQ")
+		private String acnoSeq;//账户序号
+
+		@JSONField(name = "BAL")
+		private String bal;//账户余额
+
+		public String getBal() {
+			return bal;
 		}
 
-		public void setKeyValue(String keyValue) {
-			this.keyValue = keyValue;
+		public void setBal(String bal) {
+			this.bal = bal;
 		}
 
-		public String getChkKeyValue() {
-			return chkKeyValue;
+		public String getPayerAcno() {
+			return payerAcno;
 		}
 
-		public void setChkKeyValue(String chkKeyValue) {
-			this.chkKeyValue = chkKeyValue;
+		public void setPayerAcno(String payerAcno) {
+			this.payerAcno = payerAcno;
 		}
 
+		public String getPayerName() {
+			return payerName;
+		}
+
+		public void setPayerName(String payerName) {
+			this.payerName = payerName;
+		}
+
+		public String getAcnoSeq() {
+			return acnoSeq;
+		}
+
+		public void setAcnoSeq(String acnoSeq) {
+			this.acnoSeq = acnoSeq;
+		}
+
+		
 	}
 }

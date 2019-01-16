@@ -13,15 +13,15 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.PasswordModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_KEY01;
-import com.fxbank.tpp.tcex.dto.esb.REQ_KEY01;
+import com.fxbank.tpp.tcex.dto.esb.REP_KEY001;
+import com.fxbank.tpp.tcex.dto.esb.REQ_KEY001;
 
 /**
  * 工作密钥更新申请
  * @author liye
  *
  */
-@Service("REQ_KEY01")
+@Service("REQ_KEY001")
 public class TownQueryKey extends TradeBase implements TradeExecutionStrategy{
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
 
@@ -39,14 +39,14 @@ public class TownQueryKey extends TradeBase implements TradeExecutionStrategy{
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
-		REQ_KEY01 reqDto = (REQ_KEY01)dto;
+		REQ_KEY001 reqDto = (REQ_KEY001)dto;
 		String keyModel = reqDto.getReqBody().getKeyModel();
 		//请求核心获取账户信息
 		PasswordModel passwordModel = new PasswordModel(logPool.get(), reqDto.getSysDate(), 
 				reqDto.getSysTime(),reqDto.getSysTraceno());
 		passwordModel.setKeyModel(keyModel);
 		passwordModel = passwordService.genKey(passwordModel);
-		REP_KEY01 repDto = new REP_KEY01();
+		REP_KEY001 repDto = new REP_KEY001();
 		repDto.getRepBody().setKeyValue(passwordModel.getKeyValue());
 		repDto.getRepBody().setChkKeyValue(passwordModel.getCheckValue());
 		myLog.info(logger, "获取工作密钥更新申请成功，申请密钥类型"+keyModel);

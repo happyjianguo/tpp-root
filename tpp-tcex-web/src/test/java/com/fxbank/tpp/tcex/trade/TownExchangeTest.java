@@ -30,8 +30,8 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.PasswordModel;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0012;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0012;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -45,7 +45,8 @@ public class TownExchangeTest {
 	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
-	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	//private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 	
 	@Reference(version = "1.0.0")
 	private IPasswordService passwordService;
@@ -53,16 +54,16 @@ public class TownExchangeTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TR002 req ;
+	private REQ_TR0012 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TR002.REQ_BODY reqBody ;
+	private REQ_TR0012.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TR002();
+		req = new REQ_TR0012();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TR0");
-		reqSysHead.setSceneId("02");
+		reqSysHead.setServiceId("TR0012");
+		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("LV");	//网联
@@ -118,7 +119,7 @@ public class TownExchangeTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR002 rep = JsonUtil.toBean(repContent, REP_TR002.class);
+		REP_TR0012 rep = JsonUtil.toBean(repContent, REP_TR0012.class);
 	}
 	
 }

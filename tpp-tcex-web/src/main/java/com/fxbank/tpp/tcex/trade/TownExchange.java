@@ -20,8 +20,8 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR002;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR002;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0012;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0012;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
@@ -37,7 +37,7 @@ import redis.clients.jedis.Jedis;
 * @date 2018年12月18日 下午2:50:42 
 *  
 */
-@Service("REQ_TR002")
+@Service("REQ_TR0012")
 public class TownExchange implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(CityDeposit.class);
@@ -65,9 +65,9 @@ public class TownExchange implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_TR002 reqDto = (REQ_TR002) dto;
-		REP_TR002 repDto = new REP_TR002();
-		REP_TR002.REP_BODY repBody = repDto.getRepBody();
+		REQ_TR0012 reqDto = (REQ_TR0012) dto;
+		REP_TR0012 repDto = new REP_TR0012();
+		REP_TR0012.REP_BODY repBody = repDto.getRepBody();
 		//平台日期
 		Integer platDate = reqDto.getSysDate();
 		//平台流水
@@ -136,10 +136,10 @@ public class TownExchange implements TradeExecutionStrategy {
 	* @return  ESB_REP_30011000103  返回类型 
 	* @throws 
 	*/
-	private ESB_REP_30011000103 hostCharge(REQ_TR002 reqDto) throws SysTradeExecuteException {
+	private ESB_REP_30011000103 hostCharge(REQ_TR0012 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
-		REQ_TR002.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_TR0012.REQ_BODY reqBody = reqDto.getReqBody();
 		// 村镇编号
 		String townFlag = reqBody.getBrnoFlag();
 		// 交易机构
@@ -204,10 +204,10 @@ public class TownExchange implements TradeExecutionStrategy {
 	* @return    返回类型 
 	* @throws 
 	*/
-	private void initRecord(REQ_TR002 reqDto) throws SysTradeExecuteException {
+	private void initRecord(REQ_TR0012 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 
-		REQ_TR002.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_TR0012.REQ_BODY reqBody = reqDto.getReqBody();
 		REQ_SYS_HEAD reqSysHead = reqDto.getReqSysHead();
 
 		RcvTraceInitModel record = new RcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
@@ -249,7 +249,7 @@ public class TownExchange implements TradeExecutionStrategy {
 	* @return RcvTraceUpdModel   返回类型 
 	* @throws 
 	*/
-	private RcvTraceUpdModel updateHostRecord(REQ_TR002 reqDto, String hostDate, String hostTraceno,
+	private RcvTraceUpdModel updateHostRecord(REQ_TR0012 reqDto, String hostDate, String hostTraceno,
 			String hostState,String retCode,String retMsg,String accounting_branch) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
