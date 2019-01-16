@@ -31,9 +31,9 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS004;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS004;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TS0014;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -54,13 +54,13 @@ public class TS004Test {
 	@Reference(version = "1.0.0")
 	private IPasswordService passwordService;
 	
-	private REQ_TS004 req ;
+	private REQ_TS0014 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TS004.REQ_BODY reqBody ;
+	private REQ_TS0014.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TS004();
+		req = new REQ_TS0014();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("TS004");
 		reqSysHead.setSceneId("");
@@ -106,7 +106,7 @@ public class TS004Test {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TS004 rep = JsonUtil.toBean(repContent, REP_TS004.class);
+		REP_TS0014 rep = JsonUtil.toBean(repContent, REP_TS0014.class);
 	}
 	
 }

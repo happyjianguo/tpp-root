@@ -26,10 +26,10 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR005;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0005;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0005;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,15 +44,15 @@ public class TownCashQueryTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_TR005 req ;
+	private REQ_TR0005 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TR005.REQ_BODY reqBody ;
+	private REQ_TR0005.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TR005();
+		req = new REQ_TR0005();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TR005");
+		reqSysHead.setServiceId("TR0005");
 		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
@@ -90,7 +90,7 @@ public class TownCashQueryTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR005 rep = JsonUtil.toBean(repContent, REP_TR005.class);
+		REP_TR0005 rep = JsonUtil.toBean(repContent, REP_TR0005.class);
 	}
 	
 }

@@ -16,12 +16,12 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS001;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS003;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0011;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0013;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS001;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS003;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0011;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0013;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041000901;
@@ -96,14 +96,14 @@ public class CityDeposit implements TradeExecutionStrategy {
 			myLog.info(logger, "商行通存村镇核心记账成功，渠道日期" + reqDto.getSysDate() + 
 					"渠道流水号" + reqDto.getSysTraceno());
 			// 通知村镇记账
-			ESB_REP_TS001 esbRep_TS001 = null;
+			ESB_REP_TS0011 esbRep_TS001 = null;
 			String townBranch = null;
 			String townDate = null;
 			String townTraceNo = null;
 			String townRetCode = null;
 			try {
 			    esbRep_TS001 = townCharge(reqDto);
-			    ESB_REP_TS001.REP_BODY esbRepBody_TS001 = esbRep_TS001.getRepBody();
+			    ESB_REP_TS0011.REP_BODY esbRepBody_TS001 = esbRep_TS001.getRepBody();
 				townBranch = esbRepBody_TS001.getBrno();
 				townDate = esbRepBody_TS001.getTownDate();
 				townTraceNo = esbRepBody_TS001.getTownTraceno();
@@ -113,7 +113,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 					updateTownRecord(reqDto, "", "", "", "3");
 					myLog.error(logger, "商行通存村镇村镇记账超时，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e);
-					ESB_REP_TS003 esbRep_TS003 = null;
+					ESB_REP_TS0013 esbRep_TS003 = null;
 					String confirmTownDate = null;
 					String confirmTownTraceNo = null;
 					try {
@@ -282,15 +282,15 @@ public class CityDeposit implements TradeExecutionStrategy {
 		sndTraceService.sndTraceUpd(record);
 		return record;
 	}
-	private ESB_REP_TS001 townCharge(REQ_30041000901 reqDto) throws SysTradeExecuteException {
+	private ESB_REP_TS0011 townCharge(REQ_30041000901 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		ESB_REQ_TS001 esbReq_TS001 = new ESB_REQ_TS001(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
+		ESB_REQ_TS0011 esbReq_TS001 = new ESB_REQ_TS0011(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_TS001.getReqSysHead(), reqDto)
 				.setBranchId(reqDto.getReqSysHead().getBranchId()).setUserId(reqDto.getReqSysHead().getUserId())
 				.build();
 		esbReq_TS001.setReqSysHead(reqSysHead);
-		ESB_REQ_TS001.REQ_BODY esbReqBody_TS001 = esbReq_TS001.getReqBody();
+		ESB_REQ_TS0011.REQ_BODY esbReqBody_TS001 = esbReq_TS001.getReqBody();
 		REQ_30041000901.REQ_BODY reqBody = reqDto.getReqBody();
 		esbReqBody_TS001.setPlatDate(reqDto.getSysDate().toString());
 		esbReqBody_TS001.setPlatTraceno(reqDto.getSysTraceno().toString());
@@ -300,25 +300,25 @@ public class CityDeposit implements TradeExecutionStrategy {
         esbReqBody_TS001.setPayeeName(reqBody.getPayeeAcctName());
         esbReqBody_TS001.setBrnoFlag(reqBody.getVillageBrnachFlag());
         
-		ESB_REP_TS001 esbRep_TS001 = forwardToTownService.sendToTown(esbReq_TS001, esbReqBody_TS001,
-				ESB_REP_TS001.class);
+		ESB_REP_TS0011 esbRep_TS001 = forwardToTownService.sendToTown(esbReq_TS001, esbReqBody_TS001,
+				ESB_REP_TS0011.class);
 		return esbRep_TS001;
 	}
-	private ESB_REP_TS003 townDepositConfirm(REQ_30041000901 reqDto) throws SysTradeExecuteException {
+	private ESB_REP_TS0013 townDepositConfirm(REQ_30041000901 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		ESB_REQ_TS003 esbReq_TS003 = new ESB_REQ_TS003(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
+		ESB_REQ_TS0013 esbReq_TS003 = new ESB_REQ_TS0013(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_TS003.getReqSysHead(), reqDto)
 				.setBranchId(reqDto.getReqSysHead().getBranchId()).setUserId(reqDto.getReqSysHead().getUserId())
 				.build();
 		esbReq_TS003.setReqSysHead(reqSysHead);
-		ESB_REQ_TS003.REQ_BODY esbReqBody_TS003 = esbReq_TS003.getReqBody();
+		ESB_REQ_TS0013.REQ_BODY esbReqBody_TS003 = esbReq_TS003.getReqBody();
 		esbReqBody_TS003.setPlatDate(reqDto.getSysDate().toString());
 		esbReqBody_TS003.setPlatTraceno(reqDto.getSysTraceno().toString());
 
         
-		ESB_REP_TS003 esbRep_TS003 = forwardToTownService.sendToTown(esbReq_TS003, esbReqBody_TS003,
-				ESB_REP_TS003.class);
+		ESB_REP_TS0013 esbRep_TS003 = forwardToTownService.sendToTown(esbReq_TS003, esbReqBody_TS003,
+				ESB_REP_TS0013.class);
 		return esbRep_TS003;
 	}
 	private ESB_REP_30014000101 hostReversal(REQ_30041000901 reqDto,String hostSeqno)

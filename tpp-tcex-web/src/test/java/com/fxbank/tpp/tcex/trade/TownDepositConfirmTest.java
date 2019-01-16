@@ -32,11 +32,11 @@ import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0013;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR005;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0005;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0013;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0005;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

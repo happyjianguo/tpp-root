@@ -33,7 +33,7 @@ import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS003;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS003;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TS0013;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -54,13 +54,13 @@ public class TS003Test {
 	@Reference(version = "1.0.0")
 	private IPasswordService passwordService;
 	
-	private REQ_TS003 req ;
+	private REQ_TS0013 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TS003.REQ_BODY reqBody ;
+	private REQ_TS0013.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TS003();
+		req = new REQ_TS0013();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("TS003");
 		reqSysHead.setSceneId("");

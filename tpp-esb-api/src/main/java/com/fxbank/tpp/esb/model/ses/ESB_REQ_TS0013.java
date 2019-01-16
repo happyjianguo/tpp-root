@@ -7,28 +7,31 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
+import com.fxbank.tpp.esb.common.TOWN;
 
 
 /** 
-* @ClassName: TSK01 
-* @Description: 商行通兑快捷查询村镇账户信息
+* @ClassName: REQ_TS002 
+* @Description: 商行通兑村镇 
 * @author Duzhenduo
 * @date 2018年12月11日 下午2:04:30 
 *  
 */
-public class ESB_REQ_TSK01 extends ESB_BASE {
+public class ESB_REQ_TS0013 extends ESB_BASE {
 	
 	private static final long serialVersionUID = -813981987125918717L;
 
-	public ESB_REQ_TSK01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public ESB_REQ_TS0013(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
+		super.macEnable = true;
+		this.getReqSysHead().setMacValue(TOWN.macDeginId + "|" + TOWN.macNodeId + "|" + TOWN.macKeyModelId + "|" + TOWN.macPlaceHolder + "|");
 	}
 
 	@JSONField(name = "APP_HEAD")
 	private ESB_REQ_APP_HEAD reqAppHead = new ESB_REQ_APP_HEAD();
 
 	@JSONField(name = "SYS_HEAD")
-	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TSK01", "");
+	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TS0013", "");
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody = new REQ_BODY();
 
@@ -60,28 +63,38 @@ public class ESB_REQ_TSK01 extends ESB_BASE {
 
 		private static final long serialVersionUID = -8415585719972566411L;
 
-		@JSONField(name = "PAYER_ACNO")
-		private String payerAcno;	//账/卡号
+		@JSONField(name = "DCFLAG")
+		private String dcFlag;	//通存通兑标志
+
+		@JSONField(name = "PLAT_DATE")
+		private String platDate;	//平台日期
 		
-		@JSONField(name = "BRNO_FLAG")
-		private String brnoFlag;	//村镇机构
+		@JSONField(name = "PLAT_TRACENO")
+		private String platTraceno;		//平台流水
 
-		public String getPayerAcno() {
-			return payerAcno;
+		public String getDcFlag() {
+			return dcFlag;
 		}
 
-		public void setPayerAcno(String payerAcno) {
-			this.payerAcno = payerAcno;
+		public void setDcFlag(String dcFlag) {
+			this.dcFlag = dcFlag;
 		}
 
-		public String getBrnoFlag() {
-			return brnoFlag;
+		public String getPlatDate() {
+			return platDate;
 		}
 
-		public void setBrnoFlag(String brnoFlag) {
-			this.brnoFlag = brnoFlag;
+		public void setPlatDate(String platDate) {
+			this.platDate = platDate;
 		}
-		
+
+		public String getPlatTraceno() {
+			return platTraceno;
+		}
+
+		public void setPlatTraceno(String platTraceno) {
+			this.platTraceno = platTraceno;
+		}
 		
 	
 	}

@@ -8,16 +8,16 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REP_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REP_SYS_HEAD;
 
-public class ESB_REP_TS003 extends ESB_BASE {
+public class ESB_REP_TS0013 extends ESB_BASE {
 
 	private static final long serialVersionUID = -2496078829437573719L;
 
 	@Deprecated
-	public ESB_REP_TS003() {
+	public ESB_REP_TS0013() {
 		super(null, 0, 0, 0);
 	}
 
-	public ESB_REP_TS003(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public ESB_REP_TS0013(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 

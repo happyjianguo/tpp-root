@@ -26,11 +26,11 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
-import com.fxbank.tpp.tcex.dto.esb.REP_TR005;
+import com.fxbank.tpp.tcex.dto.esb.REP_TR0005;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REQ_KEY001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TR005;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TR0005;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -91,7 +91,7 @@ public class TownQueryKeyTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TR005 rep = JsonUtil.toBean(repContent, REP_TR005.class);
+		REP_TR0005 rep = JsonUtil.toBean(repContent, REP_TR0005.class);
 	}
 	
 }

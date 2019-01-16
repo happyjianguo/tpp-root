@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TEST_TSK01
-* @Description: 村镇账户信息
+* @ClassName: REQ_TR005
+* @Description: 村镇头寸查询
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TSK01 extends REQ_BASE {
+public class REQ_TR0005 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_TSK01 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TSK01(){
-		super.txDesc = "模拟村镇账户信息";
+	public REQ_TR0005(){
+		super.txDesc = "村镇头寸查询";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -57,19 +57,16 @@ public class REQ_TSK01 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "PAYER_ACNO")
-		private String payerAcno;	//账/卡号
+		@JSONField(name = "BRNO_FLAG")
+		private String brnoFlag;	//村镇机构
 
-		public String getPayerAcno() {
-			return payerAcno;
+		public String getBrnoFlag() {
+			return brnoFlag;
 		}
 
-		public void setPayerAcno(String payerAcno) {
-			this.payerAcno = payerAcno;
+		public void setBrnoFlag(String brnoFlag) {
+			this.brnoFlag = brnoFlag;
 		}
 
-
-		
-	
 	}
 }

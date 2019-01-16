@@ -8,16 +8,16 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REP_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REP_SYS_HEAD;
 
-public class ESB_REP_TS002 extends ESB_BASE {
+public class ESB_REP_TSK001 extends ESB_BASE {
 
 	private static final long serialVersionUID = -2496078829437573719L;
 
 	@Deprecated
-	public ESB_REP_TS002() {
+	public ESB_REP_TSK001() {
 		super(null, 0, 0, 0);
 	}
 
-	public ESB_REP_TS002(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public ESB_REP_TSK001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 
@@ -59,49 +59,50 @@ public class ESB_REP_TS002 extends ESB_BASE {
 	public class REP_BODY implements Serializable{
 		private static final long serialVersionUID = -4029732750907650659L;
 
-		@JSONField(name = "BRNO")
-		private String brno;	//村镇记账机构
+		@JSONField(name = "PAYER_ACNO")
+		private String payerAcno;	//账/卡号
 		
-		@JSONField(name = "TOWN_DATE")
-		private String townDate;	//村镇日期
+		@JSONField(name = "PAYER_NAME")
+		private String payerName;	//账户姓名
 		
-		@JSONField(name = "TOWN_TRACENO")
-		private String townTraceno;	//村镇流水
+		@JSONField(name = "ACNO_SEQ")
+		private String acnoSeq;	//账户序号
 		
-		@JSONField(name = "BACK_TAL")
-		private String backTal;	//取款后余额
+		@JSONField(name = "BAL")
+		private String bal;	//账户余额
 
-		public String getBrno() {
-			return brno;
+		public String getPayerAcno() {
+			return payerAcno;
 		}
 
-		public void setBrno(String brno) {
-			this.brno = brno;
+		public void setPayerAcno(String payerAcno) {
+			this.payerAcno = payerAcno;
 		}
 
-		public String getTownDate() {
-			return townDate;
+		public String getPayerName() {
+			return payerName;
 		}
 
-		public void setTownDate(String townDate) {
-			this.townDate = townDate;
+		public void setPayerName(String payerName) {
+			this.payerName = payerName;
 		}
 
-		public String getTownTraceno() {
-			return townTraceno;
+		public String getAcnoSeq() {
+			return acnoSeq;
 		}
 
-		public void setTownTraceno(String townTraceno) {
-			this.townTraceno = townTraceno;
+		public void setAcnoSeq(String acnoSeq) {
+			this.acnoSeq = acnoSeq;
 		}
 
-		public String getBackTal() {
-			return backTal;
+		public String getBal() {
+			return bal;
 		}
 
-		public void setBackTal(String backTal) {
-			this.backTal = backTal;
+		public void setBal(String bal) {
+			this.bal = bal;
 		}
+
 
 	}
 }

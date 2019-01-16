@@ -17,11 +17,11 @@ import com.fxbank.tpp.esb.common.TOWN;
 * @date 2018年12月11日 下午2:04:30 
 *  
 */
-public class ESB_REQ_TS001 extends ESB_BASE {
+public class ESB_REQ_TS0011 extends ESB_BASE {
 	
 	private static final long serialVersionUID = -813981987125918717L;
 
-	public ESB_REQ_TS001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public ESB_REQ_TS0011(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 		super.macEnable = true;
 		this.getReqSysHead().setMacValue(TOWN.macDeginId + "|" + TOWN.macNodeId + "|" + TOWN.macKeyModelId + "|" + TOWN.macPlaceHolder + "|");
@@ -31,7 +31,7 @@ public class ESB_REQ_TS001 extends ESB_BASE {
 	private ESB_REQ_APP_HEAD reqAppHead = new ESB_REQ_APP_HEAD();
 
 	@JSONField(name = "SYS_HEAD")
-	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TS001", "");
+	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TS0011", "");
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody = new REQ_BODY();
 

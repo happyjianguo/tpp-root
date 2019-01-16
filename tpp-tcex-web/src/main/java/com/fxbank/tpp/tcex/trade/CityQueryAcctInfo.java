@@ -12,9 +12,9 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TSK01;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS002;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TSK01;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_TSK001;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0012;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_TSK001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
@@ -59,13 +59,13 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 				
 		//请求村镇账户信息接口，反馈结果写入REP_TSK01
 		
-		ESB_REQ_TSK01 esbReq_tsk01 = new ESB_REQ_TSK01(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
+		ESB_REQ_TSK001 esbReq_tsk01 = new ESB_REQ_TSK001(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tsk01.getReqSysHead(),reqDto).setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_tsk01.setReqSysHead(reqSysHead);
-		ESB_REQ_TSK01.REQ_BODY esbReqBody_tsk01 = esbReq_tsk01.getReqBody();
+		ESB_REQ_TSK001.REQ_BODY esbReqBody_tsk01 = esbReq_tsk01.getReqBody();
 		esbReqBody_tsk01.setPayerAcno(payerAcno);
 		esbReqBody_tsk01.setBrnoFlag(brnoFlag);
-		ESB_REP_TSK01 esbRep_tsk01 = forwardToTownService.sendToTown(esbReq_tsk01, esbReqBody_tsk01, ESB_REP_TSK01.class);
+		ESB_REP_TSK001 esbRep_tsk01 = forwardToTownService.sendToTown(esbReq_tsk01, esbReqBody_tsk01, ESB_REP_TSK001.class);
 
 
 		REP_30042000307 repDto = new REP_30042000307();

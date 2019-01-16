@@ -23,8 +23,8 @@ import com.fxbank.tpp.tcex.dto.esb.REP_TS002;
  * @author liye
  *
  */
-@Service("REQ_TS002")
-public class TS002 implements TradeExecutionStrategy {
+@Service("REQ_TS0012")
+public class TS0012 implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(CityDeposit.class);
 

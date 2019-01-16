@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TR005
-* @Description: 村镇头寸查询
+* @ClassName: REQ_TESTTS004
+* @Description: 商行通兑村镇冲正
 * @author zhouyongwei zyw_unix@126.com
 * @date 2018年4月5日 下午11:31:28 
 *  
 */
-public class REQ_TR005 extends REQ_BASE {
+public class REQ_TS0014 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_TR005 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_TR005(){
-		super.txDesc = "村镇头寸查询";
+	public REQ_TS0014(){
+		super.txDesc = "商行通兑村镇冲正";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -57,16 +57,29 @@ public class REQ_TR005 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "BRNO_FLAG")
-		private String brnoFlag;	//村镇机构
+		@JSONField(name = "PLAT_DATE")
+		private String platDate;		//平台日期
+		
+		@JSONField(name = "PLAT_TRACENO")
+		private String platTraceno;		//平台流水
 
-		public String getBrnoFlag() {
-			return brnoFlag;
+		public String getPlatDate() {
+			return platDate;
 		}
 
-		public void setBrnoFlag(String brnoFlag) {
-			this.brnoFlag = brnoFlag;
+		public void setPlatDate(String platDate) {
+			this.platDate = platDate;
 		}
 
+		public String getPlatTraceno() {
+			return platTraceno;
+		}
+
+		public void setPlatTraceno(String platTraceno) {
+			this.platTraceno = platTraceno;
+		}
+		
+		
+	
 	}
 }

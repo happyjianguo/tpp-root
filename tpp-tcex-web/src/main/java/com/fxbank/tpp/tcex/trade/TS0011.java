@@ -19,14 +19,14 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS001;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS0011;
 /**
  * 商行通存业务
  * @author liye
  *
  */
-@Service("REQ_TS001")
-public class TS001 implements TradeExecutionStrategy {
+@Service("REQ_TS0011")
+public class TS0011 implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(CityDeposit.class);
 
@@ -40,7 +40,7 @@ public class TS001 implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REP_TS001 repDto = new REP_TS001();
+		REP_TS0011 repDto = new REP_TS0011();
 		/**
 		List<REP_RET> list = new ArrayList<REP_RET>();
 		REP_RET ret = new REP_RET();

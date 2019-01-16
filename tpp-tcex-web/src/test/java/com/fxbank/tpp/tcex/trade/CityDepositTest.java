@@ -31,9 +31,9 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS001;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS0011;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS001;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TS0011;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,7 +43,7 @@ public class CityDepositTest {
 	private static Logger logger = LoggerFactory.getLogger(CityDepositTest.class);
 	
 	//private static final String URL="http://57.25.3.165:7003/tcex/city.do";
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+      private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -112,7 +112,7 @@ public class CityDepositTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TS001 rep = JsonUtil.toBean(repContent, REP_TS001.class);
+		REP_TS0011 rep = JsonUtil.toBean(repContent, REP_TS0011.class);
 	}
 	
 }
