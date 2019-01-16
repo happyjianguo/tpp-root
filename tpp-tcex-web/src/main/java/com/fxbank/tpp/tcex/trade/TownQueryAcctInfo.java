@@ -70,6 +70,7 @@ public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		esbReq_30013000201.setReqSysHead(reqSysHead);	
 		ESB_REQ_30013000201.REQ_BODY reqBody_30013000201 = esbReq_30013000201.getReqBody();
 		reqBody_30013000201.setBaseAcctNo(payerAcno);
+		reqBody_30013000201.setCcy("CNY");
 		
 		ESB_REP_30013000201 esbRep_30013000201 = forwardToESBService.sendToESB(esbReq_30013000201, reqBody_30013000201, ESB_REP_30013000201.class);
 //		String code = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetCode();
