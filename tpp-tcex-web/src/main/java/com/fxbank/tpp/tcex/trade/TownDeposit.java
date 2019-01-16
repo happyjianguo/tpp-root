@@ -19,6 +19,7 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR001;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -50,6 +51,9 @@ public class TownDeposit implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private IForwardToTownService forwardToTownService;
+	
+	@Reference(version = "1.0.0")
+	private IPasswordService passwordService;
 	
 	@Resource
 	private MyJedis myJedis;
@@ -119,6 +123,9 @@ public class TownDeposit implements TradeExecutionStrategy {
 		repBody.setPlatDate(platDate.toString());
 		repBody.setPlatTraceno(platTraceNo.toString());
 		repBody.setSts(sts);
+		String macDataStr = JsonUtil.toJson(repBody);
+		byte[] macBytes = macDataStr.getBytes();
+		repDto.getRepSysHead().setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		return repDto;
 	}
 	/** 

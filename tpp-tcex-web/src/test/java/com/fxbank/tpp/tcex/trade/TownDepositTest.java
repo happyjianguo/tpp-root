@@ -41,8 +41,8 @@ public class TownDepositTest {
 	
 	static SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
 	
-	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
-	//private static final String URL="http://127.0.0.1:7000/tcex/town.do";
+	//private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -98,7 +98,7 @@ public class TownDepositTest {
 		
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
-		//reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
+		reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		
 		String reqContent = JsonUtil.toJson(req);
 		

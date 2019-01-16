@@ -77,12 +77,6 @@ public class TownReversal implements TradeExecutionStrategy {
 			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
         }
 		
-		String macDataStr = JsonUtil.toJson(reqDto.getReqBody());
-		byte[] macBytes = macDataStr.getBytes();
-		//passwordService.verifyTownMac(myLog, macBytes, reqDto.getReqSysHead().getMacValue());
-		myLog.info(logger, "村镇通存商行MAC校验成功，渠道日期" + platDate +  
-				"渠道流水号" + platTraceno);
-		
 //		RcvTraceQueryModel model = rcvTraceService.getRcvTraceByKey(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno(),
 //				Integer.parseInt(platDate), Integer.parseInt(platTraceno));
 		
@@ -119,6 +113,9 @@ public class TownReversal implements TradeExecutionStrategy {
 		
 		REP_TR004 repDto = new REP_TR004();
 		repDto.getRepBody().setSts(code.equals("000000")?"1":"2");
+		String macDataStr = JsonUtil.toJson(repDto.getRepBody());
+		byte[] macBytes = macDataStr.getBytes();
+		repDto.getRepSysHead().setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 
 		return repDto;
 	}

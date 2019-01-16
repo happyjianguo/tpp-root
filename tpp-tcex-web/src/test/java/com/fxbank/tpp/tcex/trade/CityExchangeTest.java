@@ -42,7 +42,7 @@ public class CityExchangeTest {
 	private LogPool logPool;
 	
 	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
-
+	//private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -103,8 +103,9 @@ public class CityExchangeTest {
 		reqBody.setDocumentID("211003199105271510");
 		
 		String macDataStr = JsonUtil.toJson(reqBody);
-		byte[] macBytes = macDataStr.getBytes();
-		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
+		macDataStr="{\"PLAT_DATE\":\"20180928\",\"PLAT_TRACENO\":\"5619\",\"STS\":\"1\"}";
+		byte[] macBytes = macDataStr.getBytes("UTF-8");
+		reqSysHead.setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		
 		String reqContent = JsonUtil.toJson(req);
 		

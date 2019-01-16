@@ -24,6 +24,7 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
+import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR003;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR003;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
@@ -51,7 +52,10 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private IRcvTraceService rcvTraceService;
-
+	
+	@Reference(version = "1.0.0")
+    private IPasswordService passwordService;
+	
 	@Resource
 	private MyJedis myJedis;
 
@@ -229,7 +233,9 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		repDto.getRepBody().setSts("1");
 		repDto.getRepBody().setPlatDate(platDate.toString());
 		repDto.getRepBody().setPlatTraceno(platTrance.toString());
-		
+		String macDataStr = JsonUtil.toJson(repDto.getRepBody());
+		byte[] macBytes = macDataStr.getBytes();
+		repDto.getRepSysHead().setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
 		return repDto;
 	}
 
