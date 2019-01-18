@@ -38,8 +38,8 @@ public class TownQueryAcctInfoTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(TownQueryAcctInfoTest.class);
 	
-	//private static final String URL="http://57.25.3.165:7003/tcex/town.do";
-	private static final String URL="http://127.0.0.1:7000/tcex/town.do";
+	private static final String URL="http://57.25.3.165:7003/tcex/town.do";
+	//private static final String URL="http://127.0.0.1:7000/tcex/town.do";
 
 	@Autowired
 	private MockMvc mockMvc;

@@ -31,16 +31,16 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.IPasswordService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS003;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
-import com.fxbank.tpp.tcex.dto.esb.REQ_TS0013;
+import com.fxbank.tpp.tcex.dto.esb.REQ_TS0014;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class TS003Test {
+public class TS0014Test {
 	
-	private static Logger logger = LoggerFactory.getLogger(TS003Test.class);
+	private static Logger logger = LoggerFactory.getLogger(TS0014Test.class);
 	
 	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
 	//private static final String URL="http://127.0.0.1:7000/tcex/city.do";
@@ -54,15 +54,15 @@ public class TS003Test {
 	@Reference(version = "1.0.0")
 	private IPasswordService passwordService;
 	
-	private REQ_TS0013 req ;
+	private REQ_TS0014 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_TS0013.REQ_BODY reqBody ;
+	private REQ_TS0014.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_TS0013();
+		req = new REQ_TS0014();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TS003");
+		reqSysHead.setServiceId("TS0014");
 		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
@@ -91,8 +91,8 @@ public class TS003Test {
 	public void payOk() throws Exception {
 		
 		
-		reqBody.setPlatDate("20190116");
-		reqBody.setPlatTraceno("129180");
+		reqBody.setPlatDate("20190117");
+		reqBody.setPlatTraceno("129960");
 		
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
@@ -106,7 +106,7 @@ public class TS003Test {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TS003 rep = JsonUtil.toBean(repContent, REP_TS003.class);
+		REP_TS0014 rep = JsonUtil.toBean(repContent, REP_TS0014.class);
 	}
 	
 }

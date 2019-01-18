@@ -115,7 +115,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		RcvTraceQueryModel model = null;
 		try {
 			model = rcvTraceService.getConfirmTrace(myLog,  townDate, townTraceno);
-		}catch(SysTradeExecuteException e) {
+		}catch(Exception e) {
 			myLog.error(logger,"村镇流水号【"+townDate+","+townTraceno+"】待确认存款信息不存在："+e.getMessage());
 			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10014);
 			throw e1;
