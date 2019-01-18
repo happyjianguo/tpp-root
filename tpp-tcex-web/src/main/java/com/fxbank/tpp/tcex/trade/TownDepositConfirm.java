@@ -27,6 +27,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IPasswordService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0013;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0013;
+import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.model.TownInfo;
@@ -110,8 +111,17 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
 			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
         }
+		
+		RcvTraceQueryModel model = null;
+		try {
+			model = rcvTraceService.getConfirmTrace(myLog,  townDate, townTraceno);
+		}catch(SysTradeExecuteException e) {
+			myLog.error(logger,"村镇流水号【"+townDate+","+townTraceno+"】待确认存款信息不存在："+e.getMessage());
+			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10014);
+			throw e1;
+		}
 		//自查流水状态
-		RcvTraceQueryModel model = rcvTraceService.getConfirmTrace(myLog,  townDate, townTraceno);
+		
 		String state = model.getHostState();
 		Integer platDate = model.getPlatDate();
 		Integer platTrance = model.getPlatTrace();
