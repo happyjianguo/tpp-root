@@ -543,8 +543,8 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		try (Jedis jedis = myJedis.connect()) {
 			localPath = jedis.get(COMMON_PREFIX+"txt_path");
 		}
-		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+fileName);
-		return localPath+File.separator+fileName;
+		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+direction+"_"+fileName);
+		return localPath+File.separator+direction+"_"+fileName;
 	}
 //	/**
 //	 * @Title: loadFile @Description: 从文件传输平台下载文件 @param @param
