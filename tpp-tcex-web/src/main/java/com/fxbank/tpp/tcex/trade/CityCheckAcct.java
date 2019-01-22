@@ -150,7 +150,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			}else if(model.getDcFlag().equals("1")) {
 				//通兑
 				//失败、超时
-				if(!model.getHostState().equals("2")&&!model.getHostState().equals("3")) {
+				if(!model.getHostState().equals("0")&&!model.getHostState().equals("2")&&!model.getHostState().equals("3")) {
 					System.out.println("柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
 					myLog.error(logger,"柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
 					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
