@@ -95,6 +95,9 @@ public class SndTraceService implements ISndTraceService{
 		if(null != record.getRetMsg()) {
 			tppSndTraceLog.setRetMsg(record.getRetMsg());
 		}
+		if(null != record.getCheckFlag()) {
+			tppSndTraceLog.setCheckFlag(record.getCheckFlag());
+		}
 		
 		tppSndTraceLogMapper.updateByPrimaryKeySelective(tppSndTraceLog);
 	}
@@ -201,6 +204,7 @@ public class SndTraceService implements ISndTraceService{
 		tppSndTraceLog.setAuthTel(record.getAuthTel());
 		tppSndTraceLog.setInfo(record.getInfo());
 		tppSndTraceLog.setTownFlag(record.getTownFlag());
+		tppSndTraceLog.setCheckFlag(record.getCheckFlag());
 		
 		tppSndTraceLogMapper.insertSelective(tppSndTraceLog);
 	}

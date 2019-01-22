@@ -139,6 +139,9 @@ public class RcvTraceService implements IRcvTraceService{
 		if(null != record.getHostBranch()) {
 			tppRcvTraceLog.setHostBranch(record.getHostBranch());
 		}
+		if(null != record.getCheckFlag()) {
+			tppRcvTraceLog.setCheckFlag(record.getCheckFlag());
+		}
 		tppRcvTraceLogMapper.updateByPrimaryKeySelective(tppRcvTraceLog);
 		
 	}
@@ -241,6 +244,7 @@ public class RcvTraceService implements IRcvTraceService{
 		tppRcvTraceLog.setAuthTel(record.getAuthTel());
 		tppRcvTraceLog.setInfo(record.getInfo());
 		tppRcvTraceLog.setTownFlag(record.getTownFlag());
+		tppRcvTraceLog.setCheckFlag(record.getCheckFlag());
 		
 		tppRcvTraceLogMapper.insertSelective(tppRcvTraceLog);
 	}
