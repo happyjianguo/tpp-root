@@ -383,7 +383,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 						SndTraceUpdModel record = new SndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setCheckFlag("2");
 						sndTraceService.sndTraceUpd(record);
-					}else if(hostState.equals("3")||hostState.equals("6")||hostState.equals("7")) {
+					}else if(hostState.equals("3")||hostState.equals("5")||hostState.equals("6")||hostState.equals("7")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 						RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");
@@ -444,7 +444,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 					RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
-				}else if(hostState.equals("3")||hostState.equals("4")||hostState.equals("6")||hostState.equals("7")) {
+				}else if(hostState.equals("3")||hostState.equals("4")||hostState.equals("5")||hostState.equals("6")||hostState.equals("7")) {
 					//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 					RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setHostState("1");
