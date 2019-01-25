@@ -176,19 +176,19 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		String sndExTotalSum = sndTraceService.getSndTotalSum(myLog, date, "1");
 		sb.append("I0").append("|");
 		sb.append(rcvDeTotalNum).append("|");
-		sb.append(rcvDeTotalSum).append("|");
+		sb.append(null==rcvDeTotalSum?"0":rcvDeTotalSum).append("|");
 		sb.append("\n"); 
 		sb.append("I1").append("|");
 		sb.append(rcvExTotalNum).append("|");
-		sb.append(rcvExTotalSum).append("|");
+		sb.append(null==rcvExTotalSum?"0":rcvExTotalSum).append("|");
 		sb.append("\n"); 
 		sb.append("O0").append("|");
 		sb.append(sndDeTotalNum).append("|");
-		sb.append(sndDeTotalSum).append("|");
+		sb.append(null==sndDeTotalSum?"0":sndDeTotalSum).append("|");
 		sb.append("\n"); 
 		sb.append("O1").append("|");
 		sb.append(sndExTotalNum).append("|");
-		sb.append(sndExTotalSum).append("|");
+		sb.append(null==sndExTotalSum?"0":sndExTotalSum).append("|");
 		sb.append("\n"); 
 		List<RcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
 		for(RcvTraceQueryModel model : upRcvTraceList) {
