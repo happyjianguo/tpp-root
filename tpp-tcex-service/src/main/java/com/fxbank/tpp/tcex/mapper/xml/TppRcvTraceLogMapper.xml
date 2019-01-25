@@ -59,5 +59,12 @@
       </if>
     </trim>
   </select>
-  
+    <select id="selectDtRcvTotalNum" resultType="java.lang.String" >
+    select count(tx_amt) as num from tpp_rcv_trace_log where 
+     plat_date=#{date} and dc_flag=#{flag} and host_state=1
+  </select>
+   <select id="selectDtRcvTotalSum" resultType="java.lang.String" >
+    select sum(tx_amt) as sum from tpp_rcv_trace_log where 
+     plat_date=#{date} and dc_flag=#{flag} and host_state=1
+  </select>
 </mapper>

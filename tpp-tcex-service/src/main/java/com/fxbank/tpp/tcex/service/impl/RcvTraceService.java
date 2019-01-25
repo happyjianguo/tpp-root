@@ -316,11 +316,47 @@ public class RcvTraceService implements IRcvTraceService{
 			model.setTownState(data.getTownState());
 			model.setTownTraceno(data.getTownTraceno());
 			model.setTownFlag(data.getTownFlag());
+			model.setTxAmt(data.getTxAmt());
+			model.setTxInd(data.getTxInd());
 
 			modelList.add(model);
 		}
 		
 		return modelList;
 	}
+
+	/** 
+	* @Title: getRcvTotalNum 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param @param myLog
+	* @param @param date
+	* @param @param dcFlag
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public String getRcvTotalNum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
+		String num = tppRcvTraceLogMapper.selectDtRcvTotalNum(date, dcFlag);
+		return num;
+	}
+
+	/** 
+	* @Title: getRcvTotalSum 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param @param myLog
+	* @param @param date
+	* @param @param dcFlag
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public String getRcvTotalSum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
+		String sum = tppRcvTraceLogMapper.selectDtRcvTotalSum(date, dcFlag);
+		return sum;
+	}
+
+	
 
 }

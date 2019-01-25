@@ -59,7 +59,7 @@ public class SndTraceRepModel extends ModelBase implements Serializable {
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; //核心记账状态
 	
-	@NotNull(message = "town_state村镇记账状态不能为空")
+//	@NotNull(message = "town_state村镇记账状态不能为空")
 	@Size(max = 10,message = "town_state村镇记账状态最大长度是10")
 	private String townState; //村镇记账状态
 	

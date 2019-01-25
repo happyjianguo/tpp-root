@@ -80,6 +80,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 			   hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 			   hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
 			   hostSeqno = esbRep_30011000103.getRepBody().getReference();
+			   repDto.getRepBody().setHostTraceNo(hostSeqno);
 			   hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
 			   // 开户机构
 			   //String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
@@ -108,6 +109,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 				townDate = esbRepBody_TS001.getTownDate();
 				townTraceNo = esbRepBody_TS001.getTownTraceno();
 				townRetCode = esbRep_TS001.getRepSysHead().getRet().get(0).getRetCode();
+				repDto.getRepBody().setBalance(esbRep_TS001.getRepBody().getBackTal());
 			}catch(SysTradeExecuteException e) {
 				if("CIP_E_000004".equals(e.getRspCode())) {
 					updateTownRecord(reqDto, "", "", "", "3");

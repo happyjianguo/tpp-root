@@ -283,5 +283,36 @@ public class SndTraceService implements ISndTraceService{
 		
 		return modelList;
 	}
+	/** 
+	* @Title: getRcvTotalNum 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param @param myLog
+	* @param @param date
+	* @param @param dcFlag
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public String getSndTotalNum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
+		String num = tppSndTraceLogMapper.selectDtSndTotalNum(date, dcFlag);
+		return num;
+	}
+
+	/** 
+	* @Title: getRcvTotalSum 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param @param myLog
+	* @param @param date
+	* @param @param dcFlag
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public String getSndTotalSum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
+		String sum = tppSndTraceLogMapper.selectDtSndTotalSum(date, dcFlag);
+		return sum;
+	}
 
 }

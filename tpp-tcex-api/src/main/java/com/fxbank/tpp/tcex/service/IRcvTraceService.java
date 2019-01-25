@@ -29,5 +29,8 @@ public interface IRcvTraceService {
 
 	List<RcvTraceQueryModel> getUploadCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
 			String date)throws SysTradeExecuteException;
+	String getRcvTotalNum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
+	String getRcvTotalSum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
+			
 
 }

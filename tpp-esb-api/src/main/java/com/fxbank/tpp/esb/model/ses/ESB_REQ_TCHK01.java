@@ -62,6 +62,9 @@ public class ESB_REQ_TCHK01 extends ESB_BASE {
 
 		@JSONField(name = "FILE_NAME")
 		private String fileName;	//对账文件名
+		
+		@JSONField(name = "COLLECT_DT")
+		private String collectDt;	//对账日期
 
 		public String getFileName() {
 			return fileName;
@@ -69,6 +72,14 @@ public class ESB_REQ_TCHK01 extends ESB_BASE {
 
 		public void setFileName(String fileName) {
 			this.fileName = fileName;
+		}
+
+		public String getCollectDt() {
+			return collectDt;
+		}
+
+		public void setCollectDt(String collectDt) {
+			this.collectDt = collectDt;
 		}
 
 	}
