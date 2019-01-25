@@ -180,15 +180,15 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		sb.append("\n"); 
 		sb.append("I1").append("|");
 		sb.append(rcvExTotalNum).append("|");
-		sb.append(rcvExTotalNum).append("|");
+		sb.append(rcvExTotalSum).append("|");
 		sb.append("\n"); 
 		sb.append("O0").append("|");
 		sb.append(sndDeTotalNum).append("|");
-		sb.append(sndDeTotalNum).append("|");
+		sb.append(sndDeTotalSum).append("|");
 		sb.append("\n"); 
 		sb.append("O1").append("|");
 		sb.append(sndExTotalNum).append("|");
-		sb.append(sndExTotalNum).append("|");
+		sb.append(sndExTotalSum).append("|");
 		sb.append("\n"); 
 		List<RcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
 		for(RcvTraceQueryModel model : upRcvTraceList) {
