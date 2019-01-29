@@ -207,7 +207,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			sb.append(null==model.getPayerAcno()?"":model.getPayerAcno()).append("|"); //付款人账号
 			sb.append(null==model.getPayerName()?"":model.getPayerName()).append("|"); //付款人户名
 			sb.append(model.getTownFlag()).append("|"); //村镇机构
-			sb.append(model.getInfo()).append("|"); //摘要
+			sb.append(null==model.getInfo()?"":model.getInfo()).append("|"); //摘要
 			sb.append("\n"); 
 		}
 		
@@ -223,12 +223,12 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			sb.append(model.getTxInd()).append("|");//现转标志
 			sb.append(model.getTownDate()).append("|"); //村镇日期
 			sb.append(model.getTownTraceno()).append("|");//村镇流水
-			sb.append(model.getPayeeAcno()).append("|"); //收款人账号
-			sb.append(model.getPayeeName()).append("|"); //收款人户名
-			sb.append(model.getPayerAcno()).append("|"); //付款人账号
-			sb.append(model.getPayerName()).append("|"); //付款人户名
+			sb.append(null==model.getPayeeAcno()?"":model.getPayeeAcno()).append("|"); //收款人账号
+			sb.append(null==model.getPayeeName()?"":model.getPayeeName()).append("|"); //收款人户名
+			sb.append(null==model.getPayerAcno()?"":model.getPayerAcno()).append("|"); //付款人账号
+			sb.append(null==model.getPayerName()?"":model.getPayerName()).append("|"); //付款人户名
 			sb.append(model.getTownFlag()).append("|"); //村镇机构
-			sb.append(model.getInfo()).append("|"); //摘要
+			sb.append(null==model.getInfo()?"":model.getInfo()).append("|"); //摘要
 			sb.append("\n"); 
 		}
 		
