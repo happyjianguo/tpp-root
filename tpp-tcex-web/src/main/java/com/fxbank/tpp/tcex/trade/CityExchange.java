@@ -17,16 +17,16 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0012;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0014;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0012;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0014;
-import com.fxbank.tpp.esb.model.ses.PasswordModel;
+import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0012;
+import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0014;
+import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0012;
+import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0014;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
-import com.fxbank.tpp.esb.service.IPasswordService;
+import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041001001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041001001;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -62,7 +62,7 @@ public class CityExchange implements TradeExecutionStrategy {
 	private ISndTraceService sndTraceService;
 	
 	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
+	private ISafeService passwordService;
 	
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -231,7 +231,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		esbReqBody_TS002.setTxAmt(reqBody.getTranAmt());
 		esbReqBody_TS002.setPayerName(reqBody.getPayerName());
 		esbReqBody_TS002.setPayerAcc(reqBody.getPayerAcctNo());
-		PasswordModel passwordModel = new PasswordModel(logPool.get(), reqDto.getSysDate(), 
+		SafeModel passwordModel = new SafeModel(logPool.get(), reqDto.getSysDate(), 
 				reqDto.getSysTime(),reqDto.getSysTraceno());
 		passwordModel.setAcctNo(reqBody.getPayerAcctNo());
 		passwordModel.setPassword(reqBody.getPayPassword());

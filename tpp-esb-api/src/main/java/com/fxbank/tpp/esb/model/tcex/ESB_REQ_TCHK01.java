@@ -1,4 +1,4 @@
-package com.fxbank.tpp.esb.model.ses;
+package com.fxbank.tpp.esb.model.tcex;
 
 import java.io.Serializable;
 
@@ -10,17 +10,17 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 
 
 /** 
-* @ClassName: TSK01 
-* @Description: 商行通兑快捷查询村镇账户信息
+* @ClassName: TCHK01 
+* @Description: 商行村镇柜面通对账
 * @author Duzhenduo
 * @date 2018年12月11日 下午2:04:30 
 *  
 */
-public class ESB_REQ_TSK001 extends ESB_BASE {
+public class ESB_REQ_TCHK01 extends ESB_BASE {
 	
 	private static final long serialVersionUID = -813981987125918717L;
 
-	public ESB_REQ_TSK001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public ESB_REQ_TCHK01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 
@@ -28,7 +28,7 @@ public class ESB_REQ_TSK001 extends ESB_BASE {
 	private ESB_REQ_APP_HEAD reqAppHead = new ESB_REQ_APP_HEAD();
 
 	@JSONField(name = "SYS_HEAD")
-	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TSK001", "");
+	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TCHK01", "");
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody = new REQ_BODY();
 
@@ -60,29 +60,27 @@ public class ESB_REQ_TSK001 extends ESB_BASE {
 
 		private static final long serialVersionUID = -8415585719972566411L;
 
-		@JSONField(name = "PAYER_ACNO")
-		private String payerAcno;	//账/卡号
+		@JSONField(name = "FILE_NAME")
+		private String fileName;	//对账文件名
 		
-		@JSONField(name = "BRNO_FLAG")
-		private String brnoFlag;	//村镇机构
+		@JSONField(name = "COLLECT_DT")
+		private String collectDt;	//对账日期
 
-		public String getPayerAcno() {
-			return payerAcno;
+		public String getFileName() {
+			return fileName;
 		}
 
-		public void setPayerAcno(String payerAcno) {
-			this.payerAcno = payerAcno;
+		public void setFileName(String fileName) {
+			this.fileName = fileName;
 		}
 
-		public String getBrnoFlag() {
-			return brnoFlag;
+		public String getCollectDt() {
+			return collectDt;
 		}
 
-		public void setBrnoFlag(String brnoFlag) {
-			this.brnoFlag = brnoFlag;
+		public void setCollectDt(String collectDt) {
+			this.collectDt = collectDt;
 		}
-		
-		
-	
+
 	}
 }

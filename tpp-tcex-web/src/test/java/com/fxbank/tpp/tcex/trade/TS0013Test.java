@@ -30,7 +30,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.esb.service.IPasswordService;
+import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS003;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS0013;
@@ -52,7 +52,7 @@ public class TS0013Test {
 	private LogPool logPool;
 	
 	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
+	private ISafeService passwordService;
 	
 	private REQ_TS0013 req ;
 	private REQ_SYS_HEAD reqSysHead;
@@ -91,8 +91,8 @@ public class TS0013Test {
 	public void payOk() throws Exception {
 		
 		
-		reqBody.setPlatDate("20190117");
-		reqBody.setPlatTraceno("129896");
+		reqBody.setPlatDate("20190130");
+		reqBody.setPlatTraceno("156840");
 		
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();

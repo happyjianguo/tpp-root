@@ -74,7 +74,7 @@ public class CityQueryAcctInfoTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setBasrAcctNo("2330210110000002014");
+		reqBody.setBasrAcctNo("621681003000028509");
 		reqBody.setVillageBrnachFlag("2");
 		
 		String reqContent = JsonUtil.toJson(req);

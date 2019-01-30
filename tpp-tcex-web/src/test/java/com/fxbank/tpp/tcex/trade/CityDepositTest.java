@@ -30,7 +30,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.esb.service.IPasswordService;
+import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS0011;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS0011;
@@ -52,7 +52,7 @@ public class CityDepositTest {
 	private LogPool logPool;
 	
 	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
+	private ISafeService passwordService;
 	
 	private REQ_30041000901 req ;
 	private REQ_SYS_HEAD reqSysHead;
@@ -91,8 +91,8 @@ public class CityDepositTest {
 	public void payOk() throws Exception {
 		
 		
-		reqBody.setPayeeAcctName("张三思");
-		reqBody.setPayeeAcctNo("2330210110000002014");
+		reqBody.setPayeeAcctName("小英");
+		reqBody.setPayeeAcctNo("621681003000028509");
 		reqBody.setTranAmt("100");
 		reqBody.setChannelType("TB");
 		reqBody.setNarrative("");

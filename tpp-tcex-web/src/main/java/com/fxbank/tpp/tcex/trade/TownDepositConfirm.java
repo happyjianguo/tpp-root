@@ -24,7 +24,7 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.esb.service.IPasswordService;
+import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0013;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0013;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
@@ -55,7 +55,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 	private IRcvTraceService rcvTraceService;
 	
 	@Reference(version = "1.0.0")
-    private IPasswordService passwordService;
+    private ISafeService passwordService;
 	
 	@Resource
 	private MyJedis myJedis;

@@ -2,15 +2,15 @@ package com.fxbank.tpp.esb.service;
 
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.tpp.esb.model.ses.PasswordModel;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 
-public interface IPasswordService {
+public interface ISafeService {
 
-	public PasswordModel transPin(PasswordModel model) throws SysTradeExecuteException;
+	public SafeModel transPin(SafeModel model) throws SysTradeExecuteException;
 	
-	public PasswordModel encryptPwd(PasswordModel model) throws SysTradeExecuteException;
+	public SafeModel encryptPwd(SafeModel model) throws SysTradeExecuteException;
 	
-	public PasswordModel genKey(PasswordModel model) throws SysTradeExecuteException;
+	public SafeModel genKey(SafeModel model) throws SysTradeExecuteException;
 	
 	public void verifyTownMac(MyLog myLog,byte[] dataToMAC,String mac) throws SysTradeExecuteException;
 

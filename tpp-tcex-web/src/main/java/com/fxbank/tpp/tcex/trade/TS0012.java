@@ -18,11 +18,14 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS002;
-/**
- * 商行通兑业务
- * @author liye
- *
- */
+
+/** 
+* @ClassName: TS0012 
+* @Description: 模拟商行通兑村镇
+* @author Duzhenduo
+* @date 2019年1月30日 下午2:14:36 
+*  
+*/
 @Service("REQ_TS0012")
 public class TS0012 implements TradeExecutionStrategy {
 

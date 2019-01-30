@@ -1,4 +1,4 @@
-package com.fxbank.tpp.esb.model.ses;
+package com.fxbank.tpp.esb.model.tcex;
 
 import java.io.Serializable;
 
@@ -8,16 +8,16 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REP_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REP_SYS_HEAD;
 
-public class ESB_REP_TS0014 extends ESB_BASE {
+public class ESB_REP_TS0011 extends ESB_BASE {
 
 	private static final long serialVersionUID = -2496078829437573719L;
 
 	@Deprecated
-	public ESB_REP_TS0014() {
+	public ESB_REP_TS0011() {
 		super(null, 0, 0, 0);
 	}
 
-	public ESB_REP_TS0014(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public ESB_REP_TS0011(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 
@@ -59,15 +59,48 @@ public class ESB_REP_TS0014 extends ESB_BASE {
 	public class REP_BODY implements Serializable{
 		private static final long serialVersionUID = -4029732750907650659L;
 
-		@JSONField(name = "STS")
-		private String sts;	//处理状态
+		@JSONField(name = "BRNO")
+		private String brno;	//村镇记账机构
 		
-		public String getSts() {
-			return sts;
+		@JSONField(name = "TOWN_DATE")
+		private String townDate;	//村镇日期
+		
+		@JSONField(name = "TOWN_TRACENO")
+		private String townTraceno;	//村镇流水
+		
+		@JSONField(name = "BACK_TAL")
+		private String backTal;	//存入后余额
+
+		public String getBrno() {
+			return brno;
 		}
 
-		public void setSts(String sts) {
-			this.sts = sts;
+		public void setBrno(String brno) {
+			this.brno = brno;
+		}
+
+		public String getTownDate() {
+			return townDate;
+		}
+
+		public void setTownDate(String townDate) {
+			this.townDate = townDate;
+		}
+
+		public String getTownTraceno() {
+			return townTraceno;
+		}
+
+		public void setTownTraceno(String townTraceno) {
+			this.townTraceno = townTraceno;
+		}
+
+		public String getBackTal() {
+			return backTal;
+		}
+
+		public void setBackTal(String backTal) {
+			this.backTal = backTal;
 		}
 
 	}

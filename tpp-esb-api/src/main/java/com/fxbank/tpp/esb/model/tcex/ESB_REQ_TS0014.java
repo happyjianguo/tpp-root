@@ -1,4 +1,4 @@
-package com.fxbank.tpp.esb.model.ses;
+package com.fxbank.tpp.esb.model.tcex;
 
 import java.io.Serializable;
 
@@ -7,28 +7,31 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
+import com.fxbank.tpp.esb.common.TOWN;
 
 
 /** 
-* @ClassName: TCHK01 
-* @Description: 商行村镇柜面通对账
+* @ClassName: REQ_TS002 
+* @Description: 商行通兑村镇 
 * @author Duzhenduo
 * @date 2018年12月11日 下午2:04:30 
 *  
 */
-public class ESB_REQ_TCHK01 extends ESB_BASE {
+public class ESB_REQ_TS0014 extends ESB_BASE {
 	
 	private static final long serialVersionUID = -813981987125918717L;
 
-	public ESB_REQ_TCHK01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public ESB_REQ_TS0014(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
+		super.macEnable = true;
+		this.getReqSysHead().setMacValue(TOWN.macDeginId + "|" + TOWN.macNodeId + "|" + TOWN.macKeyModelId + "|" + TOWN.macPlaceHolder + "|");
 	}
 
 	@JSONField(name = "APP_HEAD")
 	private ESB_REQ_APP_HEAD reqAppHead = new ESB_REQ_APP_HEAD();
 
 	@JSONField(name = "SYS_HEAD")
-	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TCHK01", "");
+	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("TS0014", "");
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody = new REQ_BODY();
 
@@ -60,27 +63,28 @@ public class ESB_REQ_TCHK01 extends ESB_BASE {
 
 		private static final long serialVersionUID = -8415585719972566411L;
 
-		@JSONField(name = "FILE_NAME")
-		private String fileName;	//对账文件名
+		@JSONField(name = "PLAT_DATE")
+		private String platDate;	//平台日期
 		
-		@JSONField(name = "COLLECT_DT")
-		private String collectDt;	//对账日期
+		@JSONField(name = "PLAT_TRACENO")
+		private String platTraceno;		//平台流水
 
-		public String getFileName() {
-			return fileName;
+		public String getPlatDate() {
+			return platDate;
 		}
 
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
+		public void setPlatDate(String platDate) {
+			this.platDate = platDate;
 		}
 
-		public String getCollectDt() {
-			return collectDt;
+		public String getPlatTraceno() {
+			return platTraceno;
 		}
 
-		public void setCollectDt(String collectDt) {
-			this.collectDt = collectDt;
+		public void setPlatTraceno(String platTraceno) {
+			this.platTraceno = platTraceno;
 		}
-
+		
+	
 	}
 }
