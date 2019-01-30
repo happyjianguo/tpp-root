@@ -5,11 +5,11 @@ import java.io.Serializable;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 
-public class PasswordModel extends ModelBase implements Serializable {
+public class SafeModel extends ModelBase implements Serializable {
 
 	private static final long serialVersionUID = -6232087490769944074L;
 
-	public PasswordModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	public SafeModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 

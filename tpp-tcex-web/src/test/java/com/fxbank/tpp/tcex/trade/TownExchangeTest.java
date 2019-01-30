@@ -28,7 +28,7 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.esb.model.tcex.PasswordModel;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0012;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0012;
@@ -93,7 +93,7 @@ public class TownExchangeTest {
 		reqBody.setTxAmt("1.00");
 		reqBody.setPayerName("张三");
 		reqBody.setPayerAcc("623166000000810480");
-		PasswordModel passwordModel = new PasswordModel(logPool.get(), 20181226, 10000,
+		SafeModel passwordModel = new SafeModel(logPool.get(), 20181226, 10000,
 				1111);
 		passwordModel.setAcctNo("623166000000810480");
 		passwordModel.setPassword("147258");

@@ -23,7 +23,7 @@ import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0012;
 import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0014;
 import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0012;
 import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0014;
-import com.fxbank.tpp.esb.model.tcex.PasswordModel;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.esb.service.ISafeService;
@@ -231,7 +231,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		esbReqBody_TS002.setTxAmt(reqBody.getTranAmt());
 		esbReqBody_TS002.setPayerName(reqBody.getPayerName());
 		esbReqBody_TS002.setPayerAcc(reqBody.getPayerAcctNo());
-		PasswordModel passwordModel = new PasswordModel(logPool.get(), reqDto.getSysDate(), 
+		SafeModel passwordModel = new SafeModel(logPool.get(), reqDto.getSysDate(), 
 				reqDto.getSysTime(),reqDto.getSysTraceno());
 		passwordModel.setAcctNo(reqBody.getPayerAcctNo());
 		passwordModel.setPassword(reqBody.getPayPassword());

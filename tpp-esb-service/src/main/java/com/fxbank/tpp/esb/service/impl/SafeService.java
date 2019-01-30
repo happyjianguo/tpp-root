@@ -13,7 +13,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.esb.common.ESB;
 import com.fxbank.tpp.esb.common.TOWN;
 import com.fxbank.tpp.esb.exception.ESBTradeExecuteException;
-import com.fxbank.tpp.esb.model.tcex.PasswordModel;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 import cn.highsuccess.connPool.api.tssc.HisuTSSCAPI;
@@ -33,7 +33,7 @@ public class SafeService implements ISafeService {
 	private HisuTSSCAPI hisuTSSCAPI;
 	
 	@Override
-	public PasswordModel transPin(PasswordModel model) throws SysTradeExecuteException {
+	public SafeModel transPin(SafeModel model) throws SysTradeExecuteException {
 		MyLog myLog = model.getMylog();
 		String password = model.getPassword();
 		String acctNo = model.getAcctNo();
@@ -82,7 +82,7 @@ public class SafeService implements ISafeService {
 	* @throws 
 	*/
 	@Override
-	public PasswordModel encryptPwd(PasswordModel model) throws SysTradeExecuteException {
+	public SafeModel encryptPwd(SafeModel model) throws SysTradeExecuteException {
 		MyLog myLog = model.getMylog();
 		String password = model.getPassword();
 		String acctNo = model.getAcctNo();
@@ -121,7 +121,7 @@ public class SafeService implements ISafeService {
 	* @throws 
 	*/
 	@Override
-	public PasswordModel genKey(PasswordModel model) throws SysTradeExecuteException {
+	public SafeModel genKey(SafeModel model) throws SysTradeExecuteException {
 		MyLog myLog = model.getMylog();
 		String keyModel = model.getKeyModel();
 		String deginId = "";

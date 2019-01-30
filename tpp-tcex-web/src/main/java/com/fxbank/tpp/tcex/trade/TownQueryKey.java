@@ -10,7 +10,7 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.esb.model.tcex.PasswordModel;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_KEY001;
@@ -42,7 +42,7 @@ public class TownQueryKey extends TradeBase implements TradeExecutionStrategy{
 		REQ_KEY001 reqDto = (REQ_KEY001)dto;
 		String keyModel = reqDto.getReqBody().getKeyModel();
 		//请求核心获取账户信息
-		PasswordModel passwordModel = new PasswordModel(logPool.get(), reqDto.getSysDate(), 
+		SafeModel passwordModel = new SafeModel(logPool.get(), reqDto.getSysDate(), 
 				reqDto.getSysTime(),reqDto.getSysTraceno());
 		passwordModel.setKeyModel(keyModel);
 		passwordModel = passwordService.genKey(passwordModel);

@@ -26,7 +26,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.esb.model.tcex.PasswordModel;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041001001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041001001;
@@ -88,7 +88,7 @@ public class CityExchangeTest {
 		reqBody.setVillageBrnachFlag("2");
 		reqBody.setPayerName("小英");
 		reqBody.setPayerAcctNo("621681003000028509");
-		PasswordModel passwordModel = new PasswordModel(logPool.get(), 20181226, 10000,
+		SafeModel passwordModel = new SafeModel(logPool.get(), 20181226, 10000,
 				1111);
 		passwordModel.setAcctNo("621681003000028509");
 		passwordModel.setPassword("147258");
