@@ -1,0 +1,12 @@
+package com.fxbank.cip.manager.quartz;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class QuartzJobConfigration {
+
+	public static final String JOBGROUP = "cap";
+	public static final String METHODNAME = "exec";
+	public static final String CIP_CRON = "cip_cron.";
+	
+}
