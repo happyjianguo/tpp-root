@@ -19,10 +19,10 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0012;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0013;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0012;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0013;
+import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0012;
+import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0013;
+import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0012;
+import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0013;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS003;
@@ -30,11 +30,14 @@ import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS0013;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
-/**
- * 商行通存记账确认
- * @author liye
- *
- */
+
+/** 
+* @ClassName: TS0013 
+* @Description: 
+* @author Duzhenduo
+* @date 2019年1月30日 下午2:14:57 
+*  
+*/
 @Service("REQ_TS0013")
 public class TS0013 implements TradeExecutionStrategy {
 

@@ -28,7 +28,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.esb.service.IPasswordService;
+import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0013;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
@@ -52,7 +52,7 @@ public class TownDepositConfirmTest {
 	private MockMvc mockMvc;
 	
 	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
+	private ISafeService passwordService;
 	
 	@Resource
 	private LogPool logPool;

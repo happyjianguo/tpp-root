@@ -16,12 +16,12 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0011;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_TS0013;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0011;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_TS0013;
+import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0011;
+import com.fxbank.tpp.esb.model.tcex.ESB_REP_TS0013;
+import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0011;
+import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0013;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30041000901;
@@ -30,11 +30,14 @@ import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.SndTraceInitModel;
 import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 import com.fxbank.tpp.tcex.service.ISndTraceService;
-/**
- * 商行通存业务
- * @author liye
- *
- */
+
+/** 
+* @ClassName: CityDeposit 
+* @Description: 商行通存村镇 
+* @author Duzhenduo
+* @date 2019年1月30日 上午11:29:05 
+*  
+*/
 @Service("REQ_30041000901")
 public class CityDeposit implements TradeExecutionStrategy {
 	

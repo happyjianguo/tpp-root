@@ -23,7 +23,7 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.esb.service.IPasswordService;
+import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
@@ -52,7 +52,7 @@ public class TownReversal implements TradeExecutionStrategy {
 	private IRcvTraceService rcvTraceService;
 	
 	@Reference(version = "1.0.0")
-	private IPasswordService passwordService;
+	private ISafeService passwordService;
 	
 	@Resource
 	private MyJedis myJedis;

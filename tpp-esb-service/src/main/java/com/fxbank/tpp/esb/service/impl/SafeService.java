@@ -13,17 +13,17 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.esb.common.ESB;
 import com.fxbank.tpp.esb.common.TOWN;
 import com.fxbank.tpp.esb.exception.ESBTradeExecuteException;
-import com.fxbank.tpp.esb.model.ses.PasswordModel;
-import com.fxbank.tpp.esb.service.IPasswordService;
+import com.fxbank.tpp.esb.model.tcex.PasswordModel;
+import com.fxbank.tpp.esb.service.ISafeService;
 
 import cn.highsuccess.connPool.api.tssc.HisuTSSCAPI;
 import cn.highsuccess.connPool.api.tssc.HisuTSSCAPIResult;
 import redis.clients.jedis.Jedis;
 
 @Service(version = "1.0.0")
-public class PasswordService implements IPasswordService {
+public class SafeService implements ISafeService {
 
-	private static Logger logger = LoggerFactory.getLogger(PasswordService.class);
+	private static Logger logger = LoggerFactory.getLogger(SafeService.class);
 	private final static String COMMON_PREFIX = "tcex_common.";
 
 	@Resource

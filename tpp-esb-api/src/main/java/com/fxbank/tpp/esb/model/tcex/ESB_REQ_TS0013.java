@@ -1,4 +1,4 @@
-package com.fxbank.tpp.esb.model.ses;
+package com.fxbank.tpp.esb.model.tcex;
 
 import java.io.Serializable;
 
