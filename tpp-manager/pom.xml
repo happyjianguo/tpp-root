@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.fxbank.cip</groupId>
-		<artifactId>cip-root</artifactId>
+		<groupId>com.fxbank.tpp</groupId>
+		<artifactId>tpp-root</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<artifactId>cip-manager</artifactId>
-	<name>cip-manager</name>
+	<artifactId>tpp-manager</artifactId>
+	<name>tpp-manager</name>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -55,8 +55,8 @@
 			<version>2.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.fxbank.cip</groupId>
-			<artifactId>cip-esb-api</artifactId>
+			<groupId>com.fxbank.tpp</groupId>
+			<artifactId>tpp-esb-api</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
