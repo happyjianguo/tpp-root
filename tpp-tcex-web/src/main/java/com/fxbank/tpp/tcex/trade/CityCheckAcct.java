@@ -150,7 +150,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			}else if(model.getDcFlag().equals("1")) {
 				//通兑
 				//失败、超时
-				if(!model.getHostState().equals("2")&&!model.getHostState().equals("3")) {
+				if(!model.getHostState().equals("0")&&!model.getHostState().equals("2")&&!model.getHostState().equals("3")) {
 					System.out.println("柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
 					myLog.error(logger,"柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
 					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
@@ -165,6 +165,31 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		}
 		
 		StringBuffer sb = new StringBuffer();
+		//来账通存I0、来账通兑I1、往账通存O0、往账通兑O1（第一位是大写字母，I代表来账、O代表往账；第二位是数字，0代表通存、1代表通兑）
+		String rcvDeTotalNum = rcvTraceService.getRcvTotalNum(myLog, date, "0");
+		String rcvDeTotalSum = rcvTraceService.getRcvTotalSum(myLog, date, "0");
+		String rcvExTotalNum = rcvTraceService.getRcvTotalNum(myLog, date, "1");
+		String rcvExTotalSum = rcvTraceService.getRcvTotalSum(myLog, date, "1");
+		String sndDeTotalNum = sndTraceService.getSndTotalNum(myLog, date, "0");
+		String sndDeTotalSum = sndTraceService.getSndTotalSum(myLog, date, "0");
+		String sndExTotalNum = sndTraceService.getSndTotalNum(myLog, date, "1");
+		String sndExTotalSum = sndTraceService.getSndTotalSum(myLog, date, "1");
+		sb.append("I0").append("|");
+		sb.append(rcvDeTotalNum).append("|");
+		sb.append(null==rcvDeTotalSum?"0":rcvDeTotalSum).append("|");
+		sb.append("\n"); 
+		sb.append("I1").append("|");
+		sb.append(rcvExTotalNum).append("|");
+		sb.append(null==rcvExTotalSum?"0":rcvExTotalSum).append("|");
+		sb.append("\n"); 
+		sb.append("O0").append("|");
+		sb.append(sndDeTotalNum).append("|");
+		sb.append(null==sndDeTotalSum?"0":sndDeTotalSum).append("|");
+		sb.append("\n"); 
+		sb.append("O1").append("|");
+		sb.append(sndExTotalNum).append("|");
+		sb.append(null==sndExTotalSum?"0":sndExTotalSum).append("|");
+		sb.append("\n"); 
 		List<RcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
 		for(RcvTraceQueryModel model : upRcvTraceList) {
 			sb.append(model.getPlatDate()).append("|"); //平台日期
@@ -177,12 +202,12 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			sb.append(model.getTxInd()).append("|");//现转标志
 			sb.append(model.getTownDate()).append("|"); //村镇日期
 			sb.append(model.getTownTraceno()).append("|");//村镇流水
-			sb.append(model.getPayeeAcno()).append("|"); //收款人账号
-			sb.append(model.getPayeeName()).append("|"); //收款人户名
-			sb.append(model.getPayerAcno()).append("|"); //付款人账号
-			sb.append(model.getPayerName()).append("|"); //付款人户名
+			sb.append(null==model.getPayeeAcno()?"":model.getPayeeAcno()).append("|"); //收款人账号
+			sb.append(null==model.getPayeeName()?"":model.getPayeeName()).append("|"); //收款人户名
+			sb.append(null==model.getPayerAcno()?"":model.getPayerAcno()).append("|"); //付款人账号
+			sb.append(null==model.getPayerName()?"":model.getPayerName()).append("|"); //付款人户名
 			sb.append(model.getTownFlag()).append("|"); //村镇机构
-			sb.append(model.getInfo()).append("|"); //摘要
+			sb.append(null==model.getInfo()?"":model.getInfo()).append("|"); //摘要
 			sb.append("\n"); 
 		}
 		
@@ -198,12 +223,12 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			sb.append(model.getTxInd()).append("|");//现转标志
 			sb.append(model.getTownDate()).append("|"); //村镇日期
 			sb.append(model.getTownTraceno()).append("|");//村镇流水
-			sb.append(model.getPayeeAcno()).append("|"); //收款人账号
-			sb.append(model.getPayeeName()).append("|"); //收款人户名
-			sb.append(model.getPayerAcno()).append("|"); //付款人账号
-			sb.append(model.getPayerName()).append("|"); //付款人户名
+			sb.append(null==model.getPayeeAcno()?"":model.getPayeeAcno()).append("|"); //收款人账号
+			sb.append(null==model.getPayeeName()?"":model.getPayeeName()).append("|"); //收款人户名
+			sb.append(null==model.getPayerAcno()?"":model.getPayerAcno()).append("|"); //付款人账号
+			sb.append(null==model.getPayerName()?"":model.getPayerName()).append("|"); //付款人户名
 			sb.append(model.getTownFlag()).append("|"); //村镇机构
-			sb.append(model.getInfo()).append("|"); //摘要
+			sb.append(null==model.getInfo()?"":model.getInfo()).append("|"); //摘要
 			sb.append("\n"); 
 		}
 		
@@ -218,6 +243,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		esbReq_tchk01.setReqSysHead(reqSysHead);
 		ESB_REQ_TCHK01.REQ_BODY esbReqBody_tchk01 = esbReq_tchk01.getReqBody();
 		esbReqBody_tchk01.setFileName(fileName);
+		esbReqBody_tchk01.setCollectDt(date);
 		ESB_REP_TCHK01 esbRep_tchk01 = forwardToTownService.sendToTown(esbReq_tchk01, esbReqBody_tchk01, ESB_REP_TCHK01.class);
 		if("000000".equals(esbRep_tchk01.getRepSysHead().getRet().get(0).getRetCode())) {
 			System.out.println("柜面通【"+date+"】对账成功:");
@@ -383,7 +409,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 						SndTraceUpdModel record = new SndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setCheckFlag("2");
 						sndTraceService.sndTraceUpd(record);
-					}else if(hostState.equals("3")||hostState.equals("6")||hostState.equals("7")) {
+					}else if(hostState.equals("3")||hostState.equals("5")||hostState.equals("6")||hostState.equals("7")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 						RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");
@@ -444,7 +470,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 					RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
-				}else if(hostState.equals("3")||hostState.equals("4")||hostState.equals("6")||hostState.equals("7")) {
+				}else if(hostState.equals("3")||hostState.equals("4")||hostState.equals("5")||hostState.equals("6")||hostState.equals("7")) {
 					//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 					RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setHostState("1");
@@ -543,8 +569,8 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		try (Jedis jedis = myJedis.connect()) {
 			localPath = jedis.get(COMMON_PREFIX+"txt_path");
 		}
-		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+fileName);
-		return localPath+File.separator+fileName;
+		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+direction+"_"+fileName);
+		return localPath+File.separator+direction+"_"+fileName;
 	}
 //	/**
 //	 * @Title: loadFile @Description: 从文件传输平台下载文件 @param @param

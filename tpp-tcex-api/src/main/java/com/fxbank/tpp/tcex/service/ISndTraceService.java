@@ -30,5 +30,7 @@ public interface ISndTraceService {
 
 	List<SndTraceQueryModel> getUploadCheckSndTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
 			String date) throws SysTradeExecuteException;
+	String getSndTotalNum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
+	String getSndTotalSum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
 
 }

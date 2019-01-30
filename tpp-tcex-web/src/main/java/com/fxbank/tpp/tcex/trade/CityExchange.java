@@ -114,6 +114,7 @@ public class CityExchange implements TradeExecutionStrategy {
 			    hostCode = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetCode();
 				hostMsg = esbRep_30011000103.getRepSysHead().getRet().get(0).getRetMsg();
 				hostSeqno = esbRep_30011000103.getRepBody().getReference();
+				repDto.getRepBody().setHostTraceNo(hostSeqno);
 				hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
 				accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
 				// 开户机构
