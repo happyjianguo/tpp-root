@@ -36,7 +36,6 @@ import redis.clients.jedis.Jedis;
 public class TownCashQuery implements TradeExecutionStrategy{
 	private static Logger logger = LoggerFactory.getLogger(CitySndTraceQuery.class);
 
-
 	@Resource
 	private LogPool logPool;
 	
@@ -90,17 +89,6 @@ public class TownCashQuery implements TradeExecutionStrategy{
 
 		REP_TR0005 repDto = new REP_TR0005();
 		repDto.getRepBody().setBal(esbRep_30013000801.getRepBody().getBalance());
-		
-//		String code = esbRep_30013000801.getRepSysHead().getRet().get(0).getRetCode();
-//		String msg = esbRep_30013000801.getRepSysHead().getRet().get(0).getRetMsg();
-//		if(code.equals("000000")) {
-//			logger.info("头寸查询成功：机构码【"+townBranch+"】，余额【"+esbRep_30013000801.getRepBody().getBalance()+"】");
-//		}else {
-//			System.out.println("头寸查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
-//			myLog.error(logger,"头寸查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
-//			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10005);
-//			throw e;
-//		}
 		
 		return repDto;
 	}
