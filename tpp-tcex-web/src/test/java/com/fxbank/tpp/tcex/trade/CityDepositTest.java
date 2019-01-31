@@ -91,9 +91,9 @@ public class CityDepositTest {
 	public void payOk() throws Exception {
 		
 		
-		reqBody.setPayeeAcctName("小英");
-		reqBody.setPayeeAcctNo("621681003000028509");
-		reqBody.setTranAmt("100");
+		reqBody.setPayeeAcctName("杨逍");
+		reqBody.setPayeeAcctNo("621681003000026073");
+		reqBody.setTranAmt("1000.00");
 		reqBody.setChannelType("TB");
 		reqBody.setNarrative("");
 		reqBody.setDocClass("1");

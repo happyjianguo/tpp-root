@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fxbank.tpp.tcex.mapper.TppRcvTraceLogMapper">
-  <resultMap id="BaseResultMap" type="com.fxbank.tpp.tcex.entity.TppRcvTraceLog">
+<mapper namespace="com.fxbank.tpp.tcex.mapper.TcexRcvLogMapper">
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.tcex.entity.TcexRcvLog">
     <id column="plat_date" jdbcType="INTEGER" property="platDate" />
     <id column="plat_trace" jdbcType="INTEGER" property="platTrace" />
     <result column="plat_time" jdbcType="INTEGER" property="platTime" />
@@ -37,10 +37,10 @@
     tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
     town_branch, town_date, town_traceno, check_flag, host_state, town_state, tx_tel, 
     chk_tel, auth_tel, print, info,ret_code,ret_msg,town_flag,host_branch
-    from tpp_rcv_trace_log
+    from tcex_rcv_log
   </select>
   <select id="selectRcvTrace" resultMap="BaseResultMap">
-    select * from tpp_rcv_trace_log
+    select * from tcex_rcv_log
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
       <if test='minAmt != null and minAmt != ""'>
         and tx_amt <![CDATA[ >= ]]> #{minAmt}
@@ -60,11 +60,11 @@
     </trim>
   </select>
     <select id="selectDtRcvTotalNum" resultType="java.lang.String" >
-    select count(tx_amt) as num from tpp_rcv_trace_log where 
+    select count(tx_amt) as num from tcex_rcv_log where 
      plat_date=#{date} and dc_flag=#{flag} and host_state=1
   </select>
    <select id="selectDtRcvTotalSum" resultType="java.lang.String" >
-    select sum(tx_amt) as sum from tpp_rcv_trace_log where 
+    select sum(tx_amt) as sum from tcex_rcv_log where 
      plat_date=#{date} and dc_flag=#{flag} and host_state=1
   </select>
 </mapper>

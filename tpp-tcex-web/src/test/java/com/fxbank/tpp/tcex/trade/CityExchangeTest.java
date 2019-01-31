@@ -86,15 +86,15 @@ public class CityExchangeTest {
 	public void payOk() throws Exception {
 		
 		reqBody.setVillageBrnachFlag("2");
-		reqBody.setPayerName("小英");
-		reqBody.setPayerAcctNo("621681003000028509");
+		reqBody.setPayerName("杨逍");
+		reqBody.setPayerAcctNo("621681003000026073");
 		SafeModel passwordModel = new SafeModel(logPool.get(), 20181226, 10000,
 				1111);
-		passwordModel.setAcctNo("621681003000028509");
-		passwordModel.setPassword("147258");
+		passwordModel.setAcctNo("621681003000026073");
+		passwordModel.setPassword("159357");
 		passwordModel = passwordService.encryptPwd(passwordModel);
 		reqBody.setPayPassword(passwordModel.getPassword());
-		reqBody.setTranAmt("10.00");
+		reqBody.setTranAmt("100.00");
 		reqBody.setChannelType("TCEX");
 		reqBody.setNarrative("测试");
 		reqBody.setDocClass("2");

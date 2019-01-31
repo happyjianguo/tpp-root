@@ -9,8 +9,8 @@ import javax.validation.Valid;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.tpp.tcex.entity.TppDayCheckLog;
-import com.fxbank.tpp.tcex.mapper.TppDayCheckLogMapper;
+import com.fxbank.tpp.tcex.entity.TcexChkLog;
+import com.fxbank.tpp.tcex.mapper.TcexChkLogMapper;
 import com.fxbank.tpp.tcex.model.DayCheckLogInitModel;
 import com.fxbank.tpp.tcex.service.IDayCheckLogService;
 
@@ -18,36 +18,36 @@ import com.fxbank.tpp.tcex.service.IDayCheckLogService;
 public class DayCheckLogService implements IDayCheckLogService {
 	
 	@Resource
-	private TppDayCheckLogMapper mapper;
+	private TcexChkLogMapper mapper;
 
 	@Override
 	public void dayCheckLogInit(@Valid DayCheckLogInitModel model) throws SysTradeExecuteException {
-		TppDayCheckLog tppDayCheckLog = new TppDayCheckLog();
+		TcexChkLog tcexChkLog = new TcexChkLog();
 		
-		tppDayCheckLog.setAccountno(model.getAccountno());
-		tppDayCheckLog.setCcy(model.getCcy());
-		tppDayCheckLog.setHostDate(model.getHostDate());
-		tppDayCheckLog.setHostTraceno(model.getHostTraceno());
-		tppDayCheckLog.setPlatDate(model.getPlatDate());
-		tppDayCheckLog.setPlatTrace(model.getPlatTrace());
-		tppDayCheckLog.setReversal(model.getReversal());
-		tppDayCheckLog.setSettleBranch(model.getSettleBranch());
-		tppDayCheckLog.setTxAmt(model.getTxAmt());
-		tppDayCheckLog.setTxStatus(model.getTxStatus());
-		tppDayCheckLog.setSettleDate(model.getSettleDate());
-		tppDayCheckLog.setDirection(model.getDirection());
-		mapper.insertSelective(tppDayCheckLog);
+		tcexChkLog.setAccountno(model.getAccountno());
+		tcexChkLog.setCcy(model.getCcy());
+		tcexChkLog.setHostDate(model.getHostDate());
+		tcexChkLog.setHostTraceno(model.getHostTraceno());
+		tcexChkLog.setPlatDate(model.getPlatDate());
+		tcexChkLog.setPlatTrace(model.getPlatTrace());
+		tcexChkLog.setReversal(model.getReversal());
+		tcexChkLog.setSettleBranch(model.getSettleBranch());
+		tcexChkLog.setTxAmt(model.getTxAmt());
+		tcexChkLog.setTxStatus(model.getTxStatus());
+		tcexChkLog.setSettleDate(model.getSettleDate());
+		tcexChkLog.setDirection(model.getDirection());
+		mapper.insertSelective(tcexChkLog);
 	}
 
 	@Override
 	public List<DayCheckLogInitModel> getDayCheckLog(MyLog myLog,Integer sysTime, Integer sysTraceno,Integer platDate,String direction) throws SysTradeExecuteException {
-		TppDayCheckLog tppDayCheckLog = new TppDayCheckLog();
-		tppDayCheckLog.setPlatDate(platDate);
-		tppDayCheckLog.setDirection(direction);
+		TcexChkLog tcexChkLog = new TcexChkLog();
+		tcexChkLog.setPlatDate(platDate);
+		tcexChkLog.setDirection(direction);
 		
-		List<TppDayCheckLog> tppDayCheckLogList = mapper.select(tppDayCheckLog);
+		List<TcexChkLog> tcexChkLogList = mapper.select(tcexChkLog);
 		List<DayCheckLogInitModel> dayCheckLogInitModelList = new ArrayList<DayCheckLogInitModel>();
-		for(TppDayCheckLog tpp : tppDayCheckLogList) {
+		for(TcexChkLog tpp : tcexChkLogList) {
 			DayCheckLogInitModel model = new DayCheckLogInitModel(myLog,platDate,sysTime,sysTraceno);
 			model.setAccountno(tpp.getAccountno());
 			model.setCcy(tpp.getCcy());

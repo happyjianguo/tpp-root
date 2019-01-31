@@ -9,9 +9,9 @@ import javax.validation.Valid;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.tpp.tcex.entity.TppRcvTraceLog;
-import com.fxbank.tpp.tcex.entity.TppSndTraceLog;
-import com.fxbank.tpp.tcex.mapper.TppSndTraceLogMapper;
+import com.fxbank.tpp.tcex.entity.TcexRcvLog;
+import com.fxbank.tpp.tcex.entity.TcexSndLog;
+import com.fxbank.tpp.tcex.mapper.TcexSndLogMapper;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.SndTraceInitModel;
 import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
@@ -23,34 +23,34 @@ import com.fxbank.tpp.tcex.service.ISndTraceService;
 public class SndTraceService implements ISndTraceService{
 	
 	@Resource
-	private TppSndTraceLogMapper tppSndTraceLogMapper;
+	private TcexSndLogMapper tcexSndLogMapper;
 
 	@Override
 	public void sndTraceInit(@Valid SndTraceInitModel record) throws SysTradeExecuteException {
-		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(record.getSysDate());
-		tppSndTraceLog.setPlatTrace(record.getSysTraceno());
-		tppSndTraceLog.setPlatTime(record.getSysTime());
-		tppSndTraceLog.setSourceType(record.getSourceType());
-		tppSndTraceLog.setTxBranch(record.getTxBranch());
-		tppSndTraceLog.setTxInd(record.getTxInd());
-		tppSndTraceLog.setDcFlag(record.getDcFlag());
-		tppSndTraceLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
-		tppSndTraceLog.setPayerAcno(record.getPayerAcno());
-		tppSndTraceLog.setPayerName(record.getPayerName());
-		tppSndTraceLog.setPayeeAcno(record.getPayeeAcno());
-		tppSndTraceLog.setPayeeName(record.getPayeeName());
-		tppSndTraceLog.setHostState(record.getHostState());
-		tppSndTraceLog.setTownState(record.getTownState());
-		tppSndTraceLog.setTxTel(record.getTxTel());
-		tppSndTraceLog.setChkTel(record.getChkTel());
-		tppSndTraceLog.setAuthTel(record.getAuthTel());
-		tppSndTraceLog.setInfo(record.getInfo());
-		tppSndTraceLog.setTownFlag(record.getTownFlag());
-		tppSndTraceLog.setPrint(record.getPrint());
-		tppSndTraceLog.setCheckFlag(record.getCheckFlag());
+		TcexSndLog tcexSndLog = new TcexSndLog();
+		tcexSndLog.setPlatDate(record.getSysDate());
+		tcexSndLog.setPlatTrace(record.getSysTraceno());
+		tcexSndLog.setPlatTime(record.getSysTime());
+		tcexSndLog.setSourceType(record.getSourceType());
+		tcexSndLog.setTxBranch(record.getTxBranch());
+		tcexSndLog.setTxInd(record.getTxInd());
+		tcexSndLog.setDcFlag(record.getDcFlag());
+		tcexSndLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
+		tcexSndLog.setPayerAcno(record.getPayerAcno());
+		tcexSndLog.setPayerName(record.getPayerName());
+		tcexSndLog.setPayeeAcno(record.getPayeeAcno());
+		tcexSndLog.setPayeeName(record.getPayeeName());
+		tcexSndLog.setHostState(record.getHostState());
+		tcexSndLog.setTownState(record.getTownState());
+		tcexSndLog.setTxTel(record.getTxTel());
+		tcexSndLog.setChkTel(record.getChkTel());
+		tcexSndLog.setAuthTel(record.getAuthTel());
+		tcexSndLog.setInfo(record.getInfo());
+		tcexSndLog.setTownFlag(record.getTownFlag());
+		tcexSndLog.setPrint(record.getPrint());
+		tcexSndLog.setCheckFlag(record.getCheckFlag());
 		
-		tppSndTraceLogMapper.insertSelective(tppSndTraceLog);
+		tcexSndLogMapper.insertSelective(tcexSndLog);
 	}
 
 	/** 
@@ -62,52 +62,52 @@ public class SndTraceService implements ISndTraceService{
 	*/
 	@Override
 	public void sndTraceUpd(@Valid SndTraceUpdModel record) throws SysTradeExecuteException {
-		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(record.getSysDate());
-		tppSndTraceLog.setPlatTrace(record.getSysTraceno());
+		TcexSndLog tcexSndLog = new TcexSndLog();
+		tcexSndLog.setPlatDate(record.getSysDate());
+		tcexSndLog.setPlatTrace(record.getSysTraceno());
 		if(null != record.getHostState()) {
-		    tppSndTraceLog.setHostState(record.getHostState());
+		    tcexSndLog.setHostState(record.getHostState());
 		}
 		if(null != record.getHostDate()) {
-			tppSndTraceLog.setHostDate(record.getHostDate());
+			tcexSndLog.setHostDate(record.getHostDate());
 		}
 		if(null != record.getHostTraceno()) {
-			tppSndTraceLog.setHostTraceno(record.getHostTraceno());
+			tcexSndLog.setHostTraceno(record.getHostTraceno());
 		}
 		if(null != record.getHostBranch()) {
-			tppSndTraceLog.setHostBranch(record.getHostBranch());
+			tcexSndLog.setHostBranch(record.getHostBranch());
 		}
 		if(null != record.getTownDate()) {
-			tppSndTraceLog.setTownDate(record.getTownDate());
+			tcexSndLog.setTownDate(record.getTownDate());
 		}
 		if(null != record.getTownBranch()) {
-			tppSndTraceLog.setTownBranch(record.getTownBranch());
+			tcexSndLog.setTownBranch(record.getTownBranch());
 		}
 		if(null != record.getTownState()) {
-			tppSndTraceLog.setTownState(record.getTownState());
+			tcexSndLog.setTownState(record.getTownState());
 		}
 		if(null != record.getTownTraceno()) {
-			tppSndTraceLog.setTownTraceno(record.getTownTraceno());
+			tcexSndLog.setTownTraceno(record.getTownTraceno());
 		}
 		if(null != record.getRetCode()) {
-			tppSndTraceLog.setRetCode(record.getRetCode());
+			tcexSndLog.setRetCode(record.getRetCode());
 		}
 		if(null != record.getRetMsg()) {
-			tppSndTraceLog.setRetMsg(record.getRetMsg());
+			tcexSndLog.setRetMsg(record.getRetMsg());
 		}
 		if(null != record.getCheckFlag()) {
-			tppSndTraceLog.setCheckFlag(record.getCheckFlag());
+			tcexSndLog.setCheckFlag(record.getCheckFlag());
 		}
 		
-		tppSndTraceLogMapper.updateByPrimaryKeySelective(tppSndTraceLog);
+		tcexSndLogMapper.updateByPrimaryKeySelective(tcexSndLog);
 	}
 		
 	@Override
 	public List<SndTraceQueryModel> getSndTrace(MyLog myLog, String begDate, String endDate, String minAmt,
 			String maxAmt, String brnoFlag) throws SysTradeExecuteException {
-		List<TppSndTraceLog> tppSndTraceList = tppSndTraceLogMapper.selectSndTrace(begDate, endDate, minAmt, maxAmt, brnoFlag);
+		List<TcexSndLog> tppSndTraceList = tcexSndLogMapper.selectSndTrace(begDate, endDate, minAmt, maxAmt, brnoFlag);
 		List<SndTraceQueryModel> sndTraceQueryModelList = new ArrayList<>();
-		for(TppSndTraceLog tpp : tppSndTraceList) {
+		for(TcexSndLog tpp : tppSndTraceList) {
 			SndTraceQueryModel model = new SndTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());
 			model.setAuthTel(tpp.getAuthTel());
 			model.setChkTel(tpp.getCheckFlag());
@@ -143,10 +143,10 @@ public class SndTraceService implements ISndTraceService{
 	@Override
 	public SndTraceQueryModel getSndTraceByKey(MyLog myLog, Integer sysTime, Integer sysTraceno, Integer sysDate,
 			Integer settleDate, Integer platTrace) {
-		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(settleDate);
-		tppSndTraceLog.setPlatTrace(platTrace);
-		TppSndTraceLog data = tppSndTraceLogMapper.selectOne(tppSndTraceLog);
+		TcexSndLog tcexSndLog = new TcexSndLog();
+		tcexSndLog.setPlatDate(settleDate);
+		tcexSndLog.setPlatTrace(platTrace);
+		TcexSndLog data = tcexSndLogMapper.selectOne(tcexSndLog);
 		SndTraceQueryModel model = new SndTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
 		if(data == null )model = null;
 		else {
@@ -176,48 +176,48 @@ public class SndTraceService implements ISndTraceService{
 
 	@Override
 	public void replenishSndTrace(SndTraceRepModel record) {
-		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(record.getSysDate());
-		tppSndTraceLog.setPlatTrace(record.getSysTraceno());
-		tppSndTraceLog.setPlatTime(record.getSysTime());
-		tppSndTraceLog.setSourceType(record.getSourceType());
-		tppSndTraceLog.setTxBranch(record.getTxBranch());
-		tppSndTraceLog.setTxInd(record.getTxInd());
-		tppSndTraceLog.setDcFlag(record.getDcFlag());
-		tppSndTraceLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
+		TcexSndLog tcexSndLog = new TcexSndLog();
+		tcexSndLog.setPlatDate(record.getSysDate());
+		tcexSndLog.setPlatTrace(record.getSysTraceno());
+		tcexSndLog.setPlatTime(record.getSysTime());
+		tcexSndLog.setSourceType(record.getSourceType());
+		tcexSndLog.setTxBranch(record.getTxBranch());
+		tcexSndLog.setTxInd(record.getTxInd());
+		tcexSndLog.setDcFlag(record.getDcFlag());
+		tcexSndLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
 		if("1".equals(record.getTxInd())) {
-		tppSndTraceLog.setPayerAcno(record.getPayerAcno());
-		tppSndTraceLog.setPayerName(record.getPayerName());
+		tcexSndLog.setPayerAcno(record.getPayerAcno());
+		tcexSndLog.setPayerName(record.getPayerName());
 		}
-		tppSndTraceLog.setPayeeAcno(record.getPayeeAcno());
-		tppSndTraceLog.setPayeeName(record.getPayeeName());
-		tppSndTraceLog.setHostState(record.getHostState());
-		tppSndTraceLog.setTownState(record.getTownState());
+		tcexSndLog.setPayeeAcno(record.getPayeeAcno());
+		tcexSndLog.setPayeeName(record.getPayeeName());
+		tcexSndLog.setHostState(record.getHostState());
+		tcexSndLog.setTownState(record.getTownState());
 		if(null != record.getTownDate()) {
-			tppSndTraceLog.setTownDate(Integer.parseInt(record.getTownDate()));
+			tcexSndLog.setTownDate(Integer.parseInt(record.getTownDate()));
 		}
 		if(null != record.getTownTraceNo()) {
-			tppSndTraceLog.setTownTraceno(record.getTownTraceNo());
+			tcexSndLog.setTownTraceno(record.getTownTraceNo());
 		}
-		tppSndTraceLog.setTxTel(record.getTxTel());
-		tppSndTraceLog.setChkTel(record.getChkTel());
-		tppSndTraceLog.setAuthTel(record.getAuthTel());
-		tppSndTraceLog.setInfo(record.getInfo());
-		tppSndTraceLog.setTownFlag(record.getTownFlag());
-		tppSndTraceLog.setCheckFlag(record.getCheckFlag());
+		tcexSndLog.setTxTel(record.getTxTel());
+		tcexSndLog.setChkTel(record.getChkTel());
+		tcexSndLog.setAuthTel(record.getAuthTel());
+		tcexSndLog.setInfo(record.getInfo());
+		tcexSndLog.setTownFlag(record.getTownFlag());
+		tcexSndLog.setCheckFlag(record.getCheckFlag());
 		
-		tppSndTraceLogMapper.insertSelective(tppSndTraceLog);
+		tcexSndLogMapper.insertSelective(tcexSndLog);
 	}
 
 	@Override
 	public List<SndTraceQueryModel> getCheckSndTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
 			String date) throws SysTradeExecuteException {
-		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(Integer.parseInt(date));
-		tppSndTraceLog.setCheckFlag("1");
-		List<TppSndTraceLog> dataList = tppSndTraceLogMapper.select(tppSndTraceLog);
+		TcexSndLog tcexSndLog = new TcexSndLog();
+		tcexSndLog.setPlatDate(Integer.parseInt(date));
+		tcexSndLog.setCheckFlag("1");
+		List<TcexSndLog> dataList = tcexSndLogMapper.select(tcexSndLog);
 		List<SndTraceQueryModel> modelList = new ArrayList<>();
-		for(TppSndTraceLog data : dataList) {
+		for(TcexSndLog data : dataList) {
 			SndTraceQueryModel model = new SndTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
 			model.setAuthTel(data.getAuthTel());
 			model.setCheckFlag(data.getCheckFlag());
@@ -248,13 +248,13 @@ public class SndTraceService implements ISndTraceService{
 	@Override
 	public List<SndTraceQueryModel> getUploadCheckSndTrace(MyLog myLog, Integer sysDate, Integer sysTime,
 			Integer sysTraceno, String date) throws SysTradeExecuteException {
-		TppSndTraceLog tppSndTraceLog = new TppSndTraceLog();
-		tppSndTraceLog.setPlatDate(Integer.parseInt(date));
-		tppSndTraceLog.setHostState("1");
+		TcexSndLog tcexSndLog = new TcexSndLog();
+		tcexSndLog.setPlatDate(Integer.parseInt(date));
+		tcexSndLog.setHostState("1");
 		
-		List<TppSndTraceLog> dataList = tppSndTraceLogMapper.select(tppSndTraceLog);
+		List<TcexSndLog> dataList = tcexSndLogMapper.select(tcexSndLog);
 		List<SndTraceQueryModel> modelList = new ArrayList<>();
-		for(TppSndTraceLog data : dataList) {
+		for(TcexSndLog data : dataList) {
 			SndTraceQueryModel model = new SndTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
 			model.setAuthTel(data.getAuthTel());
 			model.setCheckFlag(data.getCheckFlag());
@@ -295,7 +295,7 @@ public class SndTraceService implements ISndTraceService{
 	*/
 	@Override
 	public String getSndTotalNum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
-		String num = tppSndTraceLogMapper.selectDtSndTotalNum(date, dcFlag);
+		String num = tcexSndLogMapper.selectDtSndTotalNum(date, dcFlag);
 		return num;
 	}
 
@@ -311,7 +311,7 @@ public class SndTraceService implements ISndTraceService{
 	*/
 	@Override
 	public String getSndTotalSum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
-		String sum = tppSndTraceLogMapper.selectDtSndTotalSum(date, dcFlag);
+		String sum = tcexSndLogMapper.selectDtSndTotalSum(date, dcFlag);
 		return sum;
 	}
 
