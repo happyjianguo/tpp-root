@@ -2,6 +2,13 @@ package com.fxbank.tpp.tcex.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+/** 
+* @ClassName: TownInfo 
+* @Description: 查询来往账村镇信息
+* @author Duzhenduo
+* @date 2019年1月31日 上午10:07:52 
+*  
+*/
 public class TownInfo {
 	
 	@JSONField(name = "TOWN_FLAG")

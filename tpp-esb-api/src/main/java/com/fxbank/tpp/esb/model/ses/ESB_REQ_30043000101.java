@@ -8,6 +8,13 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 
+/** 
+* @ClassName: ESB_REQ_30043000101 
+* @Description: 记账状态查询 
+* @author Duzhenduo
+* @date 2019年1月31日 下午3:53:30 
+*  
+*/
 public class ESB_REQ_30043000101 extends ESB_BASE {
 
 	private static final long serialVersionUID = -981820169279642493L;

@@ -5,7 +5,14 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-public class REP_TS002 extends REP_BASE {
+/** 
+* @ClassName: REP_TS0013 
+* @Description: 模拟商行存款确认 
+* @author Duzhenduo
+* @date 2019年1月31日 上午10:01:59 
+*  
+*/
+public class REP_TS0013 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,24 +57,21 @@ public class REP_TS002 extends REP_BASE {
 
 
 	public class REP_BODY {
-		@JSONField(name = "BRNO")
-		private String brno;	//村镇记账机构
-		
 		@JSONField(name = "TOWN_DATE")
 		private String townDate;	//村镇日期
 		
 		@JSONField(name = "TOWN_TRACENO")
-		private String townTraceno;	//村镇流水
+		private String townTraceNo;	//村镇流水
 		
-		@JSONField(name = "BACK_TAL")
-		private String backTal; //取款后余额
+		@JSONField(name = "STS")
+		private String sts;	//处理状态
 
-		public String getBrno() {
-			return brno;
+		public String getSts() {
+			return sts;
 		}
 
-		public void setBrno(String brno) {
-			this.brno = brno;
+		public void setSts(String sts) {
+			this.sts = sts;
 		}
 
 		public String getTownDate() {
@@ -78,22 +82,15 @@ public class REP_TS002 extends REP_BASE {
 			this.townDate = townDate;
 		}
 
-		public String getTownTraceno() {
-			return townTraceno;
+		public String getTownTraceNo() {
+			return townTraceNo;
 		}
 
-		public void setTownTraceno(String townTraceno) {
-			this.townTraceno = townTraceno;
-		}
-
-		public String getBackTal() {
-			return backTal;
-		}
-
-		public void setBackTal(String backTal) {
-			this.backTal = backTal;
+		public void setTownTraceNo(String townTraceNo) {
+			this.townTraceNo = townTraceNo;
 		}
 		
+
 
 	}
 }

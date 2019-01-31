@@ -6,9 +6,9 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_TEST_TCHK01
-* @Description: 村镇账户信息
-* @author zhouyongwei zyw_unix@126.com
+* @ClassName: REQ_TCHK01
+* @Description: 模拟村镇账户信息查询
+* @author Duzhenduo
 * @date 2018年4月5日 下午11:31:28 
 *  
 */

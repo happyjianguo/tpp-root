@@ -8,7 +8,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 /** 
 * @ClassName: REQ_TR003
 * @Description: 村镇通存记账确认
-* @author zhouyongwei zyw_unix@126.com
+* @author Duzhenduo
 * @date 2018年4月5日 下午11:31:28 
 *  
 */

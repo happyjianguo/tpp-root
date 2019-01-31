@@ -25,7 +25,7 @@ import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0012;
 import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0013;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS003;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS0013;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS0013;
 import com.fxbank.tpp.tcex.model.RcvTraceInitModel;
@@ -33,7 +33,7 @@ import com.fxbank.tpp.tcex.service.IRcvTraceService;
 
 /** 
 * @ClassName: TS0013 
-* @Description: 
+* @Description: 模拟村镇存款确认
 * @author Duzhenduo
 * @date 2019年1月30日 下午2:14:57 
 *  
@@ -64,7 +64,7 @@ public class TS0013 implements TradeExecutionStrategy {
 		repDto.getRepBody().setSts("1");
 		**/
 		REQ_TS0013 reqDto = (REQ_TS0013) dto;
-		REP_TS003 repDto = new REP_TS003();
+		REP_TS0013 repDto = new REP_TS0013();
 		ESB_REQ_TS0013 esbReq_TS003 = new ESB_REQ_TS0013(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_TS003.getReqSysHead(), reqDto)

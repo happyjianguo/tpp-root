@@ -7,6 +7,13 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 
+/** 
+* @ClassName: ESB_REQ_30013000801 
+* @Description: 村镇柜面查询村镇在商行头寸 
+* @author Duzhenduo
+* @date 2019年1月31日 下午3:52:58 
+*  
+*/
 public class ESB_REQ_30013000801 extends ESB_BASE {
 
 	private static final long serialVersionUID = 6659439168887602492L;

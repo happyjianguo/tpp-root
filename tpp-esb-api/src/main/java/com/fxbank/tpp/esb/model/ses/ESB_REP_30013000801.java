@@ -8,6 +8,13 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REP_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REP_SYS_HEAD;
 
+/** 
+* @ClassName: ESB_REP_30013000801 
+* @Description: 村镇柜面查询村镇在商行头寸
+* @author Duzhenduo
+* @date 2019年1月31日 下午3:50:02 
+*  
+*/
 public class ESB_REP_30013000801 extends ESB_BASE {
 
 

@@ -31,7 +31,7 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS003;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS0013;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30041000901;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS0013;
 
@@ -106,7 +106,7 @@ public class TS0013Test {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_TS003 rep = JsonUtil.toBean(repContent, REP_TS003.class);
+		REP_TS0013 rep = JsonUtil.toBean(repContent, REP_TS0013.class);
 	}
 	
 }

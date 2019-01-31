@@ -17,7 +17,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.tcex.dto.esb.REP_TS002;
+import com.fxbank.tpp.tcex.dto.esb.REP_TS0012;
 
 /** 
 * @ClassName: TS0012 
@@ -41,7 +41,7 @@ public class TS0012 implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REP_TS002 repDto = new REP_TS002();
+		REP_TS0012 repDto = new REP_TS0012();
 		repDto.getRepBody().setBrno("10001");
 		repDto.getRepBody().setTownDate(sdf1.format(new Date()));
 		repDto.getRepBody().setTownTraceno(UUID.randomUUID().toString().replace("-", "").substring(0, 15));

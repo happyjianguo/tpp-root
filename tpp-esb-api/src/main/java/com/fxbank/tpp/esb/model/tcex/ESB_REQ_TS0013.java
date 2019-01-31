@@ -11,8 +11,8 @@ import com.fxbank.tpp.esb.common.TOWN;
 
 
 /** 
-* @ClassName: REQ_TS002 
-* @Description: 商行通兑村镇 
+* @ClassName: REQ_TS0013 
+* @Description: 商行通存记账确认
 * @author Duzhenduo
 * @date 2018年12月11日 下午2:04:30 
 *  

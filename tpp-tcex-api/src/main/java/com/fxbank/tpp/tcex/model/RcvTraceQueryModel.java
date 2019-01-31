@@ -6,6 +6,13 @@ import java.math.BigDecimal;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 
+/** 
+* @ClassName: RcvTraceQueryModel 
+* @Description: 查询来账信息
+* @author Duzhenduo
+* @date 2019年1月31日 上午10:10:11 
+*  
+*/
 public class RcvTraceQueryModel extends ModelBase implements Serializable{
 
 	/**

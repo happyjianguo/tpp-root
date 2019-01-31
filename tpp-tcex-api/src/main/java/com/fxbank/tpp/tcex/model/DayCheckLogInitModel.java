@@ -8,6 +8,13 @@ import javax.validation.constraints.NotNull;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 
+/** 
+* @ClassName: DayCheckLogInitModel 
+* @Description: 对账登记
+* @author Duzhenduo
+* @date 2019年1月31日 上午10:09:47 
+*  
+*/
 public class DayCheckLogInitModel extends ModelBase implements Serializable {
 
 	public DayCheckLogInitModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
