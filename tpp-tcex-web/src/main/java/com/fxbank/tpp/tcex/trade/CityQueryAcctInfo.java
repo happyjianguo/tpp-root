@@ -75,13 +75,6 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		repBody.setAcctSqNoT(esbRep_tsk01.getRepBody().getAcnoSeq());
 		repBody.setBalance(esbRep_tsk01.getRepBody().getBal());
 		
-//		if("000000".equals(esbRep_tsk01.getRepSysHead().getRet().get(0).getRetCode())) {
-//		}else {
-//			System.out.println("获取账户【"+payerAcno+"】信息失败: "+esbRep_tsk01.getRepSysHead().getRet().get(0).getRetMsg());
-//			myLog.error(logger, "获取账户【"+payerAcno+"】信息失败: "+esbRep_tsk01.getRepSysHead().getRet().get(0).getRetMsg());
-//			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10002);
-//			throw e;
-//		}
 		
 		return repDto;
 	}

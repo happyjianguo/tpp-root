@@ -83,25 +83,8 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 	private MyJedis myJedis;
 
 	private final static String COMMON_PREFIX = "tcex_common.";
-//	
-	@Override
-//	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
-//		MyLog myLog = logPool.get();
-//		
-//		REQ_30042001701 reqDto = (REQ_30042001701)dto;
-//		//对账日期
-//		String date = reqDto.getReqBody().getCollateDt();
-//		// 交易机构
-//		String txBrno = reqDto.getReqSysHead().getBranchId();
-//		// 柜员号
-//		String txTel = reqDto.getReqSysHead().getUserId();
-//				
-//		REP_30042001701 repDto = new REP_30042001701();
-//		
-//		testHx(myLog, date, txBrno, txTel, dto);
-//		return repDto;
-//	}
 	
+	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		
@@ -257,75 +240,6 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		return repDto;
 	}
 	
-	private void testHx(MyLog myLog, String date, String txBrno, String txTel, DataTransObject dto) throws SysTradeExecuteException {
-		List<DayCheckLogInitModel> rcvDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "I");
-		//核对往帐
-		List<DayCheckLogInitModel> SndDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "O");
-		
-//		StringBuffer sb = new StringBuffer();
-//		List<RcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
-//		for(RcvTraceQueryModel model : upRcvTraceList) {
-//			sb.append(model.getPlatDate()).append("|"); //平台日期
-//			sb.append(model.getPlatTrace()).append("|"); //平台流水
-//			sb.append(model.getDcFlag()).append("|"); //通存通兑标志
-//			sb.append("I").append("|");//来往账标志
-//			sb.append(model.getSourceType()).append("|");//交易渠道
-//			sb.append(model.getTownBranch()).append("|");//村镇记账机构
-//			sb.append(model.getTxAmt()).append("|");//交易金额
-//			sb.append(model.getTxInd()).append("|");//现转标志
-//			sb.append(model.getTownDate()).append("|"); //村镇日期
-//			sb.append(model.getTownTraceno()).append("|");//村镇流水
-//			sb.append(model.getPayeeAcno()).append("|"); //收款人账号
-//			sb.append(model.getPayeeName()).append("|"); //收款人户名
-//			sb.append(model.getPayerAcno()).append("|"); //付款人账号
-//			sb.append(model.getPayerName()).append("|"); //付款人户名
-//			sb.append(model.getTownFlag()).append("|"); //村镇机构
-//			sb.append(model.getInfo()).append("|"); //摘要
-//			sb.append("\n"); 
-//		}
-//		
-//		List<SndTraceQueryModel> upSndTraceList = sndTraceService.getUploadCheckSndTrace(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
-//		for(SndTraceQueryModel model : upSndTraceList) {
-//			sb.append(model.getPlatDate()).append("|"); //平台日期
-//			sb.append(model.getPlatTrace()).append("|"); //平台流水
-//			sb.append(model.getDcFlag()).append("|"); //通存通兑标志
-//			sb.append("O").append("|");//来往账标志
-//			sb.append(model.getSourceType()).append("|");//交易渠道
-//			sb.append(model.getTownBranch()).append("|");//村镇记账机构
-//			sb.append(model.getTxAmt()).append("|");//交易金额
-//			sb.append(model.getTxInd()).append("|");//现转标志
-//			sb.append(model.getTownDate()).append("|"); //村镇日期
-//			sb.append(model.getTownTraceno()).append("|");//村镇流水
-//			sb.append(model.getPayeeAcno()).append("|"); //收款人账号
-//			sb.append(model.getPayeeName()).append("|"); //收款人户名
-//			sb.append(model.getPayerAcno()).append("|"); //付款人账号
-//			sb.append(model.getPayerName()).append("|"); //付款人户名
-//			sb.append(model.getTownFlag()).append("|"); //村镇机构
-//			sb.append(model.getInfo()).append("|"); //摘要
-//			sb.append("\n"); 
-//		}
-//		
-//		//生成本地对账文件并上传至FTP服务器
-//		String fileName="CheckTrace_"+date+dto.getSysTime()+".txt";
-//		String localFile = ftpUpload(myLog, fileName, sb.toString());
-//		
-//		//调用村镇接口，通知村镇对账
-//		ESB_REQ_TCHK01 esbReq_tchk01 = new ESB_REQ_TCHK01(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
-//		esbReq_tchk01.getReqSysHead().setFilePath(localFile);
-//		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tchk01.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).build();
-//		esbReq_tchk01.setReqSysHead(reqSysHead);
-//		ESB_REQ_TCHK01.REQ_BODY esbReqBody_tchk01 = esbReq_tchk01.getReqBody();
-//		esbReqBody_tchk01.setFileName(fileName);
-//		ESB_REP_TCHK01 esbRep_tchk01 = forwardToTownService.sendToTown(esbReq_tchk01, esbReqBody_tchk01, ESB_REP_TCHK01.class);
-//		if("000000".equals(esbRep_tchk01.getRepSysHead().getRet().get(0).getRetCode())) {
-//			System.out.println("柜面通【"+date+"】对账成功:");
-//		}else {
-//			System.out.println("柜面通【\"+date+\"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
-//			myLog.error(logger, "柜面通【\"+date+\"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
-//			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
-//			throw e;
-//		}
-	}
 
 	private String ftpUpload(MyLog myLog,String fileName,String str) throws TcexTradeExecuteException {
 		String localPath="";
@@ -548,10 +462,6 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(Integer.parseInt("00005389"));
-	}
-
 	private String getEsbCheckFile(MyLog myLog, String date, String txBrno, String txTel,DataTransObject dto,String direction) throws SysTradeExecuteException {
 		ESB_REQ_50015000101 esbReq_50015000101 = new ESB_REQ_50015000101(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
@@ -572,12 +482,12 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+direction+"_"+fileName);
 		return localPath+File.separator+direction+"_"+fileName;
 	}
-//	/**
-//	 * @Title: loadFile @Description: 从文件传输平台下载文件 @param @param
-//	 * myLog @param @param remoteFile 文件传输平台路径+文件名 @param @param localFile
-//	 * 文件本地路径+文件名 @param @throws PafTradeExecuteException 设定文件 @return void
-//	 * 返回类型 @throws
-//	 */
+	/**
+	 * @Title: loadFile @Description: 从文件传输平台下载文件 @param @param
+	 * myLog @param @param remoteFile 文件传输平台路径+文件名 @param @param localFile
+	 * 文件本地路径+文件名 @param @throws PafTradeExecuteException 设定文件 @return void
+	 * 返回类型 @throws
+	 */
 	private void loadTraceLogFile(MyLog myLog, String remoteFile, String localFile) throws SysTradeExecuteException {
 		System.out.println("remoteFile  "+remoteFile);
 		System.out.println("localFile  "+localFile);

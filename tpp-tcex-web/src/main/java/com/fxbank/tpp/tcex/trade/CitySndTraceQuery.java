@@ -65,9 +65,6 @@ public class CitySndTraceQuery extends TradeBase implements TradeExecutionStrate
 		String maxAmt = reqBody.getMaxAmt();//最大金额
 		String brnoFlag = reqBody.getBrnoFlag();//村镇机构
 		
-		
-
-		
 		//获取往帐流水
 		List<SndTraceQueryModel> sndTraceQueryModelList = sndTraceService.getSndTrace(myLog, begDate, endDate, minAmt, maxAmt, brnoFlag);
 

@@ -36,7 +36,6 @@ import redis.clients.jedis.Jedis;
 public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrategy{
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
 
-
 	@Resource
 	private LogPool logPool;
 	
@@ -73,22 +72,12 @@ public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		reqBody_30013000201.setCcy("CNY");
 		
 		ESB_REP_30013000201 esbRep_30013000201 = forwardToESBService.sendToESB(esbReq_30013000201, reqBody_30013000201, ESB_REP_30013000201.class);
-//		String code = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetCode();
-//		String msg = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetMsg();
 		
 		REP_TRK001 repDto = new REP_TRK001();
 		repDto.getRepBody().setPayerAcno(esbRep_30013000201.getRepBody().getBaseAcctNo());
 		repDto.getRepBody().setPayerName(esbRep_30013000201.getRepBody().getAcctName());
 		repDto.getRepBody().setAcnoSeq(esbRep_30013000201.getRepBody().getAcctSeqNo());
 		repDto.getRepBody().setBal(esbRep_30013000201.getRepBody().getBalance());
-//		if(code.equals("000000")) {
-//			logger.info("商行账户信息查询成功：账号【"+payerAcno+"】");
-//		}else {
-//			System.out.println("商行账户信息查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
-//			myLog.error(logger,"商行账户信息查询失败: 错误码【"+code+"】,错误信息【"+msg+"】");
-//			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10006);
-//			throw e;
-//		}
 		
 		return repDto;
 	}
