@@ -7,6 +7,13 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 
+/** 
+* @ClassName: ESB_REQ_30014000101 
+* @Description: 单笔冲正 
+* @author Duzhenduo
+* @date 2019年1月31日 下午3:53:15 
+*  
+*/
 public class ESB_REQ_30014000101 extends ESB_BASE {
 
 

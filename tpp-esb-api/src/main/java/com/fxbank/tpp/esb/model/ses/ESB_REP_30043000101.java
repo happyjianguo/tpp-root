@@ -8,6 +8,13 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REP_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REP_SYS_HEAD;
 
+/** 
+* @ClassName: ESB_REP_30043000101 
+* @Description: 记账状态查询 
+* @author Duzhenduo
+* @date 2019年1月31日 下午3:51:32 
+*  
+*/
 public class ESB_REP_30043000101 extends ESB_BASE {
 
 

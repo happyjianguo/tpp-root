@@ -5,6 +5,13 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
+/** 
+* @ClassName: REP_KEY001 
+* @Description: 工作密钥更新申请 
+* @author Duzhenduo
+* @date 2019年1月31日 上午9:55:12 
+*  
+*/
 public class REP_KEY001 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")

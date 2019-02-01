@@ -7,7 +7,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 
 /** 
-* @ClassName: REQ_TS002 
+* @ClassName: REQ_30041001001 
 * @Description: 商行通兑村镇 
 * @author Duzhenduo
 * @date 2018年12月11日 下午2:04:30 

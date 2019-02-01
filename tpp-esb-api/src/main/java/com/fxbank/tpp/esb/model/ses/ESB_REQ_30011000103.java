@@ -8,6 +8,13 @@ import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.tpp.esb.common.ESB;
 
+/** 
+* @ClassName: ESB_REQ_30011000103 
+* @Description: 柜面通记账 
+* @author Duzhenduo
+* @date 2019年1月31日 下午3:52:26 
+*  
+*/
 public class ESB_REQ_30011000103 extends ESB_BASE {
 
 	private static final long serialVersionUID = 6659439168887602492L;

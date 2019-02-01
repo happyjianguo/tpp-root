@@ -10,7 +10,7 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 
 
 /** 
-* @ClassName: TSK01 
+* @ClassName: TSK001 
 * @Description: 商行通兑快捷查询村镇账户信息
 * @author Duzhenduo
 * @date 2018年12月11日 下午2:04:30 

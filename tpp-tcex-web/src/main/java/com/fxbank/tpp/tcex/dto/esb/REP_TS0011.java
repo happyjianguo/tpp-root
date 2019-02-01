@@ -5,6 +5,13 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
+/** 
+* @ClassName: REP_TS0011 
+* @Description: 模拟商行通存村镇
+* @author Duzhenduo
+* @date 2019年1月31日 上午9:59:54 
+*  
+*/
 public class REP_TS0011 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")

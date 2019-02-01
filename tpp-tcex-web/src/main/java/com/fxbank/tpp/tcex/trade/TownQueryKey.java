@@ -16,11 +16,14 @@ import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_KEY001;
 import com.fxbank.tpp.tcex.dto.esb.REQ_KEY001;
 
-/**
- * 工作密钥更新申请
- * @author liye
- *
- */
+
+/** 
+* @ClassName: TownQueryKey 
+* @Description: 工作密钥更新申请
+* @author Duzhenduo
+* @date 2019年1月31日 上午10:07:28 
+*  
+*/
 @Service("REQ_KEY001")
 public class TownQueryKey extends TradeBase implements TradeExecutionStrategy{
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);

@@ -7,6 +7,13 @@ import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REP_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REP_SYS_HEAD;
 
+/** 
+* @ClassName: ESB_REP_30011000103 
+* @Description: 柜面通记账
+* @author Duzhenduo
+* @date 2019年1月31日 下午3:48:44 
+*  
+*/
 public class ESB_REP_30011000103 extends ESB_BASE {
 
 

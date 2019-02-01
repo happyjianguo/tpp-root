@@ -20,11 +20,14 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TS0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TS0014;
-/**
- * 商行通兑业务
- * @author liye
- *
- */
+
+/** 
+* @ClassName: TS0014 
+* @Description: 模拟村镇通兑冲正 
+* @author Duzhenduo
+* @date 2019年1月31日 上午10:06:53 
+*  
+*/
 @Service("REQ_TS0014")
 public class TS0014 implements TradeExecutionStrategy {
 

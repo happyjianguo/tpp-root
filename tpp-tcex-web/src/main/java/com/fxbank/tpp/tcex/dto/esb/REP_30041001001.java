@@ -5,6 +5,13 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
+/** 
+* @ClassName: REP_30041001001 
+* @Description: 村镇业务借记往账
+* @author Duzhenduo
+* @date 2019年1月31日 上午9:52:45 
+*  
+*/
 public class REP_30041001001 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")

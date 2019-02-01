@@ -95,30 +95,17 @@ public class TownExchange implements TradeExecutionStrategy {
 		  hostSeqno = esbRep_30011000103.getRepBody().getReference();
 		  hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
 		  accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
-		  // 开户机构
-		  //String acctBranch = esbRep_30011000103.getRepBody().getAcctBranch();
-		  // 记账结果，00-已记账 01-已挂账
-		  //String acctResult = esbRep_30011000103.getRepBody().getAcctResult();
 		}catch(SysTradeExecuteException e) {
 			updateHostRecord(reqDto, "", "", "2",e.getRspCode(),e.getRspMsg(),"");
 			myLog.error(logger, "村镇通兑商行核心记账失败，渠道日期" + platDate +
 					"渠道流水号"+platTraceNo, e);
-			//sts = "2";
 			throw e;
 		}
 		// 更新流水表核心记账状态
-		if("000000".equals(hostCode)) {
 			updateHostRecord(reqDto, hostDate, hostSeqno, "1",hostCode,hostMsg,accounting_branch);
 		    myLog.info(logger, "村镇通兑商行核心记账成功，渠道日期" + platDate + 
 					"渠道流水号" + platTraceNo);
 		    sts = "1";
-		}else {
-			updateHostRecord(reqDto, "", "", "2",hostCode,hostMsg,"");
-			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10008);
-			myLog.error(logger, "村镇通兑商行核心记账失败，渠道日期" + platDate +
-					"渠道流水号"+platTraceNo, e);
-			sts = "2";
-		}
 		repBody.setPlatDate(platDate.toString());
 		repBody.setPlatTraceno(platTraceNo.toString());
 		repBody.setSts(sts);

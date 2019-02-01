@@ -6,6 +6,13 @@ import java.math.BigDecimal;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 
+/** 
+* @ClassName: SndTraceQueryModel 
+* @Description: 往账查询 
+* @author Duzhenduo
+* @date 2019年1月31日 上午10:10:39 
+*  
+*/
 public class SndTraceQueryModel extends ModelBase implements Serializable{
 
 	public SndTraceQueryModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
