@@ -107,6 +107,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		checkSndLog(myLog, dto, SndDayCheckLogList, date);
 		
 		//获取未对账的来账信息
+		//TODO 对账逻辑需要调整，渠道多记录时，应调整chestate状态     加上状态3-核心比渠道多  4-渠道比核心多
 		List<RcvTraceQueryModel> rcvTraceList = rcvTraceService.getCheckRcvTrace(myLog,dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
 		//失败、超时、存款确认、冲正成功？
 		for(RcvTraceQueryModel model : rcvTraceList) {
@@ -373,6 +374,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				record.setHostDate(model.getHostDate());
 				record.setHostTraceno(model.getHostTraceno());
 				record.setTxAmt(model.getTxAmt().toString());
+				//TODO 待确认
 				record.setHostState(model.getReversal().equals("Y")?"5":"1");
 				record.setCheckFlag("2");
 				
@@ -390,6 +392,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 					record.setHostState("1");
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
+					//TODO 输出日志 渠道日期 渠道流水 状态
 				}else {
 					System.out.println("柜面通【"+date+"】对账失败: 渠道流水号【"+rcvTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+rcvTraceQueryModel.getHostState()+"】,与核心记账状态不符");
 					myLog.error(logger, "柜面通【"+date+"】对账失败: 渠道流水号【"+rcvTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+rcvTraceQueryModel.getHostState()+"】,与核心记账状态不符");
