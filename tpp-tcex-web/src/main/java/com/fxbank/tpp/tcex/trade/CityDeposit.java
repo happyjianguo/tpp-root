@@ -112,6 +112,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 				townTraceNo = esbRepBody_TS001.getTownTraceno();
 				repDto.getRepBody().setBalance(esbRep_TS001.getRepBody().getBackTal());
 			}catch(SysTradeExecuteException e) {
+				//村镇记账响应超时，村镇存款确认
 				if("CIP_E_000004".equals(e.getRspCode())) {
 					updateTownRecord(reqDto, "", "", "", "3");
 					myLog.error(logger, "商行通存村镇村镇记账超时，渠道日期" + reqDto.getSysDate() + 
@@ -133,6 +134,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 					}
 					return repDto;
 				}else {
+					//村镇核心记账报错，商行核心冲正
 					updateTownRecord(reqDto, "", "", "", "2");
 					myLog.error(logger, "商行通存村镇村镇记账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e);

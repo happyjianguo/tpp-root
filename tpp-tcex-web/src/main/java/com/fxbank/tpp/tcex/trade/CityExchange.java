@@ -115,6 +115,7 @@ public class CityExchange implements TradeExecutionStrategy {
 				hostDate = esbRep_30011000103.getRepSysHead().getRunDate();
 				accounting_branch = esbRep_30011000103.getRepBody().getAccountingBranch();
 			}catch(SysTradeExecuteException e) {
+				//商行核心记账失败，村镇冲正
 				updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg(),"");
 				myLog.error(logger, "商行通兑村镇核心记账失败，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);
