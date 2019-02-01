@@ -150,11 +150,12 @@ public class CityDeposit implements TradeExecutionStrategy {
 						updateHostRecord(reqDto, "", "", "6", e.getRspCode(), e.getRspMsg(),"");
 						myLog.error(logger, "商行通存村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						throw e1;
+						TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10013,e.getRspMsg()+"(村镇冲正失败)");
+						throw e2;
 					}
 					
 						updateHostRecord(reqDto, hostDate, hostSeqno, "5", hostReversalCode, hostReversalMsg,"");
-						TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10013);
+						TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10013,e.getRspMsg()+"(村镇冲正成功)");
 						myLog.error(logger, "商行通存村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(),e2);
 						throw e2;

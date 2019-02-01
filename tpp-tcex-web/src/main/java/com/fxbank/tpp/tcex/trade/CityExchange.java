@@ -126,15 +126,16 @@ public class CityExchange implements TradeExecutionStrategy {
 					updateTownRecord(reqDto, "", "", "", "6");
 					myLog.error(logger, "商行通兑村镇村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
-					throw e;
+					TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10012,e.getRspMsg()+"(村镇冲正失败)");
+					throw e2;
 				}
 				// 更新流水表村镇记账状态
 				// 村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 				updateTownRecord(reqDto, townBranch, townDate, townTraceNo, "5");
-				TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10012);
+				TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10012,e.getRspMsg()+"(村镇冲正成功)");
 				myLog.error(logger, "商行通兑村镇村镇冲正成功，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(),e2);
-				throw e;
+				throw e2;
 			}
 			// 更新流水表核心记账状态
 				repDto.getRepBody().setBalance(esbRep_TS002.getRepBody().getBackTal());
