@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fxbank.cip.manager.mapper.SysDepartMapper" >
-    <resultMap id="BaseResultMap" type="com.fxbank.cip.manager.entity.SysDepart" >
+<mapper namespace="com.fxbank.tpp.manager.mapper.SysDepartMapper" >
+    <resultMap id="BaseResultMap" type="com.fxbank.tpp.manager.entity.SysDepart" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="code" property="code" jdbcType="VARCHAR" />
         <result column="name" property="name" jdbcType="VARCHAR" />
@@ -19,7 +19,7 @@
     select max(id) from sys_depart
   </select>
 
-    <select id="selectAvailableDepart" parameterType="com.fxbank.cip.manager.entity.SysDepart" resultMap="BaseResultMap" >
+    <select id="selectAvailableDepart" parameterType="com.fxbank.tpp.manager.entity.SysDepart" resultMap="BaseResultMap" >
         select id, code, name, parent_id, available,parent_ids
         from sys_depart where available=0
         <if test="id != null and id != ''">
@@ -28,7 +28,7 @@
         order by id
   </select>
 
-    <update id="updateChildPid" parameterType="com.fxbank.cip.manager.entity.SysDepart" >
+    <update id="updateChildPid" parameterType="com.fxbank.tpp.manager.entity.SysDepart" >
     update sys_depart set parent_id=#{parentId},parent_ids=#{parentIds} where parent_id=#{id}
   </update>
 

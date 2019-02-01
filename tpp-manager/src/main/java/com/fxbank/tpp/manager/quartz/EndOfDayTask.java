@@ -64,7 +64,7 @@ public class EndOfDayTask {
 		tigger.setJobDetail(jobDetail.getObject());
 		String exp = null;
 		try (Jedis jedis = jedisPool.getResource()) {
-			exp = jedis.get(QuartzJobConfigration.CIP_CRON + JOBNAME);
+			exp = jedis.get(QuartzJobConfigration.TPP_CRON + JOBNAME);
 		}
 		if (exp == null) {
 			exp = "0 0 0 * * ?";
