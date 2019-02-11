@@ -273,7 +273,9 @@ public class SndTraceService implements ISndTraceService{
 			model.setTownState(data.getTownState());
 			model.setTownTraceno(data.getTownTraceno());
 			model.setTownFlag(data.getTownFlag());
-
+			model.setTxAmt(data.getTxAmt());
+            model.setTxInd(data.getTxInd());
+			
 			modelList.add(model);
 		}
 		
