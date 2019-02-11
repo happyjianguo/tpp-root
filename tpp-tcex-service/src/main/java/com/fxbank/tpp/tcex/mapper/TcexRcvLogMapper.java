@@ -11,4 +11,6 @@ public interface TcexRcvLogMapper extends MyMapper<TcexRcvLog> {
     List<TcexRcvLog> selectRcvTrace(String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag);
     String selectDtRcvTotalNum(@Param("date") String date, @Param("flag") String flag);
     String selectDtRcvTotalSum(@Param("date") String date, @Param("flag") String flag);
+    List<TcexRcvLog> selectCheckedTrace(String date);
+    String selectTraceNum(String date,String checkFlag);
 }

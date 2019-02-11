@@ -111,40 +111,36 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		List<RcvTraceQueryModel> rcvTraceList = rcvTraceService.getCheckRcvTrace(myLog,dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
 		//失败、超时、存款确认、冲正成功？
 		for(RcvTraceQueryModel model : rcvTraceList) {
-			if(!model.getHostState().equals("2")&&!model.getHostState().equals("3")&&!model.getHostState().equals("4")&&!model.getHostState().equals("5")) {
-				System.out.println("柜面通【"+date+"】对账失败: 多出来账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
-				myLog.error(logger,"柜面通【"+date+"】对账失败: 多出来账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
+			RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(), model.getPlatTrace());
+			record.setCheckFlag("4");
+			rcvTraceService.rcvTraceUpd(record);
+			
+			if(model.getHostState().equals("1")) {
+				System.out.println("柜面通【"+date+"】对账失败: 多出来账记录，渠道流水号【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
+				myLog.error(logger,"柜面通【"+date+"】对账失败: 多出来账记录，渠道流水号【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
 				TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
 				throw e;
+			}else {
+				System.out.println("渠道多出来账数据，渠道日期【"+model.getPlatDate()+"】，渠道流水【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
+				myLog.debug(logger, "渠道多出来账数据，渠道日期【"+model.getPlatDate()+"】，渠道流水【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
 			}
 		}
 		
 		//获取未对账的往帐信息
 		List<SndTraceQueryModel> sndTraceList = sndTraceService.getCheckSndTrace(myLog,dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
 		for(SndTraceQueryModel model:sndTraceList) {
-			if(model.getDcFlag().equals("0")) {
-				//通存
-				//失败、超时、存款确认、冲正成功？
-				if(!model.getHostState().equals("2")&&!model.getHostState().equals("3")&&!model.getHostState().equals("4")&&!model.getHostState().equals("5")) {
-					System.out.println("柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
-					myLog.error(logger,"柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
-					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
-					throw e;
-				}
-			}else if(model.getDcFlag().equals("1")) {
-				//通兑
-				//失败、超时
-				if(!model.getHostState().equals("0")&&!model.getHostState().equals("2")&&!model.getHostState().equals("3")) {
-					System.out.println("柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
-					myLog.error(logger,"柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】核心状态【"+model.getHostState()+"】异常");
-					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
-					throw e;
-				}
-			}else {
-				System.out.println("柜面通【"+date+"】往帐对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】通存通兑标志状态异常:【"+model.getDcFlag()+"】");
-				myLog.error(logger,"柜面通【"+date+"】往帐对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】通存通兑标志状态异常:【"+model.getDcFlag()+"】");
+			SndTraceUpdModel record = new SndTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(), model.getPlatTrace());
+			record.setCheckFlag("4");
+			sndTraceService.sndTraceUpd(record);
+			
+			if(model.getHostState().equals("1")) {
+				System.out.println("柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
+				myLog.error(logger,"柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
 				TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
 				throw e;
+			}else {
+				System.out.println("渠道多出往账数据，渠道日期【"+model.getPlatDate()+"】，渠道流水【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
+				myLog.debug(logger, "渠道多出往账数据，渠道日期【"+model.getPlatDate()+"】，渠道流水【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
 			}
 		}
 		
@@ -237,7 +233,24 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
 			throw e;
 		}
+		
+		String rcvTotal = rcvTraceService.getTraceNum(date, "");
+		String rcvCheckFlag1 = rcvTraceService.getTraceNum(date, "1");
+		String rcvCheckFlag2 = rcvTraceService.getTraceNum(date, "2");
+		String rcvCheckFlag3 = rcvTraceService.getTraceNum(date, "3");
+		String rcvCheckFlag4 = rcvTraceService.getTraceNum(date, "4");
+		
+		String sndTotal = sndTraceService.getTraceNum(date, "");
+		String sndCheckFlag1 = sndTraceService.getTraceNum(date, "1");
+		String sndCheckFlag2 = sndTraceService.getTraceNum(date, "2");
+		String sndCheckFlag3 = sndTraceService.getTraceNum(date, "3");
+		String sndCheckFlag4 = sndTraceService.getTraceNum(date, "4");
+		String s = "柜面通【"+date+"】对账统计：来账共【"+rcvTotal+"】条，其中未对账【"+rcvCheckFlag1+"】条，已对账【"+rcvCheckFlag2+"】条，核心多出【"+rcvCheckFlag3+"】条，渠道多出【"+rcvCheckFlag4+"】条;"
+				+ "往账共【"+sndTotal+"】条，其中未对账【"+sndCheckFlag1+"】条，已对账【"+sndCheckFlag2+"】条，核心多出【"+sndCheckFlag3+"】条，渠道多出【"+sndCheckFlag4+"】条";
 
+		System.out.println(s);
+		myLog.debug(logger, s);
+		
 		return repDto;
 	}
 	
@@ -309,10 +322,12 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				record.setHostDate(model.getHostDate());
 				record.setHostTraceno(model.getHostTraceno());
 				record.setTxAmt(model.getTxAmt().toString());
-				record.setHostState(model.getReversal().equals("Y")?"5":"1");
-				record.setCheckFlag("2");
+				record.setHostState("1");
+				record.setCheckFlag("3");
 				
 				sndTraceService.replenishSndTrace(record);
+				System.out.println("渠道补充往账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
+				myLog.debug(logger, "渠道补充往账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
 			}else {
 				String dcFlag = sndTraceQueryModel.getDcFlag();//通存通兑标志
 				String hostState = sndTraceQueryModel.getHostState(); //渠道记录的核心状态
@@ -324,12 +339,14 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 						SndTraceUpdModel record = new SndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setCheckFlag("2");
 						sndTraceService.sndTraceUpd(record);
-					}else if(hostState.equals("3")||hostState.equals("5")||hostState.equals("6")||hostState.equals("7")) {
+					}else if(hostState.equals("0")||hostState.equals("3")||hostState.equals("6")||hostState.equals("7")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 						RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");
 						record.setCheckFlag("2");
 						rcvTraceService.rcvTraceUpd(record);
+						System.out.println("渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
+						myLog.debug(logger,"渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
 					}else {
 						System.out.println("柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
 						myLog.error(logger, "柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
@@ -343,12 +360,14 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 						SndTraceUpdModel record = new SndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setCheckFlag("2");
 						sndTraceService.sndTraceUpd(record);
-					}else if(hostState.equals("3")) {
+					}else if(hostState.equals("0")||hostState.equals("3")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 						RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");
 						record.setCheckFlag("2");
 						rcvTraceService.rcvTraceUpd(record);
+						System.out.println("渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
+						myLog.debug(logger,"渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
 					}else {
 						System.out.println("柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
 						myLog.error(logger, "柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
@@ -374,11 +393,12 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				record.setHostDate(model.getHostDate());
 				record.setHostTraceno(model.getHostTraceno());
 				record.setTxAmt(model.getTxAmt().toString());
-				//TODO 待确认
-				record.setHostState(model.getReversal().equals("Y")?"5":"1");
-				record.setCheckFlag("2");
+				record.setHostState("1");
+				record.setCheckFlag("3");
 				
 				rcvTraceService.replenishRcvTrace(record);
+				System.out.println("渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
+				myLog.debug(logger, "渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
 			}else {
 				String hostState = rcvTraceQueryModel.getHostState(); //渠道记录的核心状态
 				if(hostState.equals("1")) {
@@ -386,12 +406,14 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 					RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
-				}else if(hostState.equals("3")||hostState.equals("4")||hostState.equals("5")||hostState.equals("6")||hostState.equals("7")) {
+				}else if(hostState.equals("0")||hostState.equals("3")||hostState.equals("4")||hostState.equals("6")||hostState.equals("7")) {
 					//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 					RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setHostState("1");
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
+					System.out.println("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
+					myLog.debug(logger,"渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
 					//TODO 输出日志 渠道日期 渠道流水 状态
 				}else {
 					System.out.println("柜面通【"+date+"】对账失败: 渠道流水号【"+rcvTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+rcvTraceQueryModel.getHostState()+"】,与核心记账状态不符");

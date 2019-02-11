@@ -139,5 +139,13 @@ public interface ISndTraceService {
 	* @throws 
 	*/
 	String getSndTotalSum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
+	/**
+	 * 统计往帐条数
+	 * @param date
+	 * @param checkFlag
+	 * @return
+	 * @throws SysTradeExecuteException
+	 */
+	String getTraceNum(String date, String checkFlag) throws SysTradeExecuteException;
 
 }

@@ -287,11 +287,7 @@ public class RcvTraceService implements IRcvTraceService{
 	@Override
 	public List<RcvTraceQueryModel> getUploadCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime,
 			Integer sysTraceno, String date) throws SysTradeExecuteException {
-		TcexRcvLog tcexRcvLog = new TcexRcvLog();
-		tcexRcvLog.setPlatDate(Integer.parseInt(date));
-		tcexRcvLog.setHostState("1");
-		
-		List<TcexRcvLog> dataList = tcexRcvLogMapper.select(tcexRcvLog);
+		List<TcexRcvLog> dataList = tcexRcvLogMapper.selectCheckedTrace(date);
 		List<RcvTraceQueryModel> modelList = new ArrayList<>();
 		for(TcexRcvLog data : dataList) {
 			RcvTraceQueryModel model = new RcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
@@ -354,6 +350,13 @@ public class RcvTraceService implements IRcvTraceService{
 	@Override
 	public String getRcvTotalSum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
 		String sum = tcexRcvLogMapper.selectDtRcvTotalSum(date, dcFlag);
+		return sum;
+	}
+
+	
+	@Override
+	public String getTraceNum(String date, String checkFlag) throws SysTradeExecuteException {
+		String sum = tcexRcvLogMapper.selectTraceNum(date, checkFlag);
 		return sum;
 	}
 

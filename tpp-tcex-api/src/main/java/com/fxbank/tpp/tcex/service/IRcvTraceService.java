@@ -149,6 +149,13 @@ public interface IRcvTraceService {
 	* @throws 
 	*/
 	String getRcvTotalSum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
-			
+	/**
+	 * 获取来账统计信息
+	 * @param date
+	 * @param checkFlag
+	 * @return
+	 * @throws SysTradeExecuteException
+	 */
+	String getTraceNum(String date,String checkFlag)throws SysTradeExecuteException;
 
 }

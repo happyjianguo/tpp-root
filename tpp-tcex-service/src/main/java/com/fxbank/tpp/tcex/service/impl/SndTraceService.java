@@ -248,11 +248,7 @@ public class SndTraceService implements ISndTraceService{
 	@Override
 	public List<SndTraceQueryModel> getUploadCheckSndTrace(MyLog myLog, Integer sysDate, Integer sysTime,
 			Integer sysTraceno, String date) throws SysTradeExecuteException {
-		TcexSndLog tcexSndLog = new TcexSndLog();
-		tcexSndLog.setPlatDate(Integer.parseInt(date));
-		tcexSndLog.setHostState("1");
-		
-		List<TcexSndLog> dataList = tcexSndLogMapper.select(tcexSndLog);
+		List<TcexSndLog> dataList = tcexSndLogMapper.selectCheckedTrace(date);
 		List<SndTraceQueryModel> modelList = new ArrayList<>();
 		for(TcexSndLog data : dataList) {
 			SndTraceQueryModel model = new SndTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
@@ -315,4 +311,9 @@ public class SndTraceService implements ISndTraceService{
 		return sum;
 	}
 
+	@Override
+	public String getTraceNum(String date, String checkFlag) throws SysTradeExecuteException {
+		String sum = tcexSndLogMapper.selectTraceNum(date, checkFlag);
+		return sum;
+	}
 }
