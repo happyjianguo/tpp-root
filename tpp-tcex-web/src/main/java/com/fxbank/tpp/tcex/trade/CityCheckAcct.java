@@ -98,6 +98,8 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				
 		REP_30042001701 repDto = new REP_30042001701();
 		
+		System.out.println("核心与外围对账开始");
+		myLog.debug(logger, "核心与外围对账开始");
 		//核对来账
 		List<DayCheckLogInitModel> rcvDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "I");
 		checkRcvLog(myLog, dto, rcvDayCheckLogList, date);
@@ -106,8 +108,13 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		List<DayCheckLogInitModel> SndDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "O");
 		checkSndLog(myLog, dto, SndDayCheckLogList, date);
 		
+		System.out.println("核心与外围对账结束");
+		myLog.debug(logger, "核心与外围对账结束");
+		
+		
+		System.out.println("外围与核心对账开始");
+		myLog.debug(logger, "外围与核心对账开始");
 		//获取未对账的来账信息
-		//TODO 对账逻辑需要调整，渠道多记录时，应调整chestate状态     加上状态3-核心比渠道多  4-渠道比核心多
 		List<RcvTraceQueryModel> rcvTraceList = rcvTraceService.getCheckRcvTrace(myLog,dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
 		//失败、超时、存款确认、冲正成功？
 		for(RcvTraceQueryModel model : rcvTraceList) {
@@ -143,6 +150,9 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				myLog.debug(logger, "渠道多出往账数据，渠道日期【"+model.getPlatDate()+"】，渠道流水【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
 			}
 		}
+		
+		System.out.println("外围与核心对账结束");
+		myLog.debug(logger, "外围与核心对账结束");
 		
 		StringBuffer sb = new StringBuffer();
 		//来账通存I0、来账通兑I1、往账通存O0、往账通兑O1（第一位是大写字母，I代表来账、O代表往账；第二位是数字，0代表通存、1代表通兑）
@@ -187,7 +197,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			sb.append(null==model.getPayerAcno()?"":model.getPayerAcno()).append("|"); //付款人账号
 			sb.append(null==model.getPayerName()?"":model.getPayerName()).append("|"); //付款人户名
 			sb.append(model.getTownFlag()).append("|"); //村镇机构
-			sb.append(null==model.getInfo()?"":model.getInfo()).append("|"); //摘要
+			sb.append(null==model.getInfo()?" ":model.getInfo()).append("|"); //摘要
 			sb.append("\n"); 
 		}
 		
@@ -208,7 +218,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			sb.append(null==model.getPayerAcno()?"":model.getPayerAcno()).append("|"); //付款人账号
 			sb.append(null==model.getPayerName()?"":model.getPayerName()).append("|"); //付款人户名
 			sb.append(model.getTownFlag()).append("|"); //村镇机构
-			sb.append(null==model.getInfo()?"":model.getInfo()).append("|"); //摘要
+			sb.append(null==model.getInfo()?" ":model.getInfo()).append("|"); //摘要
 			sb.append("\n"); 
 		}
 		
@@ -226,27 +236,26 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		esbReqBody_tchk01.setCollectDt(date);
 		ESB_REP_TCHK01 esbRep_tchk01 = forwardToTownService.sendToTown(esbReq_tchk01, esbReqBody_tchk01, ESB_REP_TCHK01.class);
 		if("000000".equals(esbRep_tchk01.getRepSysHead().getRet().get(0).getRetCode())) {
-			System.out.println("柜面通【"+date+"】对账成功:");
+			System.out.println("柜面通【"+date+"】对账成功");
+			myLog.debug(logger, "柜面通【"+date+"】对账成功");
 		}else {
-			System.out.println("柜面通【\"+date+\"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
-			myLog.error(logger, "柜面通【\"+date+\"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
+			System.out.println("柜面通【"+date+"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
+			myLog.error(logger, "柜面通【"+date+"】对账失败: "+esbRep_tchk01.getRepSysHead().getRet().get(0).getRetMsg());
 			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
 			throw e;
 		}
 		
-		String rcvTotal = rcvTraceService.getTraceNum(date, "");
-		String rcvCheckFlag1 = rcvTraceService.getTraceNum(date, "1");
 		String rcvCheckFlag2 = rcvTraceService.getTraceNum(date, "2");
 		String rcvCheckFlag3 = rcvTraceService.getTraceNum(date, "3");
 		String rcvCheckFlag4 = rcvTraceService.getTraceNum(date, "4");
+		int rcvTotal = Integer.parseInt(rcvCheckFlag2)+Integer.parseInt(rcvCheckFlag3)+Integer.parseInt(rcvCheckFlag4);
 		
-		String sndTotal = sndTraceService.getTraceNum(date, "");
-		String sndCheckFlag1 = sndTraceService.getTraceNum(date, "1");
 		String sndCheckFlag2 = sndTraceService.getTraceNum(date, "2");
 		String sndCheckFlag3 = sndTraceService.getTraceNum(date, "3");
 		String sndCheckFlag4 = sndTraceService.getTraceNum(date, "4");
-		String s = "柜面通【"+date+"】对账统计：来账共【"+rcvTotal+"】条，其中未对账【"+rcvCheckFlag1+"】条，已对账【"+rcvCheckFlag2+"】条，核心多出【"+rcvCheckFlag3+"】条，渠道多出【"+rcvCheckFlag4+"】条;"
-				+ "往账共【"+sndTotal+"】条，其中未对账【"+sndCheckFlag1+"】条，已对账【"+sndCheckFlag2+"】条，核心多出【"+sndCheckFlag3+"】条，渠道多出【"+sndCheckFlag4+"】条";
+		int sndTotal = Integer.parseInt(sndCheckFlag2)+Integer.parseInt(sndCheckFlag3)+Integer.parseInt(sndCheckFlag4);
+		String s = "柜面通【"+date+"】对账统计：来账共【"+rcvTotal+"】笔，其中已对账【"+rcvCheckFlag2+"】笔，核心多出【"+rcvCheckFlag3+"】笔，渠道多出【"+rcvCheckFlag4+"】笔;"
+				+ "往账共【"+sndTotal+"】笔，其中已对账【"+sndCheckFlag2+"】笔，核心多出【"+sndCheckFlag3+"】笔，渠道多出【"+sndCheckFlag4+"】笔";
 
 		System.out.println(s);
 		myLog.debug(logger, s);
