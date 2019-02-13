@@ -18,8 +18,6 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.tcex.dto.esb.REP_30043002701;
-import com.fxbank.tpp.tcex.dto.esb.REQ_30043002701;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30043002702;
 import com.fxbank.tpp.tcex.dto.esb.REP_30043002702;
 import com.fxbank.tpp.tcex.dto.esb.REP_30043002702.TMSGR;

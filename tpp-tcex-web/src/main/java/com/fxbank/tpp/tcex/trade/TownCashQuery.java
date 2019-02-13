@@ -21,7 +21,6 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000801;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0005;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0005;
-import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.TownInfo;
 import com.fxbank.tpp.tcex.model.TownList;
 

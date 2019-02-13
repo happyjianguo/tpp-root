@@ -31,6 +31,8 @@ import com.fxbank.tpp.tcex.model.SndTraceInitModel;
 import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 import com.fxbank.tpp.tcex.service.ISndTraceService;
 
+import redis.clients.jedis.Jedis;
+
 /** 
 * @ClassName: CityDeposit 
 * @Description: 商行通存村镇 
@@ -57,6 +59,8 @@ public class CityDeposit implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private ISndTraceService sndTraceService;
+	
+	private final static String COMMON_PREFIX = "tcex_common.";
 	
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -207,9 +211,13 @@ public class CityDeposit implements TradeExecutionStrategy {
 		// 村镇标志
 		String townFlag = reqBody.getVillageBrnachFlag();
 		// 交易机构
-		String txBrno = reqDto.getReqSysHead().getBranchId();
+		String txBrno = null;
 		// 柜员号
-		String txTel = reqDto.getReqSysHead().getUserId();
+		String txTel = null;
+		try(Jedis jedis = myJedis.connect()){
+			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
+        }
 
 		ESB_REQ_30011000103 esbReq_30011000103 = new ESB_REQ_30011000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());

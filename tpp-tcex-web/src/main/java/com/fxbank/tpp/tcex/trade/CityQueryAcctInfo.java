@@ -7,19 +7,20 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.tcex.ESB_REP_TSK001;
-import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TS0012;
 import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TSK001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042000307;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042000307;
-import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
+
+import redis.clients.jedis.Jedis;
 
 
 /**
@@ -34,7 +35,6 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 
 	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
 
-
 	@Resource
 	private LogPool logPool;
 	
@@ -43,6 +43,11 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 	
 	@Reference(version = "1.0.0")
 	private IForwardToTownService forwardToTownService;
+	
+	@Resource
+	private MyJedis myJedis;
+	
+	private final static String COMMON_PREFIX = "tcex_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -53,9 +58,13 @@ public class CityQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		String payerAcno = reqBody.getBasrAcctNo();
 		String brnoFlag = reqBody.getVillageBrnachFlag();
 		// 交易机构
-		String txBrno = reqDto.getReqSysHead().getBranchId();
+		String txBrno = null;
 		// 柜员号
-		String txTel = reqDto.getReqSysHead().getUserId();
+		String txTel = null;
+		try(Jedis jedis = myJedis.connect()){
+			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
+        }
 				
 		//请求村镇账户信息接口，反馈结果写入REP_TSK01
 		
