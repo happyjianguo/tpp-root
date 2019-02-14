@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.dubbo.common.utils.LogUtil;
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisSentinelPool;
 
 @Controller
 public class ForwardToESBController{
@@ -34,14 +34,14 @@ public class ForwardToESBController{
 	private static final String servicePack = "ecc_common.testSelfPack";
 	
 	@Resource
-	private JedisSentinelPool jedisPool;
+	private MyJedis myJedis;
 	
 	
 	@RequestMapping("/test/sendtomyself")
 	public void sendToMyself() throws SysTradeExecuteException {
 		String url ;
 		String jsonReq;
-		try(Jedis jedis=jedisPool.getResource()){
+		try(Jedis jedis=myJedis.connect()){
 			url = jedis.get(serviceKey);
 			jsonReq = jedis.get(servicePack);
 		}
