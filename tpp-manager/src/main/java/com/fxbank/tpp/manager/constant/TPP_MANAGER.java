@@ -8,5 +8,5 @@ package com.fxbank.tpp.manager.constant;
 *  
 */
 public class TPP_MANAGER {
-	public static final String SYSTEM_ID="TPP";	
+	public static final String SYSTEM_ID="CIP";	
 }
