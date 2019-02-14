@@ -79,6 +79,10 @@
     		<artifactId>commons-net</artifactId>
 			<version>3.6</version>
 		</dependency>
+			<dependency>
+			<groupId>dom4j</groupId>
+    		<artifactId>dom4j</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
