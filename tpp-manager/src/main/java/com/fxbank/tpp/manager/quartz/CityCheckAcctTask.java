@@ -236,6 +236,7 @@ public class CityCheckAcctTask {
 		reqDto.setSysDate(date);
 		reqDto.setSysTime(sysTime);
 		reqDto.setSysTraceno(sysTraceno);
+		reqDto.setSourceType("LV");
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tchk01.getReqSysHead(),reqDto).setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_tchk01.setReqSysHead(reqSysHead);
 		ESB_REQ_TCHK01.REQ_BODY esbReqBody_tchk01 = esbReq_tchk01.getReqBody();
