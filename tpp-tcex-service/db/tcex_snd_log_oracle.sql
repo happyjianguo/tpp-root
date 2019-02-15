@@ -50,7 +50,7 @@ COMMENT ON COLUMN tcex_snd_log.payee_name IS '收款人户名';
 COMMENT ON COLUMN tcex_snd_log.town_branch IS '村镇记账机构';
 COMMENT ON COLUMN tcex_snd_log.town_date IS '村镇日期';
 COMMENT ON COLUMN tcex_snd_log.town_traceno IS '村镇流水';
-COMMENT ON COLUMN tcex_snd_log.check_flag IS '对账标志，1-未对账，2-已对账';
+COMMENT ON COLUMN tcex_snd_log.check_flag IS '对账标志，1-未对账，2-已对账，3-核心多，4-渠道多';
 COMMENT ON COLUMN tcex_snd_log.host_state IS '核心记账状态，0-登记，1-成功，2-失败，3-超时，5-冲正成功，6-冲正失败，7-冲正超时';
 COMMENT ON COLUMN tcex_snd_log.town_state IS '村镇记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败';
 COMMENT ON COLUMN tcex_snd_log.tx_tel IS '交易柜员';
