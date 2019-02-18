@@ -38,6 +38,7 @@ import com.fxbank.tpp.esb.service.IForwardToTownService;
 import com.fxbank.tpp.tcex.dto.esb.REP_30042001701;
 import com.fxbank.tpp.tcex.dto.esb.REQ_30042001701;
 import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
+import com.fxbank.tpp.tcex.model.AcctCheckErrModel;
 import com.fxbank.tpp.tcex.model.DayCheckLogInitModel;
 import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
 import com.fxbank.tpp.tcex.model.RcvTraceRepModel;
@@ -45,6 +46,7 @@ import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.model.SndTraceQueryModel;
 import com.fxbank.tpp.tcex.model.SndTraceRepModel;
 import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
+import com.fxbank.tpp.tcex.service.IAcctCheckErrService;
 import com.fxbank.tpp.tcex.service.IDayCheckLogService;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
 import com.fxbank.tpp.tcex.service.ISndTraceService;
@@ -79,6 +81,9 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private IRcvTraceService rcvTraceService;
 	
+	@Reference(version = "1.0.0")
+	private IAcctCheckErrService acctCheckErrService;
+	
 	@Resource
 	private MyJedis myJedis;
 
@@ -103,6 +108,7 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		REP_30042001701 repDto = new REP_30042001701();
 		
 		myLog.info(logger, "核心与外围对账开始");
+		acctCheckErrService.delete(date);
 		//核对来账
 		List<DayCheckLogInitModel> rcvDayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto, "I");
 		checkRcvLog(myLog, dto, rcvDayCheckLogList, date);
@@ -327,6 +333,17 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				
 				sndTraceService.replenishSndTrace(record);
 				myLog.info(logger, "渠道补充往账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
+				
+				AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
+				aceModel.setPlatDate(model.getSettleDate());
+				aceModel.setPlatTrace(model.getPlatTrace());
+				aceModel.setPreHostState("");
+				aceModel.setReHostState("1");
+				aceModel.setDcFlag("");
+				aceModel.setCheckFlag("3");
+				aceModel.setDirection("O");
+				aceModel.setMsg("渠道补充往账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
+				acctCheckErrService.insert(aceModel);
 			}else {
 				String dcFlag = sndTraceQueryModel.getDcFlag();//通存通兑标志
 				String hostState = sndTraceQueryModel.getHostState(); //渠道记录的核心状态
@@ -345,6 +362,22 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 						record.setCheckFlag("2");
 						rcvTraceService.rcvTraceUpd(record);
 						myLog.info(logger,"渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
+					
+						AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
+						aceModel.setPlatDate(model.getSettleDate());
+						aceModel.setPlatTrace(model.getPlatTrace());
+						aceModel.setPreHostState(hostState);
+						aceModel.setReHostState("1");
+						aceModel.setDcFlag(dcFlag);
+						aceModel.setCheckFlag("2");
+						aceModel.setDirection("O");
+						aceModel.setTxAmt(sndTraceQueryModel.getTxAmt());
+						aceModel.setPayeeAcno(sndTraceQueryModel.getPayeeAcno());
+						aceModel.setPayeeName(sndTraceQueryModel.getPayeeName());
+						aceModel.setPayerAcno(sndTraceQueryModel.getPayerAcno());
+						aceModel.setPayerName(sndTraceQueryModel.getPayerName());
+						aceModel.setMsg("渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
+						acctCheckErrService.insert(aceModel);
 					}else {
 						myLog.error(logger, "柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
 						TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
@@ -364,6 +397,22 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 						record.setCheckFlag("2");
 						rcvTraceService.rcvTraceUpd(record);
 						myLog.info(logger,"渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
+					
+						AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
+						aceModel.setPlatDate(model.getSettleDate());
+						aceModel.setPlatTrace(model.getPlatTrace());
+						aceModel.setPreHostState(hostState);
+						aceModel.setReHostState("1");
+						aceModel.setDcFlag(dcFlag);
+						aceModel.setCheckFlag("2");
+						aceModel.setDirection("O");
+						aceModel.setTxAmt(sndTraceQueryModel.getTxAmt());
+						aceModel.setPayeeAcno(sndTraceQueryModel.getPayeeAcno());
+						aceModel.setPayeeName(sndTraceQueryModel.getPayeeName());
+						aceModel.setPayerAcno(sndTraceQueryModel.getPayerAcno());
+						aceModel.setPayerName(sndTraceQueryModel.getPayerName());
+						aceModel.setMsg("渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
+						acctCheckErrService.insert(aceModel);
 					}else {
 						myLog.error(logger, "柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
 						TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
@@ -392,6 +441,18 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				
 				rcvTraceService.replenishRcvTrace(record);
 				myLog.info(logger, "渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
+				
+				AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
+				aceModel.setPlatDate(model.getSettleDate());
+				aceModel.setPlatTrace(model.getPlatTrace());
+				aceModel.setPreHostState("");
+				aceModel.setReHostState("1");
+				aceModel.setDcFlag("");
+				aceModel.setCheckFlag("3");
+				aceModel.setDirection("I");
+				aceModel.setTxAmt(model.getTxAmt());
+				aceModel.setMsg("渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
+				acctCheckErrService.insert(aceModel);
 			}else {
 				String hostState = rcvTraceQueryModel.getHostState(); //渠道记录的核心状态
 				if(hostState.equals("1")) {
@@ -406,7 +467,22 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
 					myLog.info(logger,"渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
-					//TODO 输出日志 渠道日期 渠道流水 状态
+
+					AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
+					aceModel.setPlatDate(model.getSettleDate());
+					aceModel.setPlatTrace(model.getPlatTrace());
+					aceModel.setPreHostState(rcvTraceQueryModel.getHostState());
+					aceModel.setReHostState("1");
+					aceModel.setDcFlag(rcvTraceQueryModel.getDcFlag());
+					aceModel.setCheckFlag("2");
+					aceModel.setDirection("I");
+					aceModel.setTxAmt(rcvTraceQueryModel.getTxAmt());
+					aceModel.setPayeeAcno(rcvTraceQueryModel.getPayeeAcno());
+					aceModel.setPayeeName(rcvTraceQueryModel.getPayeeName());
+					aceModel.setPayerAcno(rcvTraceQueryModel.getPayerAcno());
+					aceModel.setPayerName(rcvTraceQueryModel.getPayerName());
+					aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
+					acctCheckErrService.insert(aceModel);
 				}else {
 					myLog.error(logger, "柜面通【"+date+"】对账失败: 渠道流水号【"+rcvTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+rcvTraceQueryModel.getHostState()+"】,与核心记账状态不符");
 					TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
