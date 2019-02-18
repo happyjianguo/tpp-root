@@ -20,6 +20,11 @@
     select plat_date, plat_trace, pre_host_state, re_host_state, dc_flag, check_flag, 
     direction, tx_amt, payer_acno, payer_name, payee_acno, payee_name, msg
     from tcex_acct_check_err
+  </select>
+  <select id="selectByDate" resultMap="BaseResultMap">
+    select plat_date, plat_trace, pre_host_state, re_host_state, dc_flag, check_flag, 
+    direction, tx_amt, payer_acno, payer_name, payee_acno, payee_name, msg
+    from tcex_acct_check_err
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
       <if test='date != null and date != ""'>
         and plat_date = #{date}

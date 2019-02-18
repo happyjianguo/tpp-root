@@ -21,7 +21,7 @@ public class AcctCheckErrService implements IAcctCheckErrService {
 
 	@Override
 	public List<AcctCheckErrModel> getListByDate(MyLog myLog,Integer sysTime, Integer sysDate,Integer sysTraceno,String date) throws SysTradeExecuteException {
-		List<TcexAcctCheckErr> list = mapper.selectAll(date);
+		List<TcexAcctCheckErr> list = mapper.selectByDate(date);
 		List<AcctCheckErrModel> modelList = new ArrayList<>();
 		for(TcexAcctCheckErr ace : list) {
 			AcctCheckErrModel model = new AcctCheckErrModel(myLog, sysDate, sysTime, sysTraceno);
