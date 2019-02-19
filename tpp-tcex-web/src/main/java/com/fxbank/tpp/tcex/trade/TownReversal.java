@@ -87,8 +87,8 @@ public class TownReversal implements TradeExecutionStrategy {
 			ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101, ESB_REP_30014000101.class);
 			code = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
 			msg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
-		} catch (Exception e) {
-			code="error";
+		} catch (SysTradeExecuteException e) {
+			code = e.getRspCode();
 			msg = e.getMessage();
 			myLog.error(logger,"村镇【"+txBrno+"】柜面通冲正失败:",e);
 		}
@@ -97,7 +97,7 @@ public class TownReversal implements TradeExecutionStrategy {
 		logger.info("村镇【"+txBrno+"】柜面通冲正反馈码【"+code+"】，反馈信息【"+msg+"】");
 		
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, Integer.parseInt(platDate), reqDto.getSysTime(),Integer.parseInt(platTraceno));
-		record.setHostState(code.equals("000000")?"5":(code.equals("@@@@")?"7":"6"));
+		record.setHostState(code.equals("000000")?"5":(code.equals("CIP_E_000004")?"7":"6"));
 		record.setRetCode(code);
 		record.setRetMsg(msg);
 		rcvTraceService.rcvTraceUpd(record);
