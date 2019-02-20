@@ -426,8 +426,6 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 			RcvTraceQueryModel rcvTraceQueryModel = rcvTraceService.getRcvTraceByKey(myLog, dto.getSysTime(), dto.getSysTraceno(), dto.getSysDate(),model.getSettleDate(),model.getPlatTrace());
 			//若渠道缺少数据则报错
 			if(rcvTraceQueryModel == null) {
-				RcvTraceRepModel record = new RcvTraceRepModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
-				
 				AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
 				aceModel.setPlatDate(model.getSettleDate());
 				aceModel.setPlatTrace(model.getPlatTrace());

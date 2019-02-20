@@ -460,8 +460,6 @@ public class CityCheckAcctTask {
 			SndTraceQueryModel sndTraceQueryModel = sndTraceService.getSndTraceByKey(myLog, sysTime, sysTraceno, date,model.getSettleDate(),model.getPlatTrace());
 			//若渠道缺少数据则补充
 			if(sndTraceQueryModel == null) {
-				SndTraceRepModel record = new SndTraceRepModel(myLog, model.getSettleDate(), sysTime, model.getPlatTrace());
-				
 				AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), model.getSysTime(), model.getPlatTrace());
 				aceModel.setPlatDate(model.getSettleDate());
 				aceModel.setPlatTrace(model.getPlatTrace());
@@ -567,11 +565,6 @@ public class CityCheckAcctTask {
 			RcvTraceQueryModel rcvTraceQueryModel = rcvTraceService.getRcvTraceByKey(myLog, sysTime, sysTraceno, date,model.getSettleDate(),model.getPlatTrace());
 			//若渠道缺少数据则补充
 			if(rcvTraceQueryModel == null) {
-				RcvTraceRepModel record = new RcvTraceRepModel(myLog, model.getSettleDate(), sysTime, model.getPlatTrace());
-				
-				rcvTraceService.replenishRcvTrace(record);
-				myLog.info(logger, "渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
-				
 				AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), model.getSysTime(), model.getPlatTrace());
 				aceModel.setPlatDate(model.getSettleDate());
 				aceModel.setPlatTrace(model.getPlatTrace());
