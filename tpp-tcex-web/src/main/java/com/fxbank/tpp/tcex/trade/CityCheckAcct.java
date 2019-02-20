@@ -322,18 +322,8 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		for(DayCheckLogInitModel model:sndDayCheckLogList) {
 			//根据核心对账数据取渠道往账数据
 			SndTraceQueryModel sndTraceQueryModel = sndTraceService.getSndTraceByKey(myLog, dto.getSysTime(), dto.getSysTraceno(), dto.getSysDate(),model.getSettleDate(),model.getPlatTrace());
-			//若渠道缺少数据则补充
+			//若渠道缺少数据则报错
 			if(sndTraceQueryModel == null) {
-				SndTraceRepModel record = new SndTraceRepModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
-				record.setHostDate(model.getHostDate());
-				record.setHostTraceno(model.getHostTraceno());
-				record.setTxAmt(model.getTxAmt().toString());
-				record.setHostState("1");
-				record.setCheckFlag("3");
-				
-				sndTraceService.replenishSndTrace(record);
-				myLog.info(logger, "渠道补充往账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
-				
 				AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
 				aceModel.setPlatDate(model.getSettleDate());
 				aceModel.setPlatTrace(model.getPlatTrace());
@@ -344,6 +334,10 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				aceModel.setDirection("O");
 				aceModel.setMsg("渠道补充往账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
 				acctCheckErrService.insert(aceModel);
+				
+				myLog.error(logger, "柜面通【"+date+"】往帐对账失败,渠道数据丢失: 核心流水号【"+model.getHostTraceno()+"】核心日期为【"+model.getSysDate()+"】");
+				TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
+				throw e;
 			}else {
 				String dcFlag = sndTraceQueryModel.getDcFlag();//通存通兑标志
 				String hostState = sndTraceQueryModel.getHostState(); //渠道记录的核心状态
@@ -430,17 +424,9 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		for(DayCheckLogInitModel model:rcvDayCheckLogList) {
 			//根据核心对账数据取渠道来账数据
 			RcvTraceQueryModel rcvTraceQueryModel = rcvTraceService.getRcvTraceByKey(myLog, dto.getSysTime(), dto.getSysTraceno(), dto.getSysDate(),model.getSettleDate(),model.getPlatTrace());
-			//若渠道缺少数据则补充
+			//若渠道缺少数据则报错
 			if(rcvTraceQueryModel == null) {
 				RcvTraceRepModel record = new RcvTraceRepModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
-				record.setHostDate(model.getHostDate());
-				record.setHostTraceno(model.getHostTraceno());
-				record.setTxAmt(model.getTxAmt().toString());
-				record.setHostState("1");
-				record.setCheckFlag("3");
-				
-				rcvTraceService.replenishRcvTrace(record);
-				myLog.info(logger, "渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
 				
 				AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), dto.getSysTime(), model.getPlatTrace());
 				aceModel.setPlatDate(model.getSettleDate());
@@ -453,6 +439,10 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 				aceModel.setTxAmt(model.getTxAmt());
 				aceModel.setMsg("渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】");
 				acctCheckErrService.insert(aceModel);
+			
+				myLog.error(logger, "柜面通【"+date+"】来帐对账失败,渠道数据丢失: 核心流水号【"+model.getHostTraceno()+"】核心日期为【"+model.getSysDate()+"】");
+				TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
+				throw e;
 			}else {
 				String hostState = rcvTraceQueryModel.getHostState(); //渠道记录的核心状态
 				if(hostState.equals("1")) {
