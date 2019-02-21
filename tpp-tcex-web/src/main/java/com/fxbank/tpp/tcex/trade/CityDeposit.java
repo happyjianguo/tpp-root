@@ -151,11 +151,19 @@ public class CityDeposit implements TradeExecutionStrategy {
 						hostReversalCode = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
 						hostReversalMsg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
 					}catch(SysTradeExecuteException e1) {
+						if("CIP_E_000004".equals(e1.getRspCode())) {
+							updateHostRecord(reqDto, "", "", "7", e.getRspCode(), e.getRspMsg(),"");
+							myLog.error(logger, "商行通存村镇冲正超时，渠道日期" + reqDto.getSysDate() + 
+									"渠道流水号" + reqDto.getSysTraceno(), e1);
+							TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10013,e.getRspMsg()+"(核心冲正超时)");
+							throw e2;
+						}else {
 						updateHostRecord(reqDto, "", "", "6", e.getRspCode(), e.getRspMsg(),"");
 						myLog.error(logger, "商行通存村镇冲正失败，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);
 						TcexTradeExecuteException e2 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10013,e.getRspMsg()+"(核心冲正失败)");
 						throw e2;
+						}
 					}
 					
 						updateHostRecord(reqDto, hostDate, hostSeqno, "5", hostReversalCode, hostReversalMsg,"");
