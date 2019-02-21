@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
+import com.fxbank.cip.base.dto.REP_RET;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
@@ -44,7 +45,7 @@ public class TS0011 implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REP_TS0011 repDto = new REP_TS0011();
-		/**
+		
 		List<REP_RET> list = new ArrayList<REP_RET>();
 		REP_RET ret = new REP_RET();
 		ret.setRetCode("@@@@");
@@ -52,7 +53,7 @@ public class TS0011 implements TradeExecutionStrategy {
 		list.add(ret);
 		repDto.getRepSysHead().setRet(list);
 		repDto.getRepSysHead().setRetStatus("F");
-		
+		/**
 			try {
 				Thread.sleep(60000);
 			} catch (InterruptedException e) {
@@ -60,10 +61,12 @@ public class TS0011 implements TradeExecutionStrategy {
 				e.printStackTrace();
 			}
 			**/
+		/**
 		repDto.getRepBody().setBrno("10001");
 		repDto.getRepBody().setTownDate(sdf1.format(new Date()));
 		repDto.getRepBody().setTownTraceno(UUID.randomUUID().toString().replace("-", "").substring(0, 15));
 		repDto.getRepBody().setBackTal("10000.00");
+		**/
 		return repDto;
 	}
 }
