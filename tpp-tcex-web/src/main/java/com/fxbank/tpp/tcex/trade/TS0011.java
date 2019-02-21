@@ -46,13 +46,9 @@ public class TS0011 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REP_TS0011 repDto = new REP_TS0011();
 		
-		List<REP_RET> list = new ArrayList<REP_RET>();
-		REP_RET ret = new REP_RET();
-		ret.setRetCode("@@@@");
-		ret.setRetMsg("@@@@");
-		list.add(ret);
-		repDto.getRepSysHead().setRet(list);
-		repDto.getRepSysHead().setRetStatus("F");
+		
+		Integer.parseInt("a");
+		
 		/**
 			try {
 				Thread.sleep(60000);
