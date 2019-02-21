@@ -147,6 +147,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 					String hostReversalCode = null;
 					String hostReversalMsg = null;
 					try {
+						myLog.info(logger, "program_id"+reqDto.getReqSysHead().getProgramId()+"END");
 						esbRep_30014000101 = hostReversal(reqDto,hostSeqno);
 						hostReversalCode = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
 						hostReversalMsg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
