@@ -45,12 +45,7 @@ public class TS0011 implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REP_TS0011 repDto = new REP_TS0011();
-		try {
-			Thread.sleep(60000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Integer.parseInt("a");
 		/**
 			try {
 				Thread.sleep(60000);
