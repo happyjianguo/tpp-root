@@ -147,7 +147,6 @@ public class CityDeposit implements TradeExecutionStrategy {
 					String hostReversalCode = null;
 					String hostReversalMsg = null;
 					try {
-						myLog.info(logger, "program_id"+reqDto.getReqSysHead().getProgramId()+"END");
 						esbRep_30014000101 = hostReversal(reqDto,hostSeqno);
 						hostReversalCode = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
 						hostReversalMsg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
@@ -325,7 +324,8 @@ public class CityDeposit implements TradeExecutionStrategy {
 		ESB_REQ_30014000101 esbReq_30014000101 = new ESB_REQ_30014000101(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto)
-				.setBranchId(txBrno).setUserId(txTel).setProgramId(reqDto.getReqSysHead().getProgramId()).build();
+				.setBranchId(txBrno).setUserId(txTel).build();
+		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
 		esbReq_30014000101.setReqSysHead(reqSysHead);
 
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
