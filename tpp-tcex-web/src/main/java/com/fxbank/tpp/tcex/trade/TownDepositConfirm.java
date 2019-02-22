@@ -43,7 +43,7 @@ import redis.clients.jedis.Jedis;
  */
 @Service("REQ_TR0013")
 public class TownDepositConfirm implements TradeExecutionStrategy {
-	private static Logger logger = LoggerFactory.getLogger(CityQueryAcctInfo.class);
+	private static Logger logger = LoggerFactory.getLogger(TownDepositConfirm.class);
 
 	@Resource
 	private LogPool logPool;
@@ -82,7 +82,7 @@ public class TownDepositConfirm implements TradeExecutionStrategy {
 		try {
 			model = rcvTraceService.getConfirmTrace(myLog,  townDate, townTraceno);
 		}catch(Exception e) {
-			myLog.error(logger,"村镇流水号【"+townDate+","+townTraceno+"】待确认存款信息不存在："+e.getMessage());
+			myLog.error(logger,"村镇流水号【"+townDate+","+townTraceno+"】待确认存款信息不存在",e);
 			TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10014);
 			throw e1;
 		}
