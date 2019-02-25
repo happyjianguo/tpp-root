@@ -106,12 +106,6 @@ public class TownExchange implements TradeExecutionStrategy {
 		    myLog.info(logger, "村镇通兑商行核心记账成功，渠道日期" + platDate + 
 					"渠道流水号" + platTraceNo);
 		    sts = "1";
-			try {
-				Thread.sleep(60000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		repBody.setPlatDate(platDate.toString());
 		repBody.setPlatTraceno(platTraceNo.toString());
 		repBody.setSts(sts);
