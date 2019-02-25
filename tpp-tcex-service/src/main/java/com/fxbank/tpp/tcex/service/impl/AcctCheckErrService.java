@@ -8,8 +8,8 @@ import javax.annotation.Resource;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.tpp.tcex.entity.TcexAcctCheckErr;
-import com.fxbank.tpp.tcex.mapper.TcexAcctCheckErrMapper;
+import com.fxbank.tpp.tcex.entity.TcexChkErr;
+import com.fxbank.tpp.tcex.mapper.TcexChkErrMapper;
 import com.fxbank.tpp.tcex.model.AcctCheckErrModel;
 import com.fxbank.tpp.tcex.service.IAcctCheckErrService;
 
@@ -17,13 +17,13 @@ import com.fxbank.tpp.tcex.service.IAcctCheckErrService;
 public class AcctCheckErrService implements IAcctCheckErrService {
 	
 	@Resource
-	private TcexAcctCheckErrMapper mapper;
+	private TcexChkErrMapper mapper;
 
 	@Override
 	public List<AcctCheckErrModel> getListByDate(MyLog myLog,Integer sysTime, Integer sysDate,Integer sysTraceno,String date) throws SysTradeExecuteException {
-		List<TcexAcctCheckErr> list = mapper.selectByDate(date);
+		List<TcexChkErr> list = mapper.selectByDate(date);
 		List<AcctCheckErrModel> modelList = new ArrayList<>();
-		for(TcexAcctCheckErr ace : list) {
+		for(TcexChkErr ace : list) {
 			AcctCheckErrModel model = new AcctCheckErrModel(myLog, sysDate, sysTime, sysTraceno);
 			model.setPlatDate(ace.getPlatDate());
 			model.setPlatTrace(ace.getPlatTrace());
@@ -45,7 +45,7 @@ public class AcctCheckErrService implements IAcctCheckErrService {
 
 	@Override
 	public void insert(AcctCheckErrModel model) throws SysTradeExecuteException {
-		TcexAcctCheckErr ace = new TcexAcctCheckErr();
+		TcexChkErr ace = new TcexChkErr();
 		ace.setPlatDate(model.getPlatDate());
 		ace.setPlatTrace(model.getPlatTrace());
 		ace.setPreHostState(model.getPreHostState());

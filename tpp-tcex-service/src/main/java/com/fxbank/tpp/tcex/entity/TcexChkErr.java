@@ -7,11 +7,11 @@ import javax.persistence.Table;
 import org.apache.ibatis.type.Alias;
 
 /**
- * tcex_acct_check_err
+ * tcex_chk_err
  */
-@Table(name = "tcex_acct_check_err")
-@Alias("tcexAcctCheckErr")
-public class TcexAcctCheckErr {
+@Table(name = "tcex_chk_err")
+@Alias("tcexChkErr")
+public class TcexChkErr {
     /**
      * 渠道日期
      */
