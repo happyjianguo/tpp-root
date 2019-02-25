@@ -17,12 +17,14 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.base.util.JsonUtil;
+import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.tcex.dto.esb.REP_TR0014;
 import com.fxbank.tpp.tcex.dto.esb.REQ_TR0014;
+import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
 import com.fxbank.tpp.tcex.service.IRcvTraceService;
 
@@ -49,6 +51,9 @@ public class TownReversal implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private ISafeService passwordService;
 	
+	@Reference(version = "1.0.0")
+	private IPublicService publicService;
+	
 	@Resource
 	private MyJedis myJedis;
 	
@@ -61,6 +66,14 @@ public class TownReversal implements TradeExecutionStrategy {
 		REQ_TR0014 reqDto = (REQ_TR0014) dto;
 		String platDate = reqDto.getReqBody().getPlatDate();
 		String platTraceno = reqDto.getReqBody().getPlatTraceno();
+		Integer sysDate = publicService.getSysDate("CIP");
+		if(sysDate.compareTo(Integer.parseInt(platDate))!=0) {
+			myLog.error(logger, "不能隔日冲正，渠道日期" + platDate + 
+					"渠道流水号" + platTraceno);
+			TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10015);
+			throw e;
+		}
+		
 		// 交易机构
 		String txBrno = null;
 		// 柜员号
