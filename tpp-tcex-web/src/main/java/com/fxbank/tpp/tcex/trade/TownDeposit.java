@@ -77,6 +77,13 @@ public class TownDeposit implements TradeExecutionStrategy {
 		initRecord(reqDto);
 		myLog.info(logger, "村镇通存商行登记成功，渠道日期" + platDate + 
 				"渠道流水号" + platTraceNo);
+		try {
+			Thread.sleep(60000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// 记账状态码
 		String hostCode = null;
 		String hostMsg = null;
