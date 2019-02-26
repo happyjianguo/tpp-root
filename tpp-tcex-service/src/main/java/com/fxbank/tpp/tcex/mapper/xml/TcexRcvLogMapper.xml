@@ -58,6 +58,7 @@
         and town_flag = #{brnoFlag}
       </if>
     </trim>
+     order by plat_trace desc
   </select>
     <select id="selectDtRcvTotalNum" resultType="java.lang.String" >
     select count(tx_amt) as num from tcex_rcv_log where 
