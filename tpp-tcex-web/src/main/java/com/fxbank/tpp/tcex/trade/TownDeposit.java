@@ -69,12 +69,6 @@ public class TownDeposit implements TradeExecutionStrategy {
 		REQ_TR0011 reqDto = (REQ_TR0011) dto;
 		REP_TR0011 repDto = new REP_TR0011();
 		REP_TR0011.REP_BODY repBody = repDto.getRepBody();
-		try {
-			Thread.sleep(60000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		//平台日期
 		Integer platDate = reqDto.getSysDate();
 		//平台流水

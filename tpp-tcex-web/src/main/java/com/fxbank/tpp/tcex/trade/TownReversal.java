@@ -91,7 +91,7 @@ public class TownReversal implements TradeExecutionStrategy {
 				.setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
-		reqBody_30014000101.setChannelSeqNo(CIP.SYSTEM_ID+platDate+String.format("%08d",Integer.parseInt(platTraceno)));
+		reqBody_30014000101.setChannelSeqNo(CIP.SYSTEM_ID+platDate+String.format("%08d",Integer.parseInt(platTraceno))+"11111111");
 		reqBody_30014000101.setReversalReason("村镇【"+txBrno+"】柜面通发起冲正");
 		reqBody_30014000101.setEventType("");
 		
