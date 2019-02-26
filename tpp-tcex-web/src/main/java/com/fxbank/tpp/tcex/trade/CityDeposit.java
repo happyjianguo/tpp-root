@@ -8,6 +8,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
+import com.fxbank.cip.base.constant.CIP;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
@@ -339,7 +340,7 @@ public class CityDeposit implements TradeExecutionStrategy {
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 
-		reqBody_30014000101.setReference(hostSeqno);
+		reqBody_30014000101.setReference(CIP.SYSTEM_ID+reqDto.getSysDate()+String.format("%08d",reqDto.getSysTraceno()));
 		reqBody_30014000101.setReversalReason("村镇【"+txBrno+"】柜面通发起冲正");
 		reqBody_30014000101.setEventType("");
 
