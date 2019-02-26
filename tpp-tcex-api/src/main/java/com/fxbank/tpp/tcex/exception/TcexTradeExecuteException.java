@@ -30,6 +30,8 @@ public class TcexTradeExecuteException extends SysTradeExecuteException {
 	public final static String TCEX_E_10013 = "TCEX_E_10013";
 	public final static String TCEX_E_10014 = "TCEX_E_10014";
 	public final static String TCEX_E_10015 = "TCEX_E_10015";
+	public final static String TCEX_E_10016 = "TCEX_E_10016";
+	public final static String TCEX_E_10017 = "TCEX_E_10017";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 		private static final long serialVersionUID = -8667135437237760216L;
@@ -50,6 +52,8 @@ public class TcexTradeExecuteException extends SysTradeExecuteException {
 			put(TCEX_E_10013, "核心冲正成功");
 			put(TCEX_E_10014, "待确认存款信息不存在");
 			put(TCEX_E_10015, "不能隔日冲正");
+			put(TCEX_E_10016, "核心冲正超时");
+			put(TCEX_E_10017, "核心冲正失败");
 			
 		}
 	};
