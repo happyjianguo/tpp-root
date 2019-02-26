@@ -103,20 +103,38 @@ public class TownReversal implements TradeExecutionStrategy {
 		} catch (SysTradeExecuteException e) {
 			code = e.getRspCode();
 			msg = e.getMessage();
-			myLog.error(logger,"村镇【"+txBrno+"】柜面通冲正失败:",e);
+			if("CIP_E_000004".equals(code)) {
+				RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, Integer.parseInt(platDate), reqDto.getSysTime(),Integer.parseInt(platTraceno));
+				record.setHostState("7");
+				record.setRetCode(code);
+				record.setRetMsg(msg);
+				rcvTraceService.rcvTraceUpd(record);
+				myLog.error(logger,"村镇【"+txBrno+"】柜面通冲正超时:",e);
+				TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10016);
+				throw e1;
+			}else {
+				RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, Integer.parseInt(platDate), reqDto.getSysTime(),Integer.parseInt(platTraceno));
+				record.setHostState("6");
+				record.setRetCode(code);
+				record.setRetMsg(msg);
+				rcvTraceService.rcvTraceUpd(record);
+				myLog.error(logger,"村镇【"+txBrno+"】柜面通冲正失败:",e);
+				TcexTradeExecuteException e1 = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10017);
+				throw e1;
+			}
 		}
 		
 		
 		logger.info("村镇【"+txBrno+"】柜面通冲正反馈码【"+code+"】，反馈信息【"+msg+"】");
 		
 		RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, Integer.parseInt(platDate), reqDto.getSysTime(),Integer.parseInt(platTraceno));
-		record.setHostState(code.equals("000000")?"5":(code.equals("CIP_E_000004")?"7":"6"));
+		record.setHostState("5");
 		record.setRetCode(code);
 		record.setRetMsg(msg);
 		rcvTraceService.rcvTraceUpd(record);
 		
 		REP_TR0014 repDto = new REP_TR0014();
-		repDto.getRepBody().setSts(code.equals("000000")?"1":"2");
+		repDto.getRepBody().setSts("1");
 		String macDataStr = JsonUtil.toJson(repDto.getRepBody());
 		byte[] macBytes = macDataStr.getBytes();
 		repDto.getRepSysHead().setMacValue(passwordService.calcTOWN(logPool.get(), macBytes));
