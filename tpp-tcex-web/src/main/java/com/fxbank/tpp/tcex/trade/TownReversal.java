@@ -98,7 +98,7 @@ public class TownReversal implements TradeExecutionStrategy {
 		String code="",msg="";
 		try {
 			ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101, ESB_REP_30014000101.class);
-			code = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
+			code = "CIP_E_000004";
 			msg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
 			code = e.getRspCode();
