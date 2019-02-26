@@ -91,14 +91,14 @@ public class TownReversal implements TradeExecutionStrategy {
 				.setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
-		reqBody_30014000101.setChannelSeqNo(CIP.SYSTEM_ID+platDate+String.format("%08d",Integer.parseInt(platTraceno))+"11111111");
+		reqBody_30014000101.setChannelSeqNo(CIP.SYSTEM_ID+platDate+String.format("%08d",Integer.parseInt(platTraceno)));
 		reqBody_30014000101.setReversalReason("村镇【"+txBrno+"】柜面通发起冲正");
 		reqBody_30014000101.setEventType("");
 		
 		String code="",msg="";
 		try {
 			ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101, ESB_REP_30014000101.class);
-			code = "CIP_E_000004";
+			code = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
 			msg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
 			code = e.getRspCode();
