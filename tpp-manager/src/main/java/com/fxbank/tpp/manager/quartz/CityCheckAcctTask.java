@@ -487,10 +487,10 @@ public class CityCheckAcctTask {
 						sndTraceService.sndTraceUpd(record);
 					}else if(hostState.equals("0")||hostState.equals("3")||hostState.equals("6")||hostState.equals("7")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
-						RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
+						SndTraceUpdModel record = new SndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");
 						record.setCheckFlag("2");
-						rcvTraceService.rcvTraceUpd(record);
+						sndTraceService.sndTraceUpd(record);
 						myLog.info(logger,"渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
 
 						AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), model.getSysTime(), model.getPlatTrace());
@@ -523,10 +523,10 @@ public class CityCheckAcctTask {
 						sndTraceService.sndTraceUpd(record);
 					}else if(hostState.equals("0")||hostState.equals("3")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
-						RcvTraceUpdModel record = new RcvTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
+						SndTraceUpdModel record = new SndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");
 						record.setCheckFlag("2");
-						rcvTraceService.rcvTraceUpd(record);
+						sndTraceService.sndTraceUpd(record);
 						myLog.info(logger,"渠道调整往账数据核心状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+dcFlag+"】");
 
 						AcctCheckErrModel aceModel = new AcctCheckErrModel(myLog, model.getSettleDate(), model.getSysTime(), model.getPlatTrace());
