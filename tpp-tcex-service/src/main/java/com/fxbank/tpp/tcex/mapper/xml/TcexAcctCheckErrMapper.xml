@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxbank.tpp.tcex.mapper.TcexChkErrMapper">
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.tcex.entity.TcexChkErr">
+    <id column="plat_date" jdbcType="INTEGER" property="platDate" />
+    <id column="plat_trace" jdbcType="INTEGER" property="platTrace" />
+    <result column="pre_host_state" jdbcType="VARCHAR" property="preHostState" />
+    <result column="re_host_state" jdbcType="VARCHAR" property="reHostState" />
+    <result column="dc_flag" jdbcType="VARCHAR" property="dcFlag" />
+    <result column="check_flag" jdbcType="VARCHAR" property="checkFlag" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
+    <result column="tx_amt" jdbcType="DECIMAL" property="txAmt" />
+    <result column="payer_acno" jdbcType="VARCHAR" property="payerAcno" />
+    <result column="payer_name" jdbcType="VARCHAR" property="payerName" />
+    <result column="payee_acno" jdbcType="VARCHAR" property="payeeAcno" />
+    <result column="payee_name" jdbcType="VARCHAR" property="payeeName" />
+    <result column="msg" jdbcType="VARCHAR" property="msg" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select plat_date, plat_trace, pre_host_state, re_host_state, dc_flag, check_flag, 
+    direction, tx_amt, payer_acno, payer_name, payee_acno, payee_name, msg
+    from tcex_chk_err
+  </select>
+  <select id="selectByDate" resultMap="BaseResultMap">
+    select plat_date, plat_trace, pre_host_state, re_host_state, dc_flag, check_flag, 
+    direction, tx_amt, payer_acno, payer_name, payee_acno, payee_name, msg
+    from tcex_chk_err
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test='date != null and date != ""'>
+        and plat_date = #{date}
+      </if>
+    </trim>
+  </select>
+  
+  <select id="deleteByDate" >
+    delete from tcex_chk_err where plat_date = #{date}
+  </select>
+</mapper>

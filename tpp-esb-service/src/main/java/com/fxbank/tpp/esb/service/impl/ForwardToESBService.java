@@ -1,13 +1,10 @@
 package com.fxbank.tpp.esb.service.impl;
 
 import java.net.SocketTimeoutException;
-
 import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.common.HttpService;
 import com.fxbank.cip.base.common.MyJedis;
@@ -17,7 +14,6 @@ import com.fxbank.cip.base.model.ESB_REP_BASE;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.common.ESB;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-
 import redis.clients.jedis.Jedis;
 
 @Service(version = "1.0.0")
@@ -100,5 +96,4 @@ public class ForwardToESBService implements IForwardToESBService {
 		
 		return resultModel;
 	}
-
 }

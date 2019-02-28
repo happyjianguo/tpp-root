@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" th:href="@{../ui/button/buttons.css}" />
+    <script th:src="@{../ui/jquery/jquery.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{../ui/button/buttons.js}" type="text/javascript" charset="utf-8"></script>
+    <script th:src="@{../system/paf/paf.js}" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+    <div style="margin-top: 18%;">
+        <div style="text-align: center">
+            <div id="message" style="margin-bottom:100px;display: none;">
+                <a class="button button-glow button-border button-rounded button-caution" id="message_a">登录成功</a>
+            </div>
+            <span class="button-wrap">
+                <button class="button button-pill button-raised button-primary button-giant" id="login" onclick="operate('login')">
+                  <i class="fa fa-cloud">签到</i>
+                </button>
+            </span>
+
+            <span class="button-wrap" style="margin-left: 60px">
+                <button class="button button-pill button-giant" id="out" onclick="operate('out')">
+                  <i class="fa fa-cloud">签退</i>
+                </button>
+            </span>
+        </div>
+    </div>
+    <!--<span class="button-wrap">-->
+        <!--<a href="#" class="button button-pill button-raised button-primary button-giant">签到</a>-->
+    <!--</span>-->
+
+    <!--<span class="button-wrap">-->
+        <!--<a href="#" class="button button-pill button-giant">签退</a>-->
+    <!--</span>-->
+</body>
+</html>
