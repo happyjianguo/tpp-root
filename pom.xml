@@ -35,6 +35,9 @@
 	</build>
 
 	<modules>
+		<module>tpp-bocm-api</module>
+		<module>tpp-bocm-service</module>
+		<module>tpp-bocm-web</module>
 		<module>tpp-tcex-api</module>
 		<module>tpp-tcex-service</module>
 		<module>tpp-tcex-web</module>
