@@ -1,4 +1,4 @@
-package com.fxbank.tpp.ccex;
+package com.fxbank.tpp.bocm;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

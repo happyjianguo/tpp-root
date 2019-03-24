@@ -1,4 +1,4 @@
-package com.fxbank.tpp.ccex.nettty;
+package com.fxbank.tpp.bocm.nettty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

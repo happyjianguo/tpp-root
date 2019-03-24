@@ -1,4 +1,4 @@
-package com.fxbank.tpp.ccex.nettty;
+package com.fxbank.tpp.bocm.nettty;
 
 import java.net.InetAddress;
 import java.util.List;

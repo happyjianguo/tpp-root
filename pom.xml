@@ -34,10 +34,15 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Releases</name>
+			<url>http://57.25.8.121:8081/repository/cip-maven</url>
+		</repository>
+	</distributionManagement>
+
 	<modules>
-		<module>tpp-bocm-api</module>
-		<module>tpp-bocm-service</module>
-		<module>tpp-bocm-web</module>
 		<module>tpp-tcex-api</module>
 		<module>tpp-tcex-service</module>
 		<module>tpp-tcex-web</module>
