@@ -233,13 +233,9 @@ public class CityExchange implements TradeExecutionStrategy {
 		// 村镇标志
 		String townFlag = reqBody.getVillageBrnachFlag();
 		// 交易机构
-		String txBrno = null;
+		String txBrno = reqDto.getReqSysHead().getBranchId();
 		// 柜员号
-		String txTel = null;
-		try(Jedis jedis = myJedis.connect()){
-			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
-			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
-        }
+		String txTel = reqDto.getReqSysHead().getUserId();
 
 		ESB_REQ_30011000103 esbReq_30011000103 = new ESB_REQ_30011000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
