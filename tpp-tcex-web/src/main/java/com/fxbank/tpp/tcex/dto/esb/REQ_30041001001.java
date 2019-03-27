@@ -67,8 +67,8 @@ public class REQ_30041001001 extends REQ_BASE {
 		@JSONField(name = "PAYER_ACCT_NO")
 		private String payerAcctNo;	//付款人账号
 		
-		@JSONField(name = "PAY_PASSWORD")
-		private String payPassword;		//付款账户密码
+		@JSONField(name = "PWD_T")
+		private String password;		//付款账户密码
 		
 		@JSONField(name = "TRAN_AMT")
 		private String tranAmt;		//交易金额
@@ -107,12 +107,12 @@ public class REQ_30041001001 extends REQ_BASE {
 			this.payerAcctNo = payerAcctNo;
 		}
 
-		public String getPayPassword() {
-			return payPassword;
+		public String getPassword() {
+			return password;
 		}
 
-		public void setPayPassword(String payPassword) {
-			this.payPassword = payPassword;
+		public void setPassword(String password) {
+			this.password = password;
 		}
 
 		public String getTranAmt() {

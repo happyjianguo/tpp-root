@@ -205,7 +205,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		SafeModel passwordModel = new SafeModel(logPool.get(), reqDto.getSysDate(), 
 				reqDto.getSysTime(),reqDto.getSysTraceno());
 		passwordModel.setAcctNo(reqBody.getPayerAcctNo());
-		passwordModel.setPassword(reqBody.getPayPassword());
+		passwordModel.setPassword(reqBody.getPassword());
 		passwordModel = passwordService.transPin(passwordModel);
 		esbReqBody_TS002.setPayerPwd(passwordModel.getPassword());
 		esbReqBody_TS002.setIdType(reqBody.getDocumentType());
@@ -257,7 +257,7 @@ public class CityExchange implements TradeExecutionStrategy {
 		// 交易金额
 		reqBody_30011000103.setTranAmt(reqBody.getTranAmt());
 		// 密码
-		reqBody_30011000103.setPassword(reqBody.getPayPassword());
+		reqBody_30011000103.setPassword(reqBody.getPassword());
 		//N新核心O老核心
 		reqBody_30011000103.setNewCoreFlag("N");
 		ESB_REP_30011000103 esbRep_30011000103 = forwardToESBService.sendToESB(esbReq_30011000103, reqBody_30011000103,
