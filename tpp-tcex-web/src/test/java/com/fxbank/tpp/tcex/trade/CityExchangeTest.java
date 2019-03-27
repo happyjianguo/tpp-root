@@ -93,7 +93,7 @@ public class CityExchangeTest {
 		passwordModel.setAcctNo("621681003000026073");
 		passwordModel.setPassword("159357");
 		passwordModel = passwordService.encryptPwd(passwordModel);
-		reqBody.setPayPassword(passwordModel.getPassword());
+		reqBody.setPassword(passwordModel.getPassword());
 		reqBody.setTranAmt("100.00");
 		reqBody.setChannelType("TCEX");
 		reqBody.setNarrative("测试");
