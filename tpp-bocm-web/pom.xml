@@ -14,7 +14,7 @@
 		<dependency>
 			<groupId>com.fxbank.cip</groupId>
 			<artifactId>cip-base-web</artifactId>
-			<version>1.1.0</version>
+			<version>1.2.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fxbank.tpp</groupId>
@@ -25,10 +25,6 @@
 			<groupId>com.fxbank.tpp</groupId>
 			<artifactId>tpp-esb-api</artifactId>
 			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.netty</groupId>
-			<artifactId>netty-all</artifactId>
 		</dependency>
 		 <dependency>
 			<groupId>ESBFileAPI</groupId>

@@ -9,10 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 @ServletComponentScan
 @SpringBootApplication
 @ComponentScan("com.fxbank")
-public class TcexApp implements CommandLineRunner {
+public class BocmApp implements CommandLineRunner {
 
-	public static void main(String[] args) {
-        SpringApplication.run(TcexApp.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(BocmApp.class, args);
     }
 
     @Override

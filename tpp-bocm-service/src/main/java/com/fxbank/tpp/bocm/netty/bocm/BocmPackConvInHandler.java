@@ -1,35 +1,35 @@
-package com.fxbank.tpp.bocm.nettty;
+package com.fxbank.tpp.bocm.netty.bocm;
 
 import javax.annotation.Resource;
 
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.tpp.bocm.dto.bocm.Req_1001;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.ReferenceCountUtil;
 
-@Component("serverPackConvInHandler")
-@Sharable
-public class ServerPackConvInHandler extends ChannelInboundHandlerAdapter {
+public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 
-	private static Logger logger = LoggerFactory.getLogger(ServerPackConvInHandler.class);
+	private static Logger logger = LoggerFactory.getLogger(BocmPackConvInHandler.class);
 
-	@Resource
 	private LogPool logPool;
 
-	@Resource
-	private MyJedis myJedis;
+	private MyLog myLog;
+
+	public BocmPackConvInHandler(MyLog myLog){
+		this.myLog = myLog;
+	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		MyLog logUtil = logPool.get();
 		try {
 			/*
 			ByteBuf bb = (ByteBuf) msg;
@@ -38,8 +38,12 @@ public class ServerPackConvInHandler extends ChannelInboundHandlerAdapter {
 			String reqStr = new String(reqByte);
 			logger.info("接收到客户端请求"+reqStr);
 			*/
-			logger.info("接收到客户端请求");
-			ctx.writeAndFlush(msg);
+			String data = (String) msg;
+			this.myLog.info(logger,"接收到客户端请求"+data);
+			Req_1001 req = new Req_1001();
+			req.setTxcode(data.substring(0, 6));
+			req.setData(data.substring(7));
+			ctx.fireChannelRead(req);
 		} finally {
 			//ReferenceCountUtil.release(msg);
 		}
@@ -48,7 +52,7 @@ public class ServerPackConvInHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		super.channelActive(ctx);
-		logger.debug("接收到客户端请求");
+		this.myLog.debug(logger,"接收到客户端请求");
 	}
 
 }
