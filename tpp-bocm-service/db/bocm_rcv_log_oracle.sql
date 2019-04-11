@@ -38,7 +38,7 @@ COMMENT ON COLUMN bocm_rcv_log.plat_trace IS '渠道流水';
 COMMENT ON COLUMN bocm_rcv_log.plat_time IS '交易时间';
 COMMENT ON COLUMN bocm_rcv_log.source_type IS '交易渠道';
 COMMENT ON COLUMN bocm_rcv_log.tx_branch IS '交易机构';
-COMMENT ON COLUMN bocm_rcv_log.tx_ind IS '现转标志；0现金、1转账';
+COMMENT ON COLUMN bocm_snd_log.tx_ind IS '现转标志；0现金、1转账、2 普通转账、3 隔日转账、9 其他';
 COMMENT ON COLUMN bocm_rcv_log.dc_flag IS '通存通兑标志；0通存、1通兑';
 COMMENT ON COLUMN bocm_rcv_log.tx_amt IS '交易金额';
 COMMENT ON COLUMN bocm_rcv_log.host_date IS '核心日期';
