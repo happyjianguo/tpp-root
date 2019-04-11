@@ -49,7 +49,7 @@ COMMENT ON COLUMN bocm_rcv_log.payee_acno IS '收款人账户';
 COMMENT ON COLUMN bocm_rcv_log.payee_name IS '收款人户名';
 COMMENT ON COLUMN bocm_rcv_log.bocm_branch IS '交通银行记账机构';
 COMMENT ON COLUMN bocm_rcv_log.bocm_date IS '交通银行日期';
-COMMENT ON COLUMN bocm_rcv_log.bocm_traceno IS '村镇流水';
+COMMENT ON COLUMN bocm_rcv_log.bocm_traceno IS '交通银行流水';
 COMMENT ON COLUMN bocm_rcv_log.check_flag IS '对账标志，1-未对账，2-已对账，3-核心多，4-渠道多';
 COMMENT ON COLUMN bocm_rcv_log.host_state IS '核心记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败，7-冲正超时';
 COMMENT ON COLUMN bocm_rcv_log.bocm_state IS '交通银行记账状态，0-登记';
