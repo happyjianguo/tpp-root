@@ -18,7 +18,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.fxbank.tpp</groupId>
-			<artifactId>tpp-tcex-api</artifactId>
+			<artifactId>tpp-bocm-api</artifactId>
 			<version>1.0.0</version>
 		</dependency>
 		<dependency>

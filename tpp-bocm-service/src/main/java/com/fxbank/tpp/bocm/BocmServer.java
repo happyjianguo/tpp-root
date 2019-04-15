@@ -11,10 +11,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @ComponentScan("com.fxbank")
-public class TcexServer implements CommandLineRunner {
+public class BocmServer implements CommandLineRunner {
     
 	public static void main(String[] args) {
-        SpringApplication.run(TcexServer.class, args);
+        SpringApplication.run(BocmServer.class, args);
     }
 	
     @Override

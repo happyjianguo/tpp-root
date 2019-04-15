@@ -1,6 +1,7 @@
 package com.fxbank.tpp.bocm.netty.bocm;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.tpp.bocm.model.REQ_BASE;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,14 +22,11 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 	
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-		this.myLog.info(logger, "返回报文体=[" + msg.toString() + "]");
-		ctx.writeAndFlush(msg.toString(), promise);
+		REQ_BASE reqBase = (REQ_BASE)msg;
+		StringBuffer fixPack = new StringBuffer(reqBase.creaFixPack());
+		//TODO 生成MAC
+		fixPack.append("FFFFFFFFFFFFFFFF");
+		ctx.writeAndFlush(fixPack.toString(), promise);
 	}
 
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-		this.myLog.error(logger, "PackConvertOutHandler process error!", cause);
-		ctx.writeAndFlush("abc");
-		ctx.close();
-	}
 }

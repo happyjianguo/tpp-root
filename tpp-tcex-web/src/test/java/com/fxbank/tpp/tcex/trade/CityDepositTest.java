@@ -42,7 +42,7 @@ public class CityDepositTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CityDepositTest.class);
 	
-	private static final String URL="http://57.25.3.165:7003/tcex/city.do";
+	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
      // private static final String URL="http://127.0.0.1:7000/tcex/city.do";
 
 	@Autowired
@@ -113,6 +113,7 @@ public class CityDepositTest {
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
 		REP_TS0011 rep = JsonUtil.toBean(repContent, REP_TS0011.class);
+		System.out.println(rep);
 	}
 	
 }

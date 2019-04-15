@@ -10,20 +10,25 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 public class BocmLengthEncoder extends MessageToByteEncoder<Object> {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(BocmLengthEncoder.class);
 
 	private MyLog myLog;
 
-	public BocmLengthEncoder(MyLog myLog){
+	public BocmLengthEncoder(MyLog myLog) {
 		this.myLog = myLog;
 	}
-	
+
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
 		String msgStr = (String) msg;
-		byte[] data = msgStr.getBytes();
-		out.writeBytes(data);
+		Integer msgStrLen = msgStr.getBytes(BocmClient.CODING).length;
+		StringBuffer sb = new StringBuffer();
+		sb.append(String.format("%08d", msgStrLen));
+		sb.append(msgStr);
+		String reqPack = sb.toString();
+		this.myLog.info(logger, "发送请求报文=[" + reqPack);
+		out.writeBytes(reqPack.getBytes(BocmClient.CODING));
 	}
 
 }
