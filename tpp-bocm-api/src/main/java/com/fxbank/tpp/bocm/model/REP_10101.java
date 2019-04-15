@@ -5,10 +5,10 @@ import java.math.BigDecimal;
 import com.fxbank.cip.base.log.MyLog;
 
 /**
-* @Description: 交行余额查询应答
-* @author 周勇沩
-* @date 20190415
-*/
+ * @Description: 交行余额查询应答
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:21:01
+ */
 public class REP_10101 extends REP_BASE {
 
     private static final long serialVersionUID = 5293911485350387070L;

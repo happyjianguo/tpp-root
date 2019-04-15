@@ -5,6 +5,11 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
+/**
+ * @Description: 本行柜面交行卡余额查询
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:18:38
+ */
 public class REP_30063800301 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")

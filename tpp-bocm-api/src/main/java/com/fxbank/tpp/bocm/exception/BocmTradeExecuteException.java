@@ -5,13 +5,11 @@ import java.util.Map;
 
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 
-/** 
-* @ClassName: CcexTradeExecuteException 
-* @Description: 异常类及响应码、响应信息定义
-* @author ZhouYongwei
-* @date 2018年4月3日 下午3:40:26 
-*  
-*/
+/**
+ * @Description: 异常类及响应码、响应信息定义
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:20:18
+ */
 public class BocmTradeExecuteException extends SysTradeExecuteException {
 	
 	private static final long serialVersionUID = 1767308581692333362L;

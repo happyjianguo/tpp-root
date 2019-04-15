@@ -15,9 +15,12 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 /**
- * 网银互联行名行号的查询
- * */
+ * @Description: 交行查询本行卡余额
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:16:10
+ */
 @Service("REQ_10101")
 public class QR_FxBal implements TradeExecutionStrategy {
 

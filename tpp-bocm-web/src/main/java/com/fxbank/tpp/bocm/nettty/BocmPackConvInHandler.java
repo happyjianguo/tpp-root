@@ -10,6 +10,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
 
+/**
+ * @Description: 交行来账请求拆包
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:17:31
+ */
 public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 
 	private static Logger logger = LoggerFactory.getLogger(BocmPackConvInHandler.class);

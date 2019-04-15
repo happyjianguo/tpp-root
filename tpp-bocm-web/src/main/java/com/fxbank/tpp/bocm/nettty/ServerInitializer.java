@@ -13,6 +13,11 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 
+/**
+ * @Description: netty服务端处理初始化
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:16:32
+ */
 @Component("serverInitializer")
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 

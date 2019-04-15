@@ -9,6 +9,11 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
+/**
+ * @Description: 交行来账应答发送
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:17:46
+ */
 public class BocmLengthEncoder extends MessageToByteEncoder<Object> {
 
 	private static Logger logger = LoggerFactory.getLogger(BocmLengthEncoder.class);

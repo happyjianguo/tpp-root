@@ -19,6 +19,11 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/**
+ * @Description: 交易处理控制器
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:19:34
+ */
 @Service("tradeDispatcherHandler")
 @Sharable
 public class TradeDispatcherHandler extends ChannelInboundHandlerAdapter {

@@ -1,5 +1,10 @@
 package com.fxbank.tpp.bocm.dto.bocm;
 
+/**
+ * @Descripttion: 交行来账余额查询
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:18:51
+ */
 public class REQ_10101 extends REQ_BASE {
 
     private String ccyCod;

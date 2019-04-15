@@ -10,6 +10,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
 
+/**
+ * @Description: 交行客户端请求组包
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 12:00:43
+ */
 public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 
 	private static Logger logger = LoggerFactory.getLogger(BocmPackConvOutHandler.class);

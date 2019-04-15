@@ -5,13 +5,11 @@ import com.fxbank.cip.base.dto.REQ_APP_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
-/** 
-* @ClassName: REQ_30063800301
-* @Description: 交行卡账户余额查询
-* @author zhouyongwei zyw_unix@126.com
-* @date 2018年4月5日 下午11:32:26 
-*  
-*/
+/**
+ * @Description: 本行柜面交行卡余额查询
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:18:21
+ */
 public class REQ_30063800301 extends REQ_BASE {
 
 	@JSONField(name = "APP_HEAD")

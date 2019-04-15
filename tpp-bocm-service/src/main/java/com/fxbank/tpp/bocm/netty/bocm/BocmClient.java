@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 
 import redis.clients.jedis.Jedis;
 
+/**
+ * @Description: 交行客户端通讯主程序
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:59:18
+ */
 @Component
 public class BocmClient {
 

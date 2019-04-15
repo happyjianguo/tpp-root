@@ -15,6 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * @Description: 交易程序基础公共类
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:15:15
+ */
 @Component
 public class TradeBase {
 	private static Logger logger = LoggerFactory.getLogger(TradeBase.class);

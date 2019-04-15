@@ -8,6 +8,11 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 
+/**
+ * @Description: 交行客户端通讯初始化
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:59:34
+ */
 public class BocmInitializer<T> extends ChannelInitializer<SocketChannel> {
 
     private MyLog myLog;

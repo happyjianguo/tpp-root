@@ -20,6 +20,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+/**
+ * @Description: 本行查询交行卡余额
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:15:42
+ */
 @Service("REQ_30063800301")
 public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 	private static Logger logger = LoggerFactory.getLogger(QR_BocmBal.class);

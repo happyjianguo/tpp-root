@@ -2,6 +2,11 @@ package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
 
+/**
+ * @Descripttion: 交行来账余额查询
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:19:04
+ */
 public class REP_10101 extends REP_BASE {
 
     private String ccyCod;

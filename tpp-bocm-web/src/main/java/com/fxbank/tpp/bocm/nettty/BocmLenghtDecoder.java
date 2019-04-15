@@ -13,6 +13,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.ReferenceCountUtil;
 
+/**
+ * @Description: 交行来账请求接收
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:17:58
+ */
 public class BocmLenghtDecoder<T> extends ByteToMessageDecoder {
 
 	private static Logger logger = LoggerFactory.getLogger(BocmLenghtDecoder.class);

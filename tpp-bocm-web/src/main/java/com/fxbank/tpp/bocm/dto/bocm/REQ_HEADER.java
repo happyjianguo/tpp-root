@@ -1,6 +1,13 @@
 package com.fxbank.tpp.bocm.dto.bocm;
 
-public class REQ_HEADER implements FIXP_SERIAL{
+import com.fxbank.cip.base.model.FIXP_SERIAL;
+
+/**
+ * @Description: 交行通讯请求报文头
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:55:17
+ */
+public class REQ_HEADER implements FIXP_SERIAL {
 
 	private String tTxnCd;
 

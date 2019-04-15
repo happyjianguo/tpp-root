@@ -2,6 +2,13 @@ package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
 
+import com.fxbank.cip.base.model.FIXP_SERIAL;
+
+/**
+ * @Description: 交行通讯请求报文头
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:23:39
+ */
 public class REQ_HEADER implements Serializable,FIXP_SERIAL{
 
 	private static final long serialVersionUID = -4254351009472258829L;

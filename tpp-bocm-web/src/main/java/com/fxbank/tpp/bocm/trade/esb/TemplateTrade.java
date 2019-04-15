@@ -15,7 +15,11 @@ import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//例子供参考
+/**
+ * @Description: 通讯返回码判断例子程序，实际运行不用
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:14:17
+ */
 public class TemplateTrade implements TradeExecutionStrategy {
     private static Logger logger = LoggerFactory.getLogger(TemplateTrade.class);
 

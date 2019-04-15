@@ -3,10 +3,10 @@ package com.fxbank.tpp.bocm.model;
 import com.fxbank.cip.base.log.MyLog;
 
 /**
-* @Description: 交行余额查询请求
-* @author 周勇沩
-* @date 20190415
-*/
+ * @Description: 交行余额查询请求
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:20:40
+ */
 public class REQ_10101 extends REQ_BASE {
 
     private static final long serialVersionUID = 4718668418571598941L;

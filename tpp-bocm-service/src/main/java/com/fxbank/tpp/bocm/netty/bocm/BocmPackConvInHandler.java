@@ -2,7 +2,6 @@ package com.fxbank.tpp.bocm.netty.bocm;
 
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.netty.NettySyncSlot;
-import com.fxbank.cip.base.util.XmlUtil;
 import com.fxbank.tpp.bocm.model.REP_BASE;
 
 import org.slf4j.Logger;
@@ -12,6 +11,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
 
+/**
+ * @Description: 交行客户端应答拆包
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 12:00:22
+ */
 public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 
 	private static Logger logger = LoggerFactory.getLogger(BocmPackConvInHandler.class);

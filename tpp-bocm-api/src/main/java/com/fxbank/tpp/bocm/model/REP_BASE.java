@@ -3,8 +3,14 @@ package com.fxbank.tpp.bocm.model;
 import java.io.Serializable;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.model.FIXP_SERIAL;
 import com.fxbank.cip.base.model.ModelBase;
 
+/**
+ * @Description: 交行通讯应答基础类
+ * @Author: 周勇沩
+ * @Date: 2019-04-15 11:26:25
+ */
 public abstract class REP_BASE extends ModelBase implements Serializable,FIXP_SERIAL{
 	
 	private static final long serialVersionUID = 6311109021156971900L;
