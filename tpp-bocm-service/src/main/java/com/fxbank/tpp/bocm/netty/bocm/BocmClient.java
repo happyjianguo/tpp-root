@@ -58,7 +58,7 @@ public class BocmClient {
 
         NettySyncSlot<T> slot = new NettySyncSlot<T>();
         BocmInitializer<T> initializer = new BocmInitializer<T>(myLog, slot, req,clazz);
-        NettySyncClient<T> clientSync = new NettySyncClient<T>(myLog, initializer, slot);
+        NettySyncClient<T> clientSync = new NettySyncClient<T>(myLog, initializer, slot);        
         T repData = clientSync.comm(ip,port,timeOut);
         return repData;
     }
