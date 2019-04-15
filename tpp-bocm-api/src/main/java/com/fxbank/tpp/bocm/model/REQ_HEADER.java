@@ -30,13 +30,13 @@ public class REQ_HEADER implements Serializable,FIXP_SERIAL{
 	@Override
 	public String creaFixPack() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(String.format("%-5s", this.tTxnCd));
-		sb.append(String.format("%-3s", this.bBusTyp));
-		sb.append(String.format("%-12s", this.sBnkNo));
-		sb.append(String.format("%-12s", this.rBnkNo));
-		sb.append(String.format("%08d", this.tTxnDat));
-		sb.append(String.format("%06d", this.tTxnTim));
-		sb.append(String.format("%-14s", this.sLogNo));
+		sb.append(String.format("%-5s", this.tTxnCd==null?"":this.tTxnCd));
+		sb.append(String.format("%-3s", this.bBusTyp==null?"":this.bBusTyp));
+		sb.append(String.format("%-12s", this.sBnkNo==null?"":this.sBnkNo));
+		sb.append(String.format("%-12s", this.rBnkNo==null?"":this.rBnkNo));
+		sb.append(String.format("%08d", this.tTxnDat==null?0:this.tTxnDat));
+		sb.append(String.format("%06d", this.tTxnTim==null?0:this.tTxnTim));
+		sb.append(String.format("%-14s", this.sLogNo==null?"":this.sLogNo));
 		return sb.toString();
 	}
 

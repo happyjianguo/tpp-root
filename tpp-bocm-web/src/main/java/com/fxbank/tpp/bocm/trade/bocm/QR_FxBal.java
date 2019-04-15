@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
+import java.math.BigDecimal;
+
 import javax.annotation.Resource;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -38,6 +40,9 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		REQ_10101 req = (REQ_10101) dto;
 		//调用ESB余额查询
 		REP_10101 rep = new REP_10101();
+		rep.setActNo("623166000009897");
+		rep.setActNam("zzz");
+		rep.setActBal(new BigDecimal(34.45));
 		return rep;
 	}
 }

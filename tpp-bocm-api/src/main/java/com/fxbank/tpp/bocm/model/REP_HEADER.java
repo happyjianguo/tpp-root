@@ -21,10 +21,10 @@ public class REP_HEADER  implements Serializable,FIXP_SERIAL{
 	@Override
 	public String creaFixPack() {
 		StringBuffer sb = new StringBuffer();
-		sb.append(String.format("%-1s", this.tMsgTyp));
-		sb.append(String.format("%-6s", this.tRspCd));
-		sb.append(String.format("%-30s", this.tRspMsg));
-		sb.append(String.format("%-14s", this.rLogNo));
+		sb.append(String.format("%-1s", this.tMsgTyp==null?"":this.tMsgTyp));
+		sb.append(String.format("%-6s", this.tRspCd==null?"":this.tRspCd));
+		sb.append(String.format("%-30s", this.tRspMsg==null?"":this.tRspMsg));
+		sb.append(String.format("%-14s", this.rLogNo==null?"":this.rLogNo));
 		return sb.toString();
 	}
 

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  */
 public class REP_10101 extends REP_BASE {
 
-    private String ccyCod;
+    private String ccyCod="CNY";
 
     private String actNam;
 
@@ -21,10 +21,10 @@ public class REP_10101 extends REP_BASE {
     public String creaFixPack() {
         StringBuffer sb = new StringBuffer();
         sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-3s", this.ccyCod));
-        sb.append(String.format("%-30s", this.actNam));
-        sb.append(String.format("%-32s", this.actNo));
-        sb.append(String.format("%015.0f", this.actBal.multiply(new BigDecimal(100))));
+        sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
+        sb.append(String.format("%-30s", this.actNam==null?"":this.actNam));
+        sb.append(String.format("%-32s", this.actNo==null?"":this.actNo));
+        sb.append(String.format("%015.0f", this.actBal==null?0.0:actBal.multiply(new BigDecimal(100))));
         return sb.toString();
     }
 

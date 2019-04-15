@@ -14,7 +14,7 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	
 	private static final long serialVersionUID = 1767308581692333362L;
 
-	public final static String BOCM_E_10001 = "BOCM_E_10001";
+	public final static String BOCM_E_10001 = "FX0001";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 

@@ -1,8 +1,11 @@
 package com.fxbank.tpp.bocm.nettty;
 
+import java.net.InetAddress;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.log.MyLog;
 
 import org.slf4j.Logger;
@@ -18,17 +21,20 @@ import io.netty.util.ReferenceCountUtil;
  * @Author: 周勇沩
  * @Date: 2019-04-15 11:17:58
  */
-public class BocmLenghtDecoder<T> extends ByteToMessageDecoder {
+public class BocmLenghtDecoder extends ByteToMessageDecoder {
 
 	private static Logger logger = LoggerFactory.getLogger(BocmLenghtDecoder.class);
-	private MyLog myLog;
 	private final Integer DATALENGTH = 8;
+	private LogPool logPool;
+	private MyLog myLog;
 
-	public BocmLenghtDecoder(MyLog myLog) {
-		this.myLog = myLog;
+	public BocmLenghtDecoder(LogPool logPool) {
+		this.logPool = logPool;
 	}
 
 	protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+		this.myLog = new MyLog(UUID.randomUUID().toString(), InetAddress.getLocalHost().getHostAddress().toString());
+		logPool.init(this.myLog);
 		if (in == null) {
 			return null;
 		}

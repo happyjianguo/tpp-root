@@ -16,7 +16,7 @@ public class BASE_TEST {
     private static Logger logger = LoggerFactory.getLogger(BASE_TEST.class);
 
     private static final String IP = "127.0.0.1";
-    private static final Integer PORT = 6003;
+    private static final Integer PORT = 6006;
     private static final String CODING = "UTF-8";
 
     public String comm(String reqData) throws Exception {

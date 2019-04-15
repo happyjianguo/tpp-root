@@ -33,16 +33,16 @@ public class REQ_10101 extends REQ_BASE {
     public String creaFixPack() {
         StringBuffer sb = new StringBuffer();
         sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-3s", this.ccyCod));
-        sb.append(String.format("%-1s", this.actTyp));
-        sb.append(String.format("%-32s", this.actNo));
-        sb.append(String.format("%-20s", this.pin));
+        sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
+        sb.append(String.format("%-1s", this.actTyp==null?"":this.actTyp));
+        sb.append(String.format("%-32s", this.actNo==null?"":this.actNo));
+        sb.append(String.format("%-20s", this.pin==null?"":this.pin));
         return sb.toString();
     }
 
     @Override
     public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer(pack);
         int i = 0;
         super.getHeader().chanFixPack(sb.substring(0, i=i+60));
         this.ccyCod = sb.substring(i, i=i+3).trim();
