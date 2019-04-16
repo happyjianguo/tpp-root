@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 
@@ -9,20 +11,26 @@ public class BocmRcvLog {
      */
     @Id
     @Column(name = "PLAT_DATE")
-    private Long platDate;
+    private Integer platDate;
 
     /**
      * null
      */
     @Id
     @Column(name = "PLAT_TRACE")
-    private Long platTrace;
+    private Integer platTrace;
 
     /**
      * null
      */
     @Column(name = "PLAT_TIME")
-    private Long platTime;
+    private Integer platTime;
+    
+    /**
+     * null
+     */
+    @Column(name = "CUR_TIME")
+    private Long curTime;
 
     /**
      * null
@@ -52,13 +60,13 @@ public class BocmRcvLog {
      * null
      */
     @Column(name = "TX_AMT")
-    private Short txAmt;
+    private BigDecimal txAmt;
 
     /**
      * null
      */
     @Column(name = "HOST_DATE")
-    private Long hostDate;
+    private Integer hostDate;
 
     /**
      * null
@@ -100,7 +108,14 @@ public class BocmRcvLog {
      * null
      */
     @Column(name = "BOCM_DATE")
-    private Long bocmDate;
+    private Integer bocmDate;
+    
+    
+    /**
+     * null
+     */
+    @Column(name = "BOCM_TIME")
+    private Integer bocmTime;
 
     /**
      * null
@@ -180,55 +195,40 @@ public class BocmRcvLog {
     @Column(name = "HOST_BRANCH")
     private String hostBranch;
 
-    /**
-     * null
-     * @return PLAT_DATE null
-     */
-    public Long getPlatDate() {
-        return platDate;
-    }
 
-    /**
-     * null
-     * @param platDate null
-     */
-    public void setPlatDate(Long platDate) {
-        this.platDate = platDate;
-    }
+    public Integer getPlatDate() {
+		return platDate;
+	}
 
-    /**
-     * null
-     * @return PLAT_TRACE null
-     */
-    public Long getPlatTrace() {
-        return platTrace;
-    }
+	public void setPlatDate(Integer platDate) {
+		this.platDate = platDate;
+	}
 
-    /**
-     * null
-     * @param platTrace null
-     */
-    public void setPlatTrace(Long platTrace) {
-        this.platTrace = platTrace;
-    }
+	public Integer getPlatTrace() {
+		return platTrace;
+	}
 
-    /**
-     * null
-     * @return PLAT_TIME null
-     */
-    public Long getPlatTime() {
-        return platTime;
-    }
+	public void setPlatTrace(Integer platTrace) {
+		this.platTrace = platTrace;
+	}
 
-    /**
-     * null
-     * @param platTime null
-     */
-    public void setPlatTime(Long platTime) {
-        this.platTime = platTime;
-    }
+	public Integer getPlatTime() {
+		return platTime;
+	}
 
-    /**
+	public void setPlatTime(Integer platTime) {
+		this.platTime = platTime;
+	}
+
+	public Long getCurTime() {
+		return curTime;
+	}
+
+	public void setCurTime(Long curTime) {
+		this.curTime = curTime;
+	}
+
+	/**
      * null
      * @return SOURCE_TYPE null
      */
@@ -292,39 +292,23 @@ public class BocmRcvLog {
         this.dcFlag = dcFlag;
     }
 
-    /**
-     * null
-     * @return TX_AMT null
-     */
-    public Short getTxAmt() {
-        return txAmt;
-    }
+    public BigDecimal getTxAmt() {
+		return txAmt;
+	}
 
-    /**
-     * null
-     * @param txAmt null
-     */
-    public void setTxAmt(Short txAmt) {
-        this.txAmt = txAmt;
-    }
+	public void setTxAmt(BigDecimal txAmt) {
+		this.txAmt = txAmt;
+	}
 
-    /**
-     * null
-     * @return HOST_DATE null
-     */
-    public Long getHostDate() {
-        return hostDate;
-    }
+    public Integer getHostDate() {
+		return hostDate;
+	}
 
-    /**
-     * null
-     * @param hostDate null
-     */
-    public void setHostDate(Long hostDate) {
-        this.hostDate = hostDate;
-    }
+	public void setHostDate(Integer hostDate) {
+		this.hostDate = hostDate;
+	}
 
-    /**
+	/**
      * null
      * @return HOST_TRACENO null
      */
@@ -420,23 +404,15 @@ public class BocmRcvLog {
         this.bocmBranch = bocmBranch;
     }
 
-    /**
-     * null
-     * @return BOCM_DATE null
-     */
-    public Long getBocmDate() {
-        return bocmDate;
-    }
+    public Integer getBocmDate() {
+		return bocmDate;
+	}
 
-    /**
-     * null
-     * @param bocmDate null
-     */
-    public void setBocmDate(Long bocmDate) {
-        this.bocmDate = bocmDate;
-    }
+	public void setBocmDate(Integer bocmDate) {
+		this.bocmDate = bocmDate;
+	}
 
-    /**
+	/**
      * null
      * @return BOCM_TRACENO null
      */
@@ -643,4 +619,13 @@ public class BocmRcvLog {
     public void setHostBranch(String hostBranch) {
         this.hostBranch = hostBranch;
     }
+
+	public Integer getBocmTime() {
+		return bocmTime;
+	}
+
+	public void setBocmTime(Integer bocmTime) {
+		this.bocmTime = bocmTime;
+	}
+    
 }

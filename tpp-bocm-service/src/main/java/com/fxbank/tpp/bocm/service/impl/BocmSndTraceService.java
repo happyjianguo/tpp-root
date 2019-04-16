@@ -20,7 +20,7 @@ import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 * @author YePuLiang
 * @date  2019年3月19日 上午10:58:27   
 */
-@Service(validation = "true", version = "1.0.0")
+@Service(version = "1.0.0")
 public class BocmSndTraceService implements IBocmSndTraceService{
 	
 	@Resource
@@ -46,7 +46,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		entity.setPayeeAcno(record.getPayeeAcno());
 		entity.setPayeeName(record.getPayeeName());
 		entity.setBocmBranch(record.getBocmBranch());
-		entity.setHostState("0");		
+		entity.setHostState(record.getHostState());		
 		
 		entity.setTxTel(record.getTxTel());
 		entity.setChkTel(record.getChkTel());
@@ -95,8 +95,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		}
 		if(null != record.getCheckFlag()) {
 			bocmSndLog.setCheckFlag(record.getCheckFlag());
-		}
-		
+		}		
 		bocmSndLogMapper.updateByPrimaryKeySelective(bocmSndLog);
 	}
 }

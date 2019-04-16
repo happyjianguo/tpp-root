@@ -18,6 +18,7 @@
     <result column="PAYEE_NAME" jdbcType="NVARCHAR" property="payeeName" />
     <result column="BOCM_BRANCH" jdbcType="NVARCHAR" property="bocmBranch" />
     <result column="BOCM_DATE" jdbcType="DECIMAL" property="bocmDate" />
+    <result column="BOCM_TIME" jdbcType="DECIMAL" property="bocmTime" />
     <result column="BOCM_TRACENO" jdbcType="NVARCHAR" property="bocmTraceno" />
     <result column="CHECK_FLAG" jdbcType="NVARCHAR" property="checkFlag" />
     <result column="HOST_STATE" jdbcType="NVARCHAR" property="hostState" />

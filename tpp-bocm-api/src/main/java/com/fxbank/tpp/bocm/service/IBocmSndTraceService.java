@@ -8,7 +8,7 @@ import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
 
 /** 
 * @ClassName: ISndTraceService 
-* @Description: 往账处理
+* @Description: 交行往账处理
 * @author YePuLiang
 * @date 2019年4月15日 上午10:26:13 
 *  

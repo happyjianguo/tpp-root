@@ -1,3 +1,11 @@
+/**   
+* @Title: BocmRcvTraceInitModel.java 
+* @Package com.fxbank.tpp.bocm.model 
+* @Description: TODO(用一句话描述该文件做什么) 
+* @author YePuLiang
+* @date 2019年4月16日 上午8:31:45 
+* @version V1.0   
+*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
@@ -10,19 +18,20 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 
 /** 
-* @ClassName: SndTraceInitModel 
-* @Description: 发送流水表登记模型 
+* @ClassName: BocmRcvTraceInitModel 
+* @Description: 接收日志流水表登记模型
 * @author YePuLiang
-* @date 2019年04月15日 下午1:38:29 
+* @date 2019年4月16日 上午8:31:45 
 *  
 */
-public class BocmSndTraceInitModel extends ModelBase implements Serializable{
+public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 
-	private static final long serialVersionUID = -7927287552811072315L;
-
-	public BocmSndTraceInitModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	private static final long serialVersionUID = -2295106283747182412L;
+	
+	public BocmRcvTraceInitModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
+	
 	@NotNull(message = "source_type交易渠道不能为空")
 	@Size(max = 20,message = "source_type交易渠道最大长度是20")
 	private String sourceType; //交易渠道
@@ -55,15 +64,15 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 100,message = "payee_name收款人户名最大长度是100")
 	private String payeeName; //收款人户名
 	
-	@Size(max = 20,message = "bocm_branch村镇机构最大长度是20")
-	private String bocmBranch; //交行机构
+	@Size(max = 20,message = "town_branch村镇机构最大长度是20")
+	private String BocmBranch; //村镇机构
 	
 	@NotNull(message = "host_state核心记账状态不能为空")
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; //核心记账状态
 	
-	@NotNull(message = "bocm_state村镇记账状态不能为空")
-	@Size(max = 10,message = "bocm_state村镇记账状态最大长度是10")
+	@NotNull(message = "town_state村镇记账状态不能为空")
+	@Size(max = 10,message = "town_state村镇记账状态最大长度是10")
 	private String bocmState; //村镇记账状态
 	
 	@NotNull(message = "tx_tel交易柜员不能为空")
@@ -82,7 +91,22 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 255,message = "info摘要最大长度是255")
 	private String info; //摘要
 	
+	private String bocmDate;//村镇日期
+	
+	private String bocmTraceNo;//村镇流水
+	
+	private String bocmFlag;//村镇标志
+	
 	private String checkFlag;//对账标志
+	
+
+	public String getCheckFlag() {
+		return checkFlag;
+	}
+
+	public void setCheckFlag(String checkFlag) {
+		this.checkFlag = checkFlag;
+	}
 
 	public String getSourceType() {
 		return sourceType;
@@ -156,14 +180,6 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 		this.payeeName = payeeName;
 	}
 
-	public String getBocmBranch() {
-		return bocmBranch;
-	}
-
-	public void setBocmBranch(String bocmBranch) {
-		this.bocmBranch = bocmBranch;
-	}
-
 	public String getHostState() {
 		return hostState;
 	}
@@ -212,6 +228,14 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 		this.info = info;
 	}
 
+	public String getBocmBranch() {
+		return BocmBranch;
+	}
+
+	public void setBocmBranch(String bocmBranch) {
+		BocmBranch = bocmBranch;
+	}
+
 	public String getBocmState() {
 		return bocmState;
 	}
@@ -220,12 +244,28 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 		this.bocmState = bocmState;
 	}
 
-	public String getCheckFlag() {
-		return checkFlag;
+	public String getBocmDate() {
+		return bocmDate;
 	}
 
-	public void setCheckFlag(String checkFlag) {
-		this.checkFlag = checkFlag;
+	public void setBocmDate(String bocmDate) {
+		this.bocmDate = bocmDate;
 	}
-	
+
+	public String getBocmTraceNo() {
+		return bocmTraceNo;
+	}
+
+	public void setBocmTraceNo(String bocmTraceNo) {
+		this.bocmTraceNo = bocmTraceNo;
+	}
+
+	public String getBocmFlag() {
+		return bocmFlag;
+	}
+
+	public void setBocmFlag(String bocmFlag) {
+		this.bocmFlag = bocmFlag;
+	}
+
 }
