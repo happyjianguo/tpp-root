@@ -1,0 +1,73 @@
+package com.fxbank.tpp.bocm.dto.esb;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fxbank.cip.base.dto.REP_APP_HEAD;
+import com.fxbank.cip.base.dto.REP_BASE;
+import com.fxbank.cip.base.dto.REP_SYS_HEAD;
+
+/** 
+* @ClassName: REP_30061800301 
+* @Description: 本行柜面交行卡存现金
+* @author Duzhenduo
+* @date 2019年4月15日 下午4:42:09 
+*  
+*/
+public class REP_30061800301 extends REP_BASE {
+
+
+	@JSONField(name = "APP_HEAD")
+	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
+	
+	@JSONField(name = "SYS_HEAD")
+	private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
+
+	@JSONField(name = "BODY")
+	private REQ_BODY reqBody = new REQ_BODY();
+	
+	public REP_APP_HEAD getRepAppHead() {
+		return repAppHead;
+	}
+
+	public void setRepAppHead(REP_APP_HEAD repAppHead) {
+		this.repAppHead = repAppHead;
+	}
+
+	public REP_SYS_HEAD getRepSysHead() {
+		return repSysHead;
+	}
+
+	public void setRepSysHead(REP_SYS_HEAD repSysHead) {
+		this.repSysHead = repSysHead;
+	}
+
+	public REQ_BODY getReqBody() {
+		return reqBody;
+	}
+
+
+	public void setReqBody(REQ_BODY reqBody) {
+		this.reqBody = reqBody;
+	}
+
+	public class REQ_BODY {
+
+		@JSONField(name = "OPN_ACCT_BNK_FEE_T")
+		private String opnAcctBnkFeeT;//开户行手续费
+		@JSONField(name = "ACCT_BAL_T2")
+		private String acctBalT2;//账户余额
+		public String  getOpnAcctBnkFeeT(){
+			return opnAcctBnkFeeT;
+		}
+		public void setOpnAcctBnkFeeT(String opnAcctBnkFeeT){
+			this.opnAcctBnkFeeT = opnAcctBnkFeeT;
+		}
+		public String  getAcctBalT2(){
+			return acctBalT2;
+		}
+		public void setAcctBalT2(String acctBalT2){
+			this.acctBalT2 = acctBalT2;
+		}
+		
+	}
+
+}
