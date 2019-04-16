@@ -1,8 +1,9 @@
 DROP TABLE bocm_snd_log;
 CREATE TABLE bocm_snd_log (
-plat_date NUMBER(11) NOT NULL ,
+plat_date NUMBER(8) NOT NULL ,
 plat_trace NUMBER(11) NOT NULL ,
-plat_time NUMBER(11) NULL ,
+plat_time NUMBER(6) NULL ,
+cur_time NUMBER(16) NULL ,
 source_type NVARCHAR2(20) NULL ,
 tx_branch NVARCHAR2(20) NULL ,
 tx_ind NVARCHAR2(10) NULL ,
@@ -16,6 +17,7 @@ payee_acno NVARCHAR2(50) NULL ,
 payee_name NVARCHAR2(100) NULL ,
 bocm_branch NVARCHAR2(20) NULL ,
 bocm_date NUMBER(11) NULL ,
+bocm_time NUMBER(6) NULL ,
 bocm_traceno NVARCHAR2(20) NULL ,
 check_flag NVARCHAR2(10) NULL ,
 host_state NVARCHAR2(10) NULL ,
@@ -36,6 +38,7 @@ COMMENT ON TABLE bocm_snd_log IS '交通银行柜面通发送流水日志';
 COMMENT ON COLUMN bocm_snd_log.plat_date IS '渠道日期';
 COMMENT ON COLUMN bocm_snd_log.plat_trace IS '渠道流水';
 COMMENT ON COLUMN bocm_snd_log.plat_time IS '交易时间';
+COMMENT ON COLUMN bocm_rcv_log.cur_time IS '交易时间戳';
 COMMENT ON COLUMN bocm_snd_log.source_type IS '交易渠道';
 COMMENT ON COLUMN bocm_snd_log.tx_branch IS '交易机构';
 COMMENT ON COLUMN bocm_snd_log.tx_ind IS '现转标志；0现金、1转账、2 普通转账、3 隔日转账、9 其他';
@@ -49,9 +52,10 @@ COMMENT ON COLUMN bocm_snd_log.payee_acno IS '收款人账户';
 COMMENT ON COLUMN bocm_snd_log.payee_name IS '收款人户名';
 COMMENT ON COLUMN bocm_snd_log.bocm_branch IS '交通银行记账机构';
 COMMENT ON COLUMN bocm_snd_log.bocm_date IS '交通银行日期';
+COMMENT ON COLUMN bocm_snd_log.bocm_time IS '交通银行时间';
 COMMENT ON COLUMN bocm_snd_log.bocm_traceno IS '交通银行流水';
 COMMENT ON COLUMN bocm_snd_log.check_flag IS '对账标志，1-未对账，2-已对账，3-核心多，4-渠道多';
-COMMENT ON COLUMN bocm_snd_log.host_state IS '核心记账状态，0-登记，1-成功，2-失败，3-超时，5-冲正成功，6-冲正失败，7-冲正超时';
+COMMENT ON COLUMN bocm_snd_log.host_state IS '核心记账状态，0-登记，1-成功，2-失败，3-超时，5-冲正成功，6-冲正失败，7-冲正超时，8-延时转账';
 COMMENT ON COLUMN bocm_snd_log.bocm_state IS '交通银行记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败';
 COMMENT ON COLUMN bocm_snd_log.tx_tel IS '交易柜员';
 COMMENT ON COLUMN bocm_snd_log.chk_tel IS '复核员';
@@ -60,7 +64,8 @@ COMMENT ON COLUMN bocm_snd_log.print IS '打印次数';
 COMMENT ON COLUMN bocm_snd_log.info IS '摘要';
 COMMENT ON COLUMN bocm_snd_log.ret_code IS '核心反馈响应码';
 COMMENT ON COLUMN bocm_snd_log.ret_msg IS '核心反馈响应信息';
-COMMENT ON COLUMN bocm_snd_log.bocm_flag IS '交通银行标志';
+COMMENT ON COLUMN bocm_snd_log.bocm_flag IS '交通银行标志--本次不用';
 COMMENT ON COLUMN bocm_snd_log.host_branch IS '核心记账机构';
 
 ALTER TABLE bocm_snd_log ADD PRIMARY KEY (plat_date, plat_trace);
+Create Index bocm_snd_log_index1 On bocm_snd_log(bocm_traceno);
