@@ -38,7 +38,7 @@ COMMENT ON TABLE bocm_snd_log IS '交通银行柜面通发送流水日志';
 COMMENT ON COLUMN bocm_snd_log.plat_date IS '渠道日期';
 COMMENT ON COLUMN bocm_snd_log.plat_trace IS '渠道流水';
 COMMENT ON COLUMN bocm_snd_log.plat_time IS '交易时间';
-COMMENT ON COLUMN bocm_rcv_log.cur_time IS '交易时间戳';
+COMMENT ON COLUMN bocm_snd_log.cur_time IS '交易时间戳';
 COMMENT ON COLUMN bocm_snd_log.source_type IS '交易渠道';
 COMMENT ON COLUMN bocm_snd_log.tx_branch IS '交易机构';
 COMMENT ON COLUMN bocm_snd_log.tx_ind IS '现转标志；0现金、1转账、2 普通转账、3 隔日转账、9 其他';
