@@ -29,7 +29,6 @@ print NVARCHAR2(10) NULL ,
 info NVARCHAR2(255) NULL ,
 ret_code NVARCHAR2(20) NULL ,
 ret_msg NVARCHAR2(200) NULL ,
-bocm_flag NVARCHAR2(5) NULL ,
 host_branch NVARCHAR2(20) NULL 
 )
 
@@ -64,7 +63,6 @@ COMMENT ON COLUMN bocm_rcv_log.print IS '打印次数';
 COMMENT ON COLUMN bocm_rcv_log.info IS '摘要';
 COMMENT ON COLUMN bocm_rcv_log.ret_code IS '核心反馈响应码';
 COMMENT ON COLUMN bocm_rcv_log.ret_msg IS '核心反馈响应信息';
-COMMENT ON COLUMN bocm_rcv_log.bocm_flag IS '交通银行标志';
 COMMENT ON COLUMN bocm_rcv_log.host_branch IS '核心记账机构';
 
 ALTER TABLE bocm_rcv_log ADD PRIMARY KEY (plat_date, plat_trace);
