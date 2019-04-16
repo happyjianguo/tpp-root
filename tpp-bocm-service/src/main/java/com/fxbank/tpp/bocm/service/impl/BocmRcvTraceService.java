@@ -60,7 +60,8 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		entity.setPayeeAcno(record.getPayeeAcno());
 		entity.setPayeeName(record.getPayeeName());
 		entity.setBocmBranch(record.getBocmBranch());
-		entity.setHostState(record.getHostState());		
+		entity.setHostState(record.getHostState());	
+		entity.setBocmState(record.getBocmState());
 		
 		entity.setTxTel(record.getTxTel());
 		entity.setChkTel(record.getChkTel());

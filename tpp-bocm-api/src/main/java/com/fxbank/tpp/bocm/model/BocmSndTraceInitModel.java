@@ -62,8 +62,8 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; //核心记账状态
 	
-	@NotNull(message = "bocm_state村镇记账状态不能为空")
-	@Size(max = 10,message = "bocm_state村镇记账状态最大长度是10")
+	@NotNull(message = "bocm_state交行记账状态不能为空")
+	@Size(max = 10,message = "bocm_state交行记账状态最大长度是10")
 	private String bocmState; //村镇记账状态
 	
 	@NotNull(message = "tx_tel交易柜员不能为空")
