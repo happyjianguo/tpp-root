@@ -22,7 +22,7 @@ public class REP_30061800101 extends REP_BASE {
 	private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
 	@JSONField(name = "BODY")
-	private REQ_BODY reqBody = new REQ_BODY();
+	private REP_BODY repBody = new REP_BODY();
 	
 	public REP_APP_HEAD getRepAppHead() {
 		return repAppHead;
@@ -40,16 +40,16 @@ public class REP_30061800101 extends REP_BASE {
 		this.repSysHead = repSysHead;
 	}
 
-	public REQ_BODY getReqBody() {
-		return reqBody;
+	public REP_BODY getRepBody() {
+		return repBody;
 	}
 
 
-	public void setReqBody(REQ_BODY reqBody) {
-		this.reqBody = reqBody;
+	public void setRepBody(REP_BODY repBody) {
+		this.repBody = repBody;
 	}
 
-	public class REQ_BODY {
+	public class REP_BODY {
 
 	}
 

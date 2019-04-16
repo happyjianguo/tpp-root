@@ -6,13 +6,13 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
-* @ClassName: REP_30061800301 
-* @Description: 本行柜面交行卡存现金
+* @ClassName: REP_30061800201 
+* @Description: 本行柜面交行卡付款转账
 * @author Duzhenduo
-* @date 2019年4月15日 下午4:42:09 
+* @date 2019年4月16日 上午11:19:23 
 *  
 */
-public class REP_30061800301 extends REP_BASE {
+public class REP_30061800201 extends REP_BASE {
 
 
 	@JSONField(name = "APP_HEAD")
@@ -51,21 +51,23 @@ public class REP_30061800301 extends REP_BASE {
 
 	public class REP_BODY {
 
-		@JSONField(name = "OPN_ACCT_BNK_FEE_T")
-		private String opnAcctBnkFeeT;//开户行手续费
-		@JSONField(name = "ACCT_BAL_T2")
-		private String acctBalT2;//账户余额
-		public String  getOpnAcctBnkFeeT(){
-			return opnAcctBnkFeeT;
+		@JSONField(name = "FEE_T3")
+		private String feeT3;//手续费
+		
+		@JSONField(name = "BALANCE3_T")
+		private String balance3T;//余额
+		
+		public String  getFeeT3(){
+			return feeT3;
 		}
-		public void setOpnAcctBnkFeeT(String opnAcctBnkFeeT){
-			this.opnAcctBnkFeeT = opnAcctBnkFeeT;
+		public void setFeeT3(String feeT3){
+			this.feeT3 = feeT3;
 		}
-		public String  getAcctBalT2(){
-			return acctBalT2;
+		public String getBalance3T() {
+			return balance3T;
 		}
-		public void setAcctBalT2(String acctBalT2){
-			this.acctBalT2 = acctBalT2;
+		public void setBalance3T(String balance3t) {
+			balance3T = balance3t;
 		}
 		
 	}
