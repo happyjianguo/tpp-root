@@ -19,6 +19,7 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	public final static String BOCM_E_10003 = "FX0003";
 	public final static String BOCM_E_10004 = "FX0004";
 	public final static String BOCM_E_10005 = "FX0005";
+	public final static String BOCM_E_10006 = "FX0006";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 
@@ -29,6 +30,8 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 			put(BOCM_E_10002, "交行记账失败");	
 			put(BOCM_E_10003, "交行第一次记账超时，重发记账失败");
 			put(BOCM_E_10004, "核心记账失败");
+			put(BOCM_E_10005, "交行冲正成功");
+			put(BOCM_E_10006, "交行冲正失败");
 			
 		}
 	};
