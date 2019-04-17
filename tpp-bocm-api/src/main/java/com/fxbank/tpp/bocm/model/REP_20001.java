@@ -4,11 +4,12 @@ import com.fxbank.cip.base.log.MyLog;
 
 
 
+
 /** 
-* @ClassName: REP_20000 
-* @Description:IC卡通存 
+* @ClassName: REP_20001 
+* @Description: IC卡通兑
 * @author Duzhenduo
-* @date 2019年4月16日 上午9:03:52 
+* @date 2019年4月16日 下午4:06:09 
 *  
 */
 public class REP_20001 extends REP_BASE {

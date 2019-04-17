@@ -15,6 +15,8 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	private static final long serialVersionUID = 1767308581692333362L;
 
 	public final static String BOCM_E_10001 = "FX0001";
+	public final static String BOCM_E_10002 = "FX0002";
+	public final static String BOCM_E_10003 = "FX0003";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 
@@ -22,7 +24,8 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 
 		{
 			put(BOCM_E_10001, "业务不支持");
-			
+			put(BOCM_E_10002, "交行记账失败");	
+			put(BOCM_E_10003, "交行第一次记账超时，重发记账失败");
 		}
 	};
 
