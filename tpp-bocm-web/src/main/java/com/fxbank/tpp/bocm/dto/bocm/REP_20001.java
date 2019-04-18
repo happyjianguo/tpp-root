@@ -1,34 +1,21 @@
-package com.fxbank.tpp.bocm.model;
+package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
 
-import com.fxbank.cip.base.log.MyLog;
-
 /** 
-* @ClassName: REP_10001 
-* @Description: 磁条卡通兑
+* @ClassName: REP_20001 
+* @Description: IC卡通兑
 * @author Duzhenduo
-* @date 2019年4月16日 上午9:26:08 
+* @date 2019年4月16日 下午4:06:09 
 *  
 */
-public class REP_10001 extends REP_BASE {
-
-	private static final long serialVersionUID = 927936689160685939L;
+public class REP_20001 extends REP_BASE {
 
 	private BigDecimal oTxnAmt;
 
     private BigDecimal fee;
 
     private BigDecimal actBal;
-
-    @Deprecated
-	public REP_10001() {
-		super(null, 0, 0, 0);
-	}
-
-    public REP_10001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
-        super(mylog, sysDate, sysTime, sysTraceno);
-    }
 
     @Override
     public String creaFixPack() {
@@ -75,4 +62,5 @@ public class REP_10001 extends REP_BASE {
 	}
 
 	
+
 }

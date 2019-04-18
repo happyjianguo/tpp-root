@@ -1,8 +1,6 @@
-package com.fxbank.tpp.bocm.model;
+package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
-
-import com.fxbank.cip.base.log.MyLog;
 
 /** 
 * @ClassName: REQ_10001 
@@ -12,8 +10,6 @@ import com.fxbank.cip.base.log.MyLog;
 *  
 */
 public class REQ_10001 extends REQ_BASE {
-
-	private static final long serialVersionUID = -5030423745594921356L;
 
 	private String ccyCod = "CNY";
     
@@ -61,15 +57,10 @@ public class REQ_10001 extends REQ_BASE {
     
     private String remark;
     
-    @Deprecated
-	public REQ_10001() {
-		super(null, 0, 0, 0);
+    public REQ_10001() {
+        super.txDesc = "磁条卡通兑";
+        super.log = false;
 	}
-
-    public REQ_10001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
-        super(mylog, sysDate, sysTime, sysTraceno);
-        super.getHeader().settTxnCd("10001");
-    }
 
     @Override
     public String creaFixPack() {

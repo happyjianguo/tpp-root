@@ -1,8 +1,6 @@
-package com.fxbank.tpp.bocm.model;
+package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
-
-import com.fxbank.cip.base.log.MyLog;
 
 /** 
 * @ClassName: REP_10001 
@@ -13,22 +11,11 @@ import com.fxbank.cip.base.log.MyLog;
 */
 public class REP_10001 extends REP_BASE {
 
-	private static final long serialVersionUID = 927936689160685939L;
-
 	private BigDecimal oTxnAmt;
 
     private BigDecimal fee;
 
     private BigDecimal actBal;
-
-    @Deprecated
-	public REP_10001() {
-		super(null, 0, 0, 0);
-	}
-
-    public REP_10001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
-        super(mylog, sysDate, sysTime, sysTraceno);
-    }
 
     @Override
     public String creaFixPack() {

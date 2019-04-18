@@ -2,6 +2,7 @@ package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -63,10 +64,10 @@ public class BASE_TEST {
 
     public void initReqHeader(String tTxnCd,REQ_HEADER header){
         String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        Integer seq = Math.abs(new Random().nextInt());
+        Integer seq = Math.abs(new Random().nextInt(100000000));
         header.settTxnCd(tTxnCd);
-        header.setsBnkNo("3131310000008");
-		header.setrBnkNo("3131310000007");
+        header.setsBnkNo("313131000008");
+		header.setrBnkNo("313131000007");
 		header.settTxnDat(Integer.valueOf(sDate.substring(0, 8)));
         header.settTxnTim(Integer.valueOf(sDate.substring(8))); 
         header.setsLogNo(String.format("%6s%08d", sDate.substring(2, 8),seq));

@@ -1,26 +1,24 @@
-package com.fxbank.tpp.bocm.model;
+package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
 
-import com.fxbank.cip.base.log.MyLog;
-
 /** 
-* @ClassName: REQ_10001 
-* @Description: 磁条卡通兑 
+* @ClassName: REQ_20000 
+* @Description: IC卡通存 
 * @author Duzhenduo
-* @date 2019年4月16日 上午9:23:02 
+* @date 2019年4月16日 上午9:03:24 
 *  
 */
-public class REQ_10001 extends REQ_BASE {
-
-	private static final long serialVersionUID = -5030423745594921356L;
+public class REQ_20000 extends REQ_BASE {
 
 	private String ccyCod = "CNY";
     
     private BigDecimal txnAmt;
-    
-    private String pin;
 
+    private String feeFlg;
+
+    private BigDecimal fee;
+    
     private String oprFlg;
     
     private String txnMod;
@@ -55,21 +53,22 @@ public class REQ_10001 extends REQ_BASE {
     
     private String agtNam;
     
-    private String secMag;
+    private String seqNo;
     
-    private String thdMag;
+    private String aRQC;
+    
+    private String iCAID;
+    
+    private String iCOutDate;
+    
+    private String iCData;
     
     private String remark;
     
-    @Deprecated
-	public REQ_10001() {
-		super(null, 0, 0, 0);
+    public REQ_20000() {
+        super.txDesc = "IC卡通存";
+        super.log = false;
 	}
-
-    public REQ_10001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
-        super(mylog, sysDate, sysTime, sysTraceno);
-        super.getHeader().settTxnCd("10001");
-    }
 
     @Override
     public String creaFixPack() {
@@ -77,7 +76,8 @@ public class REQ_10001 extends REQ_BASE {
         sb.append(super.getHeader().creaFixPack());
         sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
         sb.append(String.format("%015.0f", this.txnAmt==null?0.0:this.txnAmt.movePointRight(2)));
-        sb.append(String.format("%-20s", this.pin==null?"":this.pin));
+        sb.append(String.format("%-1s", this.feeFlg==null?"":this.feeFlg));
+        sb.append(String.format("%015.0f", this.fee==null?0.0:this.fee.movePointRight(2)));
         sb.append(String.format("%-1s", this.oprFlg==null?"":this.oprFlg));
         sb.append(String.format("%-1s", this.txnMod==null?"":this.txnMod));
         sb.append(String.format("%-12s", this.payBnk==null?"":this.payBnk));
@@ -95,8 +95,11 @@ public class REQ_10001 extends REQ_BASE {
         sb.append(String.format("%-2s", this.agIdTp==null?"":this.agIdTp));
         sb.append(String.format("%-30s", this.agIdNo==null?"":this.agIdNo));
         sb.append(String.format("%-30s", this.agtNam==null?"":this.agtNam));
-        sb.append(String.format("%-37s", this.secMag==null?"":this.secMag));
-        sb.append(String.format("%-104s", this.thdMag==null?"":this.thdMag));
+        sb.append(String.format("%-3s", this.seqNo==null?"":this.seqNo));
+        sb.append(String.format("%-24s", this.aRQC==null?"":this.aRQC));
+        sb.append(String.format("%-16s", this.iCAID==null?"":this.iCAID));
+        sb.append(String.format("%-8s", this.iCOutDate==null?"":this.iCOutDate));
+        sb.append(String.format("%-255s", this.iCData==null?"":this.iCData));
         sb.append(String.format("%-60s", this.remark==null?"":this.remark));
         
         return sb.toString();
@@ -109,7 +112,8 @@ public class REQ_10001 extends REQ_BASE {
         super.getHeader().chanFixPack(sb.substring(0, i=i+60));
         this.ccyCod = sb.substring(i, i=i+3).trim();
         this.txnAmt = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.pin = sb.substring(i, i=i+20).trim();
+        this.feeFlg = sb.substring(i, i=i+1).trim();
+        this.fee = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
         this.oprFlg = sb.substring(i, i=i+1).trim();
         this.txnMod = sb.substring(i, i=i+1).trim();
         this.payBnk = sb.substring(i, i=i+12).trim();
@@ -127,8 +131,11 @@ public class REQ_10001 extends REQ_BASE {
         this.agIdTp = sb.substring(i, i=i+2).trim();
         this.agIdNo = sb.substring(i, i=i+30).trim();
         this.agtNam = sb.substring(i, i=i+30).trim();
-        this.secMag = sb.substring(i, i=i+37).trim();
-        this.thdMag = sb.substring(i, i=i+104).trim();
+        this.seqNo = sb.substring(i, i=i+3).trim();
+        this.aRQC = sb.substring(i, i=i+24).trim();
+        this.iCAID = sb.substring(i, i=i+16).trim();
+        this.iCOutDate = sb.substring(i, i=i+8).trim();
+        this.iCData = sb.substring(i, i=i+255).trim();
         this.remark = sb.substring(i, i=i+60).trim();
     }
 
@@ -138,6 +145,14 @@ public class REQ_10001 extends REQ_BASE {
 
 	public void setCcyCod(String ccyCod) {
 		this.ccyCod = ccyCod;
+	}
+
+	public String getFeeFlg() {
+		return feeFlg;
+	}
+
+	public void setFeeFlg(String feeFlg) {
+		this.feeFlg = feeFlg;
 	}
 
 	public String getOprFlg() {
@@ -276,22 +291,6 @@ public class REQ_10001 extends REQ_BASE {
 		this.agtNam = agtNam;
 	}
 
-	public String getSecMag() {
-		return secMag;
-	}
-
-	public void setSecMag(String secMag) {
-		this.secMag = secMag;
-	}
-
-	public String getThdMag() {
-		return thdMag;
-	}
-
-	public void setThdMag(String thdMag) {
-		this.thdMag = thdMag;
-	}
-
 	public String getRemark() {
 		return remark;
 	}
@@ -300,12 +299,44 @@ public class REQ_10001 extends REQ_BASE {
 		this.remark = remark;
 	}
 
-	public String getPin() {
-		return pin;
+	public String getSeqNo() {
+		return seqNo;
 	}
 
-	public void setPin(String pin) {
-		this.pin = pin;
+	public void setSeqNo(String seqNo) {
+		this.seqNo = seqNo;
+	}
+
+	public String getaRQC() {
+		return aRQC;
+	}
+
+	public void setaRQC(String aRQC) {
+		this.aRQC = aRQC;
+	}
+
+	public String getiCAID() {
+		return iCAID;
+	}
+
+	public void setiCAID(String iCAID) {
+		this.iCAID = iCAID;
+	}
+
+	public String getiCOutDate() {
+		return iCOutDate;
+	}
+
+	public void setiCOutDate(String iCOutDate) {
+		this.iCOutDate = iCOutDate;
+	}
+
+	public String getiCData() {
+		return iCData;
+	}
+
+	public void setiCData(String iCData) {
+		this.iCData = iCData;
 	}
 
 	public BigDecimal getTxnAmt() {
@@ -315,5 +346,15 @@ public class REQ_10001 extends REQ_BASE {
 	public void setTxnAmt(BigDecimal txnAmt) {
 		this.txnAmt = txnAmt;
 	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
+	}
+
+   
 
 }

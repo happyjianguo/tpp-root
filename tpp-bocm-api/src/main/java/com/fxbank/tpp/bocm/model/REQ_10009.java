@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.model;
 
+import java.math.BigDecimal;
+
 import com.fxbank.cip.base.log.MyLog;
 
 
@@ -20,7 +22,7 @@ public class REQ_10009 extends REQ_BASE {
 
     private String ccyCod = "CNY";
 
-    private String txnAmt;
+    private BigDecimal txnAmt;
     
     private String txnMod;
     
@@ -73,7 +75,7 @@ public class REQ_10009 extends REQ_BASE {
         sb.append(String.format("%-14s", this.ologNo==null?"":this.ologNo));
         sb.append(String.format("%-5s", this.otxnCd==null?"":this.otxnCd));
         sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
-        sb.append(String.format("%-15s", this.txnAmt==null?"":this.txnAmt));
+        sb.append(String.format("%015.0f", this.txnAmt==null?0.0:this.txnAmt.movePointRight(2)));
         sb.append(String.format("%-1s", this.txnMod==null?"":this.txnMod));
         sb.append(String.format("%-12s", this.payBnk==null?"":this.payBnk));
         sb.append(String.format("%-1s", this.pActTp==null?"":this.pActTp));
@@ -103,7 +105,7 @@ public class REQ_10009 extends REQ_BASE {
         this.ologNo = sb.substring(i,i=i+14).trim();
         this.otxnCd = sb.substring(i, i=i+5).trim();
         this.ccyCod = sb.substring(i, i=i+3).trim();
-        this.txnAmt = sb.substring(i, i=i+15).trim();
+        this.txnAmt = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
         this.txnMod = sb.substring(i, i=i+1).trim();
         this.payBnk = sb.substring(i, i=i+12).trim();
         this.pActTp = sb.substring(i, i=i+1).trim();
@@ -129,14 +131,6 @@ public class REQ_10009 extends REQ_BASE {
 
 	public void setCcyCod(String ccyCod) {
 		this.ccyCod = ccyCod;
-	}
-
-	public String getTxnAmt() {
-		return txnAmt;
-	}
-
-	public void setTxnAmt(String txnAmt) {
-		this.txnAmt = txnAmt;
 	}
 
 	public String getTxnMod() {
@@ -289,6 +283,14 @@ public class REQ_10009 extends REQ_BASE {
 
 	public void setOtxnCd(String otxnCd) {
 		this.otxnCd = otxnCd;
+	}
+
+	public BigDecimal getTxnAmt() {
+		return txnAmt;
+	}
+
+	public void setTxnAmt(BigDecimal txnAmt) {
+		this.txnAmt = txnAmt;
 	}
 
    

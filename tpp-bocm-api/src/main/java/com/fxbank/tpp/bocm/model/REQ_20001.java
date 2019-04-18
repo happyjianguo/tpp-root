@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.model;
 
+import java.math.BigDecimal;
+
 import com.fxbank.cip.base.log.MyLog;
 
 /** 
@@ -15,7 +17,7 @@ public class REQ_20001 extends REQ_BASE {
 
 	private String ccyCod = "CNY";
     
-    private String txnAmt;
+    private BigDecimal txnAmt;
 
     private String pin;
 
@@ -80,7 +82,7 @@ public class REQ_20001 extends REQ_BASE {
         StringBuffer sb = new StringBuffer();
         sb.append(super.getHeader().creaFixPack());
         sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
-        sb.append(String.format("%-15s", this.txnAmt==null?"":this.txnAmt));
+        sb.append(String.format("%015.0f", this.txnAmt==null?0.0:this.txnAmt.movePointRight(2)));
         sb.append(String.format("%-20s", this.pin==null?"":this.pin));
         sb.append(String.format("%-1s", this.oprFlg==null?"":this.oprFlg));
         sb.append(String.format("%-1s", this.txnMod==null?"":this.txnMod));
@@ -115,7 +117,7 @@ public class REQ_20001 extends REQ_BASE {
         int i = 0;
         super.getHeader().chanFixPack(sb.substring(0, i=i+60));
         this.ccyCod = sb.substring(i, i=i+3).trim();
-        this.txnAmt = sb.substring(i, i=i+15).trim();
+        this.txnAmt = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
         this.pin = sb.substring(i, i=i+20).trim();
         this.oprFlg = sb.substring(i, i=i+1).trim();
         this.txnMod = sb.substring(i, i=i+1).trim();
@@ -148,14 +150,6 @@ public class REQ_20001 extends REQ_BASE {
 
 	public void setCcyCod(String ccyCod) {
 		this.ccyCod = ccyCod;
-	}
-
-	public String getTxnAmt() {
-		return txnAmt;
-	}
-
-	public void setTxnAmt(String txnAmt) {
-		this.txnAmt = txnAmt;
 	}
 
 	public String getOprFlg() {
@@ -348,6 +342,14 @@ public class REQ_20001 extends REQ_BASE {
 
 	public void setPin(String pin) {
 		this.pin = pin;
+	}
+
+	public BigDecimal getTxnAmt() {
+		return txnAmt;
+	}
+
+	public void setTxnAmt(BigDecimal txnAmt) {
+		this.txnAmt = txnAmt;
 	}
 
    
