@@ -275,13 +275,13 @@ public class WD_BocmTrsr extends TradeBase implements TradeExecutionStrategy {
 				    updateBocmRecord(reqDto, "", "5");
 				    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno());
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交行记账失败(交行抹账成功)");
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"其它未知错误(交行抹账成功)");
 					throw e2;
 				}catch(SysTradeExecuteException e1) {
 					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
 					updateBocmRecord(reqDto, "", "6");
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交行记账失败(交行抹账失败)");
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"其它未知错误(交行抹账失败)");
 					throw e2;
 				}
 			}
