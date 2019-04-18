@@ -8,6 +8,8 @@
 */
 package com.fxbank.tpp.bocm.trade.esb;
 
+import java.math.BigDecimal;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -96,9 +98,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				rep10001 = magCardCharge(reqDto);
 				bocmTraceNo = rep10001.getHeader().getrLogNo();
 				//手续费
-				rep.getRepBody().setFeeT3(rep10001.getFee());
+				rep.getRepBody().setFeeT3(rep10001.getFee().toString());
 				//余额
-				rep.getRepBody().setBalance3T(rep10001.getActBal());
+				rep.getRepBody().setBalance3T(rep10001.getActBal().toString());
 				//3.更新流水表交行记账状态
 				//交行记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 				updateBocmRecord(reqDto,bocmTraceNo,"1");
@@ -114,9 +116,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				rep20001 = iCCardCharge(reqDto);
 				bocmTraceNo = rep20001.getHeader().getrLogNo();
 				//手续费
-				rep.getRepBody().setFeeT3(rep20001.getFee());
+				rep.getRepBody().setFeeT3(rep20001.getFee().toString());
 				//余额
-				rep.getRepBody().setBalance3T(rep20001.getActBal());
+				rep.getRepBody().setBalance3T(rep20001.getActBal().toString());
 				//3.更新流水表交行记账状态
 				//交行记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败
 				updateBocmRecord(reqDto,bocmTraceNo,"1");
@@ -139,9 +141,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		String accounting_branch = null;
 		try {
 			esbRep_30011000104 = hostCharge(reqDto);
-			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
-			hostTraceno = esbRep_30011000104.getRepBody().getReference();
-			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
+			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();//核心日期
+			hostTraceno = esbRep_30011000104.getRepBody().getReference();//核心流水
+			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();//核心返回
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();			
 			accounting_branch = esbRep_30011000104.getRepBody().getAcctBranch();
 		}catch(SysTradeExecuteException e) {			
@@ -215,7 +217,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_10001 req10001 = new REQ_10001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001.getHeader()); // 设置报文头中的行号信息
 		REQ_30061800401.REQ_BODY reqBody = reqDto.getReqBody();
-		req10001.setTxnAmt(reqBody.getWthrAmtT());//交易金额
+		BigDecimal txnAmt = new BigDecimal(reqBody.getWthrAmtT());
+		req10001.setTxnAmt(txnAmt);//交易金额
 		req10001.setPin(reqBody.getPwdT());//交易密码
 		req10001.setOprFlg("0");//卡输入方式  通兑必须刷卡
 		req10001.setTxnMod("0");//业务模式 0 现金 1 转账（实时转账）
@@ -249,8 +252,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061800401.REQ_BODY reqBody = reqDto.getReqBody();
 		REQ_20001 req20001 = new REQ_20001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001.getHeader()); // 设置报文头中的行号信息
-
-		req20001.setTxnAmt(reqBody.getWthrAmtT());//交易金额
+		BigDecimal txnAmt = new BigDecimal(reqBody.getWthrAmtT());
+		req20001.setTxnAmt(txnAmt);//交易金额
 		req20001.setPin(reqBody.getPwdT());//交易密码
 		req20001.setOprFlg("0");//卡输入方式  通兑必须刷卡
 		req20001.setTxnMod("0");//业务模式 0 现金 1 转账（实时转账）
@@ -441,11 +444,12 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		}else{
 			req_10009.setOtxnCd("20001");
 		}		
-		//交易金额
-		req_10009.setTxnAmt(reqBody.getWthrAmtT());
+		
 		//业务模式
 		req_10009.setTxnMod("");
-		req_10009.setTxnAmt(reqBody.getWthrAmtT());//交易金额
+		//交易金额
+		BigDecimal txnAmt = new BigDecimal(reqBody.getWthrAmtT());
+		req_10009.setTxnAmt(txnAmt);
 		req_10009.setTxnMod("0");//业务模式 0 现金 1 转账（实时转账）
 		req_10009.setPayBnk(reqBody.getOpnAcctBnkNoT7());//付款人开户行行号
 		req_10009.setpActTp(reqBody.getAcctNoTpT());//付款人账户类型
