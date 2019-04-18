@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.model;
 
+import java.math.BigDecimal;
+
 import com.fxbank.cip.base.log.MyLog;
 
 
@@ -16,11 +18,11 @@ public class REP_20001 extends REP_BASE {
 
 	private static final long serialVersionUID = 7762922925444902496L;
 
-	private String oTxnAmt;
+	private BigDecimal oTxnAmt;
 
-    private String fee;
+    private BigDecimal fee;
 
-    private String actBal;
+    private BigDecimal actBal;
 
     @Deprecated
 	public REP_20001() {
@@ -35,9 +37,9 @@ public class REP_20001 extends REP_BASE {
     public String creaFixPack() {
         StringBuffer sb = new StringBuffer();
         sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-15s", this.oTxnAmt==null?"":this.oTxnAmt));
-        sb.append(String.format("%-15s", this.fee==null?"":this.fee));
-        sb.append(String.format("%-15s", this.actBal==null?"":this.actBal));
+        sb.append(String.format("%015.0f", this.oTxnAmt==null?0.0:this.oTxnAmt.movePointRight(2)));
+        sb.append(String.format("%015.0f", this.fee==null?0.0:this.fee.movePointRight(2)));
+        sb.append(String.format("%015.0f", this.actBal==null?0.0:this.actBal.movePointRight(2)));
         return sb.toString();
     }
 
@@ -46,35 +48,35 @@ public class REP_20001 extends REP_BASE {
         StringBuffer sb = new StringBuffer(pack);
         int i = 0;
         super.getHeader().chanFixPack(sb.substring(0, i=i+51));
-        this.oTxnAmt = sb.substring(i, i=i+15).trim();
-        this.fee= sb.substring(i, i=i+15).trim();
-        this.actBal= sb.substring(i, i=i+15).trim();
+        this.oTxnAmt = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
+        this.fee= new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
+        this.actBal= new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
     }
 
-	public String getoTxnAmt() {
+	public BigDecimal getoTxnAmt() {
 		return oTxnAmt;
 	}
 
-	public void setoTxnAmt(String oTxnAmt) {
+	public void setoTxnAmt(BigDecimal oTxnAmt) {
 		this.oTxnAmt = oTxnAmt;
 	}
 
-	public String getFee() {
+	public BigDecimal getFee() {
 		return fee;
 	}
 
-	public void setFee(String fee) {
+	public void setFee(BigDecimal fee) {
 		this.fee = fee;
 	}
 
-	public String getActBal() {
+	public BigDecimal getActBal() {
 		return actBal;
 	}
 
-	public void setActBal(String actBal) {
+	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
 	}
 
-    
+	
 
 }

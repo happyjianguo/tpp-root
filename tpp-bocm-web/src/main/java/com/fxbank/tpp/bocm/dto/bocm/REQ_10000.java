@@ -1,26 +1,24 @@
-package com.fxbank.tpp.bocm.model;
+package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
 
-import com.fxbank.cip.base.log.MyLog;
-
 /** 
-* @ClassName: REQ_10001 
-* @Description: 磁条卡通兑 
+* @ClassName: REQ_10000 
+* @Description: 磁条卡通存 
 * @author Duzhenduo
-* @date 2019年4月16日 上午9:23:02 
+* @date 2019年4月15日 下午5:02:02 
 *  
 */
-public class REQ_10001 extends REQ_BASE {
-
-	private static final long serialVersionUID = -5030423745594921356L;
+public class REQ_10000 extends REQ_BASE {
 
 	private String ccyCod = "CNY";
     
     private BigDecimal txnAmt;
-    
-    private String pin;
 
+    private String feeFlg;
+
+    private BigDecimal fee;
+    
     private String oprFlg;
     
     private String txnMod;
@@ -61,15 +59,10 @@ public class REQ_10001 extends REQ_BASE {
     
     private String remark;
     
-    @Deprecated
-	public REQ_10001() {
-		super(null, 0, 0, 0);
+    public REQ_10000() {
+        super.txDesc = "磁条卡通存";
+        super.log = false;
 	}
-
-    public REQ_10001(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
-        super(mylog, sysDate, sysTime, sysTraceno);
-        super.getHeader().settTxnCd("10001");
-    }
 
     @Override
     public String creaFixPack() {
@@ -77,7 +70,8 @@ public class REQ_10001 extends REQ_BASE {
         sb.append(super.getHeader().creaFixPack());
         sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
         sb.append(String.format("%015.0f", this.txnAmt==null?0.0:this.txnAmt.movePointRight(2)));
-        sb.append(String.format("%-20s", this.pin==null?"":this.pin));
+        sb.append(String.format("%-1s", this.feeFlg==null?"":this.feeFlg));
+        sb.append(String.format("%015.0f", this.fee==null?0.0:this.fee.movePointRight(2)));
         sb.append(String.format("%-1s", this.oprFlg==null?"":this.oprFlg));
         sb.append(String.format("%-1s", this.txnMod==null?"":this.txnMod));
         sb.append(String.format("%-12s", this.payBnk==null?"":this.payBnk));
@@ -109,7 +103,8 @@ public class REQ_10001 extends REQ_BASE {
         super.getHeader().chanFixPack(sb.substring(0, i=i+60));
         this.ccyCod = sb.substring(i, i=i+3).trim();
         this.txnAmt = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.pin = sb.substring(i, i=i+20).trim();
+        this.feeFlg = sb.substring(i, i=i+1).trim();
+        this.fee = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
         this.oprFlg = sb.substring(i, i=i+1).trim();
         this.txnMod = sb.substring(i, i=i+1).trim();
         this.payBnk = sb.substring(i, i=i+12).trim();
@@ -138,6 +133,14 @@ public class REQ_10001 extends REQ_BASE {
 
 	public void setCcyCod(String ccyCod) {
 		this.ccyCod = ccyCod;
+	}
+
+	public String getFeeFlg() {
+		return feeFlg;
+	}
+
+	public void setFeeFlg(String feeFlg) {
+		this.feeFlg = feeFlg;
 	}
 
 	public String getOprFlg() {
@@ -300,14 +303,6 @@ public class REQ_10001 extends REQ_BASE {
 		this.remark = remark;
 	}
 
-	public String getPin() {
-		return pin;
-	}
-
-	public void setPin(String pin) {
-		this.pin = pin;
-	}
-
 	public BigDecimal getTxnAmt() {
 		return txnAmt;
 	}
@@ -315,5 +310,15 @@ public class REQ_10001 extends REQ_BASE {
 	public void setTxnAmt(BigDecimal txnAmt) {
 		this.txnAmt = txnAmt;
 	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
+	}
+
+   
 
 }
