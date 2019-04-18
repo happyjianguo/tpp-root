@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
 * @date 2019年4月18日 上午10:59:10 
 *  
 */
-@Service("REQ_20000")
+@Service("REQ_20001")
 public class WD_FxICC implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(WD_FxICC.class);
