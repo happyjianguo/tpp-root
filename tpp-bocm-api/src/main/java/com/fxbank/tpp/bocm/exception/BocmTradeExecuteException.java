@@ -20,6 +20,8 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	public final static String BOCM_E_10004 = "FX0004";
 	public final static String BOCM_E_10005 = "FX0005";
 	public final static String BOCM_E_10006 = "FX0006";
+	public final static String BOCM_E_10007 = "FX0007";
+	public final static String BOCM_E_10008 = "FX0008";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 
@@ -32,6 +34,8 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 			put(BOCM_E_10004, "核心记账失败");
 			put(BOCM_E_10005, "交行冲正失败");
 			put(BOCM_E_10006, "交行冲正成功");
+			put(BOCM_E_10007, "磁条卡二磁道校验失败");
+			put(BOCM_E_10008, "IC卡信息校验失败");
 			
 		}
 	};

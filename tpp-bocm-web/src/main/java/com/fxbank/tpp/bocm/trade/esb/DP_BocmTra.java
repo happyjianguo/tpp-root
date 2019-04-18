@@ -14,6 +14,7 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061800101;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061800101;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061800301;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmSndTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
@@ -25,8 +26,10 @@ import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30063000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30063000103;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import redis.clients.jedis.Jedis;
 import org.slf4j.Logger;
@@ -42,8 +45,8 @@ import org.springframework.stereotype.Service;
 *  
 */
 @Service("REQ_30061800101")
-public class DP_BocmTrsr extends TradeBase implements TradeExecutionStrategy {
-	private static Logger logger = LoggerFactory.getLogger(DP_BocmTrsr.class);
+public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
+	private static Logger logger = LoggerFactory.getLogger(DP_BocmTra.class);
 
 	@Resource
 	private LogPool logPool;
@@ -622,5 +625,35 @@ public class DP_BocmTrsr extends TradeBase implements TradeExecutionStrategy {
 		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,
 				ESB_REP_30014000101.class);
 		return esbRep_30014000101;
+	}
+	private ESB_REP_30063000103 queryFee(REQ_30061800301 reqDto) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
+		// 交易机构
+		String txBrno = null;
+		// 柜员号
+		String txTel = null;
+		try (Jedis jedis = myJedis.connect()) {
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
+		}
+
+		ESB_REQ_30063000103 esbReq_30063000103 = new ESB_REQ_30063000103(myLog, reqDto.getSysDate(),
+				reqDto.getSysTime(), reqDto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30063000103.getReqSysHead(), reqDto)
+				.setBranchId(txBrno).setUserId(txTel).build();
+		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
+		esbReq_30063000103.setReqSysHead(reqSysHead);
+
+		ESB_REQ_30063000103.REQ_BODY reqBody_30063000103 = esbReq_30063000103.getReqBody();
+		esbReq_30063000103.setReqSysHead(reqSysHead);	
+        //DEP-存款WTD-取款TRA-转账
+		reqBody_30063000103.setChargeSenece("TRA");
+		reqBody_30063000103.setOthBankCode(reqDto.getReqBody().getCardNoT3());
+		reqBody_30063000103.setTranAmt(reqDto.getReqBody().getDpsAmtT());
+		reqBody_30063000103.setTranCcy("CNY");
+
+		ESB_REP_30063000103 esbRep_30063000103 = forwardToESBService.sendToESB(esbReq_30063000103, reqBody_30063000103,
+				ESB_REP_30063000103.class);
+		return esbRep_30063000103;
 	}
 }
