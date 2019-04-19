@@ -42,8 +42,8 @@ import org.springframework.stereotype.Service;
 *  
 */
 @Service("REQ_30061800201")
-public class WD_BocmTrsr extends TradeBase implements TradeExecutionStrategy {
-	private static Logger logger = LoggerFactory.getLogger(DP_BocmTrsr.class);
+public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
+	private static Logger logger = LoggerFactory.getLogger(DP_BocmTra.class);
 
 	@Resource
 	private LogPool logPool;

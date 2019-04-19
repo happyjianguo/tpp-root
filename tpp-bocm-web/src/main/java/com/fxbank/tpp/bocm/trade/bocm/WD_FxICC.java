@@ -12,36 +12,35 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.bocm.REP_10000;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
+import com.fxbank.tpp.bocm.dto.bocm.REP_20001;
+import com.fxbank.tpp.bocm.dto.bocm.REQ_20001;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30033000203;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000203;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-
 import redis.clients.jedis.Jedis;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+
 /** 
-* @ClassName: DP_FxCash 
-* @Description: 交行向本行发起磁条卡通存记账请求
+* @ClassName: WD_FxICC 
+* @Description: 交行向本行发起IC卡通兑记账请求
 * @author Duzhenduo
-* @date 2019年4月17日 下午4:22:56 
+* @date 2019年4月18日 上午10:59:10 
 *  
 */
-@Service("REQ_10000")
-public class DP_FxMag implements TradeExecutionStrategy {
+@Service("REQ_20001")
+public class WD_FxICC implements TradeExecutionStrategy {
 
-	private static Logger logger = LoggerFactory.getLogger(DP_FxMag.class);
+	private static Logger logger = LoggerFactory.getLogger(WD_FxICC.class);
 
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
@@ -60,14 +59,14 @@ public class DP_FxMag implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_10000 req = (REQ_10000) dto;
+		REQ_20001 req = (REQ_20001) dto;
 		// 插入流水表
 		initRecord(req);	
-		//磁条卡二磁道校验
+		//IC卡信息校验
 		try {
-			validateMag(req);
+			validateIC(req);
 		} catch (SysTradeExecuteException e) {
-			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008);
 			throw e2;
 		}
 		// 核心记账
@@ -88,13 +87,13 @@ public class DP_FxMag implements TradeExecutionStrategy {
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
 			updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
-			myLog.error(logger, "交行代理我行账户存款（磁条卡），本行核心记账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+			myLog.error(logger, "交行代理我行账户付款（IC卡），本行核心记账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 			throw e2;
 		}
 		updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
-		myLog.info(logger, "交行代理我行账户存款（磁条卡），本行核心记账成功，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
-		REP_10000 rep = new REP_10000();
+		myLog.info(logger, "交行代理我行账户付款（IC卡），本行核心记账成功，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+		REP_20001 rep = new REP_20001();
 		rep.setoTxnAmt(req.getTxnAmt());
 		List<Fee> feeList = esbRep_30011000104.getRepBody().getFeeDetail();
 		//JHF1-异地手续费JHF2-代理手续费
@@ -117,7 +116,7 @@ public class DP_FxMag implements TradeExecutionStrategy {
 	* @return ESB_REP_30011000103    返回类型 
 	* @throws 
 	*/
-	private ESB_REP_30011000104 hostCharge(REQ_10000 reqDto) throws SysTradeExecuteException {
+	private ESB_REP_30011000104 hostCharge(REQ_20001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		// 交易机构
 		String txBrno = null;
@@ -154,7 +153,7 @@ public class DP_FxMag implements TradeExecutionStrategy {
 				ESB_REP_30011000104.class);
 		return esbRep_30011000104;
 	}
-	private void initRecord(REQ_10000 reqDto) throws SysTradeExecuteException {
+	private void initRecord(REQ_20001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
@@ -175,7 +174,7 @@ public class DP_FxMag implements TradeExecutionStrategy {
 		record.setCheckFlag("1");
 		bocmRcvTraceService.rcvTraceInit(record);
 	}
-	private BocmRcvTraceUpdModel updateHostRecord(REQ_10000 reqDto, String hostDate, String hostTraceno,
+	private BocmRcvTraceUpdModel updateHostRecord(REQ_20001 reqDto, String hostDate, String hostTraceno,
 			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
@@ -190,7 +189,7 @@ public class DP_FxMag implements TradeExecutionStrategy {
 		bocmRcvTraceService.rcvTraceUpd(record);
 		return record;
 	}
-	private ESB_REP_30033000203 validateMag(REQ_10000 reqDto) throws SysTradeExecuteException {
+	private ESB_REP_30033000202 validateIC(REQ_20001 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		// 交易机构
 		String txBrno = null;
@@ -201,19 +200,19 @@ public class DP_FxMag implements TradeExecutionStrategy {
 			txTel = jedis.get(COMMON_PREFIX + "txtel");
 		}
 
-		ESB_REQ_30033000203 esbReq_30033000203 = new ESB_REQ_30033000203(myLog, reqDto.getSysDate(),
+		ESB_REQ_30033000202 esbReq_30033000202 = new ESB_REQ_30033000202(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30033000203.getReqSysHead(), reqDto)
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30033000202.getReqSysHead(), reqDto)
 				.setBranchId(txBrno).setUserId(txTel).build();
-		esbReq_30033000203.setReqSysHead(reqSysHead);
+		esbReq_30033000202.setReqSysHead(reqSysHead);
 
-		ESB_REQ_30033000203.REQ_BODY reqBody_30033000203 = esbReq_30033000203.getReqBody();
-		reqBody_30033000203.setCardNo(reqDto.getrActNo());
-		reqBody_30033000203.setScdTrk(reqDto.getSecMag());
-		reqBody_30033000203.setCurDate(reqDto.getHeader().gettTxnDat().toString());
+		ESB_REQ_30033000202.REQ_BODY reqBody_30033000202 = esbReq_30033000202.getReqBody();
+		reqBody_30033000202.setCardNo(reqDto.getrActNo());
+		reqBody_30033000202.setF55(reqDto.getiCData());
+		reqBody_30033000202.setIcCardSeqNo(reqDto.getSeqNo());
 
-		ESB_REP_30033000203 esbRep_30033000203 = forwardToESBService.sendToESB(esbReq_30033000203, reqBody_30033000203,
-				ESB_REP_30033000203.class);
-		return esbRep_30033000203;
+		ESB_REP_30033000202 esbRep_30033000202 = forwardToESBService.sendToESB(esbReq_30033000202, reqBody_30033000202,
+				ESB_REP_30033000202.class);
+		return esbRep_30033000202;
 	}
 }

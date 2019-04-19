@@ -20,11 +20,11 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-
 import redis.clients.jedis.Jedis;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -62,6 +62,13 @@ public class DP_FxICC implements TradeExecutionStrategy {
 		REQ_20000 req = (REQ_20000) dto;
 		// 插入流水表
 		initRecord(req);		
+		//IC卡信息校验
+		try {
+			validateIC(req);
+		} catch (SysTradeExecuteException e) {
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008);
+			throw e2;
+		}
 		// 核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
@@ -181,5 +188,31 @@ public class DP_FxICC implements TradeExecutionStrategy {
 		record.setRetMsg(retMsg);
 		bocmRcvTraceService.rcvTraceUpd(record);
 		return record;
+	}
+	private ESB_REP_30033000202 validateIC(REQ_20000 reqDto) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
+		// 交易机构
+		String txBrno = null;
+		// 柜员号
+		String txTel = null;
+		try (Jedis jedis = myJedis.connect()) {
+			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
+			txTel = jedis.get(COMMON_PREFIX + "txtel");
+		}
+
+		ESB_REQ_30033000202 esbReq_30033000202 = new ESB_REQ_30033000202(myLog, reqDto.getSysDate(),
+				reqDto.getSysTime(), reqDto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30033000202.getReqSysHead(), reqDto)
+				.setBranchId(txBrno).setUserId(txTel).build();
+		esbReq_30033000202.setReqSysHead(reqSysHead);
+
+		ESB_REQ_30033000202.REQ_BODY reqBody_30033000202 = esbReq_30033000202.getReqBody();
+		reqBody_30033000202.setCardNo(reqDto.getrActNo());
+		reqBody_30033000202.setF55(reqDto.getiCData());
+		reqBody_30033000202.setIcCardSeqNo(reqDto.getSeqNo());
+
+		ESB_REP_30033000202 esbRep_30033000202 = forwardToESBService.sendToESB(esbReq_30033000202, reqBody_30033000202,
+				ESB_REP_30033000202.class);
+		return esbRep_30033000202;
 	}
 }
