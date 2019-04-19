@@ -11,6 +11,6 @@ import com.fxbank.tpp.mivs.model.REQ_BASE;
  */
 public interface IForwardToMivsService {
 	
-	public <T extends REP_BASE> T sendToBocm(REQ_BASE reqBase, Class<T> clazz) throws SysTradeExecuteException; 
+	public <T extends REP_BASE> T sendToMivs(REQ_BASE reqBase, Class<T> clazz) throws SysTradeExecuteException; 
 
 }

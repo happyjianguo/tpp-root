@@ -1,4 +1,4 @@
-package com.fxbank.tpp.mivs.dto.bocm;
+package com.fxbank.tpp.mivs.dto.mivs;
 
 import com.fxbank.cip.base.model.FIXP_SERIAL;
 
