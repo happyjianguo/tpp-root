@@ -7,7 +7,6 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.mivs.model.REP_BASE;
 import com.fxbank.tpp.mivs.model.REQ_BASE;
-import com.fxbank.tpp.mivs.netty.mivs.MivsClient;
 import com.fxbank.tpp.mivs.service.IForwardToMivsService;
 
 import org.slf4j.Logger;
@@ -18,19 +17,17 @@ public class ForwardToMivsService implements IForwardToMivsService {
 
 	private static Logger logger = LoggerFactory.getLogger(ForwardToMivsService.class);
 
-	@Resource
-	private MivsClient bocmClient;
-
 	@Override
-	public <T extends REP_BASE> T sendToBocm(REQ_BASE reqBase, Class<T> clazz) throws SysTradeExecuteException {
+	public <T extends REP_BASE> T sendToMivs(REQ_BASE reqBase, Class<T> clazz) throws SysTradeExecuteException {
 		MyLog myLog = reqBase.getMylog();
 		reqBase.getHeader().settTxnDat(reqBase.getSysDate());
 		reqBase.getHeader().settTxnTim(reqBase.getSysTime());
 		reqBase.getHeader()
 				.setsLogNo(String.format("%06d%08d", reqBase.getSysDate() % 1000000, reqBase.getSysTraceno()));
 		T repModel = null;
+		/**
 		try {
-			repModel = bocmClient.comm(myLog, reqBase, clazz);
+			repModel = mivsClient.comm(myLog, reqBase, clazz);
 		} catch (SysTradeExecuteException e) {
 			myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg(), e);
 			throw e;
@@ -40,6 +37,7 @@ public class ForwardToMivsService implements IForwardToMivsService {
 			myLog.error(logger, e1.getRspCode() + " | " + e1.getRspMsg(), e);
 			throw e1;
 		}
+		**/
 		REP_BASE repBase = repModel;
 		if (repBase == null) {
 			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);

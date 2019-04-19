@@ -1,4 +1,4 @@
-package com.fxbank.tpp.mivs.dto.bocm;
+package com.fxbank.tpp.mivs.dto.mivs;
 
 /**
  * @Description: 用于生成错误应答报文

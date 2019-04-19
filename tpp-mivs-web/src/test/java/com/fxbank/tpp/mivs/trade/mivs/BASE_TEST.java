@@ -1,4 +1,4 @@
-package com.fxbank.tpp.bocm.trade.bocm;
+package com.fxbank.tpp.mivs.trade.mivs;
 
 import java.io.InputStream;
 import java.io.OutputStream;
