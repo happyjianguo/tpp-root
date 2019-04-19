@@ -16,8 +16,6 @@ public class mq {
 
 	private String QLocal = null; 
 	
-	private String QBusilist = null; 
-
 	private MQQueueManager qMgr; 
 
 	private int waitinterval = 0;
@@ -26,7 +24,6 @@ public class mq {
 		this.QManager = "QMUMBFEA";
 		this.QRemote = "MSGTOBANK_9";
 		this.QLocal = "MSGTOBANK_9";
-		this.QBusilist = "";
 		MQEnvironment.hostname = "57.25.2.205";
 		MQEnvironment.channel = "SVCONNCH";
 		MQEnvironment.CCSID = 819;
@@ -107,20 +104,8 @@ public class mq {
 
 	}
 
-	public String get_QLocal() {
-		return this.QLocal;
-	}
-	
-	public Integer BusiChk(String busi) {
-		
-		return this.QBusilist.indexOf(busi);
-		
-	}
-
 	public void close() throws Exception {
-
 		this.qMgr.disconnect();
-
 	}
 
 	public static void main(String[] args) {
