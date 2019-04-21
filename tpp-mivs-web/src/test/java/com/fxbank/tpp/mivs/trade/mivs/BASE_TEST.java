@@ -2,16 +2,15 @@ package com.fxbank.tpp.mivs.trade.mivs;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import com.fxbank.tpp.mivs.dto.mivs.REQ_HEADER;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fxbank.tpp.mivs.model.REQ_HEADER;
 
 public class BASE_TEST {
     private static Logger logger = LoggerFactory.getLogger(BASE_TEST.class);
@@ -33,7 +32,7 @@ public class BASE_TEST {
             os.write(reqLen.getBytes(BASE_TEST.CODING));
             os.write(reqData.getBytes(BASE_TEST.CODING));
 
-            is = socket.getInputStream();
+is = socket.getInputStream();
             byte[] lenByte = new byte[8];
             is.read(lenByte);
             String slen = new String(lenByte);
