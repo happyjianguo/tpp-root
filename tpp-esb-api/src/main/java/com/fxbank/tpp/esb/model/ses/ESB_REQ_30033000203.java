@@ -19,7 +19,7 @@ public class ESB_REQ_30033000203 extends ESB_BASE {
 	private ESB_REQ_APP_HEAD reqAppHead = new ESB_REQ_APP_HEAD();
 
 	@JSONField(name = "SYS_HEAD")
-	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("300330002", "02");
+	private ESB_REQ_SYS_HEAD reqSysHead = new ESB_REQ_SYS_HEAD("300330002", "03");
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody = new REQ_BODY();
 
