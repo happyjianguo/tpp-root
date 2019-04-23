@@ -358,16 +358,17 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	
 	private void initRecord(REQ_30061800401 reqDto) throws SysTradeExecuteException{
 		MyLog myLog = logPool.get();
+		REQ_30061800401.REQ_BODY reqBody = reqDto.getReqBody();
 		BocmSndTraceInitModel record = new BocmSndTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 		record.setSourceType(reqDto.getSourceType());
 		record.setTxBranch(reqDto.getReqSysHead().getBranchId());
 		record.setTxInd("");//现转标志
 		record.setDcFlag("1");//通存通兑标志 0通存、1通兑
-		record.setTxAmt("");//交易金额
-		record.setPayerAcno("payer");//付款人账户
-		record.setPayerName("payerName");//付款人姓名
-		record.setPayeeAcno("payeeAcno");//收款人账户
-		record.setPayeeName("payeeName");//收款人姓名
+		record.setTxAmt(reqBody.getWthrAmtT());//交易金额
+		record.setPayerAcno(reqBody.getCardNoT3());//付款人账户
+		record.setPayerName(reqBody.getNmT());//付款人姓名
+		record.setPayeeAcno("");//收款人账户
+		record.setPayeeName("");//收款人姓名
 		record.setBocmBranch("");//交通银行记账机构
 		record.setCheckFlag("1");//对账标志
 		record.setHostState("0");//核心记账状态
