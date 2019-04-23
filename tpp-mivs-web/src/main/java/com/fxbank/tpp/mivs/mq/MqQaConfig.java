@@ -2,7 +2,9 @@ package com.fxbank.tpp.mivs.mq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnProperty(name = "pmts.mq.enable", havingValue = "true")
-@ConfigurationProperties(prefix = "pmts.mq")
+@ConfigurationProperties(prefix = "pmt.mq")
 public class MqQaConfig {
 
     private String qmanager1;
@@ -44,19 +46,21 @@ public class MqQaConfig {
         mqManager.setCcsid(ccsid);
         mqManager.setPort(port);
         mqManager.setWaitinterval(waitinteval);
-        // mqManager.connectManager(); //连接队列管理器
+        mqManager.connectManager(); //连接队列管理器
         return mqManager;
     }
 
     @Bean(name = "mqManagerList")
     public List<MqQaManager> mqManagerList() {
         List<MqQaManager> mqManagerList = new ArrayList<MqQaManager>();
-        mqManagerList.add(genMqManager(this.qmanager1, this.queue1, this.hostname1, this.channel1, this.ccsid1,
+        List<MqQaManager> mqManagerList2 = mqManagerList;
+        mqManagerList2.add(genMqManager(this.qmanager1, this.queue1, this.hostname1, this.channel1, this.ccsid1,
                 this.port1, this.waitinteval1));
-        mqManagerList.add(genMqManager(this.qmanager2, this.queue2, this.hostname2, this.channel2, this.ccsid2,
+        mqManagerList2.add(genMqManager(this.qmanager2, this.queue2, this.hostname2, this.channel2, this.ccsid2,
                 this.port2, this.waitinteval2));
-        return mqManagerList;
+        return mqManagerList2;
     }
+
 
     /**
      * @return the qmanager1

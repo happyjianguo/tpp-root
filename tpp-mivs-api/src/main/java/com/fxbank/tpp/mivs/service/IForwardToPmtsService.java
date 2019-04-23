@@ -1,7 +1,7 @@
 package com.fxbank.tpp.mivs.service;
 
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
-import com.fxbank.tpp.mivs.model.REQ_BASE;
+import com.fxbank.tpp.mivs.model.MODEL_BASE;
 
 /**
  * @Description: 发送请求报文至PMTS，没有异常抛出，代表发送成功，且收到成功990报文
@@ -10,6 +10,6 @@ import com.fxbank.tpp.mivs.model.REQ_BASE;
  */
 public interface IForwardToPmtsService {
 	
-	public void sendToPmts(REQ_BASE reqBase) throws SysTradeExecuteException;
+	public void sendToPmts(MODEL_BASE modelBase) throws SysTradeExecuteException;
 
 }

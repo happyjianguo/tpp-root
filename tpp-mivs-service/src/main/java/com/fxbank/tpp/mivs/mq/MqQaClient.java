@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 
+import com.fxbank.cip.base.log.MyLog;
 import com.ibm.mq.MQC;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQGetMessageOptions;
@@ -35,22 +36,25 @@ public class MqQaClient {
 	 * @Author: 周勇沩
 	 * @Date: 2019-04-22 06:35:49
 	 */
-	private MqQaManager randomManager() {
+	private MqQaManager randomManager(MyLog myLog) {
 		Integer index = new Random().nextInt(qMgrList.size());
 		MqQaManager mqManager = qMgrList.get(index);
+		myLog.info(logger, "随机获取队列管理器" + mqManager);
 		MQQueueManager qMgr = mqManager.getqMgr();
 		if (qMgr == null || !qMgr.isConnected()) {
+			myLog.info(logger, "开始重连队列管理器" + mqManager);
 			qMgr = mqManager.connectManager();
+			myLog.info(logger, "成功重连队列管理器" + mqManager);
 		}
 		return mqManager;
 	}
 
-	public void put(String message) {
+	public void put(MyLog myLog, String message) {
 		MQQueue queue = null;
 		MQQueueManager qMgr = null;
 		try {
 			int openOptions = MQC.MQOO_OUTPUT | MQC.MQOO_FAIL_IF_QUIESCING;
-			MqQaManager mqManager = randomManager();
+			MqQaManager mqManager = randomManager(myLog);
 			qMgr = mqManager.getqMgr();
 			queue = qMgr.accessQueue(mqManager.getQueue(), openOptions);
 			MQMessage putMessage = new MQMessage();
@@ -62,14 +66,16 @@ public class MqQaClient {
 			throw new RuntimeException(e);
 		} finally {
 			try {
-				qMgr.commit();
-				queue.close();
+				if (qMgr != null)
+					qMgr.commit();
+				if (queue != null)
+					queue.close();
 			} catch (MQException ex) {
 			}
 		}
 	}
 
-	public String get() {
+	public String get(MyLog myLog) {
 
 		int openOptions = MQC.MQOO_INPUT_AS_Q_DEF | MQC.MQOO_OUTPUT;
 		MQMessage retrieve = new MQMessage();
@@ -77,7 +83,7 @@ public class MqQaClient {
 		MQQueueManager qMgr = null;
 		String message = null;
 
-		MqQaManager mqManager = randomManager();
+		MqQaManager mqManager = randomManager(myLog);
 
 		MQGetMessageOptions gmo = new MQGetMessageOptions();
 		gmo.options = gmo.options + MQC.MQGMO_SYNCPOINT;

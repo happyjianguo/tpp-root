@@ -40,6 +40,31 @@
 			<groupId>dom4j</groupId>
     		<artifactId>dom4j</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.ibm</groupId>
+			<artifactId>com.ibm.mq</artifactId>
+			<version>7.0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ibm</groupId>
+			<artifactId>com.ibm.mq.commonservices</artifactId>
+			<version>7.0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ibm</groupId>
+			<artifactId>com.ibm.mq.headers</artifactId>
+			<version>7.0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ibm</groupId>
+			<artifactId>com.ibm.mq.jmqi</artifactId>
+			<version>7.0.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ibm</groupId>
+			<artifactId>connector</artifactId>
+			<version>7.0.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

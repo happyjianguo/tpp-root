@@ -1,26 +1,30 @@
 package com.fxbank.tpp.mivs.model;
 
+import java.io.Serializable;
+
 /**
  * @Description: 二代支付XML报文固定格式头
  * @Author: 周勇沩
  * @Date: 2019-04-20 09:09:58
  */
-public class PMTS_HEAD {
+public class PMTS_HEAD implements Serializable{
+
+	private static final long serialVersionUID = -6736177144900153272L;
 
 	private String beginFlag = "{H:";
 	private String versionID = "02";
-	private String origSender;			//报文发起人
-	private String origSenderSID= "MIVS";
-	private String origReceiver; 		//报文接收人
-	private String origReceiverSID= "MIVS";
-	private Integer origSendDate;		//报文发起日期
-	private Integer origSendTime; 		//报文发起时间
-	private String structType= "XML";
-	private String mesgType;			//报文类型代码
-	private String mesgID;				//通信级标识号
-	private String mesgRefID;			//通信级参考号
-	private String mesgPriority= "3";
-	private String mesgDirection= "U";
+	private String origSender; // 报文发起人
+	private String origSenderSID = "MIVS";
+	private String origReceiver; // 报文接收人
+	private String origReceiverSID = "MIVS";
+	private Integer origSendDate; // 报文发起日期
+	private Integer origSendTime; // 报文发起时间
+	private String structType = "XML";
+	private String mesgType; // 报文类型代码
+	private String mesgID; // 通信级标识号
+	private String mesgRefID; // 通信级参考号
+	private String mesgPriority = "3";
+	private String mesgDirection = "U";
 	private String reserve;
 	private String endFlag = "}\r\n";
 
@@ -28,21 +32,42 @@ public class PMTS_HEAD {
 		StringBuffer sb = new StringBuffer();
 		sb.append(String.format("%s", this.beginFlag == null ? "" : this.beginFlag));
 		sb.append(String.format("%s", this.versionID == null ? "" : this.versionID));
-		sb.append(String.format("%-14s", this.origSender== null ? "" : this.origSender));
-		sb.append(String.format("%s", this.origSenderSID== null ? "" : this.origSenderSID));
-		sb.append(String.format("%-14s", this.origReceiver== null ? "" : this.origReceiver));
-		sb.append(String.format("%s", this.origReceiverSID== null ? "" : this.origReceiverSID));
-		sb.append(String.format("%08d", this.origSendDate== null ? "" : this.origSendDate));
-		sb.append(String.format("%06d", this.origSendTime== null ? "" : this.origSendTime));
-		sb.append(String.format("%s", this.structType== null ? "" : this.structType));
-		sb.append(String.format("%-20s", this.mesgType== null ? "" : this.mesgType));
-		sb.append(String.format("%-20s", this.mesgID== null ? "" : this.mesgID));
-		sb.append(String.format("%-20s", this.mesgRefID== null ? "" : this.mesgRefID));
-		sb.append(String.format("%s", this.mesgPriority== null ? "" : this.mesgPriority));
-		sb.append(String.format("%s", this.mesgDirection== null ? "" : this.mesgDirection));
-		sb.append(String.format("%-9s", this.reserve== null ? "" : this.reserve));
+		sb.append(String.format("%-14s", this.origSender == null ? "" : this.origSender));
+		sb.append(String.format("%s", this.origSenderSID == null ? "" : this.origSenderSID));
+		sb.append(String.format("%-14s", this.origReceiver == null ? "" : this.origReceiver));
+		sb.append(String.format("%s", this.origReceiverSID == null ? "" : this.origReceiverSID));
+		sb.append(String.format("%08d", this.origSendDate == null ? "" : this.origSendDate));
+		sb.append(String.format("%06d", this.origSendTime == null ? "" : this.origSendTime));
+		sb.append(String.format("%s", this.structType == null ? "" : this.structType));
+		sb.append(String.format("%-20s", this.mesgType == null ? "" : this.mesgType));
+		sb.append(String.format("%-20s", this.mesgID == null ? "" : this.mesgID));
+		sb.append(String.format("%-20s", this.mesgRefID == null ? "" : this.mesgRefID));
+		sb.append(String.format("%s", this.mesgPriority == null ? "" : this.mesgPriority));
+		sb.append(String.format("%s", this.mesgDirection == null ? "" : this.mesgDirection));
+		sb.append(String.format("%-9s", this.reserve == null ? "" : this.reserve));
 		sb.append(String.format("%s", this.endFlag == null ? "" : this.endFlag));
 		return sb.toString();
+	}
+
+	public void chanFixPack(String head) {
+		StringBuffer sb = new StringBuffer(head);
+		int i = 0;
+		this.beginFlag = sb.substring(i, i = i + 3).trim();
+		this.versionID = sb.substring(i, i = i + 2).trim();
+		this.origSender = sb.substring(i, i = i + 14).trim();
+		this.origSenderSID = sb.substring(i, i = i + 4).trim();
+		this.origReceiver = sb.substring(i, i = i + 14).trim();
+		this.origReceiverSID = sb.substring(i, i = i + 4).trim();
+		this.origSendDate = Integer.valueOf(sb.substring(i, i = i + 8).trim());
+		this.origSendTime = Integer.valueOf(sb.substring(i, i = i + 6).trim());
+		this.structType = sb.substring(i, i = i + 3).trim();
+		this.mesgType = sb.substring(i, i = i + 20).trim();
+		this.mesgID = sb.substring(i, i = i + 20).trim();
+		this.mesgRefID = sb.substring(i, i = i + 20).trim();
+		this.mesgPriority = sb.substring(i, i = i + 1).trim();
+		this.mesgDirection = sb.substring(i, i = i + 1).trim();
+		this.reserve = sb.substring(i, i = i + 9).trim();
+		this.endFlag = sb.substring(i, i = i + 1).trim();
 	}
 
 	/**
@@ -141,10 +166,6 @@ public class PMTS_HEAD {
 	 */
 	public void setOrigSender(String origSender) {
 		this.origSender = origSender;
-	}
-
-	public void chanFixPack(String head) {
-
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fxbank.cip.base.log.MyLog;
@@ -19,14 +20,20 @@ import com.fxbank.tpp.mivs.util.PmtsXmlUtil;
  * @Date: 2019-04-20 09:36:15
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class REQ_BASE extends ModelBase implements Serializable, SIGN_DATA {
+public abstract class MODEL_BASE extends ModelBase implements Serializable, SIGN_DATA {
 
 	private static final long serialVersionUID = -6652288226005628489L;
 
 	@XmlTransient
 	protected String mesgType; // 报文类型代码
 
-	public REQ_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	@XmlAttribute(name = "xmlns")
+	protected String XMLNS;
+
+	@XmlAttribute(name = "xmlns:xsi")
+	protected String XMLNS_XSI;
+
+	public MODEL_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 
@@ -107,5 +114,33 @@ public abstract class REQ_BASE extends ModelBase implements Serializable, SIGN_D
 	 */
 	public String getMesgType() {
 		return mesgType;
+	}
+
+	/**
+	 * @param xMLNS the xMLNS to set
+	 */
+	public void setXMLNS(String xMLNS) {
+		XMLNS = xMLNS;
+	}
+
+	/**
+	 * @return the xMLNS
+	 */
+	public String getXMLNS() {
+		return XMLNS;
+	}
+
+	/**
+	 * @param xMLNS_XSI the xMLNS_XSI to set
+	 */
+	public void setXMLNS_XSI(String xMLNS_XSI) {
+		XMLNS_XSI = xMLNS_XSI;
+	}
+
+	/**
+	 * @return the xMLNS_XSI
+	 */
+	public String getXMLNS_XSI() {
+		return XMLNS_XSI;
 	}
 }

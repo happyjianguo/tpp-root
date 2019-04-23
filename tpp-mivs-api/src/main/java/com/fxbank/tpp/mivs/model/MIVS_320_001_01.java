@@ -3,6 +3,7 @@ package com.fxbank.tpp.mivs.model;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 import com.fxbank.cip.base.log.MyLog;
 
@@ -11,13 +12,16 @@ import com.fxbank.cip.base.log.MyLog;
  * @Author: 周勇沩
  * @Date: 2019-04-20 09:51:24
  */
-@XmlRootElement(name = "Document", namespace = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.320.001.01")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MIVS_320_001_01 extends REQ_BASE {
+@XmlType(propOrder = { "GetIdVrfctn" })
+@XmlRootElement(name = "Document")
+public class MIVS_320_001_01 extends MODEL_BASE {
 
     private static final long serialVersionUID = -7575351098905821390L;
 
-	private static final String MESGTYPE = "mivs.320.001.01";
+    private static final String MESGTYPE = "mivs.320.001.01";
+    private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.320.001.01";
+    private static final String XMLNS_XSI= null;
 
     private GetIdVrfctn GetIdVrfctn = new GetIdVrfctn();
 
@@ -28,6 +32,8 @@ public class MIVS_320_001_01 extends REQ_BASE {
     public MIVS_320_001_01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
         super.mesgType = MIVS_320_001_01.MESGTYPE;
+        super.XMLNS= MIVS_320_001_01.XMLNS;
+        super.XMLNS_XSI= MIVS_320_001_01.XMLNS_XSI;
         this.getGetIdVrfctn().getMsgHdr().setMsgId(super.msgId());
         this.getGetIdVrfctn().getMsgHdr().setCreDtTm(super.creDtTm());
     }
@@ -47,6 +53,7 @@ public class MIVS_320_001_01 extends REQ_BASE {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(propOrder = { "MsgHdr", "VryDef" })
     public static class GetIdVrfctn {
         private MsgHdr MsgHdr = new MsgHdr();
         private VryDef VryDef = new VryDef();
@@ -81,6 +88,7 @@ public class MIVS_320_001_01 extends REQ_BASE {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(propOrder = { "MsgId", "CreDtTm", "InstgPty", "InstdPty" })
     public static class MsgHdr {
 
         private String MsgId = null;
@@ -244,6 +252,7 @@ public class MIVS_320_001_01 extends REQ_BASE {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(propOrder = { "MobNb", "Nm", "IdTp", "Id", "UniSocCdtCd", "BizRegNb", "OpNm" })
     public static class VryDef {
         private String MobNb = null;
         private String Nm = null;
@@ -367,15 +376,17 @@ public class MIVS_320_001_01 extends REQ_BASE {
         sb.append(this.getGetIdVrfctn().getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
         sb.append(this.getGetIdVrfctn().getMsgHdr().getInstgPty().getInstgPty() + "|");
         sb.append(this.getGetIdVrfctn().getMsgHdr().getInstgPty().getPtyNm() + "|");
-        sb.append(this.getGetIdVrfctn().getMsgHdr().getInstdPty().getInstdDrctPty()+"|");
-        sb.append(this.getGetIdVrfctn().getMsgHdr().getInstdPty().getInstdPty()+"|");
-        sb.append(this.getGetIdVrfctn().getVryDef().getMobNb()+"|");
-        sb.append(this.getGetIdVrfctn().getVryDef().getNm()+"|");
-        sb.append(this.getGetIdVrfctn().getVryDef().getIdTp()+"|");
-        sb.append(this.getGetIdVrfctn().getVryDef().getId()+"|");
-        sb.append(this.getGetIdVrfctn().getVryDef().getUniSocCdtCd()==null?"":this.getGetIdVrfctn().getVryDef().getUniSocCdtCd()+"|");
-        sb.append(this.getGetIdVrfctn().getVryDef().getBizRegNb()==null?"":this.getGetIdVrfctn().getVryDef().getBizRegNb()+"|");
-        sb.append(this.getGetIdVrfctn().getVryDef().getOpNm()+"|");
+        sb.append(this.getGetIdVrfctn().getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
+        sb.append(this.getGetIdVrfctn().getMsgHdr().getInstdPty().getInstdPty() + "|");
+        sb.append(this.getGetIdVrfctn().getVryDef().getMobNb() + "|");
+        sb.append(this.getGetIdVrfctn().getVryDef().getNm() + "|");
+        sb.append(this.getGetIdVrfctn().getVryDef().getIdTp() + "|");
+        sb.append(this.getGetIdVrfctn().getVryDef().getId() + "|");
+        sb.append(this.getGetIdVrfctn().getVryDef().getUniSocCdtCd() == null ? ""
+                : this.getGetIdVrfctn().getVryDef().getUniSocCdtCd() + "|");
+        sb.append(this.getGetIdVrfctn().getVryDef().getBizRegNb() == null ? ""
+                : this.getGetIdVrfctn().getVryDef().getBizRegNb() + "|");
+        sb.append(this.getGetIdVrfctn().getVryDef().getOpNm() + "|");
         return sb.toString();
     }
 
