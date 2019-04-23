@@ -68,16 +68,17 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061800201 reqDto = (REQ_30061800201) dto;
 		REQ_30061800201.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061800201 rep = new REP_30061800201();
-		// 插入流水表
+		//1. 插入流水表
 		initRecord(reqDto);
 		myLog.info(logger, "交行卡付款转账，登记成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+		//2. 交行记账   
 		//交行记账流水号
 		String bocmTraceNo = null;
 		//原发起方交易流水
 		String oLogNo = null;
 		//原交易代码
 		String oTxnCd = null;
-		// IC_CARD_FLG_T4判断IC卡磁条卡标志
+		// IC_CARD_FLG_T4判断IC卡磁条卡标志   IC卡和磁条卡走不同的交行接口
 		if ("0".equals(reqBody.getIcCardFlgT4())) {
 			myLog.info(logger, "发送磁条卡转账通兑请求至交行");
 			REQ_10001 req10001 = null;
@@ -89,6 +90,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				oTxnCd = "10001";
 				rep10001 = magCardCharge(req10001,reqDto);
 				bocmTraceNo = rep10001.getHeader().getrLogNo();
+				//3.更新流水表交行记账状态
 				updateBocmRecord(reqDto,bocmTraceNo,"1");
 				myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 			    rep.getRepBody().setBalance3T(rep10001.getActBal().toString());
@@ -192,6 +194,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
                 oTxnCd = "20001";
 				REP_20001 rep20001 = iCCardCharge(req20001,reqDto);
 				bocmTraceNo = rep20001.getHeader().getrLogNo();
+				//3.更新流水表交行记账状态
 				updateBocmRecord(reqDto,bocmTraceNo,"1");
 				myLog.info(logger, "交行卡付款转账，交行IC卡通兑记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 			    rep.getRepBody().setBalance3T(rep20001.getActBal().toString());
@@ -286,7 +289,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				}
 			}
 		}		
-		// 核心记账
+		//4. 核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -297,6 +300,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//核心记账返回状态信息
 		String retMsg = null;
 		try {
+			//核心记账
 			esbRep_30011000104 = hostCharge(reqDto);
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
@@ -322,6 +326,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			
 		}
 		myLog.info(logger, "交行卡付款转账，本行核心记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+		//5. 核心记账成功，更新流水表核心记账状态
 		updateHostRecord(reqDto, hostDate, hostTraceno, "1", retCode, retMsg);
 
 		return rep;

@@ -69,10 +69,10 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061800301 reqDto = (REQ_30061800301) dto;
 		REQ_30061800301.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061800301 rep = new REP_30061800301();
-		// 插入流水表
+		//1. 插入流水表
 		initRecord(reqDto);
 		myLog.info(logger, "交行卡存现金，登记成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
-		// 核心记账
+		//2. 核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -83,6 +83,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		//核心记账返回状态信息
 		String retMsg = null;
 		try {
+			//核心记账
 			esbRep_30011000104 = hostCharge(reqDto);
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
@@ -95,9 +96,11 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			throw e2;
 		}
 		myLog.info(logger, "交行卡存现金，本行核心记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+		//3.核心记账成功，更新流水表
 		updateHostRecord(reqDto, hostDate, hostTraceno, "1", retCode, retMsg);
 		//交行记账流水号
 		String bocmTraceNo = null;
+		// 4.交行记账.通过标识判断调用磁条卡记账还是ic卡记账
 		// IC_CARD_FLG_T4判断IC卡磁条卡标志
 		if ("0".equals(reqBody.getIcCardFlgT4())) {
 			myLog.info(logger, "发送磁条卡现金通存请求至交行");
@@ -107,6 +110,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				bocmTraceNo = rep10000.getHeader().getrLogNo();
 				rep.getRepBody().setOpnAcctBnkFeeT(rep10000.getFee().toString());
 				rep.getRepBody().setAcctBalT2(rep10000.getActBal().toString());
+				//5.交行记账成功，更新流水表交行记账状态
 				updateBocmRecord(reqDto,bocmTraceNo,"1");
 				myLog.info(logger, "交行卡存现金，交行磁条卡通存记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 			} catch (SysTradeExecuteException e) { // 记账交易参考一下方式处理，查询交易不用
@@ -242,6 +246,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			try {
 				rep20000 = iCCardCharge(reqDto);
 				bocmTraceNo = rep20000.getHeader().getrLogNo();
+				//5.交行记账成功，更新流水表交行记账状态
 				updateBocmRecord(reqDto,bocmTraceNo,"1");
 				myLog.info(logger, "交行卡存现金，交行IC卡通存记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				rep.getRepBody().setOpnAcctBnkFeeT(rep20000.getFee().toString());

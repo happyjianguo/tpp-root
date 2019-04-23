@@ -38,6 +38,7 @@ public class TradeBase {
 		ESB_REQ_30043003001 esbReq_30043003001 = new ESB_REQ_30043003001(myLog, dto.getSysDate(), dto.getSysTime(),
 				dto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043003001.getReqSysHead(), dto).build();
+		reqSysHead.setBranchId(branchId);
 		esbReq_30043003001.setReqSysHead(reqSysHead);
 		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
 		reqBody_30043003001.setBrchNoT4(branchId);
