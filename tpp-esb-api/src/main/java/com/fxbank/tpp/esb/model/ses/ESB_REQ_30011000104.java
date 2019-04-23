@@ -1,20 +1,21 @@
 package com.fxbank.tpp.esb.model.ses;
 
 import java.io.Serializable;
-import java.util.List;
-
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
+import com.fxbank.tpp.esb.common.ESB;
 
 public class ESB_REQ_30011000104 extends ESB_BASE {
 
-	//private static final long serialVersionUID = -981820169279642493L;
+	private static final long serialVersionUID = -1422904383066616389L;
 
 	public ESB_REQ_30011000104 (MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
+		super.macEnable = true;
+		this.getReqSysHead().setMacValue(ESB.macDeginId + "|" + ESB.macNodeId + "|" + ESB.macKeyModelId + "|" + ESB.macPlaceHolder + "|");
 	}
 
 	@JSONField(name = "APP_HEAD")
@@ -27,8 +28,7 @@ public class ESB_REQ_30011000104 extends ESB_BASE {
 
 	public class REQ_BODY implements Serializable {
 
-		//private static final long serialVersionUID = 2812572356338595288L;
-
+		private static final long serialVersionUID = -3396290849861351808L;
 		@JSONField(name = "BASE_ACCT_NO")
 		private String baseAcctNo;//账号/卡号
 		@JSONField(name = "ACCT_NAME")
