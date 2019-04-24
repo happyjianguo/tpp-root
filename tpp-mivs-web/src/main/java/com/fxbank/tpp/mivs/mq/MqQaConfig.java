@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnProperty(name = "pmts.mq.enable", havingValue = "true")
-@ConfigurationProperties(prefix = "pmt.mq")
+@ConfigurationProperties(prefix = "pmts.mq")
 public class MqQaConfig {
 
     private String qmanager1;
