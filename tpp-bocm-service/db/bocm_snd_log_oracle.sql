@@ -7,6 +7,7 @@ cur_time NUMBER(16) NULL ,
 source_type NVARCHAR2(20) NULL ,
 tx_branch NVARCHAR2(20) NULL ,
 tx_ind NVARCHAR2(10) NULL ,
+tx_code NVARCHAR2(10) NULL ,
 dc_flag NVARCHAR2(10) NULL ,
 tx_amt NUMBER NULL ,
 host_date NUMBER(11) NULL ,
@@ -41,6 +42,7 @@ COMMENT ON COLUMN bocm_snd_log.cur_time IS '交易时间戳';
 COMMENT ON COLUMN bocm_snd_log.source_type IS '交易渠道';
 COMMENT ON COLUMN bocm_snd_log.tx_branch IS '交易机构';
 COMMENT ON COLUMN bocm_snd_log.tx_ind IS '现转标志；0现金、1转账、2 普通转账、3 隔日转账、9 其他';
+COMMENT ON COLUMN bocm_rcv_log.tx_code IS '交易代码';
 COMMENT ON COLUMN bocm_snd_log.dc_flag IS '通存通兑标志；0通存、1通兑';
 COMMENT ON COLUMN bocm_snd_log.tx_amt IS '交易金额';
 COMMENT ON COLUMN bocm_snd_log.host_date IS '核心日期';
