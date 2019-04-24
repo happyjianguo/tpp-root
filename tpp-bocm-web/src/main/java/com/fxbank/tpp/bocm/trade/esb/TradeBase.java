@@ -34,6 +34,8 @@ public class TradeBase {
 			myLog.error(logger,e.getRspCode() + " | " + e.getRspMsg());
 			throw e;
 		}
+		
+		
 		//行号查询
 		ESB_REQ_30043003001 esbReq_30043003001 = new ESB_REQ_30043003001(myLog, dto.getSysDate(), dto.getSysTime(),
 				dto.getSysTraceno());
@@ -57,6 +59,13 @@ public class TradeBase {
 		reqHeader.setsBnkNo(SETTLEMENT_BANK_NO); // 总行 取上面接口返回值
 		//接收行行号 办理业务网点的总行行号
 		reqHeader.setrBnkNo(BANK_NUMBER); // 网点 取上面接口返回值
+		
+		
+		
+//		//发起行行号  313229000660
+//		reqHeader.setsBnkNo("313229000660"); // 总行 取上面接口返回值
+//		//接收行行号 办理业务网点的总行行号
+//		reqHeader.setrBnkNo("313229000660"); // 网点 取上面接口返回值
 	}
 
 	public String convPin(String oPin){
