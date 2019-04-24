@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class PMTS_SIGN implements Serializable{
 
 	private static final long serialVersionUID = -7624287062337443798L;
+
 	private String beginFlag = "{S:";
 	private String digitalSignature = null;
 	private String endFlag = "}\r\n";

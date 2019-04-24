@@ -44,7 +44,7 @@ public class MqQaConfig {
         mqManager.setCcsid(ccsid);
         mqManager.setPort(port);
         mqManager.setWaitinterval(waitinteval);
-        // mqManager.connectManager(); //连接队列管理器
+        mqManager.connectManager(); //连接队列管理器
         return mqManager;
     }
 

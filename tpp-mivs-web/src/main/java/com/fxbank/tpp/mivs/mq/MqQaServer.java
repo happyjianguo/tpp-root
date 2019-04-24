@@ -1,17 +1,13 @@
 package com.fxbank.tpp.mivs.mq;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.annotation.Resource;
 
 import com.fxbank.cip.base.common.LogPool;
-import com.fxbank.cip.base.log.MyLog;
 import com.ibm.mq.MQC;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQGetMessageOptions;
@@ -67,9 +63,7 @@ public class MqQaServer {
 			queue.get(retrieve, gmo);
 			byte[] by = new byte[retrieve.getMessageLength()];
 			retrieve.readFully(by);
-			String str = new String(by);
 			message = new String(by, "UTF-8");
-
 		} finally {
 			try {
 				qMgr.commit();
@@ -78,39 +72,21 @@ public class MqQaServer {
 			}
 
 		}
-
 		return message;
-
 	}
 
 	@Autowired
-	public void serve() {
-		Executors.newSingleThreadExecutor().execute(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					listen();
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public void listen() throws UnknownHostException {
-		MyLog myLog = new MyLog(UUID.randomUUID().toString(), InetAddress.getLocalHost().getHostAddress().toString());
-		logPool.init(myLog);
+	public void listen() {
 		ExecutorService main = Executors.newFixedThreadPool(qMgrList.size());
 		ExecutorService child = Executors.newCachedThreadPool();
-		for(MqQaManager mqManager:qMgrList){
-			main.execute(new Runnable(){
+		for (MqQaManager mqManager : qMgrList) {
+			main.execute(new Runnable() {
 				@Override
 				public void run() {
 					while (true) {
 						try {
 							String message = get(mqManager);
-							child.execute(new Runnable(){
+							child.execute(new Runnable() {
 								@Override
 								public void run() {
 									mqQaExecutor.execute(message);
@@ -119,16 +95,15 @@ public class MqQaServer {
 						} catch (MQException eMQ) {
 							if (eMQ.reasonCode == 2033) {
 								continue;
-							} else
-							{
-								//applog.cnaps2.error(eMQ.getMessage());
+							} else {
+								logger.error("通过MQ获取数据异常", eMQ);
 							}
-						}catch (Exception e){
-
+						} catch (Exception e) {
+							logger.error("通过MQ获取数据异常", e);
 						}
+					}
 				}
-			}
 			});
-		};
+		}
 	}
 }

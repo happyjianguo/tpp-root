@@ -4,9 +4,16 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
 
+/**
+ * @Description: 通讯级确认应答报文主节点
+ * @Author: 周勇沩
+ * @Date: 2019-04-23 20:41:27
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CCMS_990_001_02_COMCONF implements Serializable,SIGN_DATA {
+@XmlType(propOrder = { "MsgHdr", "VryDef" })
+public class CCMS_990_001_02_ComConf implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = -704157491490561912L;
 
@@ -14,7 +21,7 @@ public class CCMS_990_001_02_COMCONF implements Serializable,SIGN_DATA {
 
     @Override
     public String toString() {
-        return "通用处理确认[CCMS_990_001_02]["+this.ConfInf.getMsgId()+"]["+this.ConfInf.getMsgPrcCd()+"]";
+        return "通用处理确认[CCMS_990_001_02][" + this.ConfInf.getMsgId() + "][" + this.ConfInf.getMsgPrcCd() + "]";
     }
 
     /**
@@ -32,7 +39,9 @@ public class CCMS_990_001_02_COMCONF implements Serializable,SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    public static class ConfInf implements Serializable{
+    @XmlType(propOrder = { "OrigSndr", "OrigSndDt", "MT", "MsgId", "MsgRefId", "MsgPrcCd" })
+    public static class ConfInf implements Serializable {
+        private static final long serialVersionUID = -9024584215900455140L;
         private String OrigSndr = null;
         private String OrigSndDt = null;
         private String MT = null;
@@ -126,6 +135,11 @@ public class CCMS_990_001_02_COMCONF implements Serializable,SIGN_DATA {
 
     }
 
+    /**
+     * @Description: 通讯级确认报文无签名域
+     * @Author: 周勇沩
+     * @Date: 2019-04-23 21:03:21
+     */
     @Override
     public String signData() {
         return null;

@@ -1,13 +1,6 @@
 package com.fxbank.tpp.mivs.controller;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.controller.TradeDispatcherBase;
@@ -15,6 +8,15 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+
+/**
+ * @Description: 交易处理入口类
+ * @Author: 周勇沩
+ * @Date: 2019-04-23 21:12:30
+ */
 @Controller
 public class TradeDispatcherExecutor {
 

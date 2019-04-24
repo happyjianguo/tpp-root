@@ -8,14 +8,14 @@ import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
 
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CCMS_990_001_02 extends DTO_BASE {
+public class MIVS_321_001_01 extends DTO_BASE {
 
     private static final long serialVersionUID = -7575351098905821390L;
 
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
-    public CCMS_990_001_02() {
-        super.txDesc = "通信级确认990";
+    public MIVS_321_001_01() {
+        super.txDesc = "手机号码联网核查应答";
     }
 
     /**

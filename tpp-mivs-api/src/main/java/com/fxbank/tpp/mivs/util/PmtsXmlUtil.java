@@ -14,7 +14,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 /**
- * @Description: 二代支付XML报文Bean转换
+ * @Description: 二代支付XML XML Bean转换
  * @Author: 周勇沩
  * @Date: 2019-04-20 08:35:54
  */
@@ -36,6 +36,7 @@ public class PmtsXmlUtil {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T xmlToObject(Class<T> clazz, String xml){
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(clazz);

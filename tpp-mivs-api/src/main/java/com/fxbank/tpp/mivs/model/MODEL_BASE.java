@@ -28,20 +28,20 @@ public abstract class MODEL_BASE extends ModelBase implements Serializable, SIGN
 	protected String mesgType; // 报文类型代码
 
 	@XmlAttribute(name = "xmlns")
-	protected String XMLNS;
+	protected String XMLNS;		//域名1
 
 	@XmlAttribute(name = "xmlns:xsi")
-	protected String XMLNS_XSI;
-
-	public MODEL_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
-		super(mylog, sysDate, sysTime, sysTraceno);
-	}
+	protected String XMLNS_XSI = null;	//域名2
 
 	@XmlTransient
 	private PMTS_HEAD head = new PMTS_HEAD();
 
 	@XmlTransient
 	private PMTS_SIGN sign = new PMTS_SIGN();
+
+	public MODEL_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+		super(mylog, sysDate, sysTime, sysTraceno);
+	}
 
 	/**
 	 * @Description: 生成请求报文

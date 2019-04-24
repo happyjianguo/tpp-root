@@ -57,33 +57,33 @@ public class MqQaExecutor{
         String txCode = head.getMesgType().replaceAll("\\.", "_").toUpperCase();
         myLog.info(logger, "交易代码=[" + txCode + "]");
 
-        DTO_BASE dto = null;
+        DTO_BASE dtoBase = null;
 		Class<?> mivsClass = null;
 		String className = "com.fxbank.tpp.mivs.dto.mivs"+"." + txCode;
 		try {
 			mivsClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
-			myLog.error(logger, "类文件[" + className + "]未定义",e);
+            myLog.error(logger, "类文件[" + className + "]未定义",e);
+            throw new RuntimeException(e);
 		}
 
 		try {
-            dto = (DTO_BASE) PmtsXmlUtil.xmlToObject(mivsClass, xml);
-            myLog.info(logger, "交易描述=[" + dto.getTxDesc() + "]");
-            String signData = dto.signData();
+            dtoBase = (DTO_BASE) PmtsXmlUtil.xmlToObject(mivsClass, xml);
+            myLog.info(logger, "交易描述=[" + dtoBase.getTxDesc() + "]");
+            String signData = dtoBase.signData();
             //TODO 验证签名
-			dto.setTxCode(txCode);
-			dto.setSourceType("MIVS");
-			dto.setOthDate(head.getOrigSendDate());
-			dto.setOthTraceno(head.getMesgID());
+			dtoBase.setTxCode(txCode);
+			dtoBase.setSourceType("MIVS");
+		    dtoBase.setOthDate(head.getOrigSendDate());
+            dtoBase.setOthTraceno(head.getMesgID());
+            dtoBase.setHead(head);
+            dtoBase.setSign(sign);
 		} catch (RuntimeException e) {
 			myLog.error(logger, "解析报文失败[" + xml + "]",e);
+            throw new RuntimeException(e);
 		}
 
-        tradeDispatcherExecutor.txMainFlowController(dto);
+        tradeDispatcherExecutor.txMainFlowController(dtoBase);
     }
 
-    public static void main(String[] args) throws UnknownHostException {
-        String pack = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Document xmlns=\"urn:cnaps:std:ccms:2010:tech:xsd:ccms.990.001.02\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"> <ComConf> <ConfInf> <OrigSndr>103100000018</OrigSndr> <OrigSndDt>20100909</OrigSndDt> <MT>hvps.111.001.01</MT> <MsgId>12345645912093812230</MsgId> <MsgRefId>12345645912093810230</MsgRefId> <MsgPrcCd>0000</MsgPrcCd> </ConfInf>	</ComConf> </Document>";
-        new MqQaExecutor().execute(pack);
-    }
 }

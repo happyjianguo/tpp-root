@@ -5,14 +5,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * @Description: 序列化反序列化工具
+ * @Author: 周勇沩
+ * @Date: 2019-04-23 20:34:13
+ */
 public class SerializeUtil {
+
+    /**
+     * @Description: 序列化
+     * @Author: 周勇沩
+     * @Date: 2019-04-23 20:35:48
+     */
     public static byte[] serialize(Object object) {
-        ObjectOutputStream oos = null;
-        ByteArrayOutputStream baos = null;
         try {
-            // 序列化
-            baos = new ByteArrayOutputStream();
-            oos = new ObjectOutputStream(baos);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(object);
             byte[] bytes = baos.toByteArray();
             return bytes;
@@ -21,11 +29,14 @@ public class SerializeUtil {
         }
     }
 
+    /**
+     * @Description: 反序列化
+     * @Author: 周勇沩
+     * @Date: 2019-04-23 20:35:56
+     */
     public static Object unserialize(byte[] bytes) {
-        ByteArrayInputStream bais = null;
         try {
-            // 反序列化
-            bais = new ByteArrayInputStream(bytes);
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
             ObjectInputStream ois = new ObjectInputStream(bais);
             return ois.readObject();
         } catch (Exception e) {

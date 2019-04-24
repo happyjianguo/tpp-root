@@ -2,9 +2,7 @@ package com.fxbank.tpp.mivs.mq;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;

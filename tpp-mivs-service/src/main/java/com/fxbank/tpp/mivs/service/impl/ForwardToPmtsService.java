@@ -7,7 +7,8 @@ import javax.annotation.Resource;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.tpp.mivs.model.CCMS_990_001_02_COMCONF;
+import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
+import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
 import com.fxbank.tpp.mivs.model.MODEL_BASE;
 import com.fxbank.tpp.mivs.mq.MqQaClient;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
@@ -28,7 +29,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 	private SyncCom syncCom;
 
 	@Override
-	public void sendToPmts(MODEL_BASE modelBase) throws SysTradeExecuteException {
+	public MODEL_BASE sendToPmts(MODEL_BASE modelBase) throws SysTradeExecuteException {
 		MyLog myLog = modelBase.getMylog();
 
 		// 请求头赋值
@@ -47,10 +48,16 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 		String pack = modelBase.creaPack();
 		myLog.info(logger, "发送至PMTS的请求报文=[" + pack + "]");
 		mqQaClient.put(myLog, pack);
-		// redis 订阅发布TODO 990的处理 990不是成功，则抛出异常
-		CCMS_990_001_02_COMCONF ccms990ComConf = syncCom.get(myLog, modelBase.getHeader().getMesgID(), 60,
+
+		CCMS_990_001_02_ComConf ccms990ComConf = syncCom.get(myLog, modelBase.getHeader().getMesgID(), 60,
 				TimeUnit.SECONDS);
-		myLog.info(logger, "ccms990ComConf="+ccms990ComConf);
+		String msgPrcCd = ccms990ComConf.getConfInf().getMsgPrcCd();
+		if(!msgPrcCd.equals("PM1I0000")){
+			myLog.error(logger, "收到990错误应答"+msgPrcCd);
+			throw new MivsTradeExecuteException(msgPrcCd, "请求发送失败");
+		}
+
+		return modelBase; //发送原报文返回，用于请求端做下一次同异步转换
 	}
 
 }

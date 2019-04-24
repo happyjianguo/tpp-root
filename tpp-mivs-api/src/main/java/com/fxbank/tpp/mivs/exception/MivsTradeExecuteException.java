@@ -21,7 +21,7 @@ public class MivsTradeExecuteException extends SysTradeExecuteException {
 		private static final long serialVersionUID = -3713497985727043375L;
 
 		{
-			put(MIVS_E_10001, "业务不支持");
+			put(MIVS_E_10001, "同步等待人行相应超时");
 			
 		}
 	};

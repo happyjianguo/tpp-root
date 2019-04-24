@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import com.fxbank.cip.base.log.MyLog;
 import com.ibm.mq.MQC;
 import com.ibm.mq.MQException;
-import com.ibm.mq.MQGetMessageOptions;
 import com.ibm.mq.MQMessage;
 import com.ibm.mq.MQPutMessageOptions;
 import com.ibm.mq.MQQueue;
@@ -74,56 +73,4 @@ public class MqQaClient {
 			}
 		}
 	}
-
-	public String get(MyLog myLog) {
-
-		int openOptions = MQC.MQOO_INPUT_AS_Q_DEF | MQC.MQOO_OUTPUT;
-		MQMessage retrieve = new MQMessage();
-		MQQueue queue = null;
-		MQQueueManager qMgr = null;
-		String message = null;
-
-		MqQaManager mqManager = randomManager(myLog);
-
-		MQGetMessageOptions gmo = new MQGetMessageOptions();
-		gmo.options = gmo.options + MQC.MQGMO_SYNCPOINT;
-		gmo.options = gmo.options + MQC.MQGMO_WAIT;
-		gmo.options = gmo.options + MQC.MQGMO_FAIL_IF_QUIESCING;
-		gmo.waitInterval = mqManager.getWaitinterval();
-		try {
-			if (qMgr == null || !qMgr.isConnected()) {
-				qMgr = mqManager.connectManager();
-			}
-			queue = qMgr.accessQueue(mqManager.getQueue(), openOptions);
-			retrieve.characterSet = 819;
-
-			queue.get(retrieve, gmo);
-			byte[] by = new byte[retrieve.getMessageLength()];
-			retrieve.readFully(by);
-			String str = new String(by);
-			message = new String(by, "UTF-8");
-
-		} catch (MQException eMQ) {
-			throw new RuntimeException(eMQ);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
-			try {
-				qMgr.commit();
-				queue.close();
-			} catch (MQException ex) {
-			}
-
-		}
-
-		return message;
-
-	}
-
-	public void close() throws Exception {
-		for (MqQaManager mqManager : qMgrList) {
-			mqManager.getqMgr().disconnect();
-		}
-	}
-
 }
