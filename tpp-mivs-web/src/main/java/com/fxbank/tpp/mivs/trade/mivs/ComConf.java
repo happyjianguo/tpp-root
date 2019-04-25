@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
  * @Author: 周勇沩
  * @Date: 2019-04-23 21:45:09
  */
-@Service("ccms_990_001_02")
+@Service("CCMS_990_001_02")
 public class ComConf extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

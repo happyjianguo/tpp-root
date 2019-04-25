@@ -11,5 +11,7 @@ import com.fxbank.tpp.mivs.model.MODEL_BASE;
 public interface IForwardToPmtsService {
 	
 	public MODEL_BASE sendToPmts(MODEL_BASE modelBase) throws SysTradeExecuteException;
+	
+	public MODEL_BASE sendToPmtsNoWait(MODEL_BASE modelBase) throws SysTradeExecuteException;
 
 }

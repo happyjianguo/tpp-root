@@ -6,23 +6,26 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-/**
- * @Description: 手机号码联网核查申请报文主节点
- * @Author: 周勇沩
- * @Date: 2019-04-20 09:51:24
- */
+
+/** 
+* @ClassName: MIVS_321_001_01_RtrIdVrfctn 
+* @Description: 手机号码联网核查应答报文主节点
+* @author Duzhenduo
+* @date 2019年4月25日 上午10:33:50 
+*  
+*/
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "OrgnlBizQry","Rspsn" })
 public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
 
-    private static final long serialVersionUID = 2906655856390529936L;
-    private MsgHdr MsgHdr = new MsgHdr();
+	private static final long serialVersionUID = 8180528574579953048L;
+	private MsgHdr MsgHdr = new MsgHdr();
     private OrgnlBizQry OrgnlBizQry = new OrgnlBizQry();
     private Rspsn Rspsn = new Rspsn();
 
     @Override
     public String toString() {
-        return "手机号码联网核查申请报文[MIVS_321_001_01]";
+        return "手机号码联网核查应答报文[MIVS_321_001_01]";
     }
 
     /**
@@ -58,8 +61,8 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
 	@XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "MsgId", "CreDtTm", "InstgPty" })
     public static class MsgHdr implements Serializable{
-        private static final long serialVersionUID = -581103924009687799L;
-        private String MsgId = null;
+		private static final long serialVersionUID = -2730483016942499803L;
+		private String MsgId = null;
         private String CreDtTm = null;
         private InstgPty InstgPty = new InstgPty();
         
@@ -106,8 +109,9 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name="MsgHdr.InstgPty")
         public static class InstgPty implements Serializable{
-            private static final long serialVersionUID = 7162761168675476519L;
+			private static final long serialVersionUID = 4421566631209532381L;
 			private String InstgDrctPty = null;
             private String InstgPty = null;
 
@@ -143,10 +147,10 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
         }
     
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(namespace="aa",name= "OrgnlBizQry",propOrder = { "MsgId", "InstgPty" })
+    @XmlType(propOrder = { "MsgId", "InstgPty" })
     public static class OrgnlBizQry implements Serializable{
-        private static final long serialVersionUID = -581103924009687799L;
-        private String MsgId = null;
+		private static final long serialVersionUID = -550977023231042322L;
+		private String MsgId = null;
         private InstgPty InstgPty = new InstgPty();
 
         /**
@@ -178,8 +182,9 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name="OrgnlBizQry.InstgPty")
         public static class InstgPty implements Serializable{
-            private static final long serialVersionUID = 7162761168675476519L;
+			private static final long serialVersionUID = -7853602652041077984L;
 			private String InstgDrctPty = null;
             private String InstgPty = null;
 
@@ -215,13 +220,23 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
         }
     
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "VrfctnInf" })
+    @XmlType(propOrder = { "VrfctnInf","OprlErr" })
     public static class Rspsn implements Serializable{
-        private static final long serialVersionUID = -581103924009687799L;
-        private VrfctnInf VrfctnInf = new VrfctnInf();
-
+		private static final long serialVersionUID = -6328418981097651591L;
+		private VrfctnInf VrfctnInf = new VrfctnInf();
+		private OprlErr OprlErr = new OprlErr();
       
-        public VrfctnInf getVrfctnInf() {
+        public OprlErr getOprlErr() {
+			return OprlErr;
+		}
+
+
+		public void setOprlErr(OprlErr oprlErr) {
+			OprlErr = oprlErr;
+		}
+
+
+		public VrfctnInf getVrfctnInf() {
 			return VrfctnInf;
 		}
 
@@ -230,11 +245,10 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
 			VrfctnInf = vrfctnInf;
 		}
 
-
 		@XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(propOrder = { "MobNb","Rslt","MobCrr","LocMobNb","LocNmMobNb","CdTp","Sts" })
         public static class VrfctnInf implements Serializable{
-            private static final long serialVersionUID = 7162761168675476519L;
+			private static final long serialVersionUID = 468743931927105502L;
 			private String MobNb = null;
             private String Rslt = null;
             private String MobCrr = null;
@@ -287,7 +301,34 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
 
             
         }
-
+		    @XmlAccessorType(XmlAccessType.FIELD)
+	        @XmlType(propOrder = {"ProcSts","ProcCd","Rjctinf"})
+	        public static class OprlErr implements Serializable{
+				private static final long serialVersionUID = 8963888345401181931L;
+				private String ProcSts;
+				private String ProcCd;
+				private String Rjctinf;
+				public String getProcSts() {
+					return ProcSts;
+				}
+				public void setProcSts(String procSts) {
+					ProcSts = procSts;
+				}
+				public String getProcCd() {
+					return ProcCd;
+				}
+				public void setProcCd(String procCd) {
+					ProcCd = procCd;
+				}
+				public String getRjctinf() {
+					return Rjctinf;
+				}
+				public void setRjctinf(String rjctinf) {
+					Rjctinf = rjctinf;
+				}
+				
+	        	
+	        }
         }
  
     
@@ -304,13 +345,18 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
         sb.append(this.getOrgnlBizQry().getMsgId() + "|");
         sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
         sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
-        sb.append(this.getRspsn().getVrfctnInf().getMobNb() + "|");
-        sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
-        sb.append(this.getRspsn().getVrfctnInf().getMobCrr() + "|");
-        sb.append(this.getRspsn().getVrfctnInf().getLocMobNb() + "|");
-        sb.append(this.getRspsn().getVrfctnInf().getLocNmMobNb() + "|");
-        sb.append(this.getRspsn().getVrfctnInf().getCdTp() + "|");
-        sb.append(this.getRspsn().getVrfctnInf().getSts() + "|");
+        if(this.getRspsn().getVrfctnInf().getMobNb()!=null) {
+        	sb.append(this.getRspsn().getVrfctnInf().getMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getMobCrr() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getLocMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getLocNmMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getCdTp() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getSts() + "|");
+        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
+        	sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
+            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
+        }
         return sb.toString();
     }
 

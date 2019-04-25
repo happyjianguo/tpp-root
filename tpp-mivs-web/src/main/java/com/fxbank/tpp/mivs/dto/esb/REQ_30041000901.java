@@ -22,7 +22,7 @@ public class REQ_30041000901 extends REQ_BASE {
 	private REQ_BODY reqBody;
 	
 	public REQ_30041000901(){
-		super.txDesc = "商行通存村镇业务";
+		super.txDesc = "手机号码联网核查";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -55,97 +55,83 @@ public class REQ_30041000901 extends REQ_BASE {
 
 	public class REQ_BODY {
 
-		@JSONField(name = "VILLAGE_BRNACH_FLAG")
-		private String villageBrnachFlag;    //村镇机构
+		@JSONField(name = "MobNb")
+		private String mobNb;    //手机号码
 				
-		@JSONField(name = "PAYEE_ACCT_NAME")
-		private String payeeAcctName;		//收款名称
+		@JSONField(name = "Nm")
+		private String nm;		//姓名
 		
-		@JSONField(name = "PAYEE_ACCT_NO")
-		private String payeeAcctNo;		//收款账号
+		@JSONField(name = "IdTp")
+		private String idTp;		//证件类型
 		
-		@JSONField(name = "TRAN_AMT")
-		private String tranAmt;		//交易金额
+		@JSONField(name = "Id")
+		private String id;		//证件号码
 		
-		@JSONField(name = "CHANNEL_TYPE")
-		private String channelType;		//交易渠道
+		@JSONField(name = "UniSocCdtCd")
+		private String uniSocCdtCd;		//统一社会信用代码
 		
-		@JSONField(name = "NARRATIVE")
-		private String narrative;		//摘要
+		@JSONField(name = "BizRegNb")
+		private String bizRegNb;		//工商注册号
 		
-		@JSONField(name = "DOC_CLASS")
-		private String docClass;		//凭证种类
+		@JSONField(name = "OpNm")
+		private String opNm;		//操作员姓名
+
+		public String getMobNb() {
+			return mobNb;
+		}
+
+		public void setMobNb(String mobNb) {
+			this.mobNb = mobNb;
+		}
+
+		public String getNm() {
+			return nm;
+		}
+
+		public void setNm(String nm) {
+			this.nm = nm;
+		}
+
+		public String getIdTp() {
+			return idTp;
+		}
+
+		public void setIdTp(String idTp) {
+			this.idTp = idTp;
+		}
+
+		public String getId() {
+			return id;
+		}
+
+		public void setId(String id) {
+			this.id = id;
+		}
+
+		public String getUniSocCdtCd() {
+			return uniSocCdtCd;
+		}
+
+		public void setUniSocCdtCd(String uniSocCdtCd) {
+			this.uniSocCdtCd = uniSocCdtCd;
+		}
+
+		public String getBizRegNb() {
+			return bizRegNb;
+		}
+
+		public void setBizRegNb(String bizRegNb) {
+			this.bizRegNb = bizRegNb;
+		}
+
+		public String getOpNm() {
+			return opNm;
+		}
+
+		public void setOpNm(String opNm) {
+			this.opNm = opNm;
+		}
 		
-		@JSONField(name = "VOUCHER_NO")
-		private String voucherNo;		//凭证号码
-		
-	  
-        public String getPayeeAcctName() {
-			return payeeAcctName;
-		}
-
-		public void setPayeeAcctName(String payeeAcctName) {
-			this.payeeAcctName = payeeAcctName;
-		}
-
-		public String getPayeeAcctNo() {
-			return payeeAcctNo;
-		}
-
-		public void setPayeeAcctNo(String payeeAcctNo) {
-			this.payeeAcctNo = payeeAcctNo;
-		}
-
-		public String getTranAmt() {
-			return tranAmt;
-		}
-
-		public void setTranAmt(String tranAmt) {
-			this.tranAmt = tranAmt;
-		}
-
-		public String getChannelType() {
-			return channelType;
-		}
-
-		public void setChannelType(String channelType) {
-			this.channelType = channelType;
-		}
-
-		public String getNarrative() {
-			return narrative;
-		}
-
-		public void setNarrative(String narrative) {
-			this.narrative = narrative;
-		}
-
-		public String getDocClass() {
-			return docClass;
-		}
-
-		public void setDocClass(String docClass) {
-			this.docClass = docClass;
-		}
-
-		public String getVoucherNo() {
-			return voucherNo;
-		}
-
-		public void setVoucherNo(String voucherNo) {
-			this.voucherNo = voucherNo;
-		}
-
-		public String getVillageBrnachFlag() {
-			return villageBrnachFlag;
-		}
-
-		public void setVillageBrnachFlag(String villageBrnachFlag) {
-			this.villageBrnachFlag = villageBrnachFlag;
-		}
-
-		
-
 		
 	}
 }

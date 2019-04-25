@@ -6,18 +6,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fxbank.cip.base.log.MyLog;
 
-/**
- * @Description: 手机号码联网核查申请报文
- * @Author: 周勇沩
- * @Date: 2019-04-20 09:51:24
- */
+
+/** 
+* @ClassName: MIVS_321_001_01 
+* @Description: 手机号码联网核查应答报文
+* @author Duzhenduo
+* @date 2019年4月25日 上午10:34:23 
+*  
+*/
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Document")
 public class MIVS_321_001_01 extends MODEL_BASE {
 
-    private static final long serialVersionUID = -7575351098905821390L;
-
-    private static final String MESGTYPE = "mivs.321.001.01";
+	private static final long serialVersionUID = 450987434163934038L;
+	private static final String MESGTYPE = "mivs.321.001.01";
     private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.321.001.01";
 
     private MIVS_321_001_01_RtrIdVrfctn RtrIdVrfctn = new MIVS_321_001_01_RtrIdVrfctn();

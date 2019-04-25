@@ -5,15 +5,23 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
+import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.mivs.dto.esb.REP_30041000901;
 import com.fxbank.tpp.mivs.dto.esb.REQ_30041000901;
+import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_321_001_01;
+import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
+import com.fxbank.tpp.mivs.model.CCMS_911_001_02_DscrdMsgNtfctn;
 import com.fxbank.tpp.mivs.model.MIVS_320_001_01;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
@@ -36,28 +44,57 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 
     @Reference(version = "1.0.0")
     private IForwardToPmtsService pmtsService;
+    
+    @Reference(version = "1.0.0")
+    private IForwardToESBService forwardToESBService;
 
     @Override
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
         REQ_30041000901 req = (REQ_30041000901) dto;
+        REQ_30041000901.REQ_BODY reqBody = req.getReqBody();
 
         MIVS_320_001_01 mivs320 = new MIVS_320_001_01(new MyLog(), 20190909, 12323, 12);
-        //TODO 通过req组合mivs320
-        mivs320.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
+        
+        if(req.getReqSysHead().getBranchId() == null){
+			myLog.error(logger, "发起机构号不能为空");
+			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
+			myLog.error(logger,e.getRspCode() + " | " + e.getRspMsg());
+			throw e;
+		}
+		// 通过机构号查询渠道接口获取（机构号查行号）
+		String bankNumber = null, bnkNmT = null, settlementBankNo = null, lqtnBnkNmT1 = null;
+		try {
+			ESB_REP_30043003001 esbRep_30043003001 = queryBnkNoByBranchId(req);
+			// 发起行人行行号
+			bankNumber = esbRep_30043003001.getRepBody().getBankNumber();
+			// 发起行人行行名
+			bnkNmT = esbRep_30043003001.getRepBody().getBnkNmT();
+			// 发起行人行清算行号
+			settlementBankNo = esbRep_30043003001.getRepBody().getSettlementBankNo();
+			// 发起行人行清算行名
+			lqtnBnkNmT1 = esbRep_30043003001.getRepBody().getLqtnBnkNmT1();
+		} catch (SysTradeExecuteException e) {
+			myLog.error(logger, "通过本行机构号查询人行行号失败，机构号：" + req.getReqSysHead().getBranchId(),e);
+			throw e;
+		}
+		myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + req.getReqSysHead().getBranchId() + "，人行行号：" + bankNumber);
+		
+		//发起行行号
+        mivs320.getHeader().setOrigSender(bankNumber);  
         mivs320.getHeader().setOrigReceiver("0000");
-        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty("3131310000008");
-        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setDrctPtyNm("阜新银行清算中心");
-        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setInstgPty("313131000009");
-        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setPtyNm("阜新银行银河支行");
+        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
+        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
+        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
+        mivs320.getGetIdVrfctn().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
 
-        mivs320.getGetIdVrfctn().getVryDef().setMobNb("18309872813");
-        mivs320.getGetIdVrfctn().getVryDef().setNm("周勇沩");
-        mivs320.getGetIdVrfctn().getVryDef().setIdTp("1");
-        mivs320.getGetIdVrfctn().getVryDef().setId("210381198302252714");
-        mivs320.getGetIdVrfctn().getVryDef().setUniSocCdtCd("uniSocCdtCd");
-        mivs320.getGetIdVrfctn().getVryDef().setOpNm("张");
+        mivs320.getGetIdVrfctn().getVryDef().setMobNb(reqBody.getMobNb());
+        mivs320.getGetIdVrfctn().getVryDef().setNm(reqBody.getNm());
+        mivs320.getGetIdVrfctn().getVryDef().setIdTp(reqBody.getIdTp());
+        mivs320.getGetIdVrfctn().getVryDef().setId(reqBody.getId());
+        mivs320.getGetIdVrfctn().getVryDef().setUniSocCdtCd(reqBody.getUniSocCdtCd());
+        mivs320.getGetIdVrfctn().getVryDef().setOpNm(reqBody.getOpNm());
 
         mivs320 = (MIVS_320_001_01) pmtsService.sendToPmts(mivs320); // 发送请求，实时等待990
 
@@ -66,14 +103,43 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         DTO_BASE dtoBase = syncCom.get(myLog, channel, 60, TimeUnit.SECONDS);
 
         REP_30041000901 rep = new REP_30041000901();
-        if(dtoBase.getHead().getMesgType().equals("911")){  //根据911组织应答报文
-
-        }else if(dtoBase.getHead().getMesgType().equals("321")){
-            MIVS_321_001_01 mivs321 = new MIVS_321_001_01();
+        if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
+        	CCMS_911_001_02 ccmc911 = (CCMS_911_001_02)dtoBase;
+        	MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,
+        			MivsTradeExecuteException.TCEXERRCODECONV.get(MivsTradeExecuteException.MIVS_E_10002)
+        			+"("+ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf()+")");
+            throw e;
+        }else if(dtoBase.getHead().getMesgType().equals("mivs.321.001.01")){
+            MIVS_321_001_01 mivs321 = (MIVS_321_001_01)dtoBase;
+            REP_30041000901.REP_BODY repBody = rep.getRepBody();
+            if(mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getProcCd()!=null) {
+            	MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,
+            			MivsTradeExecuteException.TCEXERRCODECONV.get(MivsTradeExecuteException.MIVS_E_10002)
+            			+"("+mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getRjctinf()+")");
+                throw e;
+            }
+            repBody.setMobNb(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getMobNb());
+            repBody.setRslt(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getRslt());
+            repBody.setMobCrr(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getMobCrr());
+            repBody.setLocMobNb(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getLocMobNb());
+            repBody.setLocNmMobNb(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getLocNmMobNb());
+            repBody.setCdTp(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getCdTp());
+            repBody.setSts(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getSts());
         }
 
-        //TODO 通过mivs321 组成给请求端应答
-
         return rep;
+    }
+    private ESB_REP_30043003001 queryBnkNoByBranchId(REQ_30041000901 dto) throws SysTradeExecuteException {
+    	MyLog myLog = logPool.get();
+    	ESB_REQ_30043003001 esbReq_30043003001 = new ESB_REQ_30043003001(myLog, dto.getSysDate(), dto.getSysTime(),
+				dto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043003001.getReqSysHead(), dto).build();
+		reqSysHead.setBranchId(dto.getReqSysHead().getBranchId());
+		esbReq_30043003001.setReqSysHead(reqSysHead);
+		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
+		reqBody_30043003001.setBrchNoT4(dto.getReqSysHead().getBranchId());
+		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,
+				ESB_REP_30043003001.class);
+		return esbRep_30043003001;
     }
 }

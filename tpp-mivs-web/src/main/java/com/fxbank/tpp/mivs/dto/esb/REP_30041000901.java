@@ -55,32 +55,85 @@ public class REP_30041000901 extends REP_BASE {
 
 
 	public class REP_BODY {
-		 @JSONField(name = "BALANCE")
-	     private String balance;//余额
+		 @JSONField(name = "MobNb")
+	     private String mobNb;//手机号码
 		 
-		 @JSONField(name = "HOST_TRACE_NO")
-	     private String hostTraceNo;//核心流水号
+		 @JSONField(name = "Rslt")
+	     private String rslt;//手机号码核查结果
+		 
+		 @JSONField(name = "MobCrr")
+	     private String mobCrr;//手机运营商
+		 
+		 @JSONField(name = "LocMobNb")
+	     private String locMobNb;//手机号归属地代码
+		 
+		 @JSONField(name = "LocNmMobNb")
+	     private String locNmMobNb;//手机号归属地名称
+		 
+		 @JSONField(name = "CdTp")
+	     private String cdTp;//客户类型
+		 
+		 @JSONField(name = "Sts")
+	     private String sts;//手机号码状态
 
-		public String getBalance() {
-			return balance;
+		public String getMobNb() {
+			return mobNb;
 		}
 
-		public void setBalance(String balance) {
-			this.balance = balance;
+		public void setMobNb(String mobNb) {
+			this.mobNb = mobNb;
 		}
 
-		public String getHostTraceNo() {
-			return hostTraceNo;
+		public String getRslt() {
+			return rslt;
 		}
 
-		public void setHostTraceNo(String hostTraceNo) {
-			this.hostTraceNo = hostTraceNo;
+		public void setRslt(String rslt) {
+			this.rslt = rslt;
+		}
+
+		public String getMobCrr() {
+			return mobCrr;
+		}
+
+		public void setMobCrr(String mobCrr) {
+			this.mobCrr = mobCrr;
+		}
+
+		public String getLocMobNb() {
+			return locMobNb;
+		}
+
+		public void setLocMobNb(String locMobNb) {
+			this.locMobNb = locMobNb;
+		}
+
+		public String getLocNmMobNb() {
+			return locNmMobNb;
+		}
+
+		public void setLocNmMobNb(String locNmMobNb) {
+			this.locNmMobNb = locNmMobNb;
+		}
+
+		public String getCdTp() {
+			return cdTp;
+		}
+
+		public void setCdTp(String cdTp) {
+			this.cdTp = cdTp;
+		}
+
+		public String getSts() {
+			return sts;
+		}
+
+		public void setSts(String sts) {
+			this.sts = sts;
 		}
 
 		
 		 
-		 
-		
-
+	     
 	}
 }
