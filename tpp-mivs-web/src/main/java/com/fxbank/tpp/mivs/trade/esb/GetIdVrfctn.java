@@ -57,16 +57,11 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 
         MIVS_320_001_01 mivs320 = new MIVS_320_001_01(new MyLog(), 20190909, 12323, 12);
         
-        if(req.getReqSysHead().getBranchId() == null){
-			myLog.error(logger, "发起机构号不能为空");
-			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
-			myLog.error(logger,e.getRspCode() + " | " + e.getRspMsg());
-			throw e;
-		}
 		// 通过机构号查询渠道接口获取（机构号查行号）
-		String bankNumber = null, bnkNmT = null, settlementBankNo = null, lqtnBnkNmT1 = null;
+        String branchId = req.getReqSysHead().getBranchId();
+        String bankNumber = null, bnkNmT = null, settlementBankNo = null, lqtnBnkNmT1 = null;
 		try {
-			ESB_REP_30043003001 esbRep_30043003001 = queryBnkNoByBranchId(req);
+			ESB_REP_30043003001 esbRep_30043003001 = queryBankno(myLog, dto, branchId);
 			// 发起行人行行号
 			bankNumber = esbRep_30043003001.getRepBody().getBankNumber();
 			// 发起行人行行名
@@ -76,10 +71,10 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 			// 发起行人行清算行名
 			lqtnBnkNmT1 = esbRep_30043003001.getRepBody().getLqtnBnkNmT1();
 		} catch (SysTradeExecuteException e) {
-			myLog.error(logger, "通过本行机构号查询人行行号失败，机构号：" + req.getReqSysHead().getBranchId(),e);
+			myLog.error(logger, "通过本行机构号查询人行行号失败，机构号：" + branchId,e);
 			throw e;
 		}
-		myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + req.getReqSysHead().getBranchId() + "，人行行号：" + bankNumber);
+		myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + branchId + "，人行行号：" + bankNumber);
 		
 		//发起行行号
         mivs320.getHeader().setOrigSender(bankNumber);  
@@ -128,18 +123,5 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         }
 
         return rep;
-    }
-    private ESB_REP_30043003001 queryBnkNoByBranchId(REQ_30041000901 dto) throws SysTradeExecuteException {
-    	MyLog myLog = logPool.get();
-    	ESB_REQ_30043003001 esbReq_30043003001 = new ESB_REQ_30043003001(myLog, dto.getSysDate(), dto.getSysTime(),
-				dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043003001.getReqSysHead(), dto).build();
-		reqSysHead.setBranchId(dto.getReqSysHead().getBranchId());
-		esbReq_30043003001.setReqSysHead(reqSysHead);
-		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
-		reqBody_30043003001.setBrchNoT4(dto.getReqSysHead().getBranchId());
-		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,
-				ESB_REP_30043003001.class);
-		return esbRep_30043003001;
     }
 }
