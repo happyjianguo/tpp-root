@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlType;
  * @Date: 2019-04-23 20:41:27
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "MsgHdr", "VryDef" })
+@XmlType(propOrder = { "ConfInf" })
 public class CCMS_990_001_02_ComConf implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = -704157491490561912L;
