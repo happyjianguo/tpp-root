@@ -34,10 +34,10 @@ import com.fxbank.tpp.mivs.dto.esb.REQ_30041000901;
 @RunWith(SpringRunner.class)
 @SpringBootTest
  @AutoConfigureMockMvc	
-public class Mivs320Test {
+public class GetIdVrfctnTest {
 
 	
-	private static Logger logger = LoggerFactory.getLogger(Mivs320Test.class);
+	private static Logger logger = LoggerFactory.getLogger(GetIdVrfctnTest.class);
 	
     private static final String URL="http://127.0.0.1:7006/esb/mivs.do";
 	
