@@ -13,7 +13,7 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.tpp.bocm.model.REQ_HEADER;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
-import com.fxbank.tpp.esb.service.IForwardToTPPSService;
+import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 /**
  * @Description: 交易程序基础公共类
@@ -25,7 +25,7 @@ public class TradeBase {
 	private static Logger logger = LoggerFactory.getLogger(TradeBase.class);
 
 	@Reference(version = "1.0.0")
-	private IForwardToTPPSService forwardToTPPSService;
+	private IForwardToESBService forwardToESBService;
 
 	public void setBankno(MyLog myLog, DataTransObject dto, String branchId, REQ_HEADER reqHeader) throws SysTradeExecuteException {
 		if(branchId == null){
@@ -45,7 +45,7 @@ public class TradeBase {
 		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
 		reqBody_30043003001.setBrchNoT4(branchId);
 		myLog.info(logger, "通过本行机构号查询人行行号");
-		ESB_REP_30043003001 esbRep_30043003001 = forwardToTPPSService.sendToTPPS(esbReq_30043003001, reqBody_30043003001,
+		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,				
 				ESB_REP_30043003001.class);
 		//发起行人行行号
 		String BANK_NUMBER = esbRep_30043003001.getRepBody().getBankNumber();

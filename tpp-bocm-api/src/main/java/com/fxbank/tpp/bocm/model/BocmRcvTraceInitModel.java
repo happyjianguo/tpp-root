@@ -44,6 +44,9 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 10,message = "tx_ind现转标志最大长度是10")
 	private String txInd; //现转标志
 	
+	@Size(max = 10,message = "tx_code交易代码最大长度是10")
+	private String txCode; //交易代码
+	
 	@NotNull(message = "dc_flag通存通兑标志不能为空")
 	@Size(max = 10,message = "dc_flag通存通兑标志最大长度是10")
 	private String dcFlag; //通存通兑标志
@@ -71,9 +74,17 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; //核心记账状态
 	
+    private Integer hostDate;//核心日期
+
+    private String hostTraceno;//核心流水
+    
+    private String retCode;//核心反馈响应码
+    
+    private String retMsg;//核心反馈响应信息
+
 	@NotNull(message = "town_state村镇记账状态不能为空")
 	@Size(max = 10,message = "town_state村镇记账状态最大长度是10")
-	private String bocmState; //村镇记账状态
+	private String bocmState; //交行记账状态
 	
 	@NotNull(message = "tx_tel交易柜员不能为空")
 	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
@@ -130,6 +141,14 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 
 	public void setTxInd(String txInd) {
 		this.txInd = txInd;
+	}
+	
+	public String getTxCode() {
+		return txCode;
+	}
+
+	public void setTxCode(String txCode) {
+		this.txCode = txCode;
 	}
 
 	public String getDcFlag() {
@@ -266,6 +285,38 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 
 	public void setBocmFlag(String bocmFlag) {
 		this.bocmFlag = bocmFlag;
+	}
+
+	public Integer getHostDate() {
+		return hostDate;
+	}
+
+	public void setHostDate(Integer hostDate) {
+		this.hostDate = hostDate;
+	}
+
+	public String getHostTraceno() {
+		return hostTraceno;
+	}
+
+	public void setHostTraceno(String hostTraceno) {
+		this.hostTraceno = hostTraceno;
+	}
+
+	public String getRetCode() {
+		return retCode;
+	}
+
+	public void setRetCode(String retCode) {
+		this.retCode = retCode;
+	}
+
+	public String getRetMsg() {
+		return retMsg;
+	}
+
+	public void setRetMsg(String retMsg) {
+		this.retMsg = retMsg;
 	}
 
 }

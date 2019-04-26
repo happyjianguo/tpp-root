@@ -49,6 +49,12 @@ public class BocmSndLog {
      */
     @Column(name = "TX_IND")
     private String txInd;
+    
+    /**
+     * null
+     */
+    @Column(name = "TX_CODE")
+    private String txCode;
 
     /**
      * null
@@ -269,6 +275,14 @@ public class BocmSndLog {
     public void setTxInd(String txInd) {
         this.txInd = txInd;
     }
+    
+    public String getTxCode() {
+		return txCode;
+	}
+
+	public void setTxCode(String txCode) {
+		this.txCode = txCode;
+	}
 
     /**
      * null

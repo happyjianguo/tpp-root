@@ -57,7 +57,7 @@ COMMENT ON COLUMN bocm_snd_log.bocm_time IS '交通银行时间';
 COMMENT ON COLUMN bocm_snd_log.bocm_traceno IS '交通银行流水';
 COMMENT ON COLUMN bocm_snd_log.check_flag IS '对账标志，1-未对账，2-已对账，3-核心多，4-渠道多';
 COMMENT ON COLUMN bocm_snd_log.host_state IS '核心记账状态，0-登记，1-成功，2-失败，3-超时，5-冲正成功，6-冲正失败，7-冲正超时，8-延时转账';
-COMMENT ON COLUMN bocm_snd_log.bocm_state IS '交通银行记账状态，0-登记，1-成功，2-失败，3-超时，4-存款确认，5-冲正成功，6-冲正失败';
+COMMENT ON COLUMN bocm_snd_log.bocm_state IS '交通银行记账状态，0-登记，1-成功，2-失败，3-超时，4-重发超时，5-冲正成功，6-冲正失败';
 COMMENT ON COLUMN bocm_snd_log.tx_tel IS '交易柜员';
 COMMENT ON COLUMN bocm_snd_log.chk_tel IS '复核员';
 COMMENT ON COLUMN bocm_snd_log.auth_tel IS '授权员';

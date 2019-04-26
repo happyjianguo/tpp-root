@@ -49,6 +49,12 @@ public class BocmRcvLog {
      */
     @Column(name = "TX_IND")
     private String txInd;
+    
+    /**
+     * null
+     */
+    @Column(name = "TX_CODE")
+    private String txCode;
 
     /**
      * null
@@ -275,8 +281,16 @@ public class BocmRcvLog {
     public void setTxInd(String txInd) {
         this.txInd = txInd;
     }
+    
+    public String getTxCode() {
+		return txCode;
+	}
 
-    /**
+	public void setTxCode(String txCode) {
+		this.txCode = txCode;
+	}
+
+	/**
      * null
      * @return DC_FLAG null
      */

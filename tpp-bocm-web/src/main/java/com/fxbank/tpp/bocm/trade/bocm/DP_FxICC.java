@@ -2,7 +2,13 @@ package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
@@ -19,15 +25,13 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30033000202;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
+
 import redis.clients.jedis.Jedis;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 
 /** 
@@ -41,12 +45,13 @@ import org.springframework.stereotype.Service;
 public class DP_FxICC implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(DP_FxICC.class);
-
+	
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
 	
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService bocmRcvTraceService;
+	
 
 	@Resource
 	private LogPool logPool;
@@ -60,7 +65,7 @@ public class DP_FxICC implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_20000 req = (REQ_20000) dto;
-		// 插入流水表
+		//1.插入流水表
 		initRecord(req);		
 		//IC卡信息校验
 		try {
@@ -69,7 +74,7 @@ public class DP_FxICC implements TradeExecutionStrategy {
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008);
 			throw e2;
 		}
-		// 核心记账
+		//2.核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -80,6 +85,7 @@ public class DP_FxICC implements TradeExecutionStrategy {
 		//核心记账返回状态信息
 		String retMsg = null;
 		try {
+			//调用核心记账
 			esbRep_30011000104 = hostCharge(req);
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
@@ -91,6 +97,7 @@ public class DP_FxICC implements TradeExecutionStrategy {
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 			throw e2;
 		}
+		//3.更新流水表核心记账状态
 		updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
 		myLog.info(logger, "交行代理我行账户存款（IC卡），本行核心记账成功，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 		REP_20000 rep = new REP_20000();

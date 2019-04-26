@@ -48,6 +48,10 @@ public class ForwardToBocmService implements IForwardToBocmService {
 		} else {
 			String rspCode = repBase.getHeader().gettRspCd();
 			String rspMsg = repBase.getHeader().gettRspMsg();
+			//本行模拟交行交易返回状态码判断
+			if(rspCode.equals("FX0000")){
+				return repModel;
+			}
 			if (repBase.getHeader().gettMsgTyp().equals("E") || !rspCode.equals("JH0000")) { // 交行返回失败
 				SysTradeExecuteException e = new SysTradeExecuteException(rspCode, rspMsg);
 				myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg());

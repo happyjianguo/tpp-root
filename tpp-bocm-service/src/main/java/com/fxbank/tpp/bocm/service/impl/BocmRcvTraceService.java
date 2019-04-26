@@ -15,9 +15,11 @@ import javax.validation.Valid;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
+import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.bocm.entity.BocmRcvLog;
 import com.fxbank.tpp.bocm.mapper.BocmRcvLogMapper;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
+import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 
@@ -51,10 +53,12 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		entity.setSourceType(record.getSourceType());
 		entity.setTxBranch(record.getTxBranch());
 		entity.setTxInd(record.getTxInd());
+		entity.setTxCode(record.getTxCode());
 		entity.setDcFlag(record.getDcFlag());
-		BigDecimal txAmt = new BigDecimal(record.getTxAmt());
-		entity.setTxAmt(txAmt);
-		
+		if(record.getTxAmt()!=null){
+			BigDecimal txAmt = new BigDecimal(record.getTxAmt());
+			entity.setTxAmt(txAmt);
+		}
 		entity.setPayerAcno(record.getPayerAcno());
 		entity.setPayerName(record.getPayerName());
 		entity.setPayeeAcno(record.getPayeeAcno());
@@ -124,6 +128,37 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		}
 		
 		bocmRcvLogMapper.updateByPrimaryKeySelective(bocmRcvLog);
+	}
+	
+	@Override
+	public BocmRcvTraceQueryModel getConfirmTrace(MyLog myLog,String townDate,String townTraceno)throws SysTradeExecuteException {
+		BocmRcvLog bocmRcvLog = new BocmRcvLog();
+		bocmRcvLog.setBocmDate(Integer.parseInt(townDate));
+		bocmRcvLog.setBocmTraceno(townTraceno);
+		BocmRcvLog data = bocmRcvLogMapper.selectOne(bocmRcvLog);
+		BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog, bocmRcvLog.getPlatDate(), bocmRcvLog.getPlatTime(), bocmRcvLog.getPlatTrace());
+		model.setAuthTel(data.getAuthTel());
+		model.setCheckFlag(data.getCheckFlag());
+		model.setChkTel(data.getChkTel());
+		model.setDcFlag(data.getDcFlag());
+		model.setHostDate(data.getHostDate());
+		model.setHostState(data.getHostState());
+		model.setHostTraceno(data.getHostTraceno());
+		model.setInfo(data.getInfo());
+		model.setPayeeAcno(data.getPayeeAcno());
+		model.setPayeeName(data.getPayeeName());
+		model.setPayerAcno(data.getPayerAcno());
+		model.setPayerName(data.getPayerName());
+		model.setPlatDate(data.getPlatDate());
+		model.setPlatTime(data.getPlatTime());
+		model.setPlatTrace(data.getPlatTrace());
+		model.setSourceType(data.getSourceType());
+		model.setBocmBranch(data.getBocmBranch());
+		model.setBocmDate(data.getBocmDate());
+		model.setBocmState(data.getBocmState());
+		model.setBocmTraceno(model.getBocmTraceno());
+		model.setTxAmt(data.getTxAmt());
+		return model;
 	}
 
 }

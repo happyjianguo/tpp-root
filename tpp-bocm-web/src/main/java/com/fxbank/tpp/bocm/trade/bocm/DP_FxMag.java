@@ -61,16 +61,21 @@ public class DP_FxMag implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_10000 req = (REQ_10000) dto;
-		// 插入流水表
+		
+		//1.查询请求流水号是否存在
+		myLog.info(logger, "1.交行向本行发起磁条卡通存记账请求");		
+		//1.插入流水表
 		initRecord(req);	
 		//磁条卡二磁道校验
 		try {
+			myLog.info(logger, "2.磁条卡二磁道校验");	
 			validateMag(req);
 		} catch (SysTradeExecuteException e) {
+			myLog.info(logger, "3.磁条卡状态异常,磁条卡二磁道校验失败");	
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
 			throw e2;
 		}
-		// 核心记账
+		//2.核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -81,6 +86,7 @@ public class DP_FxMag implements TradeExecutionStrategy {
 		//核心记账返回状态信息
 		String retMsg = null;
 		try {
+			myLog.info(logger, "3.交行向本行发起磁条卡通存核心记账");	
 			esbRep_30011000104 = hostCharge(req);
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
@@ -88,12 +94,13 @@ public class DP_FxMag implements TradeExecutionStrategy {
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
 			updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
-			myLog.error(logger, "交行代理我行账户存款（磁条卡），本行核心记账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+			myLog.error(logger, "4.交行代理我行账户存款（磁条卡），本行核心记账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 			throw e2;
 		}
+		//3.更新流水表核心记账状态
 		updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
-		myLog.info(logger, "交行代理我行账户存款（磁条卡），本行核心记账成功，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+		myLog.info(logger, "4.交行代理我行账户存款（磁条卡），本行核心记账成功，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 		REP_10000 rep = new REP_10000();
 		rep.setoTxnAmt(req.getTxnAmt());
 		List<Fee> feeList = esbRep_30011000104.getRepBody().getFeeDetail();
