@@ -60,12 +60,14 @@ class Run implements Runnable {
             is.read(dataByte);
             String data = new String(dataByte, SimuBocmServer.CODING);
             this.logger.info("接收请求报文[" + data + "]");
+            String seq = data.substring(46, 46+14);
+            this.logger.info("SEQ="+seq);
 
             REP_10101 rep = new REP_10101(new MyLog(), 20190909, 125609, 1);
             rep.getHeader().settMsgTyp("N");
             rep.getHeader().settRspCd("JH0000");
             rep.getHeader().settRspMsg("成功");
-            rep.getHeader().setrLogNo("18042600000214");
+            rep.getHeader().setrLogNo(seq);
             rep.setCcyCod("CNY");
             rep.setActNo("62316600000123");
             rep.setActNam("zzh");

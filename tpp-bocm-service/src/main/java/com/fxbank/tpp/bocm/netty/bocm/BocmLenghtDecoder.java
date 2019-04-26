@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.netty.NettySyncClient;
 import com.fxbank.cip.base.netty.NettySyncSlot;
 
 import org.slf4j.Logger;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import io.netty.util.ReferenceCountUtil;
 
 /**
@@ -24,11 +27,9 @@ public class BocmLenghtDecoder<T> extends ByteToMessageDecoder {
 	private static Logger logger = LoggerFactory.getLogger(BocmLenghtDecoder.class);
 	private MyLog myLog;
 	private final Integer DATALENGTH = 8;
-	private NettySyncSlot<T> slot;
 
-	public BocmLenghtDecoder(MyLog myLog, NettySyncSlot<T> slot) {
+	public BocmLenghtDecoder(MyLog myLog) {
 		this.myLog = myLog;
-		this.slot = slot;
 	}
 
 	protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
@@ -110,8 +111,10 @@ public class BocmLenghtDecoder<T> extends ByteToMessageDecoder {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		Attribute<NettySyncSlot<T>> slotAttr = ctx.channel().attr(AttributeKey.valueOf(NettySyncClient.SLOTKEY));
+		NettySyncSlot<T> slot = slotAttr.get();
+		slot.setResponse(null);
 		this.myLog.info(logger, "接收服务端应答异常",cause);
-		this.slot.setResponse(null);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.fxbank.tpp.bocm.netty.bocm;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.netty.NettySyncClient;
 import com.fxbank.cip.base.netty.NettySyncSlot;
 import com.fxbank.tpp.bocm.model.REP_BASE;
 
@@ -9,6 +10,14 @@ import org.slf4j.LoggerFactory;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import io.netty.util.ReferenceCountUtil;
 
 /**
@@ -22,13 +31,10 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 
 	private MyLog myLog;
 
-	private NettySyncSlot<T> slot;
-
 	private Class<T> clazz;
 
-	public BocmPackConvInHandler(MyLog myLog, NettySyncSlot<T> slot, Class<T> clazz) {
+	public BocmPackConvInHandler(MyLog myLog, Class<T> clazz) {
 		this.myLog = myLog;
-		this.slot = slot;
 		this.clazz = clazz;
 	}
 
@@ -51,8 +57,10 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		Attribute<NettySyncSlot<T>> slotAttr = ctx.channel().attr(AttributeKey.valueOf(NettySyncClient.SLOTKEY));
+		NettySyncSlot<T> slot = slotAttr.get();
+		slot.setResponse(null);
 		this.myLog.info(logger, "解析服务端应答异常", cause);
-		this.slot.setResponse(null);
 	}
 
 }
