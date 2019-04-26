@@ -29,6 +29,7 @@ public class QR_10101_TEST extends BASE_TEST {
 		req.setActNo("62316600000018");
 		req.setPin("0123456789ABCDEF");
 		String repData = super.comm(req.creaFixPack());
+		System.out.println("repData: "+repData);
 		REP_10101 rep = new REP_10101();
 		rep.chanFixPack(repData);
 		assertEquals(rep.getHeader().gettMsgTyp(), "N");

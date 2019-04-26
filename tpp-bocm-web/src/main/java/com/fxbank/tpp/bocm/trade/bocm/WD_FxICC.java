@@ -60,7 +60,7 @@ public class WD_FxICC implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_20001 req = (REQ_20001) dto;
-		// 插入流水表
+		//1.插入流水表
 		initRecord(req);	
 		//IC卡信息校验
 		try {
@@ -69,7 +69,7 @@ public class WD_FxICC implements TradeExecutionStrategy {
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008);
 			throw e2;
 		}
-		// 核心记账
+		//2.核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -91,6 +91,7 @@ public class WD_FxICC implements TradeExecutionStrategy {
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 			throw e2;
 		}
+		//3.更新流水表核心记账状态
 		updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
 		myLog.info(logger, "交行代理我行账户付款（IC卡），本行核心记账成功，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 		REP_20001 rep = new REP_20001();

@@ -11,7 +11,9 @@ package com.fxbank.tpp.bocm.service;
 import javax.validation.Valid;
 
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
+import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
+import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 
 /** 
@@ -43,6 +45,17 @@ public interface IBocmRcvTraceService {
 	* @throws 
 	*/
 	void rcvTraceUpd(@Valid BocmRcvTraceUpdModel record) throws SysTradeExecuteException;
-	
+	/** 
+	* @Title: getConfirmTrace 
+	* @Description: 来账确认查询 
+	* @param @param myLog
+	* @param @param townDate
+	* @param @param townTraceno
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return RcvTraceQueryModel    返回类型 
+	* @throws 
+	*/
+	public BocmRcvTraceQueryModel getConfirmTrace(MyLog myLog,String townDate,String townTraceno)throws SysTradeExecuteException;
 
 }
