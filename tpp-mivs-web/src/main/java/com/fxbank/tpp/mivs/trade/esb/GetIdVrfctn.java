@@ -25,6 +25,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+/**
+ * @Description: 行内系统发起企业手机号核查
+ * @Author: 周勇沩
+ * @Date: 2019-04-28 09:54:14
+ */
 @Service("REQ_30041000901")
 public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 
@@ -49,7 +54,7 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         REQ_30041000901 req = (REQ_30041000901) dto;
         REQ_30041000901.REQ_BODY reqBody = req.getReqBody();
 
-        MIVS_320_001_01 mivs320 = new MIVS_320_001_01(new MyLog(), 20190909, 12323, 12);
+        MIVS_320_001_01 mivs320 = new MIVS_320_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         
 		// 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -89,22 +94,18 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 
         String msgid= mivs320.getGetIdVrfctn().getMsgHdr().getMsgId();    //为同步等待321，组合三要素
         String channel = "321_"+msgid;
-        DTO_BASE dtoBase = syncCom.get(myLog, channel, 60, TimeUnit.SECONDS);
+        DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
         REP_30041000901 rep = new REP_30041000901();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
         	CCMS_911_001_02 ccmc911 = (CCMS_911_001_02)dtoBase;
-        	MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,
-        			MivsTradeExecuteException.TCEXERRCODECONV.get(MivsTradeExecuteException.MIVS_E_10002)
-        			+"("+ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf()+")");
+        	MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.321.001.01")){
             MIVS_321_001_01 mivs321 = (MIVS_321_001_01)dtoBase;
             REP_30041000901.REP_BODY repBody = rep.getRepBody();
-            if(mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getProcCd()!=null) {
-            	MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,
-            			MivsTradeExecuteException.TCEXERRCODECONV.get(MivsTradeExecuteException.MIVS_E_10002)
-            			+"("+mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getRjctinf()+")");
+            if(mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getProcSts()!=null) {
+            	MivsTradeExecuteException e = new MivsTradeExecuteException(mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getProcCd(),mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getRjctinf());
                 throw e;
             }
             repBody.setMobNb(mivs321.getRtrIdVrfctn().getRspsn().getVrfctnInf().getMobNb());

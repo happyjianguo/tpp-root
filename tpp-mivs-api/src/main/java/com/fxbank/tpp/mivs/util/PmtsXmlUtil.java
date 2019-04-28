@@ -42,11 +42,9 @@ public class PmtsXmlUtil {
 			JAXBContext jaxbContext = JAXBContext.newInstance(clazz);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			StringReader reader = new StringReader(xml);
-
 			SAXParserFactory sax = SAXParserFactory.newInstance();
 			sax.setNamespaceAware(false);
 			XMLReader xmlReader = sax.newSAXParser().getXMLReader();
-
 			Source source = new SAXSource(xmlReader, new InputSource(reader));
 			return (T) unmarshaller.unmarshal(source);
 		} catch (Exception e) {

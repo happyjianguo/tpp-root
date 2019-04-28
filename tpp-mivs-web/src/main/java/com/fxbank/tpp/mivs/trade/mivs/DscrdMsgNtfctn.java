@@ -13,14 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-
-/** 
-* @ClassName: DscrdMsgNtfctn 
-* @Description: 报文丢弃通知报文 
-* @author Duzhenduo
-* @date 2019年4月25日 下午2:50:50 
-*  
-*/
+/**
+ * @ClassName: DscrdMsgNtfctn
+ * @Description: 报文丢弃通知报文
+ * @author Duzhenduo
+ * @date 2019年4月25日 下午2:50:50
+ * 
+ */
 @Service("CCMS_911_001_02")
 public class DscrdMsgNtfctn extends TradeBase implements TradeExecutionStrategy {
 
@@ -38,8 +37,10 @@ public class DscrdMsgNtfctn extends TradeBase implements TradeExecutionStrategy 
         CCMS_911_001_02 ccms911 = (CCMS_911_001_02) dto;
         myLog.info(logger, "收到人行报文丢弃通知报文,进行同步处理");
         byte[] b911 = SerializeUtil.serialize(ccms911);
-        String msgId = "321_" + ccms911.getDscrdMsgNtfctn().getDscrdInf().getMsgId();   //TODO 拼接原报文三要素
-        super.jedisPublish(msgId.getBytes(), b911);
+        String msgType = ccms911.getDscrdMsgNtfctn().getDscrdInf().getMT().substring(5, 8);
+        String channel = msgType + "_" + ccms911.getDscrdMsgNtfctn().getDscrdInf().getMsgId(); // TODO 拼接原报文三要素
+        myLog.info(logger, "911报文同步通道编号=[" + channel + "]");
+        super.jedisPublish(myLog,channel.getBytes(), b911);
         myLog.info(logger, "发布至redis成功");
         return ccms911;
     }

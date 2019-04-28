@@ -63,7 +63,7 @@ public class SyncCom {
 			myLog.info(logger, "实时等待应答["+channel+"]...");
 			byte[] repData = slot.get(timeout, unit);
 			t = (T) SerializeUtil.unserialize(repData);
-			myLog.info(logger, "收到实时应答["+channel+"]...");
+			myLog.info(logger, "收到实时应答["+channel+"]["+t+"]...");
 		} catch (InterruptedException e) {
 			myLog.error(logger, "等待服务端应答超时", e);
 			MivsTradeExecuteException e1 = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10001);

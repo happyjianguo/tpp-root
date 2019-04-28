@@ -5,6 +5,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import com.fxbank.tpp.mivs.model.CCMS_911_001_02_DscrdMsgNtfctn;
 
+/**
+ * @Description: 人行请求911
+ * @Author: 周勇沩
+ * @Date: 2019-04-28 09:28:00
+ */
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CCMS_911_001_02 extends DTO_BASE {

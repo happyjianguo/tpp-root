@@ -1,6 +1,7 @@
 package com.fxbank.tpp.mivs.trade.simu;
 
 import javax.annotation.Resource;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -8,6 +9,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_320_001_01;
+import com.fxbank.tpp.mivs.model.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02;
 import com.fxbank.tpp.mivs.model.MIVS_321_001_01;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
@@ -48,7 +50,7 @@ public class SIMU_GetIdVrfctn implements TradeExecutionStrategy {
 		mivs.getHeader().setOrigReceiver("0000");
 		mivs.getHeader().setMesgID(mivs320.getHead().getMesgID());
 		mivs.getComConf().getConfInf().setMT("MT");
-		mivs.getComConf().getConfInf().setMsgId(mivs320.getGetIdVrfctn().getMsgHdr().getMsgId());
+		mivs.getComConf().getConfInf().setMsgId(mivs320.getHead().getMesgID());
 		mivs.getComConf().getConfInf().setMsgPrcCd("PM1I0000");
 		mivs.getComConf().getConfInf().setMsgRefId("msgRefId");
 		mivs.getComConf().getConfInf().setOrigSndDt("20190909");
@@ -83,6 +85,7 @@ public class SIMU_GetIdVrfctn implements TradeExecutionStrategy {
 		mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().setProcCd("O3048");
 		mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().setRjctinf("手机号码核查业务本行当日总量超限");
 		**/
+
 		pmtsService.sendToPmtsNoWait(mivs321);
 		
 		/**
@@ -92,7 +95,7 @@ public class SIMU_GetIdVrfctn implements TradeExecutionStrategy {
 		ccms911.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
 		ccms911.getHeader().setOrigReceiver("0000");
 		ccms911.getHeader().setMesgID(mivs320.getHead().getMesgID());
-		ccms911.getDscrdMsgNtfctn().getDscrdInf().setMT("MT");
+		ccms911.getDscrdMsgNtfctn().getDscrdInf().setMT("mivs.321.001.01");
 		ccms911.getDscrdMsgNtfctn().getDscrdInf().setMsgId(mivs320.getGetIdVrfctn().getMsgHdr().getMsgId());
 		ccms911.getDscrdMsgNtfctn().getDscrdInf().setPrcCd("O1106");
 		ccms911.getDscrdMsgNtfctn().getDscrdInf().setRjctInf("原报文类型非法");

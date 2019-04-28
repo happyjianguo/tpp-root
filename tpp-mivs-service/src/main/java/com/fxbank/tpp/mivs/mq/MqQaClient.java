@@ -70,6 +70,7 @@ public class MqQaClient {
 				if (queue != null)
 					queue.close();
 			} catch (MQException ex) {
+				myLog.error(logger, "关闭队列、提交事物异常",ex);
 			}
 		}
 	}

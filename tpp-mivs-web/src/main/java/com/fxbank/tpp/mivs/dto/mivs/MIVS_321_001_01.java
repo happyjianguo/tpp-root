@@ -6,6 +6,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
 import com.fxbank.tpp.mivs.model.MIVS_321_001_01_RtrIdVrfctn;
 
+/**
+ * @Description: 人行请求321
+ * @Author: 周勇沩
+ * @Date: 2019-04-28 09:27:32
+ */
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MIVS_321_001_01 extends DTO_BASE {

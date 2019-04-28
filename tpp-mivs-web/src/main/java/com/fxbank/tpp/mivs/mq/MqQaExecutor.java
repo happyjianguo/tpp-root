@@ -70,14 +70,15 @@ public class MqQaExecutor{
 		try {
             dtoBase = (DTO_BASE) PmtsXmlUtil.xmlToObject(mivsClass, xml);
             myLog.info(logger, "交易描述=[" + dtoBase.getTxDesc() + "]");
-            String signData = dtoBase.signData();
-            //TODO 验证签名
 			dtoBase.setTxCode(txCode);
 			dtoBase.setSourceType("MIVS");
 		    dtoBase.setOthDate(head.getOrigSendDate());
             dtoBase.setOthTraceno(head.getMesgID());
             dtoBase.setHead(head);
             dtoBase.setSign(sign);
+
+            String signData = dtoBase.signData();
+            //TODO 验证签名
 		} catch (RuntimeException e) {
 			myLog.error(logger, "解析报文失败[" + xml + "]",e);
             throw new RuntimeException(e);

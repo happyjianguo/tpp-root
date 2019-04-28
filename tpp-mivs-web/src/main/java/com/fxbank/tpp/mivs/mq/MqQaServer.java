@@ -69,6 +69,7 @@ public class MqQaServer {
 				qMgr.commit();
 				queue.close();
 			} catch (MQException ex) {
+				this.logger.error("关闭队列、提交事物异常",ex);
 			}
 
 		}
@@ -97,9 +98,11 @@ public class MqQaServer {
 								continue;
 							} else {
 								logger.error("通过MQ获取数据异常", eMQ);
+								mqManager.connectManager();
 							}
 						} catch (Exception e) {
 							logger.error("通过MQ获取数据异常", e);
+							mqManager.connectManager();
 						}
 					}
 				}

@@ -35,8 +35,9 @@ public class RtrIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         MIVS_321_001_01 mivs321 = (MIVS_321_001_01) dto;
         myLog.info(logger, "收到人行手机号码联网核查应答报文,进行同步处理");
         byte[] b321 = SerializeUtil.serialize(mivs321);
-        String msgId = "321_" + mivs321.getHead().getMesgID();   //TODO 拼接原报文三要素
-        super.jedisPublish(msgId.getBytes(), b321);
+        String channel = "321_" + mivs321.getHead().getMesgID();   //TODO 拼接原报文三要素
+        myLog.info(logger, "321报文同步通道编号=[" + channel + "]");
+        super.jedisPublish(myLog,channel.getBytes(), b321);
         myLog.info(logger, "发布至redis成功");
         return mivs321;
     }

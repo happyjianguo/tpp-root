@@ -35,13 +35,12 @@ public class ComConf extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
         CCMS_990_001_02 ccms990 = (CCMS_990_001_02) dto;
-
         myLog.info(logger, "收到人行通讯级应答报文,进行同步处理");
         byte[] b990 = SerializeUtil.serialize(ccms990.getComConf());
-        String msgId = "990_" + ccms990.getComConf().getConfInf().getMsgId();
-        super.jedisPublish(msgId.getBytes(), b990);
+        String channel = "990_" + ccms990.getComConf().getConfInf().getMsgId();
+        myLog.info(logger, "990报文同步通道编号=[" + channel + "]");
+        super.jedisPublish(myLog,channel.getBytes(), b990);
         myLog.info(logger, "发布至redis成功");
-
         return ccms990;
     }
 
