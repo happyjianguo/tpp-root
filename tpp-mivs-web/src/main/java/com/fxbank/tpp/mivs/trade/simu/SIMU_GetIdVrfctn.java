@@ -1,5 +1,7 @@
 package com.fxbank.tpp.mivs.trade.simu;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.annotation.Resource;
 
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -61,7 +63,7 @@ public class SIMU_GetIdVrfctn implements TradeExecutionStrategy {
 		} catch (SysTradeExecuteException e) {
 			e.printStackTrace();
 		}
-		
+
 		// 3、根据320内容模拟返回321
 		MIVS_321_001_01 mivs321 = new MIVS_321_001_01(new MyLog(), 20190909, 122321, 13);
 		mivs321.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
