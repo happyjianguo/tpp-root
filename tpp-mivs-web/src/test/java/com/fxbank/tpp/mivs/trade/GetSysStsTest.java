@@ -5,8 +5,8 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
-import com.fxbank.tpp.mivs.dto.esb.REP_30041000903;
-import com.fxbank.tpp.mivs.dto.esb.REQ_30041000903;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000203;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000203;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -49,16 +49,16 @@ public class GetSysStsTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_30041000903 req ;
+    private REQ_50023000203 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_30041000903.REQ_BODY reqBody ;
+    private REQ_50023000203.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_30041000903();
+        req = new REQ_50023000203();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("300410009");
         reqSysHead.setSceneId("03");
@@ -102,7 +102,7 @@ public class GetSysStsTest {
         int status = mvcResult.getResponse().getStatus();
         assertEquals(status, 200);
         String repContent = mvcResult.getResponse().getContentAsString();
-        REP_30041000903 rep = JsonUtil.toBean(repContent, REP_30041000903.class);
+        REP_50023000203 rep = JsonUtil.toBean(repContent, REP_50023000203.class);
     }
 
 

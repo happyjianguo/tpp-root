@@ -8,8 +8,8 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_30041000903;
-import com.fxbank.tpp.mivs.dto.esb.REQ_30041000903;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000203;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000203;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_346_001_01;
@@ -51,8 +51,8 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_30041000903 req = (REQ_30041000903) dto;//接收ESB请求报文
-        REQ_30041000903.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000203 req = (REQ_50023000203) dto;//接收ESB请求报文
+        REQ_50023000203.REQ_BODY reqBody = req.getReqBody();
 
         MIVS_345_001_01 mivs345 = new MIVS_345_001_01(new MyLog(),dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
 
@@ -91,14 +91,14 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
         String channel = "345_"+msgid;
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
-        REP_30041000903 rep = new REP_30041000903();
+        REP_50023000203 rep = new REP_50023000203();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
             CCMS_911_001_02 ccmc911 = (CCMS_911_001_02)dtoBase;
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.346.001.01")){
             MIVS_346_001_01 mivs346 = (MIVS_346_001_01)dtoBase;
-            REP_30041000903.REP_BODY repBody = rep.getRepBody();
+            REP_50023000203.REP_BODY repBody = rep.getRepBody();
 //            if(mivs346.getRtrSysSts().getRspsn().getOprlErr().getProcSts()!=null) {
 //                MivsTradeExecuteException e = new MivsTradeExecuteException(mivs346.getRtrSysSts().getRspsn().getOprlErr().getProcCd(),mivs346.getRtrSysSts().getRspsn().getOprlErr().getRjctinf());
 //                throw e;

@@ -8,8 +8,8 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 
-import com.fxbank.tpp.mivs.dto.esb.REP_30041000902;
-import com.fxbank.tpp.mivs.dto.esb.REQ_30041000902;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000202;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000202;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,16 +52,16 @@ public class GetTxPmtVrfctnTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_30041000902 req ;
+    private REQ_50023000202 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_30041000902.REQ_BODY reqBody ;
+    private REQ_50023000202.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_30041000902();
+        req = new REQ_50023000202();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("300410009");
         reqSysHead.setSceneId("02");
@@ -107,7 +107,7 @@ public class GetTxPmtVrfctnTest {
         int status = mvcResult.getResponse().getStatus();
         assertEquals(status, 200);
         String repContent = mvcResult.getResponse().getContentAsString();
-        REP_30041000902 rep = JsonUtil.toBean(repContent, REP_30041000902.class);
+        REP_50023000202 rep = JsonUtil.toBean(repContent, REP_50023000202.class);
     }
 
 
