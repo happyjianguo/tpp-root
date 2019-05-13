@@ -10,13 +10,13 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_30041000901;
-import com.fxbank.tpp.mivs.dto.esb.REQ_30041000901;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000201;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000201;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_321_001_01;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
-import com.fxbank.tpp.mivs.model.MIVS_320_001_01;
+import com.fxbank.tpp.mivs.model.request.MIVS_320_001_01;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
 import com.fxbank.tpp.mivs.trade.mivs.ComConf;
@@ -51,8 +51,8 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_30041000901 req = (REQ_30041000901) dto;
-        REQ_30041000901.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000201 req = (REQ_50023000201) dto;
+        REQ_50023000201.REQ_BODY reqBody = req.getReqBody();
 
         MIVS_320_001_01 mivs320 = new MIVS_320_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         
@@ -60,6 +60,7 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         String branchId = req.getReqSysHead().getBranchId();
         String bankNumber = null, bnkNmT = null, settlementBankNo = null, lqtnBnkNmT1 = null;
 		try {
+		    //调用二代接口查询二代行号
 			ESB_REP_30043003001 esbRep_30043003001 = queryBankno(myLog, dto, branchId);
 			// 发起行人行行号
 			bankNumber = esbRep_30043003001.getRepBody().getBankNumber();
@@ -96,14 +97,14 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         String channel = "321_"+msgid;
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
-        REP_30041000901 rep = new REP_30041000901();
+        REP_50023000201 rep = new REP_50023000201();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
         	CCMS_911_001_02 ccmc911 = (CCMS_911_001_02)dtoBase;
         	MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.321.001.01")){
             MIVS_321_001_01 mivs321 = (MIVS_321_001_01)dtoBase;
-            REP_30041000901.REP_BODY repBody = rep.getRepBody();
+            REP_50023000201.REP_BODY repBody = rep.getRepBody();
             if(mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getProcSts()!=null) {
             	MivsTradeExecuteException e = new MivsTradeExecuteException(mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getProcCd(),mivs321.getRtrIdVrfctn().getRspsn().getOprlErr().getRjctinf());
                 throw e;
