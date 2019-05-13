@@ -28,12 +28,12 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
-import com.fxbank.tpp.mivs.dto.esb.REP_30041000901;
-import com.fxbank.tpp.mivs.dto.esb.REQ_30041000901;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000201;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000201;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
- @AutoConfigureMockMvc	
+@AutoConfigureMockMvc
 public class GetIdVrfctnTest {
 
 	
@@ -47,16 +47,16 @@ public class GetIdVrfctnTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	private REQ_30041000901 req ;
+	private REQ_50023000201 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_30041000901.REQ_BODY reqBody ;
+	private REQ_50023000201.REQ_BODY reqBody ;
 	
 	@Reference(version = "1.0.0")
 	private ISafeService passwordService;
 	
 	@Before
 	public void init(){
-		req = new REQ_30041000901();
+		req = new REQ_50023000201();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("300410009");
 		reqSysHead.setSceneId("01");
@@ -104,7 +104,7 @@ public class GetIdVrfctnTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30041000901 rep = JsonUtil.toBean(repContent, REP_30041000901.class);
+		REP_50023000201 rep = JsonUtil.toBean(repContent, REP_50023000201.class);
 	}
 	
 
