@@ -10,7 +10,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
  * @Author: 王鹏
  * @Date: 2019/4/29 9:29.
  */
-public class REP_30041000902 extends REP_BASE {
+public class REP_50023000202 extends REP_BASE {
 
     @JSONField(name = "APP_HEAD")
     private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -19,7 +19,7 @@ public class REP_30041000902 extends REP_BASE {
     private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
     @JSONField(name = "BODY")
-    private REP_30041000902.REP_BODY repBody = new REP_30041000902.REP_BODY();
+    private REP_50023000202.REP_BODY repBody = new REP_50023000202.REP_BODY();
 
     public REP_APP_HEAD getRepAppHead() {
         return repAppHead;
@@ -42,13 +42,13 @@ public class REP_30041000902 extends REP_BASE {
 
 
 
-    public REP_30041000902.REP_BODY getRepBody() {
+    public REP_50023000202.REP_BODY getRepBody() {
         return repBody;
     }
 
 
 
-    public void setRepBody(REP_30041000902.REP_BODY repBody) {
+    public void setRepBody(REP_50023000202.REP_BODY repBody) {
         this.repBody = repBody;
     }
 

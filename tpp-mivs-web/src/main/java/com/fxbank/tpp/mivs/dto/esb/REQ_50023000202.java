@@ -10,7 +10,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
  * @Author: 王鹏
  * @Date: 2019/4/29 9:22
  */
-public class REQ_30041000902 extends REQ_BASE {
+public class REQ_50023000202 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
     private REQ_APP_HEAD reqAppHead;
 
@@ -18,9 +18,9 @@ public class REQ_30041000902 extends REQ_BASE {
     private REQ_SYS_HEAD reqSysHead;
 
     @JSONField(name = "BODY")
-    private REQ_30041000902.REQ_BODY reqBody;
+    private REQ_50023000202.REQ_BODY reqBody;
 
-    public REQ_30041000902(){
+    public REQ_50023000202(){
         super.txDesc = "纳税信息联网核查";
     }
 
@@ -43,12 +43,12 @@ public class REQ_30041000902 extends REQ_BASE {
     }
 
 
-    public REQ_30041000902.REQ_BODY getReqBody() {
+    public REQ_50023000202.REQ_BODY getReqBody() {
         return reqBody;
     }
 
 
-    public void setReqBody(REQ_30041000902.REQ_BODY reqBody) {
+    public void setReqBody(REQ_50023000202.REQ_BODY reqBody) {
         this.reqBody = reqBody;
     }
 
