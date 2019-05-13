@@ -9,6 +9,7 @@
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -54,6 +55,39 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	@NotNull(message = "tx_amt交易金额不能为空")
 	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
 	private String txAmt;//交易金额
+	
+    /**
+     * 手续费收取方式
+     */
+    private String feeFlag;
+    /**
+     * 手续费
+     */
+    private BigDecimal fee;
+    /**
+     * 发起行人行行号
+     */
+    private String sndBankno;
+    /**
+     * 接收行人行行号
+     */
+    private String rcvBankno;
+    /**
+     * 付款人开户行
+     */
+    private String payerBank;
+    /**
+     * 收款人开户行
+     */
+    private String payerActtp;
+    /**
+     * 收款人开户行
+     */
+    private String payeeBank;
+    /**
+     * 收款人开户行
+     */
+    private String payeeActtp;
 	
 	@Size(max = 50,message = "payer_acno付款人账户最大长度是50")
 	private String payerAcno; //付款人账户
@@ -101,8 +135,10 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	
 	@Size(max = 255,message = "info摘要最大长度是255")
 	private String info; //摘要
-	
-	private String bocmDate;//村镇日期
+	//交行日期
+	private int bocmDate;
+	//交行时间
+	private int bocmTime;
 	
 	private String bocmTraceNo;//村镇流水
 	
@@ -263,12 +299,22 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 		this.bocmState = bocmState;
 	}
 
-	public String getBocmDate() {
+
+
+	public int getBocmDate() {
 		return bocmDate;
 	}
 
-	public void setBocmDate(String bocmDate) {
+	public void setBocmDate(int bocmDate) {
 		this.bocmDate = bocmDate;
+	}
+
+	public int getBocmTime() {
+		return bocmTime;
+	}
+
+	public void setBocmTime(int bocmTime) {
+		this.bocmTime = bocmTime;
 	}
 
 	public String getBocmTraceNo() {
@@ -317,6 +363,70 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 
 	public void setRetMsg(String retMsg) {
 		this.retMsg = retMsg;
+	}
+
+	public String getFeeFlag() {
+		return feeFlag;
+	}
+
+	public void setFeeFlag(String feeFlag) {
+		this.feeFlag = feeFlag;
+	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
+	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getRcvBankno() {
+		return rcvBankno;
+	}
+
+	public void setRcvBankno(String rcvBankno) {
+		this.rcvBankno = rcvBankno;
+	}
+
+	public String getPayerBank() {
+		return payerBank;
+	}
+
+	public void setPayerBank(String payerBank) {
+		this.payerBank = payerBank;
+	}
+
+	public String getPayerActtp() {
+		return payerActtp;
+	}
+
+	public void setPayerActtp(String payerActtp) {
+		this.payerActtp = payerActtp;
+	}
+
+	public String getPayeeBank() {
+		return payeeBank;
+	}
+
+	public void setPayeeBank(String payeeBank) {
+		this.payeeBank = payeeBank;
+	}
+
+	public String getPayeeActtp() {
+		return payeeActtp;
+	}
+
+	public void setPayeeActtp(String payeeActtp) {
+		this.payeeActtp = payeeActtp;
 	}
 
 }

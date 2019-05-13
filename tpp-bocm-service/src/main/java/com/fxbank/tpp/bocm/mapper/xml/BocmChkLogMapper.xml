@@ -20,4 +20,8 @@
     CCY, TX_AMT, ACCOUNTNO, REVERSAL, TX_STATUS, DIRECTION
     from BOCM_CHK_LOG
   </select>
+  
+  <select id="deleteAll" >
+    delete from bocm_chk_log where direction = #{direction}
+  </select>
 </mapper>

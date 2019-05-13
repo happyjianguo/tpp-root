@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface BocmChkLogMapper extends MyMapper<BocmChkLog> {
     List<BocmChkLog> selectAll();
+	void deleteAll(String direction);
 }

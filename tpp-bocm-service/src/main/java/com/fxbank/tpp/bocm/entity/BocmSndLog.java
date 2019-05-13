@@ -67,6 +67,54 @@ public class BocmSndLog {
      */
     @Column(name = "TX_AMT")
     private BigDecimal txAmt;
+    
+    /**
+     * null
+     */
+    @Column(name = "FEE_FLAG")
+    private String feeFlag;
+    
+    /**
+     * null
+     */
+    @Column(name = "FEE")
+    private BigDecimal fee;
+    
+    /**
+     * null
+     */
+    @Column(name = "SND_BANKNO")
+    private String sndBankno;
+    
+    /**
+     * null
+     */
+    @Column(name = "RCV_BANKNO")
+    private String rcvBankno;
+    
+    /**
+     * null
+     */
+    @Column(name = "PAYER_BANK")
+    private String payerBank;
+    
+    /**
+     * null
+     */
+    @Column(name = "PAYER_ACTTP")
+    private String payerActtp;
+    
+    /**
+     * null
+     */
+    @Column(name = "PAYEE_BANK")
+    private String payeeBank;
+    
+    /**
+     * null
+     */
+    @Column(name = "PAYEE_ACTTP")
+    private String payeeActtp;
 
     /**
      * null
@@ -115,6 +163,12 @@ public class BocmSndLog {
      */
     @Column(name = "BOCM_DATE")
     private Integer bocmDate;
+    
+    /**
+     * null
+     */
+    @Column(name = "BOCM_TIME")
+    private Integer bocmTime;
 
     /**
      * null
@@ -182,11 +236,6 @@ public class BocmSndLog {
     @Column(name = "RET_MSG")
     private String retMsg;
 
-    /**
-     * null
-     */
-    @Column(name = "BOCM_FLAG")
-    private String bocmFlag;
 
     /**
      * null
@@ -598,22 +647,6 @@ public class BocmSndLog {
 
     /**
      * null
-     * @return BOCM_FLAG null
-     */
-    public String getBocmFlag() {
-        return bocmFlag;
-    }
-
-    /**
-     * null
-     * @param bocmFlag null
-     */
-    public void setBocmFlag(String bocmFlag) {
-        this.bocmFlag = bocmFlag;
-    }
-
-    /**
-     * null
      * @return HOST_BRANCH null
      */
     public String getHostBranch() {
@@ -627,4 +660,78 @@ public class BocmSndLog {
     public void setHostBranch(String hostBranch) {
         this.hostBranch = hostBranch;
     }
+
+	public Integer getBocmTime() {
+		return bocmTime;
+	}
+
+	public void setBocmTime(Integer bocmTime) {
+		this.bocmTime = bocmTime;
+	}
+
+	public String getFeeFlag() {
+		return feeFlag;
+	}
+
+	public void setFeeFlag(String feeFlag) {
+		this.feeFlag = feeFlag;
+	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
+	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getRcvBankno() {
+		return rcvBankno;
+	}
+
+	public void setRcvBankno(String rcvBankno) {
+		this.rcvBankno = rcvBankno;
+	}
+
+	public String getPayerBank() {
+		return payerBank;
+	}
+
+	public void setPayerBank(String payerBank) {
+		this.payerBank = payerBank;
+	}
+
+	public String getPayerActtp() {
+		return payerActtp;
+	}
+
+	public void setPayerActtp(String payerActtp) {
+		this.payerActtp = payerActtp;
+	}
+
+	public String getPayeeBank() {
+		return payeeBank;
+	}
+
+	public void setPayeeBank(String payeeBank) {
+		this.payeeBank = payeeBank;
+	}
+
+	public String getPayeeActtp() {
+		return payeeActtp;
+	}
+
+	public void setPayeeActtp(String payeeActtp) {
+		this.payeeActtp = payeeActtp;
+	}
+    
+    
 }

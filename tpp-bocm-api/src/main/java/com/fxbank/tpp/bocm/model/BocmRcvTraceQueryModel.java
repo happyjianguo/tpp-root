@@ -73,7 +73,40 @@ public class BocmRcvTraceQueryModel extends ModelBase implements Serializable{
      * 交易金额
      */
     private BigDecimal txAmt;
-
+    
+    /**
+     * 手续费收取方式
+     */
+    private String feeFlag;
+    /**
+     * 手续费
+     */
+    private BigDecimal fee;
+    /**
+     * 发起行人行行号
+     */
+    private String sndBankno;
+    /**
+     * 接收行人行行号
+     */
+    private String rcvBankno;
+    /**
+     * 付款人开户行
+     */
+    private String payerBank;
+    /**
+     * 收款人开户行
+     */
+    private String payerActtp;
+    /**
+     * 收款人开户行
+     */
+    private String payeeBank;
+    /**
+     * 收款人开户行
+     */
+    private String payeeActtp;
+ 
     /**
      * 核心日期
      */
@@ -158,6 +191,10 @@ public class BocmRcvTraceQueryModel extends ModelBase implements Serializable{
      * 摘要
      */
     private String info;   
+    //核心反馈响应码
+    private String retCode;
+    //核心反馈响应信息
+    private String retMsg;
 
 	public Integer getPlatDate() {
 		return platDate;
@@ -367,6 +404,86 @@ public class BocmRcvTraceQueryModel extends ModelBase implements Serializable{
 
 	public void setBocmState(String bocmState) {
 		this.bocmState = bocmState;
+	}
+
+	public String getRetCode() {
+		return retCode;
+	}
+
+	public void setRetCode(String retCode) {
+		this.retCode = retCode;
+	}
+
+	public String getRetMsg() {
+		return retMsg;
+	}
+
+	public void setRetMsg(String retMsg) {
+		this.retMsg = retMsg;
+	}
+
+	public String getFeeFlag() {
+		return feeFlag;
+	}
+
+	public void setFeeFlag(String feeFlag) {
+		this.feeFlag = feeFlag;
+	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
+	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getRcvBankno() {
+		return rcvBankno;
+	}
+
+	public void setRcvBankno(String rcvBankno) {
+		this.rcvBankno = rcvBankno;
+	}
+
+	public String getPayerBank() {
+		return payerBank;
+	}
+
+	public void setPayerBank(String payerBank) {
+		this.payerBank = payerBank;
+	}
+
+	public String getPayerActtp() {
+		return payerActtp;
+	}
+
+	public void setPayerActtp(String payerActtp) {
+		this.payerActtp = payerActtp;
+	}
+
+	public String getPayeeBank() {
+		return payeeBank;
+	}
+
+	public void setPayeeBank(String payeeBank) {
+		this.payeeBank = payeeBank;
+	}
+
+	public String getPayeeActtp() {
+		return payeeActtp;
+	}
+
+	public void setPayeeActtp(String payeeActtp) {
+		this.payeeActtp = payeeActtp;
 	}
 	
 	

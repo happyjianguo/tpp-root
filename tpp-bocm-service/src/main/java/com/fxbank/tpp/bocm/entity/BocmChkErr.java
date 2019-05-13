@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 
@@ -9,14 +11,14 @@ public class BocmChkErr {
      */
     @Id
     @Column(name = "PLAT_DATE")
-    private Long platDate;
+    private Integer platDate;
 
     /**
      * null
      */
     @Id
     @Column(name = "PLAT_TRACE")
-    private Long platTrace;
+    private Integer platTrace;
 
     /**
      * null
@@ -52,7 +54,7 @@ public class BocmChkErr {
      * null
      */
     @Column(name = "TX_AMT")
-    private Short txAmt;
+    private BigDecimal txAmt;
 
     /**
      * null
@@ -84,39 +86,24 @@ public class BocmChkErr {
     @Column(name = "MSG")
     private String msg;
 
-    /**
-     * null
-     * @return PLAT_DATE null
-     */
-    public Long getPlatDate() {
-        return platDate;
-    }
 
-    /**
-     * null
-     * @param platDate null
-     */
-    public void setPlatDate(Long platDate) {
-        this.platDate = platDate;
-    }
+    public Integer getPlatDate() {
+		return platDate;
+	}
 
-    /**
-     * null
-     * @return PLAT_TRACE null
-     */
-    public Long getPlatTrace() {
-        return platTrace;
-    }
+	public void setPlatDate(Integer platDate) {
+		this.platDate = platDate;
+	}
 
-    /**
-     * null
-     * @param platTrace null
-     */
-    public void setPlatTrace(Long platTrace) {
-        this.platTrace = platTrace;
-    }
+	public Integer getPlatTrace() {
+		return platTrace;
+	}
 
-    /**
+	public void setPlatTrace(Integer platTrace) {
+		this.platTrace = platTrace;
+	}
+
+	/**
      * null
      * @return PRE_HOST_STATE null
      */
@@ -196,23 +183,15 @@ public class BocmChkErr {
         this.direction = direction;
     }
 
-    /**
-     * null
-     * @return TX_AMT null
-     */
-    public Short getTxAmt() {
-        return txAmt;
-    }
+    public BigDecimal getTxAmt() {
+		return txAmt;
+	}
 
-    /**
-     * null
-     * @param txAmt null
-     */
-    public void setTxAmt(Short txAmt) {
-        this.txAmt = txAmt;
-    }
+	public void setTxAmt(BigDecimal txAmt) {
+		this.txAmt = txAmt;
+	}
 
-    /**
+	/**
      * null
      * @return PAYER_ACNO null
      */

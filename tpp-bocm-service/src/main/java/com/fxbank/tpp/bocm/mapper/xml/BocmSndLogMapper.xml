@@ -11,14 +11,23 @@
     <result column="TX_CODE" jdbcType="NVARCHAR" property="txCode" />
     <result column="DC_FLAG" jdbcType="NVARCHAR" property="dcFlag" />
     <result column="TX_AMT" jdbcType="DECIMAL" property="txAmt" />
+    <result column="FEE_FLAG" jdbcType="NVARCHAR" property="feeFlag" />
+    <result column="FEE" jdbcType="DECIMAL" property="fee" />
     <result column="HOST_DATE" jdbcType="DECIMAL" property="hostDate" />
-    <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />
+    <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />   
+    <result column="SND_BANKNO" jdbcType="NVARCHAR" property="sndBankno" />
+    <result column="RCV_BANKNO" jdbcType="NVARCHAR" property="rcvBankno" />
+    <result column="PAYER_BANK" jdbcType="NVARCHAR" property="payerBank" />
+    <result column="PAYER_ACTTP" jdbcType="NVARCHAR" property="payerActtp" />
     <result column="PAYER_ACNO" jdbcType="NVARCHAR" property="payerAcno" />
     <result column="PAYER_NAME" jdbcType="NVARCHAR" property="payerName" />
+    <result column="PAYEE_BANK" jdbcType="NVARCHAR" property="payeeBank" />
+    <result column="PAYEE_ACTTP" jdbcType="NVARCHAR" property="payeeActtp" />
     <result column="PAYEE_ACNO" jdbcType="NVARCHAR" property="payeeAcno" />
     <result column="PAYEE_NAME" jdbcType="NVARCHAR" property="payeeName" />
     <result column="BOCM_BRANCH" jdbcType="NVARCHAR" property="bocmBranch" />
     <result column="BOCM_DATE" jdbcType="DECIMAL" property="bocmDate" />
+    <result column="BOCM_TIME" jdbcType="DECIMAL" property="bocmTime" />
     <result column="BOCM_TRACENO" jdbcType="NVARCHAR" property="bocmTraceno" />
     <result column="CHECK_FLAG" jdbcType="NVARCHAR" property="checkFlag" />
     <result column="HOST_STATE" jdbcType="NVARCHAR" property="hostState" />
@@ -30,15 +39,58 @@
     <result column="INFO" jdbcType="NVARCHAR" property="info" />
     <result column="RET_CODE" jdbcType="NVARCHAR" property="retCode" />
     <result column="RET_MSG" jdbcType="NVARCHAR" property="retMsg" />
-    <result column="BOCM_FLAG" jdbcType="NVARCHAR" property="bocmFlag" />
     <result column="HOST_BRANCH" jdbcType="NVARCHAR" property="hostBranch" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap">
     select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SOURCE_TYPE, TX_BRANCH, TX_IND, TX_CODE,DC_FLAG, 
     TX_AMT, HOST_DATE, HOST_TRACENO, PAYER_ACNO, PAYER_NAME, PAYEE_ACNO, PAYEE_NAME, 
     BOCM_BRANCH, BOCM_DATE, BOCM_TRACENO, CHECK_FLAG, HOST_STATE, BOCM_STATE, TX_TEL, 
-    CHK_TEL, AUTH_TEL, PRINT, INFO, RET_CODE, RET_MSG, BOCM_FLAG, HOST_BRANCH
+    CHK_TEL, AUTH_TEL, PRINT, INFO, RET_CODE, RET_MSG, BOCM_FLAG, HOST_BRANCH,
+    FEE_FLAG,FEE,SND_BANKNO,RCV_BANKNO,PAYER_BANK,PAYER_ACTTP,PAYEE_BANK,PAYEE_ACTTP
     from BOCM_SND_LOG
   </select>
-
+  
+  <select id="selectSndTrace" resultMap="BaseResultMap">
+    select * from bocm_snd_log
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="minAmt != null and minAmt != ''">
+        and tx_amt <![CDATA[ >= ]]> #{minAmt}
+      </if>
+      <if test="maxAmt != null and maxAmt != ''">
+        and tx_amt <![CDATA[ <= ]]> #{maxAmt}
+      </if>
+      <if test="begDate != null and begDate != ''">
+        and plat_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and plat_date <![CDATA[ <= ]]> #{endDate}
+      </if>
+      <if test='brnoFlag != null and brnoFlag != "" and brnoFlag != "0"'>
+        and bocm_flag = #{brnoFlag}
+      </if>
+    </trim>
+     order by plat_trace desc
+  </select>
+  <select id="selectDtSndTotalNum" resultType="java.lang.String" >
+    select count(tx_amt) as num from bocm_snd_log where 
+     plat_date=#{date} and dc_flag=#{flag} and host_state=1 and check_flag in ('2','3')
+  </select>
+   <select id="selectDtSndTotalSum" resultType="java.lang.String" >
+    select sum(tx_amt) as sum from bocm_snd_log where 
+     plat_date=#{date} and dc_flag=#{flag} and host_state=1 and check_flag in ('2','3')
+  </select>
+  <select id="selectCheckedTrace" resultMap="BaseResultMap">
+    select plat_date, plat_trace, plat_time, source_type, tx_branch, tx_ind,tx_code, dc_flag, 
+    tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
+    bocm_branch, bocm_date, bocm_traceno, check_flag, host_state, bocm_state, tx_tel, 
+    chk_tel, auth_tel, print, info,ret_code,ret_msg,bocm_flag,host_branch,
+    fee_flag,fee,snd_bankno,rcv_bankno,payer_bank,payer_acttp,payee_bank,payee_acttp
+    from bocm_snd_log where plat_date=#{date} and host_state=1 and check_flag in ('2','3')
+  </select>
+  <select id="selectTraceNum" resultType="java.lang.String" >
+    select count(*) as num from bocm_snd_log where plat_date=#{date}  
+     <if test='checkFlag != null and checkFlag != ""'>
+        and check_flag = #{checkFlag}
+      </if>
+  </select>
 </mapper>

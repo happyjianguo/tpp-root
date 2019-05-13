@@ -9,6 +9,8 @@
 package com.fxbank.tpp.bocm.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -20,6 +22,7 @@ import com.fxbank.tpp.bocm.entity.BocmRcvLog;
 import com.fxbank.tpp.bocm.mapper.BocmRcvLogMapper;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
+import com.fxbank.tpp.bocm.model.BocmRcvTraceRepModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 
@@ -66,12 +69,25 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		entity.setBocmBranch(record.getBocmBranch());
 		entity.setHostState(record.getHostState());	
 		entity.setBocmState(record.getBocmState());
+		entity.setBocmDate(record.getBocmDate());
+		entity.setBocmTime(record.getBocmTime());
+		entity.setBocmTraceno(record.getBocmTraceNo());
 		
 		entity.setTxTel(record.getTxTel());
 		entity.setChkTel(record.getChkTel());
 		entity.setAuthTel(record.getAuthTel());
 		entity.setPrint(record.getPrint());
 		entity.setInfo(record.getInfo());
+		entity.setCheckFlag("1");
+		
+		entity.setFeeFlag(record.getFeeFlag());
+		entity.setFee(record.getFee());
+		entity.setSndBankno(record.getSndBankno());
+		entity.setRcvBankno(record.getRcvBankno());
+		entity.setPayerBank(record.getPayerBank());
+		entity.setPayerActtp(record.getPayerActtp());
+		entity.setPayeeBank(record.getPayeeBank());
+		entity.setPayeeActtp(record.getPayeeActtp());
 		
 		bocmRcvLogMapper.insertSelective(entity);
 
@@ -131,11 +147,14 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 	}
 	
 	@Override
-	public BocmRcvTraceQueryModel getConfirmTrace(MyLog myLog,String townDate,String townTraceno)throws SysTradeExecuteException {
+	public BocmRcvTraceQueryModel getConfirmTrace(MyLog myLog,int townDate, String townTraceno)throws SysTradeExecuteException {
 		BocmRcvLog bocmRcvLog = new BocmRcvLog();
-		bocmRcvLog.setBocmDate(Integer.parseInt(townDate));
+		bocmRcvLog.setBocmDate(townDate);
 		bocmRcvLog.setBocmTraceno(townTraceno);
 		BocmRcvLog data = bocmRcvLogMapper.selectOne(bocmRcvLog);
+		if(data==null){
+			return null;
+		}
 		BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog, bocmRcvLog.getPlatDate(), bocmRcvLog.getPlatTime(), bocmRcvLog.getPlatTrace());
 		model.setAuthTel(data.getAuthTel());
 		model.setCheckFlag(data.getCheckFlag());
@@ -158,7 +177,267 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		model.setBocmState(data.getBocmState());
 		model.setBocmTraceno(model.getBocmTraceno());
 		model.setTxAmt(data.getTxAmt());
+		model.setRetCode(data.getRetCode());
+		model.setRetMsg(data.getRetMsg());
 		return model;
+	}
+	
+	@Override
+	public List<BocmRcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag) throws SysTradeExecuteException{
+		List<BocmRcvLog> tppRcvTraceList = bocmRcvLogMapper.selectRcvTrace(begDate, endDate, minAmt, maxAmt, brnoFlag);
+		List<BocmRcvTraceQueryModel> rcvTraceInitModelList = new ArrayList<>();
+		for(BocmRcvLog tpp : tppRcvTraceList) {
+			BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());
+			model.setAuthTel(tpp.getAuthTel());
+			model.setChkTel(tpp.getCheckFlag());
+			model.setDcFlag(tpp.getDcFlag());
+			model.setHostState(tpp.getHostState());
+			model.setInfo(tpp.getInfo());
+			model.setPayeeAcno(tpp.getPayeeAcno());
+			model.setPayeeName(tpp.getPayeeName());
+			model.setPayerAcno(tpp.getPayerAcno());
+			model.setPayerName(tpp.getPayerName());
+			model.setPrint(tpp.getPrint());
+			model.setSourceType(tpp.getSourceType());
+			model.setBocmBranch(tpp.getBocmBranch());
+			model.setTxAmt(tpp.getTxAmt());
+			model.setTxBranch(tpp.getTxBranch());
+			model.setTxInd(tpp.getTxInd());
+			model.setTxTel(tpp.getTxTel());
+			model.setCheckFlag(tpp.getCheckFlag());
+			model.setHostDate(tpp.getHostDate());
+			model.setHostTraceno(tpp.getHostTraceno());
+			model.setPlatDate(tpp.getPlatDate());
+			model.setPlatTime(tpp.getPlatTime());
+			model.setPlatTrace(tpp.getPlatTrace());
+			model.setBocmDate(tpp.getBocmDate());
+			model.setBocmState(tpp.getBocmState());
+			model.setBocmTraceno(tpp.getBocmTraceno());
+			
+			rcvTraceInitModelList.add(model);
+		}
+		return rcvTraceInitModelList;
+	}
+
+	@Override
+	public List<BocmRcvTraceQueryModel> getCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
+			String date) throws SysTradeExecuteException {
+		BocmRcvLog tcexRcvLog = new BocmRcvLog();
+		tcexRcvLog.setPlatDate(Integer.parseInt(date));
+		tcexRcvLog.setCheckFlag("1");
+		List<BocmRcvLog> dataList = bocmRcvLogMapper.select(tcexRcvLog);
+		List<BocmRcvTraceQueryModel> modelList = new ArrayList<>();
+		for(BocmRcvLog data : dataList) {
+			BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
+			model.setAuthTel(data.getAuthTel());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setChkTel(data.getChkTel());
+			model.setDcFlag(data.getDcFlag());
+			model.setHostDate(data.getHostDate());
+			model.setHostState(data.getHostState());
+			model.setHostTraceno(data.getHostTraceno());
+			model.setInfo(data.getInfo());
+			model.setPayeeAcno(data.getPayeeAcno());
+			model.setPayeeName(data.getPayeeName());
+			model.setPayerAcno(data.getPayerAcno());
+			model.setPayerName(data.getPayerName());
+			model.setPlatDate(data.getPlatDate());
+			model.setPlatTime(data.getPlatTime());
+			model.setPlatTrace(data.getPlatTrace());
+			model.setSourceType(data.getSourceType());
+			model.setBocmBranch(data.getBocmBranch());
+			model.setBocmDate(data.getBocmDate());
+			model.setBocmState(data.getBocmState());
+			model.setBocmTraceno(model.getBocmTraceno());
+			modelList.add(model);
+		}
+		
+		return modelList;
+	}
+
+	@Override
+	public void replenishRcvTrace(BocmRcvTraceRepModel record) throws SysTradeExecuteException{
+		BocmRcvLog tcexRcvLog = new BocmRcvLog();
+		tcexRcvLog.setPlatDate(record.getSysDate());
+		tcexRcvLog.setPlatTrace(record.getSysTraceno());
+		tcexRcvLog.setPlatTime(record.getSysTime());
+		tcexRcvLog.setSourceType(record.getSourceType());
+		tcexRcvLog.setTxBranch(record.getTxBranch());
+		tcexRcvLog.setTxInd(record.getTxInd());
+		tcexRcvLog.setDcFlag(record.getDcFlag());
+		tcexRcvLog.setTxAmt(new BigDecimal("".equals(record.getTxAmt())?"0":record.getTxAmt()));
+		if("1".equals(record.getTxInd())) {
+		tcexRcvLog.setPayerAcno(record.getPayerAcno());
+		tcexRcvLog.setPayerName(record.getPayerName());
+		}
+		tcexRcvLog.setPayeeAcno(record.getPayeeAcno());
+		tcexRcvLog.setPayeeName(record.getPayeeName());
+		tcexRcvLog.setHostState(record.getHostState());
+		tcexRcvLog.setBocmState(record.getBocmState());
+		if(null != record.getBocmDate()) {
+			tcexRcvLog.setBocmDate(Integer.parseInt(record.getBocmDate()));
+		}
+		if(null != record.getBocmTraceNo()) {
+			tcexRcvLog.setBocmTraceno(record.getBocmTraceNo());
+		}
+		tcexRcvLog.setTxTel(record.getTxTel());
+		tcexRcvLog.setChkTel(record.getChkTel());
+		tcexRcvLog.setAuthTel(record.getAuthTel());
+		tcexRcvLog.setInfo(record.getInfo());
+		tcexRcvLog.setCheckFlag(record.getCheckFlag());
+		
+		bocmRcvLogMapper.insertSelective(tcexRcvLog);
+	}
+
+	@Override
+	public BocmRcvTraceQueryModel getRcvTraceByKey(MyLog myLog, Integer sysTime, Integer sysTraceno, Integer sysDate,
+			Integer settleDate, Integer platTrace) throws SysTradeExecuteException {
+		BocmRcvLog tcexRcvLog = new BocmRcvLog();
+		tcexRcvLog.setPlatDate(settleDate);
+		tcexRcvLog.setPlatTrace(platTrace);
+		BocmRcvLog data = bocmRcvLogMapper.selectOne(tcexRcvLog);
+		BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
+		if(data == null )model = null;
+		else {
+			model.setAuthTel(data.getAuthTel());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setChkTel(data.getChkTel());
+			model.setDcFlag(data.getDcFlag());
+			model.setHostDate(data.getHostDate());
+			model.setHostState(data.getHostState());
+			model.setHostTraceno(data.getHostTraceno());
+			model.setInfo(data.getInfo());
+			model.setPayeeAcno(data.getPayeeAcno());
+			model.setPayeeName(data.getPayeeName());
+			model.setPayerAcno(data.getPayerAcno());
+			model.setPayerName(data.getPayerName());
+			model.setPlatDate(data.getPlatDate());
+			model.setPlatTime(data.getPlatTime());
+			model.setPlatTrace(data.getPlatTrace());
+			model.setSourceType(data.getSourceType());
+			model.setBocmBranch(data.getBocmBranch());
+			model.setBocmDate(data.getBocmDate());
+			model.setBocmState(data.getBocmState());
+			model.setBocmTraceno(model.getBocmTraceno());
+		}
+		
+		return model;
+	}
+	
+	public BocmRcvTraceQueryModel getBocmRcvTraceByKey(MyLog myLog, Integer sysTime, Integer sysTraceno, Integer sysDate,
+			Integer bocmDate, String bocmTrace)throws SysTradeExecuteException{
+		BocmRcvLog tcexRcvLog = new BocmRcvLog();
+		tcexRcvLog.setBocmDate(bocmDate);
+		tcexRcvLog.setBocmTraceno(bocmTrace);
+		BocmRcvLog data = bocmRcvLogMapper.selectOne(tcexRcvLog);
+		BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
+		if(data == null )model = null;
+		else {
+			model.setAuthTel(data.getAuthTel());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setChkTel(data.getChkTel());
+			model.setDcFlag(data.getDcFlag());
+			model.setHostDate(data.getHostDate());
+			model.setHostState(data.getHostState());
+			model.setHostTraceno(data.getHostTraceno());
+			model.setInfo(data.getInfo());
+			model.setPayeeAcno(data.getPayeeAcno());
+			model.setPayeeName(data.getPayeeName());
+			model.setPayerAcno(data.getPayerAcno());
+			model.setPayerName(data.getPayerName());
+			model.setPlatDate(data.getPlatDate());
+			model.setPlatTime(data.getPlatTime());
+			model.setPlatTrace(data.getPlatTrace());
+			model.setSourceType(data.getSourceType());
+			model.setBocmBranch(data.getBocmBranch());
+			model.setBocmDate(data.getBocmDate());
+			model.setBocmState(data.getBocmState());
+			model.setBocmTraceno(model.getBocmTraceno());
+		}
+		
+		return model;
+	}
+
+	@Override
+	public List<BocmRcvTraceQueryModel> getUploadCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime,
+			Integer sysTraceno, String date) throws SysTradeExecuteException {
+		List<BocmRcvLog> dataList = bocmRcvLogMapper.selectCheckedTrace(date);
+		List<BocmRcvTraceQueryModel> modelList = new ArrayList<>();
+		for(BocmRcvLog data : dataList) {
+			BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
+			model.setAuthTel(data.getAuthTel());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setChkTel(data.getChkTel());
+			model.setDcFlag(data.getDcFlag());
+			model.setHostDate(data.getHostDate());
+			model.setHostState(data.getHostState());
+			model.setHostTraceno(data.getHostTraceno());
+			model.setInfo(data.getInfo());
+			model.setPayeeAcno(data.getPayeeAcno());
+			model.setPayeeName(data.getPayeeName());
+			model.setPayerAcno(data.getPayerAcno());
+			model.setPayerName(data.getPayerName());
+			model.setPlatDate(data.getPlatDate());
+			model.setPlatTime(data.getPlatTime());
+			model.setPlatTrace(data.getPlatTrace());
+			model.setSourceType(data.getSourceType());
+			model.setBocmBranch(data.getBocmBranch());
+			model.setBocmDate(data.getBocmDate());
+			model.setBocmState(data.getBocmState());
+			model.setBocmTraceno(data.getBocmTraceno());
+			model.setTxAmt(data.getTxAmt());
+			model.setTxInd(data.getTxInd());
+			model.setTxCode(data.getTxCode());
+
+			modelList.add(model);
+		}
+		
+		return modelList;
+	}
+
+	/** 
+	* @Title: getRcvTotalNum 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param @param myLog
+	* @param @param date
+	* @param @param dcFlag
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public String getRcvTotalNum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
+		String num = bocmRcvLogMapper.selectDtRcvTotalNum(date, dcFlag);
+		return num;
+	}
+
+	/** 
+	* @Title: getRcvTotalSum 
+	* @Description: TODO(这里用一句话描述这个方法的作用) 
+	* @param @param myLog
+	* @param @param date
+	* @param @param dcFlag
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @throws 
+	*/
+	@Override
+	public String getRcvTotalSum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
+		String sum = bocmRcvLogMapper.selectDtRcvTotalSum(date, dcFlag);
+		return sum;
+	}
+
+	
+	@Override
+	public String getTraceNum(String date, String checkFlag) throws SysTradeExecuteException {
+		System.out.println(checkFlag);
+		String sum = bocmRcvLogMapper.selectTraceNum(date, checkFlag);
+		return sum;
+	}
+	@Override
+	public String getRcvTotalChkSum(MyLog myLog, String date) throws SysTradeExecuteException{
+		String sum = bocmRcvLogMapper.selectChkRcvTotalSum(date);
+		return sum;
 	}
 
 }

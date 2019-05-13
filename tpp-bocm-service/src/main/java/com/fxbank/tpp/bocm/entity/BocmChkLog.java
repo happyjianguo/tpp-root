@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 
@@ -9,20 +11,20 @@ public class BocmChkLog {
      */
     @Id
     @Column(name = "PLAT_DATE")
-    private Long platDate;
+    private Integer platDate;
 
     /**
      * null
      */
     @Id
     @Column(name = "PLAT_TRACE")
-    private Long platTrace;
+    private Integer platTrace;
 
     /**
      * null
      */
     @Column(name = "SETTLE_DATE")
-    private Long settleDate;
+    private Integer settleDate;
 
     /**
      * null
@@ -34,7 +36,7 @@ public class BocmChkLog {
      * null
      */
     @Column(name = "HOST_DATE")
-    private Long hostDate;
+    private Integer hostDate;
 
     /**
      * null
@@ -52,7 +54,7 @@ public class BocmChkLog {
      * null
      */
     @Column(name = "TX_AMT")
-    private Short txAmt;
+    private BigDecimal txAmt;
 
     /**
      * null
@@ -78,53 +80,22 @@ public class BocmChkLog {
     @Column(name = "DIRECTION")
     private String direction;
 
-    /**
-     * null
-     * @return PLAT_DATE null
-     */
-    public Long getPlatDate() {
-        return platDate;
-    }
 
-    /**
-     * null
-     * @param platDate null
-     */
-    public void setPlatDate(Long platDate) {
-        this.platDate = platDate;
-    }
 
-    /**
-     * null
-     * @return PLAT_TRACE null
-     */
-    public Long getPlatTrace() {
-        return platTrace;
-    }
+    public Integer getPlatDate() {
+		return platDate;
+	}
 
-    /**
-     * null
-     * @param platTrace null
-     */
-    public void setPlatTrace(Long platTrace) {
-        this.platTrace = platTrace;
-    }
+	public void setPlatDate(Integer platDate) {
+		this.platDate = platDate;
+	}
 
-    /**
-     * null
-     * @return SETTLE_DATE null
-     */
-    public Long getSettleDate() {
-        return settleDate;
-    }
+	public void setPlatTrace(Integer platTrace) {
+		this.platTrace = platTrace;
+	}
 
-    /**
-     * null
-     * @param settleDate null
-     */
-    public void setSettleDate(Long settleDate) {
-        this.settleDate = settleDate;
-    }
+
+
 
     /**
      * null
@@ -141,24 +112,20 @@ public class BocmChkLog {
     public void setSettleBranch(String settleBranch) {
         this.settleBranch = settleBranch;
     }
+    
+    public Integer getHostDate() {
+		return hostDate;
+	}
 
-    /**
-     * null
-     * @return HOST_DATE null
-     */
-    public Long getHostDate() {
-        return hostDate;
-    }
+	public void setHostDate(Integer hostDate) {
+		this.hostDate = hostDate;
+	}
 
-    /**
-     * null
-     * @param hostDate null
-     */
-    public void setHostDate(Long hostDate) {
-        this.hostDate = hostDate;
-    }
+	public Integer getPlatTrace() {
+		return platTrace;
+	}
 
-    /**
+	/**
      * null
      * @return HOST_TRACENO null
      */
@@ -190,23 +157,25 @@ public class BocmChkLog {
         this.ccy = ccy;
     }
 
-    /**
-     * null
-     * @return TX_AMT null
-     */
-    public Short getTxAmt() {
-        return txAmt;
-    }
 
-    /**
-     * null
-     * @param txAmt null
-     */
-    public void setTxAmt(Short txAmt) {
-        this.txAmt = txAmt;
-    }
 
-    /**
+    public Integer getSettleDate() {
+		return settleDate;
+	}
+
+	public void setSettleDate(Integer settleDate) {
+		this.settleDate = settleDate;
+	}
+
+	public BigDecimal getTxAmt() {
+		return txAmt;
+	}
+
+	public void setTxAmt(BigDecimal txAmt) {
+		this.txAmt = txAmt;
+	}
+
+	/**
      * null
      * @return ACCOUNTNO null
      */

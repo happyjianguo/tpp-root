@@ -1,6 +1,7 @@
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -46,6 +47,39 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
 	private String txAmt;//交易金额
 	
+    /**
+     * 手续费收取方式
+     */
+    private String feeFlag;
+    /**
+     * 手续费
+     */
+    private BigDecimal fee;
+    /**
+     * 发起行人行行号
+     */
+    private String sndBankno;
+    /**
+     * 接收行人行行号
+     */
+    private String rcvBankno;
+    /**
+     * 付款人开户行
+     */
+    private String payerBank;
+    /**
+     * 收款人开户行
+     */
+    private String payerActtp;
+    /**
+     * 收款人开户行
+     */
+    private String payeeBank;
+    /**
+     * 收款人开户行
+     */
+    private String payeeActtp;
+	
 	@Size(max = 50,message = "payer_acno付款人账户最大长度是50")
 	private String payerAcno; //付款人账户
 	
@@ -76,6 +110,13 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	@NotNull(message = "bocm_state交行记账状态不能为空")
 	@Size(max = 10,message = "bocm_state交行记账状态最大长度是10")
 	private String bocmState; //村镇记账状态
+	
+    //交行日期
+    private Integer bocmDate;
+    //交行时间
+    private Integer bocmTime;
+    //交行流水
+    private String bocmTraceno;
 	
 	@NotNull(message = "tx_tel交易柜员不能为空")
 	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
@@ -277,6 +318,94 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 
 	public void setRetMsg(String retMsg) {
 		this.retMsg = retMsg;
+	}
+
+	public Integer getBocmDate() {
+		return bocmDate;
+	}
+
+	public void setBocmDate(Integer bocmDate) {
+		this.bocmDate = bocmDate;
+	}
+
+	public Integer getBocmTime() {
+		return bocmTime;
+	}
+
+	public void setBocmTime(Integer bocmTime) {
+		this.bocmTime = bocmTime;
+	}
+
+	public String getBocmTraceno() {
+		return bocmTraceno;
+	}
+
+	public void setBocmTraceno(String bocmTraceno) {
+		this.bocmTraceno = bocmTraceno;
+	}
+
+	public String getFeeFlag() {
+		return feeFlag;
+	}
+
+	public void setFeeFlag(String feeFlag) {
+		this.feeFlag = feeFlag;
+	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
+	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getRcvBankno() {
+		return rcvBankno;
+	}
+
+	public void setRcvBankno(String rcvBankno) {
+		this.rcvBankno = rcvBankno;
+	}
+
+	public String getPayerBank() {
+		return payerBank;
+	}
+
+	public void setPayerBank(String payerBank) {
+		this.payerBank = payerBank;
+	}
+
+	public String getPayerActtp() {
+		return payerActtp;
+	}
+
+	public void setPayerActtp(String payerActtp) {
+		this.payerActtp = payerActtp;
+	}
+
+	public String getPayeeBank() {
+		return payeeBank;
+	}
+
+	public void setPayeeBank(String payeeBank) {
+		this.payeeBank = payeeBank;
+	}
+
+	public String getPayeeActtp() {
+		return payeeActtp;
+	}
+
+	public void setPayeeActtp(String payeeActtp) {
+		this.payeeActtp = payeeActtp;
 	}
 	
 }
