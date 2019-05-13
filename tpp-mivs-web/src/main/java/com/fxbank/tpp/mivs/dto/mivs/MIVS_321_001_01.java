@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
-import com.fxbank.tpp.mivs.model.MIVS_321_001_01_RtrIdVrfctn;
+import com.fxbank.tpp.mivs.model.response.MIVS_321_001_01_RtrIdVrfctn;
 
 /**
  * @Description: 人行请求321

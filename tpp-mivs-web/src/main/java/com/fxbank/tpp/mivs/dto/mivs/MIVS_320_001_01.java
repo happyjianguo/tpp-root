@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
-import com.fxbank.tpp.mivs.model.MIVS_320_001_01_GetIdVrfctn;
+import com.fxbank.tpp.mivs.model.request.MIVS_320_001_01_GetIdVrfctn;
 
 /**
  * @Description: 人行请求320(测试用)
