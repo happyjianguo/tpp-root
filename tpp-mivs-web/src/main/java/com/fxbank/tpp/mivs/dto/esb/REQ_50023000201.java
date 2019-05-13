@@ -10,7 +10,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
  * @Author: 周勇沩
  * @Date: 2019-04-23 21:27:18
  */
-public class REQ_30041000901 extends REQ_BASE {
+public class REQ_50023000201 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -21,7 +21,7 @@ public class REQ_30041000901 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_30041000901(){
+	public REQ_50023000201(){
 		super.txDesc = "手机号码联网核查";
 	}
 
