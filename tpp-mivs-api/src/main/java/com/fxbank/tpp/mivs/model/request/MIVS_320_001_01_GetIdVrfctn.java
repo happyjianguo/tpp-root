@@ -1,4 +1,6 @@
-package com.fxbank.tpp.mivs.model;
+package com.fxbank.tpp.mivs.model.request;
+
+import com.fxbank.tpp.mivs.model.SIGN_DATA;
 
 import java.io.Serializable;
 
@@ -13,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "VryDef" })
-public class MIVS_320_001_01_GetIdVrfctn implements Serializable,SIGN_DATA{
+public class MIVS_320_001_01_GetIdVrfctn implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = 2906655856390529936L;
     private MsgHdr MsgHdr = new MsgHdr();

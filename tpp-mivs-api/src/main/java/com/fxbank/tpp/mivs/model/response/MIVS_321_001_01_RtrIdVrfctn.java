@@ -1,4 +1,6 @@
-package com.fxbank.tpp.mivs.model;
+package com.fxbank.tpp.mivs.model.response;
+
+import com.fxbank.tpp.mivs.model.SIGN_DATA;
 
 import java.io.Serializable;
 
@@ -16,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
 */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "OrgnlBizQry","Rspsn" })
-public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
+public class MIVS_321_001_01_RtrIdVrfctn implements Serializable, SIGN_DATA {
 
 	private static final long serialVersionUID = 8180528574579953048L;
 	private MsgHdr MsgHdr = new MsgHdr();
@@ -83,8 +85,8 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
         /**
          * @param instgPty the instgPty to set
          */
-        public void setInstgPty(InstgPty InstgPty) {
-            this.InstgPty = InstgPty;
+        public void setInstgPty(InstgPty instgPty) {
+            this.InstgPty = instgPty;
         }
 
         /**
@@ -132,8 +134,8 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
             /**
              * @param instgPty the instgPty to set
              */
-            public void setInstgPty(String InstgPty) {
-                this.InstgPty = InstgPty;
+            public void setInstgPty(String instgPty) {
+                this.InstgPty = instgPty;
             }
 
             /**
@@ -144,7 +146,7 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
             }
         }
 
-        }
+    }
     
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "MsgId", "InstgPty" })
@@ -225,7 +227,7 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
 		private static final long serialVersionUID = -6328418981097651591L;
 		private VrfctnInf VrfctnInf = new VrfctnInf();
 		private OprlErr OprlErr = new OprlErr();
-      
+
         public OprlErr getOprlErr() {
 			return OprlErr;
 		}
@@ -326,8 +328,8 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable,SIGN_DATA{
 				public void setRjctinf(String rjctinf) {
 					Rjctinf = rjctinf;
 				}
-				
-	        	
+
+
 	        }
         }
  

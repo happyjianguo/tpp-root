@@ -1,10 +1,11 @@
-package com.fxbank.tpp.mivs.model;
+package com.fxbank.tpp.mivs.model.request;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.tpp.mivs.model.MODEL_BASE;
 
 /**
  * @Description: 手机号码联网核查申请报文

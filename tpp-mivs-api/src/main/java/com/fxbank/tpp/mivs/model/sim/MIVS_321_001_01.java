@@ -1,10 +1,12 @@
-package com.fxbank.tpp.mivs.model;
+package com.fxbank.tpp.mivs.model.sim;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.tpp.mivs.model.MODEL_BASE;
+import com.fxbank.tpp.mivs.model.response.MIVS_321_001_01_RtrIdVrfctn;
 
 
 /** 

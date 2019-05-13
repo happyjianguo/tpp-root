@@ -1,5 +1,7 @@
 package com.fxbank.tpp.mivs.model;
 
+import com.fxbank.tpp.mivs.model.SIGN_DATA;
+
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
