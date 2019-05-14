@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/4/29 10:53
  */
-@Service("REQ_30041000902")
+@Service("REQ_50023000202")
 public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
@@ -54,8 +54,6 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         REQ_50023000202 req = (REQ_50023000202) dto;//接收ESB请求报文
         REQ_50023000202.REQ_BODY reqBody = req.getReqBody();
 
-        MIVS_322_001_01 mivs322 = new MIVS_322_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
-
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
         String bankNumber = null, bnkNmT = null, settlementBankNo = null, lqtnBnkNmT1 = null;
@@ -76,6 +74,7 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         }
         myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + branchId + "，人行行号：" + bankNumber);
 
+        MIVS_322_001_01 mivs322 = new MIVS_322_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         //发起行行号
         mivs322.getHeader().setOrigSender(bankNumber);
         mivs322.getHeader().setOrigReceiver("0000");

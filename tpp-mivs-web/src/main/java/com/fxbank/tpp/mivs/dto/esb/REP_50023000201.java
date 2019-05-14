@@ -55,26 +55,35 @@ public class REP_50023000201 extends REP_BASE {
 
 
 	public class REP_BODY {
-		 @JSONField(name = "MobNb")
+		 @JSONField(name = "MOBILE_PHONE")
 	     private String mobNb;//手机号码
 		 
-		 @JSONField(name = "Rslt")
+		 @JSONField(name = "MOBILE_VER_RESULT")
 	     private String rslt;//手机号码核查结果
 		 
-		 @JSONField(name = "MobCrr")
+		 @JSONField(name = "MOBILE_OPRS")
 	     private String mobCrr;//手机运营商
 		 
-		 @JSONField(name = "LocMobNb")
+		 @JSONField(name = "MOBILE_BLNG_LOC_CODE")
 	     private String locMobNb;//手机号归属地代码
 		 
-		 @JSONField(name = "LocNmMobNb")
+		 @JSONField(name = "MOBILE_BLNG_LOC_NAME")
 	     private String locNmMobNb;//手机号归属地名称
 		 
-		 @JSONField(name = "CdTp")
+		 @JSONField(name = "CLIENT_TYPE")
 	     private String cdTp;//客户类型
 		 
-		 @JSONField(name = "Sts")
+		 @JSONField(name = "MOBILE_PHONE_STATUS")
 	     private String sts;//手机号码状态
+
+		@JSONField(name = "MSG_RFS_STATUS")
+		private String ProcSts;//手机号码状态
+
+		@JSONField(name = "MSG_RFS_CODE")
+		private String ProcCd;//手机号码状态
+
+		@JSONField(name = "MSG_RFS_INFO")
+		private String Rjctinf;//手机号码状态
 
 		public String getMobNb() {
 			return mobNb;

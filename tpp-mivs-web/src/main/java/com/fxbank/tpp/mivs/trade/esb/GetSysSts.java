@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/4/30 10:09
  */
-@Service("REQ_30041000903")
+@Service("REQ_50023000203")
 public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
@@ -83,7 +83,7 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
         mivs345.getSysSts().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
 
         mivs345.getSysSts().getQueInf().setSysInd(reqBody.getSysInd());
-        mivs345.getSysSts().getQueInf().setQueryDate(reqBody.getQueDt());
+        mivs345.getSysSts().getQueInf().setQueDt(reqBody.getQueDt());
 
         mivs345 = (MIVS_345_001_01) pmtsService.sendToPmts(mivs345); // 发送请求，实时等待990
 

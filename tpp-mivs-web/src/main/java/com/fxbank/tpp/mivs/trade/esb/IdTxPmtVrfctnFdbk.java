@@ -8,13 +8,14 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_30041000904;
-import com.fxbank.tpp.mivs.dto.esb.REQ_30041000904;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000205;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000205;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_900_001_02;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.request.MIVS_347_001_01;
+import com.fxbank.tpp.mivs.model.request.MIVS_348_001_01;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
 import com.fxbank.tpp.mivs.trade.mivs.ComConf;
@@ -30,8 +31,8 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/5/5 8:09
  */
-@Service("REQ_30041000904")
-public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
+@Service("REQ_50023000205")
+public class IdTxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
 
@@ -51,10 +52,8 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_30041000904 req = (REQ_30041000904) dto;//接收ESB请求报文
-        REQ_30041000904.REQ_BODY reqBody = req.getReqBody();
-
-        MIVS_347_001_01 mivs347 = new MIVS_347_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
+        REQ_50023000205 req = (REQ_50023000205) dto;//接收ESB请求报文
+        REQ_50023000205.REQ_BODY reqBody = req.getReqBody();
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -76,32 +75,55 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         }
         myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + branchId + "，人行行号：" + bankNumber);
 
-        //发起行行号
-        mivs347.getHeader().setOrigSender(bankNumber);
-        mivs347.getHeader().setOrigReceiver("0000");
-        mivs347.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
-        mivs347.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
-        mivs347.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
-        mivs347.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
+        //判断手机号查询或纳税信息查询
+        String channel = null;
+        if(reqBody.getSysInd().equals("MIIT")){
+            MIVS_347_001_01 mivsIdTxPmt = new MIVS_347_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
+            myLog.info(logger, "手机号码核查结果疑义反馈");
+            //发起行行号
+            mivsIdTxPmt.getHeader().setOrigSender(bankNumber);
+            mivsIdTxPmt.getHeader().setOrigReceiver("0000");
+            mivsIdTxPmt.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
+            mivsIdTxPmt.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
+            mivsIdTxPmt.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
+            mivsIdTxPmt.getIdVrfctnFdbk().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
 
-        mivs347.getIdVrfctnFdbk().getFdbk().setSysInd(reqBody.getSysInd());
+            mivsIdTxPmt.getIdVrfctnFdbk().getFdbk().setSysInd(reqBody.getSysInd());
 
-        mivs347 = (MIVS_347_001_01) pmtsService.sendToPmts(mivs347); // 发送请求，实时等待990
+            mivsIdTxPmt = (MIVS_347_001_01) pmtsService.sendToPmts(mivsIdTxPmt); // 发送请求，实时等待990
+            String msgid= mivsIdTxPmt.getIdVrfctnFdbk().getMsgHdr().getMsgId();    //为同步等待347，组合三要素
+            channel = "347_"+msgid;
 
-        String msgid= mivs347.getIdVrfctnFdbk().getMsgHdr().getMsgId();    //为同步等待347，组合三要素
-        String channel = "347_"+msgid;
+        }else if(reqBody.getSysInd().equals("CSAT")){
+            MIVS_348_001_01 mivsIdTxPmt = new MIVS_348_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
+            myLog.info(logger, "纳税信息核查结果疑义反馈");
+            //发起行行号
+            mivsIdTxPmt.getHeader().setOrigSender(bankNumber);
+            mivsIdTxPmt.getHeader().setOrigReceiver("0000");
+            mivsIdTxPmt.getTxPmtVrfctnFdbk().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
+            mivsIdTxPmt.getTxPmtVrfctnFdbk().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
+            mivsIdTxPmt.getTxPmtVrfctnFdbk().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
+            mivsIdTxPmt.getTxPmtVrfctnFdbk().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
+
+            mivsIdTxPmt.getTxPmtVrfctnFdbk().getFdbk().setSysInd(reqBody.getSysInd());
+
+            mivsIdTxPmt = (MIVS_348_001_01) pmtsService.sendToPmts(mivsIdTxPmt); // 发送请求，实时等待990
+            String msgid= mivsIdTxPmt.getTxPmtVrfctnFdbk().getMsgHdr().getMsgId();    //为同步等待348，组合三要素
+            channel = "348_"+msgid;
+        }
+
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
-        REP_30041000904 rep = new REP_30041000904();
+        REP_50023000205 rep = new REP_50023000205();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
             CCMS_911_001_02 ccmc911 = (CCMS_911_001_02)dtoBase;
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.900.001.01")){ //通用处理确认报文
             CCMS_900_001_02 ccms900 = (CCMS_900_001_02)dtoBase;
-            REP_30041000904.REP_BODY repBody = rep.getRepBody();
+            REP_50023000205.REP_BODY repBody = rep.getRepBody();
 //            if(ccms900.getCmonConf().getCmonConf().getPrcSts()!=null) {
-//                MivsTradeExecuteException e = new MivsTradeExecuteException(ccms900.getCmonConf().getRspsn().getOprlErr().getProcCd(),mivs347.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getRjctinf());
+//                MivsTradeExecuteException e = new MivsTradeExecuteException(ccms900.getCmonConf().getRspsn().getOprlErr().getProcCd(),mivsIdTxPmt.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getRjctinf());
 //                throw e;
 //            }
             repBody.setProcSts(ccms900.getCmonConf().getCmonConf().getPrcSts());

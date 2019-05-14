@@ -191,11 +191,11 @@ public class MIVS_345_001_01_GetSysSts implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "SysInd", "QueryDate"})
+    @XmlType(propOrder = { "SysInd", "QueDt"})
     public static class QueInf implements Serializable{
-        private static final long serialVersionUID = 4714006479457445745L;
+        private static final long serialVersionUID = 7500158135784137006L;
         private String SysInd = null;
-        private String QueryDate = null;
+        private String QueDt = null;
 
         /**
          * @return the SysInd
@@ -212,17 +212,17 @@ public class MIVS_345_001_01_GetSysSts implements Serializable, SIGN_DATA {
         }
 
         /**
-         * @return the queryDate
+         * @return the queDt
          */
-        public String getQueryDate() {
-            return QueryDate;
+        public String getQueDt() {
+            return QueDt;
         }
 
         /**
-         * @param queryDate the queryDate to set
+         * @param queDt the queDt to set
          */
-        public void setQueryDate(String queryDate) {
-            this.QueryDate = queryDate;
+        public void setQueDt(String queDt) {
+            this.QueDt = queDt;
         }
     }
 
@@ -236,7 +236,7 @@ public class MIVS_345_001_01_GetSysSts implements Serializable, SIGN_DATA {
 //        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
 //        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
 //        sb.append(this.getQueInf().getSysInd() + "|");
-//        sb.append(this.getQueInf().getQueryDate() + "|");
+//        sb.append(this.getQueInf().getQueDt() + "|");
 //        return sb.toString();
         return null;
     }

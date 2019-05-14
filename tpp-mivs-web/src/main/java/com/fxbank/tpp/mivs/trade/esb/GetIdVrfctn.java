@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service;
  * @Author: 周勇沩
  * @Date: 2019-04-28 09:54:14
  */
-@Service("REQ_30041000901")
+@Service("REQ_50023000201")
 public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

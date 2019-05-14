@@ -8,14 +8,14 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 /**
- * @Description: 请求人行“手机号码核查结果疑义反馈报文” mivs.347.001.01
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/5/5 9:15
+ * @Date: 2019/5/13 17:46
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "Fdbk" })
-public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
-    private static final long serialVersionUID = -9141340844535091973L;
+public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA {
+    private static final long serialVersionUID = 3079722949164892776L;
     private MsgHdr MsgHdr = new MsgHdr();
     private Fdbk Fdbk = new Fdbk();
 
@@ -58,8 +58,8 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         private static final long serialVersionUID = -4057972559971807035L;
         private String MsgId = null;
         private String CreDtTm = null;
-        private MsgHdr.InstgPty InstgPty = new MsgHdr.InstgPty();
-        private MsgHdr.InstdPty InstdPty = new MsgHdr.InstdPty();
+        private InstgPty InstgPty = new InstgPty();
+        private InstdPty InstdPty = new InstdPty();
 
         /**
          * @return the msgId
@@ -71,14 +71,14 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         /**
          * @return the instdPty
          */
-        public MsgHdr.InstdPty getInstdPty() {
+        public InstdPty getInstdPty() {
             return InstdPty;
         }
 
         /**
          * @param instdPty the instdPty to set
          */
-        public void setInstdPty(MsgHdr.InstdPty instdPty) {
+        public void setInstdPty(InstdPty instdPty) {
             this.InstdPty = instdPty;
         }
 
@@ -106,14 +106,14 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         /**
          * @return the instgPty
          */
-        public MsgHdr.InstgPty getInstgPty() {
+        public InstgPty getInstgPty() {
             return InstgPty;
         }
 
         /**
          * @param instgPty the instgPty to set
          */
-        public void setInstgPty(MsgHdr.InstgPty instgPty) {
+        public void setInstgPty(InstgPty instgPty) {
             this.InstgPty = instgPty;
         }
 
@@ -293,7 +293,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
             private static final long serialVersionUID = 7905030991058988432L;
             private String OrgnlDlvrgMsgId = null;
             private String OrgnlRcvgMsgId = null;
-            private OrgnlVrfctnInfo OrgnlVrfctnInfo = new OrgnlVrfctnInfo();
+            private OrgnlVrfctn.OrgnlVrfctnInfo OrgnlVrfctnInfo = new OrgnlVrfctn.OrgnlVrfctnInfo();
 
             public String getOrgnlDlvrgMsgId() {
                 return OrgnlDlvrgMsgId;
@@ -309,10 +309,10 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
                 this.OrgnlRcvgMsgId = orgnlRcvgMsgId;
             }
 
-            public OrgnlVrfctnInfo getOrgnlVrfctnInfo() {
+            public OrgnlVrfctn.OrgnlVrfctnInfo getOrgnlVrfctnInfo() {
                 return OrgnlVrfctnInfo;
             }
-            public void setOrgnlVrfctnInfo(OrgnlVrfctnInfo orgnlVrfctnInfo) {
+            public void setOrgnlVrfctnInfo(OrgnlVrfctn.OrgnlVrfctnInfo orgnlVrfctnInfo) {
                 this.OrgnlVrfctnInfo = orgnlVrfctnInfo;
             }
 

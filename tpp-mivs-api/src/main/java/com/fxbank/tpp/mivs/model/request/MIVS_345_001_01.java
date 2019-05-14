@@ -12,11 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @Author: 王鹏
  * @Date: 2019/4/30 10:25
  */
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Document")
 public class MIVS_345_001_01 extends MODEL_BASE {
+
     private static final long serialVersionUID = -8645602514515434625L;
+
     private static final String MESGTYPE = "mivs.345.001.01";
     private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.345.001.01";
 

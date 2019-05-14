@@ -56,31 +56,33 @@ public class REP_50023000202 extends REP_BASE {
 
     public class REP_BODY {
 
-        @JSONField(name = "Rslt")
+        @JSONField(name = "TXPYR_INFO_VER_RESULT")
         private String rslt;//纳税核查结果
 
         //“数据源日期”为税务总局所返回数据的实际收集日期，目前为一般为 T-3
-        @JSONField(name = "DataResrcD")
+        @JSONField(name = "DATA_SOURCE_DATE")
         private String dataResrcD;//数据源日期
 
+        //循环开始TXPYR_INFO_ARRAY
         //以下信息 当“纳税信息核查结果”为“MCHD” 时填
-        @JSONField(name = "TxAuthCd")
+        @JSONField(name = "TAX_JDCY_CODE")
         private String txAuthCd;//税务机关代码
 
-        @JSONField(name = "TxAuthNm")
+        @JSONField(name = "TAX_JDCY_NAME")
         private String txAuthNm;//税务机关名称
 
-        @JSONField(name = "TxpyrSts")
+        @JSONField(name = "TXPYR_STATUS")
         private String txpyrSts;//纳税人状态
+        //循环结束
 
         //以下信息 当“纳税信息核查结果”为非“MCHD” 时填
-        @JSONField(name = "ProcSts")
+        @JSONField(name = "MSG_RFS_STATUS")
         private String procSts;//申请报文拒绝状态
 
-        @JSONField(name = "ProcCd")
+        @JSONField(name = "MSG_RFS_CODE")
         private String procCd;//申请报文拒绝码
 
-        @JSONField(name = "Rjctinf")
+        @JSONField(name = "MSG_RFS_INFO")
         private String rjctinf;//申请报文拒绝信息
 
         public String getRslt() {
@@ -144,5 +146,6 @@ public class REP_50023000202 extends REP_BASE {
         public void setRjctinf(String rjctinf) {
             this.rjctinf = rjctinf;
         }
+
     }
 }

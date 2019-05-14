@@ -54,17 +54,42 @@ public class REQ_50023000202 extends REQ_BASE {
 
     public class REQ_BODY {
 
-        @JSONField(name = "CompanyName")
+        @JSONField(name = "COMPANY_NAME")
         private String companyName;    //单位名称
 
-        @JSONField(name = "UniSocCdtCd")
+        @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;		//统一社会信用代码
 
-        @JSONField(name = "TaxPayerId")
+        @JSONField(name = "TXPYR_DIST_NO")
         private String taxPayerId;		//纳税人识别号
 
-        @JSONField(name = "OpNm")
+        @JSONField(name = "OPRTR_NAME")
         private String opNm;		//操作员姓名
+
+        @JSONField(name = "RESERVE_FIELD1")
+        private String remarks1;		//备用字段1
+        @JSONField(name = "RESERVE_FIELD2")
+        private String remarks2;		//备用字段2
+        @JSONField(name = "RESERVE_FIELD3")
+        private String remarks3;		//备用字段3
+        public String getRemarks1() {
+            return remarks1;
+        }
+        public void setRemarks1(String remarks1) {
+            this.remarks1 = remarks1;
+        }
+        public String getRemarks2() {
+            return remarks2;
+        }
+        public void setRemarks2(String remarks2) {
+            this.remarks2 = remarks2;
+        }
+        public String getRemarks3() {
+            return remarks3;
+        }
+        public void setRemarks3(String remarks3) {
+            this.remarks3 = remarks3;
+        }
 
         public String getCompanyName() {
             return companyName;

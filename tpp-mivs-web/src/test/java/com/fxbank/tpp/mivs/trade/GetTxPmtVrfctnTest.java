@@ -63,7 +63,7 @@ public class GetTxPmtVrfctnTest {
     public void init(){
         req = new REQ_50023000202();
         reqSysHead = new REQ_SYS_HEAD();
-        reqSysHead.setServiceId("300410009");
+        reqSysHead.setServiceId("500230002");
         reqSysHead.setSceneId("02");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
