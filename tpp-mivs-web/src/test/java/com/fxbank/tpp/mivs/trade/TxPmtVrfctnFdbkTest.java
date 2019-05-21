@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000202;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000205;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000207;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,7 +30,7 @@ import java.util.Random;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @Description: 手机号码/纳税信息核查结果疑义反馈 测试
+ * @Description: 纳税信息核查结果疑义反馈 测试
  * @Author: 王鹏
  * @Date: 2019/5/14 7:58
  */
@@ -38,7 +38,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class IdTxPmtVrfctnFdbkTest {
+public class TxPmtVrfctnFdbkTest {
 
 
     private static Logger logger = LoggerFactory.getLogger(GetTxPmtVrfctnTest.class);
@@ -51,19 +51,19 @@ public class IdTxPmtVrfctnFdbkTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_50023000205 req ;
+    private REQ_50023000207 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_50023000205.REQ_BODY reqBody ;
+    private REQ_50023000207.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_50023000205();
+        req = new REQ_50023000207();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("05");
+        reqSysHead.setSceneId("07");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -89,15 +89,17 @@ public class IdTxPmtVrfctnFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setSysInd("MIIT");
+        reqBody.setSysInd("CSAT");
         reqBody.setOrgnlDlvrgMsgId("123456789012345678");
         reqBody.setOrgnlRcvgMsgId("123456789012345678");
-        reqBody.setMobNb("17702499222");
-        reqBody.setNm("王鹏");
-        reqBody.setIdTp("IC00");
-        reqBody.setId("210904198703261013");
-        reqBody.setRslt("MCHD");
+        reqBody.setCoNm("拉哈哈娱乐股份有限公司");
+        reqBody.setUniSocCdtCd("52188802499222");
+//        reqBody.setTxpyrIdNb("123456789123456789");
+        reqBody.setRslt("WIDT");
         reqBody.setDataResrcDt("2019-04-29");
+
+
+
         reqBody.setCntt("对核查结果有疑义");
         reqBody.setContactNm("哈哈精");
         reqBody.setContactNb("17702499222");

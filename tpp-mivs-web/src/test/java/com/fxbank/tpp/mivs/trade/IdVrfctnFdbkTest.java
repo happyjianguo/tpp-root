@@ -5,8 +5,8 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000205;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000205;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000202;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000207;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,16 +30,18 @@ import java.util.Random;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @Description: 企业信息联网核查查业务受理时间查询 测试
+ * @Description: 手机号码核查结果疑义反馈 测试
  * @Author: 王鹏
- * @Date: 2019/5/10 9:29
+ * @Date: 2019/5/14 7:58
  */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GetSysStsTest {
+public class IdVrfctnFdbkTest {
 
-    private static Logger logger = LoggerFactory.getLogger(GetIdVrfctnTest.class);
+
+    private static Logger logger = LoggerFactory.getLogger(GetTxPmtVrfctnTest.class);
 
     private static final String URL="http://127.0.0.1:7006/esb/mivs.do";
 
@@ -49,19 +51,19 @@ public class GetSysStsTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_50023000205 req ;
+    private REQ_50023000207 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_50023000205.REQ_BODY reqBody ;
+    private REQ_50023000207.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_50023000205();
+        req = new REQ_50023000207();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("05");
+        reqSysHead.setSceneId("07");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -87,9 +89,21 @@ public class GetSysStsTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setSysInd("PHNB");
-        reqBody.setQueDt("2019-03-01");
+        reqBody.setSysInd("MIIT");
+        reqBody.setOrgnlDlvrgMsgId("123456789012345678");
+        reqBody.setOrgnlRcvgMsgId("123456789012345678");
+        reqBody.setMobNb("17702499222");
+        reqBody.setNm("王鹏");
+        reqBody.setIdTp("IC00");
+        reqBody.setId("210904198703261013");
+        reqBody.setUniSocCdtCd("123456789123456789");
+//        reqBody.setBizRegNb("123456789123456789");
+        reqBody.setRslt("WIDT");
+        reqBody.setCntt("对核查结果有疑义");
+        reqBody.setContactNm("哈哈精");
+        reqBody.setContactNb("17702499222");
 
+        logger.debug("模拟发送ESB请求报文");
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();
         reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
@@ -102,7 +116,7 @@ public class GetSysStsTest {
         int status = mvcResult.getResponse().getStatus();
         assertEquals(status, 200);
         String repContent = mvcResult.getResponse().getContentAsString();
-        REP_50023000205 rep = JsonUtil.toBean(repContent, REP_50023000205.class);
+        REP_50023000202 rep = JsonUtil.toBean(repContent, REP_50023000202.class);
     }
 
 
