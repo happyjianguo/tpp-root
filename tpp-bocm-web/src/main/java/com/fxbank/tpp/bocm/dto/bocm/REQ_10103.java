@@ -8,6 +8,8 @@
 */
 package com.fxbank.tpp.bocm.dto.bocm;
 
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+
 /** 
 * @ClassName: REQ_10103 
 * @Description: 对账文件获取
@@ -17,23 +19,9 @@ package com.fxbank.tpp.bocm.dto.bocm;
 */
 public class REQ_10103 extends REQ_BASE {
 	
+	@FixedField(order = 8, len = 28, desc = "文件名称")
 	private String filNam;
 	
-    @Override
-    public String creaFixPack() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-28s", this.filNam==null?"":this.filNam));
-        return sb.toString();
-    }
-
-    @Override
-    public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer(pack);
-        int i = 0;
-        super.getHeader().chanFixPack(sb.substring(0, i=i+60));
-        this.filNam = sb.substring(i, i=i+28).trim();
-    }
 
 	public String getFilNam() {
 		return filNam;

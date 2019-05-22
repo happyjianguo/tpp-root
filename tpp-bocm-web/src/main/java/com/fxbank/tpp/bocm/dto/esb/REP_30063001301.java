@@ -20,7 +20,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 * @date 2019年5月9日 上午10:36:35 
 *  
 */
-public class REP_30063806801 extends REP_BASE {
+public class REP_30063001301 extends REP_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();

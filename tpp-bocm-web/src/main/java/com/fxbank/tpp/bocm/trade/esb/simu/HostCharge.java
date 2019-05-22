@@ -40,7 +40,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 @Service("REQ_30011000104")
 public class HostCharge implements TradeExecutionStrategy {
 
-	private static Logger logger = LoggerFactory.getLogger(DP_FxICC.class);
+	private static Logger logger = LoggerFactory.getLogger(HostCharge.class);
 
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;

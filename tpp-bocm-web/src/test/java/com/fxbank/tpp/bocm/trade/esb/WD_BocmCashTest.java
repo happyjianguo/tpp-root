@@ -36,10 +36,7 @@ import com.alibaba.fastjson.JSON;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.bocm.dto.esb.REP_30061800301;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800301;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800301.REQ_BODY;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800401;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061001001;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
@@ -68,13 +65,13 @@ public class WD_BocmCashTest {
 	@Reference(version = "1.0.0")
 	private ISafeService passwordService;
 	
-	private REQ_30061800401 req ;
+	private REQ_30061001001 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_30061800401.REQ_BODY reqBody ;
+	private REQ_30061001001.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_30061800401();
+		req = new REQ_30061001001();
 		reqSysHead = new REQ_SYS_HEAD();
 		reqSysHead.setServiceId("300618004");
 		reqSysHead.setSceneId("01");
@@ -139,7 +136,6 @@ public class WD_BocmCashTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30061800301 rep = JsonUtil.toBean(repContent, REP_30061800301.class);
-		System.out.println(rep);
+
 	}
 }

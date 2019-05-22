@@ -2,6 +2,8 @@ package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
 
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+
 /**
  * @Descripttion: 交行来账余额查询
  * @Author: 周勇沩
@@ -9,90 +11,53 @@ import java.math.BigDecimal;
  */
 public class REP_10101 extends REP_BASE {
 
+	@FixedField(order = 5, len = 3, desc = "币种")
     private String ccyCod="CNY";
 
+	@FixedField(order = 6, len = 30, desc = "账户名称")
     private String actNam;
 
+	@FixedField(order = 7, len = 32, desc = "账号")
     private String actNo;
 
-    private BigDecimal actBal;
+    @FixedField(order = 8, len = 15, scale = 0, desc = "账户余额")
+    private Double actBal;
 
-    @Override
-    public String creaFixPack() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
-        sb.append(String.format("%-30s", this.actNam==null?"":this.actNam));
-        sb.append(String.format("%-32s", this.actNo==null?"":this.actNo));
-        sb.append(String.format("%015.0f", this.actBal==null?0.0:actBal.multiply(new BigDecimal(100))));
-        return sb.toString();
-    }
+	public String getCcyCod() {
+		return ccyCod;
+	}
 
-    @Override
-    public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer(pack);
-        int i = 0;
-        super.getHeader().chanFixPack(sb.substring(0, i=i+51));
-        this.ccyCod = sb.substring(i, i=i+3).trim();
-        this.actNam= sb.substring(i, i=i+30).trim();
-        this.actNo= sb.substring(i, i=i+32).trim();
-        this.actBal= new BigDecimal(sb.substring(i, i=i+15).trim()).divide(new BigDecimal(100),2,BigDecimal.ROUND_HALF_UP);
-    }
+	public void setCcyCod(String ccyCod) {
+		this.ccyCod = ccyCod;
+	}
 
-    /**
-	 * @return the actBal
-	 */
-	public BigDecimal getActBal() {
+	public String getActNam() {
+		return actNam;
+	}
+
+	public void setActNam(String actNam) {
+		this.actNam = actNam;
+	}
+
+	public String getActNo() {
+		return actNo;
+	}
+
+	public void setActNo(String actNo) {
+		this.actNo = actNo;
+	}
+
+	public Double getActBal() {
 		return actBal;
 	}
 
-	/**
-	 * @param actBal the actBal to set
-	 */
-	public void setActBal(BigDecimal actBal) {
+	public void setActBal(Double actBal) {
 		this.actBal = actBal;
 	}
+    
+    
 
-	/**
-     * @return the actNam
-     */
-    public String getActNam() {
-        return actNam;
-    }
 
-    /**
-     * @param actNam the actNam to set
-     */
-    public void setActNam(String actNam) {
-        this.actNam = actNam;
-    }
-
-    /**
-     * @return the ccyCod
-     */
-    public String getCcyCod() {
-        return ccyCod;
-    }
-
-    /**
-     * @return the actNo
-     */
-    public String getActNo() {
-        return actNo;
-    }
-
-    /**
-     * @param actNo the actNo to set
-     */
-    public void setActNo(String actNo) {
-        this.actNo = actNo;
-    }
-
-    /**
-     * @param ccyCod the ccyCod to set
-     */
-    public void setCcyCod(String ccyCod) {
-        this.ccyCod = ccyCod;
-    }
+ 
 
 }

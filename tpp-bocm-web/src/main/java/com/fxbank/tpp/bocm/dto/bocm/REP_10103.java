@@ -8,7 +8,11 @@
 */
 package com.fxbank.tpp.bocm.dto.bocm;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 
 /** 
 * @ClassName: REP_10103 
@@ -19,40 +23,44 @@ import java.math.BigDecimal;
 */
 public class REP_10103 extends REP_BASE {
 	
+	@FixedField(order = 5, len = 8, desc = "文件长度")
     private String filLen;
 
+	@FixedField(order = 6, len = 7, desc = "总笔数")
     private String tolCnt;
 
-    private BigDecimal tolAmt;
+	@FixedField(order = 7, len = 15, desc = "总金额")
+    private Double tolAmt;
+	
+	@FixedField(order = 8, desc = "循环内容")
+    private List<Inner> content = new ArrayList<Inner>();
+	
+    public static class Inner {
 
-    private String filTxt;
-    
-    @Override
-    public String creaFixPack() {
-        StringBuffer sb = new StringBuffer();
-        int len = Integer.parseInt(this.filLen);
-        sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-8s", this.filLen==null?"":this.filLen));
-        sb.append(String.format("%-7s", this.tolCnt==null?"":this.tolCnt));
-        sb.append(String.format("%015.0f", this.tolAmt==null?0.0:this.tolAmt.movePointRight(2)));
-        sb.append(String.format("%-"+len+"s", this.filTxt==null?"":this.filTxt));
-        return sb.toString();
+        @FixedField(order = 81, len = 2, desc = "业务类型")
+        private String svalue;
+
+        @FixedField(order = 82, len = 2, desc = "交易日期1")
+        private Integer ivalue;
+
+		public String getSvalue() {
+			return svalue;
+		}
+
+		public void setSvalue(String svalue) {
+			this.svalue = svalue;
+		}
+
+		public Integer getIvalue() {
+			return ivalue;
+		}
+
+		public void setIvalue(Integer ivalue) {
+			this.ivalue = ivalue;
+		}
+
+
     }
-
-    @Override
-    public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer(pack);
-        int i = 0;
-        super.getHeader().chanFixPack(sb.substring(0, i=i+51));
-        this.filLen = sb.substring(i, i=i+8).trim();
-        this.tolCnt= sb.substring(i, i=i+7).trim();
-        this.tolAmt= new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.filTxt= sb.substring(i, i=Integer.parseInt(this.filLen)).trim();
-    }
-
-
-
-
 
 	public String getFilLen() {
 		return filLen;
@@ -60,14 +68,6 @@ public class REP_10103 extends REP_BASE {
 
 	public void setFilLen(String filLen) {
 		this.filLen = filLen;
-	}
-
-	public BigDecimal getTolAmt() {
-		return tolAmt;
-	}
-
-	public void setTolAmt(BigDecimal tolAmt) {
-		this.tolAmt = tolAmt;
 	}
 
 	public String getTolCnt() {
@@ -78,14 +78,41 @@ public class REP_10103 extends REP_BASE {
 		this.tolCnt = tolCnt;
 	}
 
-	public String getFilTxt() {
-		return filTxt;
+	public Double getTolAmt() {
+		return tolAmt;
 	}
 
-	public void setFilTxt(String filTxt) {
-		this.filTxt = filTxt;
+	public void setTolAmt(Double tolAmt) {
+		this.tolAmt = tolAmt;
 	}
-    
+
+	public List<Inner> getContent() {
+		return content;
+	}
+
+	public void setContent(List<Inner> content) {
+		this.content = content;
+	}
+
+//	public String getFilTxt() {
+//		return filTxt;
+//	}
+//
+//	public void setFilTxt(String filTxt) {
+//		this.filTxt = filTxt;
+//	}
+	
+	
+	public static void main(String[] args) {
+		String tx = "NFX0000交易成功                          1906200001279100000008      2              601020304";
+		
+		REP_10103 modelRep = new FixedUtil(tx).toBean(REP_10103.class); // 定长
+		
+		
+
+	}
+	
+   
     
 
 

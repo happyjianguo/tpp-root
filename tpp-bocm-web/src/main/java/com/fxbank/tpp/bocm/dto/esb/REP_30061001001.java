@@ -6,14 +6,13 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
-* @ClassName: REP_30061800201 
-* @Description: 本行柜面交行卡付款转账
+* @ClassName: REP_30061800401 
+* @Description: 本行柜面交行卡取现金
 * @author Duzhenduo
-* @date 2019年4月16日 上午11:19:23 
+* @date 2019年4月16日 上午9:21:25 
 *  
 */
-public class REP_30061800201 extends REP_BASE {
-
+public class REP_30061001001 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -50,26 +49,22 @@ public class REP_30061800201 extends REP_BASE {
 	}
 
 	public class REP_BODY {
-
 		@JSONField(name = "FEE_T3")
 		private String feeT3;//手续费
-		
 		@JSONField(name = "BALANCE3_T")
 		private String balance3T;//余额
-		
 		public String  getFeeT3(){
 			return feeT3;
 		}
 		public void setFeeT3(String feeT3){
 			this.feeT3 = feeT3;
 		}
-		public String getBalance3T() {
+		public String  getBalance3T(){
 			return balance3T;
 		}
-		public void setBalance3T(String balance3t) {
-			balance3T = balance3t;
+		public void setBalance3T(String balance3T){
+			this.balance3T = balance3T;
 		}
 		
 	}
-
 }

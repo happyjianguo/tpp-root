@@ -12,7 +12,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 * @date 2019年4月16日 上午10:43:50 
 *  
 */
-public class REQ_30061800101 extends REQ_BASE {
+public class REQ_30061000701 extends REQ_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,7 +23,7 @@ public class REQ_30061800101 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_30061800101(){
+	public REQ_30061000701(){
 		super.txDesc = "本行卡付款转账";
 	}
 

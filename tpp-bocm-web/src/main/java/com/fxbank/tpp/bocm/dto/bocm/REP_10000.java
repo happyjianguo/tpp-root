@@ -1,6 +1,6 @@
 package com.fxbank.tpp.bocm.dto.bocm;
 
-import java.math.BigDecimal;
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
 /** 
 * @ClassName: REP_10000 
@@ -10,56 +10,44 @@ import java.math.BigDecimal;
 *  
 */
 public class REP_10000 extends REP_BASE {
+	
+	@FixedField(order = 5, len = 15, scale = 0, desc = "原交易金额")
+	private Double otxnAmt;
 
-	private BigDecimal oTxnAmt;
+	@FixedField(order = 6, len = 15, scale = 0, desc = "开户行手续费")
+    private Double fee;
 
-    private BigDecimal fee;
+	@FixedField(order = 7, len = 15, scale = 0, desc = "账户余额")
+    private Double actBal;
 
-    private BigDecimal actBal;
 
-    @Override
-    public String creaFixPack() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%015.0f", this.oTxnAmt==null?0.0:this.oTxnAmt.movePointRight(2)));
-        sb.append(String.format("%015.0f", this.fee==null?0.0:this.fee.movePointRight(2)));
-        sb.append(String.format("%015.0f", this.actBal==null?0.0:this.actBal.movePointRight(2)));
-        return sb.toString();
-    }
 
-    @Override
-    public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer(pack);
-        int i = 0;
-        super.getHeader().chanFixPack(sb.substring(0, i=i+51));
-        this.oTxnAmt = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.fee= new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.actBal= new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-    }
-
-	public BigDecimal getoTxnAmt() {
-		return oTxnAmt;
+	public Double getOtxnAmt() {
+		return otxnAmt;
 	}
 
-	public void setoTxnAmt(BigDecimal oTxnAmt) {
-		this.oTxnAmt = oTxnAmt;
+	public void setOtxnAmt(Double otxnAmt) {
+		this.otxnAmt = otxnAmt;
 	}
 
-	public BigDecimal getFee() {
+	public Double getFee() {
 		return fee;
 	}
 
-	public void setFee(BigDecimal fee) {
+	public void setFee(Double fee) {
 		this.fee = fee;
 	}
 
-	public BigDecimal getActBal() {
+	public Double getActBal() {
 		return actBal;
 	}
 
-	public void setActBal(BigDecimal actBal) {
+	public void setActBal(Double actBal) {
 		this.actBal = actBal;
 	}
+
+
+
 
 	
     

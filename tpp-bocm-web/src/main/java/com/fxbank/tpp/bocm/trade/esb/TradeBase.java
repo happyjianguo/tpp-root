@@ -44,7 +44,11 @@ public class TradeBase {
 		esbReq_30043003001.setReqSysHead(reqSysHead);
 		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
 		reqBody_30043003001.setBrchNoT4(branchId);
-		myLog.info(logger, "通过本行机构号查询人行行号");
+		
+		
+		/**
+		
+		myLog.info(logger, "TradeBase通过本行机构号查询人行行号");
 		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,				
 				ESB_REP_30043003001.class);
 		//发起行人行行号
@@ -60,12 +64,12 @@ public class TradeBase {
 		//接收行行号 办理业务网点的总行行号
 		reqHeader.setrBnkNo(BANK_NUMBER); // 网点 取上面接口返回值
 		
-		
+		*/
 		
 //		//发起行行号  313229000660
-//		reqHeader.setsBnkNo("313229000660"); // 总行 取上面接口返回值
+		reqHeader.setsBnkNo("313229000660"); // 总行 取上面接口返回值
 //		//接收行行号 办理业务网点的总行行号
-//		reqHeader.setrBnkNo("313229000660"); // 网点 取上面接口返回值
+		reqHeader.setrBnkNo("313229000660"); // 网点 取上面接口返回值
 	}
 
 	public String convPin(String oPin){

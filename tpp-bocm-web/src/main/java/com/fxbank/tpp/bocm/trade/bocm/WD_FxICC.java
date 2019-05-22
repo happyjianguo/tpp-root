@@ -63,12 +63,12 @@ public class WD_FxICC implements TradeExecutionStrategy {
 		//1.插入流水表
 		initRecord(req);	
 		//IC卡信息校验
-		try {
-			validateIC(req);
-		} catch (SysTradeExecuteException e) {
-			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008);
-			throw e2;
-		}
+//		try {
+//			validateIC(req);
+//		} catch (SysTradeExecuteException e) {
+//			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008,e.getMessage());
+//			throw e2;
+//		}
 		//2.核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
@@ -86,26 +86,35 @@ public class WD_FxICC implements TradeExecutionStrategy {
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
-			updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
-			myLog.error(logger, "交行代理我行账户付款（IC卡），本行核心记账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
-			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
-			throw e2;
+			if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000004)) { // ESB超时	
+				updateHostRecord(req, "", "", "3", e.getRspCode(), e.getRspMsg());
+				myLog.error(logger, "交行代理我行账户付款（IC卡），本行核心记账超时，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
+				throw e2;
+			}else{
+				updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
+				myLog.error(logger, "交行代理我行账户付款（IC卡），本行核心记账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
+				throw e2;
+			}
+
 		}
 		//3.更新流水表核心记账状态
 		updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
 		myLog.info(logger, "交行代理我行账户付款（IC卡），本行核心记账成功，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 		REP_20001 rep = new REP_20001();
-		rep.setoTxnAmt(req.getTxnAmt());
+		rep.setOtxnAmt(req.getTxnAmt());
 		List<Fee> feeList = esbRep_30011000104.getRepBody().getFeeDetail();
 		//JHF1-异地手续费JHF2-代理手续费
-		BigDecimal fee = new BigDecimal(0);
+		Double fee = new Double(0);
 		for(Fee temp:feeList) {
 			if("JHF2".equals(temp.getFeeType())) {
-				fee = new BigDecimal(temp.getFeeAmt());
+				fee = Double.valueOf(temp.getFeeAmt());
 			}
 		}
 		rep.setFee(fee);
-		rep.setActBal(new BigDecimal(esbRep_30011000104.getRepBody().getAvailBal()));
+		rep.setActBal(Double.valueOf(esbRep_30011000104.getRepBody().getAvailBal()));
+		
 		return rep;
 	}
 	/** 
@@ -135,19 +144,19 @@ public class WD_FxICC implements TradeExecutionStrategy {
 		esbReq_30011000104.setReqSysHead(reqSysHead);
 
 		ESB_REQ_30011000104.REQ_BODY reqBody_30011000104 = esbReq_30011000104.getReqBody();
-		reqBody_30011000104.setBaseAcctNo(reqDto.getrActNo());
+		reqBody_30011000104.setBaseAcctNo(reqDto.getRactNo());
 		reqBody_30011000104.setAcctName(reqDto.getRecNam());
-		reqBody_30011000104.setTranType("JH02");
+		reqBody_30011000104.setTranType("JH01");
 		reqBody_30011000104.setTranCcy("CNY");
 		reqBody_30011000104.setTranAmt(reqDto.getTxnAmt().toString());
 		reqBody_30011000104.setWithdrawalType("P");
-		reqBody_30011000104.setOthBaseAcctNo(reqDto.getpActNo());
+		reqBody_30011000104.setOthBaseAcctNo(reqDto.getPactNo());
 		reqBody_30011000104.setOthBaseAcctName(reqDto.getPayNam());
-		reqBody_30011000104.setChannelType("");
-		reqBody_30011000104.setSendBankCode(reqDto.getHeader().getsBnkNo());
+		reqBody_30011000104.setChannelType("BU");
+		reqBody_30011000104.setSendBankCode(reqDto.getSbnkNo());
 		reqBody_30011000104.setBankCode(reqDto.getRecBnk());
-		reqBody_30011000104.setOthBankCode(reqDto.getHeader().getsBnkNo());
-		reqBody_30011000104.setSettlementDate(reqDto.getHeader().gettTxnDat().toString());
+		reqBody_30011000104.setOthBankCode(reqDto.getSbnkNo());
+		reqBody_30011000104.setSettlementDate(reqDto.getTtxnDat().toString());
 		reqBody_30011000104.setCollateFlag("Y");
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
@@ -159,20 +168,28 @@ public class WD_FxICC implements TradeExecutionStrategy {
 		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		record.setSourceType(reqDto.getSourceType());
-		record.setTxBranch(reqDto.getHeader().getsBnkNo());
+		record.setTxBranch(reqDto.getSbnkNo());
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
 		record.setTxAmt(reqDto.getTxnAmt().toString());
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		record.setHostState("0");
-		record.setBocmState("0");
-		record.setPayerAcno(reqDto.getpActNo());
+		record.setPayerAcno(reqDto.getPactNo());
 		record.setPayerName(reqDto.getPayNam());
-		record.setPayeeAcno(reqDto.getrActNo());
+		record.setPayeeAcno(reqDto.getRactNo());
 		record.setPayeeName(reqDto.getRecNam());
 		record.setPrint("0");
 		record.setCheckFlag("1");
+		record.setBocmState("0");
+		//交行流水号
+		record.setBocmTraceNo(reqDto.getSlogNo());		
+		record.setBocmDate(reqDto.getTtxnDat());
+		record.setBocmTime(reqDto.getTtxnTim());
+		//发起行行号
+		record.setBocmBranch(reqDto.getSbnkNo());
+		//交易码
+		record.setTxCode(reqDto.getTtxnCd());
 		bocmRcvTraceService.rcvTraceInit(record);
 	}
 	private BocmRcvTraceUpdModel updateHostRecord(REQ_20001 reqDto, String hostDate, String hostTraceno,
@@ -208,7 +225,7 @@ public class WD_FxICC implements TradeExecutionStrategy {
 		esbReq_30033000202.setReqSysHead(reqSysHead);
 
 		ESB_REQ_30033000202.REQ_BODY reqBody_30033000202 = esbReq_30033000202.getReqBody();
-		reqBody_30033000202.setCardNo(reqDto.getrActNo());
+		reqBody_30033000202.setCardNo(reqDto.getRactNo());
 		reqBody_30033000202.setF55(reqDto.getiCData());
 		reqBody_30033000202.setIcCardSeqNo(reqDto.getSeqNo());
 

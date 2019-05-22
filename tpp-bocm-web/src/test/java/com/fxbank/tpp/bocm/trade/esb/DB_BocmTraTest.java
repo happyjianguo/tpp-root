@@ -36,8 +36,8 @@ import com.alibaba.fastjson.JSON;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.bocm.dto.esb.REP_30061800301;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800101;
+import com.fxbank.tpp.bocm.dto.esb.REP_30061000701;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061000701;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
@@ -66,15 +66,15 @@ public class DB_BocmTraTest {
 	@Reference(version = "1.0.0")
 	private ISafeService passwordService;
 	
-	private REQ_30061800101 req ;
+	private REQ_30061000701 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_30061800101.REQ_BODY reqBody ;
+	private REQ_30061000701.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_30061800101();
+		req = new REQ_30061000701();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300618001");
+		reqSysHead.setServiceId("300610007");
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
@@ -105,11 +105,11 @@ public class DB_BocmTraTest {
 		
 		reqBody.setBnkCardUseCcyT("CNY");
 		reqBody.setBcmCardUseCcyT("CNY");
-		reqBody.setBnkCardAcctNaT("本行卡账户姓名");
-		reqBody.setBcmCardAcctNaT("交行卡账户姓名");
+		reqBody.setBnkCardAcctNaT("姓名1");
+		reqBody.setBcmCardAcctNaT("姓名2");
 		reqBody.setAcctBranchT1("123");//开户机构
-		reqBody.setBnkCardAcctNoT("123");//本行卡账号
-		reqBody.setBcmCardAcctNoT("123");//交行卡账号
+		reqBody.setBnkCardAcctNoT("622126010001048643");//本行卡账号
+		reqBody.setBcmCardAcctNoT("6222600530011742438");//交行卡账号
 		reqBody.setTrsrAmtT3("100.00");//转账金额
 		reqBody.setFeeT3("0.00");//手续费
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费
@@ -132,7 +132,7 @@ public class DB_BocmTraTest {
 		reqBody.setIdTpT2("15");//证件类型
 		reqBody.setBrchNoT8("02002");//机构号1
 		reqBody.setBrchNoT9("02003");//机构号2
-		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
+		reqBody.setScdTrkInfoT2("622126010001048643=4912567019123456");//二磁道信息
 		reqBody.setIcCardFlgT4("0");//IC卡磁条卡标志   0磁条卡  1IC卡
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
@@ -147,8 +147,6 @@ public class DB_BocmTraTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30061800301 rep = JsonUtil.toBean(repContent, REP_30061800301.class);
-		System.out.println(rep);
 	}
 
 }

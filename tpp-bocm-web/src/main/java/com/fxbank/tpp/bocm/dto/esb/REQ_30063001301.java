@@ -12,7 +12,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fxbank.cip.base.dto.REQ_APP_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30063800301.REQ_BODY;
 
 /** 
 * @ClassName: REQ_30063806801 
@@ -21,7 +20,7 @@ import com.fxbank.tpp.bocm.dto.esb.REQ_30063800301.REQ_BODY;
 * @date 2019年5月9日 上午10:32:02 
 *  
 */
-public class REQ_30063806801 extends REQ_BASE {
+public class REQ_30063001301 extends REQ_BASE {
 	
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -32,7 +31,7 @@ public class REQ_30063806801 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_30063806801(){
+	public REQ_30063001301(){
 		super.txDesc = "交行柜面账户信息快速查询";
 	}
 

@@ -36,8 +36,8 @@ import com.alibaba.fastjson.JSON;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.bocm.dto.esb.REP_30061800301;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800301;
+import com.fxbank.tpp.bocm.dto.esb.REP_30061000901;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061000901;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 
@@ -67,15 +67,15 @@ public class DB_BocmCashTest {
 	@Reference(version = "1.0.0")
 	private ISafeService passwordService;
 	
-	private REQ_30061800301 req ;
+	private REQ_30061000901 req ;
 	private REQ_SYS_HEAD reqSysHead;
-	private REQ_30061800301.REQ_BODY reqBody ;
+	private REQ_30061000901.REQ_BODY reqBody ;
 	
 	@Before
 	public void init(){
-		req = new REQ_30061800301();
+		req = new REQ_30061000901();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300618003");
+		reqSysHead.setServiceId("300610009");
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
@@ -105,7 +105,7 @@ public class DB_BocmCashTest {
 		
 		reqBody.setCcyT("CNY");
 		reqBody.setNaT1("姓名");//姓名
-		reqBody.setCardNoT3("卡号");//卡号
+		reqBody.setCardNoT3("6222600530011742438");//卡号
 		reqBody.setDpsAmtT("100.00");//存款金额
 		reqBody.setFeeT3("0.00");//手续费
 		reqBody.setAcctBalT3("1000.00");//账户余额
@@ -122,7 +122,7 @@ public class DB_BocmCashTest {
 		//15	居民身份证        
 		reqBody.setIdTpT2("15");
 		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
-		reqBody.setIcCardFlgT4("0");//IC卡磁条卡标志   0磁条卡  1IC卡
+		reqBody.setIcCardFlgT4("1");//IC卡磁条卡标志   0磁条卡  1IC卡
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
@@ -136,7 +136,7 @@ public class DB_BocmCashTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30061800301 rep = JsonUtil.toBean(repContent, REP_30061800301.class);
+		REP_30061000901 rep = JsonUtil.toBean(repContent, REP_30061000901.class);
 		System.out.println(rep);
 	}
 

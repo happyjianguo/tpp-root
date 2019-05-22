@@ -10,6 +10,8 @@ package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.math.BigDecimal;
 
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+
 /** 
 * @ClassName: REP_20102 
 * @Description: TODO(这里用一句话描述这个类的作用) 
@@ -19,99 +21,96 @@ import java.math.BigDecimal;
 */
 public class REP_20102 extends REP_BASE {
 	
+	@FixedField(order = 5, len = 3, desc = "币种")
 	private String ccyCod;
+	
+	@FixedField(order = 6, len = 12, desc = "开户行行号")
 	private String actBnk;
+	
+	@FixedField(order = 7, len = 1, desc = "账户类型")	
 	private String actTyp;
+	
+	@FixedField(order = 8, len = 30, desc = "账户户名")
 	private String actNam;
+	
+	@FixedField(order = 9, len = 32, desc = "账号")
 	private String actNo;
-	private BigDecimal fee;
-	private String actAdr;
-	private String amtLmt;
 	
-    @Override
-    public String creaFixPack() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
-        sb.append(String.format("%-12s", this.actBnk==null?"":this.actBnk));
-        sb.append(String.format("%-1s", this.actTyp==null?"":this.actTyp));
-        sb.append(String.format("%-30s", this.actNam==null?"":this.actNam));
-        sb.append(String.format("%-32s", this.actNo==null?"":this.actNo));
-        sb.append(String.format("%015.0f", this.fee==null?0.0:this.fee.movePointRight(2)));
-        sb.append(String.format("%-60s", this.actAdr==null?"":this.actAdr));
-        sb.append(String.format("%-1s", this.amtLmt==null?"":this.amtLmt));
-        return sb.toString();
-    }
+	@FixedField(order = 10, len = 15, desc = "手续费")
+	private Double fee;
 
-    @Override
-    public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer(pack);
-        int i = 0;
-        super.getHeader().chanFixPack(sb.substring(0, i=i+51));
-        this.ccyCod = sb.substring(i, i=i+3).trim();
-        this.actBnk = sb.substring(i, i=i+12).trim();
-        this.actTyp = sb.substring(i, i=i+1).trim();
-        this.actNam = sb.substring(i, i=i+30).trim();
-        this.actNo = sb.substring(i, i=i+32).trim();
-        this.fee= new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.actAdr = sb.substring(i, i=i+60).trim();
-        this.amtLmt = sb.substring(i, i=i+1).trim();
-    }
+	@FixedField(order = 11, len = 60, desc = "客户地址")
+	private String actAdr;
 	
+	@FixedField(order = 12, len = 1, desc = "金额超限标志")
+	private String amtLmt;
+
 	public String getCcyCod() {
 		return ccyCod;
 	}
+
 	public void setCcyCod(String ccyCod) {
 		this.ccyCod = ccyCod;
 	}
+
 	public String getActBnk() {
 		return actBnk;
 	}
+
 	public void setActBnk(String actBnk) {
 		this.actBnk = actBnk;
 	}
+
 	public String getActTyp() {
 		return actTyp;
 	}
+
 	public void setActTyp(String actTyp) {
 		this.actTyp = actTyp;
 	}
+
 	public String getActNam() {
 		return actNam;
 	}
+
 	public void setActNam(String actNam) {
 		this.actNam = actNam;
 	}
+
 	public String getActNo() {
 		return actNo;
 	}
+
 	public void setActNo(String actNo) {
 		this.actNo = actNo;
 	}
 
-	public BigDecimal getFee() {
+	public Double getFee() {
 		return fee;
 	}
 
-	public void setFee(BigDecimal fee) {
+	public void setFee(Double fee) {
 		this.fee = fee;
 	}
 
 	public String getActAdr() {
 		return actAdr;
 	}
+
 	public void setActAdr(String actAdr) {
 		this.actAdr = actAdr;
 	}
+
 	public String getAmtLmt() {
 		return amtLmt;
 	}
+
 	public void setAmtLmt(String amtLmt) {
 		this.amtLmt = amtLmt;
 	}
 	
-	
-	
+
+
 	
 	
 }

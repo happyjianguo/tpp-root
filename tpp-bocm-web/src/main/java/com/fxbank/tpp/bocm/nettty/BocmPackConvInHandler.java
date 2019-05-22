@@ -4,7 +4,10 @@ import javax.annotation.Resource;
 
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
+import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_BASE;
+import com.fxbank.tpp.bocm.dto.bocm.REQ_HEADER;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,12 +53,11 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 				throw e;
 			}
 			
-			reqBase = (REQ_BASE) bocmClass.newInstance();
-			reqBase.chanFixPack(fixPack);
+			
+			reqBase = (REQ_BASE) bocmClass.newInstance();			
+			reqBase = (REQ_BASE)new FixedUtil(fixPack).toBean(reqBase.getClass());			
 			reqBase.setTxCode(txCode);
-			reqBase.setSourceType("JH");
-			reqBase.setOthDate(reqBase.getHeader().gettTxnDat());
-			reqBase.setOthTraceno(reqBase.getHeader().getsLogNo());
+			reqBase.setSourceType("BU");
 			ctx.fireChannelRead(reqBase);
 		} finally {
 			ReferenceCountUtil.release(msg);

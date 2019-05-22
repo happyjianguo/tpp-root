@@ -1,6 +1,9 @@
 package com.fxbank.tpp.bocm.dto.bocm;
 
-import java.math.BigDecimal;
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
+import com.fxbank.cip.base.pkg.tag.TagAnno.TagField;
+
 
 /** 
 * @ClassName: REQ_10000 
@@ -11,121 +14,83 @@ import java.math.BigDecimal;
 */
 public class REQ_10000 extends REQ_BASE {
 
-	private String ccyCod = "CNY";
-    
-    private BigDecimal txnAmt;
-
-    private String feeFlg;
-
-    private BigDecimal fee;
-    
-    private String oprFlg;
-    
-    private String txnMod;
-    
-    private String payBnk;
-    
-    private String pActTp;
-    
-    private String pActNo;
-    
-    private String payNam;
-    
-    private String payAdr;
-    
-    private String recBnk;
-    
-    private String rActTp;
-    
-    private String rActNo;
-    
-    private String recNam;
-    
-    private String recAdr;
-    
-    private String cuIdTp;
-    
-    private String cuIdNo;
-    
-    private String agIdTp;
-    
-    private String agIdNo;
-    
-    private String agtNam;
-    
-    private String secMag;
-    
-    private String thdMag;
-    
-    private String remark;
-    
     public REQ_10000() {
         super.txDesc = "磁条卡通存";
         super.log = false;
 	}
 
-    @Override
-    public String creaFixPack() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-3s", this.ccyCod==null?"":this.ccyCod));
-        sb.append(String.format("%015.0f", this.txnAmt==null?0.0:this.txnAmt.movePointRight(2)));
-        sb.append(String.format("%-1s", this.feeFlg==null?"":this.feeFlg));
-        sb.append(String.format("%015.0f", this.fee==null?0.0:this.fee.movePointRight(2)));
-        sb.append(String.format("%-1s", this.oprFlg==null?"":this.oprFlg));
-        sb.append(String.format("%-1s", this.txnMod==null?"":this.txnMod));
-        sb.append(String.format("%-12s", this.payBnk==null?"":this.payBnk));
-        sb.append(String.format("%-1s", this.pActTp==null?"":this.pActTp));
-        sb.append(String.format("%-32s", this.pActNo==null?"":this.pActNo));
-        sb.append(String.format("%-30s", this.payNam==null?"":this.payNam));
-        sb.append(String.format("%-60s", this.payAdr==null?"":this.payAdr));
-        sb.append(String.format("%-12s", this.recBnk==null?"":this.recBnk));
-        sb.append(String.format("%-1s", this.rActTp==null?"":this.rActTp));
-        sb.append(String.format("%-32s", this.rActNo==null?"":this.rActNo));
-        sb.append(String.format("%-30s", this.recNam==null?"":this.recNam));
-        sb.append(String.format("%-60s", this.recAdr==null?"":this.recAdr));
-        sb.append(String.format("%-2s", this.cuIdTp==null?"":this.cuIdTp));
-        sb.append(String.format("%-30s", this.cuIdNo==null?"":this.cuIdNo));
-        sb.append(String.format("%-2s", this.agIdTp==null?"":this.agIdTp));
-        sb.append(String.format("%-30s", this.agIdNo==null?"":this.agIdNo));
-        sb.append(String.format("%-30s", this.agtNam==null?"":this.agtNam));
-        sb.append(String.format("%-37s", this.secMag==null?"":this.secMag));
-        sb.append(String.format("%-104s", this.thdMag==null?"":this.thdMag));
-        sb.append(String.format("%-60s", this.remark==null?"":this.remark));
-        
-        return sb.toString();
-    }
+    @TagField(name = "10000")
+    @FixedField(order = 8, len = 3, desc = "币种")
+	private String ccyCod = "CNY";
+    
+    @FixedField(order = 9, len = 15, scale = 0, desc = "交易金额")
+    private Double txnAmt;
 
-    @Override
-    public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer(pack);
-        int i = 0;
-        super.getHeader().chanFixPack(sb.substring(0, i=i+60));
-        this.ccyCod = sb.substring(i, i=i+3).trim();
-        this.txnAmt = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.feeFlg = sb.substring(i, i=i+1).trim();
-        this.fee = new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.oprFlg = sb.substring(i, i=i+1).trim();
-        this.txnMod = sb.substring(i, i=i+1).trim();
-        this.payBnk = sb.substring(i, i=i+12).trim();
-        this.pActTp = sb.substring(i, i=i+1).trim();
-        this.pActNo = sb.substring(i, i=i+32).trim();
-        this.payNam = sb.substring(i, i=i+30).trim();
-        this.payAdr = sb.substring(i, i=i+60).trim();
-        this.recBnk = sb.substring(i, i=i+12).trim();
-        this.rActTp = sb.substring(i, i=i+1).trim();
-        this.rActNo = sb.substring(i, i=i+32).trim();
-        this.recNam = sb.substring(i, i=i+30).trim();
-        this.recAdr = sb.substring(i, i=i+60).trim();
-        this.cuIdTp = sb.substring(i, i=i+2).trim();
-        this.cuIdNo = sb.substring(i, i=i+30).trim();
-        this.agIdTp = sb.substring(i, i=i+2).trim();
-        this.agIdNo = sb.substring(i, i=i+30).trim();
-        this.agtNam = sb.substring(i, i=i+30).trim();
-        this.secMag = sb.substring(i, i=i+37).trim();
-        this.thdMag = sb.substring(i, i=i+104).trim();
-        this.remark = sb.substring(i, i=i+60).trim();
-    }
+    @FixedField(order = 10, len = 1, desc = "手续费收取方式")
+    private String feeFlg;
+
+    @FixedField(order = 11, len = 15, scale = 0, desc = "手续费")
+    private Double fee;
+    
+    @FixedField(order = 12, len = 1, desc = "卡输入方式")
+    private String oprFlg;
+    
+    @FixedField(order = 13, len = 1, desc = "业务模式")
+    private String txnMod;
+    
+    @FixedField(order = 14, len = 12, desc = "付款人开户行行号")
+    private String payBnk;
+    
+    @FixedField(order = 15, len = 1, desc = "付款人账户类型")
+    private String pactTp;
+    
+    @FixedField(order = 16, len = 32, desc = "付款人账号")
+    private String pactNo;
+    
+    @FixedField(order = 17, len = 30, desc = "付款人名称")
+    private String payNam;
+    
+    @FixedField(order = 18, len = 60, desc = "付款人地址")
+    private String payAdr;
+    
+    @FixedField(order = 19, len = 12, desc = "收款人开户行行号")
+    private String recBnk;
+    
+    @FixedField(order = 20, len = 1, desc = "收款人账户类型")
+    private String ractTp;
+    
+    @FixedField(order = 21, len = 32, desc = "收款人账号")
+    private String ractNo;
+    
+    @FixedField(order = 22, len = 30, desc = "收款人名称")
+    private String recNam;
+    
+    @FixedField(order = 23, len = 60, desc = "收款人地址")
+    private String recAdr;
+    
+    @FixedField(order = 24, len = 2, desc = "客户证件种类")
+    private String cuIdTp;
+    
+    @FixedField(order = 25, len = 30, desc = "客户证件号码")
+    private String cuIdNo;
+    
+    @FixedField(order = 26, len = 2, desc = "代理人证件种类")
+    private String agIdTp;
+    
+    @FixedField(order = 27, len = 30, desc = "代理人证件号码")
+    private String agIdNo;
+    
+    @FixedField(order = 28, len = 30, desc = "代理人姓名")
+    private String agtNam;
+    
+    @FixedField(order = 29, len = 37, desc = "第二磁道")
+    private String secMag;
+    
+    @FixedField(order = 30, len = 104, desc = "第三磁道")
+    private String thdMag;
+    
+    @FixedField(order = 31, len = 60, desc = "附言")
+    private String remark;
 
 	public String getCcyCod() {
 		return ccyCod;
@@ -133,6 +98,24 @@ public class REQ_10000 extends REQ_BASE {
 
 	public void setCcyCod(String ccyCod) {
 		this.ccyCod = ccyCod;
+	}
+	
+	
+
+	public Double getTxnAmt() {
+		return txnAmt;
+	}
+
+	public void setTxnAmt(Double txnAmt) {
+		this.txnAmt = txnAmt;
+	}
+
+	public Double getFee() {
+		return fee;
+	}
+
+	public void setFee(Double fee) {
+		this.fee = fee;
 	}
 
 	public String getFeeFlg() {
@@ -167,22 +150,6 @@ public class REQ_10000 extends REQ_BASE {
 		this.payBnk = payBnk;
 	}
 
-	public String getpActTp() {
-		return pActTp;
-	}
-
-	public void setpActTp(String pActTp) {
-		this.pActTp = pActTp;
-	}
-
-	public String getpActNo() {
-		return pActNo;
-	}
-
-	public void setpActNo(String pActNo) {
-		this.pActNo = pActNo;
-	}
-
 	public String getPayNam() {
 		return payNam;
 	}
@@ -207,20 +174,38 @@ public class REQ_10000 extends REQ_BASE {
 		this.recBnk = recBnk;
 	}
 
-	public String getrActTp() {
-		return rActTp;
+
+
+	public String getPactTp() {
+		return pactTp;
 	}
 
-	public void setrActTp(String rActTp) {
-		this.rActTp = rActTp;
+	public void setPactTp(String pactTp) {
+		this.pactTp = pactTp;
 	}
 
-	public String getrActNo() {
-		return rActNo;
+	public String getPactNo() {
+		return pactNo;
 	}
 
-	public void setrActNo(String rActNo) {
-		this.rActNo = rActNo;
+	public void setPactNo(String pactNo) {
+		this.pactNo = pactNo;
+	}
+
+	public String getRactTp() {
+		return ractTp;
+	}
+
+	public void setRactTp(String ractTp) {
+		this.ractTp = ractTp;
+	}
+
+	public String getRactNo() {
+		return ractNo;
+	}
+
+	public void setRactNo(String ractNo) {
+		this.ractNo = ractNo;
 	}
 
 	public String getRecNam() {
@@ -302,23 +287,5 @@ public class REQ_10000 extends REQ_BASE {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-	public BigDecimal getTxnAmt() {
-		return txnAmt;
-	}
-
-	public void setTxnAmt(BigDecimal txnAmt) {
-		this.txnAmt = txnAmt;
-	}
-
-	public BigDecimal getFee() {
-		return fee;
-	}
-
-	public void setFee(BigDecimal fee) {
-		this.fee = fee;
-	}
-
-   
-
+    
 }

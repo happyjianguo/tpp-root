@@ -37,7 +37,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 @Service("REQ_30033000202")
 public class ValidateIC implements TradeExecutionStrategy {
 
-	private static Logger logger = LoggerFactory.getLogger(DP_FxICC.class);
+	private static Logger logger = LoggerFactory.getLogger(ValidateIC.class);
 
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;

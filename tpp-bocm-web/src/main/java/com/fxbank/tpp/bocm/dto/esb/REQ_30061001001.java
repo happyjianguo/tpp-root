@@ -2,17 +2,17 @@ package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fxbank.cip.base.dto.REQ_APP_HEAD;
-import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
+import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_30061800301 
-* @Description: 本行柜面交行卡存现金
+* @ClassName: REQ_30061800401 
+* @Description: 本行柜面交行卡取现金 
 * @author Duzhenduo
-* @date 2019年4月15日 下午4:42:46 
+* @date 2019年4月16日 上午9:19:53 
 *  
 */
-public class REQ_30061800301 extends REQ_BASE {
+public class REQ_30061001001 extends REQ_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
@@ -23,8 +23,8 @@ public class REQ_30061800301 extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_30061800301(){
-		super.txDesc = "交行卡存现金";
+	public REQ_30061001001(){
+		super.txDesc = "交行卡取现金";
 	}
 
 	public REQ_APP_HEAD getReqAppHead() {
@@ -59,36 +59,38 @@ public class REQ_30061800301 extends REQ_BASE {
 
 		@JSONField(name = "CCY_T")
 		private String ccyT;//币种
-		@JSONField(name = "NA_T1")
-		private String naT1;//姓名
+		@JSONField(name = "NM_T")
+		private String nmT;//名称
 		@JSONField(name = "CARD_NO_T3")
 		private String cardNoT3;//卡号
-		@JSONField(name = "DPS_AMT_T")
-		private String dpsAmtT;//存款金额
-		@JSONField(name = "FEE_T3")
-		private String feeT3;//手续费
-		@JSONField(name = "ACCT_BAL_T3")
-		private String acctBalT3;//账户余额
+		@JSONField(name = "WTHR_AMT_T")
+		private String wthrAmtT;//取款金额
+		@JSONField(name = "FEE_AMT_T3")
+		private String feeAmtT3;//手续费金额
+		@JSONField(name = "BAL_T")
+		private String balT;//余额
 		@JSONField(name = "HNDL_PYMNT_FEE_T5")
 		private String hndlPymntFeeT5;//应收手续费
 		@JSONField(name = "HLDR_GLBL_ID_T")
 		private String hldrGlblIdT;//证件号码
-		@JSONField(name = "AGENT_CRTF_NO_T")
-		private String agentCrtfNoT;//代理证件号码
-		@JSONField(name = "RCVE_WY_T")
-		private String rcveWyT;//收取方式
-		@JSONField(name = "ACCT_TP_T")
-		private String acctTpT;//账户类型
-		@JSONField(name = "BUSI_MD_T1")
-		private String busiMdT1;//业务模式
-		@JSONField(name = "RD_CARD_WY_T")
-		private String rdCardWyT;//读卡方式
-		@JSONField(name = "OPN_ACCT_BNK_NO_T8")
-		private String opnAcctBnkNoT8;//开户行号
+		@JSONField(name = "CMSN_HLDR_GLBL_ID_T")
+		private String cmsnHldrGlblIdT;//代理人证件号码
+		@JSONField(name = "ACCT_NO_TP_T")
+		private String acctNoTpT;//账号类型
+		@JSONField(name = "FEE_RCVE_WY_T1")
+		private String feeRcveWyT1;//手续费收取方式
+		@JSONField(name = "BUS_TP_T13")
+		private String busTpT13;//业务类型
+		@JSONField(name = "CARD_IN_WY_T")
+		private String cardInWyT;//卡输入方式
+		@JSONField(name = "PWD_T")
+		private String pwdT;//密码
+		@JSONField(name = "OPN_ACCT_BNK_NO_T7")
+		private String opnAcctBnkNoT7;//开户行行号
 		@JSONField(name = "ID_TP_T2")
 		private String idTpT2;//证件类型
-		@JSONField(name = "AGENT_CRTF_T")
-		private String agentCrtfT;//代理证件
+		@JSONField(name = "AGENT_ID_TP_T3")
+		private String agentIdTpT3;//代理人证件类型
 		@JSONField(name = "FST_TRK_INFO_T1")
 		private String fstTrkInfoT1;//一磁道信息
 		@JSONField(name = "SCD_TRK_INFO_T2")
@@ -114,11 +116,11 @@ public class REQ_30061800301 extends REQ_BASE {
 		public void setCcyT(String ccyT){
 			this.ccyT = ccyT;
 		}
-		public String  getNaT1(){
-			return naT1;
+		public String  getNmT(){
+			return nmT;
 		}
-		public void setNaT1(String naT1){
-			this.naT1 = naT1;
+		public void setNmT(String nmT){
+			this.nmT = nmT;
 		}
 		public String  getCardNoT3(){
 			return cardNoT3;
@@ -126,23 +128,23 @@ public class REQ_30061800301 extends REQ_BASE {
 		public void setCardNoT3(String cardNoT3){
 			this.cardNoT3 = cardNoT3;
 		}
-		public String  getDpsAmtT(){
-			return dpsAmtT;
+		public String  getWthrAmtT(){
+			return wthrAmtT;
 		}
-		public void setDpsAmtT(String dpsAmtT){
-			this.dpsAmtT = dpsAmtT;
+		public void setWthrAmtT(String wthrAmtT){
+			this.wthrAmtT = wthrAmtT;
 		}
-		public String  getFeeT3(){
-			return feeT3;
+		public String  getFeeAmtT3(){
+			return feeAmtT3;
 		}
-		public void setFeeT3(String feeT3){
-			this.feeT3 = feeT3;
+		public void setFeeAmtT3(String feeAmtT3){
+			this.feeAmtT3 = feeAmtT3;
 		}
-		public String  getAcctBalT3(){
-			return acctBalT3;
+		public String  getBalT(){
+			return balT;
 		}
-		public void setAcctBalT3(String acctBalT3){
-			this.acctBalT3 = acctBalT3;
+		public void setBalT(String balT){
+			this.balT = balT;
 		}
 		public String  getHndlPymntFeeT5(){
 			return hndlPymntFeeT5;
@@ -156,41 +158,47 @@ public class REQ_30061800301 extends REQ_BASE {
 		public void setHldrGlblIdT(String hldrGlblIdT){
 			this.hldrGlblIdT = hldrGlblIdT;
 		}
-		public String  getAgentCrtfNoT(){
-			return agentCrtfNoT;
+		public String  getCmsnHldrGlblIdT(){
+			return cmsnHldrGlblIdT;
 		}
-		public void setAgentCrtfNoT(String agentCrtfNoT){
-			this.agentCrtfNoT = agentCrtfNoT;
+		public void setCmsnHldrGlblIdT(String cmsnHldrGlblIdT){
+			this.cmsnHldrGlblIdT = cmsnHldrGlblIdT;
 		}
-		public String  getRcveWyT(){
-			return rcveWyT;
+		public String  getAcctNoTpT(){
+			return acctNoTpT;
 		}
-		public void setRcveWyT(String rcveWyT){
-			this.rcveWyT = rcveWyT;
+		public void setAcctNoTpT(String acctNoTpT){
+			this.acctNoTpT = acctNoTpT;
 		}
-		public String  getAcctTpT(){
-			return acctTpT;
+		public String  getFeeRcveWyT1(){
+			return feeRcveWyT1;
 		}
-		public void setAcctTpT(String acctTpT){
-			this.acctTpT = acctTpT;
+		public void setFeeRcveWyT1(String feeRcveWyT1){
+			this.feeRcveWyT1 = feeRcveWyT1;
 		}
-		public String  getBusiMdT1(){
-			return busiMdT1;
+		public String  getBusTpT13(){
+			return busTpT13;
 		}
-		public void setBusiMdT1(String busiMdT1){
-			this.busiMdT1 = busiMdT1;
+		public void setBusTpT13(String busTpT13){
+			this.busTpT13 = busTpT13;
 		}
-		public String  getRdCardWyT(){
-			return rdCardWyT;
+		public String  getCardInWyT(){
+			return cardInWyT;
 		}
-		public void setRdCardWyT(String rdCardWyT){
-			this.rdCardWyT = rdCardWyT;
+		public void setCardInWyT(String cardInWyT){
+			this.cardInWyT = cardInWyT;
 		}
-		public String  getOpnAcctBnkNoT8(){
-			return opnAcctBnkNoT8;
+		public String  getPwdT(){
+			return pwdT;
 		}
-		public void setOpnAcctBnkNoT8(String opnAcctBnkNoT8){
-			this.opnAcctBnkNoT8 = opnAcctBnkNoT8;
+		public void setPwdT(String pwdT){
+			this.pwdT = pwdT;
+		}
+		public String  getOpnAcctBnkNoT7(){
+			return opnAcctBnkNoT7;
+		}
+		public void setOpnAcctBnkNoT7(String opnAcctBnkNoT7){
+			this.opnAcctBnkNoT7 = opnAcctBnkNoT7;
 		}
 		public String  getIdTpT2(){
 			return idTpT2;
@@ -198,11 +206,11 @@ public class REQ_30061800301 extends REQ_BASE {
 		public void setIdTpT2(String idTpT2){
 			this.idTpT2 = idTpT2;
 		}
-		public String  getAgentCrtfT(){
-			return agentCrtfT;
+		public String  getAgentIdTpT3(){
+			return agentIdTpT3;
 		}
-		public void setAgentCrtfT(String agentCrtfT){
-			this.agentCrtfT = agentCrtfT;
+		public void setAgentIdTpT3(String agentIdTpT3){
+			this.agentIdTpT3 = agentIdTpT3;
 		}
 		public String  getFstTrkInfoT1(){
 			return fstTrkInfoT1;

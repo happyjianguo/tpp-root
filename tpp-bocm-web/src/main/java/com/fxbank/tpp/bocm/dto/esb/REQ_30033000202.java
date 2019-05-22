@@ -9,12 +9,9 @@
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fxbank.cip.base.dto.REP_APP_HEAD;
-import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 import com.fxbank.cip.base.dto.REQ_APP_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800101.REQ_BODY;
 
 /** 
 * @ClassName: REQ_30033000202 

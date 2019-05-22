@@ -1,7 +1,13 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
+
 import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
@@ -12,11 +18,12 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.esb.REP_30061800201;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800201;
+import com.fxbank.tpp.bocm.dto.esb.REP_30061000801;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061000801;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmSndTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
+import com.fxbank.tpp.bocm.model.REP_10000;
 import com.fxbank.tpp.bocm.model.REP_10001;
 import com.fxbank.tpp.bocm.model.REP_10009;
 import com.fxbank.tpp.bocm.model.REP_20001;
@@ -26,12 +33,12 @@ import com.fxbank.tpp.bocm.model.REQ_20001;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
+
 import redis.clients.jedis.Jedis;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 
 /** 
@@ -41,7 +48,7 @@ import org.springframework.stereotype.Service;
 * @date 2019年4月17日 上午10:38:50 
 *  
 */
-@Service("REQ_30061800201")
+@Service("REQ_30061000801")
 public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	private static Logger logger = LoggerFactory.getLogger(DP_BocmTra.class);
 
@@ -65,230 +72,112 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_30061800201 reqDto = (REQ_30061800201) dto;
-		REQ_30061800201.REQ_BODY reqBody = reqDto.getReqBody();
-		REP_30061800201 rep = new REP_30061800201();
-		//1. 插入流水表
-		initRecord(reqDto);
-		myLog.info(logger, "交行卡付款转账，登记成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
-		//2. 交行记账   
-		//交行记账流水号
+		REQ_30061000801 reqDto = (REQ_30061000801) dto;
+		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
+		REP_30061000801 rep = new REP_30061000801();
+		//1. 交行记账   
+		int bocmDate = 0;
+		int bocmTime = 0;
+		String cardTypeName = "";
+		//原发起方交易流水 交行记账流水号
 		String bocmTraceNo = null;
-		//原发起方交易流水
-		String oLogNo = null;
 		//原交易代码
-		String oTxnCd = null;
+		String oTxnCd = null;		
+		REQ_10001 req10001 = null;
+		REP_10001 rep10001 = null;
+		REQ_20001 req20001 = null;
+		REP_20001 rep20001 = null;
 		// IC_CARD_FLG_T4判断IC卡磁条卡标志   IC卡和磁条卡走不同的交行接口
-		if ("0".equals(reqBody.getIcCardFlgT4())) {
-			myLog.info(logger, "发送磁条卡转账通兑请求至交行");
-			REQ_10001 req10001 = null;
-			REP_10001 rep10001 = null;
+		if("2".equals(reqBody.getIcCardFlgT4())){
+			oTxnCd = "10001";
+			req10001 = new REQ_10001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
+			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001.getHeader()); // 设置报文头中的行号信息
+		}else{
+			oTxnCd = "20001";
+			req20001 = new REQ_20001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
+			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001.getHeader()); // 设置报文头中的行号信息
+		}	
+		
 			try {
-				req10001 = new REQ_10001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
-				super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001.getHeader()); // 设置报文头中的行号信息
-				oLogNo = req10001.getHeader().getsLogNo();
-				oTxnCd = "10001";
-				rep10001 = magCardCharge(req10001,reqDto);
-				bocmTraceNo = rep10001.getHeader().getrLogNo();
-				//3.更新流水表交行记账状态
-				updateBocmRecord(reqDto,bocmTraceNo,"1");
-				myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
-			    rep.getRepBody().setBalance3T(rep10001.getActBal().toString());
-			    rep.getRepBody().setFeeT3(rep10001.getFee().toString());
+				if (oTxnCd.equals("10001")) {						
+					myLog.info(logger, "交行卡付款转账,发送"+cardTypeName+"付款转账请求至交行");		
+					cardTypeName = "磁条卡";
+					rep10001 = magCardCharge(reqDto,req10001);
+					bocmTraceNo = rep10001.getHeader().getrLogNo();
+					bocmDate = rep10001.getSysDate();
+					bocmTime = rep10001.getSysTime();
+					rep.getRepBody().setBalance3T(rep10001.getActBal().toString());
+				    rep.getRepBody().setFeeT3(rep10001.getFee().toString());				 
+				}else{					
+					myLog.info(logger, "交行卡付款转账,发送"+cardTypeName+"付款转账请求至交行");
+					cardTypeName = "IC卡";
+					rep20001 = iCCardCharge(reqDto,req20001);
+					bocmTraceNo = rep20001.getHeader().getrLogNo();				
+				    rep.getRepBody().setBalance3T(rep20001.getActBal().toString());
+				    rep.getRepBody().setFeeT3(rep20001.getFee().toString());
+				}				
+				//插入流水表
+				 //交行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败,6-冲正超时
+				initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "1");
+				myLog.info(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 			} catch (SysTradeExecuteException e) { // 记账交易参考一下方式处理，查询交易不用
 				// 如果不是账务类请求，可以不用分类处理应答码，统一当成失败处理即可
 				// 如果交易不关心返回的异常类型，直接可以不捕获，直接省略catch，抛出异常即可
 				if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000006) // 生成请求失败
 						|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000007)
 						|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000008)) {
-					//交行核心记账报错，本行核心冲正
-					updateBocmRecord(reqDto, "", "2");
-					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账失败，渠道日期" + reqDto.getSysDate() + 
+					myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002);
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());
 					throw e2;
-				}else if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000009)) { // 接收交行返回结果超时
-					updateBocmRecord(reqDto, "", "3");
-					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账返回结果超时，渠道日期" + reqDto.getSysDate() + 
+				}else if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000009)||e.getRspCode().equals("JH6203")) { // 接收交行返回结果超时
+					myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账返回结果超时，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e);
 					try {
-						bocmReversal(reqDto,oLogNo,oTxnCd);
-					    updateBocmRecord(reqDto, "", "5");
-					    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
+						myLog.error(logger, "发送"+cardTypeName+"通兑抹账请求至交行");
+						bocmReversal(reqDto,bocmTraceNo,oTxnCd);
+						initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "4");
+					    myLog.info(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno());
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账成功)");
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
 						throw e2;
 					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
+						myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						updateBocmRecord(reqDto, "", "6");
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账失败)");
-						throw e2;
-					}
-				}else if (e.getRspCode().equals("JH6203")) { // 交行返回结果成功，但结果是超时
-				       // 确认是否有冲正操作
-					updateBocmRecord(reqDto, "", "3");
-					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账返回结果成功，但结果超时，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					try {
-						bocmReversal(reqDto,oLogNo,oTxnCd);
-					    updateBocmRecord(reqDto, "", "5");
-					    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno());
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账成功)");
-						throw e2;
-					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						updateBocmRecord(reqDto, "", "6");
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账失败)");
+						initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5");
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
 						throw e2;
 					}
 				} else { // 目标系统应答失败
 							// 确认是否有冲正操作
-					updateBocmRecord(reqDto, "", "3");
-					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账应答失败，渠道日期" + reqDto.getSysDate() + 
+					//交行核心记账报错，交易失败
+					myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e);
-					try {
-						bocmReversal(reqDto,oLogNo,oTxnCd);
-					    updateBocmRecord(reqDto, "", "5");
-					    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno());
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账成功)");
-						throw e2;
-					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						updateBocmRecord(reqDto, "", "6");
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账失败)");
-						throw e2;
-					}
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());
+					throw e2;
 				}
 			} catch (Exception e) { // 其它未知错误，可以当成超时处理
 				// 确认是否有冲正操作
-				updateBocmRecord(reqDto, "", "3");
-				myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账其它未知错误，渠道日期" + reqDto.getSysDate() + 
+				updateBocmRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "3");
+				myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账其它未知错误，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);
 				try {
-					bocmReversal(reqDto,oLogNo,oTxnCd);
-				    updateBocmRecord(reqDto, "", "5");
-				    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
+					myLog.error(logger, "发送"+cardTypeName+"通兑抹账请求至交行");
+					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
+					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "4");
+				    myLog.info(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno());
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"其它未知错误(交行抹账成功)");
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
 					throw e2;
 				}catch(SysTradeExecuteException e1) {
-					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
+					myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
-					updateBocmRecord(reqDto, "", "6");
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"其它未知错误(交行抹账失败)");
+					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5");
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
 					throw e2;
 				}
 			}
-		} else {
-			myLog.info(logger, "发送IC卡转账通兑请求至交行");
-			REQ_20001 req20001 = null;
-			try {
-				req20001 = new REQ_20001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
-				super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001.getHeader()); // 设置报文头中的行号信息
-                oLogNo = req20001.getHeader().getsLogNo();
-                oTxnCd = "20001";
-				REP_20001 rep20001 = iCCardCharge(req20001,reqDto);
-				bocmTraceNo = rep20001.getHeader().getrLogNo();
-				//3.更新流水表交行记账状态
-				updateBocmRecord(reqDto,bocmTraceNo,"1");
-				myLog.info(logger, "交行卡付款转账，交行IC卡通兑记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
-			    rep.getRepBody().setBalance3T(rep20001.getActBal().toString());
-			    rep.getRepBody().setFeeT3(rep20001.getFee().toString());
-			} catch (SysTradeExecuteException e) { // 记账交易参考一下方式处理，查询交易不用
-				// 如果不是账务类请求，可以不用分类处理应答码，统一当成失败处理即可
-				// 如果交易不关心返回的异常类型，直接可以不捕获，直接省略catch，抛出异常即可
-				if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000006) // 生成请求失败
-						|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000007)
-						|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000008)) {
-					//交行核心记账报错，本行核心冲正
-					updateBocmRecord(reqDto, "", "2");
-					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账失败，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002);
-					throw e2;
-				} else if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000009)) { // 接收交行返回结果超时
-					// 确认是否有冲正操作
-					updateBocmRecord(reqDto, "", "3");
-					myLog.error(logger, "交行卡付款转账，交行IC卡通兑记账返回结果超时，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					try {
-						bocmReversal(reqDto,req20001.getHeader().getsLogNo(),"20001");
-					    updateBocmRecord(reqDto, "", "5");
-					    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno());
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账成功)");
-						throw e2;
-					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						updateBocmRecord(reqDto, "", "6");
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账失败)");
-						throw e2;
-					}
-				} else if (e.getRspCode().equals("JH6203")) { // 交行返回结果成功，但结果是超时
-					// 确认是否有冲正操作
-					updateBocmRecord(reqDto, "", "3");
-					myLog.error(logger, "交行卡付款转账，交行IC卡通兑记账返回结果成功，但结果超时，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					try {
-						bocmReversal(reqDto,req20001.getHeader().getsLogNo(),"20001");
-					    updateBocmRecord(reqDto, "", "5");
-					    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno());
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账成功)");
-						throw e2;
-					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						updateBocmRecord(reqDto, "", "6");
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账失败)");
-						throw e2;
-					}
-				} else { // 目标系统应答失败
-							// 确认是否有冲正操作
-					updateBocmRecord(reqDto, "", "3");
-					myLog.error(logger, "交行卡付款转账，交行IC卡通兑记账应答失败，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					try {
-						bocmReversal(reqDto,req20001.getHeader().getsLogNo(),"20001");
-					    updateBocmRecord(reqDto, "", "5");
-					    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno());
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账成功)");
-						throw e2;
-					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						updateBocmRecord(reqDto, "", "6");
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账失败)");
-						throw e2;
-					}
-				}
-			} catch (Exception e) { // 其它未知错误，可以当成超时处理
-				updateBocmRecord(reqDto, "", "3");
-				myLog.error(logger, "交行卡付款转账，交行IC卡通兑记账其它未知错误，渠道日期" + reqDto.getSysDate() + 
-						"渠道流水号" + reqDto.getSysTraceno(), e);
-				try {
-					bocmReversal(reqDto,req20001.getHeader().getsLogNo(),"20001");
-				    updateBocmRecord(reqDto, "", "5");
-				    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno());
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"其它未知错误(交行抹账成功)");
-					throw e2;
-				}catch(SysTradeExecuteException e1) {
-					myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e1);
-					updateBocmRecord(reqDto, "", "6");
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"其它未知错误(交行抹账失败)");
-					throw e2;
-				}
-			}
-		}		
+		
 		//4. 核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
@@ -307,23 +196,59 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
-			updateHostRecord(reqDto, "", "", "2", e.getRspCode(), e.getRspMsg());
-			myLog.error(logger, "交行卡付款转账，本行核心记账失败，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
-			try {
-				bocmReversal(reqDto,oLogNo,oTxnCd);
-			    updateBocmRecord(reqDto, "", "5");
-			    myLog.info(logger, "交行卡付款转账，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-						"渠道流水号" + reqDto.getSysTraceno());
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账成功)");
-				throw e2;
-			}catch(SysTradeExecuteException e1) {
-				myLog.error(logger, "交行卡付款转账，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-						"渠道流水号" + reqDto.getSysTraceno(), e1);
-				updateBocmRecord(reqDto, "", "6");
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,e.getRspMsg()+"(交行抹账失败)");
-				throw e2;
-			}
-			
+			if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000004)) { // ESB超时
+				//如果超时，请求重发
+				try {
+					esbRep_30011000104 = hostCharge(reqDto);
+					hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
+					hostTraceno = esbRep_30011000104.getRepBody().getReference();
+					retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
+					retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
+				} catch (SysTradeExecuteException e1) {
+					myLog.error(logger, "交行卡付款转账，本行记账超时，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e);
+					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易成功:"+e.getRspMsg()+",核心记账超时");
+					throw e2;
+				}		
+			}else{
+				//如果失败，交行冲正
+				myLog.error(logger, "交行卡付款转账，核心记账失败，发送"+cardTypeName+"通兑抹账请求至交行，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno(), e);
+				try {
+					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
+					updateBocmRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "4");
+				    myLog.info(logger, "4.交行卡付款转账，交行"+cardTypeName+"通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno());
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败"+e.getRspMsg());
+					throw e2;
+				}catch(SysTradeExecuteException e1) {
+					if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000006) // 生成请求失败
+							|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000007)
+							|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000008)) {						
+						myLog.error(logger, "4.交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
+								"渠道流水号" + reqDto.getSysTraceno(), e1);
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易成功，本行核心记账失败");
+						throw e2;
+					}else if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000009)||e.getRspCode().equals("JH6203")) { // 接收交行返回结果超时
+						updateBocmRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "6");
+						myLog.error(logger, "4.交行卡付款转账，交行"+cardTypeName+"通兑记账抹账超时，渠道日期" + reqDto.getSysDate() + 
+								"渠道流水号" + reqDto.getSysTraceno(), e1);
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，交行卡冲正超时，请柜面确认交行卡记账状态");
+						throw e2;
+					}else{
+						myLog.error(logger, "4.交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
+								"渠道流水号" + reqDto.getSysTraceno(), e1);
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易成功，本行核心记账失败,"+e.getRspMsg());
+						throw e2;
+					}
+				}catch (Exception e3) { // 其它未知错误，可以当成超时处理
+					updateBocmRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "6");
+					myLog.error(logger, "4.交行卡付款转账，交行"+cardTypeName+"通兑记账其他未知错误，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e3);
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，交行卡冲正未知错误，请柜面确认交行卡记账状态");
+					throw e2;
+				}
+			}		
 		}
 		myLog.info(logger, "交行卡付款转账，本行核心记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 		//5. 核心记账成功，更新流水表核心记账状态
@@ -341,10 +266,11 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @return void    返回类型 
 	* @throws 
 	*/
-	private void initRecord(REQ_30061800201 reqDto) throws SysTradeExecuteException {
+	public void initRecord(DataTransObject dto, int bocmDate, int bocmTime, String bocmTraceNo,
+			String bocmState) throws SysTradeExecuteException{
 		MyLog myLog = logPool.get();
-
-		REQ_30061800201.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_30061000801 reqDto = (REQ_30061000801)dto;
+		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		REQ_SYS_HEAD reqSysHead = reqDto.getReqSysHead();
 
 		BocmSndTraceInitModel record = new BocmSndTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
@@ -380,44 +306,63 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @return ESB_REP_30011000103    返回类型 
 	* @throws 
 	*/
-	private ESB_REP_30011000104 hostCharge(REQ_30061800201 reqDto) throws SysTradeExecuteException {
+	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-
-		REQ_30061800201.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_30061000801 reqDto = (REQ_30061000801)dto;
+		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		// 交易机构
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
-		try (Jedis jedis = myJedis.connect()) {
-			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-			txTel = jedis.get(COMMON_PREFIX + "txtel");
-		}
-
+//		try (Jedis jedis = myJedis.connect()) {
+//			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
+//			txTel = jedis.get(COMMON_PREFIX + "txtel");
+//		}
+		//交易机构号，交易柜员号
+		txTel = reqDto.getReqSysHead().getUserId();
+		txBrno = reqDto.getReqSysHead().getBranchId();
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000104.getReqSysHead(), reqDto)
 				.setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_30011000104.setReqSysHead(reqSysHead);
 
+		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
+		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
+		reqSysHead.setSourceType(reqDto.getReqSysHead().getSourceType());
+		
 		ESB_REQ_30011000104.REQ_BODY reqBody_30011000104 = esbReq_30011000104.getReqBody();
-		reqBody_30011000104.setBaseAcctNo(reqBody.getRcptPrAcctNoT2());
-		reqBody_30011000104.setAcctName(reqBody.getRcptPrNmT7());
-		reqBody_30011000104.setTranType("JH10");
+		//账号
+		reqBody_30011000104.setBaseAcctNo(reqBody.getPyrAcctNoT2());
+		reqBody_30011000104.setAcctName(reqBody.getPyrNaT());
+		reqBody_30011000104.setTranType("JH11");
 		reqBody_30011000104.setTranCcy("CNY");
 		reqBody_30011000104.setTranAmt(reqBody.getTrsrAmtT3());
 		reqBody_30011000104.setWithdrawalType("P");
 		reqBody_30011000104.setPassword(reqBody.getPwdT());
-		reqBody_30011000104.setOthBaseAcctNo(reqBody.getPyrAcctNoT2());
-		reqBody_30011000104.setOthBaseAcctName(reqBody.getPyrNaT());
-		reqBody_30011000104.setChannelType("");
-		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
-		reqBody_30011000104.setBankCode(reqBody.getPyrOpnBnkNoT2());
-		reqBody_30011000104.setOthBankCode(reqBody.getPyrOpnBnkNoT2());
-		reqBody_30011000104.setSettlementDate("");
+		reqBody_30011000104.setOthBaseAcctNo(reqBody.getRcptPrAcctNoT2());
+		reqBody_30011000104.setOthBaseAcctName(reqBody.getRcptPrNmT7());
+		reqBody_30011000104.setChannelType("BU");
+
+		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
+		//发起行行号
+		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
+		//我方银行账号
+		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
+		//对方银行账号
+		reqBody_30011000104.setOthBankCode(reqBody.getPyrOpnBnkNoT2());
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
+		
+		if(1==1){
+			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
+//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
+//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
+			throw e;
+		}
+		
 		return esbRep_30011000104;
 	}
 	
@@ -435,7 +380,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @return SndTraceUpdModel    返回类型 
 	* @throws 
 	*/
-	private BocmSndTraceUpdModel updateHostRecord(REQ_30061800201 reqDto, String hostDate, String hostTraceno,
+	private BocmSndTraceUpdModel updateHostRecord(REQ_30061000801 reqDto, String hostDate, String hostTraceno,
 			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
@@ -462,7 +407,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @return BocmSndTraceUpdModel    返回类型 
 	* @throws 
 	*/
-	private BocmSndTraceUpdModel updateBocmRecord(REQ_30061800201 reqDto,
+	private BocmSndTraceUpdModel updateBocmRecord(REQ_30061000801 reqDto,
 			String bocmTraceno, String bocmState) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
@@ -481,8 +426,9 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @return REP_10001    返回类型 
 	* @throws 
 	*/
-	private REP_10001 magCardCharge(REQ_10001 req10001,REQ_30061800201 reqDto) throws SysTradeExecuteException {
-		REQ_30061800201.REQ_BODY reqBody = reqDto.getReqBody();
+	public REP_10001 magCardCharge(DataTransObject dto, REQ_10001 req10001) throws SysTradeExecuteException { 
+		REQ_30061000801 reqDto = (REQ_30061000801)dto;
+		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		req10001.setTxnAmt(new BigDecimal(reqBody.getTrsrAmtT3()));
 		req10001.setOprFlg(reqBody.getCardInWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
@@ -504,8 +450,14 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req10001.setThdMag(reqBody.getThrTrkInfoT1());
 		req10001.setRemark(reqBody.getNoteT2());
         
-		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
-				REP_10001.class);
+//		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
+//				REP_10001.class);
+		
+		REP_10001 rep_10001 = new REP_10001();
+		rep_10001.setActBal(new BigDecimal("1000"));
+		rep_10001.setFee(new BigDecimal("0.00"));
+		rep_10001.setoTxnAmt(new BigDecimal("100"));
+		
 		return rep_10001;
 	}
 	/** 
@@ -517,8 +469,9 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @return REP_20001    返回类型 
 	* @throws 
 	*/
-	private REP_20001 iCCardCharge(REQ_20001 req20001,REQ_30061800201 reqDto) throws SysTradeExecuteException {
-		REQ_30061800201.REQ_BODY reqBody = reqDto.getReqBody();
+	public REP_20001 iCCardCharge(DataTransObject dto,REQ_20001 req20001) throws SysTradeExecuteException {
+		REQ_30061000801 reqDto = (REQ_30061000801)dto;
+		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		req20001.setTxnAmt(new BigDecimal(reqBody.getTrsrAmtT3()));
 		req20001.setPin(reqBody.getPwdT());
 		req20001.setOprFlg(reqBody.getCardInWyT());
@@ -560,10 +513,10 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @return REP_10009    返回类型 
 	* @throws 
 	*/
-	private REP_10009 bocmReversal(REQ_30061800201 reqDto,String oLogNo,String oTxnCd)
+	private REP_10009 bocmReversal(REQ_30061000801 reqDto,String oLogNo,String oTxnCd)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_30061800201.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		REQ_10009 req10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10009.getHeader()); // 设置报文头中的行号信息
 		req10009.setOlogNo(oLogNo);
@@ -589,6 +542,92 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		REP_10009 rep_10009 = forwardToBocmService.sendToBocm(req10009, 
 				REP_10009.class);
 		return rep_10009;
+	}
+	
+	/** 
+	* @Title: hostReversal 
+	* @Description: 本行核心冲正
+	* @param @param reqDto
+	* @param @param hostSeqno
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return ESB_REP_30014000101    返回类型 
+	* @throws 
+	*/
+	public ESB_REP_30014000101 hostReversal(DataTransObject dto,String hostSeqno)
+			throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
+		REQ_30061000801 reqDto = (REQ_30061000801)dto;
+		// 交易机构
+		String txBrno = null;
+		// 柜员号
+		String txTel = null;
+//		try (Jedis jedis = myJedis.connect()) {
+//			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+//			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
+//		}
+		
+		txTel = reqDto.getReqSysHead().getUserId();
+		txBrno = reqDto.getReqSysHead().getBranchId();
+
+		ESB_REQ_30014000101 esbReq_30014000101 = new ESB_REQ_30014000101(myLog, reqDto.getSysDate(),
+				reqDto.getSysTime(), reqDto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto)
+				.setBranchId(txBrno).setUserId(txTel).build();
+		
+		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
+		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
+		reqSysHead.setSourceType(reqDto.getReqSysHead().getSourceType());
+		
+		esbReq_30014000101.setReqSysHead(reqSysHead);
+
+		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
+		esbReq_30014000101.setReqSysHead(reqSysHead);	
+
+		reqBody_30014000101.setChannelSeqNo(esbReq_30014000101.getReqSysHead().getSeqNo());
+		reqBody_30014000101.setReversalReason("");
+		reqBody_30014000101.setEventType("");
+
+		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,
+				ESB_REP_30014000101.class);
+		return esbRep_30014000101;
+	}
+	
+	/** 
+	* @Title: updateHostRecord 
+	* @Description: 更新核心记账状态 
+	*/
+	public BocmSndTraceUpdModel updateHostRecord(DataTransObject dto, String hostDate, String hostTraceno,
+			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
+		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, dto.getSysDate(), dto.getSysTime(),
+				dto.getSysTraceno());
+		if(!"".equals(hostDate)) {
+		record.setHostDate(Integer.parseInt(hostDate));
+		}
+		record.setHostState(hostState);
+		record.setHostTraceno(hostTraceno);
+		record.setRetCode(retCode);
+		record.setRetMsg(retMsg);
+		bocmSndTraceService.sndTraceUpd(record);
+		return record;
+	}
+	/** 
+	* @Title: updateBocmRecord 
+	* @Description: 更新交行记账状态 
+	*/
+	public BocmSndTraceUpdModel updateBocmRecord(DataTransObject dto,
+			int bocmDate,int bocmTime,String bocmTraceno, 
+			String bocmState) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
+		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, dto.getSysDate(), dto.getSysTime(),
+				dto.getSysTraceno());
+		record.setBocmState(bocmState);
+		record.setBocmDate(bocmDate);
+		record.setBocmTime(bocmTime);
+		record.setBocmTraceno(bocmTraceno);
+		bocmSndTraceService.sndTraceUpd(record);
+		return record;
 	}
 }
 

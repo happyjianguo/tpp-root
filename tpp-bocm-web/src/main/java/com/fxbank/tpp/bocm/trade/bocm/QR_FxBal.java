@@ -60,7 +60,7 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_10101 req = (REQ_10101) dto;
 		//1.插入流水表
-		initRecord(req);
+		//initRecord(req);
 		//2.调用ESB余额查询
 		ESB_REP_30013000201 esbRep_30013000201 = null;
 		//核心记账日期
@@ -97,8 +97,8 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
 		**/
 		rep.setActNo("623166000009897");
-		rep.setActNam("zzz");
-		rep.setActBal(new BigDecimal(34.45));
+		rep.setActNam("ZZZ");
+		rep.setActBal(new Double(34.45));
 		return rep;
 	}
 	
@@ -107,11 +107,20 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		record.setSourceType(reqDto.getSourceType());
-		record.setTxBranch(reqDto.getHeader().getsBnkNo());
+		record.setTxBranch(reqDto.getSbnkNo());
 		record.setHostState("0");
-		record.setBocmState("0");
 		record.setPrint("0");
-		record.setCheckFlag("1");
+		record.setCheckFlag("0");
+		
+		record.setBocmState("0");
+		//交行流水号
+		record.setBocmTraceNo(reqDto.getSlogNo());		
+		record.setBocmDate(reqDto.getTtxnDat());
+		record.setBocmTime(reqDto.getTtxnTim());
+		//发起行行号
+		record.setBocmBranch(reqDto.getSbnkNo());
+		//交易码
+		record.setTxCode(reqDto.getTtxnCd());
 		bocmRcvTraceService.rcvTraceInit(record);
 	}
 	private BocmRcvTraceUpdModel updateHostRecord(REQ_10101 reqDto, String hostDate, String hostTraceno,

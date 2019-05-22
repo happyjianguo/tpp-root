@@ -6,8 +6,8 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.esb.REP_30063800301;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30063800301;
+import com.fxbank.tpp.bocm.dto.esb.REP_30063001201;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30063001201;
 import com.fxbank.tpp.bocm.model.REP_10101;
 import com.fxbank.tpp.bocm.model.REQ_10101;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
@@ -32,8 +32,8 @@ public class TemplateTrade implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_30063800301 req = (REQ_30063800301) dto;
-		REQ_30063800301.REQ_BODY reqBody = req.getReqBody();
+		REQ_30063001201 req = (REQ_30063001201) dto;
+		REQ_30063001201.REQ_BODY reqBody = req.getReqBody();
 
 		REQ_10101 req10101 = new REQ_10101(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		req10101.setActTyp(reqBody.getAcctType());
@@ -64,7 +64,7 @@ public class TemplateTrade implements TradeExecutionStrategy {
 			throw e;
 		}
 
-		REP_30063800301 rep = new REP_30063800301();
+		REP_30063001201 rep = new REP_30063001201();
 		rep.getReqBody().setAcctName(rep10101.getActNam());
 		rep.getReqBody().setBal(rep10101.getActBal().doubleValue());
 		return rep;
