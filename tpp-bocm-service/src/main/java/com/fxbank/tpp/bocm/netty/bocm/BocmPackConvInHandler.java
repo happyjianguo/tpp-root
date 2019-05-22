@@ -1,20 +1,15 @@
 package com.fxbank.tpp.bocm.netty.bocm;
 
-import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.netty.NettySyncClient;
-import com.fxbank.cip.base.netty.NettySyncSlot;
-import com.fxbank.tpp.bocm.model.REP_BASE;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.netty.NettySyncClient;
+import com.fxbank.cip.base.netty.NettySyncSlot;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
+import com.fxbank.tpp.bocm.model.REP_BASE;
+
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.Attribute;
-import io.netty.util.AttributeKey;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.Attribute;
-import io.netty.util.AttributeKey;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
@@ -47,8 +42,8 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 			// TODO 校验MAC
 			
 			String fixPack = pack.substring(0, pack.length() - 16);
-			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();
-			repBase.chanFixPack(fixPack);
+			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();			
+			repBase = (REP_BASE)new FixedUtil(fixPack).toBean(repBase.getClass());		
 			ctx.fireChannelRead(repBase);
 		} finally {
 			ReferenceCountUtil.release(msg);

@@ -91,11 +91,11 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		if("2".equals(reqBody.getIcCardFlgT4())){
 			oTxnCd = "10001";
 			req10001 = new REQ_10001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
-			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001.getHeader()); // 设置报文头中的行号信息
+			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001); // 设置报文头中的行号信息
 		}else{
 			oTxnCd = "20001";
 			req20001 = new REQ_20001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
-			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001.getHeader()); // 设置报文头中的行号信息
+			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001); // 设置报文头中的行号信息
 		}	
 		
 			try {
@@ -103,7 +103,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					myLog.info(logger, "交行卡付款转账,发送"+cardTypeName+"付款转账请求至交行");		
 					cardTypeName = "磁条卡";
 					rep10001 = magCardCharge(reqDto,req10001);
-					bocmTraceNo = rep10001.getHeader().getrLogNo();
+					bocmTraceNo = rep10001.getRlogNo();
 					bocmDate = rep10001.getSysDate();
 					bocmTime = rep10001.getSysTime();
 					rep.getRepBody().setBalance3T(rep10001.getActBal().toString());
@@ -112,7 +112,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					myLog.info(logger, "交行卡付款转账,发送"+cardTypeName+"付款转账请求至交行");
 					cardTypeName = "IC卡";
 					rep20001 = iCCardCharge(reqDto,req20001);
-					bocmTraceNo = rep20001.getHeader().getrLogNo();				
+					bocmTraceNo = rep20001.getRlogNo();				
 				    rep.getRepBody().setBalance3T(rep20001.getActBal().toString());
 				    rep.getRepBody().setFeeT3(rep20001.getFee().toString());
 				}				
@@ -429,18 +429,18 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	public REP_10001 magCardCharge(DataTransObject dto, REQ_10001 req10001) throws SysTradeExecuteException { 
 		REQ_30061000801 reqDto = (REQ_30061000801)dto;
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
-		req10001.setTxnAmt(new BigDecimal(reqBody.getTrsrAmtT3()));
+		req10001.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		req10001.setOprFlg(reqBody.getCardInWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
 		req10001.setTxnMod("1");
 		req10001.setPayBnk(reqBody.getPyrOpnBnkNoT2());
 		//付款人账户类型,0 银行账号1 贷记卡2 借记卡3其他
-		req10001.setpActTp(reqBody.getPyrAcctTpT());
-		req10001.setpActNo(reqBody.getPyrAcctNoT2());
+		req10001.setPactTp(reqBody.getPyrAcctTpT());
+		req10001.setPactNo(reqBody.getPyrAcctNoT2());
 		req10001.setPayNam(reqBody.getPyrNaT());
 		req10001.setRecBnk(reqBody.getPyeeOpnBnkNoT6());
-		req10001.setrActTp(reqBody.getPyAcctTpT());
-		req10001.setrActNo(reqBody.getRcptPrAcctNoT2());
+		req10001.setRactTp(reqBody.getPyAcctTpT());
+		req10001.setRactNo(reqBody.getRcptPrAcctNoT2());
 		req10001.setRecNam(reqBody.getRcptPrNmT7());
 		req10001.setCuIdTp(reqBody.getIdTpT2());
 		req10001.setCuIdNo(reqBody.getHldrGlblIdT());
@@ -454,9 +454,9 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 //				REP_10001.class);
 		
 		REP_10001 rep_10001 = new REP_10001();
-		rep_10001.setActBal(new BigDecimal("1000"));
-		rep_10001.setFee(new BigDecimal("0.00"));
-		rep_10001.setoTxnAmt(new BigDecimal("100"));
+		rep_10001.setActBal(0d);
+		rep_10001.setFee(0d);
+		rep_10001.setOtxnAmt(0d);
 		
 		return rep_10001;
 	}
@@ -472,19 +472,19 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	public REP_20001 iCCardCharge(DataTransObject dto,REQ_20001 req20001) throws SysTradeExecuteException {
 		REQ_30061000801 reqDto = (REQ_30061000801)dto;
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
-		req20001.setTxnAmt(new BigDecimal(reqBody.getTrsrAmtT3()));
+		req20001.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		req20001.setPin(reqBody.getPwdT());
 		req20001.setOprFlg(reqBody.getCardInWyT());
 		//业务模式，0 现金1 转账（即实时转账）2 普通转账（2小时后）3 隔日转账9 其他
 		req20001.setTxnMod("1");
 		req20001.setPayBnk(reqBody.getPyrOpnBnkNoT2());
 		//付款人账户类型,0 银行账号1 贷记卡2 借记卡3其他
-		req20001.setpActTp(reqBody.getPyrAcctTpT());
-		req20001.setpActNo(reqBody.getPyrAcctNoT2());
+		req20001.setPactTp(reqBody.getPyrAcctTpT());
+		req20001.setPactNo(reqBody.getPyrAcctNoT2());
 		req20001.setPayNam(reqBody.getPyrNaT());
 		req20001.setRecBnk(reqBody.getPyeeOpnBnkNoT6());
-		req20001.setrActTp(reqBody.getPyAcctTpT());
-		req20001.setrActNo(reqBody.getRcptPrAcctNoT2());
+		req20001.setRactTp(reqBody.getPyAcctTpT());
+		req20001.setRactNo(reqBody.getRcptPrAcctNoT2());
 		req20001.setRecNam(reqBody.getRcptPrNmT7());
 		req20001.setCuIdTp(reqBody.getIdTpT2());
 		req20001.setCuIdNo(reqBody.getHldrGlblIdT());
@@ -518,20 +518,20 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		REQ_10009 req10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
-		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10009.getHeader()); // 设置报文头中的行号信息
+		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10009); // 设置报文头中的行号信息
 		req10009.setOlogNo(oLogNo);
 		req10009.setOtxnCd(oTxnCd);
-		req10009.setTxnAmt(new BigDecimal(reqBody.getTrsrAmtT3()));
+		req10009.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		//业务模式，0 现金1 转账（即实时转账）2 普通转账（2小时后）3 隔日转账9 其他
 		req10009.setTxnMod("1");
 		req10009.setPayBnk(reqBody.getPyrOpnBnkNoT2());
 		//付款人账户类型,0 银行账号1 贷记卡2 借记卡3其他
-		req10009.setpActTp(reqBody.getPyrAcctTpT());
-		req10009.setpActNo(reqBody.getPyrAcctNoT2());
+		req10009.setPactTp(reqBody.getPyrAcctTpT());
+		req10009.setPactNo(reqBody.getPyrAcctNoT2());
 		req10009.setPayNam(reqBody.getPyrNaT());
 		req10009.setRecBnk(reqBody.getPyeeOpnBnkNoT6());
-		req10009.setrActTp(reqBody.getPyAcctTpT());
-		req10009.setrActNo(reqBody.getRcptPrAcctNoT2());
+		req10009.setRactTp(reqBody.getPyAcctTpT());
+		req10009.setRactNo(reqBody.getRcptPrAcctNoT2());
 		req10009.setRecNam(reqBody.getRcptPrNmT7());
 		req10009.setCuIdTp(reqBody.getIdTpT2());
 		req10009.setCuIdNo(reqBody.getHldrGlblIdT());

@@ -24,10 +24,9 @@ public class ForwardToBocmService implements IForwardToBocmService {
 	@Override
 	public <T extends REP_BASE> T sendToBocm(REQ_BASE reqBase, Class<T> clazz) throws SysTradeExecuteException {
 		MyLog myLog = reqBase.getMylog();
-		reqBase.getHeader().settTxnDat(reqBase.getSysDate());
-		reqBase.getHeader().settTxnTim(reqBase.getSysTime());
-		reqBase.getHeader()
-				.setsLogNo(String.format("%06d%08d", reqBase.getSysDate() % 1000000, reqBase.getSysTraceno()));
+		reqBase.setTtxnDat(reqBase.getSysDate());
+		reqBase.setTtxnTim(reqBase.getSysTime());
+		reqBase.setSlogNo(String.format("%06d%08d", reqBase.getSysDate() % 1000000, reqBase.getSysTraceno()));
 		T repModel = null;
 		try {
 			repModel = bocmClient.comm(myLog, reqBase, clazz);
@@ -46,13 +45,14 @@ public class ForwardToBocmService implements IForwardToBocmService {
 			myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg(), e);
 			throw e;
 		} else {
-			String rspCode = repBase.getHeader().gettRspCd();
-			String rspMsg = repBase.getHeader().gettRspMsg();
+			String rspCode = repBase.getTrspCd();
+			String rspMsg = repBase.getTrspMsg();
 			//本行模拟交行交易返回状态码判断
 			if(rspCode.equals("FX0000")){
 				return repModel;
 			}
-			if (repBase.getHeader().gettMsgTyp().equals("E") || !rspCode.equals("JH0000")) { // 交行返回失败
+			//结束
+			if (repBase.getTmsgTyp().equals("E") || !rspCode.equals("JH0000")) { // 交行返回失败
 				SysTradeExecuteException e = new SysTradeExecuteException(rspCode, rspMsg);
 				myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg());
 				throw e;

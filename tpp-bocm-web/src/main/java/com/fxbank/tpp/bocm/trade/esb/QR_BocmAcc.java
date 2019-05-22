@@ -63,12 +63,12 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		REQ_30063001301.REQ_BODY reqBody = reqDto.getReqBody();
 
 		REQ_20102 req20102 = new REQ_20102(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
-		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req20102.getHeader());	//设置报文头中的行号信息
+		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req20102);	//设置报文头中的行号信息
 		req20102.setActTyp(reqBody.getAcctTpT());		
 		req20102.setActNo(reqBody.getAcctNoT());
 		req20102.setTxnTyp(reqBody.getTrnsTpT8());
 		req20102.setFeeFlg(reqBody.getRcveWyT());
-		req20102.setTxnAmt(new BigDecimal(reqBody.getTrsrAmtT3()));
+		req20102.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		myLog.info(logger, "发送账号信息 查询请求至交行");
 		REP_20102 rep20102 = forwardToBocmService.sendToBocm(req20102, REP_20102.class);
 

@@ -127,18 +127,18 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			if("2".equals(reqBody.getIcCardFlgT4())){
 				oTxnCd = "10000";
 				req10000 = new REQ_10000(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
-				super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10000.getHeader()); // 设置报文头中的行号信息
+				super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10000); // 设置报文头中的行号信息
 			}else{
 				oTxnCd = "20000";
 				req20000 = new REQ_20000(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
-				super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20000.getHeader()); // 设置报文头中的行号信息
+				super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20000); // 设置报文头中的行号信息
 			}						
 			try {
 				if (oTxnCd.equals("10000")) {						
 					myLog.info(logger, "发送磁条卡现金通存请求至交行");		
 					cardTypeName = "磁条卡";
 					rep10000 = magCardCharge(reqDto,req10000);
-					bocmTraceNo = rep10000.getHeader().getrLogNo();
+					bocmTraceNo = rep10000.getRlogNo();
 					bocmDate = rep10000.getSysDate();
 					bocmTime = rep10000.getSysTime();
 					rep.getRepBody().setOpnAcctBnkFeeT(rep10000.getFee().toString());
@@ -147,7 +147,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 					myLog.info(logger, "发送IC卡现金通存请求至交行");
 					cardTypeName = "IC卡";
 					rep20000 = iCCardCharge(reqDto,req20000);
-					bocmTraceNo = rep20000.getHeader().getrLogNo();
+					bocmTraceNo = rep20000.getRlogNo();
 					bocmDate = rep20000.getSysDate();
 					bocmTime = rep20000.getSysTime();
 					rep.getRepBody().setOpnAcctBnkFeeT(rep20000.getFee().toString());
@@ -284,7 +284,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		if(oTxnCd.equals("10000")){
 			REP_10000 rep10000 = magCardCharge(reqDto,req10000);
-			String reBocmTraceNo = rep10000.getHeader().getrLogNo();
+			String reBocmTraceNo = rep10000.getRlogNo();
 		    updateBocmRecord(reqDto, rep10000.getSysDate(),rep10000.getSysTime(),reBocmTraceNo, "1");
 		    myLog.info(logger, "6.交行卡存现金，交行"+cardTypeName+"通存记账重发成功，渠道日期" + reqDto.getSysDate() + 
 					"渠道流水号" + reqDto.getSysTraceno());
@@ -292,7 +292,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			rep.getRepBody().setAcctBalT2(rep10000.getActBal().toString());
 		}else{
 			REP_20000 rep20000 = iCCardCharge(reqDto,req20000);
-			String reBocmTraceNo = rep20000.getHeader().getrLogNo();
+			String reBocmTraceNo = rep20000.getRlogNo();
 		    updateBocmRecord(reqDto, rep20000.getSysDate(),rep20000.getSysTime(),reBocmTraceNo, "1");
 		    myLog.info(logger, "6.交行卡存现金，交行"+cardTypeName+"通存记账重发成功，渠道日期" + reqDto.getSysDate() + 
 					"渠道流水号" + reqDto.getSysTraceno());
@@ -416,15 +416,15 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
-		req10000.setTxnAmt(new BigDecimal(reqBody.getDpsAmtT()));
+		req10000.setTxnAmt(Double.parseDouble(reqBody.getDpsAmtT()));
 		req10000.setFeeFlg(reqBody.getRcveWyT());
-		req10000.setFee(new BigDecimal(reqBody.getFeeT3()));
+		req10000.setFee(Double.parseDouble(reqBody.getFeeT3()));
 		req10000.setOprFlg(reqBody.getRdCardWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
 		req10000.setTxnMod("0");
 		req10000.setRecBnk(reqBody.getOpnAcctBnkNoT8());
-		req10000.setrActTp(reqBody.getAcctTpT());
-		req10000.setrActNo(reqBody.getCardNoT3());
+		req10000.setRactTp(reqBody.getAcctTpT());
+		req10000.setRactNo(reqBody.getCardNoT3());
 		req10000.setRecNam(reqBody.getNaT1());
 		req10000.setCuIdTp(reqBody.getIdTpT2());
 		req10000.setCuIdNo(reqBody.getHldrGlblIdT());
@@ -441,9 +441,9 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		
 		//模拟报文返回，挡板
 		REP_10000 rep_10000 = new REP_10000();
-		rep_10000.setActBal(new BigDecimal("1000"));
-		rep_10000.setFee(new BigDecimal("0.00"));
-		rep_10000.setoTxnAmt(new BigDecimal("100"));
+		rep_10000.setActBal(10d);
+		rep_10000.setFee(0d);
+		rep_10000.setOtxnAmt(0d);
 		
 //		if(1==1){
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
@@ -466,15 +466,15 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
-		req20000.setTxnAmt(new BigDecimal(reqBody.getDpsAmtT()));
+		req20000.setTxnAmt(Double.parseDouble(reqBody.getDpsAmtT()));
 		req20000.setFeeFlg(reqBody.getRcveWyT());
-		req20000.setFee(new BigDecimal(reqBody.getFeeT3()));
+		req20000.setFee(Double.parseDouble(reqBody.getFeeT3()));
 		req20000.setOprFlg(reqBody.getRdCardWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
 		req20000.setTxnMod("0");
 		req20000.setRecBnk(reqBody.getOpnAcctBnkNoT8());
-		req20000.setrActTp(reqBody.getAcctTpT());
-		req20000.setrActNo(reqBody.getCardNoT3());
+		req20000.setRactTp(reqBody.getAcctTpT());
+		req20000.setRactNo(reqBody.getCardNoT3());
 		req20000.setRecNam(reqBody.getNaT1());
 		req20000.setCuIdTp(reqBody.getIdTpT2());
 		req20000.setCuIdNo(reqBody.getHldrGlblIdT());
@@ -491,9 +491,9 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		
 		//模拟报文返回，挡板
 		REP_20000 rep_20000 = new REP_20000();
-		rep_20000.setActBal(new BigDecimal("1000"));
-		rep_20000.setFee(new BigDecimal("0.00"));
-		rep_20000.setoTxnAmt(new BigDecimal("100"));
+		rep_20000.setActBal(1000d);
+		rep_20000.setFee(0d);
+		rep_20000.setOtxnAmt(100d);
 		
 		return rep_20000;
 	}

@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.concurrent.Executors;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_10101;
 
 import org.slf4j.Logger;
@@ -64,15 +65,15 @@ class Run implements Runnable {
             this.logger.info("SEQ="+seq);
 
             REP_10101 rep = new REP_10101(new MyLog(), 20190909, 125609, 1);
-            rep.getHeader().settMsgTyp("N");
-            rep.getHeader().settRspCd("JH0000");
-            rep.getHeader().settRspMsg("成功");
-            rep.getHeader().setrLogNo(seq);
+            rep.setTmsgTyp("N");
+            rep.setTrspCd("JH0000");
+            rep.setTrspMsg("成功");
+            rep.setRlogNo(seq);
             rep.setCcyCod("CNY");
             rep.setActNo("62316600000123");
             rep.setActNam("zzh");
-            rep.setActBal(new BigDecimal(12.23));
-            String repData = rep.creaFixPack();
+            rep.setActBal(12.23d);
+            String repData = FixedUtil.toFixed(rep);
             repData = repData + "FFFFFFFFFFFFFFFF";
             os = socket.getOutputStream();
             String repLen = String.format("%08d", repData.getBytes(SimuBocmServer.CODING).length);

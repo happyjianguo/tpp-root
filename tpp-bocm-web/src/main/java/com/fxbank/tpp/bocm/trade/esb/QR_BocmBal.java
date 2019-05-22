@@ -50,7 +50,7 @@ public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 		REQ_30063001201.REQ_BODY reqBody = reqDto.getReqBody();
 
 		REQ_10101 req10101 = new REQ_10101(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
-		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req10101.getHeader());	//设置报文头中的行号信息
+		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req10101);	//设置报文头中的行号信息
 		req10101.setActTyp(reqBody.getAcctType());
 		req10101.setActNo(reqBody.getCardNo());
 		req10101.setPin(super.convPin(reqBody.getPwd()));

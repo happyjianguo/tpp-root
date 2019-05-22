@@ -85,14 +85,14 @@ public class DP_FxMag implements TradeExecutionStrategy {
 		myLog.info(logger, "交行向本行发起磁条卡通存记账请求");		
 	
 		//磁条卡二磁道校验
-//		try {
-//			myLog.info(logger, "2.磁条卡二磁道校验");	
-//			validateMag(req);
-//		} catch (SysTradeExecuteException e) {
-//			myLog.info(logger, "3.磁条卡状态异常,磁条卡二磁道校验失败");	
-//			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007,e.getMessage());
-//			throw e2;
-//		}
+		try {
+			myLog.info(logger, "2.磁条卡二磁道校验");	
+			validateMag(req);
+		} catch (SysTradeExecuteException e) {
+			myLog.info(logger, "3.磁条卡状态异常,磁条卡二磁道校验失败");	
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007,e.getMessage());
+			throw e2;
+		}
 		//2.核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期

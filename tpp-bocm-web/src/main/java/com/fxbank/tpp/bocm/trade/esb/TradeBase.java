@@ -7,11 +7,10 @@ import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.dto.DataTransObject;
+import com.fxbank.tpp.bocm.model.REQ_BASE;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
-import com.fxbank.tpp.bocm.model.REQ_HEADER;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
@@ -27,7 +26,7 @@ public class TradeBase {
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
 
-	public void setBankno(MyLog myLog, DataTransObject dto, String branchId, REQ_HEADER reqHeader) throws SysTradeExecuteException {
+	public void setBankno(MyLog myLog, DataTransObject dto, String branchId, REQ_BASE reqBase) throws SysTradeExecuteException {
 		if(branchId == null){
 			myLog.error(logger, "发起机构号不能为空");
 			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
@@ -67,9 +66,9 @@ public class TradeBase {
 		*/
 		
 //		//发起行行号  313229000660
-		reqHeader.setsBnkNo("313229000660"); // 总行 取上面接口返回值
+		reqBase.setSbnkNo("313229000660"); // 总行 取上面接口返回值
 //		//接收行行号 办理业务网点的总行行号
-		reqHeader.setrBnkNo("313229000660"); // 网点 取上面接口返回值
+		reqBase.setRbnkNo("313229000660"); // 网点 取上面接口返回值
 	}
 
 	public String convPin(String oPin){

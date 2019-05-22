@@ -72,9 +72,9 @@ public class BASE_TEST {
         header.settTxnTim(Integer.valueOf(sDate.substring(8))); 
 //        header.setsLogNo(String.format("%6s%08d", sDate.substring(2, 8),seq));
         
-        header.settTxnDat(20190620);
-        header.settTxnTim(154800);
-        header.setsLogNo("20190620");
+//        header.settTxnDat(20190620);
+//        header.settTxnTim(154800);
+//        header.setsLogNo("20190620");
     }
 
 }

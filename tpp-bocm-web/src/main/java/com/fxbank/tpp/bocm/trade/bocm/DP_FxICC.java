@@ -68,12 +68,12 @@ public class DP_FxICC implements TradeExecutionStrategy {
 		//1.插入流水表
 		initRecord(req);		
 		//IC卡信息校验
-//		try {
-//			validateIC(req);
-//		} catch (SysTradeExecuteException e) {
-//			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008,e.getMessage());
-//			throw e2;
-//		}
+		try {
+			validateIC(req);
+		} catch (SysTradeExecuteException e) {
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008,e.getMessage());
+			throw e2;
+		}
 		//2.核心记账
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期

@@ -1,6 +1,7 @@
 package com.fxbank.tpp.bocm.netty.bocm;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REQ_BASE;
 
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
 		REQ_BASE reqBase = (REQ_BASE)msg;
-		StringBuffer fixPack = new StringBuffer(reqBase.creaFixPack());
+		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase));
 		//TODO 生成MAC
 		fixPack.append("FFFFFFFFFFFFFFFF");
 		ctx.writeAndFlush(fixPack.toString(), promise);
