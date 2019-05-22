@@ -22,7 +22,12 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	public final static String BOCM_E_10006 = "FX0006";
 	public final static String BOCM_E_10007 = "FX0007";
 	public final static String BOCM_E_10008 = "FX0008";
-	public final static String BOCM_E_10009 = "FX0009";
+	public final static String BOCM_E_10009 = "FX0009";	
+	public final static String BOCM_E_10011 = "FX0011";
+	public final static String BOCM_E_10012 = "FX0012";
+	public final static String BOCM_E_10013 = "FX0013";
+	public final static String BOCM_E_11007 = "FX1007";
+	public final static String BOCM_E_16203 = "FX6203";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 
@@ -38,6 +43,11 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 			put(BOCM_E_10007, "磁条卡二磁道校验失败");
 			put(BOCM_E_10008, "IC卡信息校验失败");
 			put(BOCM_E_10009, "核心查询失败");
+			put(BOCM_E_10011, "不能隔日冲正");
+			put(BOCM_E_10012, "下载ESB文件失败");
+			put(BOCM_E_10013, "柜面通对账失败");
+			put(BOCM_E_11007, "无此记录");
+			put(BOCM_E_16203, "交易超时");
 			
 		}
 	};
