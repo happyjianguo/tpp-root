@@ -9,8 +9,12 @@
 package com.fxbank.tpp.bocm.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+
 
 /** 
 * @ClassName: REP_10103 
@@ -23,12 +27,6 @@ public class REP_10103 extends REP_BASE {
 	
 	private static final long serialVersionUID = -3159939908759734651L;
 
-	private String filLen;
-
-    private String tolCnt;
-
-    private BigDecimal tolAmt;
-
     private String filTxt;
 	
     @Deprecated
@@ -40,26 +38,43 @@ public class REP_10103 extends REP_BASE {
         super(mylog, sysDate, sysTime, sysTraceno);
     }
 
-    @Override
-    public String creaFixPack() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(super.getHeader().creaFixPack());
-        sb.append(String.format("%-8s", this.filLen==null?"":this.filLen));
-        sb.append(String.format("%-7s", this.tolCnt==null?"":this.tolCnt));
-        sb.append(String.format("%015.0f", this.tolAmt==null?0.0:this.tolAmt.movePointRight(2)));
-        sb.append(String.format("%-"+filLen+"s", this.filTxt==null?"":this.filTxt));
-        return sb.toString();
-    }
+	@FixedField(order = 5, len = 8, desc = "文件长度")
+    private String filLen;
 
-    @Override
-    public void chanFixPack(String pack) {
-        StringBuffer sb = new StringBuffer(pack);
-        int i = 0;
-        super.getHeader().chanFixPack(sb.substring(0, i=i+51));
-        this.filLen = sb.substring(i, i=i+8).trim();
-        this.tolCnt= sb.substring(i, i=i+7).trim();
-        this.tolAmt= new BigDecimal(sb.substring(i, i=i+15).trim()).movePointLeft(2);
-        this.filTxt= sb.substring(i, i=i+Integer.parseInt(this.filLen)).trim();
+	@FixedField(order = 6, len = 7, desc = "总笔数")
+    private String tolCnt;
+
+	@FixedField(order = 7, len = 15, desc = "总金额")
+    private Double tolAmt;
+	
+	@FixedField(order = 8, desc = "循环内容")
+    private List<Inner> content = new ArrayList<Inner>();
+	
+    public static class Inner {
+
+        @FixedField(order = 81, len = 2, desc = "业务类型")
+        private String svalue;
+
+        @FixedField(order = 82, len = 2, desc = "交易日期1")
+        private Integer ivalue;
+
+		public String getSvalue() {
+			return svalue;
+		}
+
+		public void setSvalue(String svalue) {
+			this.svalue = svalue;
+		}
+
+		public Integer getIvalue() {
+			return ivalue;
+		}
+
+		public void setIvalue(Integer ivalue) {
+			this.ivalue = ivalue;
+		}
+
+
     }
 
 	public String getFilLen() {
@@ -78,20 +93,20 @@ public class REP_10103 extends REP_BASE {
 		this.tolCnt = tolCnt;
 	}
 
-	public BigDecimal getTolAmt() {
+	public Double getTolAmt() {
 		return tolAmt;
 	}
 
-	public void setTolAmt(BigDecimal tolAmt) {
+	public void setTolAmt(Double tolAmt) {
 		this.tolAmt = tolAmt;
 	}
 
-	public String getFilTxt() {
-		return filTxt;
+	public List<Inner> getContent() {
+		return content;
 	}
 
-	public void setFilTxt(String filTxt) {
-		this.filTxt = filTxt;
+	public void setContent(List<Inner> content) {
+		this.content = content;
 	}
     
     
