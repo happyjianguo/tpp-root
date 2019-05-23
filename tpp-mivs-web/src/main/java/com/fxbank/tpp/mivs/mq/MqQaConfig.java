@@ -3,19 +3,14 @@ package com.fxbank.tpp.mivs.mq;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 /**
  * @Description: IBM MQ 通过QA方式连接队列管理器配置类
  * @Author: 周勇沩
  * @Date: 2019-04-22 06:33:17
  */
-@Configuration
-@ConditionalOnProperty(name = "pmts.mq.enable", havingValue = "true")
-@ConfigurationProperties(prefix = "pmts.mq")
+@Component
 public class MqQaConfig {
 
     private String qmanager1;
@@ -48,15 +43,13 @@ public class MqQaConfig {
         return mqManager;
     }
 
-    @Bean(name = "mqManagerList")
     public List<MqQaManager> mqManagerList() {
         List<MqQaManager> mqManagerList = new ArrayList<MqQaManager>();
-        List<MqQaManager> mqManagerList2 = mqManagerList;
-        mqManagerList2.add(genMqManager(this.qmanager1, this.queue1, this.hostname1, this.channel1, this.ccsid1,
+        mqManagerList.add(genMqManager(this.qmanager1, this.queue1, this.hostname1, this.channel1, this.ccsid1,
                 this.port1, this.waitinteval1));
-        mqManagerList2.add(genMqManager(this.qmanager2, this.queue2, this.hostname2, this.channel2, this.ccsid2,
+        mqManagerList.add(genMqManager(this.qmanager2, this.queue2, this.hostname2, this.channel2, this.ccsid2,
                 this.port2, this.waitinteval2));
-        return mqManagerList2;
+        return mqManagerList;
     }
 
 
