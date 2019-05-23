@@ -15,7 +15,7 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "Fdbk" })
 public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
-    private static final long serialVersionUID = -9141340844535091973L;
+    private static final long serialVersionUID = -6270567302102318691L;
     private MsgHdr MsgHdr = new MsgHdr();
     private Fdbk Fdbk = new Fdbk();
 
@@ -58,8 +58,8 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         private static final long serialVersionUID = -4057972559971807035L;
         private String MsgId = null;
         private String CreDtTm = null;
-        private MsgHdr.InstgPty InstgPty = new MsgHdr.InstgPty();
-        private MsgHdr.InstdPty InstdPty = new MsgHdr.InstdPty();
+        private InstgPty InstgPty = new InstgPty();
+        private InstdPty InstdPty = new InstdPty();
 
         /**
          * @return the msgId
@@ -67,35 +67,6 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         public String getMsgId() {
             return MsgId;
         }
-
-        /**
-         * @return the instdPty
-         */
-        public MsgHdr.InstdPty getInstdPty() {
-            return InstdPty;
-        }
-
-        /**
-         * @param instdPty the instdPty to set
-         */
-        public void setInstdPty(MsgHdr.InstdPty instdPty) {
-            this.InstdPty = instdPty;
-        }
-
-        /**
-         * @return the creDtTm
-         */
-        public String getCreDtTm() {
-            return CreDtTm;
-        }
-
-        /**
-         * @param creDtTm the creDtTm to set
-         */
-        public void setCreDtTm(String creDtTm) {
-            this.CreDtTm = creDtTm;
-        }
-
         /**
          * @param msgId the msgId to set
          */
@@ -104,17 +75,42 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         }
 
         /**
-         * @return the instgPty
+         * @return the creDtTm
          */
-        public MsgHdr.InstgPty getInstgPty() {
-            return InstgPty;
+        public String getCreDtTm() {
+            return CreDtTm;
+        }
+        /**
+         * @param creDtTm the creDtTm to set
+         */
+        public void setCreDtTm(String creDtTm) {
+            this.CreDtTm = creDtTm;
         }
 
         /**
+         * @return the instgPty
+         */
+        public InstgPty getInstgPty() {
+            return InstgPty;
+        }
+        /**
          * @param instgPty the instgPty to set
          */
-        public void setInstgPty(MsgHdr.InstgPty instgPty) {
+        public void setInstgPty(InstgPty instgPty) {
             this.InstgPty = instgPty;
+        }
+
+        /**
+         * @return the instdPty
+         */
+        public InstdPty getInstdPty() {
+            return InstdPty;
+        }
+        /**
+         * @param instdPty the instdPty to set
+         */
+        public void setInstdPty(InstdPty instdPty) {
+            this.InstdPty = instdPty;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
@@ -122,8 +118,6 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
             private static final long serialVersionUID = -4783744123340710335L;
             private String InstgDrctPty = null;
             private String DrctPtyNm = null;
-            private String InstgPty = null;
-            private String PtyNm = null;
 
             /**
              * @return the instgDrctPty
@@ -133,31 +127,10 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
             }
 
             /**
-             * @return the ptyNm
+             * @param instgDrctPty the instgDrctPty to set
              */
-            public String getPtyNm() {
-                return PtyNm;
-            }
-
-            /**
-             * @param ptyNm the ptyNm to set
-             */
-            public void setPtyNm(String ptyNm) {
-                this.PtyNm = ptyNm;
-            }
-
-            /**
-             * @return the instgPty
-             */
-            public String getInstgPty() {
-                return InstgPty;
-            }
-
-            /**
-             * @param instgPty the instgPty to set
-             */
-            public void setInstgPty(String instgPty) {
-                this.InstgPty = instgPty;
+            public void setInstgDrctPty(String instgDrctPty) {
+                this.InstgDrctPty = instgDrctPty;
             }
 
             /**
@@ -172,13 +145,6 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
              */
             public void setDrctPtyNm(String drctPtyNm) {
                 this.DrctPtyNm = drctPtyNm;
-            }
-
-            /**
-             * @param instgDrctPty the instgDrctPty to set
-             */
-            public void setInstgDrctPty(String instgDrctPty) {
-                this.InstgDrctPty = instgDrctPty;
             }
         }
 
@@ -290,7 +256,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(propOrder = { "OrgnlDlvrgMsgId", "OrgnlRcvgMsgId", "OrgnlVrfctnInfo"})
         public static class OrgnlVrfctn implements Serializable {
-            private static final long serialVersionUID = 7905030991058988432L;
+            private static final long serialVersionUID = -1547501573785824109L;
             private String OrgnlDlvrgMsgId = null;
             private String OrgnlRcvgMsgId = null;
             private OrgnlVrfctnInfo OrgnlVrfctnInfo = new OrgnlVrfctnInfo();
@@ -318,7 +284,9 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
 
             @XmlAccessorType(XmlAccessType.FIELD)
             public static class OrgnlVrfctnInfo implements Serializable {
-                private static final long serialVersionUID = -7845518911845351191L;
+                private static final long serialVersionUID = -1985474429876848638L;
+
+                // 手机号码
                 private String MobNb = null;
                 public String getMobNb() {
                     return MobNb;
@@ -327,6 +295,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
                     this.MobNb = mobNb;
                 }
 
+                //姓名
                 private String Nm = null;
                 public String getNm() {
                     return Nm;
@@ -335,6 +304,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
                     this.Nm = nm;
                 }
 
+                //证件类型
                 private String IdTp = null;
                 public String getIdTp() {
                     return IdTp;
@@ -343,6 +313,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
                     this.IdTp = idTp;
                 }
 
+                //证件号码
                 private String Id = null;
                 public String getId() {
                     return Id;
@@ -351,6 +322,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
                     this.Id = id;
                 }
 
+                //统一社会信用代码
                 private String UniSocCdtCd = null;
                 public String getUniSocCdtCd() {
                     return UniSocCdtCd;
@@ -359,6 +331,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
                     this.UniSocCdtCd = uniSocCdtCd;
                 }
 
+                //工商注册号
                 private String BizRegNb = null;
                 public String getBizRegNb() {
                     return BizRegNb;
@@ -367,6 +340,7 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
                     this.BizRegNb = bizRegNb;
                 }
 
+                //手机号码核查结果
                 private String Rslt = null;
                 public String getRslt() {
                     return Rslt;

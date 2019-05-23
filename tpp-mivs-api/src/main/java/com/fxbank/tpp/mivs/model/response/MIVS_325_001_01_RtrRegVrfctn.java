@@ -9,50 +9,50 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Description: 人行纳税信息联网核查应答报文 mivs.323.001.01.xml
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/4/29 9:58
+ * @Date: 2019/5/20 16:38
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "OrgnlBizQry","Rspsn" })
-public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
+public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
     private static final long serialVersionUID = -4933387881402294675L;
-    private MsgHdr MsgHdr = new MsgHdr();
-    private OrgnlBizQry OrgnlBizQry = new OrgnlBizQry();
-    private Rspsn Rspsn = new Rspsn();
+    private MIVS_325_001_01_RtrRegVrfctn.MsgHdr MsgHdr = new MIVS_325_001_01_RtrRegVrfctn.MsgHdr();
+    private MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry OrgnlBizQry = new MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry();
+    private MIVS_325_001_01_RtrRegVrfctn.Rspsn Rspsn = new MIVS_325_001_01_RtrRegVrfctn.Rspsn();
 
     @Override
     public String toString() {
-        return "纳税信息联网核查应答报文[MIVS_323_001_01]";
+        return "纳税信息联网核查应答报文[MIVS_325_001_01]";
     }
 
     /**
      * @return the msgHdr
      */
-    public MsgHdr getMsgHdr() {
+    public MIVS_325_001_01_RtrRegVrfctn.MsgHdr getMsgHdr() {
         return MsgHdr;
     }
 
     /**
      * @param msgHdr the msgHdr to set
      */
-    public void setMsgHdr(MsgHdr msgHdr) {
+    public void setMsgHdr(MIVS_325_001_01_RtrRegVrfctn.MsgHdr msgHdr) {
         this.MsgHdr = msgHdr;
     }
 
-    public OrgnlBizQry getOrgnlBizQry() {
+    public MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry getOrgnlBizQry() {
         return OrgnlBizQry;
     }
 
-    public void setOrgnlBizQry(OrgnlBizQry orgnlBizQry) {
+    public void setOrgnlBizQry(MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry orgnlBizQry) {
         OrgnlBizQry = orgnlBizQry;
     }
 
-    public Rspsn getRspsn() {
+    public MIVS_325_001_01_RtrRegVrfctn.Rspsn getRspsn() {
         return Rspsn;
     }
 
-    public void setRspsn(Rspsn rspsn) {
+    public void setRspsn(MIVS_325_001_01_RtrRegVrfctn.Rspsn rspsn) {
         Rspsn = rspsn;
     }
 
@@ -62,7 +62,7 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
         private static final long serialVersionUID = 8127207925264274988L;
         private String MsgId = null;
         private String CreDtTm = null;
-        private InstgPty InstgPty = new InstgPty();
+        private MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty InstgPty = new MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty();
         /**
          * @return the msgId
          */
@@ -94,14 +94,14 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
         /**
          * @return the instgPty
          */
-        public InstgPty getInstgPty() {
+        public MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty getInstgPty() {
             return InstgPty;
         }
 
         /**
          * @param instgPty the instgPty to set
          */
-        public void setInstgPty(InstgPty instgPty) {
+        public void setInstgPty(MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty instgPty) {
             this.InstgPty = instgPty;
         }
 
@@ -148,7 +148,7 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
     public static class OrgnlBizQry implements Serializable{
         private static final long serialVersionUID = -1561794738551219893L;
         private String MsgId = null;
-        private InstgPty InstgPty = new InstgPty();
+        private MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty InstgPty = new MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty();
         /**
          * @return the msgId
          */
@@ -166,14 +166,14 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
         /**
          * @return the instgPty
          */
-        public InstgPty getInstgPty() {
+        public MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty getInstgPty() {
             return InstgPty;
         }
 
         /**
          * @param instgPty the instgPty to set
          */
-        public void setInstgPty(InstgPty instgPty) {
+        public void setInstgPty(MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty instgPty) {
             this.InstgPty = instgPty;
         }
 
@@ -219,23 +219,23 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
     @XmlType(propOrder = { "VrfctnInf","OprlErr" })
     public static class Rspsn implements Serializable{
         private static final long serialVersionUID = 3266024638124569555L;
-        private VrfctnInf VrfctnInf = new VrfctnInf();
-        private OprlErr OprlErr = new OprlErr();
+        private MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf VrfctnInf = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf();
+        private MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr OprlErr = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr();
 
-        public VrfctnInf getVrfctnInf() {
+        public MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf getVrfctnInf() {
             return VrfctnInf;
         }
 
-        public void setVrfctnInf(VrfctnInf vrfctnInf) {
+        public void setVrfctnInf(MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf vrfctnInf) {
             VrfctnInf = vrfctnInf;
         }
 
-        public OprlErr getOprlErr() {
+        public MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr getOprlErr() {
             return OprlErr;
         }
 
 
-        public void setOprlErr(OprlErr oprlErr) {
+        public void setOprlErr(MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr oprlErr) {
             OprlErr = oprlErr;
         }
 
@@ -245,7 +245,7 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
             private static final long serialVersionUID = 293223418691401711L;
             private String Rslt = null;
             private String DataResrcDt = null;
-            private List<TxpmtInf> TxpmtInf;
+            private List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf> TxpmtInf;
 
             public String getRslt() {
                 return Rslt;
@@ -261,11 +261,11 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
                 DataResrcDt = dataResrcDt;
             }
 
-            public List<TxpmtInf> getTxpmtInf() {
+            public List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf> getTxpmtInf() {
                 return TxpmtInf;
             }
 
-            public void setTxpmtInf(List<TxpmtInf> txpmtInf) {
+            public void setTxpmtInf(List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf> txpmtInf) {
                 TxpmtInf = txpmtInf;
             }
 

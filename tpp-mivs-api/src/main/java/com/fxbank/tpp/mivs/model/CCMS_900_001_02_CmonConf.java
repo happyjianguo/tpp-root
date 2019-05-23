@@ -1,9 +1,5 @@
-package com.fxbank.tpp.mivs.model.response;
+package com.fxbank.tpp.mivs.model;
 
-import com.fxbank.tpp.mivs.model.response.CCMS_900_001_02_CmonConf;
-import com.fxbank.tpp.mivs.model.SIGN_DATA;
-
-import javax.print.DocFlavor;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -17,7 +13,7 @@ import java.io.Serializable;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "GrpHdr", "OrgnlGrpHdr", "CmonConfInf" })
 public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
-    private static final long serialVersionUID = -3004970587967549485L;
+    private static final long serialVersionUID = -343137596164008712L;
     private GrpHdr GrpHdr = new GrpHdr();
     private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
     private CmonConfInf CmonConfInf = new CmonConfInf();
@@ -50,127 +46,107 @@ public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "MsgId", "CreDtTm", "InstgPty", "SysCd", "Rmk" })
+    @XmlType(propOrder = { "MsgId", "CreDtTm", "InstgPty", "InstdPty", "SysCd", "Rmk" })
     public static class GrpHdr implements Serializable{
-        private static final long serialVersionUID = 8121528476392753031L;
+        private static final long serialVersionUID = 7064458568354829448L;
         private String MsgId = null;
         private String CreDtTm = null;
         private String SysCd = null;
         private String Rmk = null;
-        private CCMS_900_001_02_CmonConf.GrpHdr.InstgPty InstgPty = new CCMS_900_001_02_CmonConf.GrpHdr.InstgPty();
+        private InstgPty InstgPty = new InstgPty();
+        private InstdPty InstdPty = new InstdPty();
 
-        /**
-         * @return the msgId
-         */
         public String getMsgId() {
             return MsgId;
         }
-
-        /**
-         * @param msgId the msgId to set
-         */
         public void setMsgId(String msgId) {
             this.MsgId = msgId;
         }
 
-        /**
-         * @return the creDtTm
-         */
         public String getCreDtTm() {
             return CreDtTm;
         }
-
-        /**
-         * @param creDtTm the creDtTm to set
-         */
         public void setCreDtTm(String creDtTm) {
             this.CreDtTm = creDtTm;
         }
 
-        /**
-         * @return the SysCd
-         */
         public String getSysCd() {
             return SysCd;
         }
-
-        /**
-         * @param sysCd the msgId to set
-         */
         public void setSysCd(String sysCd) {
             this.SysCd = sysCd;
         }
 
-        /**
-         * @return the Rmk
-         */
         public String getRmk() {
             return Rmk;
         }
-
-        /**
-         * @param rmk the msgId to set
-         */
         public void setRmk(String rmk) {
             this.Rmk = rmk;
         }
 
-        /**
-         * @return the instgPty
-         */
-        public CCMS_900_001_02_CmonConf.GrpHdr.InstgPty getInstgPty() {
+        public InstgPty getInstgPty() {
             return InstgPty;
         }
-
-        /**
-         * @param instgPty the instgPty to set
-         */
-        public void setInstgPty(CCMS_900_001_02_CmonConf.GrpHdr.InstgPty instgPty) {
+        public void setInstgPty(InstgPty instgPty) {
             this.InstgPty = instgPty;
         }
 
+        public InstdPty getInstdPty() {
+            return InstdPty;
+        }
+        public void setInstdPty(InstdPty instdPty) {
+            this.InstdPty = instdPty;
+        }
+
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name="MsgHdr.InstgPty")
+        @XmlType(name="GrpHdr.InstgPty")
         public static class InstgPty implements Serializable{
-            private static final long serialVersionUID = -5453943109475404050L;
+            private static final long serialVersionUID = -3001592118091189025L;
             private String InstgDrctPty = null;
             private String InstgPty = null;
 
-            /**
-             * @return the instgDrctPty
-             */
             public String getInstgDrctPty() {
                 return InstgDrctPty;
             }
-
-            /**
-             * @param instgDrctPty the instgDrctPty to set
-             */
             public void setInstgDrctPty(String instgDrctPty) {
                 this.InstgDrctPty = instgDrctPty;
             }
 
-            /**
-             * @return the instgPty
-             */
             public String getInstgPty() {
                 return InstgPty;
             }
-
-            /**
-             * @param instgPty the instgPty to set
-             */
             public void setInstgPty(String instgPty) {
                 this.InstgPty = instgPty;
             }
         }
 
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name="GrpHdr.InstdPty")
+        public static class InstdPty implements Serializable{
+            private static final long serialVersionUID = 9055744269135507563L;
+            private String InstdDrctPty = null;
+            private String InstdPty = null;
+
+            public String getInstdDrctPty() {
+                return InstdDrctPty;
+            }
+            public void setInstdDrctPty(String instdDrctPty) {
+                this.InstdDrctPty = instdDrctPty;
+            }
+
+            public String getInstdPty() {
+                return InstdPty;
+            }
+            public void setInstdPty(String instdPty) {
+                this.InstdPty = instdPty;
+            }
+        }
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "OrgnlMsgId", "OrgnlInstgPty", "OrgnlMT" })
     public static class OrgnlGrpHdr implements Serializable {
-        private static final long serialVersionUID = -2552734227495157774L;
+        private static final long serialVersionUID = 6992811309663856775L;
         private String OrgnlMsgId = null; //原报文标识号
         private String OrgnlInstgPty = null; //原发起参与机构
         private String OrgnlMT = null; //原报文类型
@@ -200,7 +176,7 @@ public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "PrcSts", "PrcCd", "PtyId", "PtyPrcCd", "RjctInf", "PrcDt" , "NetgRnd" })
     public static class CmonConfInf implements Serializable {
-        private static final long serialVersionUID = 8969553749240316746L;
+        private static final long serialVersionUID = 6614959647434104151L;
         private String PrcSts = null; //业务状态
         private String PtyId = null; //业务处理码
         private String PtyPrcCd = null; //拒绝业务的参与机构行号
@@ -256,7 +232,7 @@ public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
 
     /**
      * @Title: signData
-     * @Description:通讯级确认报文无签名域
+     * @Description: 通讯级确认报文无签名域
      * @param @return    设定文件
      * @throws
      */

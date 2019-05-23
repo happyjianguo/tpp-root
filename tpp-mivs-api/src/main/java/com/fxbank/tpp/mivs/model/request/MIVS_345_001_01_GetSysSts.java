@@ -118,7 +118,7 @@ public class MIVS_345_001_01_GetSysSts implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = { "InstgDrctPty", "InstgPty" })
+//        @XmlType(propOrder = { "InstgDrctPty", "InstgPty" })
         public static class InstgPty implements Serializable{
             private static final long serialVersionUID = 2267139539513933332L;
             private String InstgDrctPty = null;
@@ -154,7 +154,7 @@ public class MIVS_345_001_01_GetSysSts implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = { "InstdDrctPty", "InstdPty" })
+//        @XmlType(propOrder = { "InstdDrctPty", "InstdPty" })
         public static class InstdPty implements Serializable{
             private static final long serialVersionUID = -7963369455171749739L;
             private String InstdDrctPty = "0000";

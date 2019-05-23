@@ -8,6 +8,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_322_001_01;
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02;
+import com.fxbank.tpp.mivs.model.response.MIVS_323_001_01_RtrTxPmtVrfctn;
 import com.fxbank.tpp.mivs.model.sim.MIVS_323_001_01;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
@@ -17,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description: 模拟用
@@ -62,7 +65,22 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 
 		// 3、根据322内容模拟返回323
 		MIVS_323_001_01 mivs323 = new MIVS_323_001_01(new MyLog(), 20190909, 122321, 13);
-		mivs323.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
+//		//编值
+//		ArrayList al = new ArrayList();
+//		al.add("TxAuthCd001");
+		//赋循环数据
+		List<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf> txpmtInf = new ArrayList<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf>();
+		for (int i=0 ; i<2; i++) {
+			MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf arraymsg = new MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf();
+			arraymsg.setTxAuthCd("TxAuthCd001");
+			arraymsg.setTxAuthNm("国税局");
+			arraymsg.setTxpySts("01");
+//			myLog.info(logger, "i=" + i);
+			txpmtInf.add(arraymsg);
+		}
+//		myLog.info(logger,"循环列表内容为：" + txpmtInf);
+
+		mivs323.getHeader().setOrigSender("313131000008");
 		mivs323.getHeader().setOrigReceiver("0000");
 		mivs323.getHeader().setMesgID(mivs322.getHead().getMesgID());
 		mivs323.getRtrTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty("0000");
@@ -72,16 +90,11 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 		mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().setInstgDrctPty("313871000007");
 		mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().setInstgPty("313871000007");
 
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().setRslt("MACH");
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().setDataResrcDt("20190429");
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getTxpmtInf().setTxAuthCd("TxAuthCd001");
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getTxpmtInf().setTxAuthNm("国税局");
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getTxpmtInf().setTxpySts("01");
-		/**
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().setProcSts("1111");
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().setProcCd("O3048");
-		mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().setRjctinf("手机号码核查业务本行当日总量超限");
-		**/
+		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().setRslt("MCHD");
+		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().setDataResrcDt("2019-04-29");
+		if(txpmtInf !=null && !txpmtInf.isEmpty()){
+			mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().setTxpmtInf(txpmtInf);
+		}
 
 		pmtsService.sendToPmtsNoWait(mivs323);
 		

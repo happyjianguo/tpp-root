@@ -9,14 +9,14 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000202;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000202;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000203;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000203;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
-import com.fxbank.tpp.mivs.dto.mivs.MIVS_323_001_01;
+import com.fxbank.tpp.mivs.dto.mivs.MIVS_325_001_01;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
-import com.fxbank.tpp.mivs.model.request.MIVS_322_001_01;
-import com.fxbank.tpp.mivs.model.response.MIVS_323_001_01_RtrTxPmtVrfctn;
+import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01;
+import com.fxbank.tpp.mivs.model.response.MIVS_325_001_01_RtrRegVrfctn;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
 import com.fxbank.tpp.mivs.trade.mivs.ComConf;
@@ -30,12 +30,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description: 纳税信息联网核查
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/4/29 10:53
+ * @Date: 2019/5/20 15:28
  */
-@Service("REQ_50023000202")
-public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy {
+@Service("REQ_50023000203")
+public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
 
@@ -55,8 +55,8 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_50023000202 req = (REQ_50023000202) dto;//接收ESB请求报文
-        REQ_50023000202.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000203 req = (REQ_50023000203) dto;//接收ESB请求报文
+        REQ_50023000203.REQ_BODY reqBody = req.getReqBody();
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -78,66 +78,66 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         }
         myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + branchId + "，人行行号：" + bankNumber);
 
-        MIVS_322_001_01 mivs322 = new MIVS_322_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
+        MIVS_324_001_01 mivs324 = new MIVS_324_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         //发起行行号
-        mivs322.getHeader().setOrigSender(bankNumber);
-        mivs322.getHeader().setOrigReceiver("0000");
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
+        mivs324.getHeader().setOrigSender(bankNumber);
+        mivs324.getHeader().setOrigReceiver("0000");
+        mivs324.getRegVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
+        mivs324.getRegVrfctn().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
+        mivs324.getRegVrfctn().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
+        mivs324.getRegVrfctn().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
 
-        mivs322.getTxPmtVrfctn().getVryDef().setCompanyName(reqBody.getCompanyName());
-        mivs322.getTxPmtVrfctn().getVryDef().setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        mivs322.getTxPmtVrfctn().getVryDef().setTaxPayerId(reqBody.getTaxPayerId());
-        mivs322.getTxPmtVrfctn().getVryDef().setOpNm(reqBody.getOpNm());
+        mivs324.getRegVrfctn().getVryDef().setCompanyName(reqBody.getCompanyName());
+        mivs324.getRegVrfctn().getVryDef().setUniSocCdtCd(reqBody.getUniSocCdtCd());
+        mivs324.getRegVrfctn().getVryDef().setTaxPayerId(reqBody.getTaxPayerId());
+        mivs324.getRegVrfctn().getVryDef().setOpNm(reqBody.getOpNm());
 
         //发送人行请求报文落地
 
 
-        mivs322 = (MIVS_322_001_01) pmtsService.sendToPmts(mivs322); // 发送请求，实时等待990
+        mivs324 = (MIVS_324_001_01) pmtsService.sendToPmts(mivs324); // 发送请求，实时等待990
 
-        String msgid= mivs322.getTxPmtVrfctn().getMsgHdr().getMsgId();    //为同步等待323，组合三要素
+        String msgid= mivs324.getRegVrfctn().getMsgHdr().getMsgId();    //为同步等待323，组合三要素
         String channel = "323_"+msgid;
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
         //收到人行通讯回执，更新数据库状态
 
-        REP_50023000202 rep = new REP_50023000202();
+        REP_50023000203 rep = new REP_50023000203();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
             CCMS_911_001_02 ccmc911 = (CCMS_911_001_02)dtoBase;
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
 
             //根据人行返回报文更新数据库状态
             throw e;
-        }else if(dtoBase.getHead().getMesgType().equals("mivs.323.001.01")){
-            MIVS_323_001_01 mivs323 = (MIVS_323_001_01)dtoBase;
-            REP_50023000202.REP_BODY repBody = rep.getRepBody();
-            if(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcSts()!=null) {
-                MivsTradeExecuteException e = new MivsTradeExecuteException(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcCd(),mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getRjctinf());
+        }else if(dtoBase.getHead().getMesgType().equals("mivs.325.001.01")){
+            MIVS_325_001_01 mivs325 = (MIVS_325_001_01)dtoBase;
+            REP_50023000203.REP_BODY repBody = rep.getRepBody();
+            if(mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getProcSts()!=null) {
+                MivsTradeExecuteException e = new MivsTradeExecuteException(mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getProcCd(),mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getRjctinf());
                 throw e;
             }
             //取循环数据
-            List<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf> TxpmtInf = mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getTxpmtInf();
+            List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf> TxpmtInf = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getTxpmtInf();
             //赋循环数据
-            List<REP_50023000202.TXPYR_INFO_ARRAY> arrayMsg = new ArrayList<REP_50023000202.TXPYR_INFO_ARRAY>();
+            List<REP_50023000203.TXPYR_INFO_ARRAY> arrayMsg = new ArrayList<REP_50023000203.TXPYR_INFO_ARRAY>();
             if(TxpmtInf != null && !TxpmtInf.isEmpty()) {
-                for (MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf Info:TxpmtInf) {
-                    REP_50023000202.TXPYR_INFO_ARRAY arMsg = new REP_50023000202.TXPYR_INFO_ARRAY();
+                for (MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf Info:TxpmtInf) {
+                    REP_50023000203.TXPYR_INFO_ARRAY arMsg = new REP_50023000203.TXPYR_INFO_ARRAY();
                     arMsg.setTxAuthCd(Info.getTxAuthCd());
                     arMsg.setTxAuthNm(Info.getTxAuthNm());
                     arMsg.setTxpyrSts(Info.getTxpySts());
                     arrayMsg.add(arMsg);
                 }
             }
-            repBody.setRslt(mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getRslt());
-            repBody.setDataResrcD(mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getDataResrcDt());
+            repBody.setRslt(mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRslt());
+            repBody.setDataResrcD(mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getDataResrcDt());
             if(arrayMsg !=null && !arrayMsg.isEmpty()){
                 repBody.setArrayMsg(arrayMsg);
             }
-            repBody.setProcSts(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcSts());
-            repBody.setProcCd(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcCd());
-            repBody.setRjctinf(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getRjctinf());
+            repBody.setProcSts(mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getProcSts());
+            repBody.setProcCd(mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getProcCd());
+            repBody.setRjctinf(mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getRjctinf());
 
             //根据人行返回报文更新数据库状态
 

@@ -21,7 +21,7 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
 
     @Override
     public String toString() {
-        return "手机号码核查结果疑义反馈报文[MIVS_347_001_01]";
+        return "纳税信息核查结果疑义反馈报文[MIVS_348_001_01]";
     }
 
     /**
@@ -55,7 +55,7 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "MsgId", "CreDtTm", "InstgPty", "InstdPty" })
     public static class MsgHdr implements Serializable {
-        private static final long serialVersionUID = -4057972559971807035L;
+        private static final long serialVersionUID = 8422215765668873527L;
         private String MsgId = null;
         private String CreDtTm = null;
         private InstgPty InstgPty = new InstgPty();
@@ -119,7 +119,7 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
 
         @XmlAccessorType(XmlAccessType.FIELD)
         public static class InstgPty implements Serializable{
-            private static final long serialVersionUID = -4783744123340710335L;
+            private static final long serialVersionUID = -2970202727987414731L;
             private String InstgDrctPty = null;
             private String DrctPtyNm = null;
             private String InstgPty = null;
@@ -184,7 +184,7 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
 
         @XmlAccessorType(XmlAccessType.FIELD)
         public static class InstdPty implements Serializable{
-            private static final long serialVersionUID = 4474632357265632738L;
+            private static final long serialVersionUID = -9101025784924839328L;
             private String InstdDrctPty = "0000";
             private String InstdPty = "0000";
 
@@ -221,7 +221,7 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "SysInd", "OrgnlVrfctn", "Cntt", "ContactNm", "ContactNb"})
     public static class Fdbk implements Serializable{
-        private static final long serialVersionUID = 8204286574726473960L;
+        private static final long serialVersionUID = -1920158947608994691L;
         private String SysInd = null;
         private OrgnlVrfctn OrgnlVrfctn = new OrgnlVrfctn();
         private String Cntt = null;
@@ -290,10 +290,10 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(propOrder = { "OrgnlDlvrgMsgId", "OrgnlRcvgMsgId", "OrgnlVrfctnInfo"})
         public static class OrgnlVrfctn implements Serializable {
-            private static final long serialVersionUID = 7905030991058988432L;
+            private static final long serialVersionUID = -8455053784531181518L;
             private String OrgnlDlvrgMsgId = null;
             private String OrgnlRcvgMsgId = null;
-            private OrgnlVrfctn.OrgnlVrfctnInfo OrgnlVrfctnInfo = new OrgnlVrfctn.OrgnlVrfctnInfo();
+            private OrgnlVrfctnInfo OrgnlVrfctnInfo = new OrgnlVrfctnInfo();
 
             public String getOrgnlDlvrgMsgId() {
                 return OrgnlDlvrgMsgId;
@@ -309,46 +309,22 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
                 this.OrgnlRcvgMsgId = orgnlRcvgMsgId;
             }
 
-            public OrgnlVrfctn.OrgnlVrfctnInfo getOrgnlVrfctnInfo() {
+            public OrgnlVrfctnInfo getOrgnlVrfctnInfo() {
                 return OrgnlVrfctnInfo;
             }
-            public void setOrgnlVrfctnInfo(OrgnlVrfctn.OrgnlVrfctnInfo orgnlVrfctnInfo) {
+            public void setOrgnlVrfctnInfo(OrgnlVrfctnInfo orgnlVrfctnInfo) {
                 this.OrgnlVrfctnInfo = orgnlVrfctnInfo;
             }
 
             @XmlAccessorType(XmlAccessType.FIELD)
             public static class OrgnlVrfctnInfo implements Serializable {
-                private static final long serialVersionUID = -7845518911845351191L;
-                private String MobNb = null;
-                public String getMobNb() {
-                    return MobNb;
+                private static final long serialVersionUID = 2786932349128861617L;
+                private String CoNm = null;
+                public String getCoNm() {
+                    return CoNm;
                 }
-                public void setMobNb(String mobNb) {
-                    this.MobNb = mobNb;
-                }
-
-                private String Nm = null;
-                public String getNm() {
-                    return Nm;
-                }
-                public void setNm(String nm) {
-                    this.Nm = nm;
-                }
-
-                private String IdTp = null;
-                public String getIdTp() {
-                    return IdTp;
-                }
-                public void setIdTp(String idTp) {
-                    this.IdTp = idTp;
-                }
-
-                private String Id = null;
-                public String getId() {
-                    return Id;
-                }
-                public void setId(String id) {
-                    this.Id = id;
+                public void setCoNm(String coNm) {
+                    this.CoNm = coNm;
                 }
 
                 private String UniSocCdtCd = null;
@@ -359,12 +335,12 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
                     this.UniSocCdtCd = uniSocCdtCd;
                 }
 
-                private String BizRegNb = null;
-                public String getBizRegNb() {
-                    return BizRegNb;
+                private String TxpyrIdNb = null;
+                public String getTxpyrIdNb() {
+                    return TxpyrIdNb;
                 }
-                public void setBizRegNb(String bizRegNb) {
-                    this.BizRegNb = bizRegNb;
+                public void setTxpyrIdNb(String txpyrIdNb) {
+                    this.TxpyrIdNb = txpyrIdNb;
                 }
 
                 private String Rslt = null;
@@ -375,6 +351,50 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
                     this.Rslt = rslt;
                 }
 
+                private String DataResrcDt = null;
+                public String getDataResrcDt() {
+                    return DataResrcDt;
+                }
+                public void setDataResrcDt(String dataResrcDt) {
+                    this.DataResrcDt = dataResrcDt;
+                }
+
+                private TxpmtInf TxpmtInf = new TxpmtInf();
+                public TxpmtInf getTxpmtInf() {
+                    return TxpmtInf;
+                }
+                public void setTxpmtInf(TxpmtInf txpmtInf) {
+                    this.TxpmtInf = txpmtInf;
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                public static class TxpmtInf implements Serializable {
+                    private static final long serialVersionUID = 4678125740927063368L;
+
+                    private String TxAuthCd = null;
+                    public String getTxAuthCd() {
+                        return TxAuthCd;
+                    }
+                    public void setTxAuthCd(String txAuthCd) {
+                        this.TxAuthCd = txAuthCd;
+                    }
+
+                    private String TxAuthNm = null;
+                    public String getTxAuthNm() {
+                        return TxAuthNm;
+                    }
+                    public void setTxAuthNm(String txAuthNm) {
+                        this.TxAuthNm = txAuthNm;
+                    }
+
+                    private String TxpyrSts = null;
+                    public String getTxpyrSts() {
+                        return TxpyrSts;
+                    }
+                    public void setTxpyrSts(String txpyrSts) {
+                        this.TxpyrSts = txpyrSts;
+                    }
+                }
             }
         }
 

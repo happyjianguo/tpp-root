@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @Description: 请求人行“手机号码核查结果疑义反馈报文”
+ * @Description: 请求人行“手机号码核查结果疑义反馈报文 mivs.347.001.01”
  * @Author: 王鹏
  * @Date: 2019/5/5 9:14
  */
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class MIVS_347_001_01 extends MODEL_BASE {
     private static final long serialVersionUID = 7372090657419787388L;
     private static final String MESGTYPE = "mivs.347.001.01";
-    private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.322.001.01";
+    private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.347.001.01";
 
     private MIVS_347_001_01_IdVrfctnFdbk IdVrfctnFdbk = new MIVS_347_001_01_IdVrfctnFdbk();
 

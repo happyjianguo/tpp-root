@@ -1,30 +1,29 @@
 package com.fxbank.tpp.mivs.dto.mivs;
 
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
-import com.fxbank.tpp.mivs.model.request.MIVS_345_001_01_GetSysSts;
+import com.fxbank.tpp.mivs.model.response.MIVS_325_001_01_RtrRegVrfctn;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @Description: 企业信息联网核查业务受理时间查询报文345 测试用
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/5/10 8:59
+ * @Date: 2019/5/20 16:51
  */
-
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MIVS_345_001_01 extends DTO_BASE {
+public class MIVS_325_001_01 extends DTO_BASE {
 
-    private static final long serialVersionUID = 7043577496218974114L;
+    private static final long serialVersionUID = -4928890298018821288L;
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
-    public MIVS_345_001_01() {
-        super.txDesc = "企业信息联网核查业务受理时间查询报文345";
+    public MIVS_325_001_01() {
+        super.txDesc = "纳税信息联网核查应答323";
     }
 
-    private MIVS_345_001_01_GetSysSts GetSysSts = new MIVS_345_001_01_GetSysSts();
+    private MIVS_325_001_01_RtrRegVrfctn RtrRegVrfctn = new MIVS_325_001_01_RtrRegVrfctn();
 
     /**
      * @return the comConf
@@ -45,18 +44,12 @@ public class MIVS_345_001_01 extends DTO_BASE {
         return this.comConf.signData();
     }
 
-    /**
-     * @return the getSysSts
-     */
-    public MIVS_345_001_01_GetSysSts getSysSts() {
-        return GetSysSts;
+    public MIVS_325_001_01_RtrRegVrfctn getRtrRegVrfctn() {
+        return RtrRegVrfctn;
     }
 
-    /**
-     * @param getSysSts the getSysSts to set
-     */
-    public void setSysSts(MIVS_345_001_01_GetSysSts getSysSts) {
-        GetSysSts = getSysSts;
+    public void setRtrRegVrfctn(MIVS_325_001_01_RtrRegVrfctn rtrRegVrfctn) {
+        RtrRegVrfctn = rtrRegVrfctn;
     }
 
 

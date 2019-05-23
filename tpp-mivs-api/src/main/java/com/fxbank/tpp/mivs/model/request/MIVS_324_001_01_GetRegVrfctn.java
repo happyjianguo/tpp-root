@@ -8,16 +8,16 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 /**
- * @Description: 纳税信息联网核查申请报文主节点
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/4/29 9:48
+ * @Date: 2019/5/20 16:33
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "VryDef" })
-public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
-    private static final long serialVersionUID = -7866286955362967083L;
-    private MsgHdr MsgHdr = new MsgHdr();
-    private VryDef VryDef = new VryDef();
+public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
+    private static final long serialVersionUID = 2671959651920079085L;
+    private MIVS_324_001_01_GetRegVrfctn.MsgHdr MsgHdr = new MIVS_324_001_01_GetRegVrfctn.MsgHdr();
+    private MIVS_324_001_01_GetRegVrfctn.VryDef VryDef = new MIVS_324_001_01_GetRegVrfctn.VryDef();
 
     @Override
     public String toString() {
@@ -27,39 +27,39 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
     /**
      * @return the msgHdr
      */
-    public MsgHdr getMsgHdr() {
+    public MIVS_324_001_01_GetRegVrfctn.MsgHdr getMsgHdr() {
         return MsgHdr;
     }
 
     /**
      * @return the vryDef
      */
-    public VryDef getVryDef() {
+    public MIVS_324_001_01_GetRegVrfctn.VryDef getVryDef() {
         return VryDef;
     }
 
     /**
      * @param vryDef the vryDef to set
      */
-    public void setVryDef(VryDef vryDef) {
+    public void setVryDef(MIVS_324_001_01_GetRegVrfctn.VryDef vryDef) {
         this.VryDef = vryDef;
     }
 
     /**
      * @param msgHdr the msgHdr to set
      */
-    public void setMsgHdr(MsgHdr msgHdr) {
+    public void setMsgHdr(MIVS_324_001_01_GetRegVrfctn.MsgHdr msgHdr) {
         this.MsgHdr = msgHdr;
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "MsgId", "CreDtTm", "InstgPty", "InstdPty" })
     public static class MsgHdr implements Serializable {
-        private static final long serialVersionUID = -7832110571163013845L;
+        private static final long serialVersionUID = -1562462308783251754L;
         private String MsgId = null;
         private String CreDtTm = null;
-        private InstgPty InstgPty = new InstgPty();
-        private InstdPty InstdPty = new InstdPty();
+        private MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstgPty InstgPty = new MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstgPty();
+        private MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstdPty InstdPty = new MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstdPty();
 
         /**
          * @return the msgId
@@ -71,28 +71,28 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
         /**
          * @return the instdPty
          */
-        public InstdPty getInstdPty() {
+        public MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstdPty getInstdPty() {
             return InstdPty;
         }
 
         /**
          * @param instdPty the instdPty to set
          */
-        public void setInstdPty(InstdPty instdPty) {
+        public void setInstdPty(MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstdPty instdPty) {
             this.InstdPty = instdPty;
         }
 
         /**
          * @return the instgPty
          */
-        public InstgPty getInstgPty() {
+        public MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstgPty getInstgPty() {
             return InstgPty;
         }
 
         /**
          * @param instgPty the instgPty to set
          */
-        public void setInstgPty(InstgPty instgPty) {
+        public void setInstgPty(MIVS_324_001_01_GetRegVrfctn.MsgHdr.InstgPty instgPty) {
             this.InstgPty = instgPty;
         }
 

@@ -6,9 +6,9 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description: 企业信息联网核查查业务受理时间查询ESB请求报文
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/4/30 10:15
+ * @Date: 2019/5/20 16:40
  */
 public class REQ_50023000203 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
@@ -21,7 +21,7 @@ public class REQ_50023000203 extends REQ_BASE {
     private REQ_50023000203.REQ_BODY reqBody;
 
     public REQ_50023000203(){
-        super.txDesc = "企业信息联网核查查业务受理时间查询";
+        super.txDesc = "纳税信息联网核查";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -54,26 +54,75 @@ public class REQ_50023000203 extends REQ_BASE {
 
     public class REQ_BODY {
 
-        @JSONField(name = "SysInd")
-        private String SysInd;    //核查系统标识
+        @JSONField(name = "COMPANY_NAME")
+        private String companyName;    //单位名称
 
-        @JSONField(name = "QueDt")
-        private String QueDt;		//查询日期
+        @JSONField(name = "SOCIAL_CODE")
+        private String uniSocCdtCd;		//统一社会信用代码
 
-        public String getSysInd() {
-            return SysInd;
+        @JSONField(name = "TXPYR_DIST_NO")
+        private String taxPayerId;		//纳税人识别号
+
+        @JSONField(name = "OPRTR_NAME")
+        private String opNm;		//操作员姓名
+
+        @JSONField(name = "RESERVE_FIELD1")
+        private String remarks1;		//备用字段1
+        @JSONField(name = "RESERVE_FIELD2")
+        private String remarks2;		//备用字段2
+        @JSONField(name = "RESERVE_FIELD3")
+        private String remarks3;		//备用字段3
+        public String getRemarks1() {
+            return remarks1;
+        }
+        public void setRemarks1(String remarks1) {
+            this.remarks1 = remarks1;
+        }
+        public String getRemarks2() {
+            return remarks2;
+        }
+        public void setRemarks2(String remarks2) {
+            this.remarks2 = remarks2;
+        }
+        public String getRemarks3() {
+            return remarks3;
+        }
+        public void setRemarks3(String remarks3) {
+            this.remarks3 = remarks3;
         }
 
-        public void setSysInd(String sysInd) {
-            this.SysInd = sysInd;
+        public String getCompanyName() {
+            return companyName;
         }
 
-        public String getQueDt() {
-            return QueDt;
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
         }
 
-        public void setQueDt(String queDt) {
-            this.QueDt = queDt;
+        public String getUniSocCdtCd() {
+            return uniSocCdtCd;
         }
+
+        public void setUniSocCdtCd(String uniSocCdtCd) {
+            this.uniSocCdtCd = uniSocCdtCd;
+        }
+
+        public String getTaxPayerId() {
+            return taxPayerId;
+        }
+
+        public void setTaxPayerId(String taxPayerId) {
+            this.taxPayerId = taxPayerId;
+        }
+
+        public String getOpNm() {
+            return opNm;
+        }
+
+        public void setOpNm(String opNm) {
+            this.opNm = opNm;
+        }
+
+
     }
 }

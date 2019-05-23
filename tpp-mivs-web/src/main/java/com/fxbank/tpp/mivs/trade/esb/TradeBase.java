@@ -80,4 +80,23 @@ public class TradeBase {
 	/*
 	 * public String convPin(String oPin){ String nPin = oPin; //TODO return nPin; }
 	 */
+
+//	public getMsgHrd getmsghrd(MyLog myLog, DataTransObject dto)
+////		throws SysTradeExecuteException {
+////		if (branchId == null) {
+////			myLog.error(logger, "发起机构号不能为空");
+////			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
+////			myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg());
+////			throw e;
+////		}
+//		getMsgHrd msgHrd = new getMsgHrd(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
+//		//发起行行号
+//		msgHrd.getHeader().setOrigSender(bankNumber);
+//		msgHrd.getHeader().setOrigReceiver("0000");
+//		msgHrd.getTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
+//		msgHrd.getTxPmtVrfctn().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
+//		msgHrd.getTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
+//		msgHrd.getTxPmtVrfctn().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
+//		return esbRep_30043003001;
+//	}
 }
