@@ -85,7 +85,7 @@ public class GetIdVrfctnTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setMobNb("18312345678");
+		reqBody.setMobNb("8618312345678");
 		reqBody.setNm("李明");
 		reqBody.setIdTp("IC00");
 		reqBody.setId("610123199002140010");
