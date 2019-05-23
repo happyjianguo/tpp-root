@@ -18,8 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import cn.highsuccess.connPool.api.tssc.HisuTSSCAPIResult;
+import cn.highsuccess.connPool.api.tssc.secondpayment.HisuTSSCAPIForSecondPayment;
+
 @Component
-public class MqQaExecutor{
+public class MqQaExecutor {
 
     private static Logger logger = LoggerFactory.getLogger(MqQaExecutor.class);
 
@@ -27,27 +30,30 @@ public class MqQaExecutor{
     private TradeDispatcherExecutor tradeDispatcherExecutor;
 
     @Resource
+    private HisuTSSCAPIForSecondPayment hisuTSSCAPIForSecondPayment;
+
+    @Resource
     private LogPool logPool;
 
-    public void execute(String message){
+    public void execute(String message) {
         MyLog myLog = null;
         try {
             myLog = new MyLog(UUID.randomUUID().toString(), InetAddress.getLocalHost().getHostAddress().toString());
         } catch (UnknownHostException e1) {
             myLog = new MyLog(UUID.randomUUID().toString(), "UnknownHost");
         }
-		logPool.init(myLog);
-        myLog.info(logger, "收到人行报文["+message+"]");
+        logPool.init(myLog);
+        myLog.info(logger, "收到人行报文[" + message + "]");
         PMTS_HEAD head = new PMTS_HEAD();
         PMTS_SIGN sign = new PMTS_SIGN();
         String[] splitPack = message.split("\r\n");
         String sHead = null;
         String sSign = null;
         String xml = null;
-        if (splitPack.length == 2) {    //无签名
+        if (splitPack.length == 2) { // 无签名
             sHead = splitPack[0];
             xml = splitPack[1];
-        } else if (splitPack.length == 3) { //有签名
+        } else if (splitPack.length == 3) { // 有签名
             sHead = splitPack[0];
             sSign = splitPack[1];
             xml = splitPack[2];
@@ -58,31 +64,44 @@ public class MqQaExecutor{
         myLog.info(logger, "交易代码=[" + txCode + "]");
 
         DTO_BASE dtoBase = null;
-		Class<?> mivsClass = null;
-		String className = "com.fxbank.tpp.mivs.dto.mivs"+"." + txCode;
-		try {
-			mivsClass = Class.forName(className);
-		} catch (ClassNotFoundException e) {
-            myLog.error(logger, "类文件[" + className + "]未定义",e);
+        Class<?> mivsClass = null;
+        String className = "com.fxbank.tpp.mivs.dto.mivs" + "." + txCode;
+        try {
+            mivsClass = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            myLog.error(logger, "类文件[" + className + "]未定义", e);
             throw new RuntimeException(e);
-		}
+        }
 
-		try {
+        try {
             dtoBase = (DTO_BASE) PmtsXmlUtil.xmlToObject(mivsClass, xml);
             myLog.info(logger, "交易描述=[" + dtoBase.getTxDesc() + "]");
-			dtoBase.setTxCode(txCode);
-			dtoBase.setSourceType("MIVS");
-		    dtoBase.setOthDate(head.getOrigSendDate());
+            dtoBase.setTxCode(txCode);
+            dtoBase.setSourceType("MIVS");
+            dtoBase.setOthDate(head.getOrigSendDate());
             dtoBase.setOthTraceno(head.getMesgID());
             dtoBase.setHead(head);
             dtoBase.setSign(sign);
 
-            String signData = dtoBase.signData();
-            //TODO 验证签名
-		} catch (RuntimeException e) {
-			myLog.error(logger, "解析报文失败[" + xml + "]",e);
+            if (sSign != null) {
+                String signData = dtoBase.signData();
+                try {
+                    HisuTSSCAPIResult result = this.hisuTSSCAPIForSecondPayment.hisuUniversalVerifyDataSign("CNAPS2",
+                            head.getOrigSender(), "X509", signData, sSign.getBytes());
+                    if (result.getErrCode() < 0) {
+                        myLog.error(logger, "验证签名错误[" + signData + "][" + sSign + "]");
+                        throw new RuntimeException("验证签名错误");
+                    }
+                } catch (Exception e) {
+                    myLog.error(logger, "验证签名错误[" + signData + "][" + sSign + "]", e);
+                    throw new RuntimeException("验证签名错误");
+                }
+                myLog.info(logger,"验证签名成功");
+            }
+        } catch (RuntimeException e) {
+            myLog.error(logger, "解析报文失败[" + xml + "]", e);
             throw new RuntimeException(e);
-		}
+        }
 
         tradeDispatcherExecutor.txMainFlowController(dtoBase);
     }

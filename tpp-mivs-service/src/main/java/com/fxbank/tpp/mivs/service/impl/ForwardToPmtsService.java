@@ -18,6 +18,8 @@ import com.fxbank.tpp.mivs.sync.SyncCom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import cn.highsuccess.connPool.api.tssc.HisuTSSCAPIResult;
+import cn.highsuccess.connPool.api.tssc.secondpayment.HisuTSSCAPIForSecondPayment;
 import redis.clients.jedis.Jedis;
 
 @Service(version = "1.0.0")
@@ -36,6 +38,8 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 	@Resource
 	private MyJedis myJedis;
 
+	private HisuTSSCAPIForSecondPayment hisuTSSCAPIForSecondPayment;
+
 	@Override
 	public MODEL_BASE sendToPmts(MODEL_BASE modelBase) throws SysTradeExecuteException {
 		MyLog myLog = modelBase.getMylog();
@@ -50,7 +54,20 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 
 		String signData = modelBase.signData(); // 待签名数据
 		if (signData != null) { // 需要签名
-			String signature = "SS+" + signData; // TODO 计算签名
+			String signature = null;
+			try {
+				HisuTSSCAPIResult result = this.hisuTSSCAPIForSecondPayment.hisuUniveralGenDataSign("CNAPS2",
+						modelBase.getHeader().getOrigSender(), "SM2", signData.getBytes());
+				if (result.getErrCode() < 0) {
+					myLog.error(logger, "计算签名错误[" + result.getErrCode() + "]");
+					throw new RuntimeException("计算签名错误");
+				}
+				signature = result.getSign();
+			} catch (Exception e) {
+				myLog.error(logger, "计算签名错误",e);
+				throw new RuntimeException("计算签名错误");
+			}
+			myLog.info(logger, "计算签名成功");
 			modelBase.getSign().setDigitalSignature(signature);
 		}
 		String pack = modelBase.creaPack();
