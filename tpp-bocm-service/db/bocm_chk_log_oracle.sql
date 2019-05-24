@@ -2,6 +2,7 @@ DROP TABLE bocm_chk_log;
 CREATE TABLE bocm_chk_log (
 plat_date NUMBER(11) NOT NULL ,
 plat_trace NUMBER(11) NOT NULL ,
+tran_type NVARCHAR2(10) NULL ,
 settle_date NUMBER(11) NULL ,
 settle_branch NVARCHAR2(50) NULL ,
 host_date NUMBER(11) NULL ,
