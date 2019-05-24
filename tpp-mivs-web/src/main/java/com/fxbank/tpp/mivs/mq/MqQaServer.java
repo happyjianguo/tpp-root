@@ -17,7 +17,6 @@ import com.ibm.mq.MQQueueManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,7 +29,6 @@ public class MqQaServer {
 
 	private static Logger logger = LoggerFactory.getLogger(MqQaServer.class);
 
-	@Resource(name = "mqManagerList")
 	private List<MqQaManager> qMgrList;
 
 	@Resource
@@ -76,7 +74,6 @@ public class MqQaServer {
 		return message;
 	}
 
-	@Autowired
 	public void listen() {
 		ExecutorService main = Executors.newFixedThreadPool(qMgrList.size());
 		ExecutorService child = Executors.newCachedThreadPool();
@@ -108,5 +105,19 @@ public class MqQaServer {
 				}
 			});
 		}
+	}
+
+	/**
+	 * @return the qMgrList
+	 */
+	public List<MqQaManager> getqMgrList() {
+		return qMgrList;
+	}
+
+	/**
+	 * @param qMgrList the qMgrList to set
+	 */
+	public void setqMgrList(List<MqQaManager> qMgrList) {
+		this.qMgrList = qMgrList;
 	}
 }

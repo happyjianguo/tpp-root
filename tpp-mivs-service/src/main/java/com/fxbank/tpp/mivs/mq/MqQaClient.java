@@ -3,8 +3,6 @@ package com.fxbank.tpp.mivs.mq;
 import java.util.List;
 import java.util.Random;
 
-import javax.annotation.Resource;
-
 import com.fxbank.cip.base.log.MyLog;
 import com.ibm.mq.MQC;
 import com.ibm.mq.MQException;
@@ -27,7 +25,6 @@ public class MqQaClient {
 
 	private static Logger logger = LoggerFactory.getLogger(MqQaClient.class);
 
-	@Resource(name = "mqManagerList")
 	private List<MqQaManager> qMgrList;
 
 	/**
@@ -73,5 +70,19 @@ public class MqQaClient {
 				myLog.error(logger, "关闭队列、提交事物异常",ex);
 			}
 		}
+	}
+
+	/**
+	 * @return the qMgrList
+	 */
+	public List<MqQaManager> getqMgrList() {
+		return qMgrList;
+	}
+
+	/**
+	 * @param qMgrList the qMgrList to set
+	 */
+	public void setqMgrList(List<MqQaManager> qMgrList) {
+		this.qMgrList = qMgrList;
 	}
 }
