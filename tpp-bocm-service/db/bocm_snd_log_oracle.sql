@@ -10,6 +10,7 @@ tx_ind NVARCHAR2(10) NULL ,
 tx_code NVARCHAR2(10) NULL ,
 dc_flag NVARCHAR2(10) NULL ,
 tx_amt NUMBER NULL ,
+act_bal NUMBER NULL ,
 fee_flag NVARCHAR2(2) NULL ,
 fee NUMBER NULL ,
 host_date NUMBER(11) NULL ,
@@ -54,6 +55,7 @@ COMMENT ON COLUMN bocm_rcv_log.tx_code IS '交易代码';
 COMMENT ON COLUMN bocm_snd_log.dc_flag IS '通存通兑标志；0通存、1通兑';
 COMMENT ON COLUMN bocm_snd_log.tx_amt IS '交易金额';
 COMMENT ON COLUMN bocm_rcv_log.tx_amt IS '交易金额';
+COMMENT ON COLUMN bocm_rcv_log.act_bal IS '账户余额';
 COMMENT ON COLUMN bocm_rcv_log.fee_flag IS '手续费收取方式';
 COMMENT ON COLUMN bocm_snd_log.host_date IS '核心日期';
 COMMENT ON COLUMN bocm_snd_log.host_traceno IS '核心流水';
@@ -71,7 +73,7 @@ COMMENT ON COLUMN bocm_snd_log.bocm_branch IS '交通银行记账机构';
 COMMENT ON COLUMN bocm_snd_log.bocm_date IS '交通银行日期';
 COMMENT ON COLUMN bocm_snd_log.bocm_time IS '交通银行时间';
 COMMENT ON COLUMN bocm_snd_log.bocm_traceno IS '交通银行流水';
-COMMENT ON COLUMN bocm_snd_log.check_flag IS '对账标志，0-不对账,1-未对账，2-已对账，3-核心多，4-渠道多';
+COMMENT ON COLUMN bocm_snd_log.check_flag IS '对账标志，0-不对账,1-未对账，2-已对账，3-核心多，4-渠道多，5.冲正成功';
 COMMENT ON COLUMN bocm_snd_log.host_state IS '核心记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时';
 COMMENT ON COLUMN bocm_snd_log.bocm_state IS '交通银行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时';
 COMMENT ON COLUMN bocm_snd_log.tx_tel IS '交易柜员';

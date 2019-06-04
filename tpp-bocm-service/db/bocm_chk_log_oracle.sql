@@ -19,6 +19,7 @@ direction NVARCHAR2(1) NULL
 COMMENT ON TABLE bocm_chk_log IS '交通柜面通日终对账日志';
 COMMENT ON COLUMN bocm_chk_log.plat_date IS '渠道日期';
 COMMENT ON COLUMN bocm_chk_log.plat_trace IS '渠道流水';
+COMMENT ON COLUMN bocm_chk_log.tran_type IS '交易类型';
 COMMENT ON COLUMN bocm_chk_log.settle_date IS '清算日期';
 COMMENT ON COLUMN bocm_chk_log.settle_branch IS '清算机构';
 COMMENT ON COLUMN bocm_chk_log.host_date IS '核心交易日期';
