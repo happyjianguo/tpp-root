@@ -113,10 +113,12 @@ public class REQ_10009 extends REQ_BASE {
 	}
 
 	public Double getTxnAmt() {
+		txnAmt = txnAmt/100;
 		return txnAmt;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
+		txnAmt = txnAmt*100;
 		this.txnAmt = txnAmt;
 	}
 

@@ -48,6 +48,11 @@ public class BocmDayCheckLogInitModel extends ModelBase implements Serializable 
      * 清算日期
      */
     private Integer settleDate;
+    
+    /**
+     * 交易类型
+     */
+    private String tranType;
 
     /**
      * 清算机构
@@ -287,6 +292,14 @@ public class BocmDayCheckLogInitModel extends ModelBase implements Serializable 
 
 	public void setPayeeActtp(String payeeActtp) {
 		this.payeeActtp = payeeActtp;
+	}
+
+	public String getTranType() {
+		return tranType;
+	}
+
+	public void setTranType(String tranType) {
+		this.tranType = tranType;
 	}
     
     

@@ -98,7 +98,7 @@ public class REP_20102 extends REP_BASE {
 	}
 
 	public Double getFee() {
-		return fee;
+		return fee/100;
 	}
 
 	public void setFee(Double fee) {

@@ -75,6 +75,11 @@ public class BocmRcvTraceQueryModel extends ModelBase implements Serializable{
     private BigDecimal txAmt;
     
     /**
+     * 账户余额
+     */
+    private BigDecimal actBal;
+    
+    /**
      * 手续费收取方式
      */
     private String feeFlag;
@@ -484,6 +489,14 @@ public class BocmRcvTraceQueryModel extends ModelBase implements Serializable{
 
 	public void setPayeeActtp(String payeeActtp) {
 		this.payeeActtp = payeeActtp;
+	}
+
+	public BigDecimal getActBal() {
+		return actBal;
+	}
+
+	public void setActBal(BigDecimal actBal) {
+		this.actBal = actBal;
 	}
 	
 	

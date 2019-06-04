@@ -38,26 +38,32 @@ public class REP_10000 extends REP_BASE {
 
 
 	public Double getOtxnAmt() {
+		otxnAmt = otxnAmt/100;
 		return otxnAmt;
 	}
 
 	public void setOtxnAmt(Double otxnAmt) {
+		otxnAmt = otxnAmt*100;
 		this.otxnAmt = otxnAmt;
 	}
 
 	public Double getFee() {
+		fee = fee/100;
 		return fee;
 	}
 
 	public void setFee(Double fee) {
+		fee = fee*100;
 		this.fee = fee;
 	}
 
 	public Double getActBal() {
+		actBal = actBal/100;
 		return actBal;
 	}
 
 	public void setActBal(Double actBal) {
+		actBal = actBal*100;
 		this.actBal = actBal;
 	}
 

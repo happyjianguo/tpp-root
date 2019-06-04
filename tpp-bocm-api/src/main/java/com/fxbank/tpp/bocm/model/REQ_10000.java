@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.cip.base.pkg.tag.TagAnno.TagField;
 
 
@@ -114,7 +115,7 @@ public class REQ_10000 extends REQ_BASE {
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = txnAmt;
+		this.txnAmt = AmtBase.toPack(txnAmt);
 	}
 
 	public String getFeeFlg() {
@@ -130,7 +131,7 @@ public class REQ_10000 extends REQ_BASE {
 	}
 
 	public void setFee(Double fee) {
-		this.fee = fee;
+		this.fee = AmtBase.toPack(fee);;
 	}
 
 	public String getOprFlg() {
@@ -292,5 +293,6 @@ public class REQ_10000 extends REQ_BASE {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	} 
+	
 
 }

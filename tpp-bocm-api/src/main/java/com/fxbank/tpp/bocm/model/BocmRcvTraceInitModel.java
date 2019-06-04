@@ -52,9 +52,15 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 10,message = "dc_flag通存通兑标志最大长度是10")
 	private String dcFlag; //通存通兑标志
 	
-	@NotNull(message = "tx_amt交易金额不能为空")
-	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
-	private String txAmt;//交易金额
+    /**
+     * 交易金额
+     */
+    private BigDecimal txAmt;
+    
+    /**
+     * 账户余额
+     */
+    private BigDecimal actBal;
 	
     /**
      * 手续费收取方式
@@ -193,14 +199,6 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 
 	public void setDcFlag(String dcFlag) {
 		this.dcFlag = dcFlag;
-	}
-
-	public String getTxAmt() {
-		return txAmt;
-	}
-
-	public void setTxAmt(String txAmt) {
-		this.txAmt = txAmt;
 	}
 
 	public String getPayerAcno() {
@@ -428,5 +426,23 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	public void setPayeeActtp(String payeeActtp) {
 		this.payeeActtp = payeeActtp;
 	}
+
+	public BigDecimal getTxAmt() {
+		return txAmt;
+	}
+
+	public void setTxAmt(BigDecimal txAmt) {
+		this.txAmt = txAmt;
+	}
+
+	public BigDecimal getActBal() {
+		return actBal;
+	}
+
+	public void setActBal(BigDecimal actBal) {
+		this.actBal = actBal;
+	}
+
+	
 
 }

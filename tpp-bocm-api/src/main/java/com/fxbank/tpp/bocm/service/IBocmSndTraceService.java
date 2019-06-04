@@ -159,4 +159,18 @@ public interface IBocmSndTraceService {
 	 * @throws SysTradeExecuteException
 	 */
 	String getTraceNum(String date, String checkFlag) throws SysTradeExecuteException;
+	
+	/** 
+	* @Title: getSndTotalSum 
+	* @Description: 查询往账对账总金额 
+	* @param @param myLog
+	* @param @param date
+	* @param @param dcFlag
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return String    返回类型 
+	* @throws 
+	*/
+	String getSndTotalChkSum(MyLog myLog, String date) throws SysTradeExecuteException;
+	
 }

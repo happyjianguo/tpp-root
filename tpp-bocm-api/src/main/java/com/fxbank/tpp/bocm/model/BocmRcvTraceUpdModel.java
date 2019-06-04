@@ -9,6 +9,7 @@
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
@@ -41,6 +42,11 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
     private Integer bocmTime;//交行时间
 
     private String bocmTraceno;//交行流水
+    
+    /**
+     * 账户余额
+     */
+    private BigDecimal actBal;
 
     private String checkFlag;//对账标志
 
@@ -146,6 +152,14 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setBocmTime(Integer bocmTime) {
 		this.bocmTime = bocmTime;
+	}
+
+	public BigDecimal getActBal() {
+		return actBal;
+	}
+
+	public void setActBal(BigDecimal actBal) {
+		this.actBal = actBal;
 	}
 	
 	

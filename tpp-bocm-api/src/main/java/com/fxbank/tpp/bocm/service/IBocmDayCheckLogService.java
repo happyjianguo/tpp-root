@@ -48,7 +48,7 @@ public interface IBocmDayCheckLogService {
 	* @return List<DayCheckLogInitModel>    返回类型 
 	* @throws 
 	*/
-	List<BocmDayCheckLogInitModel> getDayCheckLog(MyLog myLog,Integer sysTime, Integer sysTraceno,Integer platDate,String direction) throws SysTradeExecuteException;
+	List<BocmDayCheckLogInitModel> getDayCheckLog(MyLog myLog,Integer sysTime, Integer sysTraceno,Integer platDate) throws SysTradeExecuteException;
 
 	/** 
 	* @Title: delete 
@@ -58,5 +58,5 @@ public interface IBocmDayCheckLogService {
 	* @return void    返回类型 
 	* @throws 
 	*/
-	void delete(String direction)throws SysTradeExecuteException; 
+	void delete()throws SysTradeExecuteException; 
 }

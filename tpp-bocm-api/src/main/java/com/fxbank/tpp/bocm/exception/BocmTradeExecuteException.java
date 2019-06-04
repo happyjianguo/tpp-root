@@ -26,8 +26,13 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	public final static String BOCM_E_10011 = "FX0011";
 	public final static String BOCM_E_10012 = "FX0012";
 	public final static String BOCM_E_10013 = "FX0013";
+	public final static String BOCM_E_10014 = "FX0014";
 	public final static String BOCM_E_11007 = "FX1007";
 	public final static String BOCM_E_16203 = "FX6203";
+	public final static String TPP_E_000001 = "TPP_E_000001";
+	public final static String TPP_E_000002 = "TPP_E_000002";
+	public final static String TPP_E_000003 = "TPP_E_000003";
+	public final static String TPP_E_000004 = "TPP_E_000004";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 
@@ -46,8 +51,13 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 			put(BOCM_E_10011, "不能隔日冲正");
 			put(BOCM_E_10012, "下载ESB文件失败");
 			put(BOCM_E_10013, "柜面通对账失败");
+			put(BOCM_E_10014, "无交易流水号");
 			put(BOCM_E_11007, "无此记录");
 			put(BOCM_E_16203, "交易超时");
+			put(TPP_E_000001, "调用加密平台PIN转加密失败");
+			put(TPP_E_000002, "调用加密平台ZPK加密明文PIN失败");
+			put(TPP_E_000003, "调用加密平台工作密钥更新失败");
+			put(TPP_E_000004, "调用加密平台MAC校验失败");
 			
 		}
 	};

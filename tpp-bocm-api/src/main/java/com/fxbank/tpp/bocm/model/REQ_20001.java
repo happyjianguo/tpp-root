@@ -89,19 +89,19 @@ public class REQ_20001 extends REQ_BASE {
     @FixedField(order = 28, len = 3, desc = "IC卡顺序")
     private String seqNo;
     
-    @FixedField(order = 29, len = 24, desc = "IC卡发卡行认证")
-    private String aRQC;
+    @FixedField(order = 30, len = 24, desc = "IC卡发卡行认证")
+    private String ARQC;
     
-    @FixedField(order = 30, len = 16, desc = "IC卡应用编号")
-    private String iCAID;
+    @FixedField(order = 31, len = 16, desc = "IC卡应用编号")
+    private String ICAID;
     
-    @FixedField(order = 31, len = 8, desc = "IC卡有效期")
-    private String iCOutDate;
+    @FixedField(order = 32, len = 8, desc = "IC卡有效期")
+    private String ICOutDate;
     
-    @FixedField(order = 32, len = 255, desc = "IC卡数据域（55域）")
-    private String iCData;
+    @FixedField(order = 33, len = 255, desc = "IC卡数据域（55域）")
+    private String ICData;
     
-    @FixedField(order = 33, len = 60, desc = "附言")
+    @FixedField(order = 34, len = 60, desc = "附言")
     private String remark;
 
 	public String getCcyCod() {
@@ -112,12 +112,12 @@ public class REQ_20001 extends REQ_BASE {
 		this.ccyCod = ccyCod;
 	}
 
-	public Double getTxnAmt() {
+	public Double getTxnAmt() { 
 		return txnAmt;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = txnAmt;
+		this.txnAmt = AmtBase.toPack(txnAmt);
 	}
 
 	public String getPin() {
@@ -272,36 +272,36 @@ public class REQ_20001 extends REQ_BASE {
 		this.seqNo = seqNo;
 	}
 
-	public String getaRQC() {
-		return aRQC;
+	public String getARQC() {
+		return ARQC;
 	}
 
-	public void setaRQC(String aRQC) {
-		this.aRQC = aRQC;
+	public void setARQC(String aRQC) {
+		ARQC = aRQC;
 	}
 
-	public String getiCAID() {
-		return iCAID;
+	public String getICAID() {
+		return ICAID;
 	}
 
-	public void setiCAID(String iCAID) {
-		this.iCAID = iCAID;
+	public void setICAID(String iCAID) {
+		ICAID = iCAID;
 	}
 
-	public String getiCOutDate() {
-		return iCOutDate;
+	public String getICOutDate() {
+		return ICOutDate;
 	}
 
-	public void setiCOutDate(String iCOutDate) {
-		this.iCOutDate = iCOutDate;
+	public void setICOutDate(String iCOutDate) {
+		ICOutDate = iCOutDate;
 	}
 
-	public String getiCData() {
-		return iCData;
+	public String getICData() {
+		return ICData;
 	}
 
-	public void setiCData(String iCData) {
-		this.iCData = iCData;
+	public void setICData(String iCData) {
+		ICData = iCData;
 	}
 
 	public String getRemark() {

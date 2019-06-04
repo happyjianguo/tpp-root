@@ -1,6 +1,7 @@
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
@@ -37,6 +38,12 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
 	//交易金额
 	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
 	private String txAmt;
+	
+    /**
+     * 账户余额
+     */
+    private BigDecimal actBal;
+	
 	//付款人账户
 	@Size(max = 50,message = "payer_acno付款人账户最大长度是50")
 	private String payerAcno; 
@@ -327,6 +334,14 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setBocmTime(Integer bocmTime) {
 		this.bocmTime = bocmTime;
+	}
+
+	public BigDecimal getActBal() {
+		return actBal;
+	}
+
+	public void setActBal(BigDecimal actBal) {
+		this.actBal = actBal;
 	}
 	
 	

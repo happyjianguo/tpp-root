@@ -109,7 +109,7 @@ public class REQ_20102 extends REQ_BASE {
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = txnAmt;
+		this.txnAmt = AmtBase.toPack(txnAmt);
 	}
 
 
