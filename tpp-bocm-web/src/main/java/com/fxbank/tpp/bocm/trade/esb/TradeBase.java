@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.dto.DataTransObject;
-import com.fxbank.tpp.bocm.model.REQ_BASE;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
+import com.fxbank.tpp.bocm.model.REQ_BASE;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
@@ -44,12 +45,19 @@ public class TradeBase {
 		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
 		reqBody_30043003001.setBrchNoT4(branchId);
 		
+		//TODO 转换正式交行请求  ESB请求
 		
-		/**
 		
 		myLog.info(logger, "TradeBase通过本行机构号查询人行行号");
 		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,				
 				ESB_REP_30043003001.class);
+		
+		//BANK_NUMBER	行号
+		//BNK_NM_T	行名
+		//SETTLEMENT_BANK_NO	清算行号
+		//LQTN_BNK_NM_T1	清算行名
+
+		
 		//发起行人行行号
 		String BANK_NUMBER = esbRep_30043003001.getRepBody().getBankNumber();
 		//人行清算行号
@@ -59,11 +67,11 @@ public class TradeBase {
 		//注意：合作银行发起交易时，SBnkNo指合作银行总行行号（12位）
         //                 RBnkNo指合作银行发起交易网点行号
 		//发起行行号
-		reqHeader.setsBnkNo(SETTLEMENT_BANK_NO); // 总行 取上面接口返回值
-		//接收行行号 办理业务网点的总行行号
-		reqHeader.setrBnkNo(BANK_NUMBER); // 网点 取上面接口返回值
+		reqBase.setSbnkNo(SETTLEMENT_BANK_NO); // 总行 取上面接口返回值
+		//接收行行号 办理业务网点的人行行号
+		reqBase.setRbnkNo(BANK_NUMBER); // 网点 取上面接口返回值
 		
-		*/
+		
 		
 //		//发起行行号  313229000660
 		reqBase.setSbnkNo("313229000660"); // 总行 取上面接口返回值

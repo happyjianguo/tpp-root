@@ -73,7 +73,7 @@ class Run implements Runnable {
             rep.setActNo("62316600000123");
             rep.setActNam("zzh");
             rep.setActBal(12.23d);
-            String repData = FixedUtil.toFixed(rep);
+            String repData = FixedUtil.toFixed(rep,"UTF-8");
             repData = repData + "FFFFFFFFFFFFFFFF";
             os = socket.getOutputStream();
             String repLen = String.format("%08d", repData.getBytes(SimuBocmServer.CODING).length);
