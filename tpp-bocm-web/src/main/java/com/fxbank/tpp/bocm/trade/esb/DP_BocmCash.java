@@ -393,8 +393,15 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setTranAmt(reqBody.getDpsAmtT());
 		reqBody_30011000104.setChannelType("BU");
 		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
+		reqBody_30011000104.setChargeMethod("1");
 		reqBody_30011000104.setCollateFlag("Y");
-
+		
+		//SEND_BANK_CODE	 发起行行号
+		//BANK_CODE	                        我方银行行号
+		//OTH_BANK_CODE	            对方银行行号
+		reqBody_30011000104.setSendBankCode("313221099020");
+		reqBody_30011000104.setOthBankCode(reqBody.getOpnAcctBnkNoT8());
+//		reqBody_30011000104.setBankCode("");
 		//TT-账户内扣 CA-现金
 		reqBody_30011000104.setChargeMethod(reqBody.getRcveWyT());
 
@@ -435,12 +442,13 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		myLog.info(logger, "向交行发送发送磁条卡现金通存请求报文");
 		
 		
-		
+		//TODO 转换正式交行请求
 //		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
 //				REP_10000.class);
 		
+		REP_10000 rep_10000 = null;
 		//模拟报文返回，挡板
-		REP_10000 rep_10000 = new REP_10000();
+		rep_10000 = new REP_10000();
 		rep_10000.setActBal(10d);
 		rep_10000.setFee(0d);
 		rep_10000.setOtxnAmt(0d);
@@ -481,10 +489,10 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req20000.setAgIdTp(reqBody.getAgentCrtfT());
 		req20000.setAgIdNo(reqBody.getAgentCrtfNoT());
 		req20000.setSeqNo(reqBody.getIcCardSeqNoT1());
-		req20000.setaRQC(reqBody.getIcCard91T());
-		req20000.setiCAID(reqBody.getIcCard9f09T());
-		req20000.setiCOutDate(reqBody.getIcCardAvaiDtT());
-		req20000.setiCData(reqBody.getIcCardF55T());
+		req20000.setARQC(reqBody.getIcCard91T());
+		req20000.setICAID(reqBody.getIcCard9f09T());
+		req20000.setICOutDate(reqBody.getIcCardAvaiDtT());
+		req20000.setICData(reqBody.getIcCardF55T());
         
 //		REP_20000 rep_20000 = forwardToBocmService.sendToBocm(req20000, 
 //				REP_20000.class);
@@ -527,6 +535,9 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
 		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
 		reqSysHead.setSourceType(reqDto.getReqSysHead().getSourceType());
+		
+		
+		
 		esbReq_30014000101.setReqSysHead(reqSysHead);
 
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();

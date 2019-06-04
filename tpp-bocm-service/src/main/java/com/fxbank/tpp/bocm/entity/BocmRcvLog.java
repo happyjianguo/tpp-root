@@ -65,6 +65,12 @@ public class BocmRcvLog {
     /**
      * null
      */
+    @Column(name = "ACT_BAL")
+    private BigDecimal actBal;
+    
+    /**
+     * null
+     */
     @Column(name = "TX_AMT")
     private BigDecimal txAmt;
     
@@ -730,6 +736,14 @@ public class BocmRcvLog {
 
 	public void setPayeeActtp(String payeeActtp) {
 		this.payeeActtp = payeeActtp;
+	}
+
+	public BigDecimal getActBal() {
+		return actBal;
+	}
+
+	public void setActBal(BigDecimal actBal) {
+		this.actBal = actBal;
 	}
 	
 	

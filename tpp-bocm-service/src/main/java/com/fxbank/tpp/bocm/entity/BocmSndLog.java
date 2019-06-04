@@ -71,6 +71,12 @@ public class BocmSndLog {
     /**
      * null
      */
+    @Column(name = "ACT_BAL")
+    private BigDecimal actBal;
+    
+    /**
+     * null
+     */
     @Column(name = "FEE_FLAG")
     private String feeFlag;
     
@@ -731,6 +737,14 @@ public class BocmSndLog {
 
 	public void setPayeeActtp(String payeeActtp) {
 		this.payeeActtp = payeeActtp;
+	}
+
+	public BigDecimal getActBal() {
+		return actBal;
+	}
+
+	public void setActBal(BigDecimal actBal) {
+		this.actBal = actBal;
 	}
     
     

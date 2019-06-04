@@ -79,11 +79,12 @@ public class DB_BocmCashTest {
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
-		reqSysHead.setSourceType("BOCM");	//网联
+		reqSysHead.setSourceType("MT");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("02002");
-		reqSysHead.setUserId("002241");
+		reqSysHead.setBranchId("01016");
+		reqSysHead.setUserId("000917");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
+//		reqSysHead.setTranDate("");
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
 		reqSysHead.setUserLang("CHINESE");
 		reqSysHead.setSeqNo(String.valueOf(Math.abs(new Random().nextInt())));
@@ -94,6 +95,7 @@ public class DB_BocmCashTest {
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());
 		reqSysHead.setAuthUserId("999");
+		reqSysHead.setProgramId("7J12");
 		reqBody = req.new REQ_BODY(); 
 		req.setReqSysHead(reqSysHead);
 		req.setReqBody(reqBody);
@@ -106,8 +108,8 @@ public class DB_BocmCashTest {
 		reqBody.setCcyT("CNY");
 		reqBody.setNaT1("姓名");//姓名
 		reqBody.setCardNoT3("6222600530011742438");//卡号
-		reqBody.setDpsAmtT("100.00");//存款金额
-		reqBody.setFeeT3("0.00");//手续费
+		reqBody.setDpsAmtT("101.00");//存款金额
+		reqBody.setFeeT3("1.00");//手续费
 		reqBody.setAcctBalT3("1000.00");//账户余额
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费
 		reqBody.setHldrGlblIdT("201101");//身份证号
@@ -118,11 +120,11 @@ public class DB_BocmCashTest {
 		reqBody.setAcctTpT("0");
 		reqBody.setBusiMdT1("0");//业务模式
 		reqBody.setRdCardWyT("0");//存款时必输  0刷卡 1手工输入
-		reqBody.setOpnAcctBnkNoT8("88291991");//开户行号
+		reqBody.setOpnAcctBnkNoT8("301100000015");//开户行号
 		//15	居民身份证        
 		reqBody.setIdTpT2("15");
 		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
-		reqBody.setIcCardFlgT4("1");//IC卡磁条卡标志   0磁条卡  1IC卡
+		reqBody.setIcCardFlgT4("2");//IC卡磁条卡标志   0磁条卡  1IC卡
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));

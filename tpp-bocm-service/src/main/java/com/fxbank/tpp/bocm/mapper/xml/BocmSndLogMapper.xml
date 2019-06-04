@@ -11,6 +11,7 @@
     <result column="TX_CODE" jdbcType="NVARCHAR" property="txCode" />
     <result column="DC_FLAG" jdbcType="NVARCHAR" property="dcFlag" />
     <result column="TX_AMT" jdbcType="DECIMAL" property="txAmt" />
+    <result column="ACT_BAL" jdbcType="DECIMAL" property="actBal" />
     <result column="FEE_FLAG" jdbcType="NVARCHAR" property="feeFlag" />
     <result column="FEE" jdbcType="DECIMAL" property="fee" />
     <result column="HOST_DATE" jdbcType="DECIMAL" property="hostDate" />
@@ -43,9 +44,9 @@
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap">
     select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SOURCE_TYPE, TX_BRANCH, TX_IND, TX_CODE,DC_FLAG, 
-    TX_AMT, HOST_DATE, HOST_TRACENO, PAYER_ACNO, PAYER_NAME, PAYEE_ACNO, PAYEE_NAME, 
+    TX_AMT, ACT_BAL, HOST_DATE, HOST_TRACENO, PAYER_ACNO, PAYER_NAME, PAYEE_ACNO, PAYEE_NAME, 
     BOCM_BRANCH, BOCM_DATE, BOCM_TRACENO, CHECK_FLAG, HOST_STATE, BOCM_STATE, TX_TEL, 
-    CHK_TEL, AUTH_TEL, PRINT, INFO, RET_CODE, RET_MSG, BOCM_FLAG, HOST_BRANCH,
+    CHK_TEL, AUTH_TEL, PRINT, INFO, RET_CODE, RET_MSG,  HOST_BRANCH,
     FEE_FLAG,FEE,SND_BANKNO,RCV_BANKNO,PAYER_BANK,PAYER_ACTTP,PAYEE_BANK,PAYEE_ACTTP
     from BOCM_SND_LOG
   </select>
@@ -65,9 +66,6 @@
       <if test="endDate != null and endDate != ''">
         and plat_date <![CDATA[ <= ]]> #{endDate}
       </if>
-      <if test='brnoFlag != null and brnoFlag != "" and brnoFlag != "0"'>
-        and bocm_flag = #{brnoFlag}
-      </if>
     </trim>
      order by plat_trace desc
   </select>
@@ -83,7 +81,7 @@
     select plat_date, plat_trace, plat_time, source_type, tx_branch, tx_ind,tx_code, dc_flag, 
     tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
     bocm_branch, bocm_date, bocm_traceno, check_flag, host_state, bocm_state, tx_tel, 
-    chk_tel, auth_tel, print, info,ret_code,ret_msg,bocm_flag,host_branch,
+    chk_tel, auth_tel, print, info,ret_code,ret_msg,host_branch,
     fee_flag,fee,snd_bankno,rcv_bankno,payer_bank,payer_acttp,payee_bank,payee_acttp
     from bocm_snd_log where plat_date=#{date} and host_state=1 and check_flag in ('2','3')
   </select>
@@ -92,5 +90,10 @@
      <if test='checkFlag != null and checkFlag != ""'>
         and check_flag = #{checkFlag}
       </if>
+  </select>
+  
+  <select id="selectChkSndTotalSum" resultType="java.lang.String" >
+    select sum(tx_amt) as sum from bocm_snd_log where 
+     plat_date=#{date} and host_state=1 and check_flag in ('2','3')
   </select>
 </mapper>

@@ -32,7 +32,7 @@ public class BocmClient {
     @Resource
     private MyJedis myJedis;
 
-    public <T> T comm(MyLog myLog, Object req, Class<T> clazz) throws SysTradeExecuteException {
+    public <T> T comm(MyLog myLog, Object req, Class<T> clazz ,String MAC) throws SysTradeExecuteException {
         String ip = null;
         Integer port = 0;
         Integer timeOut = 0;
@@ -55,7 +55,7 @@ public class BocmClient {
         }
         myLog.info(logger, "连接信息：IP[" + ip + "],PORT[" + port + "],TIMEOUT[" + timeOut + "]");
 
-        BocmInitializer<T> initializer = new BocmInitializer<T>(myLog, req, clazz);
+        BocmInitializer<T> initializer = new BocmInitializer<T>(myLog, req, clazz, MAC);
         NettySyncClient<T> clientSync = new NettySyncClient<T>(myLog, initializer);
         T repData = clientSync.comm(ip, port, timeOut);
         return repData;

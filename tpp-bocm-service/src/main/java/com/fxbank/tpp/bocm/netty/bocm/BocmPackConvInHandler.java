@@ -38,12 +38,13 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 		try {
 			StringBuffer pack = new StringBuffer((String) msg);
 			String mac = pack.substring(pack.length() - 16);
+			this.myLog.info(logger, "交行请求模拟接收报文  =[" + pack + "]");
 			this.myLog.info(logger, "mac=[" + mac + "]");
 			// TODO 校验MAC
 			
 			String fixPack = pack.substring(0, pack.length() - 16);
 			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();			
-			repBase = (REP_BASE)new FixedUtil(fixPack).toBean(repBase.getClass());		
+			repBase = (REP_BASE)new FixedUtil(fixPack,"UTF-8").toBean(repBase.getClass());		
 			ctx.fireChannelRead(repBase);
 		} finally {
 			ReferenceCountUtil.release(msg);

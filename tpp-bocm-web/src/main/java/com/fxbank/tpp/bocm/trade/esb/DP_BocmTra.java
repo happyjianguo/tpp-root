@@ -1,9 +1,5 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -15,7 +11,6 @@ import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
-import com.fxbank.cip.base.dto.REP_RET;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -390,11 +385,18 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
 		
+		//SEND_BANK_CODE	 发起行行号
+		//BANK_CODE	                        我方银行行号
+		//OTH_BANK_CODE	            对方银行行号
+		reqBody_30011000104.setSendBankCode("313221099020");
+		reqBody_30011000104.setBankCode(reqBody.getPyrOpnBnkNoT2());
+		reqBody_30011000104.setOthBankCode(reqBody.getPyeeOpnBnkNoT1());
+		
 //		if(1==1){
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);	
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
-			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);			
+//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);			
 //			throw e;
 //		}
 
@@ -438,12 +440,13 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req10000.setThdMag(reqBody.getThrTrkInfoT1());
 		req10000.setRemark(reqBody.getNoteT2());
         
+		//TODO 转换正式交行请求
 //		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
 //				REP_10000.class);
 		
 //		if(1==1){
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
-			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);	
+//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);	
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
 //			throw e;
 //		}
@@ -491,10 +494,10 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req20000.setAgIdTp(reqBody.getAgentCrtfT());
 		req20000.setAgIdNo(reqBody.getCmsnHldrGlblIdT());
 		req20000.setSeqNo(reqBody.getIcCardSeqNoT1());
-		req20000.setaRQC(reqBody.getIcCard91T());
-		req20000.setiCAID(reqBody.getIcCard9f09T());
-		req20000.setiCOutDate(reqBody.getIcCardAvaiDtT());
-		req20000.setiCData(reqBody.getIcCardF55T());
+		req20000.setARQC(reqBody.getIcCard91T());
+		req20000.setICAID(reqBody.getIcCard9f09T());
+		req20000.setICOutDate(reqBody.getIcCardAvaiDtT());
+		req20000.setICData(reqBody.getIcCardF55T());
 		req20000.setRemark(reqBody.getNoteT2());
         
 		REP_20000 rep_20000 = forwardToBocmService.sendToBocm(req20000, 

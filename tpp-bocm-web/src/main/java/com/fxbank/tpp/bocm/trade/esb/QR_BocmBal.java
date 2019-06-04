@@ -25,7 +25,6 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
  * @Author: 周勇沩
  * @Date: 2019-04-15 11:15:42
  */
-//@Service("REQ_30063800301")
 @Service("REQ_30063001201")
 public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 	private static Logger logger = LoggerFactory.getLogger(QR_BocmBal.class);

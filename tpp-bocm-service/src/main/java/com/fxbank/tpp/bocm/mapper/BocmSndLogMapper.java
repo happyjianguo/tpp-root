@@ -14,4 +14,6 @@ public interface BocmSndLogMapper extends MyMapper<BocmSndLog> {
     String selectDtSndTotalSum(@Param("date") String date,@Param("flag") String flag);
     List<BocmSndLog> selectCheckedTrace(String date);
     String selectTraceNum(@Param("date") String date,@Param("checkFlag") String checkFlag);
+    
+    String selectChkSndTotalSum(@Param("date") String date);
 }

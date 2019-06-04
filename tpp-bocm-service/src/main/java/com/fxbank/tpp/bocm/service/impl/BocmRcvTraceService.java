@@ -59,15 +59,24 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		entity.setTxCode(record.getTxCode());
 		entity.setDcFlag(record.getDcFlag());
 		if(record.getTxAmt()!=null){
-			BigDecimal txAmt = new BigDecimal(record.getTxAmt());
-			entity.setTxAmt(txAmt);
+			entity.setTxAmt(record.getTxAmt());
 		}
+		if(record.getActBal()!=null){
+			entity.setActBal(record.getActBal());
+		}
+
 		entity.setPayerAcno(record.getPayerAcno());
 		entity.setPayerName(record.getPayerName());
 		entity.setPayeeAcno(record.getPayeeAcno());
 		entity.setPayeeName(record.getPayeeName());
 		entity.setBocmBranch(record.getBocmBranch());
+		
 		entity.setHostState(record.getHostState());	
+		entity.setHostDate(record.getHostDate());	
+		entity.setHostTraceno(record.getHostTraceno());
+		entity.setRetCode(record.getRetCode());
+		entity.setRetMsg(record.getRetMsg());
+		
 		entity.setBocmState(record.getBocmState());
 		entity.setBocmDate(record.getBocmDate());
 		entity.setBocmTime(record.getBocmTime());
@@ -141,6 +150,9 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		}
 		if(null != record.getCheckFlag()) {
 			bocmRcvLog.setCheckFlag(record.getCheckFlag());
+		}
+		if(null != record.getActBal()){
+			bocmRcvLog.setActBal(record.getActBal());
 		}
 		
 		bocmRcvLogMapper.updateByPrimaryKeySelective(bocmRcvLog);

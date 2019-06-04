@@ -5,6 +5,7 @@
     <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
     <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
     <result column="SETTLE_DATE" property="settleDate" jdbcType="DECIMAL" />
+    <result column="TRAN_TYPE" property="tranType" jdbcType="NVARCHAR" />
     <result column="SETTLE_BRANCH" property="settleBranch" jdbcType="NVARCHAR" />
     <result column="HOST_DATE" property="hostDate" jdbcType="DECIMAL" />
     <result column="HOST_TRACENO" property="hostTraceno" jdbcType="NVARCHAR" />
@@ -16,12 +17,12 @@
     <result column="DIRECTION" property="direction" jdbcType="NVARCHAR" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select PLAT_DATE, PLAT_TRACE, SETTLE_DATE, SETTLE_BRANCH, HOST_DATE, HOST_TRACENO, 
+    select PLAT_DATE, PLAT_TRACE,TRAN_TYPE, SETTLE_DATE, SETTLE_BRANCH, HOST_DATE, HOST_TRACENO, 
     CCY, TX_AMT, ACCOUNTNO, REVERSAL, TX_STATUS, DIRECTION
     from BOCM_CHK_LOG
   </select>
   
   <select id="deleteAll" >
-    delete from bocm_chk_log where direction = #{direction}
+    delete from bocm_chk_log
   </select>
 </mapper>

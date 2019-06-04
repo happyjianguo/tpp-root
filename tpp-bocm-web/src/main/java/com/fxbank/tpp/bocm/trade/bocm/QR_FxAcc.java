@@ -60,12 +60,15 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_20102 req = (REQ_20102) dto;
 		REP_20102 rep = new REP_20102();
+		
+		//TODO 获取交行账户信息
+		
 		rep.setActNo("6288880210000209903");
-		rep.setActBnk("623166000009");
+		rep.setActBnk("301100000015");
 		rep.setActNam("ZZZ");
 		rep.setActTyp("5");
 		rep.setAmtLmt("0");
-		
+		rep.setFee(1d);
 //		logger.info(rep.creaFixPack());
 		
 		return rep;

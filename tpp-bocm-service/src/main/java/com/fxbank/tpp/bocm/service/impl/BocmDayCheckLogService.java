@@ -43,6 +43,7 @@ public class BocmDayCheckLogService implements IBocmDayCheckLogService {
 		tcexChkLog.setCcy(model.getCcy());
 		tcexChkLog.setHostDate(model.getHostDate());
 		tcexChkLog.setHostTraceno(model.getHostTraceno());
+		tcexChkLog.setTranType(model.getTranType());
 		tcexChkLog.setPlatDate(model.getPlatDate());
 		tcexChkLog.setPlatTrace(model.getPlatTrace());
 		tcexChkLog.setReversal(model.getReversal());
@@ -55,10 +56,10 @@ public class BocmDayCheckLogService implements IBocmDayCheckLogService {
 	}
 
 	@Override
-	public List<BocmDayCheckLogInitModel> getDayCheckLog(MyLog myLog,Integer sysTime, Integer sysTraceno,Integer platDate,String direction) throws SysTradeExecuteException {
+	public List<BocmDayCheckLogInitModel> getDayCheckLog(MyLog myLog,Integer sysTime, Integer sysTraceno,Integer platDate) throws SysTradeExecuteException {
 		BocmChkLog tcexChkLog = new BocmChkLog();
 		tcexChkLog.setPlatDate(platDate);
-		tcexChkLog.setDirection(direction);
+		//tcexChkLog.setDirection(direction);
 		
 		List<BocmChkLog> tcexChkLogList = mapper.select(tcexChkLog);
 		List<BocmDayCheckLogInitModel> dayCheckLogInitModelList = new ArrayList<BocmDayCheckLogInitModel>();
@@ -68,6 +69,7 @@ public class BocmDayCheckLogService implements IBocmDayCheckLogService {
 			model.setCcy(tpp.getCcy());
 			model.setHostDate(tpp.getHostDate());
 			model.setHostTraceno(tpp.getHostTraceno());
+			model.setTranType(tpp.getTranType());
 			model.setPlatDate(tpp.getPlatDate());
 			model.setPlatTrace(tpp.getPlatTrace());
 			model.setReversal(tpp.getReversal());
@@ -82,8 +84,8 @@ public class BocmDayCheckLogService implements IBocmDayCheckLogService {
 	}
 
 	@Override
-	public void delete(String direction) throws SysTradeExecuteException {
-		mapper.deleteAll(direction);
+	public void delete() throws SysTradeExecuteException {
+		mapper.deleteAll();
 	}
 
 

@@ -427,7 +427,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		InitCheckLog(localFile,myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(),direction);
 		
 		//取对账文件数据
-		List<BocmDayCheckLogInitModel> dayCheckLogList = dayCheckLogService.getDayCheckLog(myLog, dto.getSysTime(), dto.getSysTraceno(), dto.getSysDate(),direction);
+		List<BocmDayCheckLogInitModel> dayCheckLogList = dayCheckLogService.getDayCheckLog(myLog, dto.getSysTime(), dto.getSysTraceno(), dto.getSysDate());
 			
 		return 	dayCheckLogList;
 	}
@@ -436,7 +436,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		BufferedReader br = null;
 		myLog.info(logger, "账户变动信息入库开始");
 		try {
-			dayCheckLogService.delete(direction);
+			dayCheckLogService.delete();
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(localFile)),"UTF-8"));
 			String lineTxt=null;
 			while ((lineTxt = br.readLine()) != null) {
@@ -635,7 +635,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 						BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setCheckFlag("2");
 						sndTraceService.sndTraceUpd(record);
-					}else if(hostState.equals("0")||hostState.equals("3")||hostState.equals("6")||hostState.equals("7")) {
+					}else if(hostState.equals("0")||hostState.equals("3")||hostState.equals("5")||hostState.equals("6")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 						BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");
@@ -670,7 +670,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 						BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setCheckFlag("2");
 						sndTraceService.sndTraceUpd(record);
-					}else if(hostState.equals("0")||hostState.equals("3")) {
+					}else if(hostState.equals("0")||hostState.equals("3")||hostState.equals("5")||hostState.equals("6")) {
 						//核心记账成功，渠道状态为超时、存款确认、冲正超时、冲正失败，修改渠道状态为成功
 						BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 						record.setHostState("1");

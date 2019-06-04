@@ -8,6 +8,8 @@
 */
 package com.fxbank.tpp.bocm.trade.bocm;
 
+import java.math.BigDecimal;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -95,6 +97,10 @@ public class RV_Fx implements TradeExecutionStrategy {
 				myLog.error(logger, "交行向本行发起抹账交易，本行渠道无交易记录，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_11007);
 				throw e2;
+			}else{
+				if("4".equals(model.getHostState())){
+					return rep;
+				}
 			}
 			//2.核心冲正
 			ESB_REP_30014000101 esbRep_30014000101 = null;
@@ -132,7 +138,7 @@ public class RV_Fx implements TradeExecutionStrategy {
 		record.setTxBranch(reqDto.getSbnkNo());
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
-		record.setTxAmt(reqDto.getTxnAmt().toString());
+		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt()));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		record.setHostState(hostState);

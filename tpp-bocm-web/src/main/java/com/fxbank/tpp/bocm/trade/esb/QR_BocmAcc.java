@@ -70,6 +70,8 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		req20102.setFeeFlg(reqBody.getRcveWyT());
 		req20102.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		myLog.info(logger, "发送账号信息 查询请求至交行");
+		
+		//TODO 转换正式交行请求
 		REP_20102 rep20102 = forwardToBocmService.sendToBocm(req20102, REP_20102.class);
 
 		REP_30063001301 rep = new REP_30063001301();
@@ -78,7 +80,7 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		repBody.setNaT1(rep20102.getActNam());
 		//手续费
 		repBody.setFeeT3(rep20102.getFee().toString());
-		repBody.setHndlPymntFeeT5("0.00");
+		repBody.setHndlPymntFeeT5("1.00");
 		//开户行号
 		repBody.setPyeeOpnBnkNoT1(rep20102.getActBnk());
 		//账户类型

@@ -25,6 +25,12 @@ public class BocmChkLog {
      */
     @Column(name = "SETTLE_DATE")
     private Integer settleDate;
+    
+    /**
+     * null
+     */
+    @Column(name = "TRAN_TYPE")
+    private String tranType;
 
     /**
      * null
@@ -238,4 +244,14 @@ public class BocmChkLog {
     public void setDirection(String direction) {
         this.direction = direction;
     }
+
+	public String getTranType() {
+		return tranType;
+	}
+
+	public void setTranType(String tranType) {
+		this.tranType = tranType;
+	}
+    
+    
 }

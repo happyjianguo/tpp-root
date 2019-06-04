@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.netty.bocm;
 
+import org.springframework.stereotype.Component;
+
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.netty.NettySyncHandler;
 import com.fxbank.cip.base.netty.NettySyncSlot;
@@ -18,11 +20,13 @@ public class BocmInitializer<T> extends ChannelInitializer<SocketChannel> {
     private MyLog myLog;
     private Object reqData;
     private Class<T> clazz;
+    private String MAC;
 
-    public BocmInitializer(MyLog myLog, Object reqData, Class<T> clazz) {
+    public BocmInitializer(MyLog myLog, Object reqData, Class<T> clazz, String MAC) {
         this.myLog = myLog;
         this.reqData = reqData;
         this.clazz = clazz;
+        this.MAC = MAC;
     }
     
     @Override
@@ -31,7 +35,7 @@ public class BocmInitializer<T> extends ChannelInitializer<SocketChannel> {
         p.addLast(new BocmLenghtDecoder<T>(this.myLog));
         p.addLast(new BocmLengthEncoder(this.myLog));
         p.addLast(new BocmPackConvInHandler<T>(this.myLog,clazz));
-        p.addLast(new BocmPackConvOutHandler(this.myLog));
+        p.addLast(new BocmPackConvOutHandler(this.myLog,MAC));
         p.addLast(new NettySyncHandler<T>(this.myLog,this.reqData));
     }
 

@@ -51,10 +51,15 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		entity.setPayerName(record.getPayerName());
 		entity.setPayeeAcno(record.getPayeeAcno());
 		entity.setPayeeName(record.getPayeeName());
-		entity.setBocmBranch(record.getBocmBranch());
+		
+		
 		entity.setHostState(record.getHostState());		
-		entity.setHostDate(record.getHostDate());
+		entity.setHostDate(record.getHostDate());	
 		entity.setHostTraceno(record.getHostTraceno());
+		entity.setRetCode(record.getRetCode());
+		entity.setRetMsg(record.getRetMsg());
+		
+		entity.setBocmBranch(record.getBocmBranch());
 		entity.setBocmState(record.getBocmState());
 		entity.setBocmDate(record.getBocmDate());
 		entity.setBocmTime(record.getBocmTime());
@@ -371,6 +376,12 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 	@Override
 	public String getTraceNum(String date, String checkFlag) throws SysTradeExecuteException {
 		String sum = bocmSndLogMapper.selectTraceNum(date, checkFlag);
+		return sum;
+	}
+	
+	@Override
+	public String getSndTotalChkSum(MyLog myLog, String date) throws SysTradeExecuteException{
+		String sum = bocmSndLogMapper.selectChkSndTotalSum(date);
 		return sum;
 	}
 }

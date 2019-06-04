@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
+import com.fxbank.tpp.bocm.model.REP_10000;
 import com.fxbank.tpp.bocm.model.REP_10103;
 import com.fxbank.tpp.bocm.model.REQ_10103;
 
@@ -35,20 +37,20 @@ public class CHK_10103 extends BASE_TEST {
 	@Before
 	public void init(){
 		req = new REQ_10103();
-		super.initReqHeader("10103", req.getHeader());
+		super.initReqHeader("10103", req);
 	}
 	
 	@Test
 	public void ok() throws Exception {
 
 		
-		req.setFilNam("BUPS31322900000820190620.dat");
+		req.setFilNam("BUPS31322900000820190623.dat");
 		
-		String repData = super.comm(req.creaFixPack());
+		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));
 		REP_10103 rep = new REP_10103();
-		rep.chanFixPack(repData);
-		assertEquals(rep.getHeader().gettMsgTyp(), "N");
-		assertEquals(rep.getHeader().gettRspCd(), "FX0000");
+		rep = (REP_10103)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
+		assertEquals(rep.getTmsgTyp(), "N");
+		assertEquals(rep.getTrspCd(), "FX0000");
 	}
 
 }

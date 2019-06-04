@@ -90,8 +90,7 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		//3.更新流水表核心记账状态
 		updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
 		
-		//4.设置返回报文
-		
+		//4.设置返回报文		
 		rep.setActNo(esbRep_30013000201.getRepBody().getBaseAcctNo());
 		rep.setActBal(new BigDecimal(esbRep_30013000201.getRepBody().getBalance()));
 		rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());

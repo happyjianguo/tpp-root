@@ -58,9 +58,9 @@ import com.fxbank.tpp.tcex.service.ISndTraceService;
 
 import redis.clients.jedis.Jedis;
 
-@Configuration
-@Component
-@EnableScheduling
+//@Configuration
+//@Component
+//@EnableScheduling
 public class CityCheckAcctTask {
 	private static Logger logger = LoggerFactory.getLogger(CityCheckAcctTask.class);
 

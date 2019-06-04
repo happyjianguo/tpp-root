@@ -2,16 +2,14 @@ package com.fxbank.tpp.bocm.nettty;
 
 import javax.annotation.Resource;
 
-import com.fxbank.cip.base.common.LogPool;
-import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.pkg.fixed.FixedUtil;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_BASE;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_HEADER;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
+import com.fxbank.tpp.bocm.dto.bocm.REQ_BASE;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -38,6 +36,7 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 		try {
 			StringBuffer pack = new StringBuffer((String) msg);
 			String fixPack = pack.substring(0, pack.length() - 16);
+			myLog.info(logger, "WEB SERVER请求报文=[" + fixPack + "]");
 			String mac = pack.substring(pack.length() - 16);
 			myLog.info(logger, "mac=[" + mac + "]");
 			// 校验MAC TODO
@@ -55,7 +54,7 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 			
 			
 			reqBase = (REQ_BASE) bocmClass.newInstance();			
-			reqBase = (REQ_BASE)new FixedUtil(fixPack).toBean(reqBase.getClass());			
+			reqBase = (REQ_BASE)new FixedUtil(fixPack,"UTF-8").toBean(reqBase.getClass());			
 			reqBase.setTxCode(txCode);
 			reqBase.setSourceType("BU");
 			ctx.fireChannelRead(reqBase);

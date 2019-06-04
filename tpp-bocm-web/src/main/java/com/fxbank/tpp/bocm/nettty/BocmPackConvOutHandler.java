@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
@@ -15,6 +16,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.dto.bocm.REP_BASE;
 import com.fxbank.tpp.bocm.dto.bocm.REP_ERROR;
+import com.fxbank.tpp.bocm.service.IBocmMacService;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -34,9 +36,13 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 
 	@Resource
 	private LogPool logPool;
+	
+	@Reference(version = "1.0.0")
+    private IBocmMacService macService;
 
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+		logger.info( "WEB Netty组包发送交行报文");
 		MyLog myLog = this.logPool.get();
 		@SuppressWarnings("unchecked")
 		Map<String, DataTransObject> dtoMap = (Map<String, DataTransObject>) msg;
@@ -71,10 +77,22 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 
 		//生成MAC TODO
 		String mac = "FFFFFFFFFFFFFFFF";
+		
 
-		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(repDto));
+
+		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(repDto,"UTF-8"));
 		fixPack.append(mac);
-
+		
+//		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(repDto,"UTF-8"));
+//		myLog.info(logger, "组包发送交行报文");
+//		String jsonReq = fixPack.toString();
+//		//需要生成MAC
+//		byte[] macBytes = jsonReq.getBytes();
+//		String mac = macService.calcBOCM(myLog,macBytes);
+//		fixPack.append(mac);
+		
+		myLog.info(logger, "组包发送交行报文MAC:"+mac);
+		myLog.info(logger, "WEB SERVER返回报文=[" + fixPack.toString() + "]");
 		ctx.writeAndFlush(fixPack.toString(),promise);
 		ctx.close();
 	}
