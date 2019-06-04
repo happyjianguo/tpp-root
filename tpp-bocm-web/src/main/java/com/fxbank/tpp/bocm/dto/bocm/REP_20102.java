@@ -8,9 +8,8 @@
 */
 package com.fxbank.tpp.bocm.dto.bocm;
 
-import java.math.BigDecimal;
-
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+import com.fxbank.tpp.bocm.model.AmtBase;
 
 /** 
 * @ClassName: REP_20102 
@@ -22,7 +21,7 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 public class REP_20102 extends REP_BASE {
 	
 	@FixedField(order = 5, len = 3, desc = "币种")
-	private String ccyCod;
+	private String ccyCod="CNY";
 	
 	@FixedField(order = 6, len = 12, desc = "开户行行号")
 	private String actBnk;
@@ -90,7 +89,7 @@ public class REP_20102 extends REP_BASE {
 	}
 
 	public void setFee(Double fee) {
-		this.fee = fee;
+		this.fee = AmtBase.toPack(fee);;
 	}
 
 	public String getActAdr() {

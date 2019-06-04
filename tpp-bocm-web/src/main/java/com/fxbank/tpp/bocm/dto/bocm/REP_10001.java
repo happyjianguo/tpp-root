@@ -3,6 +3,7 @@ package com.fxbank.tpp.bocm.dto.bocm;
 import java.math.BigDecimal;
 
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+import com.fxbank.tpp.bocm.model.AmtBase;
 
 /** 
 * @ClassName: REP_10001 
@@ -27,7 +28,7 @@ public class REP_10001 extends REP_BASE {
 	}
 
 	public void setOtxnAmt(Double otxnAmt) {
-		this.otxnAmt = otxnAmt;
+		this.otxnAmt = AmtBase.toPack(otxnAmt);
 	}
 
 	public Double getFee() {
@@ -35,7 +36,7 @@ public class REP_10001 extends REP_BASE {
 	}
 
 	public void setFee(Double fee) {
-		this.fee = fee;
+		this.fee = AmtBase.toPack(fee);
 	}
 
 	public Double getActBal() {
@@ -43,7 +44,7 @@ public class REP_10001 extends REP_BASE {
 	}
 
 	public void setActBal(Double actBal) {
-		this.actBal = actBal;
+		this.actBal = AmtBase.toPack(actBal);
 	}
 
 

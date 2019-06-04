@@ -20,7 +20,7 @@ public abstract class REP_BASE extends DataTransObject{
 	@FixedField(order = 3, len = 30, desc = "响应信息")
 	private String trspMsg;
 	
-	@FixedField(order = 4, len = 14, desc = "响应信息")
+	@FixedField(order = 4, len = 14, desc = "发起行交易流水号")
 	private String rlogNo;
 	
 	public String getTmsgTyp() {

@@ -3,6 +3,7 @@ package com.fxbank.tpp.bocm.dto.bocm;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.cip.base.pkg.tag.TagAnno.TagField;
+import com.fxbank.tpp.bocm.model.AmtBase;
 
 
 /** 
@@ -103,15 +104,15 @@ public class REQ_10000 extends REQ_BASE {
 	
 
 	public Double getTxnAmt() {
-		return txnAmt;
+		return txnAmt/100;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
 		this.txnAmt = txnAmt;
 	}
 
-	public Double getFee() {
-		return fee;
+	public Double getFee() {		
+		return fee = fee/100;
 	}
 
 	public void setFee(Double fee) {

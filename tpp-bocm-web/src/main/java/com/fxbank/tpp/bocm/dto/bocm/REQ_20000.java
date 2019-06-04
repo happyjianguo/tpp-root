@@ -85,16 +85,16 @@ public class REQ_20000 extends REQ_BASE {
     private String seqNo;
     
     @FixedField(order = 30, len = 24, desc = "IC卡发卡行认证")
-    private String aRQC;
+    private String ARQC;
     
     @FixedField(order = 31, len = 16, desc = "IC卡应用编号")
-    private String iCAID;
+    private String ICAID;
     
     @FixedField(order = 32, len = 8, desc = "IC卡有效期")
-    private String iCOutDate;
+    private String ICOutDate;
     
     @FixedField(order = 33, len = 255, desc = "IC卡数据域（55域）")
-    private String iCData;
+    private String ICData;
     
     @FixedField(order = 34, len = 60, desc = "附言")
     private String remark;
@@ -108,7 +108,7 @@ public class REQ_20000 extends REQ_BASE {
 	}
 
 	public Double getTxnAmt() {
-		return txnAmt;
+		return txnAmt/100;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
@@ -124,7 +124,7 @@ public class REQ_20000 extends REQ_BASE {
 	}
 
 	public Double getFee() {
-		return fee;
+		return fee/100;
 	}
 
 	public void setFee(Double fee) {
@@ -275,36 +275,38 @@ public class REQ_20000 extends REQ_BASE {
 		this.seqNo = seqNo;
 	}
 
-	public String getaRQC() {
-		return aRQC;
+
+
+	public String getARQC() {
+		return ARQC;
 	}
 
-	public void setaRQC(String aRQC) {
-		this.aRQC = aRQC;
+	public void setARQC(String aRQC) {
+		ARQC = aRQC;
 	}
 
-	public String getiCAID() {
-		return iCAID;
+	public String getICAID() {
+		return ICAID;
 	}
 
-	public void setiCAID(String iCAID) {
-		this.iCAID = iCAID;
+	public void setICAID(String iCAID) {
+		ICAID = iCAID;
 	}
 
-	public String getiCOutDate() {
-		return iCOutDate;
+	public String getICOutDate() {
+		return ICOutDate;
 	}
 
-	public void setiCOutDate(String iCOutDate) {
-		this.iCOutDate = iCOutDate;
+	public void setICOutDate(String iCOutDate) {
+		ICOutDate = iCOutDate;
 	}
 
-	public String getiCData() {
-		return iCData;
+	public String getICData() {
+		return ICData;
 	}
 
-	public void setiCData(String iCData) {
-		this.iCData = iCData;
+	public void setICData(String iCData) {
+		ICData = iCData;
 	}
 
 	public String getRemark() {

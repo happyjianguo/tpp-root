@@ -232,7 +232,7 @@ public class REQ_10001 extends REQ_BASE {
 	}
 
 	public Double getTxnAmt() {
-		return txnAmt;
+		return txnAmt/100;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
