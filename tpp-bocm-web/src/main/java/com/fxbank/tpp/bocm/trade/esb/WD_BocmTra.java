@@ -346,22 +346,26 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 
 		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
+		
+		
+		
 		//发起行行号
-		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
+//		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
+		reqBody_30011000104.setSendBankCode("313221099020");
 		//我方银行账号
 		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
 		//对方银行账号
-		reqBody_30011000104.setOthBankCode(reqBody.getPyrOpnBnkNoT2());
+		reqBody_30011000104.setOthBankCode(reqBody.getPyOpnBrNoT());
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
 		
-		if(1==1){
-			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
+//		if(1==1){
+//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
-			throw e;
-		}
+//			throw e;
+//		}
 		
 		return esbRep_30011000104;
 	}
@@ -450,6 +454,8 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req10001.setThdMag(reqBody.getThrTrkInfoT1());
 		req10001.setRemark(reqBody.getNoteT2());
         
+		
+		//TODO 转换正式交行请求
 //		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
 //				REP_10001.class);
 		
@@ -491,12 +497,14 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req20001.setAgIdTp(reqBody.getAgentCrtfT());
 		req20001.setAgIdNo(reqBody.getCmsnHldrGlblIdT());
 		req20001.setSeqNo(reqBody.getIcCardSeqNoT1());
-		req20001.setaRQC(reqBody.getIcCard91T());
-		req20001.setiCAID(reqBody.getIcCard9f09T());
-		req20001.setiCOutDate(reqBody.getIcCardAvaiDtT());
-		req20001.setiCData(reqBody.getIcCardF55T());
+		req20001.setARQC(reqBody.getIcCard91T());
+		req20001.setICAID(reqBody.getIcCard9f09T());
+		req20001.setICOutDate(reqBody.getIcCardAvaiDtT());
+		req20001.setICData(reqBody.getIcCardF55T());
 		req20001.setRemark(reqBody.getNoteT2());
         
+		
+		//TODO 转换正式交行请求
 		REP_20001 rep_20001 = forwardToBocmService.sendToBocm(req20001, 
 				REP_20001.class);
 		return rep_20001;

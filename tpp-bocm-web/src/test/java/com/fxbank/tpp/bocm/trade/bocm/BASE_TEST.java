@@ -2,16 +2,17 @@ package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import com.fxbank.tpp.bocm.model.REQ_HEADER;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.tpp.bocm.model.REQ_BASE;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 public class BASE_TEST {
     private static Logger logger = LoggerFactory.getLogger(BASE_TEST.class);
@@ -19,6 +20,9 @@ public class BASE_TEST {
     private static final String IP = "127.0.0.1";
     private static final Integer PORT = 6006;
     private static final String CODING = "UTF-8";
+    
+    @Reference(version = "1.0.0")
+    private IBocmSafeService safeService;
 
     public String comm(String reqData) throws Exception {
         Socket socket = new Socket(BASE_TEST.IP, BASE_TEST.PORT);
@@ -26,7 +30,12 @@ public class BASE_TEST {
         OutputStream os = null;
         String repData = null;
         try {
+        	
+        	//添加MAC
             reqData = reqData + "FFFFFFFFFFFFFFFF";
+//            safeService.
+            
+            
             os = socket.getOutputStream();
             String reqLen = String.format("%08d", reqData.getBytes(BASE_TEST.CODING).length);
             this.logger.info("发送请求报文[" + reqData + "]");
@@ -62,15 +71,20 @@ public class BASE_TEST {
         return repData;
     }
 
-    public void initReqHeader(String tTxnCd,REQ_HEADER header){
+    public void initReqHeader(String tTxnCd,REQ_BASE base){
         String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         Integer seq = Math.abs(new Random().nextInt(100000000));
-        header.settTxnCd(tTxnCd);
-        header.setsBnkNo("313131000008");
-		header.setrBnkNo("313131000007");
-		header.settTxnDat(Integer.valueOf(sDate.substring(0, 8)));
-        header.settTxnTim(Integer.valueOf(sDate.substring(8))); 
-//        header.setsLogNo(String.format("%6s%08d", sDate.substring(2, 8),seq));
+        base.setTtxnCd(tTxnCd);
+        //301221000011  交通银行股份有限公司辽宁省分行账务中心
+        //301100000015	交通银行北京市分行
+        //"BANK_NUMBER":"313229000442","BNK_NM_T":"阜新银行液压园支行",
+        //"SETTLEMENT_BANK_NO":"313229000008","LQTN_BNK_NM_T1":"阜新银行结算中心"  
+        //313221099020 阜新银行沈阳分行营业部
+        base.setSbnkNo("301100000015");
+        base.setRbnkNo("313229000008");
+        base.setTtxnDat(Integer.valueOf(sDate.substring(0, 8)));
+        base.setTtxnTim(Integer.valueOf(sDate.substring(8))); 
+        base.setSlogNo(String.format("%6s%08d", sDate.substring(2, 8),seq));
         
 //        header.settTxnDat(20190620);
 //        header.settTxnTim(154800);

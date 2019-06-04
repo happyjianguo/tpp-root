@@ -8,8 +8,6 @@
 */
 package com.fxbank.tpp.bocm.trade.esb;
 
-import java.math.BigDecimal;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -30,7 +28,6 @@ import com.fxbank.tpp.bocm.dto.esb.REQ_30061001001;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmSndTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
-import com.fxbank.tpp.bocm.model.REP_10000;
 import com.fxbank.tpp.bocm.model.REP_10001;
 import com.fxbank.tpp.bocm.model.REP_10009;
 import com.fxbank.tpp.bocm.model.REP_20001;
@@ -44,8 +41,6 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-
-import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: WD_BocmCash 
@@ -370,6 +365,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 //			SysTradeExecuteException e = new SysTradeExecuteException("JH6203");			
 //			throw e;
 //		}	
+		
+		
+		//TODO 转换正式交行请求
 		//向交行系统发送交行磁条卡通兑记账
 //		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
 //				REP_10001.class);
@@ -407,10 +405,10 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req20001.setAgIdTp(reqBody.getAgentIdTpT3());//代理人证件类型
 		req20001.setAgIdNo(reqBody.getCmsnHldrGlblIdT());//代理人证件号码	
 		req20001.setSeqNo(reqBody.getIcCardSeqNoT1());//IC卡顺序号
-		req20001.setaRQC(reqBody.getIcCard91T());//IC卡发卡行认证
-		req20001.setiCAID(reqBody.getIcCard9f09T());//IC卡应用编号
-		req20001.setiCOutDate(reqBody.getIcCardAvaiDtT());//IC卡有效期
-		req20001.setiCData(reqBody.getIcCardF55T());//IC卡数据域（55域）
+		req20001.setARQC(reqBody.getIcCard91T());//IC卡发卡行认证
+		req20001.setICAID(reqBody.getIcCard9f09T());//IC卡应用编号
+		req20001.setICOutDate(reqBody.getIcCardAvaiDtT());//IC卡有效期
+		req20001.setICData(reqBody.getIcCardF55T());//IC卡数据域（55域）
 		//向交行系统发送交行IC卡通兑记账
 		REP_20001 rep_20001 = forwardToBocmService.sendToBocm(req20001, 
 				REP_20001.class);
@@ -551,16 +549,24 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setCollateFlag("Y");
 		//TT-账户内扣 CA-现金
 		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());
+		
+		//发起行行号
+//		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
+		//我方银行账号
+//		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
+		reqBody_30011000104.setSendBankCode("313221099020");
+		//对方银行账号
+		reqBody_30011000104.setOthBankCode(reqBody.getOpnAcctBnkNoT7());
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
 		
-		if(1==1){
-			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
+//		if(1==1){
+//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
 //			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
-		throw e;
-	}
+//		throw e;
+//	}
 		
 
 		return esbRep_30011000104;
