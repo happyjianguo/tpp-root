@@ -378,7 +378,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000104.getReqSysHead(), reqDto)
-				.setBranchId(txBrno).setUserId(txTel).build();
+				.setBranchId("04002").setUserId("003095").build();
 		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
 		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
 		reqSysHead.setSourceType(reqDto.getReqSysHead().getSourceType());
@@ -399,7 +399,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		//SEND_BANK_CODE	 发起行行号
 		//BANK_CODE	                        我方银行行号
 		//OTH_BANK_CODE	            对方银行行号
-		reqBody_30011000104.setSendBankCode("313221099020");
+		reqBody_30011000104.setSendBankCode("313226090656");
 		reqBody_30011000104.setOthBankCode(reqBody.getOpnAcctBnkNoT8());
 //		reqBody_30011000104.setBankCode("");
 		//TT-账户内扣 CA-现金
@@ -441,24 +441,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req10000.setThdMag(reqBody.getThrTrkInfoT1());
 		myLog.info(logger, "向交行发送发送磁条卡现金通存请求报文");
 		
-		
-		//TODO 转换正式交行请求
-//		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
-//				REP_10000.class);
-		
-		REP_10000 rep_10000 = null;
-		//模拟报文返回，挡板
-		rep_10000 = new REP_10000();
-		rep_10000.setActBal(10d);
-		rep_10000.setFee(0d);
-		rep_10000.setOtxnAmt(0d);
-		
-//		if(1==1){
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
-//			throw e;
-//		}
-		
+		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
+				REP_10000.class);		
 		return rep_10000;
 	}
 	/** 
@@ -494,14 +478,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req20000.setICOutDate(reqBody.getIcCardAvaiDtT());
 		req20000.setICData(reqBody.getIcCardF55T());
         
-//		REP_20000 rep_20000 = forwardToBocmService.sendToBocm(req20000, 
-//				REP_20000.class);
-		
-		//模拟报文返回，挡板
-		REP_20000 rep_20000 = new REP_20000();
-		rep_20000.setActBal(1000d);
-		rep_20000.setFee(0d);
-		rep_20000.setOtxnAmt(100d);
+		REP_20000 rep_20000 = forwardToBocmService.sendToBocm(req20000, 
+				REP_20000.class);
 		
 		return rep_20000;
 	}

@@ -28,6 +28,7 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10009;
+import com.fxbank.tpp.bocm.dto.bocm.REP_10101;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10009;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
@@ -75,6 +76,11 @@ public class RV_Fx implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_10009 req = (REQ_10009) dto;
 		REP_10009 rep = new REP_10009();
+		
+		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
+		if("301000000000".equals(req.getSbnkNo())){
+			return rep;
+		}
 
 	
 		int platDate = req.getSysDate();

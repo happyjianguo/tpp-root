@@ -188,9 +188,7 @@ public abstract class BaseTradeT1 {
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService bocmRcvTraceService;
 
-	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
-		
-		
+	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {		
 		
 		ModelBase model = null;
 		MyLog myLog = logPool.get();

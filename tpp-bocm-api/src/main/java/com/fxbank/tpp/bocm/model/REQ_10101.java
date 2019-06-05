@@ -23,7 +23,7 @@ public class REQ_10101 extends REQ_BASE {
     private static final long serialVersionUID = 4718668418571598941L;
 
 	@FixedField(order = 8, len = 3, desc = "币种")
-    private String ccyCod;
+    private String ccyCod = "CNY";
 
 	@FixedField(order = 9, len = 1, desc = "账号类型")
     private String actTyp;

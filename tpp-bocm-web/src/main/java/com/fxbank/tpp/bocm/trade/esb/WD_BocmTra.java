@@ -197,19 +197,19 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
 			if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000004)) { // ESB超时
-				//如果超时，请求重发
-				try {
-					esbRep_30011000104 = hostCharge(reqDto);
-					hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
-					hostTraceno = esbRep_30011000104.getRepBody().getReference();
-					retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
-					retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
-				} catch (SysTradeExecuteException e1) {
-					myLog.error(logger, "交行卡付款转账，本行记账超时，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易成功:"+e.getRspMsg()+",核心记账超时");
-					throw e2;
-				}		
+				//TODO   如果超时，处理调整
+//				try {
+//					esbRep_30011000104 = hostCharge(reqDto);
+//					hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
+//					hostTraceno = esbRep_30011000104.getRepBody().getReference();
+//					retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
+//					retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
+//				} catch (SysTradeExecuteException e1) {
+//					myLog.error(logger, "交行卡付款转账，本行记账超时，渠道日期" + reqDto.getSysDate() + 
+//							"渠道流水号" + reqDto.getSysTraceno(), e);
+//					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易成功:"+e.getRspMsg()+",核心记账超时");
+//					throw e2;
+//				}		
 			}else{
 				//如果失败，交行冲正
 				myLog.error(logger, "交行卡付款转账，核心记账失败，发送"+cardTypeName+"通兑抹账请求至交行，渠道日期" + reqDto.getSysDate() + 
@@ -238,7 +238,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					}else{
 						myLog.error(logger, "4.交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易成功，本行核心记账失败,"+e.getRspMsg());
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，交行卡通兑记账抹账失败，本行核心记账失败,"+e.getRspMsg());
 						throw e2;
 					}
 				}catch (Exception e3) { // 其它未知错误，可以当成超时处理
@@ -351,11 +351,11 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		
 		//发起行行号
 //		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
-		reqBody_30011000104.setSendBankCode("313221099020");
-		//我方银行账号
-		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
-		//对方银行账号
-		reqBody_30011000104.setOthBankCode(reqBody.getPyOpnBrNoT());
+		reqBody_30011000104.setSendBankCode("313226090656");
+//		//我方银行账号
+//		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
+//		//对方银行账号
+//		reqBody_30011000104.setOthBankCode(reqBody.getPyOpnBrNoT());
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
@@ -454,15 +454,9 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req10001.setThdMag(reqBody.getThrTrkInfoT1());
 		req10001.setRemark(reqBody.getNoteT2());
         
-		
-		//TODO 转换正式交行请求
-//		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
-//				REP_10001.class);
-		
-		REP_10001 rep_10001 = new REP_10001();
-		rep_10001.setActBal(0d);
-		rep_10001.setFee(0d);
-		rep_10001.setOtxnAmt(0d);
+
+		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
+				REP_10001.class);
 		
 		return rep_10001;
 	}
@@ -503,8 +497,6 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req20001.setICData(reqBody.getIcCardF55T());
 		req20001.setRemark(reqBody.getNoteT2());
         
-		
-		//TODO 转换正式交行请求
 		REP_20001 rep_20001 = forwardToBocmService.sendToBocm(req20001, 
 				REP_20001.class);
 		return rep_20001;

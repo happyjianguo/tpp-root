@@ -52,6 +52,26 @@ public class ESB_REP_30063000103 extends ESB_BASE {
 		private String feeCcy;//收费币种
 		@JSONField(name = "FEE_AMT")
 		private String feeAmt;//费用金额
+		public String getFeeType() {
+			return feeType;
+		}
+		public void setFeeType(String feeType) {
+			this.feeType = feeType;
+		}
+		public String getFeeCcy() {
+			return feeCcy;
+		}
+		public void setFeeCcy(String feeCcy) {
+			this.feeCcy = feeCcy;
+		}
+		public String getFeeAmt() {
+			return feeAmt;
+		}
+		public void setFeeAmt(String feeAmt) {
+			this.feeAmt = feeAmt;
+		}
+		
+		
 	}	
 
 	public REP_BODY getRepBody() {

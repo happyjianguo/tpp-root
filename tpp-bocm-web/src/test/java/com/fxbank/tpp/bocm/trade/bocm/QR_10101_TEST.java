@@ -27,8 +27,8 @@ public class QR_10101_TEST extends BASE_TEST {
 	@Test
 	public void ok() throws Exception {
 		req.setActTyp("2");
-		req.setActNo("62316600000018");
-		req.setPin("0123456789ABCDEF");
+		req.setActNo("623166001016830991");
+		req.setPin("147258");
 		
 		
 		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));

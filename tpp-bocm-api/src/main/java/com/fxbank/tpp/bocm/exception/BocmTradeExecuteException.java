@@ -27,6 +27,7 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	public final static String BOCM_E_10012 = "FX0012";
 	public final static String BOCM_E_10013 = "FX0013";
 	public final static String BOCM_E_10014 = "FX0014";
+	public final static String BOCM_E_10015 = "FX0015";
 	public final static String BOCM_E_11007 = "FX1007";
 	public final static String BOCM_E_16203 = "FX6203";
 	public final static String TPP_E_000001 = "TPP_E_000001";
@@ -52,6 +53,7 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 			put(BOCM_E_10012, "下载ESB文件失败");
 			put(BOCM_E_10013, "柜面通对账失败");
 			put(BOCM_E_10014, "无交易流水号");
+			put(BOCM_E_10015, "卡状态异常");
 			put(BOCM_E_11007, "无此记录");
 			put(BOCM_E_16203, "交易超时");
 			put(TPP_E_000001, "调用加密平台PIN转加密失败");

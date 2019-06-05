@@ -359,23 +359,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req10001.setSecMag(reqBody.getScdTrkInfoT2());//第二磁道
 		req10001.setThdMag(reqBody.getThrTrkInfoT1());//第三磁道
 		
-//		if(1==1){
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);	
-//			SysTradeExecuteException e = new SysTradeExecuteException("JH6203");			
-//			throw e;
-//		}	
-		
-		
-		//TODO 转换正式交行请求
 		//向交行系统发送交行磁条卡通兑记账
-//		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
-//				REP_10001.class);
-		
-		REP_10001 rep_10001 = new REP_10001();
-		rep_10001.setActBal(0d);
-		rep_10001.setFee(0d);
-		rep_10001.setOtxnAmt(0d);
+		REP_10001 rep_10001 = forwardToBocmService.sendToBocm(req10001, 
+				REP_10001.class);
 		
 		return rep_10001;
 	}
@@ -554,7 +540,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 //		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
 		//我方银行账号
 //		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
-		reqBody_30011000104.setSendBankCode("313221099020");
+//		reqBody_30011000104.setSendBankCode("313221099020");
+		reqBody_30011000104.setSendBankCode("313226090656");
 		//对方银行账号
 		reqBody_30011000104.setOthBankCode(reqBody.getOpnAcctBnkNoT7());
 

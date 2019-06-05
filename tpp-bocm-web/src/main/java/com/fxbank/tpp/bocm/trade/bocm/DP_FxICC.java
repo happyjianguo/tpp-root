@@ -1,6 +1,7 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -75,6 +76,17 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		
 		REQ_20000 req = (REQ_20000) dto;
+		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
+		if("301000000000".equals(req.getSbnkNo())){
+			REP_20000 rep = new REP_20000();
+			rep.setOtxnAmt(req.getTxnAmt());		
+			//JHF1-异地手续费JHF2-代理手续费
+			Double fee = new Double(5d);
+			rep.setFee(fee);
+			rep.setActBal(10000d);
+			return rep;
+		}
+		
 		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
 		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10014,"交易流水号为空");

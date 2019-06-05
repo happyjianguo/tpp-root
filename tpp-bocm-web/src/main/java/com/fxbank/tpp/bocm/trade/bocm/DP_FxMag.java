@@ -21,6 +21,7 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10000;
+import com.fxbank.tpp.bocm.dto.bocm.REP_20000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
@@ -67,9 +68,19 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		
+		MyLog myLog = logPool.get();		
 		REQ_10000 req = (REQ_10000) dto;
+		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
+		if("301000000000".equals(req.getSbnkNo())){
+			REP_10000 rep = new REP_10000();
+			rep.setOtxnAmt(req.getTxnAmt());		
+			//JHF1-异地手续费JHF2-代理手续费
+			Double fee = new Double(5d);
+			rep.setFee(fee);
+			rep.setActBal(10000d);
+			return rep;
+		}
+		
 		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
 		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10014,"交易流水号为空");

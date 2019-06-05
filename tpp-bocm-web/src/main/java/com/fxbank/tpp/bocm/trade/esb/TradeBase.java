@@ -74,9 +74,9 @@ public class TradeBase {
 		
 		
 //		//发起行行号  313229000660
-		reqBase.setSbnkNo("313229000660"); // 总行 取上面接口返回值
+//		reqBase.setSbnkNo("313229000660"); // 总行 取上面接口返回值
 //		//接收行行号 办理业务网点的总行行号
-		reqBase.setRbnkNo("313229000660"); // 网点 取上面接口返回值
+//		reqBase.setRbnkNo("313229000660"); // 网点 取上面接口返回值
 	}
 
 	public String convPin(String oPin){

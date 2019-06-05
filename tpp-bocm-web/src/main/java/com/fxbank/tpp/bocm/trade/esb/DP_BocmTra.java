@@ -388,7 +388,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//SEND_BANK_CODE	 发起行行号
 		//BANK_CODE	                        我方银行行号
 		//OTH_BANK_CODE	            对方银行行号
-		reqBody_30011000104.setSendBankCode("313221099020");
+		reqBody_30011000104.setSendBankCode("313226090656");
 		reqBody_30011000104.setBankCode(reqBody.getPyrOpnBnkNoT2());
 		reqBody_30011000104.setOthBankCode(reqBody.getPyeeOpnBnkNoT1());
 		
@@ -441,21 +441,9 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req10000.setRemark(reqBody.getNoteT2());
         
 		//TODO 转换正式交行请求
-//		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
-//				REP_10000.class);
-		
-//		if(1==1){
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);	
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
-//			throw e;
-//		}
+		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
+				REP_10000.class);
 
-		//模拟报文返回，挡板
-		REP_10000 rep_10000 = new REP_10000();
-		rep_10000.setActBal(0d);
-		rep_10000.setFee(0d);
-		rep_10000.setOtxnAmt(100d);
 		
 		return rep_10000;
 

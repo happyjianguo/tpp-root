@@ -108,7 +108,7 @@ public class DB_BocmCashTest {
 		reqBody.setCcyT("CNY");
 		reqBody.setNaT1("姓名");//姓名
 		reqBody.setCardNoT3("6222600530011742438");//卡号
-		reqBody.setDpsAmtT("101.00");//存款金额
+		reqBody.setDpsAmtT("401.00");//存款金额
 		reqBody.setFeeT3("1.00");//手续费
 		reqBody.setAcctBalT3("1000.00");//账户余额
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费

@@ -17,6 +17,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.tpp.bocm.dto.bocm.REP_10001;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10101;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10101;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_20000;
@@ -59,6 +60,16 @@ public class QR_FxBal implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_10101 req = (REQ_10101) dto;
+		
+		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
+//		if("301000000000".equals(req.getSbnkNo())){
+//			REP_10101 rep = new REP_10101();
+//			rep.setActNo("623166000009897");
+//			rep.setActNam("ZZZ");
+//			rep.setActBal(new Double(34.45));
+//			return rep;
+//		}
+		
 		//1.插入流水表
 		//initRecord(req);
 		//2.调用ESB余额查询
@@ -72,7 +83,7 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		//核心记账返回状态信息
 		String retMsg = null;
 		REP_10101 rep = new REP_10101();
-		/**
+	
 		try {
 			//调用核心查询余额
 			esbRep_30013000201 = hostQuery(req);
@@ -81,23 +92,30 @@ public class QR_FxBal implements TradeExecutionStrategy {
 			retCode = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetCode();
 			retMsg = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
-			updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
+			//updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
 			myLog.error(logger, "交行查询本行卡余额，本行核心查询失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10009);
 			throw e2;
 		}
 		
 		//3.更新流水表核心记账状态
-		updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
+		//updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
 		
-		//4.设置返回报文		
-		rep.setActNo(esbRep_30013000201.getRepBody().getBaseAcctNo());
-		rep.setActBal(new BigDecimal(esbRep_30013000201.getRepBody().getBalance()));
-		rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
-		**/
-		rep.setActNo("623166000009897");
-		rep.setActNam("ZZZ");
-		rep.setActBal(new Double(34.45));
+		String acctStatus = esbRep_30013000201.getRepBody().getAcctStatus();
+		myLog.error(logger, "账户状态：" + acctStatus);
+		if("A".equals(acctStatus)){
+			//4.设置返回报文		
+			rep.setActNo(req.getActNo());
+			rep.setActBal(Double.parseDouble(esbRep_30013000201.getRepBody().getBalance()));
+			rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
+		}else{
+			myLog.error(logger, "交行查询本行卡余额，卡状态异常，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10015);
+			throw e2;
+		}
+
+		
+
 		return rep;
 	}
 	
@@ -122,21 +140,7 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		record.setTxCode(reqDto.getTtxnCd());
 		bocmRcvTraceService.rcvTraceInit(record);
 	}
-	private BocmRcvTraceUpdModel updateHostRecord(REQ_10101 reqDto, String hostDate, String hostTraceno,
-			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
-				reqDto.getSysTraceno());
-		if(!"".equals(hostDate)) {
-		record.setHostDate(Integer.parseInt(hostDate));
-		}
-		record.setHostState(hostState);
-		record.setHostTraceno(hostTraceno);
-		record.setRetCode(retCode);
-		record.setRetMsg(retMsg);
-		bocmRcvTraceService.rcvTraceUpd(record);
-		return record;
-	}
+
 	/** 
 	* @Title: hostQuery
 	* @Description: 本行核心基本账户信息查询 
