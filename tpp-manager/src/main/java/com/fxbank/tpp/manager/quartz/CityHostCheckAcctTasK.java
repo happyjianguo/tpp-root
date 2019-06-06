@@ -68,7 +68,7 @@ import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: CityHostCheckAcctTasK 
-* @Description: 渠道与核心对账
+* @Description: 渠道与核心对账定时任务
 * @author YePuLiang
 * @date 2019年5月24日 上午9:52:41 
 *  

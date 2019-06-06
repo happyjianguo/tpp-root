@@ -39,7 +39,7 @@ import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: ApplyWorkKeyTask 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 交行工作秘钥申请定时任务
 * @author YePuLiang
 * @date 2019年5月26日 下午8:30:04 
 *  

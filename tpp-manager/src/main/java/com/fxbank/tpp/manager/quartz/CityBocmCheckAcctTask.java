@@ -54,7 +54,7 @@ import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: CityBocmCheckAcctTask 
-* @Description: 渠道与交行对账
+* @Description: 渠道与交行对账定时任务
 * @author YePuLiang
 * @date 2019年5月24日 上午9:57:05 
 *  
