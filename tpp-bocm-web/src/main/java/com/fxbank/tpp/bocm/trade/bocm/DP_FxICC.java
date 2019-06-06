@@ -77,7 +77,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		REQ_20000 req = (REQ_20000) dto;
 		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getSbnkNo())){
+		if("301000000000".equals(req.getRecBnk())){
 			REP_20000 rep = new REP_20000();
 			rep.setOtxnAmt(req.getTxnAmt());		
 			//JHF1-异地手续费JHF2-代理手续费

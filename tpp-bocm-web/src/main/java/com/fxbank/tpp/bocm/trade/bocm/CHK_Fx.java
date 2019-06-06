@@ -246,12 +246,6 @@ public class CHK_Fx implements TradeExecutionStrategy {
 				}else{
 					rep.setFilTxt(tradList);
 				}
-				String repData = FixedUtil.toFixed(rep,"UTF-8");
-				myLog.info(logger, "返回报文："+rep.getFilLen());
-				rep = (REP_10103)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
-
-				
-//				myLog.info(logger, "返回报文体："+rep.creaFixPack());
 
 		return rep;
 	}
@@ -259,7 +253,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 	
 	private REP_10103.Detail modelToRcvTradDetail(BocmRcvTraceQueryModel model){
 		REP_10103.Detail chk = new REP_10103.Detail();
-		//给交行返回交易流水
+		//TODO 给交行返回交易流水
 //		chk.settLogNo(model.getPlatTrace()+"");
 //		chk.setLogNo(model.getBocmTraceno());
 		

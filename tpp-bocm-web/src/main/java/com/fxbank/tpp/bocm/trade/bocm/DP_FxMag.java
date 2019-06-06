@@ -71,7 +71,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();		
 		REQ_10000 req = (REQ_10000) dto;
 		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getSbnkNo())){
+		if("301000000000".equals(req.getRecBnk())){
 			REP_10000 rep = new REP_10000();
 			rep.setOtxnAmt(req.getTxnAmt());		
 			//JHF1-异地手续费JHF2-代理手续费
@@ -126,11 +126,6 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 
 		ESB_REP_30033000203 esbRep_30033000203 = forwardToESBService.sendToESB(esbReq_30033000203, reqBody_30033000203,
 				ESB_REP_30033000203.class);
-//		if(1==1){
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
-//			throw e;
-//		}
 		return esbRep_30033000203;
 	}
 	
