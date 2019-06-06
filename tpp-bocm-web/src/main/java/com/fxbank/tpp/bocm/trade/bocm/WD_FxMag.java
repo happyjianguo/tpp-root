@@ -79,7 +79,7 @@ public class WD_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		REQ_10001 req = (REQ_10001) dto;
 		
 		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getSbnkNo())){
+		if("301000000000".equals(req.getPayBnk())){
 			REP_10001 rep = new REP_10001();
 			rep.setOtxnAmt(req.getTxnAmt());		
 			//JHF1-异地手续费JHF2-代理手续费

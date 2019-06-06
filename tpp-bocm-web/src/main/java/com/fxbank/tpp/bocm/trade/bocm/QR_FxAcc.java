@@ -79,8 +79,9 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		rep.setFee(1d);
 		
 		return rep;
-//		logger.info(rep.creaFixPack());
+
 		
+		//TODO 后续连接交行系统请求打开注释
 		/**
 		
 		//1.插入流水表

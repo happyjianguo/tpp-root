@@ -62,13 +62,15 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		REQ_10101 req = (REQ_10101) dto;
 		
 		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-//		if("301000000000".equals(req.getSbnkNo())){
-//			REP_10101 rep = new REP_10101();
-//			rep.setActNo("623166000009897");
-//			rep.setActNam("ZZZ");
-//			rep.setActBal(new Double(34.45));
-//			return rep;
-//		}
+		REP_10101 rep = new REP_10101();
+		rep.setActNo("623166000009897");
+		rep.setActNam("ZZZ");
+		rep.setActBal(new Double(34.45));
+		return rep;
+
+	
+		//TODO 后续连接交行系统请求打开注释
+		/**
 		
 		//1.插入流水表
 		//initRecord(req);
@@ -114,31 +116,9 @@ public class QR_FxBal implements TradeExecutionStrategy {
 			throw e2;
 		}
 
-		
-
 		return rep;
-	}
-	
-	private void initRecord(REQ_10101 reqDto) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
-				reqDto.getSysTraceno());
-		record.setSourceType(reqDto.getSourceType());
-		record.setTxBranch(reqDto.getSbnkNo());
-		record.setHostState("0");
-		record.setPrint("0");
-		record.setCheckFlag("0");
 		
-		record.setBocmState("0");
-		//交行流水号
-		record.setBocmTraceNo(reqDto.getSlogNo());		
-		record.setBocmDate(reqDto.getTtxnDat());
-		record.setBocmTime(reqDto.getTtxnTim());
-		//发起行行号
-		record.setBocmBranch(reqDto.getSbnkNo());
-		//交易码
-		record.setTxCode(reqDto.getTtxnCd());
-		bocmRcvTraceService.rcvTraceInit(record);
+		*/
 	}
 
 	/** 

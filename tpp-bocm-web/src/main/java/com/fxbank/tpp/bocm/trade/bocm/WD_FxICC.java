@@ -71,7 +71,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();		
 		REQ_20001 req = (REQ_20001) dto;
 		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getSbnkNo())){
+		if("301000000000".equals(req.getPayBnk())){
 			REP_20001 rep = new REP_20001();
 			rep.setOtxnAmt(req.getTxnAmt());		
 			//JHF1-异地手续费JHF2-代理手续费
@@ -220,6 +220,8 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		ESB_REQ_30011000104.REQ_BODY reqBody_30011000104 = esbReq_30011000104.getReqBody();
 		reqBody_30011000104.setBaseAcctNo(reqDto.getPactNo());
 		reqBody_30011000104.setAcctName(reqDto.getPayNam());
+		
+		//TODO 后期直接取pin
 //		reqBody_30011000104.setPassword(reqDto.getPin());
 		reqBody_30011000104.setPassword("6FA8753E6D318C213BB7339751E9268E");
 		

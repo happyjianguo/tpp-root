@@ -78,7 +78,7 @@ public class RV_Fx implements TradeExecutionStrategy {
 		REP_10009 rep = new REP_10009();
 		
 		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getSbnkNo())){
+		if("301000000000".equals(req.getPayBnk())){
 			return rep;
 		}
 
