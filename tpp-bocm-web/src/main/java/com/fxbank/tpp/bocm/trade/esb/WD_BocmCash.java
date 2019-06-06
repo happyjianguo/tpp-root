@@ -215,8 +215,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				//本行记账超时，如果冲正也超时，提示交易失败（不出钱），核心记账超时，核心冲正超时。（交行记账成功，交易结果以本行为主，对账不返回）在完美一点把交行的冲正加上				
 				//超时处理是交易失败方向走还是往				
 				//提示超时;
-				//核心记账状态，1-成功，4-冲正成功，5-冲正失败，6-冲正超时	
-				
+				//核心记账状态，1-成功，4-冲正成功，5-冲正失败，6-冲正超时					
 				//交行抹账
 				try {
 					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
@@ -418,11 +417,6 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
-//		try (Jedis jedis = myJedis.connect()) {
-//			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-//			txTel = jedis.get(COMMON_PREFIX + "txtel");
-//		}
-
 		txTel = reqDto.getReqSysHead().getUserId();
 		txBrno = reqDto.getReqSysHead().getBranchId();
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
@@ -535,27 +529,11 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setCollateFlag("Y");
 		//TT-账户内扣 CA-现金
 		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());
-		
-		//发起行行号
-//		reqBody_30011000104.setSendBankCode(reqBody.getPyOpnBrNoT());
-		//我方银行账号
-//		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
-//		reqBody_30011000104.setSendBankCode("313221099020");
-		reqBody_30011000104.setSendBankCode("313226090656");
 		//对方银行账号
 		reqBody_30011000104.setOthBankCode(reqBody.getOpnAcctBnkNoT7());
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
-		
-//		if(1==1){
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
-//		throw e;
-//	}
-		
-
 		return esbRep_30011000104;
 	}
 	

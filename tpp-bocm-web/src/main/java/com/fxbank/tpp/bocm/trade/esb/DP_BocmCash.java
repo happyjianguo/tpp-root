@@ -213,8 +213,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						updateBocmRecord(reqDto, bocmDate,bocmTime,"", "3");
 						myLog.error(logger, "重发返回异常，给柜面返回成功，防止短款");
 						//如果还是超时返回成功，防止短款
-//						SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_000000,"交易成功");
-//						throw e2;
 					}
 				} else { // 目标系统应答失败
 							// 确认是否有冲正操作
@@ -271,8 +269,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 					updateBocmRecord(reqDto, bocmDate,bocmTime,"", "3");
 					myLog.error(logger, "重发返回异常，给柜面返回成功，防止短款");
 					//如果还是超时返回成功，防止短款					
-//					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_000000,"交易成功");
-//					throw e2;
 				}
 			}
  
@@ -369,16 +365,12 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
-//		try (Jedis jedis = myJedis.connect()) {
-//			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-//			txTel = jedis.get(COMMON_PREFIX + "txtel");
-//		}
 		txTel = reqDto.getReqSysHead().getUserId();
 		txBrno = reqDto.getReqSysHead().getBranchId();
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000104.getReqSysHead(), reqDto)
-				.setBranchId("04002").setUserId("003095").build();
+				.setBranchId(txBrno).setUserId(txTel).build();
 		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
 		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
 		reqSysHead.setSourceType(reqDto.getReqSysHead().getSourceType());

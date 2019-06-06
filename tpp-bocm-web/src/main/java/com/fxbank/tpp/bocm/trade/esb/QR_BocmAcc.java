@@ -76,7 +76,7 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		//TODO 转换正式交行请求
 		REP_20102 rep20102 = forwardToBocmService.sendToBocm(req20102, REP_20102.class);
 		
-		ESB_REP_30063000103 esbRep_30063000103 = queryFee(reqDto,rep20102);
+		
 
 		REP_30063001301 rep = new REP_30063001301();
 		REP_30063001301.REQ_BODY repBody = rep.getReqBody();
@@ -85,8 +85,13 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		//手续费
 		repBody.setFeeT3(rep20102.getFee().toString());
 		
-		ESB_REP_30063000103.Fee fee = esbRep_30063000103.getRepBody().getFeeDetail().get(0);
-		repBody.setHndlPymntFeeT5(fee.getFeeAmt());
+		//TODO 手续费查询
+		
+//		ESB_REP_30063000103 esbRep_30063000103 = queryFee(reqDto,rep20102);
+//		ESB_REP_30063000103.Fee fee = esbRep_30063000103.getRepBody().getFeeDetail().get(0);
+//		repBody.setHndlPymntFeeT5(fee.getFeeAmt());
+		
+		repBody.setHndlPymntFeeT5("1");
 		//开户行号
 		repBody.setPyeeOpnBnkNoT1(rep20102.getActBnk());
 		//账户类型
@@ -100,11 +105,8 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
-//		try (Jedis jedis = myJedis.connect()) {
-//			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
-//			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
-//		}
-
+		txTel = reqDto.getReqSysHead().getUserId();
+		txBrno = reqDto.getReqSysHead().getBranchId();
 		ESB_REQ_30063000103 esbReq_30063000103 = new ESB_REQ_30063000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30063000103.getReqSysHead(), reqDto)

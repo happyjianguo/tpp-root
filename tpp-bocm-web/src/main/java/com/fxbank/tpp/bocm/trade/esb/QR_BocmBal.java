@@ -44,7 +44,7 @@ public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		myLog.info(logger, "发送余额查询请求至交行");
+		myLog.info(logger, "余额查询请求至交行");
 		REQ_30063001201 reqDto = (REQ_30063001201) dto;
 		REQ_30063001201.REQ_BODY reqBody = reqDto.getReqBody();
 
