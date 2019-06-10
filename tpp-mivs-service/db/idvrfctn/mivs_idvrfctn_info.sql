@@ -55,7 +55,8 @@ COMMENT ON COLUMN mivs_idvrfctn_info.mivs_sts IS '业务处理状态
 01-已收到990回执
 02-已收到911回执处理失败
 03-已收到业务回执处理失败
-04-已收到业务回执 处理成功';
+04-已收到业务回执 处理成功
+05-已收到人行业务回执入库成功，但未返回ESB ';
 COMMENT ON COLUMN mivs_idvrfctn_info.msg_id IS '报文标识号';
 COMMENT ON COLUMN mivs_idvrfctn_info.cre_dt_tm IS '报文发送时间';
 COMMENT ON COLUMN mivs_idvrfctn_info.instg_drct_pty IS '发起直接参与机构';

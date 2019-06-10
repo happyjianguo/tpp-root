@@ -35,16 +35,16 @@ remark3 NVARCHAR2(100) NULL
 
 ;
 COMMENT ON TABLE mivs_txpmtvfctn_info IS '企业信息联网核查_纳税信息核查业务信息主表';
-COMMENT ON COLUMN mivs_idvrfctn_info.plat_date IS '平台日期';
-COMMENT ON COLUMN mivs_idvrfctn_info.plat_trace IS '平台流水';
-COMMENT ON COLUMN mivs_idvrfctn_info.plat_time IS '平台时间';
-COMMENT ON COLUMN mivs_idvrfctn_info.system_id IS '发起方系统编码';
-COMMENT ON COLUMN mivs_idvrfctn_info.tran_date IS '交易日期';
-COMMENT ON COLUMN mivs_idvrfctn_info.seq_no IS '渠道流水';
-COMMENT ON COLUMN mivs_idvrfctn_info.tran_time IS '交易时间';
-COMMENT ON COLUMN mivs_idvrfctn_info.user_id IS '柜员号';
-COMMENT ON COLUMN mivs_idvrfctn_info.branch_id IS '机构号';
-COMMENT ON COLUMN mivs_idvrfctn_info.mivs_sts IS '业务处理状态；00-已发送，01-已收到回执，02-已收到911回执 处理失败，03-已收到业务回执 处理失败，04-已收到业务回执 处理成功';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.plat_date IS '平台日期';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.plat_trace IS '平台流水';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.plat_time IS '平台时间';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.system_id IS '发起方系统编码';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.tran_date IS '交易日期';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.seq_no IS '渠道流水';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.tran_time IS '交易时间';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.user_id IS '柜员号';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.branch_id IS '机构号';
+COMMENT ON COLUMN mivs_txpmtvfctn_info.mivs_sts IS '业务处理状态；00-已发送，01-已收到回执，02-已收到911回执 处理失败，03-已收到业务回执 处理失败，04-已收到业务回执 处理成功';
 COMMENT ON COLUMN mivs_txpmtvfctn_info.msg_id IS '报文标识号';
 COMMENT ON COLUMN mivs_txpmtvfctn_info.cre_dt_tm IS '报文发送时间';
 COMMENT ON COLUMN mivs_txpmtvfctn_info.instg_drct_pty IS '发起直接参与机构';
