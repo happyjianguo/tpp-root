@@ -1,30 +1,30 @@
-package com.fxbank.tpp.mivs.entity;
+package com.fxbank.tpp.mivs.entity.IdVrfctn;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_TXPMTVFCTN_INFO")
-public class MivsTxpmtvfctnInfo {
+@Table(name = "MIVS_IDVRFCTN_INFO")
+public class MivsIdvrfctnInfoEntity {
     /**
      * null
      */
     @Id
     @Column(name = "PLAT_DATE")
-    private Long platDate;
+    private Integer platDate;
 
     /**
      * null
      */
     @Id
     @Column(name = "PLAT_TRACE")
-    private Long platTrace;
+    private Integer platTrace;
 
     /**
      * null
      */
     @Column(name = "PLAT_TIME")
-    private Long platTime;
+    private Integer platTime;
 
     /**
      * null
@@ -119,8 +119,26 @@ public class MivsTxpmtvfctnInfo {
     /**
      * null
      */
-    @Column(name = "CO_NM")
-    private String coNm;
+    @Column(name = "MOB_NB")
+    private String mobNb;
+
+    /**
+     * null
+     */
+    @Column(name = "NM")
+    private String nm;
+
+    /**
+     * null
+     */
+    @Column(name = "ID_TP")
+    private String idTp;
+
+    /**
+     * null
+     */
+    @Column(name = "ID")
+    private String id;
 
     /**
      * null
@@ -131,8 +149,8 @@ public class MivsTxpmtvfctnInfo {
     /**
      * null
      */
-    @Column(name = "TXPYR_ID_NB")
-    private String txpyrIdNb;
+    @Column(name = "BIZ_REG_NB")
+    private String bizRegNb;
 
     /**
      * null
@@ -149,14 +167,32 @@ public class MivsTxpmtvfctnInfo {
     /**
      * null
      */
-    @Column(name = "DATA_RESRC_DT")
-    private String dataResrcDt;
+    @Column(name = "MOB_CRR")
+    private String mobCrr;
 
     /**
      * null
      */
-    @Column(name = "TXPMT_INF_CNT")
-    private Short txpmtInfCnt;
+    @Column(name = "LOC_MOB_NB")
+    private String locMobNb;
+
+    /**
+     * null
+     */
+    @Column(name = "LOC_NM_MOB_NB")
+    private String locNmMobNb;
+
+    /**
+     * null
+     */
+    @Column(name = "CD_TP")
+    private String cdTp;
+
+    /**
+     * null
+     */
+    @Column(name = "STS")
+    private String sts;
 
     /**
      * null
@@ -198,7 +234,7 @@ public class MivsTxpmtvfctnInfo {
      * null
      * @return PLAT_DATE null
      */
-    public Long getPlatDate() {
+    public Integer getPlatDate() {
         return platDate;
     }
 
@@ -206,7 +242,7 @@ public class MivsTxpmtvfctnInfo {
      * null
      * @param platDate null
      */
-    public void setPlatDate(Long platDate) {
+    public void setPlatDate(Integer platDate) {
         this.platDate = platDate;
     }
 
@@ -214,7 +250,7 @@ public class MivsTxpmtvfctnInfo {
      * null
      * @return PLAT_TRACE null
      */
-    public Long getPlatTrace() {
+    public Integer getPlatTrace() {
         return platTrace;
     }
 
@@ -222,7 +258,7 @@ public class MivsTxpmtvfctnInfo {
      * null
      * @param platTrace null
      */
-    public void setPlatTrace(Long platTrace) {
+    public void setPlatTrace(Integer platTrace) {
         this.platTrace = platTrace;
     }
 
@@ -230,7 +266,7 @@ public class MivsTxpmtvfctnInfo {
      * null
      * @return PLAT_TIME null
      */
-    public Long getPlatTime() {
+    public Integer getPlatTime() {
         return platTime;
     }
 
@@ -238,7 +274,7 @@ public class MivsTxpmtvfctnInfo {
      * null
      * @param platTime null
      */
-    public void setPlatTime(Long platTime) {
+    public void setPlatTime(Integer platTime) {
         this.platTime = platTime;
     }
 
@@ -484,18 +520,66 @@ public class MivsTxpmtvfctnInfo {
 
     /**
      * null
-     * @return CO_NM null
+     * @return MOB_NB null
      */
-    public String getCoNm() {
-        return coNm;
+    public String getMobNb() {
+        return mobNb;
     }
 
     /**
      * null
-     * @param coNm null
+     * @param mobNb null
      */
-    public void setCoNm(String coNm) {
-        this.coNm = coNm;
+    public void setMobNb(String mobNb) {
+        this.mobNb = mobNb;
+    }
+
+    /**
+     * null
+     * @return NM null
+     */
+    public String getNm() {
+        return nm;
+    }
+
+    /**
+     * null
+     * @param nm null
+     */
+    public void setNm(String nm) {
+        this.nm = nm;
+    }
+
+    /**
+     * null
+     * @return ID_TP null
+     */
+    public String getIdTp() {
+        return idTp;
+    }
+
+    /**
+     * null
+     * @param idTp null
+     */
+    public void setIdTp(String idTp) {
+        this.idTp = idTp;
+    }
+
+    /**
+     * null
+     * @return ID null
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * null
+     * @param id null
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -516,18 +600,18 @@ public class MivsTxpmtvfctnInfo {
 
     /**
      * null
-     * @return TXPYR_ID_NB null
+     * @return BIZ_REG_NB null
      */
-    public String getTxpyrIdNb() {
-        return txpyrIdNb;
+    public String getBizRegNb() {
+        return bizRegNb;
     }
 
     /**
      * null
-     * @param txpyrIdNb null
+     * @param bizRegNb null
      */
-    public void setTxpyrIdNb(String txpyrIdNb) {
-        this.txpyrIdNb = txpyrIdNb;
+    public void setBizRegNb(String bizRegNb) {
+        this.bizRegNb = bizRegNb;
     }
 
     /**
@@ -564,34 +648,82 @@ public class MivsTxpmtvfctnInfo {
 
     /**
      * null
-     * @return DATA_RESRC_DT null
+     * @return MOB_CRR null
      */
-    public String getDataResrcDt() {
-        return dataResrcDt;
+    public String getMobCrr() {
+        return mobCrr;
     }
 
     /**
      * null
-     * @param dataResrcDt null
+     * @param mobCrr null
      */
-    public void setDataResrcDt(String dataResrcDt) {
-        this.dataResrcDt = dataResrcDt;
+    public void setMobCrr(String mobCrr) {
+        this.mobCrr = mobCrr;
     }
 
     /**
      * null
-     * @return TXPMT_INF_CNT null
+     * @return LOC_MOB_NB null
      */
-    public Short getTxpmtInfCnt() {
-        return txpmtInfCnt;
+    public String getLocMobNb() {
+        return locMobNb;
     }
 
     /**
      * null
-     * @param txpmtInfCnt null
+     * @param locMobNb null
      */
-    public void setTxpmtInfCnt(Short txpmtInfCnt) {
-        this.txpmtInfCnt = txpmtInfCnt;
+    public void setLocMobNb(String locMobNb) {
+        this.locMobNb = locMobNb;
+    }
+
+    /**
+     * null
+     * @return LOC_NM_MOB_NB null
+     */
+    public String getLocNmMobNb() {
+        return locNmMobNb;
+    }
+
+    /**
+     * null
+     * @param locNmMobNb null
+     */
+    public void setLocNmMobNb(String locNmMobNb) {
+        this.locNmMobNb = locNmMobNb;
+    }
+
+    /**
+     * null
+     * @return CD_TP null
+     */
+    public String getCdTp() {
+        return cdTp;
+    }
+
+    /**
+     * null
+     * @param cdTp null
+     */
+    public void setCdTp(String cdTp) {
+        this.cdTp = cdTp;
+    }
+
+    /**
+     * null
+     * @return STS null
+     */
+    public String getSts() {
+        return sts;
+    }
+
+    /**
+     * null
+     * @param sts null
+     */
+    public void setSts(String sts) {
+        this.sts = sts;
     }
 
     /**
