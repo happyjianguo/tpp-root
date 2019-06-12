@@ -3,7 +3,7 @@ package com.fxbank.tpp.mivs.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.tpp.mivs.entity.RegVrfctn.*;
 import com.fxbank.tpp.mivs.mapper.RegVrfctn.*;
-import com.fxbank.tpp.mivs.model.mivstables.MivsRegVrfctnInfoModel;
+import com.fxbank.tpp.mivs.model.mivsmodel.MivsRegVrfctnInfoModel;
 import com.fxbank.tpp.mivs.service.IMivsRegVrfctnInfoService;
 
 import javax.annotation.Resource;

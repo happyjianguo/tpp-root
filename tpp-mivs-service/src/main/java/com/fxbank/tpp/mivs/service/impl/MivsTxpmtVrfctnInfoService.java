@@ -5,7 +5,7 @@ import com.fxbank.tpp.mivs.entity.TxPmtVrfctn.MivsTxpmtvfctnInfoAttEntity;
 import com.fxbank.tpp.mivs.entity.TxPmtVrfctn.MivsTxpmtvfctnInfoEntity;
 import com.fxbank.tpp.mivs.mapper.TxPmtVrfctn.MivsTxpmtvfctnInfoAttMapper;
 import com.fxbank.tpp.mivs.mapper.TxPmtVrfctn.MivsTxpmtvfctnInfoMapper;
-import com.fxbank.tpp.mivs.model.mivstables.MivsTxpmtVrfctnInfoModel;
+import com.fxbank.tpp.mivs.model.mivsmodel.MivsTxpmtVrfctnInfoModel;
 import com.fxbank.tpp.mivs.service.IMivsTxPmtVrfctnInfoService;
 
 import javax.annotation.Resource;
