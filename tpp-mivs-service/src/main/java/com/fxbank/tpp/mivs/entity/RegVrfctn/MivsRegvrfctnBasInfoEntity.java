@@ -10,6 +10,13 @@ public class MivsRegvrfctnBasInfoEntity {
      * null
      */
     @Id
+    @Column(name = "INSTG_PTY")
+    private String instgPty;
+
+    /**
+     * null
+     */
+    @Id
     @Column(name = "MSG_ID")
     private String msgId;
 
@@ -119,8 +126,8 @@ public class MivsRegvrfctnBasInfoEntity {
     /**
      * null
      */
-    @Column(name = "ORIG_NM_OF_LGL_PRSN")
-    private String origNmOfLglPrsn;
+    @Column(name = "NM_OF_LGL_PRSN")
+    private String nmOfLglPrsn;
 
     /**
      * null
@@ -139,6 +146,22 @@ public class MivsRegvrfctnBasInfoEntity {
      */
     @Column(name = "BIZ_SCP")
     private String bizScp;
+
+    /**
+     * null
+     * @return instgPty null
+     */
+    public String getInstgPty() {
+        return instgPty;
+    }
+
+    /**
+     * null
+     * @param instgPty null
+     */
+    public void setInstgPty(String instgPty) {
+        this.instgPty = instgPty;
+    }
 
     /**
      * null
@@ -432,16 +455,16 @@ public class MivsRegvrfctnBasInfoEntity {
      * null
      * @return ORIG_NM_OF_LGL_PRSN null
      */
-    public String getOrigNmOfLglPrsn() {
-        return origNmOfLglPrsn;
+    public String getNmOfLglPrsn() {
+        return nmOfLglPrsn;
     }
 
     /**
      * null
-     * @param origNmOfLglPrsn null
+     * @param nmOfLglPrsn null
      */
-    public void setOrigNmOfLglPrsn(String origNmOfLglPrsn) {
-        this.origNmOfLglPrsn = origNmOfLglPrsn;
+    public void setNmOfLglPrsn(String nmOfLglPrsn) {
+        this.nmOfLglPrsn = nmOfLglPrsn;
     }
 
     /**
@@ -491,4 +514,5 @@ public class MivsRegvrfctnBasInfoEntity {
     public void setBizScp(String bizScp) {
         this.bizScp = bizScp;
     }
+
 }
