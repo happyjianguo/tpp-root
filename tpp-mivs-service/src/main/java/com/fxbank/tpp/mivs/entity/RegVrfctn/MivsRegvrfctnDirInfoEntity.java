@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_REGVRFCTN_CHNG_INFO")
-public class MivsRegvrfctnChngInfoEntity {
+@Table(name = "MIVS_REGVRFCTN_DIR_INFO")
+public class MivsRegvrfctnDirInfoEntity {
     /**
      * null
      */
@@ -24,8 +24,8 @@ public class MivsRegvrfctnChngInfoEntity {
      * null
      */
     @Id
-    @Column(name = "CHNG_INFO_NB")
-    private Integer chngInfoNb;
+    @Column(name = "DIR_SUPSRSGR_INFO_NB")
+    private Integer dirSupsrsgrInfoNb;
 
     /**
      * null
@@ -72,26 +72,14 @@ public class MivsRegvrfctnChngInfoEntity {
     /**
      * null
      */
-    @Column(name = "CHNG_ITM")
-    private String chngItm;
+    @Column(name = "NM")
+    private String nm;
 
     /**
      * null
      */
-    @Column(name = "BF_CHNG")
-    private String bfChng;
-
-    /**
-     * null
-     */
-    @Column(name = "AFT_CHNG")
-    private String aftChng;
-
-    /**
-     * null
-     */
-    @Column(name = "DT_OF_CHNG")
-    private String dtOfChng;
+    @Column(name = "POSN")
+    private String posn;
 
     /**
      * null
@@ -127,18 +115,18 @@ public class MivsRegvrfctnChngInfoEntity {
 
     /**
      * null
-     * @return CHNG_INFO_NB null
+     * @return DIR_SUPSRSGR_INFO_NB null
      */
-    public Integer getChngInfoNb() {
-        return chngInfoNb;
+    public Integer getDirSupsrsgrInfoNb() {
+        return dirSupsrsgrInfoNb;
     }
 
     /**
      * null
-     * @param chngInfoNb null
+     * @param dirSupsrsgrInfoNb null
      */
-    public void setChngInfoNb(Integer chngInfoNb) {
-        this.chngInfoNb = chngInfoNb;
+    public void setDirSupsrsgrInfoNb(Integer dirSupsrsgrInfoNb) {
+        this.dirSupsrsgrInfoNb = dirSupsrsgrInfoNb;
     }
 
     /**
@@ -255,65 +243,33 @@ public class MivsRegvrfctnChngInfoEntity {
 
     /**
      * null
-     * @return CHNG_ITM null
+     * @return NM null
      */
-    public String getChngItm() {
-        return chngItm;
+    public String getNm() {
+        return nm;
     }
 
     /**
      * null
-     * @param chngItm null
+     * @param nm null
      */
-    public void setChngItm(String chngItm) {
-        this.chngItm = chngItm;
+    public void setNm(String nm) {
+        this.nm = nm;
     }
 
     /**
      * null
-     * @return BF_CHNG null
+     * @return POSN null
      */
-    public String getBfChng() {
-        return bfChng;
+    public String getPosn() {
+        return posn;
     }
 
     /**
      * null
-     * @param bfChng null
+     * @param posn null
      */
-    public void setBfChng(String bfChng) {
-        this.bfChng = bfChng;
-    }
-
-    /**
-     * null
-     * @return AFT_CHNG null
-     */
-    public String getAftChng() {
-        return aftChng;
-    }
-
-    /**
-     * null
-     * @param aftChng null
-     */
-    public void setAftChng(String aftChng) {
-        this.aftChng = aftChng;
-    }
-
-    /**
-     * null
-     * @return DT_OF_CHNG null
-     */
-    public String getDtOfChng() {
-        return dtOfChng;
-    }
-
-    /**
-     * null
-     * @param dtOfChng null
-     */
-    public void setDtOfChng(String dtOfChng) {
-        this.dtOfChng = dtOfChng;
+    public void setPosn(String posn) {
+        this.posn = posn;
     }
 }

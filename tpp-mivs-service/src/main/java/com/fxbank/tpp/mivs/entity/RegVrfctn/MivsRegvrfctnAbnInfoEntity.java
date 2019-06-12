@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_REGVRFCTN_CHNG_INFO")
-public class MivsRegvrfctnChngInfoEntity {
+@Table(name = "MIVS_REGVRFCTN_ABN_INFO")
+public class MivsRegvrfctnAbnInfoEntity {
     /**
      * null
      */
@@ -24,8 +24,8 @@ public class MivsRegvrfctnChngInfoEntity {
      * null
      */
     @Id
-    @Column(name = "CHNG_INFO_NB")
-    private Integer chngInfoNb;
+    @Column(name = "ABN_INFO_NB")
+    private Integer abnInfoNb;
 
     /**
      * null
@@ -72,26 +72,38 @@ public class MivsRegvrfctnChngInfoEntity {
     /**
      * null
      */
-    @Column(name = "CHNG_ITM")
-    private String chngItm;
+    @Column(name = "ABNML_CAUSE")
+    private String abnmlCause;
 
     /**
      * null
      */
-    @Column(name = "BF_CHNG")
-    private String bfChng;
+    @Column(name = "ABNML_DATE")
+    private String abnmlDate;
 
     /**
      * null
      */
-    @Column(name = "AFT_CHNG")
-    private String aftChng;
+    @Column(name = "ABNML_CAUSE_DCSN_AUTH")
+    private String abnmlCauseDcsnAuth;
 
     /**
      * null
      */
-    @Column(name = "DT_OF_CHNG")
-    private String dtOfChng;
+    @Column(name = "RMV_CAUSE")
+    private String rmvCause;
+
+    /**
+     * null
+     */
+    @Column(name = "RMV_DATE")
+    private String rmvDate;
+
+    /**
+     * null
+     */
+    @Column(name = "RMV_CAUSE_DCSN_AUTH")
+    private String rmvCauseDcsnAuth;
 
     /**
      * null
@@ -127,18 +139,18 @@ public class MivsRegvrfctnChngInfoEntity {
 
     /**
      * null
-     * @return CHNG_INFO_NB null
+     * @return ABN_INFO_NB null
      */
-    public Integer getChngInfoNb() {
-        return chngInfoNb;
+    public Integer getAbnInfoNb() {
+        return abnInfoNb;
     }
 
     /**
      * null
-     * @param chngInfoNb null
+     * @param abnInfoNb null
      */
-    public void setChngInfoNb(Integer chngInfoNb) {
-        this.chngInfoNb = chngInfoNb;
+    public void setAbnInfoNb(Integer abnInfoNb) {
+        this.abnInfoNb = abnInfoNb;
     }
 
     /**
@@ -255,65 +267,97 @@ public class MivsRegvrfctnChngInfoEntity {
 
     /**
      * null
-     * @return CHNG_ITM null
+     * @return ABNML_CAUSE null
      */
-    public String getChngItm() {
-        return chngItm;
+    public String getAbnmlCause() {
+        return abnmlCause;
     }
 
     /**
      * null
-     * @param chngItm null
+     * @param abnmlCause null
      */
-    public void setChngItm(String chngItm) {
-        this.chngItm = chngItm;
+    public void setAbnmlCause(String abnmlCause) {
+        this.abnmlCause = abnmlCause;
     }
 
     /**
      * null
-     * @return BF_CHNG null
+     * @return ABNML_DATE null
      */
-    public String getBfChng() {
-        return bfChng;
+    public String getAbnmlDate() {
+        return abnmlDate;
     }
 
     /**
      * null
-     * @param bfChng null
+     * @param abnmlDate null
      */
-    public void setBfChng(String bfChng) {
-        this.bfChng = bfChng;
+    public void setAbnmlDate(String abnmlDate) {
+        this.abnmlDate = abnmlDate;
     }
 
     /**
      * null
-     * @return AFT_CHNG null
+     * @return ABNML_CAUSE_DCSN_AUTH null
      */
-    public String getAftChng() {
-        return aftChng;
+    public String getAbnmlCauseDcsnAuth() {
+        return abnmlCauseDcsnAuth;
     }
 
     /**
      * null
-     * @param aftChng null
+     * @param abnmlCauseDcsnAuth null
      */
-    public void setAftChng(String aftChng) {
-        this.aftChng = aftChng;
+    public void setAbnmlCauseDcsnAuth(String abnmlCauseDcsnAuth) {
+        this.abnmlCauseDcsnAuth = abnmlCauseDcsnAuth;
     }
 
     /**
      * null
-     * @return DT_OF_CHNG null
+     * @return RMV_CAUSE null
      */
-    public String getDtOfChng() {
-        return dtOfChng;
+    public String getRmvCause() {
+        return rmvCause;
     }
 
     /**
      * null
-     * @param dtOfChng null
+     * @param rmvCause null
      */
-    public void setDtOfChng(String dtOfChng) {
-        this.dtOfChng = dtOfChng;
+    public void setRmvCause(String rmvCause) {
+        this.rmvCause = rmvCause;
+    }
+
+    /**
+     * null
+     * @return RMV_DATE null
+     */
+    public String getRmvDate() {
+        return rmvDate;
+    }
+
+    /**
+     * null
+     * @param rmvDate null
+     */
+    public void setRmvDate(String rmvDate) {
+        this.rmvDate = rmvDate;
+    }
+
+    /**
+     * null
+     * @return RMV_CAUSE_DCSN_AUTH null
+     */
+    public String getRmvCauseDcsnAuth() {
+        return rmvCauseDcsnAuth;
+    }
+
+    /**
+     * null
+     * @param rmvCauseDcsnAuth null
+     */
+    public void setRmvCauseDcsnAuth(String rmvCauseDcsnAuth) {
+        this.rmvCauseDcsnAuth = rmvCauseDcsnAuth;
     }
 }

@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_REGVRFCTN_CHNG_INFO")
-public class MivsRegvrfctnChngInfoEntity {
+@Table(name = "MIVS_REGVRFCTN_LIC_INFO")
+public class MivsRegvrfctnLicInfoEntity {
     /**
      * null
      */
@@ -24,8 +24,8 @@ public class MivsRegvrfctnChngInfoEntity {
      * null
      */
     @Id
-    @Column(name = "CHNG_INFO_NB")
-    private Integer chngInfoNb;
+    @Column(name = "LIC_INFO_NB")
+    private Integer licInfoNb;
 
     /**
      * null
@@ -72,26 +72,38 @@ public class MivsRegvrfctnChngInfoEntity {
     /**
      * null
      */
-    @Column(name = "CHNG_ITM")
-    private String chngItm;
+    @Column(name = "ORGNL_OR_CP")
+    private String orgnlOrCp;
 
     /**
      * null
      */
-    @Column(name = "BF_CHNG")
-    private String bfChng;
+    @Column(name = "LIC_NULL_STM_DT")
+    private String licNullStmDt;
 
     /**
      * null
      */
-    @Column(name = "AFT_CHNG")
-    private String aftChng;
+    @Column(name = "RPL_STS")
+    private String rplSts;
 
     /**
      * null
      */
-    @Column(name = "DT_OF_CHNG")
-    private String dtOfChng;
+    @Column(name = "RPL_DT")
+    private String rplDt;
+
+    /**
+     * null
+     */
+    @Column(name = "LIC_CP_NB")
+    private String licCpNb;
+
+    /**
+     * null
+     */
+    @Column(name = "LIC_NULL_STM_CNTT")
+    private String licNullStmCntt;
 
     /**
      * null
@@ -127,18 +139,18 @@ public class MivsRegvrfctnChngInfoEntity {
 
     /**
      * null
-     * @return CHNG_INFO_NB null
+     * @return LIC_INFO_NB null
      */
-    public Integer getChngInfoNb() {
-        return chngInfoNb;
+    public Integer getLicInfoNb() {
+        return licInfoNb;
     }
 
     /**
      * null
-     * @param chngInfoNb null
+     * @param licInfoNb null
      */
-    public void setChngInfoNb(Integer chngInfoNb) {
-        this.chngInfoNb = chngInfoNb;
+    public void setLicInfoNb(Integer licInfoNb) {
+        this.licInfoNb = licInfoNb;
     }
 
     /**
@@ -255,65 +267,97 @@ public class MivsRegvrfctnChngInfoEntity {
 
     /**
      * null
-     * @return CHNG_ITM null
+     * @return ORGNL_OR_CP null
      */
-    public String getChngItm() {
-        return chngItm;
+    public String getOrgnlOrCp() {
+        return orgnlOrCp;
     }
 
     /**
      * null
-     * @param chngItm null
+     * @param orgnlOrCp null
      */
-    public void setChngItm(String chngItm) {
-        this.chngItm = chngItm;
+    public void setOrgnlOrCp(String orgnlOrCp) {
+        this.orgnlOrCp = orgnlOrCp;
     }
 
     /**
      * null
-     * @return BF_CHNG null
+     * @return LIC_NULL_STM_DT null
      */
-    public String getBfChng() {
-        return bfChng;
+    public String getLicNullStmDt() {
+        return licNullStmDt;
     }
 
     /**
      * null
-     * @param bfChng null
+     * @param licNullStmDt null
      */
-    public void setBfChng(String bfChng) {
-        this.bfChng = bfChng;
+    public void setLicNullStmDt(String licNullStmDt) {
+        this.licNullStmDt = licNullStmDt;
     }
 
     /**
      * null
-     * @return AFT_CHNG null
+     * @return RPL_STS null
      */
-    public String getAftChng() {
-        return aftChng;
+    public String getRplSts() {
+        return rplSts;
     }
 
     /**
      * null
-     * @param aftChng null
+     * @param rplSts null
      */
-    public void setAftChng(String aftChng) {
-        this.aftChng = aftChng;
+    public void setRplSts(String rplSts) {
+        this.rplSts = rplSts;
     }
 
     /**
      * null
-     * @return DT_OF_CHNG null
+     * @return RPL_DT null
      */
-    public String getDtOfChng() {
-        return dtOfChng;
+    public String getRplDt() {
+        return rplDt;
     }
 
     /**
      * null
-     * @param dtOfChng null
+     * @param rplDt null
      */
-    public void setDtOfChng(String dtOfChng) {
-        this.dtOfChng = dtOfChng;
+    public void setRplDt(String rplDt) {
+        this.rplDt = rplDt;
+    }
+
+    /**
+     * null
+     * @return LIC_CP_NB null
+     */
+    public String getLicCpNb() {
+        return licCpNb;
+    }
+
+    /**
+     * null
+     * @param licCpNb null
+     */
+    public void setLicCpNb(String licCpNb) {
+        this.licCpNb = licCpNb;
+    }
+
+    /**
+     * null
+     * @return LIC_NULL_STM_CNTT null
+     */
+    public String getLicNullStmCntt() {
+        return licNullStmCntt;
+    }
+
+    /**
+     * null
+     * @param licNullStmCntt null
+     */
+    public void setLicNullStmCntt(String licNullStmCntt) {
+        this.licNullStmCntt = licNullStmCntt;
     }
 }
