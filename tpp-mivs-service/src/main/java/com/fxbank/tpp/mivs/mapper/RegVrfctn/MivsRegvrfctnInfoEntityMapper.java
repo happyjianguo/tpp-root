@@ -5,6 +5,6 @@ import com.fxbank.tpp.mivs.entity.RegVrfctn.MivsRegvrfctnInfoEntity;
 
 import java.util.List;
 
-public interface MivsRegvrfctnInfoMapper extends MyMapper<MivsRegvrfctnInfoEntity> {
+public interface MivsRegvrfctnInfoEntityMapper extends MyMapper<MivsRegvrfctnInfoEntity> {
     List<MivsRegvrfctnInfoEntity> selectAll();
 }
