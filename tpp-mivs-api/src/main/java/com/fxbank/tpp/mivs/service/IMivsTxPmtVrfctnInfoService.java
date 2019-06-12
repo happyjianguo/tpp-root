@@ -1,6 +1,6 @@
 package com.fxbank.tpp.mivs.service;
 
-import com.fxbank.tpp.mivs.model.mivstables.MivsTxpmtVrfctnInfoModel;
+import com.fxbank.tpp.mivs.model.mivsmodel.MivsTxpmtVrfctnInfoModel;
 
 /**
  * @Description: 纳税信息核查数据库操作接口

@@ -1,6 +1,6 @@
 package com.fxbank.tpp.mivs.service;
 
-import com.fxbank.tpp.mivs.model.mivstables.MivsRegVrfctnInfoModel;
+import com.fxbank.tpp.mivs.model.mivsmodel.MivsRegVrfctnInfoModel;
 
 /**
  * @Description: 登记信息核查业务表操作接口

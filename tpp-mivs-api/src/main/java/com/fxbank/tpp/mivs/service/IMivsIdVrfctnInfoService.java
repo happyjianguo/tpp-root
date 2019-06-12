@@ -1,6 +1,6 @@
 package com.fxbank.tpp.mivs.service;
 
-import com.fxbank.tpp.mivs.model.mivstables.MivsIdVrfctnInfoModel;
+import com.fxbank.tpp.mivs.model.mivsmodel.MivsIdVrfctnInfoModel;
 
 /**
  * @Description: 手机号核查表操作接口
