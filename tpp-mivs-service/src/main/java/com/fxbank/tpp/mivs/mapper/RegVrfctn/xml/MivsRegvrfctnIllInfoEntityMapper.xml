@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.RegVrfctn.MivsRegvrfctnIllInfoEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.RegVrfctn.MivsRegvrfctnIllInfoEntity" >
+    <id column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
+    <id column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
+    <id column="ILL_INFO_NB" property="illInfoNb" jdbcType="DECIMAL" />
+    <result column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <result column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
+    <result column="CRE_DT_TM" property="creDtTm" jdbcType="NVARCHAR" />
+    <result column="ORIG_MSG_ID" property="origMsgId" jdbcType="NVARCHAR" />
+    <result column="ORIG_INSTG_DRCT_PTY" property="origInstgDrctPty" jdbcType="NVARCHAR" />
+    <result column="ORIG_INSTG_PTY" property="origInstgPty" jdbcType="NVARCHAR" />
+    <result column="ILL_DSCRT_CAUSE" property="illDscrtCause" jdbcType="NVARCHAR" />
+    <result column="ABNML_DATE" property="abnmlDate" jdbcType="NVARCHAR" />
+    <result column="ABN_DSCRT_CAUSE_DCSN_AUTH" property="abnDscrtCauseDcsnAuth" jdbcType="NVARCHAR" />
+    <result column="RMV_CAUSE" property="rmvCause" jdbcType="NVARCHAR" />
+    <result column="RMV_DATE" property="rmvDate" jdbcType="NVARCHAR" />
+    <result column="RMV_CAUSE_DCSN_AUTH" property="rmvCauseDcsnAuth" jdbcType="NVARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select INSTG_PTY, MSG_ID, ILL_INFO_NB, PLAT_DATE, PLAT_TRACE, PLAT_TIME, CRE_DT_TM, 
+    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, ILL_DSCRT_CAUSE, ABNML_DATE, ABN_DSCRT_CAUSE_DCSN_AUTH, 
+    RMV_CAUSE, RMV_DATE, RMV_CAUSE_DCSN_AUTH
+    from MIVS_REGVRFCTN_ILL_INFO
+  </select>
+</mapper>

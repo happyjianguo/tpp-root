@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxbank.tpp.mivs.mapper.RegVrfctn.MivsRegvrfctnLicInfoEntityMapper">
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.RegVrfctn.MivsRegvrfctnLicInfoEntity">
+    <id column="INSTG_PTY" jdbcType="NVARCHAR" property="instgPty" />
+    <id column="MSG_ID" jdbcType="NVARCHAR" property="msgId" />
+    <id column="LIC_INFO_NB" jdbcType="DECIMAL" property="licInfoNb" />
+    <result column="PLAT_DATE" jdbcType="DECIMAL" property="platDate" />
+    <result column="PLAT_TRACE" jdbcType="DECIMAL" property="platTrace" />
+    <result column="PLAT_TIME" jdbcType="DECIMAL" property="platTime" />
+    <result column="CRE_DT_TM" jdbcType="NVARCHAR" property="creDtTm" />
+    <result column="ORIG_MSG_ID" jdbcType="NVARCHAR" property="origMsgId" />
+    <result column="ORIG_INSTG_DRCT_PTY" jdbcType="NVARCHAR" property="origInstgDrctPty" />
+    <result column="ORIG_INSTG_PTY" jdbcType="NVARCHAR" property="origInstgPty" />
+    <result column="ORGNL_OR_CP" jdbcType="NVARCHAR" property="orgnlOrCp" />
+    <result column="LIC_NULL_STM_DT" jdbcType="NVARCHAR" property="licNullStmDt" />
+    <result column="RPL_STS" jdbcType="NVARCHAR" property="rplSts" />
+    <result column="RPL_DT" jdbcType="NVARCHAR" property="rplDt" />
+    <result column="LIC_CP_NB" jdbcType="NVARCHAR" property="licCpNb" />
+    <result column="LIC_NULL_STM_CNTT" jdbcType="BLOB" property="licNullStmCntt" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select INSTG_PTY, MSG_ID, LIC_INFO_NB, PLAT_DATE, PLAT_TRACE, PLAT_TIME, CRE_DT_TM, 
+    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, ORGNL_OR_CP, LIC_NULL_STM_DT, RPL_STS, 
+    RPL_DT, LIC_CP_NB, LIC_NULL_STM_CNTT
+    from MIVS_REGVRFCTN_LIC_INFO
+  </select>
+</mapper>
