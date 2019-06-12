@@ -70,11 +70,11 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 //		al.add("TxAuthCd001");
 		//赋循环数据
 		List<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf> txpmtInf = new ArrayList<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf>();
-		for (int i=0 ; i<2; i++) {
+		for (int i=0 ; i<4; i++) {
 			MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf arraymsg = new MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf();
-			arraymsg.setTxAuthCd("TxAuthCd001");
+			arraymsg.setTxAuthCd("TxAuthCd00"+i);
 			arraymsg.setTxAuthNm("国税局");
-			arraymsg.setTxpySts("01");
+			arraymsg.setTxpySts("00"+i);
 //			myLog.info(logger, "i=" + i);
 			txpmtInf.add(arraymsg);
 		}

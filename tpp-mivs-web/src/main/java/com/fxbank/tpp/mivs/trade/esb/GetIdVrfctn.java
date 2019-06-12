@@ -16,12 +16,12 @@ import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_321_001_01;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
-import com.fxbank.tpp.mivs.model.mivstables.MivsIdVrfctnInfoTable;
+import com.fxbank.tpp.mivs.model.mivsmodel.MivsIdVrfctnInfoModel;
 import com.fxbank.tpp.mivs.model.request.MIVS_320_001_01;
 import com.fxbank.tpp.mivs.model.request.MIVS_320_001_01_GetIdVrfctn;
 import com.fxbank.tpp.mivs.model.response.MIVS_321_001_01_RtrIdVrfctn;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
-import com.fxbank.tpp.mivs.service.IMivsIdvrfctnInfoService;
+import com.fxbank.tpp.mivs.service.IMivsIdVrfctnInfoService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
 import com.fxbank.tpp.mivs.trade.mivs.ComConf;
 
@@ -31,8 +31,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * @Description: 行内系统发起企业手机号核查
- * @Author: 周勇沩
+ * @Author: 周勇沩，王鹏
  * @Date: 2019-04-28 09:54:14
+ * @Update: 2019-05-26
  */
 @Service("REQ_50023000201")
 public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
@@ -52,7 +53,7 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
     private IForwardToESBService forwardToESBService;
 
     @Reference(version = "1.0.0")
-    private IMivsIdvrfctnInfoService mivsIdvrfctnService;
+    private IMivsIdVrfctnInfoService mivsIdVrfctnInfoService;
 
     @Override
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -99,62 +100,64 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         vryDef.setOpNm(reqBody.getOpNm());
 
         //发送人行请求数据落库
-        MivsIdVrfctnInfoTable IdVrfctnTableInsertStart =  new MivsIdVrfctnInfoTable();
+        MivsIdVrfctnInfoModel idVrfctnTableInsert =  new MivsIdVrfctnInfoModel();
         myLog.info(logger, "Date = " + req.getSysDate());
         myLog.info(logger, "trace = " + req.getSysTraceno());
         myLog.info(logger, "SystemId = " + req.getReqSysHead().getSystemId());
         myLog.info(logger, "TranDate = " + req.getReqSysHead().getTranDate());
         myLog.info(logger, "SeqNo = " + req.getReqSysHead().getSeqNo());
         myLog.info(logger, "TranTimestamp = " + req.getReqSysHead().getTranTimestamp());
-        IdVrfctnTableInsertStart.setPlat_date(req.getSysDate());
-        IdVrfctnTableInsertStart.setPlat_trace(req.getSysTraceno());
-        IdVrfctnTableInsertStart.setPlat_time(req.getSysTime());
-        IdVrfctnTableInsertStart.setSystem_id(req.getReqSysHead().getSystemId());
-        IdVrfctnTableInsertStart.setTran_date(req.getReqSysHead().getTranDate());
-        IdVrfctnTableInsertStart.setSeq_no(req.getReqSysHead().getSeqNo());
-        IdVrfctnTableInsertStart.setTran_time(req.getReqSysHead().getTranTimestamp());
-        IdVrfctnTableInsertStart.setUser_id(req.getReqSysHead().getUserId());
-        IdVrfctnTableInsertStart.setBranch_id(req.getReqSysHead().getBranchId());
-        IdVrfctnTableInsertStart.setMivs_sts("00");
-        IdVrfctnTableInsertStart.setMsg_id(msgHdr.getMsgId());
-        IdVrfctnTableInsertStart.setCre_dt_tm(msgHdr.getCreDtTm());
-        IdVrfctnTableInsertStart.setInstg_drct_pty(settlementBankNo);
-        IdVrfctnTableInsertStart.setDrct_pty_nm(lqtnBnkNmT1);
-        IdVrfctnTableInsertStart.setInstg_pty(bankNumber);
-        IdVrfctnTableInsertStart.setPty_nm(bnkNmT);
-        IdVrfctnTableInsertStart.setInstd_drct_pty("0000");
-        IdVrfctnTableInsertStart.setInstd_pty("0000");
-        IdVrfctnTableInsertStart.setMob_nb(reqBody.getMobNb());
-        IdVrfctnTableInsertStart.setNm(reqBody.getNm());
-        IdVrfctnTableInsertStart.setId_tp(reqBody.getIdTp());
-        IdVrfctnTableInsertStart.setId(reqBody.getId());
-        IdVrfctnTableInsertStart.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
-        IdVrfctnTableInsertStart.setBiz_reg_nb(reqBody.getBizRegNb());
-        IdVrfctnTableInsertStart.setOp_nm(reqBody.getOpNm());
+        idVrfctnTableInsert.setPlat_date(req.getSysDate());
+        idVrfctnTableInsert.setPlat_trace(req.getSysTraceno());
+        idVrfctnTableInsert.setPlat_time(req.getSysTime());
+        idVrfctnTableInsert.setSystem_id(req.getReqSysHead().getSystemId());
+        idVrfctnTableInsert.setTran_date(req.getReqSysHead().getTranDate());
+        idVrfctnTableInsert.setSeq_no(req.getReqSysHead().getSeqNo());
+        idVrfctnTableInsert.setTran_time(req.getReqSysHead().getTranTimestamp());
+        idVrfctnTableInsert.setUser_id(req.getReqSysHead().getUserId());
+        idVrfctnTableInsert.setBranch_id(req.getReqSysHead().getBranchId());
+        idVrfctnTableInsert.setMivs_sts("00");
+        idVrfctnTableInsert.setMsg_id(msgHdr.getMsgId());
+        idVrfctnTableInsert.setCre_dt_tm(msgHdr.getCreDtTm());
+        idVrfctnTableInsert.setInstg_drct_pty(settlementBankNo);
+        idVrfctnTableInsert.setDrct_pty_nm(lqtnBnkNmT1);
+        idVrfctnTableInsert.setInstg_pty(bankNumber);
+        idVrfctnTableInsert.setPty_nm(bnkNmT);
+        idVrfctnTableInsert.setInstd_drct_pty("0000");
+        idVrfctnTableInsert.setInstd_pty("0000");
+        idVrfctnTableInsert.setMob_nb(reqBody.getMobNb());
+        idVrfctnTableInsert.setNm(reqBody.getNm());
+        idVrfctnTableInsert.setId_tp(reqBody.getIdTp());
+        idVrfctnTableInsert.setId(reqBody.getId());
+        idVrfctnTableInsert.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
+        idVrfctnTableInsert.setBiz_reg_nb(reqBody.getBizRegNb());
+        idVrfctnTableInsert.setOp_nm(reqBody.getOpNm());
 
-        mivsIdvrfctnService.insertStart(IdVrfctnTableInsertStart); //插入数据库业务数据
-//        myLog.info(logger, IdVrfctnTableInsertStart.toString());
+        mivsIdVrfctnInfoService.insertStart(idVrfctnTableInsert); //插入数据库业务数据
+//        myLog.info(logger, idVrfctnTableInsert.toString());
 
+//        myLog.info(logger, "发送320报文为：" + mivs320.toString());
         mivs320 = (MIVS_320_001_01) pmtsService.sendToPmts(mivs320); // 发送请求，实时等待990
 
-         String channel = "321_"+ mivs320.getGetIdVrfctn().getMsgHdr().getMsgId();  //为同步等待321，组合报文{H:的三要素
-
+        String channel = "321_"+ mivs320.getGetIdVrfctn().getMsgHdr().getMsgId();  //为同步等待321，组合报文{H:的三要素
+        myLog.info(logger,"320报文发送通道编号=[" + channel);
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
         //收到人行通讯回执，更新数据库状态
-        MivsIdVrfctnInfoTable IdVrfctnTableUpdate = new MivsIdVrfctnInfoTable();
+        MivsIdVrfctnInfoModel idVrfctnTableUpdate = new MivsIdVrfctnInfoModel();
         //更新数据的主键赋值
-        IdVrfctnTableUpdate.setPlat_date(req.getSysDate());
-        IdVrfctnTableUpdate.setPlat_trace(req.getSysTraceno());
+        idVrfctnTableUpdate.setPlat_date(req.getSysDate());
+        idVrfctnTableUpdate.setPlat_trace(req.getSysTraceno());
 
         REP_50023000201 rep = new REP_50023000201();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
         	CCMS_911_001_02 ccms911 = (CCMS_911_001_02)dtoBase;
         	MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
 
-        	IdVrfctnTableUpdate.setMivs_sts("02");
-        	IdVrfctnTableUpdate.setProc_cd(ccms911.getDscrdMsgNtfctn().getDscrdInf().getPrcCd());
-        	IdVrfctnTableUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
+            //根据人行返回报文更新数据库状态
+        	idVrfctnTableUpdate.setMivs_sts("02");
+        	idVrfctnTableUpdate.setProc_cd(ccms911.getDscrdMsgNtfctn().getDscrdInf().getPrcCd());
+        	idVrfctnTableUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
 
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.321.001.01")){
@@ -167,10 +170,10 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
             if(oprlErr.getProcSts()!=null) {
             	MivsTradeExecuteException e = new MivsTradeExecuteException(oprlErr.getProcCd(),oprlErr.getRjctinf());
 
-            	IdVrfctnTableUpdate.setMivs_sts("03");
-                IdVrfctnTableUpdate.setProc_cd(oprlErr.getProcCd());
-                IdVrfctnTableUpdate.setProc_sts(oprlErr.getProcSts());
-                IdVrfctnTableUpdate.setRjct_inf(oprlErr.getRjctinf());
+            	idVrfctnTableUpdate.setMivs_sts("03");
+                idVrfctnTableUpdate.setProc_cd(oprlErr.getProcCd());
+                idVrfctnTableUpdate.setProc_sts(oprlErr.getProcSts());
+                idVrfctnTableUpdate.setRjct_inf(oprlErr.getRjctinf());
                 throw e;
             }
 
@@ -184,18 +187,18 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
             repBody.setSts(vrfctnInf.getSts());
 
             //待更新数据库数据
-            IdVrfctnTableUpdate.setMivs_sts("04");
-            IdVrfctnTableUpdate.setMob_nb(vrfctnInf.getMobNb());
-            IdVrfctnTableUpdate.setRslt(vrfctnInf.getRslt());
-            IdVrfctnTableUpdate.setMob_crr(vrfctnInf.getMobCrr());
-            IdVrfctnTableUpdate.setLoc_mob_nb(vrfctnInf.getLocMobNb());
-            IdVrfctnTableUpdate.setLoc_nm_mob_nb(vrfctnInf.getLocNmMobNb());
-            IdVrfctnTableUpdate.setCd_tp(vrfctnInf.getCdTp());
-            IdVrfctnTableUpdate.setSts(vrfctnInf.getSts());
+            idVrfctnTableUpdate.setMivs_sts("04");
+            idVrfctnTableUpdate.setMob_nb(vrfctnInf.getMobNb());
+            idVrfctnTableUpdate.setRslt(vrfctnInf.getRslt());
+            idVrfctnTableUpdate.setMob_crr(vrfctnInf.getMobCrr());
+            idVrfctnTableUpdate.setLoc_mob_nb(vrfctnInf.getLocMobNb());
+            idVrfctnTableUpdate.setLoc_nm_mob_nb(vrfctnInf.getLocNmMobNb());
+            idVrfctnTableUpdate.setCd_tp(vrfctnInf.getCdTp());
+            idVrfctnTableUpdate.setSts(vrfctnInf.getSts());
         }
 
         //更新业务数据表
-        mivsIdvrfctnService.updateSts(IdVrfctnTableUpdate);
+        mivsIdVrfctnInfoService.updateSts(idVrfctnTableUpdate);
 
         return rep;
     }
