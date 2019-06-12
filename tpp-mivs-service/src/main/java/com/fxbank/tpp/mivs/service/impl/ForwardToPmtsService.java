@@ -38,6 +38,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 	@Resource
 	private MyJedis myJedis;
 
+	@Resource
 	private HisuTSSCAPIForSecondPayment hisuTSSCAPIForSecondPayment;
 
 	@Override
@@ -53,6 +54,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 				.setMesgRefID(String.format("%08d%08d", modelBase.getSysDate(), modelBase.getSysTraceno()));
 
 		String signData = modelBase.signData(); // 待签名数据
+//		myLog.info(logger, "签名字段为：" + signData.toString());
 		if (signData != null) { // 需要签名
 			String signature = null;
 			try {
