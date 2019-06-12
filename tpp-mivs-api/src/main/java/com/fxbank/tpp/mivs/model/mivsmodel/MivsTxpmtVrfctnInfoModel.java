@@ -1,16 +1,15 @@
-package com.fxbank.tpp.mivs.model.mivstables;
-
-import sun.rmi.runtime.Log;
+package com.fxbank.tpp.mivs.model.mivsmodel;
 
 import java.io.Serializable;
 
 /**
  * @Description:
  * @Author: 王鹏
- * @Date: 2019/5/21 16:22
+ * @Date: 2019/5/23 10:19
  */
-public class MivsIdVrfctnInfoTable implements Serializable {
-    private static final long serialVersionUID = 1554985453452624306L;
+public class MivsTxpmtVrfctnInfoModel implements Serializable {
+    private static final long serialVersionUID = 2247595290850032278L;
+    //主表
     private Integer plat_date; //平台日期
     private Integer plat_trace; //平台流水
     private Integer plat_time; //平台时间
@@ -29,25 +28,25 @@ public class MivsIdVrfctnInfoTable implements Serializable {
     private String pty_nm; //发起参与机构行名
     private String instd_drct_pty; //接收直接参与机构
     private String instd_pty; //接收参与机构
-    private String mob_nb; //手机号
-    private String nm; //姓名
-    private String id_tp; //证件类型
-    private String id; //证件号码
+    private String co_nm; //单位名称
     private String uni_soc_cdt_cd; //统一社会信用代码
-    private String biz_reg_nb; //工商注册号
+    private String txpyr_id_nb; //纳税人识别号
     private String op_nm; //操作员姓名
     private String rslt; //手机号核查结果
-    private String mob_crr; //手机运营商
-    private String loc_mob_nb; //手机号归属地代码
-    private String loc_nm_mob_nb; //手机号归属地名称
-    private String cd_tp; //客户类型
-    private String sts; //手机号码状态
+    private String data_resrc_dt; //数据源日期
+    private Integer txpmt_inf_cnt; //核查条数
     private String proc_sts; //申请报文拒绝状态
     private String proc_cd; //申请报文拒绝码
     private String rjct_inf; //申请报文拒绝信息
     private String remark1; //备用字段1
     private String remark2; //备用字段2
     private String remark3; //备用字段3
+
+    //附表
+    private Integer txpmt_inf_nb; //条数号
+    private String tx_auth_cd ; //税务机关代码
+    private String tx_auth_nm ; //税务机关名称
+    private String txpyr_sts ; //纳税人状态
 
     public Integer getPlat_date() {
         return plat_date;
@@ -193,36 +192,12 @@ public class MivsIdVrfctnInfoTable implements Serializable {
         this.instd_pty = instd_pty;
     }
 
-    public String getMob_nb() {
-        return mob_nb;
+    public String getCo_nm() {
+        return co_nm;
     }
 
-    public void setMob_nb(String mob_nb) {
-        this.mob_nb = mob_nb;
-    }
-
-    public String getNm() {
-        return nm;
-    }
-
-    public void setNm(String nm) {
-        this.nm = nm;
-    }
-
-    public String getId_tp() {
-        return id_tp;
-    }
-
-    public void setId_tp(String id_tp) {
-        this.id_tp = id_tp;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setCo_nm(String co_nm) {
+        this.co_nm = co_nm;
     }
 
     public String getUni_soc_cdt_cd() {
@@ -233,12 +208,12 @@ public class MivsIdVrfctnInfoTable implements Serializable {
         this.uni_soc_cdt_cd = uni_soc_cdt_cd;
     }
 
-    public String getBiz_reg_nb() {
-        return biz_reg_nb;
+    public String getTxpyr_id_nb() {
+        return txpyr_id_nb;
     }
 
-    public void setBiz_reg_nb(String biz_reg_nb) {
-        this.biz_reg_nb = biz_reg_nb;
+    public void setTxpyr_id_nb(String txpyr_id_nb) {
+        this.txpyr_id_nb = txpyr_id_nb;
     }
 
     public String getOp_nm() {
@@ -257,44 +232,20 @@ public class MivsIdVrfctnInfoTable implements Serializable {
         this.rslt = rslt;
     }
 
-    public String getMob_crr() {
-        return mob_crr;
+    public String getData_resrc_dt() {
+        return data_resrc_dt;
     }
 
-    public void setMob_crr(String mob_crr) {
-        this.mob_crr = mob_crr;
+    public void setData_resrc_dt(String data_resrc_dt) {
+        this.data_resrc_dt = data_resrc_dt;
     }
 
-    public String getLoc_mob_nb() {
-        return loc_mob_nb;
+    public Integer getTxpmt_inf_cnt() {
+        return txpmt_inf_cnt;
     }
 
-    public void setLoc_mob_nb(String loc_mob_nb) {
-        this.loc_mob_nb = loc_mob_nb;
-    }
-
-    public String getLoc_nm_mob_nb() {
-        return loc_nm_mob_nb;
-    }
-
-    public void setLoc_nm_mob_nb(String loc_nm_mob_nb) {
-        this.loc_nm_mob_nb = loc_nm_mob_nb;
-    }
-
-    public String getCd_tp() {
-        return cd_tp;
-    }
-
-    public void setCd_tp(String cd_tp) {
-        this.cd_tp = cd_tp;
-    }
-
-    public String getSts() {
-        return sts;
-    }
-
-    public void setSts(String sts) {
-        this.sts = sts;
+    public void setTxpmt_inf_cnt(Integer txpmt_inf_cnt) {
+        this.txpmt_inf_cnt = txpmt_inf_cnt;
     }
 
     public String getProc_sts() {
@@ -345,46 +296,35 @@ public class MivsIdVrfctnInfoTable implements Serializable {
         this.remark3 = remark3;
     }
 
-    @Override
-    public String toString() {
-        return "MivsIdVrfctnTable{" +
-                "plat_date=" + plat_date +
-                ", plat_trace=" + plat_trace +
-                ", plat_time=" + plat_time +
-                ", system_id='" + system_id + '\'' +
-                ", tran_date='" + tran_date + '\'' +
-                ", seq_no='" + seq_no + '\'' +
-                ", tran_time='" + tran_time + '\'' +
-                ", user_id='" + user_id + '\'' +
-                ", branch_id='" + branch_id + '\'' +
-                ", mivs_sts='" + mivs_sts + '\'' +
-                ", msg_id='" + msg_id + '\'' +
-                ", cre_dt_tm='" + cre_dt_tm + '\'' +
-                ", instg_drct_pty='" + instg_drct_pty + '\'' +
-                ", drct_pty_nm='" + drct_pty_nm + '\'' +
-                ", instg_pty='" + instg_pty + '\'' +
-                ", pty_nm='" + pty_nm + '\'' +
-                ", instd_drct_pty='" + instd_drct_pty + '\'' +
-                ", instd_pty='" + instd_pty + '\'' +
-                ", mob_nb='" + mob_nb + '\'' +
-                ", nm='" + nm + '\'' +
-                ", id_tp='" + id_tp + '\'' +
-                ", id='" + id + '\'' +
-                ", uni_soc_cdt_cd='" + uni_soc_cdt_cd + '\'' +
-                ", biz_reg_nb='" + biz_reg_nb + '\'' +
-                ", op_nm='" + op_nm + '\'' +
-                ", rslt='" + rslt + '\'' +
-                ", mob_crr='" + mob_crr + '\'' +
-                ", loc_mob_nb='" + loc_mob_nb + '\'' +
-                ", loc_nm_mob_nb='" + loc_nm_mob_nb + '\'' +
-                ", cd_tp='" + cd_tp + '\'' +
-                ", sts='" + sts + '\'' +
-                ", proc_sts='" + proc_sts + '\'' +
-                ", proc_cd='" + proc_cd + '\'' +
-                ", rjct_inf='" + rjct_inf + '\'' +
-                ", remark1='" + remark1 + '\'' +
-                ", remark2='" + remark2 + '\'' +
-                ", remark3='" + remark3 + '\'' +
-                '}';
+    public Integer getTxpmt_inf_nb() {
+        return txpmt_inf_nb;
+    }
+
+    public void setTxpmt_inf_nb(Integer txpmt_inf_nb) {
+        this.txpmt_inf_nb = txpmt_inf_nb;
+    }
+
+    public String getTx_auth_cd() {
+        return tx_auth_cd;
+    }
+
+    public void setTx_auth_cd(String tx_auth_cd) {
+        this.tx_auth_cd = tx_auth_cd;
+    }
+
+    public String getTx_auth_nm() {
+        return tx_auth_nm;
+    }
+
+    public void setTx_auth_nm(String tx_auth_nm) {
+        this.tx_auth_nm = tx_auth_nm;
+    }
+
+    public String getTxpyr_sts() {
+        return txpyr_sts;
+    }
+
+    public void setTxpyr_sts(String txpyr_sts) {
+        this.txpyr_sts = txpyr_sts;
     }
 }

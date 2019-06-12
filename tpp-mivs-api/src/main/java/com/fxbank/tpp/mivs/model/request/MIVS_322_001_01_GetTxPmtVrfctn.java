@@ -221,26 +221,26 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "CompanyName", "UniSocCdtCd", "TaxPayerId", "OpNm" })
+    @XmlType(propOrder = { "CoNm", "UniSocCdtCd", "TaxPayerId", "OpNm" })
     public static class VryDef implements Serializable{
         private static final long serialVersionUID = 5043496881254050491L;
-        private String CompanyName = null;
+        private String CoNm = null;
         private String UniSocCdtCd = null;
         private String TaxPayerId = null;
         private String OpNm = null;
 
         /**
-         * @return the CompanyName
+         * @return the CoNm
          */
-        public String getCompanyName() {
-            return CompanyName;
+        public String getCoNm() {
+            return CoNm;
         }
 
         /**
-         * @param companyName the CompanyName to set
+         * @param companyName the CoNm to set
          */
-        public void setCompanyName(String companyName) {
-            this.CompanyName = companyName;
+        public void setCoNm(String companyName) {
+            this.CoNm = companyName;
         }
 
         /**
@@ -289,22 +289,23 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(this.getMsgHdr().getMsgId() + "|");
-        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
-        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
-        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
-        sb.append(this.getVryDef().getCompanyName() + "|");
-        sb.append(this.getVryDef().getUniSocCdtCd() == null ? ""
-                : this.getVryDef().getUniSocCdtCd() + "|");
-        sb.append(this.getVryDef().getTaxPayerId() == null ? ""
-                : this.getVryDef().getTaxPayerId() + "|");
-        sb.append(this.getVryDef().getOpNm() + "|");
-        return sb.toString();
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(this.getMsgHdr().getMsgId() + "|");
+//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
+//        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
+//        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
+//        sb.append(this.getVryDef().getCoNm() + "|");
+//        sb.append(this.getVryDef().getUniSocCdtCd() == null ? ""
+//                : this.getVryDef().getUniSocCdtCd() + "|");
+//        sb.append(this.getVryDef().getTaxPayerId() == null ? ""
+//                : this.getVryDef().getTaxPayerId() + "|");
+//        sb.append(this.getVryDef().getOpNm() + "|");
+//        return sb.toString();
+        return null;
     }
 
 }

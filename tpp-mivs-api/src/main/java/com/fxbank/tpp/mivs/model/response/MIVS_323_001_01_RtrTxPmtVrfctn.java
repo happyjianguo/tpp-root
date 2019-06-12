@@ -353,23 +353,24 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(this.getMsgHdr().getMsgId() + "|");
-        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
-        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
-        if(this.getRspsn().getVrfctnInf().getRslt().equals("MCHD")) {
-            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getTxpmtInf() + "|");
-        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
-            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
-            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
-        }
-        return sb.toString();
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(this.getMsgHdr().getMsgId() + "|");
+//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+//        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
+//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
+//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
+//        if(this.getRspsn().getVrfctnInf().getRslt().equals("MCHD")) {
+//            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getTxpmtInf() + "|");
+//        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
+//            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
+//            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
+//        }
+//        return sb.toString();
+        return null;
     }
 
 }

@@ -333,25 +333,24 @@ public class MIVS_320_001_01_GetIdVrfctn implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(this.getMsgHdr().getMsgId() + "|");
-        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
-        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
-        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
-        sb.append(this.getVryDef().getMobNb() + "|");
-        sb.append(this.getVryDef().getNm() + "|");
-        sb.append(this.getVryDef().getIdTp() + "|");
-        sb.append(this.getVryDef().getId() + "|");
-        sb.append(this.getVryDef().getUniSocCdtCd() == null ? ""
-                : this.getVryDef().getUniSocCdtCd() + "|");
-        sb.append(this.getVryDef().getBizRegNb() == null ? ""
-                : this.getVryDef().getBizRegNb() + "|");
-        sb.append(this.getVryDef().getOpNm() + "|");
-        return sb.toString();
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(this.getMsgHdr().getMsgId() + "|");
+//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
+//        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
+//        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
+//        sb.append(this.getVryDef().getMobNb() + "|");
+//        sb.append(this.getVryDef().getNm() + "|");
+//        sb.append(this.getVryDef().getIdTp() + "|");
+//        sb.append(this.getVryDef().getId() + "|");
+//        sb.append(this.getVryDef().getUniSocCdtCd() == null ? "" : this.getVryDef().getUniSocCdtCd() + "|");
+//        sb.append(this.getVryDef().getBizRegNb() == null ? "" : this.getVryDef().getBizRegNb() + "|");
+//        sb.append(this.getVryDef().getOpNm() + "|");
+//        return sb.toString();
+        return null;
     }
 
 }

@@ -16,10 +16,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Document")
 public class MIVS_325_001_01 extends MODEL_BASE {
-
-    private static final long serialVersionUID = -9149252817699094575L;
-    private static final String MESGTYPE = "mivs.323.001.01";
-    private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.323.001.01";
+    private static final long serialVersionUID = 54776991329445223L;
+    private static final String MESGTYPE = "mivs.325.001.01";
+    private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.325.001.01";
 
     private MIVS_325_001_01_RtrRegVrfctn RtrRegVrfctn = new MIVS_325_001_01_RtrRegVrfctn();
 

@@ -16,6 +16,7 @@ public class PMTS_SIGN implements Serializable{
 	private String endFlag = "}\r\n";
 
 	public String creaFixPack() {
+//		myLog
 		if (this.digitalSignature == null) { // 无签名
 			return "";
 		} else { // 有签名

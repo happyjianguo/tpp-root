@@ -34,17 +34,11 @@ public class MIVS_322_001_01 extends MODEL_BASE {
         this.GetTxPmtVrfctn.getMsgHdr().setCreDtTm(super.creDtTm());
     }
 
-    /**
-     * @return the getTxPmtVrfctn
-     */
-    public MIVS_322_001_01_GetTxPmtVrfctn getTxPmtVrfctn() {
+    public MIVS_322_001_01_GetTxPmtVrfctn getGetTxPmtVrfctn() {
         return GetTxPmtVrfctn;
     }
 
-    /**
-     * @param getTxPmtVrfctn the getTxPmtVrfctn to set
-     */
-    public void setRtrIdVrfctn(MIVS_322_001_01_GetTxPmtVrfctn getTxPmtVrfctn) {
+    public void setGetTxPmtVrfctn(MIVS_322_001_01_GetTxPmtVrfctn getTxPmtVrfctn) {
         GetTxPmtVrfctn = getTxPmtVrfctn;
     }
 

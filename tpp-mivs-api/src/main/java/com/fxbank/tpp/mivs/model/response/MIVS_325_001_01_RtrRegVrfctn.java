@@ -9,50 +9,53 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 登记信息核查应答报文
  * @Author: 王鹏
  * @Date: 2019/5/20 16:38
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "MsgHdr", "OrgnlBizQry","Rspsn" })
+@XmlType(propOrder = { "MsgHdr", "MsgPgntn","OrgnlBizQry", "Rspsn" })
 public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
-    private static final long serialVersionUID = -4933387881402294675L;
-    private MIVS_325_001_01_RtrRegVrfctn.MsgHdr MsgHdr = new MIVS_325_001_01_RtrRegVrfctn.MsgHdr();
-    private MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry OrgnlBizQry = new MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry();
-    private MIVS_325_001_01_RtrRegVrfctn.Rspsn Rspsn = new MIVS_325_001_01_RtrRegVrfctn.Rspsn();
+    private static final long serialVersionUID = 6410912962315563294L;
+    private MsgHdr MsgHdr = new MsgHdr();
+    private MsgPgntn MsgPgntn = new MsgPgntn();
+    private OrgnlBizQry OrgnlBizQry = new OrgnlBizQry();
+    private Rspsn Rspsn = new Rspsn();
 
     @Override
     public String toString() {
         return "纳税信息联网核查应答报文[MIVS_325_001_01]";
     }
 
-    /**
-     * @return the msgHdr
-     */
-    public MIVS_325_001_01_RtrRegVrfctn.MsgHdr getMsgHdr() {
+    public MsgHdr getMsgHdr() {
         return MsgHdr;
     }
 
-    /**
-     * @param msgHdr the msgHdr to set
-     */
-    public void setMsgHdr(MIVS_325_001_01_RtrRegVrfctn.MsgHdr msgHdr) {
-        this.MsgHdr = msgHdr;
+    public void setMsgHdr(MsgHdr msgHdr) {
+        MsgHdr = msgHdr;
     }
 
-    public MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry getOrgnlBizQry() {
+    public MsgPgntn getMsgPgntn() {
+        return MsgPgntn;
+    }
+
+    public void setMsgPgntn(MsgPgntn msgPgntn) {
+        MsgPgntn = msgPgntn;
+    }
+
+    public OrgnlBizQry getOrgnlBizQry() {
         return OrgnlBizQry;
     }
 
-    public void setOrgnlBizQry(MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry orgnlBizQry) {
+    public void setOrgnlBizQry(OrgnlBizQry orgnlBizQry) {
         OrgnlBizQry = orgnlBizQry;
     }
 
-    public MIVS_325_001_01_RtrRegVrfctn.Rspsn getRspsn() {
+    public Rspsn getRspsn() {
         return Rspsn;
     }
 
-    public void setRspsn(MIVS_325_001_01_RtrRegVrfctn.Rspsn rspsn) {
+    public void setRspsn(Rspsn rspsn) {
         Rspsn = rspsn;
     }
 
@@ -62,154 +65,127 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
         private static final long serialVersionUID = 8127207925264274988L;
         private String MsgId = null;
         private String CreDtTm = null;
-        private MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty InstgPty = new MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty();
-        /**
-         * @return the msgId
-         */
+        private InstgPty InstgPty = new InstgPty();
+
         public String getMsgId() {
             return MsgId;
         }
 
-        /**
-         * @param msgId the msgId to set
-         */
         public void setMsgId(String msgId) {
-            this.MsgId = msgId;
+            MsgId = msgId;
         }
 
-        /**
-         * @return the creDtTm
-         */
         public String getCreDtTm() {
             return CreDtTm;
         }
 
-        /**
-         * @param creDtTm the creDtTm to set
-         */
         public void setCreDtTm(String creDtTm) {
-            this.CreDtTm = creDtTm;
+            CreDtTm = creDtTm;
         }
 
-        /**
-         * @return the instgPty
-         */
-        public MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty getInstgPty() {
+        public InstgPty getInstgPty() {
             return InstgPty;
         }
 
-        /**
-         * @param instgPty the instgPty to set
-         */
-        public void setInstgPty(MIVS_325_001_01_RtrRegVrfctn.MsgHdr.InstgPty instgPty) {
-            this.InstgPty = instgPty;
+        public void setInstgPty(InstgPty instgPty) {
+            InstgPty = instgPty;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name="MsgHdr.InstgPty")
         public static class InstgPty implements Serializable{
-            private static final long serialVersionUID = -784092537111925254L;
+            private static final long serialVersionUID = 1097873633071623456L;
             private String InstgDrctPty = null;
             private String InstgPty = null;
 
-            /**
-             * @return the instgDrctPty
-             */
             public String getInstgDrctPty() {
                 return InstgDrctPty;
             }
 
-            /**
-             * @param instgDrctPty the instgDrctPty to set
-             */
             public void setInstgDrctPty(String instgDrctPty) {
-                this.InstgDrctPty = instgDrctPty;
+                InstgDrctPty = instgDrctPty;
             }
 
-            /**
-             * @return the instgPty
-             */
             public String getInstgPty() {
                 return InstgPty;
             }
 
-            /**
-             * @param instgPty the instgPty to set
-             */
             public void setInstgPty(String instgPty) {
-                this.InstgPty = instgPty;
+                InstgPty = instgPty;
             }
         }
 
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(propOrder = { "PgNb", "LastPgInd" })
+    public static class MsgPgntn implements Serializable{
+        private static final long serialVersionUID = -8844072768050566887L;
+        private Integer PgNb = null;
+        private String LastPgInd = null;
+
+        public Integer getPgNb() {
+            return PgNb;
+        }
+
+        public void setPgNb(Integer pgNb) {
+            PgNb = pgNb;
+        }
+
+        public String getLastPgInd() {
+            return LastPgInd;
+        }
+
+        public void setLastPgInd(String lastPgInd) {
+            LastPgInd = lastPgInd;
+        }
+    }
+
+
+    @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "MsgId", "InstgPty" })
     public static class OrgnlBizQry implements Serializable{
         private static final long serialVersionUID = -1561794738551219893L;
         private String MsgId = null;
-        private MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty InstgPty = new MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty();
-        /**
-         * @return the msgId
-         */
+        private InstgPty InstgPty = new InstgPty();
+
         public String getMsgId() {
             return MsgId;
         }
 
-        /**
-         * @param msgId the msgId to set
-         */
         public void setMsgId(String msgId) {
-            this.MsgId = msgId;
+            MsgId = msgId;
         }
 
-        /**
-         * @return the instgPty
-         */
-        public MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty getInstgPty() {
+        public InstgPty getInstgPty() {
             return InstgPty;
         }
 
-        /**
-         * @param instgPty the instgPty to set
-         */
-        public void setInstgPty(MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry.InstgPty instgPty) {
-            this.InstgPty = instgPty;
+        public void setInstgPty(InstgPty instgPty) {
+            InstgPty = instgPty;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name="OrgnlBizQry.InstgPty")
         public static class InstgPty implements Serializable{
-            private static final long serialVersionUID = -4572114621548591256L;
+            private static final long serialVersionUID = 5587646689678165319L;
             private String InstgDrctPty = null;
             private String InstgPty = null;
 
-            /**
-             * @return the instgDrctPty
-             */
             public String getInstgDrctPty() {
                 return InstgDrctPty;
             }
 
-            /**
-             * @return the instgPty
-             */
+            public void setInstgDrctPty(String instgDrctPty) {
+                InstgDrctPty = instgDrctPty;
+            }
+
             public String getInstgPty() {
                 return InstgPty;
             }
 
-            /**
-             * @param instgPty the instgPty to set
-             */
             public void setInstgPty(String instgPty) {
-                this.InstgPty = instgPty;
-            }
-
-            /**
-             * @param instgDrctPty the instgDrctPty to set
-             */
-            public void setInstgDrctPty(String instgDrctPty) {
-                this.InstgDrctPty = instgDrctPty;
+                InstgPty = instgPty;
             }
         }
 
@@ -218,38 +194,39 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "VrfctnInf","OprlErr" })
     public static class Rspsn implements Serializable{
-        private static final long serialVersionUID = 3266024638124569555L;
-        private MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf VrfctnInf = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf();
-        private MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr OprlErr = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr();
+        private static final long serialVersionUID = 8222417825425712922L;
+        private VrfctnInf VrfctnInf = new VrfctnInf();
+        private OprlErr OprlErr = new OprlErr();
 
-        public MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf getVrfctnInf() {
+        public VrfctnInf getVrfctnInf() {
             return VrfctnInf;
         }
 
-        public void setVrfctnInf(MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf vrfctnInf) {
+        public void setVrfctnInf(VrfctnInf vrfctnInf) {
             VrfctnInf = vrfctnInf;
         }
 
-        public MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr getOprlErr() {
+        public OprlErr getOprlErr() {
             return OprlErr;
         }
 
 
-        public void setOprlErr(MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr oprlErr) {
+        public void setOprlErr(OprlErr oprlErr) {
             OprlErr = oprlErr;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = { "Rslt","DataResrcDt","TxpmtInf"})
+        @XmlType(propOrder = { "Rslt","DataResrcDt","RegInf"})
         public static class VrfctnInf implements Serializable{
             private static final long serialVersionUID = 293223418691401711L;
             private String Rslt = null;
             private String DataResrcDt = null;
-            private List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf> TxpmtInf;
+            private RegInf RegInf = new RegInf();
 
             public String getRslt() {
                 return Rslt;
             }
+
             public void setRslt(String rslt) {
                 Rslt = rslt;
             }
@@ -257,63 +234,599 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
             public String getDataResrcDt() {
                 return DataResrcDt;
             }
+
             public void setDataResrcDt(String dataResrcDt) {
                 DataResrcDt = dataResrcDt;
             }
 
-            public List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf> getTxpmtInf() {
-                return TxpmtInf;
+            public RegInf getRegInf() {
+                return RegInf;
             }
 
-            public void setTxpmtInf(List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.TxpmtInf> txpmtInf) {
-                TxpmtInf = txpmtInf;
+            public void setRegInf(RegInf regInf) {
+                RegInf = regInf;
             }
 
             @XmlAccessorType(XmlAccessType.FIELD)
-            @XmlType(name = "VrfctnInf.TxpmtInf")
-            public static class TxpmtInf implements Serializable{
-                private static final long serialVersionUID = 9160840032547969960L;
-                private String TxAuthCd = null;
-                private String TxAuthNm = null;
-                private String TxpySts = null;
+            @XmlType(propOrder = { "BasInfo","CoShrhdrFndInfo","DirSupSrMgrInfo","ChngInfo","AbnmlBizInfo","IllDscrtInfo","LicNull"})
+            public static class RegInf implements Serializable{
+                private static final long serialVersionUID = -5365622990443907518L;
+                private List<BasInfo> BasInfo;
+                private List<CoShrhdrFndInfo> CoShrhdrFndInfo;
+                private List<DirSupSrMgrInfo> DirSupSrMgrInfo;
+                private List<ChngInfo> ChngInfo;
+                private List<AbnmlBizInfo> AbnmlBizInfo;
+                private List<IllDscrtInfo> IllDscrtInfo;
+                private List<LicNull> LicNull;
 
-                /**
-                 * @return the TxAuthCd
-                 */
-                public String getTxAuthCd() {
-                    return TxAuthCd;
-                }
-                /**
-                 * @param txAuthCd the txAuthCd to set
-                 */
-                public void setTxAuthCd(String txAuthCd) {
-                    TxAuthCd = txAuthCd;
+                public List<BasInfo> getBasInfo() {
+                    return BasInfo;
                 }
 
-                /**
-                 * @return the TxAuthNm
-                 */
-                public String getTxAuthNm() {
-                    return TxAuthNm;
-                }
-                /**
-                 * @param txAuthNm the txAuthNm to set
-                 */
-                public void setTxAuthNm(String txAuthNm) {
-                    TxAuthNm = txAuthNm;
+                public void setBasInfo(List<BasInfo> basInfo) {
+                    BasInfo = basInfo;
                 }
 
-                /**
-                 * @return the TxpySts
-                 */
-                public String getTxpySts() {
-                    return TxpySts;
+                public List<CoShrhdrFndInfo> getCoShrhdrFndInfo() {
+                    return CoShrhdrFndInfo;
                 }
-                /**
-                 * @param txpySts the txpySts to set
-                 */
-                public void setTxpySts(String txpySts) {
-                    TxpySts = txpySts;
+
+                public void setCoShrhdrFndInfo(List<CoShrhdrFndInfo> coShrhdrFndInfo) {
+                    CoShrhdrFndInfo = coShrhdrFndInfo;
+                }
+
+                public List<DirSupSrMgrInfo> getDirSupSrMgrInfo() {
+                    return DirSupSrMgrInfo;
+                }
+
+                public void setDirSupSrMgrInfo(List<DirSupSrMgrInfo> dirSupSrMgrInfo) {
+                    DirSupSrMgrInfo = dirSupSrMgrInfo;
+                }
+
+                public List<ChngInfo> getChngInfo() {
+                    return ChngInfo;
+                }
+
+                public void setChngInfo(List<ChngInfo> chngInfo) {
+                    ChngInfo = chngInfo;
+                }
+
+                public List<AbnmlBizInfo> getAbnmlBizInfo() {
+                    return AbnmlBizInfo;
+                }
+
+                public void setAbnmlBizInfo(List<AbnmlBizInfo> abnmlBizInfo) {
+                    AbnmlBizInfo = abnmlBizInfo;
+                }
+
+                public List<IllDscrtInfo> getIllDscrtInfo() {
+                    return IllDscrtInfo;
+                }
+
+                public void setIllDscrtInfo(List<IllDscrtInfo> illDscrtInfo) {
+                    IllDscrtInfo = illDscrtInfo;
+                }
+
+                public List<LicNull> getLicNull() {
+                    return LicNull;
+                }
+
+                public void setLicNull(List<LicNull> licNull) {
+                    LicNull = licNull;
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.BasInfo")
+                public static class BasInfo implements Serializable{
+                    private static final long serialVersionUID = -2967462237131397416L;
+                    private String EntNm = null;
+                    private String UniSocCdtCd = null;
+                    private String CoTp = null;
+                    private String Dom = null;
+                    private String RegCptl = null;
+                    private String DtEst = null;
+                    private String OpPrdFrom = null;
+                    private String OpPrdTo = null;
+                    private String RegSts = null;
+                    private String NmOfLglPrsn = null;
+                    private String RegAuth = null;
+                    private String BizScp = null;
+                    private String DtAppr = null;
+
+                    public String getEntNm() {
+                        return EntNm;
+                    }
+
+                    public void setEntNm(String entNm) {
+                        EntNm = entNm;
+                    }
+
+                    public String getUniSocCdtCd() {
+                        return UniSocCdtCd;
+                    }
+
+                    public void setUniSocCdtCd(String uniSocCdtCd) {
+                        UniSocCdtCd = uniSocCdtCd;
+                    }
+
+                    public String getCoTp() {
+                        return CoTp;
+                    }
+
+                    public void setCoTp(String coTp) {
+                        CoTp = coTp;
+                    }
+
+                    public String getDom() {
+                        return Dom;
+                    }
+
+                    public void setDom(String dom) {
+                        Dom = dom;
+                    }
+
+                    public String getRegCptl() {
+                        return RegCptl;
+                    }
+
+                    public void setRegCptl(String regCptl) {
+                        RegCptl = regCptl;
+                    }
+
+                    public String getDtEst() {
+                        return DtEst;
+                    }
+
+                    public void setDtEst(String dtEst) {
+                        DtEst = dtEst;
+                    }
+
+                    public String getOpPrdFrom() {
+                        return OpPrdFrom;
+                    }
+
+                    public void setOpPrdFrom(String opPrdFrom) {
+                        OpPrdFrom = opPrdFrom;
+                    }
+
+                    public String getOpPrdTo() {
+                        return OpPrdTo;
+                    }
+
+                    public void setOpPrdTo(String opPrdTo) {
+                        OpPrdTo = opPrdTo;
+                    }
+
+                    public String getRegSts() {
+                        return RegSts;
+                    }
+
+                    public void setRegSts(String regSts) {
+                        RegSts = regSts;
+                    }
+
+                    public String getNmOfLglPrsn() {
+                        return NmOfLglPrsn;
+                    }
+
+                    public void setNmOfLglPrsn(String nmOfLglPrsn) {
+                        NmOfLglPrsn = nmOfLglPrsn;
+                    }
+
+                    public String getRegAuth() {
+                        return RegAuth;
+                    }
+
+                    public void setRegAuth(String regAuth) {
+                        RegAuth = regAuth;
+                    }
+
+                    public String getBizScp() {
+                        return BizScp;
+                    }
+
+                    public void setBizScp(String bizScp) {
+                        BizScp = bizScp;
+                    }
+
+                    public String getDtAppr() {
+                        return DtAppr;
+                    }
+
+                    public void setDtAppr(String dtAppr) {
+                        DtAppr = dtAppr;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "BasInfo{" +
+                                "EntNm='" + EntNm + '\'' +
+                                ", UniSocCdtCd='" + UniSocCdtCd + '\'' +
+                                ", CoTp='" + CoTp + '\'' +
+                                ", Dom='" + Dom + '\'' +
+                                ", RegCptl='" + RegCptl + '\'' +
+                                ", DtEst='" + DtEst + '\'' +
+                                ", OpPrdFrom='" + OpPrdFrom + '\'' +
+                                ", OpPrdTo='" + OpPrdTo + '\'' +
+                                ", RegSts='" + RegSts + '\'' +
+                                ", NmOfLglPrsn='" + NmOfLglPrsn + '\'' +
+                                ", RegAuth='" + RegAuth + '\'' +
+                                ", BizScp='" + BizScp + '\'' +
+                                ", DtAppr='" + DtAppr + '\'' +
+                                '}';
+                    }
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.CoShrhdrFndInfo")
+                public static class CoShrhdrFndInfo implements Serializable{
+                    private static final long serialVersionUID = 6976244244556182886L;
+                    private String InvtrNm = null;
+                    private String InvtrId = null;
+                    private String SubscrCptlConAmt = null;
+                    private String ActlCptlConAmt = null;
+                    private String SubscrCptlConFm = null;
+                    private String SubscrCptlConDt = null;
+
+                    public String getInvtrNm() {
+                        return InvtrNm;
+                    }
+
+                    public void setInvtrNm(String invtrNm) {
+                        InvtrNm = invtrNm;
+                    }
+
+                    public String getInvtrId() {
+                        return InvtrId;
+                    }
+
+                    public void setInvtrId(String invtrId) {
+                        InvtrId = invtrId;
+                    }
+
+                    public String getSubscrCptlConAmt() {
+                        return SubscrCptlConAmt;
+                    }
+
+                    public void setSubscrCptlConAmt(String subscrCptlConAmt) {
+                        SubscrCptlConAmt = subscrCptlConAmt;
+                    }
+
+                    public String getActlCptlConAmt() {
+                        return ActlCptlConAmt;
+                    }
+
+                    public void setActlCptlConAmt(String actlCptlConAmt) {
+                        ActlCptlConAmt = actlCptlConAmt;
+                    }
+
+                    public String getSubscrCptlConFm() {
+                        return SubscrCptlConFm;
+                    }
+
+                    public void setSubscrCptlConFm(String subscrCptlConFm) {
+                        SubscrCptlConFm = subscrCptlConFm;
+                    }
+
+                    public String getSubscrCptlConDt() {
+                        return SubscrCptlConDt;
+                    }
+
+                    public void setSubscrCptlConDt(String subscrCptlConDt) {
+                        SubscrCptlConDt = subscrCptlConDt;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "CoShrhdrFndInfo{" +
+                                "InvtrNm='" + InvtrNm + '\'' +
+                                ", InvtrId='" + InvtrId + '\'' +
+                                ", SubscrCptlConAmt='" + SubscrCptlConAmt + '\'' +
+                                ", ActlCptlConAmt='" + ActlCptlConAmt + '\'' +
+                                ", SubscrCptlConFm='" + SubscrCptlConFm + '\'' +
+                                ", SubscrCptlConDt='" + SubscrCptlConDt + '\'' +
+                                '}';
+                    }
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.DirSupSrMgrInfo")
+                public static class DirSupSrMgrInfo implements Serializable{
+                    private static final long serialVersionUID = 6034573705703640062L;
+                    private String Nm = null;
+                    private String Posn = null;
+
+                    public String getNm() {
+                        return Nm;
+                    }
+
+                    public void setNm(String nm) {
+                        Nm = nm;
+                    }
+
+                    public String getPosn() {
+                        return Posn;
+                    }
+
+                    public void setPosn(String posn) {
+                        Posn = posn;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "DirSupSrMgrInfo{" +
+                                "Nm='" + Nm + '\'' +
+                                ", Posn='" + Posn + '\'' +
+                                '}';
+                    }
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.ChngInfo")
+                public static class ChngInfo implements Serializable{
+                    private static final long serialVersionUID = -8953675143549078170L;
+                    private String ChngItm = null;
+                    private String BfChng = null;
+                    private String AftChng = null;
+                    private String DtOfChng = null;
+
+                    public String getChngItm() {
+                        return ChngItm;
+                    }
+
+                    public void setChngItm(String chngItm) {
+                        ChngItm = chngItm;
+                    }
+
+                    public String getBfChng() {
+                        return BfChng;
+                    }
+
+                    public void setBfChng(String bfChng) {
+                        BfChng = bfChng;
+                    }
+
+                    public String getAftChng() {
+                        return AftChng;
+                    }
+
+                    public void setAftChng(String aftChng) {
+                        AftChng = aftChng;
+                    }
+
+                    public String getDtOfChng() {
+                        return DtOfChng;
+                    }
+
+                    public void setDtOfChng(String dtOfChng) {
+                        DtOfChng = dtOfChng;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "ChngInfo{" +
+                                "ChngItm='" + ChngItm + '\'' +
+                                ", BfChng='" + BfChng + '\'' +
+                                ", AftChng='" + AftChng + '\'' +
+                                ", DtOfChng='" + DtOfChng + '\'' +
+                                '}';
+                    }
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.AbnmlBizInfo")
+                public static class AbnmlBizInfo implements Serializable{
+                    private static final long serialVersionUID = 8786145087804013943L;
+                    private String AbnmlCause = null;
+                    private String AbnmlDate = null;
+                    private String AbnmlCauseDcsnAuth = null;
+                    private String RmvCause = null;
+                    private String RmvDate = null;
+                    private String RmvCauseDcsnAuth = null;
+
+                    public String getAbnmlCause() {
+                        return AbnmlCause;
+                    }
+
+                    public void setAbnmlCause(String abnmlCause) {
+                        AbnmlCause = abnmlCause;
+                    }
+
+                    public String getAbnmlDate() {
+                        return AbnmlDate;
+                    }
+
+                    public void setAbnmlDate(String abnmlDate) {
+                        AbnmlDate = abnmlDate;
+                    }
+
+                    public String getAbnmlCauseDcsnAuth() {
+                        return AbnmlCauseDcsnAuth;
+                    }
+
+                    public void setAbnmlCauseDcsnAuth(String abnmlCauseDcsnAuth) {
+                        AbnmlCauseDcsnAuth = abnmlCauseDcsnAuth;
+                    }
+
+                    public String getRmvCause() {
+                        return RmvCause;
+                    }
+
+                    public void setRmvCause(String rmvCause) {
+                        RmvCause = rmvCause;
+                    }
+
+                    public String getRmvDate() {
+                        return RmvDate;
+                    }
+
+                    public void setRmvDate(String rmvDate) {
+                        RmvDate = rmvDate;
+                    }
+
+                    public String getRmvCauseDcsnAuth() {
+                        return RmvCauseDcsnAuth;
+                    }
+
+                    public void setRmvCauseDcsnAuth(String rmvCauseDcsnAuth) {
+                        RmvCauseDcsnAuth = rmvCauseDcsnAuth;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "AbnmlBizInfo{" +
+                                "AbnmlCause='" + AbnmlCause + '\'' +
+                                ", AbnmlDate='" + AbnmlDate + '\'' +
+                                ", AbnmlCauseDcsnAuth='" + AbnmlCauseDcsnAuth + '\'' +
+                                ", RmvCause='" + RmvCause + '\'' +
+                                ", RmvDate='" + RmvDate + '\'' +
+                                ", RmvCauseDcsnAuth='" + RmvCauseDcsnAuth + '\'' +
+                                '}';
+                    }
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.IllDscrtInfo")
+                public static class IllDscrtInfo implements Serializable{
+                    private static final long serialVersionUID = -2848189638058499708L;
+                    private String IllDscrtCause = null;
+                    private String AbnmlDate = null;
+                    private String AbnmlCauseDcsnAuth = null;
+                    private String RmvCause = null;
+                    private String RmvCauseDcsnAuth = null;
+                    private String RmvDate = null;
+
+                    public String getIllDscrtCause() {
+                        return IllDscrtCause;
+                    }
+
+                    public void setIllDscrtCause(String illDscrtCause) {
+                        IllDscrtCause = illDscrtCause;
+                    }
+
+                    public String getAbnmlDate() {
+                        return AbnmlDate;
+                    }
+
+                    public void setAbnmlDate(String abnmlDate) {
+                        AbnmlDate = abnmlDate;
+                    }
+
+                    public String getAbnmlCauseDcsnAuth() {
+                        return AbnmlCauseDcsnAuth;
+                    }
+
+                    public void setAbnmlCauseDcsnAuth(String abnmlCauseDcsnAuth) {
+                        AbnmlCauseDcsnAuth = abnmlCauseDcsnAuth;
+                    }
+
+                    public String getRmvCause() {
+                        return RmvCause;
+                    }
+
+                    public void setRmvCause(String rmvCause) {
+                        RmvCause = rmvCause;
+                    }
+
+                    public String getRmvCauseDcsnAuth() {
+                        return RmvCauseDcsnAuth;
+                    }
+
+                    public void setRmvCauseDcsnAuth(String rmvCauseDcsnAuth) {
+                        RmvCauseDcsnAuth = rmvCauseDcsnAuth;
+                    }
+
+                    public String getRmvDate() {
+                        return RmvDate;
+                    }
+
+                    public void setRmvDate(String rmvDate) {
+                        RmvDate = rmvDate;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "IllDscrtInfo{" +
+                                "IllDscrtCause='" + IllDscrtCause + '\'' +
+                                ", AbnmlDate='" + AbnmlDate + '\'' +
+                                ", AbnmlCauseDcsnAuth='" + AbnmlCauseDcsnAuth + '\'' +
+                                ", RmvCause='" + RmvCause + '\'' +
+                                ", RmvCauseDcsnAuth='" + RmvCauseDcsnAuth + '\'' +
+                                ", RmvDate='" + RmvDate + '\'' +
+                                '}';
+                    }
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.LicNull")
+                public static class LicNull implements Serializable{
+                    private static final long serialVersionUID = 1470655276191139554L;
+                    private String OrgnlOrCp = null;
+                    private String LicNullStmCntt = null;
+                    private String LicNullStmDt = null;
+                    private String RplSts = null;
+                    private String RplDt = null;
+                    private String LicCpNb = null;
+
+                    public String getOrgnlOrCp() {
+                        return OrgnlOrCp;
+                    }
+
+                    public void setOrgnlOrCp(String orgnlOrCp) {
+                        OrgnlOrCp = orgnlOrCp;
+                    }
+
+                    public String getLicNullStmCntt() {
+                        return LicNullStmCntt;
+                    }
+
+                    public void setLicNullStmCntt(String licNullStmCntt) {
+                        LicNullStmCntt = licNullStmCntt;
+                    }
+
+                    public String getLicNullStmDt() {
+                        return LicNullStmDt;
+                    }
+
+                    public void setLicNullStmDt(String licNullStmDt) {
+                        LicNullStmDt = licNullStmDt;
+                    }
+
+                    public String getRplSts() {
+                        return RplSts;
+                    }
+
+                    public void setRplSts(String rplSts) {
+                        RplSts = rplSts;
+                    }
+
+                    public String getRplDt() {
+                        return RplDt;
+                    }
+
+                    public void setRplDt(String rplDt) {
+                        RplDt = rplDt;
+                    }
+
+                    public String getLicCpNb() {
+                        return LicCpNb;
+                    }
+
+                    public void setLicCpNb(String licCpNb) {
+                        LicCpNb = licCpNb;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "LicNull{" +
+                                "OrgnlOrCp='" + OrgnlOrCp + '\'' +
+                                ", LicNullStmCntt='" + LicNullStmCntt + '\'' +
+                                ", LicNullStmDt='" + LicNullStmDt + '\'' +
+                                ", RplSts='" + RplSts + '\'' +
+                                ", RplDt='" + RplDt + '\'' +
+                                ", LicCpNb='" + LicCpNb + '\'' +
+                                '}';
+                    }
                 }
             }
         }
@@ -321,7 +834,7 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(propOrder = {"ProcSts","ProcCd","Rjctinf"})
         public static class OprlErr implements Serializable{
-            private static final long serialVersionUID = 5982468996471624782L;
+            private static final long serialVersionUID = -4352854015236225510L;
             private String ProcSts;
             private String ProcCd;
             private String Rjctinf;
@@ -353,23 +866,36 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(this.getMsgHdr().getMsgId() + "|");
-        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
-        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
-        if(this.getRspsn().getVrfctnInf().getRslt().equals("MCHD")) {
-            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getTxpmtInf() + "|");
-        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
-            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
-            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
-        }
-        return sb.toString();
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(this.getMsgHdr().getMsgId() + "|");
+//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+//        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
+//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
+//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
+//        sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
+//        sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
+//        if(this.getRspsn().getVrfctnInf().getRslt().equals("MCHD")) {
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getEntNm() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getUniSocCdtCd() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getCoTp() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getDom() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getRegCptl() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getDtEst() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getOpPrdFrom() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getOpPrdTo() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getRegSts() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getNmOfLglPrsn() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getRegAuth() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getBizScp() + "|");
+//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getDtAppr() + "|");
+//        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
+//            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
+//            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
+//        }
+//        return sb.toString();
+        return null;
     }
 
 }
