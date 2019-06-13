@@ -113,32 +113,49 @@ public class REP_50023000202 extends REP_BASE {
 
     //以下信息 当“纳税信息核查结果”为“MCHD” 时填
     public static class TXPYR_INFO_ARRAY {
+        @JSONField(name = "TXPMT_INF_NB")
+        private Integer txpmtInfNb;//税务机关代码
+
         @JSONField(name = "TAX_JDCY_CODE")
         private String txAuthCd;//税务机关代码
+
+        @JSONField(name = "TAX_JDCY_NAME")
+        private String txAuthNm;//税务机关名称
+
+        @JSONField(name = "TXPYR_STATUS")
+        private String txpyrSts;//纳税人状态
+
+        public Integer getTxpmtInfNb() {
+            return txpmtInfNb;
+        }
+
+        public void setTxpmtInfNb(Integer txpmtInfNb) {
+            this.txpmtInfNb = txpmtInfNb;
+        }
+
         public String getTxAuthCd() {
             return txAuthCd;
         }
+
         public void setTxAuthCd(String txAuthCd) {
             this.txAuthCd = txAuthCd;
         }
 
-        @JSONField(name = "TAX_JDCY_NAME")
-        private String txAuthNm;//税务机关名称
         public String getTxAuthNm() {
             return txAuthNm;
         }
+
         public void setTxAuthNm(String txAuthNm) {
             this.txAuthNm = txAuthNm;
         }
 
-        @JSONField(name = "TXPYR_STATUS")
-        private String txpyrSts;//纳税人状态
         public String getTxpyrSts() {
             return txpyrSts;
         }
+
         public void setTxpyrSts(String txpyrSts) {
             this.txpyrSts = txpyrSts;
         }
+        //循环结束
     }
-    //循环结束
 }

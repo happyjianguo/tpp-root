@@ -20,7 +20,7 @@ public class MIVS_325_001_01 extends DTO_BASE {
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
     public MIVS_325_001_01() {
-        super.txDesc = "纳税信息联网核查应答323";
+        super.txDesc = "登记信息联网核查应答325";
     }
 
     private MIVS_325_001_01_RtrRegVrfctn RtrRegVrfctn = new MIVS_325_001_01_RtrRegVrfctn();
