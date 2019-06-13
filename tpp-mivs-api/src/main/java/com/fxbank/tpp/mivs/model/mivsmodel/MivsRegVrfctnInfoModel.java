@@ -69,6 +69,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_msg_id; //原申请报文标识号
         private String orig_instg_drct_pty; //原发起直接参与机构
         private String orig_instg_pty; //原发起参与机构
+        private Integer pg_nb; //页数号
         private Integer bas_info_nb; //条数号
         private String ent_nm;
         private String uni_soc_cdt_cd;
@@ -154,6 +155,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
 
         public void setOrig_instg_pty(String orig_instg_pty) {
             this.orig_instg_pty = orig_instg_pty;
+        }
+
+        public Integer getPg_nb() {
+            return pg_nb;
+        }
+
+        public void setPg_nb(Integer pg_nb) {
+            this.pg_nb = pg_nb;
         }
 
         public Integer getBas_info_nb() {
@@ -279,6 +288,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", pg_nb=" + pg_nb +
                     ", bas_info_nb=" + bas_info_nb +
                     ", ent_nm='" + ent_nm + '\'' +
                     ", uni_soc_cdt_cd='" + uni_soc_cdt_cd + '\'' +
@@ -310,6 +320,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_msg_id; //原申请报文标识号
         private String orig_instg_drct_pty; //原发起直接参与机构
         private String orig_instg_pty; //原发起参与机构
+        private Integer pg_nb; //本报文页码
         private Integer co_shrhdrfnd_info_nb; //条数号
         private String invtr_nm; //投资人名称
         private String invtr_id; //投资人证件号码或证件编号
@@ -390,6 +401,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.orig_instg_pty = orig_instg_pty;
         }
 
+        public Integer getPg_nb() {
+            return pg_nb;
+        }
+
+        public void setPg_nb(Integer pg_nb) {
+            this.pg_nb = pg_nb;
+        }
+
         public Integer getCo_shrhdrfnd_info_nb() {
             return co_shrhdrfnd_info_nb;
         }
@@ -458,6 +477,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", pg_nb=" + pg_nb +
                     ", co_shrhdrfnd_info_nb=" + co_shrhdrfnd_info_nb +
                     ", invtr_nm='" + invtr_nm + '\'' +
                     ", invtr_id='" + invtr_id + '\'' +
@@ -482,6 +502,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_msg_id; //原申请报文标识号
         private String orig_instg_drct_pty; //原发起直接参与机构
         private String orig_instg_pty; //原发起参与机构
+        private Integer pg_nb; //本报文页码
         private Integer dir_supsrsgr_info_nb; //条数号
         private String nm; //姓名
         private String posn; //职务
@@ -558,6 +579,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.orig_instg_pty = orig_instg_pty;
         }
 
+        public Integer getPg_nb() {
+            return pg_nb;
+        }
+
+        public void setPg_nb(Integer pg_nb) {
+            this.pg_nb = pg_nb;
+        }
+
         public Integer getDir_supsrsgr_info_nb() {
             return dir_supsrsgr_info_nb;
         }
@@ -594,6 +623,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", pg_nb=" + pg_nb +
                     ", dir_supsrsgr_info_nb=" + dir_supsrsgr_info_nb +
                     ", nm='" + nm + '\'' +
                     ", posn='" + posn + '\'' +
@@ -614,6 +644,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_msg_id; //原申请报文标识号
         private String orig_instg_drct_pty; //原发起直接参与机构
         private String orig_instg_pty; //原发起参与机构
+        private Integer pg_nb; //本报文页码
         private Integer chng_info_nb; //条数号
         private String chng_itm; //变更事项
         private String bf_chng; //变更前内容
@@ -692,6 +723,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.orig_instg_pty = orig_instg_pty;
         }
 
+        public Integer getPg_nb() {
+            return pg_nb;
+        }
+
+        public void setPg_nb(Integer pg_nb) {
+            this.pg_nb = pg_nb;
+        }
+
         public Integer getChng_info_nb() {
             return chng_info_nb;
         }
@@ -744,6 +783,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", pg_nb=" + pg_nb +
                     ", chng_info_nb=" + chng_info_nb +
                     ", chng_itm='" + chng_itm + '\'' +
                     ", bf_chng='" + bf_chng + '\'' +
@@ -766,6 +806,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_msg_id; //原申请报文标识号
         private String orig_instg_drct_pty; //原发起直接参与机构
         private String orig_instg_pty; //原发起参与机构
+        private Integer pg_nb; //本报文页码
         private Integer abn_info_nb; //条数号
         private String abnml_cause; //列入经营异常名录原因类型
         private String abnml_date; //列入日期
@@ -846,6 +887,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.orig_instg_pty = orig_instg_pty;
         }
 
+        public Integer getPg_nb() {
+            return pg_nb;
+        }
+
+        public void setPg_nb(Integer pg_nb) {
+            this.pg_nb = pg_nb;
+        }
+
         public Integer getAbn_info_nb() {
             return abn_info_nb;
         }
@@ -914,6 +963,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", pg_nb=" + pg_nb +
                     ", abn_info_nb=" + abn_info_nb +
                     ", abnml_cause='" + abnml_cause + '\'' +
                     ", abnml_date='" + abnml_date + '\'' +
@@ -938,6 +988,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_msg_id; //原申请报文标识号
         private String orig_instg_drct_pty; //原发起直接参与机构
         private String orig_instg_pty; //原发起参与机构
+        private Integer pg_nb; //本报文页码
         private Integer ill_info_nb; //条数号
         private String ill_dscrt_cause; //列入事由或情形
         private String abnml_date; //列入日期
@@ -1018,6 +1069,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.orig_instg_pty = orig_instg_pty;
         }
 
+        public Integer getPg_nb() {
+            return pg_nb;
+        }
+
+        public void setPg_nb(Integer pg_nb) {
+            this.pg_nb = pg_nb;
+        }
+
         public Integer getIll_info_nb() {
             return ill_info_nb;
         }
@@ -1086,6 +1145,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", pg_nb=" + pg_nb +
                     ", ill_info_nb=" + ill_info_nb +
                     ", ill_dscrt_cause='" + ill_dscrt_cause + '\'' +
                     ", abnml_date='" + abnml_date + '\'' +
@@ -1111,6 +1171,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_instg_drct_pty; //原发起直接参与机构
         private String orig_instg_pty; //原发起参与机构
         private Integer lic_info_nb; //条数好
+        private Integer pg_nb; //本报文页码
         private String orgnl_or_cp; //正副本标识
         private String  lic_null_stm_cntt; //声明内容
         private String lic_null_stm_dt; //声明日期
@@ -1190,6 +1251,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.orig_instg_pty = orig_instg_pty;
         }
 
+        public Integer getPg_nb() {
+            return pg_nb;
+        }
+
+        public void setPg_nb(Integer pg_nb) {
+            this.pg_nb = pg_nb;
+        }
+
         public Integer getLic_info_nb() {
             return lic_info_nb;
         }
@@ -1258,6 +1327,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", pg_nb='" + pg_nb + '\'' +
                     ", lic_info_nb='" + lic_info_nb + '\'' +
                     ", orgnl_or_cp='" + orgnl_or_cp + '\'' +
                     ", lic_null_stm_cntt='" + lic_null_stm_cntt + '\'' +

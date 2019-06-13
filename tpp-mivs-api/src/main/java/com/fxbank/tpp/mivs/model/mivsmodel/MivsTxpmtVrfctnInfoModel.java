@@ -1,6 +1,7 @@
 package com.fxbank.tpp.mivs.model.mivsmodel;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Description:
@@ -43,10 +44,146 @@ public class MivsTxpmtVrfctnInfoModel implements Serializable {
     private String remark3; //备用字段3
 
     //附表
-    private Integer txpmt_inf_nb; //条数号
-    private String tx_auth_cd ; //税务机关代码
-    private String tx_auth_nm ; //税务机关名称
-    private String txpyr_sts ; //纳税人状态
+    private List<TxpmtInf> txpmtInfList;
+    public static class TxpmtInf implements Serializable {
+        private static final long serialVersionUID = 751346967933065889L;
+        private Integer plat_date;
+        private Integer plat_trace;
+        private Integer plat_time;
+        private String instg_pty;
+        private String msg_id;
+        private String cre_dt_tm;
+        private String orig_msg_id;
+        private String orig_instg_drct_pty;
+        private String orig_instg_pty;
+        private Integer txpmt_inf_nb; //条数号
+        private String tx_auth_cd; //税务机关代码
+        private String tx_auth_nm; //税务机关名称
+        private String txpyr_sts; //纳税人状态
+
+        public Integer getPlat_date() {
+            return plat_date;
+        }
+
+        public void setPlat_date(Integer plat_date) {
+            this.plat_date = plat_date;
+        }
+
+        public Integer getPlat_trace() {
+            return plat_trace;
+        }
+
+        public void setPlat_trace(Integer plat_trace) {
+            this.plat_trace = plat_trace;
+        }
+
+        public Integer getPlat_time() {
+            return plat_time;
+        }
+
+        public void setPlat_time(Integer plat_time) {
+            this.plat_time = plat_time;
+        }
+
+        public String getInstg_pty() {
+            return instg_pty;
+        }
+
+        public void setInstg_pty(String instg_pty) {
+            this.instg_pty = instg_pty;
+        }
+
+        public String getMsg_id() {
+            return msg_id;
+        }
+
+        public void setMsg_id(String msg_id) {
+            this.msg_id = msg_id;
+        }
+
+        public String getCre_dt_tm() {
+            return cre_dt_tm;
+        }
+
+        public void setCre_dt_tm(String cre_dt_tm) {
+            this.cre_dt_tm = cre_dt_tm;
+        }
+
+        public String getOrig_msg_id() {
+            return orig_msg_id;
+        }
+
+        public void setOrig_msg_id(String orig_msg_id) {
+            this.orig_msg_id = orig_msg_id;
+        }
+
+        public String getOrig_instg_drct_pty() {
+            return orig_instg_drct_pty;
+        }
+
+        public void setOrig_instg_drct_pty(String orig_instg_drct_pty) {
+            this.orig_instg_drct_pty = orig_instg_drct_pty;
+        }
+
+        public String getOrig_instg_pty() {
+            return orig_instg_pty;
+        }
+
+        public void setOrig_instg_pty(String orig_instg_pty) {
+            this.orig_instg_pty = orig_instg_pty;
+        }
+
+        public Integer getTxpmt_inf_nb() {
+            return txpmt_inf_nb;
+        }
+
+        public void setTxpmt_inf_nb(Integer txpmt_inf_nb) {
+            this.txpmt_inf_nb = txpmt_inf_nb;
+        }
+
+        public String getTx_auth_cd() {
+            return tx_auth_cd;
+        }
+
+        public void setTx_auth_cd(String tx_auth_cd) {
+            this.tx_auth_cd = tx_auth_cd;
+        }
+
+        public String getTx_auth_nm() {
+            return tx_auth_nm;
+        }
+
+        public void setTx_auth_nm(String tx_auth_nm) {
+            this.tx_auth_nm = tx_auth_nm;
+        }
+
+        public String getTxpyr_sts() {
+            return txpyr_sts;
+        }
+
+        public void setTxpyr_sts(String txpyr_sts) {
+            this.txpyr_sts = txpyr_sts;
+        }
+
+        @Override
+        public String toString() {
+            return "TxpmtInf{" +
+                    "plat_date=" + plat_date +
+                    ", plat_trace=" + plat_trace +
+                    ", plat_time=" + plat_time +
+                    ", instg_pty='" + instg_pty + '\'' +
+                    ", msg_id='" + msg_id + '\'' +
+                    ", cre_dt_tm='" + cre_dt_tm + '\'' +
+                    ", orig_msg_id='" + orig_msg_id + '\'' +
+                    ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
+                    ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                    ", txpmt_inf_nb=" + txpmt_inf_nb +
+                    ", tx_auth_cd='" + tx_auth_cd + '\'' +
+                    ", tx_auth_nm='" + tx_auth_nm + '\'' +
+                    ", txpyr_sts='" + txpyr_sts + '\'' +
+                    '}';
+        }
+    }
 
     public Integer getPlat_date() {
         return plat_date;
@@ -296,35 +433,49 @@ public class MivsTxpmtVrfctnInfoModel implements Serializable {
         this.remark3 = remark3;
     }
 
-    public Integer getTxpmt_inf_nb() {
-        return txpmt_inf_nb;
+    public List<TxpmtInf> getTxpmtInfList() {
+        return txpmtInfList;
     }
 
-    public void setTxpmt_inf_nb(Integer txpmt_inf_nb) {
-        this.txpmt_inf_nb = txpmt_inf_nb;
+    public void setTxpmtInfList(List<TxpmtInf> txpmtInfList) {
+        this.txpmtInfList = txpmtInfList;
     }
 
-    public String getTx_auth_cd() {
-        return tx_auth_cd;
-    }
-
-    public void setTx_auth_cd(String tx_auth_cd) {
-        this.tx_auth_cd = tx_auth_cd;
-    }
-
-    public String getTx_auth_nm() {
-        return tx_auth_nm;
-    }
-
-    public void setTx_auth_nm(String tx_auth_nm) {
-        this.tx_auth_nm = tx_auth_nm;
-    }
-
-    public String getTxpyr_sts() {
-        return txpyr_sts;
-    }
-
-    public void setTxpyr_sts(String txpyr_sts) {
-        this.txpyr_sts = txpyr_sts;
+    @Override
+    public String toString() {
+        return "MivsTxpmtVrfctnInfoModel{" +
+                "plat_date=" + plat_date +
+                ", plat_trace=" + plat_trace +
+                ", plat_time=" + plat_time +
+                ", system_id='" + system_id + '\'' +
+                ", tran_date='" + tran_date + '\'' +
+                ", seq_no='" + seq_no + '\'' +
+                ", tran_time='" + tran_time + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", branch_id='" + branch_id + '\'' +
+                ", mivs_sts='" + mivs_sts + '\'' +
+                ", msg_id='" + msg_id + '\'' +
+                ", cre_dt_tm='" + cre_dt_tm + '\'' +
+                ", instg_drct_pty='" + instg_drct_pty + '\'' +
+                ", drct_pty_nm='" + drct_pty_nm + '\'' +
+                ", instg_pty='" + instg_pty + '\'' +
+                ", pty_nm='" + pty_nm + '\'' +
+                ", instd_drct_pty='" + instd_drct_pty + '\'' +
+                ", instd_pty='" + instd_pty + '\'' +
+                ", co_nm='" + co_nm + '\'' +
+                ", uni_soc_cdt_cd='" + uni_soc_cdt_cd + '\'' +
+                ", txpyr_id_nb='" + txpyr_id_nb + '\'' +
+                ", op_nm='" + op_nm + '\'' +
+                ", rslt='" + rslt + '\'' +
+                ", data_resrc_dt='" + data_resrc_dt + '\'' +
+                ", txpmt_inf_cnt=" + txpmt_inf_cnt +
+                ", proc_sts='" + proc_sts + '\'' +
+                ", proc_cd='" + proc_cd + '\'' +
+                ", rjct_inf='" + rjct_inf + '\'' +
+                ", remark1='" + remark1 + '\'' +
+                ", remark2='" + remark2 + '\'' +
+                ", remark3='" + remark3 + '\'' +
+                ", txpmtInfList=" + txpmtInfList +
+                '}';
     }
 }
