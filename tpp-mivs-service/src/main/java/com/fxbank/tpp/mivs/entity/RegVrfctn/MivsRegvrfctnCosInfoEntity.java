@@ -3,9 +3,8 @@ package com.fxbank.tpp.mivs.entity.RegVrfctn;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.List;
 
-@Table(name = "MIVS_REGVRFCTN_COS_INFO")
+@Table(name = "mivs_regvrfctn_cos_info")
 public class MivsRegvrfctnCosInfoEntity {
     /**
      * null
@@ -73,6 +72,12 @@ public class MivsRegvrfctnCosInfoEntity {
     /**
      * null
      */
+    @Column(name = "PG_NB")
+    private Integer pgNb;
+
+    /**
+     * null
+     */
     @Column(name = "INVTR_NM")
     private String invtrNm;
 
@@ -106,10 +111,18 @@ public class MivsRegvrfctnCosInfoEntity {
     @Column(name = "SUBSCR_CPTL_CON_DT")
     private String subscrCptlConDt;
 
+    /**
+     * null
+     * @return INSTG_PTY null
+     */
     public String getInstgPty() {
         return instgPty;
     }
 
+    /**
+     * null
+     * @param instgPty null
+     */
     public void setInstgPty(String instgPty) {
         this.instgPty = instgPty;
     }
@@ -260,6 +273,22 @@ public class MivsRegvrfctnCosInfoEntity {
 
     /**
      * null
+     * @return PG_NB null
+     */
+    public Integer getPgNb() {
+        return pgNb;
+    }
+
+    /**
+     * null
+     * @param pgNb null
+     */
+    public void setPgNb(Integer pgNb) {
+        this.pgNb = pgNb;
+    }
+
+    /**
+     * null
      * @return INVTR_NM null
      */
     public String getInvtrNm() {
@@ -353,5 +382,4 @@ public class MivsRegvrfctnCosInfoEntity {
     public void setSubscrCptlConDt(String subscrCptlConDt) {
         this.subscrCptlConDt = subscrCptlConDt;
     }
-
 }

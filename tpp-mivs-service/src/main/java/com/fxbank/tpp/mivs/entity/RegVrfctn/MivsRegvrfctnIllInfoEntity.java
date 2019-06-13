@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_REGVRFCTN_ILL_INFO")
+@Table(name = "mivs_regvrfctn_ill_info")
 public class MivsRegvrfctnIllInfoEntity {
     /**
      * null
@@ -68,6 +68,12 @@ public class MivsRegvrfctnIllInfoEntity {
      */
     @Column(name = "ORIG_INSTG_PTY")
     private String origInstgPty;
+
+    /**
+     * null
+     */
+    @Column(name = "PG_NB")
+    private Integer pgNb;
 
     /**
      * null
@@ -267,6 +273,22 @@ public class MivsRegvrfctnIllInfoEntity {
 
     /**
      * null
+     * @return PG_NB null
+     */
+    public Integer getPgNb() {
+        return pgNb;
+    }
+
+    /**
+     * null
+     * @param pgNb null
+     */
+    public void setPgNb(Integer pgNb) {
+        this.pgNb = pgNb;
+    }
+
+    /**
+     * null
      * @return ILL_DSCRT_CAUSE null
      */
     public String getIllDscrtCause() {
@@ -299,7 +321,7 @@ public class MivsRegvrfctnIllInfoEntity {
 
     /**
      * null
-     * @return ABN_DSCRT_CAUSE_DCSN_AUTH null
+     * @return ABNML_CAUSE_DCSN_AUTH null
      */
     public String getAbnmlCauseDcsnAuth() {
         return abnmlCauseDcsnAuth;

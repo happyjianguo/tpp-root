@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_REGVRFCTN_BAS_INFO")
+@Table(name = "mivs_regvrfctn_bas_info")
 public class MivsRegvrfctnBasInfoEntity {
     /**
      * null
@@ -68,6 +68,12 @@ public class MivsRegvrfctnBasInfoEntity {
      */
     @Column(name = "ORIG_INSTG_PTY")
     private String origInstgPty;
+
+    /**
+     * null
+     */
+    @Column(name = "PG_NB")
+    private Integer pgNb;
 
     /**
      * null
@@ -149,7 +155,7 @@ public class MivsRegvrfctnBasInfoEntity {
 
     /**
      * null
-     * @return instgPty null
+     * @return INSTG_PTY null
      */
     public String getInstgPty() {
         return instgPty;
@@ -309,6 +315,22 @@ public class MivsRegvrfctnBasInfoEntity {
 
     /**
      * null
+     * @return PG_NB null
+     */
+    public Integer getPgNb() {
+        return pgNb;
+    }
+
+    /**
+     * null
+     * @param pgNb null
+     */
+    public void setPgNb(Integer pgNb) {
+        this.pgNb = pgNb;
+    }
+
+    /**
+     * null
      * @return ENT_NM null
      */
     public String getEntNm() {
@@ -453,7 +475,7 @@ public class MivsRegvrfctnBasInfoEntity {
 
     /**
      * null
-     * @return ORIG_NM_OF_LGL_PRSN null
+     * @return NM_OF_LGL_PRSN null
      */
     public String getNmOfLglPrsn() {
         return nmOfLglPrsn;
@@ -514,5 +536,4 @@ public class MivsRegvrfctnBasInfoEntity {
     public void setBizScp(String bizScp) {
         this.bizScp = bizScp;
     }
-
 }

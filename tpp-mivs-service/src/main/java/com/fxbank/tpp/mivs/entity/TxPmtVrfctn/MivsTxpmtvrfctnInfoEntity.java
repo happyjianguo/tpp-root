@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_TXPMTVFCTN_INFO")
-public class MivsTxpmtvfctnInfoEntity {
+@Table(name = "MIVS_TXPMTVRFCTN_INFO")
+public class MivsTxpmtvrfctnInfoEntity {
     /**
      * null
      */

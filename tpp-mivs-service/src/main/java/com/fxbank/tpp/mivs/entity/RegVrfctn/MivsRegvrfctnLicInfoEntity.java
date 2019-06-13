@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_REGVRFCTN_LIC_INFO")
+@Table(name = "mivs_regvrfctn_lic_info")
 public class MivsRegvrfctnLicInfoEntity {
     /**
      * null
@@ -68,6 +68,12 @@ public class MivsRegvrfctnLicInfoEntity {
      */
     @Column(name = "ORIG_INSTG_PTY")
     private String origInstgPty;
+
+    /**
+     * null
+     */
+    @Column(name = "PG_NB")
+    private Integer pgNb;
 
     /**
      * null
@@ -263,6 +269,22 @@ public class MivsRegvrfctnLicInfoEntity {
      */
     public void setOrigInstgPty(String origInstgPty) {
         this.origInstgPty = origInstgPty;
+    }
+
+    /**
+     * null
+     * @return PG_NB null
+     */
+    public Integer getPgNb() {
+        return pgNb;
+    }
+
+    /**
+     * null
+     * @param pgNb null
+     */
+    public void setPgNb(Integer pgNb) {
+        this.pgNb = pgNb;
     }
 
     /**

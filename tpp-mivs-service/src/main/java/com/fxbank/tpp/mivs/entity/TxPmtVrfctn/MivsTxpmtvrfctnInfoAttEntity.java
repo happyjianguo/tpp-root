@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_TXPMTVFCTN_INFO_ATT")
-public class MivsTxpmtvfctnInfoAttEntity {
+@Table(name = "mivs_txpmtvrfctn_info_att")
+public class MivsTxpmtvrfctnInfoAttEntity {
     /**
      * null
      */
@@ -41,8 +41,32 @@ public class MivsTxpmtvfctnInfoAttEntity {
     /**
      * null
      */
+    @Column(name = "INSTG_PTY")
+    private String instgPty;
+
+    /**
+     * null
+     */
     @Column(name = "CRE_DT_TM")
     private String creDtTm;
+
+    /**
+     * null
+     */
+    @Column(name = "ORIG_MSG_ID")
+    private String origMsgId;
+
+    /**
+     * null
+     */
+    @Column(name = "ORIG_INSTG_DRCT_PTY")
+    private String origInstgDrctPty;
+
+    /**
+     * null
+     */
+    @Column(name = "ORIG_INSTG_PTY")
+    private String origInstgPty;
 
     /**
      * null
@@ -144,6 +168,22 @@ public class MivsTxpmtvfctnInfoAttEntity {
 
     /**
      * null
+     * @return INSTG_PTY null
+     */
+    public String getInstgPty() {
+        return instgPty;
+    }
+
+    /**
+     * null
+     * @param instgPty null
+     */
+    public void setInstgPty(String instgPty) {
+        this.instgPty = instgPty;
+    }
+
+    /**
+     * null
      * @return CRE_DT_TM null
      */
     public String getCreDtTm() {
@@ -156,6 +196,54 @@ public class MivsTxpmtvfctnInfoAttEntity {
      */
     public void setCreDtTm(String creDtTm) {
         this.creDtTm = creDtTm;
+    }
+
+    /**
+     * null
+     * @return ORIG_MSG_ID null
+     */
+    public String getOrigMsgId() {
+        return origMsgId;
+    }
+
+    /**
+     * null
+     * @param origMsgId null
+     */
+    public void setOrigMsgId(String origMsgId) {
+        this.origMsgId = origMsgId;
+    }
+
+    /**
+     * null
+     * @return ORIG_INSTG_DRCT_PTY null
+     */
+    public String getOrigInstgDrctPty() {
+        return origInstgDrctPty;
+    }
+
+    /**
+     * null
+     * @param origInstgDrctPty null
+     */
+    public void setOrigInstgDrctPty(String origInstgDrctPty) {
+        this.origInstgDrctPty = origInstgDrctPty;
+    }
+
+    /**
+     * null
+     * @return ORIG_INSTG_PTY null
+     */
+    public String getOrigInstgPty() {
+        return origInstgPty;
+    }
+
+    /**
+     * null
+     * @param origInstgPty null
+     */
+    public void setOrigInstgPty(String origInstgPty) {
+        this.origInstgPty = origInstgPty;
     }
 
     /**
