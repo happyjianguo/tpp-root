@@ -16,31 +16,21 @@ public interface IMivsRegVrfctnInfoService {
     void insertMaster(MivsRegVrfctnInfoModel mivsRegvrfctnInfoModel);
 
     /**
-     * 更新数据库表状态信息
-     *
-     * @param mivsRegvrfctnInfoModel
-     */
-    void updateSts(MivsRegVrfctnInfoModel mivsRegvrfctnInfoModel);
-
-    /**
      * 更新主表信息及插入附表信息
+     * flag = "all" ，更新主表、增加附表数据
+     * flag = "master" ，仅更新主表数据
      *
      * @param mivsRegvrfctnInfoModel
      */
-    void uMasterAndiAttached(MivsRegVrfctnInfoModel mivsRegvrfctnInfoModel);
+    void uMasterAndiAttached(MivsRegVrfctnInfoModel mivsRegvrfctnInfoModel, String flag);
 
     /**
-     * 查询数据库主表信息
-     *
-     * @param origMsgid
-     */
-    MivsRegVrfctnInfoModel selectMaster(String origMsgid);
-
-    /**
-     * 查询数据库附表信息
+     * 查询数据库表信息
+     * flag = "all" ，查询主表+附表数据
+     * flag = "master" ，仅查询主表数据
      *
      * @param Msgid
      */
-    MivsRegVrfctnInfoModel selectAttachedCnt(String Msgid, String Instgpty);
+    MivsRegVrfctnInfoModel selectMasterAndAttached(String Msgid, String Instgpty, String flag);
 
 }

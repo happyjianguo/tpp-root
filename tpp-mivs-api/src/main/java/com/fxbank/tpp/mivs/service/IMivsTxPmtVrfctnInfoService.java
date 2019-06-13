@@ -16,16 +16,20 @@ public interface IMivsTxPmtVrfctnInfoService {
     void insertMaster(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel);
 
     /**
-     * 新增纳税信息核查附表数据
+     * 新增纳税信息核查表数据
+     * flag = "all" ，更新主表、增加附表数据
+     * flag = "master" ，仅更新主表数据
      *
      * @param mivsTxpmtVrfctnInfoModel
      */
-    void insertAttached(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel);
+    void uMasterAndiAttached(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel, String flag);
 
     /**
-     * 更新数据库表状态信息
+     * 查询数据库主附表信息
+     * flag = "all" ，查询主表+附表数据
+     * flag = "master" ，仅查询主表数据
      *
-     * @param mivsTxpmtVrfctnInfoModel
+     * @param origMsgid
      */
-    void updateSts(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel);
+    MivsTxpmtVrfctnInfoModel selectMasterAndAttached(String origMsgid, String origInstgPty, String flag);
 }
