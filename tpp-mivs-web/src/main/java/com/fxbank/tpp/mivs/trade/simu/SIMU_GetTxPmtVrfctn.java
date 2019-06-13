@@ -46,7 +46,7 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 		// 1、接收322请求
 		MIVS_322_001_01 mivs322 = (MIVS_322_001_01) dto;
 		// 2、根据322内容模拟返回990
-		CCMS_990_001_02 mivs = new CCMS_990_001_02(new MyLog(), 20190909, 122321, 12);
+		CCMS_990_001_02 mivs = new CCMS_990_001_02(new MyLog(), dto.getSysDate(), dto.getSysTime(), 12);
 		mivs.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
 		mivs.getHeader().setOrigReceiver("0000");
 		mivs.getHeader().setMesgID(mivs322.getHead().getMesgID());
@@ -64,7 +64,7 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 		}
 
 		// 3、根据322内容模拟返回323
-		MIVS_323_001_01 mivs323 = new MIVS_323_001_01(new MyLog(), 20190909, 122321, 13);
+		MIVS_323_001_01 mivs323 = new MIVS_323_001_01(new MyLog(), dto.getSysDate(), dto.getSysTime(), 13);
 //		//编值
 //		ArrayList al = new ArrayList();
 //		al.add("TxAuthCd001");
@@ -82,13 +82,13 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 
 		mivs323.getHeader().setOrigSender("313131000008");
 		mivs323.getHeader().setOrigReceiver("0000");
-		mivs323.getHeader().setMesgID(mivs322.getHead().getMesgID());
+		mivs323.getHeader().setMesgID(mivs323.getHeader().getMesgID());
 		mivs323.getRtrTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty("0000");
 		mivs323.getRtrTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgPty("00000001200197");
-        mivs323.getRtrTxPmtVrfctn().getMsgHdr().setMsgId(mivs322.getTxPmtVrfctn().getMsgHdr().getMsgId());
+        mivs323.getRtrTxPmtVrfctn().getMsgHdr().setMsgId(mivs323.getRtrTxPmtVrfctn().getMsgHdr().getMsgId());
         mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().setMsgId(mivs322.getHead().getMesgID());
-		mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().setInstgDrctPty("313871000007");
-		mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().setInstgPty("313871000007");
+		mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().setInstgDrctPty(mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().getInstgDrctPty());
+		mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().setInstgPty(mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().getInstgPty());
 
 		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().setRslt("MCHD");
 		mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().setDataResrcDt("2019-04-29");

@@ -15,9 +15,12 @@ import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_323_001_01;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
+import com.fxbank.tpp.mivs.model.mivsmodel.MivsTxpmtVrfctnInfoModel;
 import com.fxbank.tpp.mivs.model.request.MIVS_322_001_01;
+import com.fxbank.tpp.mivs.model.request.MIVS_322_001_01_GetTxPmtVrfctn;
 import com.fxbank.tpp.mivs.model.response.MIVS_323_001_01_RtrTxPmtVrfctn;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
+import com.fxbank.tpp.mivs.service.IMivsTxPmtVrfctnInfoService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
 import com.fxbank.tpp.mivs.trade.mivs.ComConf;
 import org.slf4j.Logger;
@@ -51,6 +54,9 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
     @Reference(version = "1.0.0")
     private IForwardToESBService forwardToESBService;
 
+    @Reference(version = "1.0.0")
+    private IMivsTxPmtVrfctnInfoService mivsTxpmtvfctnInfoService;
+
     @Override
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
@@ -78,70 +84,117 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         }
         myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + branchId + "，人行行号：" + bankNumber);
 
+        //拼发送人行322报文
         MIVS_322_001_01 mivs322 = new MIVS_322_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
-        //发起行行号
+        MIVS_322_001_01_GetTxPmtVrfctn.MsgHdr msgHdr = mivs322.getGetTxPmtVrfctn().getMsgHdr();
+        MIVS_322_001_01_GetTxPmtVrfctn.VryDef vryDef = mivs322.getGetTxPmtVrfctn().getVryDef();
         mivs322.getHeader().setOrigSender(bankNumber);
         mivs322.getHeader().setOrigReceiver("0000");
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
-        mivs322.getTxPmtVrfctn().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
-
-        mivs322.getTxPmtVrfctn().getVryDef().setCompanyName(reqBody.getCompanyName());
-        mivs322.getTxPmtVrfctn().getVryDef().setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        mivs322.getTxPmtVrfctn().getVryDef().setTaxPayerId(reqBody.getTaxPayerId());
-        mivs322.getTxPmtVrfctn().getVryDef().setOpNm(reqBody.getOpNm());
+        msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
+        msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
+        msgHdr.getInstgPty().setInstgPty(bankNumber);
+        msgHdr.getInstgPty().setPtyNm(bnkNmT);
+        vryDef.setCoNm(reqBody.getCompanyName());
+        vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
+        vryDef.setTaxPayerId(reqBody.getTaxPayerId());
+        vryDef.setOpNm(reqBody.getOpNm());
 
         //发送人行请求报文落地
+        MivsTxpmtVrfctnInfoModel txpmtvfctnInfoTableInsert = new MivsTxpmtVrfctnInfoModel();
+        myLog.info(logger, "Date = " + req.getSysDate());
+        myLog.info(logger, "trace = " + req.getSysTraceno());
+        myLog.info(logger, "SystemId = " + req.getReqSysHead().getSystemId());
+        myLog.info(logger, "TranDate = " + req.getReqSysHead().getTranDate());
+        myLog.info(logger, "SeqNo = " + req.getReqSysHead().getSeqNo());
+        myLog.info(logger, "TranTimestamp = " + req.getReqSysHead().getTranTimestamp());
+        txpmtvfctnInfoTableInsert.setPlat_date(req.getSysDate());
+        txpmtvfctnInfoTableInsert.setPlat_trace(req.getSysTraceno());
+        txpmtvfctnInfoTableInsert.setPlat_time(req.getSysTime());
+        txpmtvfctnInfoTableInsert.setSystem_id(req.getReqSysHead().getSystemId());
+        txpmtvfctnInfoTableInsert.setTran_date(req.getReqSysHead().getTranDate());
+        txpmtvfctnInfoTableInsert.setSeq_no(req.getReqSysHead().getSeqNo());
+        txpmtvfctnInfoTableInsert.setTran_time(req.getReqSysHead().getTranTimestamp());
+        txpmtvfctnInfoTableInsert.setUser_id(req.getReqSysHead().getUserId());
+        txpmtvfctnInfoTableInsert.setBranch_id(req.getReqSysHead().getBranchId());
+        txpmtvfctnInfoTableInsert.setMivs_sts("00");
+        txpmtvfctnInfoTableInsert.setMsg_id(msgHdr.getMsgId());
+        txpmtvfctnInfoTableInsert.setCre_dt_tm(msgHdr.getCreDtTm());
+        txpmtvfctnInfoTableInsert.setInstg_drct_pty(settlementBankNo);
+        txpmtvfctnInfoTableInsert.setDrct_pty_nm(lqtnBnkNmT1);
+        txpmtvfctnInfoTableInsert.setInstg_pty(bankNumber);
+        txpmtvfctnInfoTableInsert.setPty_nm(bnkNmT);
+        txpmtvfctnInfoTableInsert.setInstd_drct_pty("0000");
+        txpmtvfctnInfoTableInsert.setInstd_pty("0000");
+        txpmtvfctnInfoTableInsert.setCo_nm(reqBody.getCompanyName());
+        txpmtvfctnInfoTableInsert.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
+        txpmtvfctnInfoTableInsert.setTxpyr_id_nb(reqBody.getTaxPayerId());
+        txpmtvfctnInfoTableInsert.setOp_nm(reqBody.getOpNm());
 
+        mivsTxpmtvfctnInfoService.insertMaster(txpmtvfctnInfoTableInsert); //插入数据库业务数据
 
         mivs322 = (MIVS_322_001_01) pmtsService.sendToPmts(mivs322); // 发送请求，实时等待990
 
-        String msgid= mivs322.getTxPmtVrfctn().getMsgHdr().getMsgId();    //为同步等待323，组合三要素
+        String msgid= mivs322.getHeader().getMesgID();    //为同步等待323，组合三要素
         String channel = "323_"+msgid;
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
-        //收到人行通讯回执，更新数据库状态
-
+        //收到人行通讯回执，准备更新数据库状态
         REP_50023000202 rep = new REP_50023000202();
-        if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
-            CCMS_911_001_02 ccmc911 = (CCMS_911_001_02)dtoBase;
-            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccmc911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
+        REP_50023000202.REP_BODY repBody = rep.getRepBody();
+        MivsTxpmtVrfctnInfoModel txpmtvfctnInfoTableUpdate = new MivsTxpmtVrfctnInfoModel();
+        //更新数据的主键赋值
+        txpmtvfctnInfoTableUpdate.setPlat_date(req.getSysDate());
+        txpmtvfctnInfoTableUpdate.setPlat_trace(req.getSysTraceno());
 
+        if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
+            CCMS_911_001_02 ccms911 = (CCMS_911_001_02)dtoBase;
+            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             //根据人行返回报文更新数据库状态
+            txpmtvfctnInfoTableUpdate.setMivs_sts("02");
+            txpmtvfctnInfoTableUpdate.setProc_cd(ccms911.getDscrdMsgNtfctn().getDscrdInf().getPrcCd());
+            txpmtvfctnInfoTableUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.323.001.01")){
             MIVS_323_001_01 mivs323 = (MIVS_323_001_01)dtoBase;
-            REP_50023000202.REP_BODY repBody = rep.getRepBody();
-            if(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcSts()!=null) {
-                MivsTradeExecuteException e = new MivsTradeExecuteException(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcCd(),mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getRjctinf());
+            MIVS_323_001_01_RtrTxPmtVrfctn.OrgnlBizQry orgnlBizQry = mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry();
+            MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf vrfctnInf = mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf();
+            MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.OprlErr oprlErr = mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr();
+            if(oprlErr.getProcSts()!=null) {
+                MivsTradeExecuteException e = new MivsTradeExecuteException(oprlErr.getProcCd(),oprlErr.getRjctinf());
+                txpmtvfctnInfoTableUpdate.setMivs_sts("03");
+                txpmtvfctnInfoTableUpdate.setProc_cd(oprlErr.getProcCd());
+                txpmtvfctnInfoTableUpdate.setProc_sts(oprlErr.getProcSts());
+                txpmtvfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctinf());
                 throw e;
             }
-            //取循环数据
-            List<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf> TxpmtInf = mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getTxpmtInf();
+            //查询数据库主表条数数据+附表内容数据，以323应答报文的“原报文标识号，原发起机构”为查询条件
+            MivsTxpmtVrfctnInfoModel infoModel = mivsTxpmtvfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "all");
+            myLog.debug(logger, "###infoModel :" + infoModel.toString());
             //赋循环数据
             List<REP_50023000202.TXPYR_INFO_ARRAY> arrayMsg = new ArrayList<REP_50023000202.TXPYR_INFO_ARRAY>();
-            if(TxpmtInf != null && !TxpmtInf.isEmpty()) {
-                for (MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf Info:TxpmtInf) {
-                    REP_50023000202.TXPYR_INFO_ARRAY arMsg = new REP_50023000202.TXPYR_INFO_ARRAY();
-                    arMsg.setTxAuthCd(Info.getTxAuthCd());
-                    arMsg.setTxAuthNm(Info.getTxAuthNm());
-                    arMsg.setTxpyrSts(Info.getTxpySts());
-                    arrayMsg.add(arMsg);
+            if(infoModel.getTxpmtInfList() != null && !infoModel.getTxpmtInfList().isEmpty()) {
+                for (MivsTxpmtVrfctnInfoModel.TxpmtInf Info:infoModel.getTxpmtInfList()) {
+                    REP_50023000202.TXPYR_INFO_ARRAY txpyrInfoArray = new REP_50023000202.TXPYR_INFO_ARRAY();
+                    //赋值纳税核查信息附表数据
+                    txpyrInfoArray.setTxpmtInfNb(Info.getTxpmt_inf_nb());
+                    txpyrInfoArray.setTxAuthCd(Info.getTx_auth_cd());
+                    txpyrInfoArray.setTxAuthNm(Info.getTx_auth_nm());
+                    txpyrInfoArray.setTxpyrSts(Info.getTxpyr_sts());
+                    arrayMsg.add(txpyrInfoArray);
                 }
-            }
-            repBody.setRslt(mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getRslt());
-            repBody.setDataResrcD(mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf().getDataResrcDt());
-            if(arrayMsg !=null && !arrayMsg.isEmpty()){
                 repBody.setArrayMsg(arrayMsg);
             }
-            repBody.setProcSts(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcSts());
-            repBody.setProcCd(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getProcCd());
-            repBody.setRjctinf(mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getRjctinf());
-
-            //根据人行返回报文更新数据库状态
-
+            repBody.setRslt(vrfctnInf.getRslt());
+            repBody.setDataResrcD(vrfctnInf.getDataResrcDt());
+            //待更新数据库数据
+            txpmtvfctnInfoTableUpdate.setMivs_sts("04");
+            txpmtvfctnInfoTableUpdate.setRslt(vrfctnInf.getRslt());
+            txpmtvfctnInfoTableUpdate.setData_resrc_dt(vrfctnInf.getDataResrcDt());
         }
+
+        //更新业务数据表
+        mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate, "master");
+
         myLog.info(logger,"Json  " + JsonUtil.toJson(rep));
         return rep;
     }

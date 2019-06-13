@@ -87,7 +87,7 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
 
         mivs345 = (MIVS_345_001_01) pmtsService.sendToPmts(mivs345); // 发送请求，实时等待990
 
-        String msgid= mivs345.getSysSts().getMsgHdr().getMsgId();    //为同步等待345，组合三要素
+        String msgid= mivs345.getHeader().getMesgID();    //为同步等待345，组合三要素
         String channel = "346_"+msgid;
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 

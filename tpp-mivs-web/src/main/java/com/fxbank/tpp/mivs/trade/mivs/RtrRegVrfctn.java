@@ -43,23 +43,23 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
         MIVS_325_001_01 mivs325 = (MIVS_325_001_01) dto;
-        myLog.info(logger, "收到登记信息联网核查应答报文,进行同步处理");
-        byte[] b325 = SerializeUtil.serialize(mivs325);
-        String channel = "325_" + mivs325.getHead().getMesgID();   //TODO 拼接原报文三要素
-        myLog.info(logger, "325报文同步通道编号=[" + channel + "]");
-
         MIVS_325_001_01_RtrRegVrfctn.MsgHdr msgHdr = mivs325.getRtrRegVrfctn().getMsgHdr();
         MIVS_325_001_01_RtrRegVrfctn.MsgPgntn msgPgntn = mivs325.getRtrRegVrfctn().getMsgPgntn();
         MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry orgnlBizQry = mivs325.getRtrRegVrfctn().getOrgnlBizQry();
         MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf vrfctnInf = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf();
         MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr oprlErr = mivs325.getRtrRegVrfctn().getRspsn().getOprlErr();
+        myLog.info(logger, "收到登记信息联网核查应答报文,进行同步处理");
+        byte[] b325 = SerializeUtil.serialize(mivs325);
+//        String channel = "325_" + mivs325.getHead().getOrigSender() + mivs325.getHead().getOrigSendDate() + mivs325.getHead().getMesgID();   //TODO 拼接原报文三要素
+        String channel = "325_" + orgnlBizQry.getMsgId();   //TODO 拼接原报文三要素
+        myLog.info(logger, "325报文同步通道编号=[" + channel + "]");
 
         if(oprlErr.getProcSts() != null){
             super.jedisPublish(myLog,channel.getBytes(), b325);
             myLog.info(logger, "发布至redis成功");
         }else{
             //查询主表数据
-            MivsRegVrfctnInfoModel regvrfctnInfoTablSelectMaster = mivsRegvrfctnInfoService.selectMaster(mivs325.getRtrRegVrfctn().getOrgnlBizQry().getMsgId());
+            MivsRegVrfctnInfoModel regvrfctnInfoTablSelectMaster = mivsRegvrfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "master");
             myLog.info(logger, "查询主表数据查询结果为：" + regvrfctnInfoTablSelectMaster.toString());
             //收到人行通讯回执，准备更新数据库状态，插入附表数据，在同一个事务进行
             myLog.info(logger, "收到人行通讯回执，准备更新数据库状态，插入附表数据，在同一个事务进行");
@@ -69,7 +69,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             regvrfctnInfoUmasAndIatt.setPlat_trace(regvrfctnInfoTablSelectMaster.getPlat_trace());
             //主表应答信息赋值
             regvrfctnInfoUmasAndIatt.setMivs_sts("05");
-            regvrfctnInfoUmasAndIatt.setPg_nb(msgPgntn.getPgNb());
+            regvrfctnInfoUmasAndIatt.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
             regvrfctnInfoUmasAndIatt.setLast_pg_ind(msgPgntn.getLastPgInd());
             regvrfctnInfoUmasAndIatt.setRslt(vrfctnInf.getRslt());
             regvrfctnInfoUmasAndIatt.setData_resrc_dt(vrfctnInf.getDataResrcDt());
@@ -99,6 +99,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     basInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
                     basInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
                     basInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    basInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     basInfoMsg.setBas_info_nb(++basInfoNb);
                     basInfoMsg.setEnt_nm(Info.getEntNm());
                     basInfoMsg.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
@@ -145,6 +146,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     coShrhdrFndInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
                     coShrhdrFndInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
                     coShrhdrFndInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    coShrhdrFndInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(++coShrhdrFndInfoNb);
                     coShrhdrFndInfoMsg.setInvtr_nm(Info.getInvtrNm());
                     coShrhdrFndInfoMsg.setInvtr_id(Info.getInvtrId());
@@ -184,6 +186,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     dirSupSrMgrInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
                     dirSupSrMgrInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
                     dirSupSrMgrInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    dirSupSrMgrInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     dirSupSrMgrInfoMsg.setDir_supsrsgr_info_nb(++dirSupSrMgrInfoNb);
                     dirSupSrMgrInfoMsg.setNm(Info.getNm());
                     dirSupSrMgrInfoMsg.setPosn(Info.getPosn());
@@ -219,6 +222,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     chngInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
                     chngInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
                     chngInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    chngInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     chngInfoMsg.setChng_info_nb(++chgInfoNb);
                     chngInfoMsg.setChng_itm(Info.getChngItm());
                     chngInfoMsg.setAft_chng(Info.getAftChng());
@@ -256,6 +260,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     abnInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
                     abnInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
                     abnInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    abnInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     abnInfoMsg.setAbn_info_nb(++abnInfoNb);
                     abnInfoMsg.setAbnml_cause(Info.getAbnmlCause());
                     abnInfoMsg.setAbnml_date(Info.getAbnmlDate());
@@ -295,6 +300,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     illInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
                     illInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
                     illInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    illInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     illInfoMsg.setIll_info_nb(++illInfoNb);
                     illInfoMsg.setIll_dscrt_cause(Info.getIllDscrtCause());
                     illInfoMsg.setAbnml_date(Info.getAbnmlDate());
@@ -334,6 +340,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     licInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
                     licInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
                     licInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    licInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     licInfoMsg.setLic_info_nb(++licInfoNb);
                     licInfoMsg.setOrgnl_or_cp(Info.getOrgnlOrCp());
                     licInfoMsg.setLic_null_stm_cntt(Info.getLicNullStmCntt());
@@ -351,7 +358,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             myLog.info(logger, "regvrfctnInfoUmasAndIatt的值为:" + regvrfctnInfoUmasAndIatt.toString());
             /*数据库中附表数据赋值结束*/
             //
-            mivsRegvrfctnInfoService.uMasterAndiAttached(regvrfctnInfoUmasAndIatt);
+            mivsRegvrfctnInfoService.uMasterAndiAttached(regvrfctnInfoUmasAndIatt, "all");
             if(mivs325.getRtrRegVrfctn().getMsgPgntn().getLastPgInd().equals("true")){
                 super.jedisPublish(myLog,channel.getBytes(), b325);
                 myLog.info(logger, "此报文为最后一页，发布至redis成功");
