@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fxbank.tpp.mivs.mapper.RegVrfctn.MivsRegvrfctnCosInfoEntityMapper" >
   <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.RegVrfctn.MivsRegvrfctnCosInfoEntity" >
+    <id column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
     <id column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
     <id column="CO_SHRHDRFND_INFO_NB" property="coShrhdrfndInfoNb" jdbcType="DECIMAL" />
-    <id column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
     <result column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
     <result column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
     <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
@@ -12,6 +12,7 @@
     <result column="ORIG_MSG_ID" property="origMsgId" jdbcType="NVARCHAR" />
     <result column="ORIG_INSTG_DRCT_PTY" property="origInstgDrctPty" jdbcType="NVARCHAR" />
     <result column="ORIG_INSTG_PTY" property="origInstgPty" jdbcType="NVARCHAR" />
+    <result column="PG_NB" property="pgNb" jdbcType="DECIMAL" />
     <result column="INVTR_NM" property="invtrNm" jdbcType="NVARCHAR" />
     <result column="INVTR_ID" property="invtrId" jdbcType="NVARCHAR" />
     <result column="SUBSCR_CPTL_CON_AMT" property="subscrCptlConAmt" jdbcType="NVARCHAR" />
@@ -20,9 +21,9 @@
     <result column="SUBSCR_CPTL_CON_DT" property="subscrCptlConDt" jdbcType="NVARCHAR" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select MSG_ID, CO_SHRHDRFND_INFO_NB, INSTG_PTY, PLAT_DATE, PLAT_TRACE, PLAT_TIME, CRE_DT_TM,
-    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, INVTR_NM, INVTR_ID, SUBSCR_CPTL_CON_AMT, 
-    ACTL_CPTL_CON_AMT, SUBSCR_CPTL_CON_FM, SUBSCR_CPTL_CON_DT
+    select INSTG_PTY, MSG_ID, CO_SHRHDRFND_INFO_NB, PLAT_DATE, PLAT_TRACE, PLAT_TIME, 
+    CRE_DT_TM, ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, PG_NB, INVTR_NM, INVTR_ID, 
+    SUBSCR_CPTL_CON_AMT, ACTL_CPTL_CON_AMT, SUBSCR_CPTL_CON_FM, SUBSCR_CPTL_CON_DT
     from MIVS_REGVRFCTN_COS_INFO
   </select>
 </mapper>

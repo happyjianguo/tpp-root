@@ -12,6 +12,7 @@
     <result column="ORIG_MSG_ID" property="origMsgId" jdbcType="NVARCHAR" />
     <result column="ORIG_INSTG_DRCT_PTY" property="origInstgDrctPty" jdbcType="NVARCHAR" />
     <result column="ORIG_INSTG_PTY" property="origInstgPty" jdbcType="NVARCHAR" />
+    <result column="PG_NB" property="pgNb" jdbcType="DECIMAL" />
     <result column="ABNML_CAUSE" property="abnmlCause" jdbcType="NVARCHAR" />
     <result column="ABNML_DATE" property="abnmlDate" jdbcType="NVARCHAR" />
     <result column="ABNML_CAUSE_DCSN_AUTH" property="abnmlCauseDcsnAuth" jdbcType="NVARCHAR" />
@@ -21,8 +22,8 @@
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
     select INSTG_PTY, MSG_ID, ABN_INFO_NB, PLAT_DATE, PLAT_TRACE, PLAT_TIME, CRE_DT_TM, 
-    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, ABNML_CAUSE, ABNML_DATE, ABNML_CAUSE_DCSN_AUTH, 
-    RMV_CAUSE, RMV_DATE, RMV_CAUSE_DCSN_AUTH
+    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, PG_NB, ABNML_CAUSE, ABNML_DATE, 
+    ABNML_CAUSE_DCSN_AUTH, RMV_CAUSE, RMV_DATE, RMV_CAUSE_DCSN_AUTH
     from MIVS_REGVRFCTN_ABN_INFO
   </select>
 </mapper>

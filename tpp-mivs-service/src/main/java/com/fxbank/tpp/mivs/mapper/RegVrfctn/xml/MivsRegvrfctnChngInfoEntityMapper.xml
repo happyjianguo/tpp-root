@@ -12,6 +12,7 @@
     <result column="ORIG_MSG_ID" property="origMsgId" jdbcType="NVARCHAR" />
     <result column="ORIG_INSTG_DRCT_PTY" property="origInstgDrctPty" jdbcType="NVARCHAR" />
     <result column="ORIG_INSTG_PTY" property="origInstgPty" jdbcType="NVARCHAR" />
+    <result column="PG_NB" property="pgNb" jdbcType="DECIMAL" />
     <result column="CHNG_ITM" property="chngItm" jdbcType="NVARCHAR" />
     <result column="BF_CHNG" property="bfChng" jdbcType="NVARCHAR" />
     <result column="AFT_CHNG" property="aftChng" jdbcType="NVARCHAR" />
@@ -19,7 +20,8 @@
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
     select INSTG_PTY, MSG_ID, CHNG_INFO_NB, PLAT_DATE, PLAT_TRACE, PLAT_TIME, CRE_DT_TM, 
-    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, CHNG_ITM, BF_CHNG, AFT_CHNG, DT_OF_CHNG
+    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, PG_NB, CHNG_ITM, BF_CHNG, AFT_CHNG, 
+    DT_OF_CHNG
     from MIVS_REGVRFCTN_CHNG_INFO
   </select>
 </mapper>
