@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @Description: 行内系统发起企业手机号核查
+ * 当需要对手机号码进行真实性核查时，发起参与机构组此报文发送到MIVS，MIVS将核查结果使用手机号码联网核查应答报文返回给发起参与机构。
  * @Author: 周勇沩，王鹏
  * @Date: 2019-04-28 09:54:14
  * @Update: 2019-05-26
