@@ -94,6 +94,8 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
+        msgHdr.getInstdPty().setInstdDrctPty("0000");
+        msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setEntNm(reqBody.getEntNm());
         vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
         vryDef.setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
@@ -126,8 +128,8 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         regvrfctnInfoTableInsert.setDrct_pty_nm(lqtnBnkNmT1);
         regvrfctnInfoTableInsert.setInstg_pty(bankNumber);
         regvrfctnInfoTableInsert.setPty_nm(bnkNmT);
-        regvrfctnInfoTableInsert.setInstd_drct_pty("0000");
-        regvrfctnInfoTableInsert.setInstd_pty("0000");
+        regvrfctnInfoTableInsert.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
+        regvrfctnInfoTableInsert.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         regvrfctnInfoTableInsert.setEnt_nm(reqBody.getEntNm());
         regvrfctnInfoTableInsert.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
         regvrfctnInfoTableInsert.setNm_of_lgl_prsn(reqBody.getNmOfLglPrsn());

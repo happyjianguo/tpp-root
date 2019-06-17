@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.CmonConf.MivsCmonconfInfoEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.CmonConf.MivsCmonconfInfoEntity" >
+    <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
+    <result column="TRAN_DATE" property="tranDate" jdbcType="NVARCHAR" />
+    <result column="SEQ_NO" property="seqNo" jdbcType="NVARCHAR" />
+    <result column="TRAN_TIME" property="tranTime" jdbcType="NVARCHAR" />
+    <result column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
+    <result column="CRE_DT_TM" property="creDtTm" jdbcType="NVARCHAR" />
+    <result column="INSTG_DRCT_PTY" property="instgDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
+    <result column="SYSTEM_CODE" property="systemCode" jdbcType="NVARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="NVARCHAR" />
+    <result column="ORGNL_MSG_ID" property="orgnlMsgId" jdbcType="NVARCHAR" />
+    <result column="ORGNL_INSTG_PTY" property="orgnlInstgPty" jdbcType="NVARCHAR" />
+    <result column="ORGNL_MT" property="orgnlMt" jdbcType="NVARCHAR" />
+    <result column="PROC_STS" property="procSts" jdbcType="NVARCHAR" />
+    <result column="PROC_CD" property="procCd" jdbcType="NVARCHAR" />
+    <result column="PTY_ID" property="ptyId" jdbcType="NVARCHAR" />
+    <result column="PTY_PRC_CD" property="ptyPrcCd" jdbcType="NVARCHAR" />
+    <result column="RJCT_INF" property="rjctInf" jdbcType="NVARCHAR" />
+    <result column="PRC_DT" property="prcDt" jdbcType="NVARCHAR" />
+    <result column="NETG_RND" property="netgRnd" jdbcType="NVARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PLAT_DATE, PLAT_TRACE, PLAT_TIME, TRAN_DATE, SEQ_NO, TRAN_TIME, MSG_ID, CRE_DT_TM, 
+    INSTG_DRCT_PTY, INSTG_PTY, INSTD_DRCT_PTY, INSTD_PTY, SYSTEM_CODE, REMARK, ORGNL_MSG_ID, 
+    ORGNL_INSTG_PTY, ORGNL_MT, PROC_STS, PROC_CD, PTY_ID, PTY_PRC_CD, RJCT_INF, PRC_DT, 
+    NETG_RND
+    from MIVS_CMONCONF_INFO
+  </select>
+</mapper>

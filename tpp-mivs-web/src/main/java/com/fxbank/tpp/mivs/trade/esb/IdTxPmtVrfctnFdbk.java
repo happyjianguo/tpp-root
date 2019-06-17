@@ -135,8 +135,8 @@ public class IdTxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrate
 //                MivsTradeExecuteException e = new MivsTradeExecuteException(ccms900.getCmonConf().getRspsn().getOprlErr().getProcCd(),mivsIdTxPmt.getRtrTxPmtVrfctn().getRspsn().getOprlErr().getRjctinf());
 //                throw e;
 //            }
-            repBody.setProcSts(ccms900.getCmonConf().getCmonConf().getPrcSts());
-            repBody.setProcCd(ccms900.getCmonConf().getCmonConf().getRjctInf());
+            repBody.setProcSts(ccms900.getCmonConf().getCmonConfInf().getPrcSts());
+            repBody.setProcCd(ccms900.getCmonConf().getCmonConfInf().getRjctInf());
         }
 
         return rep;

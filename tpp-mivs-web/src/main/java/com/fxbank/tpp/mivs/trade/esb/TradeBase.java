@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 
+import java.util.ArrayList;
+
 /**
  * @Description: 行内系统发起交易基类
  * @Author: 周勇沩
@@ -99,4 +101,15 @@ public class TradeBase {
 //		msgHrd.getTxPmtVrfctn().getMsgHdr().getInstgPty().setPtyNm(bnkNmT);
 //		return esbRep_30043003001;
 //	}
+
+	/*
+	 * ESB日期转换成人行日期
+	 */
+	public String  dateToIsoDate(String idate) {
+		StringBuilder sb = new StringBuilder(idate);//构造一个StringBuilder对象
+		sb.insert(4, "-");
+		sb.insert(6, "-");
+		String isoDate = sb.toString();
+		return isoDate;
+	}
 }

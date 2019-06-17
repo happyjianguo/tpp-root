@@ -93,6 +93,8 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
+        msgHdr.getInstdPty().setInstdDrctPty("0000");
+        msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setMobNb(reqBody.getMobNb());
         vryDef.setNm(reqBody.getNm());
         vryDef.setIdTp(reqBody.getIdTp());
@@ -124,8 +126,8 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         idVrfctnTableInsert.setDrct_pty_nm(lqtnBnkNmT1);
         idVrfctnTableInsert.setInstg_pty(bankNumber);
         idVrfctnTableInsert.setPty_nm(bnkNmT);
-        idVrfctnTableInsert.setInstd_drct_pty("0000");
-        idVrfctnTableInsert.setInstd_pty("0000");
+        idVrfctnTableInsert.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
+        idVrfctnTableInsert.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         idVrfctnTableInsert.setMob_nb(reqBody.getMobNb());
         idVrfctnTableInsert.setNm(reqBody.getNm());
         idVrfctnTableInsert.setId_tp(reqBody.getIdTp());

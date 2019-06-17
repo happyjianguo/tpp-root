@@ -78,12 +78,12 @@ public class SIMU_IdVrfctnFdbk implements TradeExecutionStrategy {
         ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlMsgId(mivs347.getIdVrfctnFdbk().getMsgHdr().getMsgId());
         ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlInstgPty(mivs347.getIdVrfctnFdbk().getMsgHdr().getInstgPty().getInstgDrctPty());
         ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlMT("mivs.347.001.013");
-        ccms900.getCmonConf().getCmonConf().setPrcSts("PR07");
-        ccms900.getCmonConf().getCmonConf().setPrcCd("00000000");
-        ccms900.getCmonConf().getCmonConf().setPtyId("313131000008");
-        ccms900.getCmonConf().getCmonConf().setPtyPrcCd("PR07");
-        ccms900.getCmonConf().getCmonConf().setRjctInf("");
-        ccms900.getCmonConf().getCmonConf().setPrcDt(mivs347.getIdVrfctnFdbk().getMsgHdr().getCreDtTm());
+        ccms900.getCmonConf().getCmonConfInf().setPrcSts("PR07");
+        ccms900.getCmonConf().getCmonConfInf().setPrcCd("00000000");
+        ccms900.getCmonConf().getCmonConfInf().setPtyId("313131000008");
+        ccms900.getCmonConf().getCmonConfInf().setPtyPrcCd("PR07");
+        ccms900.getCmonConf().getCmonConfInf().setRjctInf("");
+        ccms900.getCmonConf().getCmonConfInf().setPrcDt(mivs347.getIdVrfctnFdbk().getMsgHdr().getCreDtTm());
 
 
         pmtsService.sendToPmtsNoWait(ccms900);

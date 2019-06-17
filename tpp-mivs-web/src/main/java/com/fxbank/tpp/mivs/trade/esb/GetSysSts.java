@@ -15,6 +15,7 @@ import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_346_001_01;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.request.MIVS_345_001_01;
+import com.fxbank.tpp.mivs.model.request.MIVS_345_001_01_GetSysSts;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
 import com.fxbank.tpp.mivs.trade.mivs.ComConf;
@@ -55,6 +56,7 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
         REQ_50023000205.REQ_BODY reqBody = req.getReqBody();
 
         MIVS_345_001_01 mivs345 = new MIVS_345_001_01(new MyLog(),dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
+        MIVS_345_001_01_GetSysSts.MsgHdr msgHdr = mivs345.getSysSts().getMsgHdr();
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -79,8 +81,10 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
         //发起行行号
         mivs345.getHeader().setOrigSender(bankNumber);
         mivs345.getHeader().setOrigReceiver("0000");
-        mivs345.getSysSts().getMsgHdr().getInstgPty().setInstgDrctPty(settlementBankNo);
-        mivs345.getSysSts().getMsgHdr().getInstgPty().setInstgPty(bankNumber);
+        msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
+        msgHdr.getInstgPty().setInstgPty(bankNumber);
+        msgHdr.getInstdPty().setInstdDrctPty("0000");
+        msgHdr.getInstdPty().setInstdPty("0000");
 
         mivs345.getSysSts().getQueInf().setSysInd(reqBody.getSysInd());
         mivs345.getSysSts().getQueInf().setQueDt(reqBody.getQueDt());

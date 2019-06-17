@@ -187,8 +187,8 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
 //        @XmlType(propOrder = { "InstdDrctPty", "InstdPty" })
         public static class InstdPty implements Serializable{
             private static final long serialVersionUID = 4474632357265632738L;
-            private String InstdDrctPty = "0000";
-            private String InstdPty = "0000";
+            private String InstdDrctPty = null;
+            private String InstdPty = null;
 
             /**
              * @return the instdDrctPty

@@ -187,8 +187,8 @@ public class MIVS_320_001_01_GetIdVrfctn implements Serializable, SIGN_DATA {
         @XmlAccessorType(XmlAccessType.FIELD)
         public static class InstdPty implements Serializable{
             private static final long serialVersionUID = -3321102053955156293L;
-			private String InstdDrctPty = "0000";
-            private String InstdPty = "0000";
+			private String InstdDrctPty = null;
+            private String InstdPty = null;
 
             /**
              * @return the instdDrctPty

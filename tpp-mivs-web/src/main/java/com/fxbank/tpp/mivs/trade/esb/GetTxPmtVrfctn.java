@@ -94,6 +94,8 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
+        msgHdr.getInstdPty().setInstdDrctPty("0000");
+        msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setCoNm(reqBody.getCompanyName());
         vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
         vryDef.setTaxPayerId(reqBody.getTaxPayerId());
@@ -123,8 +125,8 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         txpmtvfctnInfoTableInsert.setDrct_pty_nm(lqtnBnkNmT1);
         txpmtvfctnInfoTableInsert.setInstg_pty(bankNumber);
         txpmtvfctnInfoTableInsert.setPty_nm(bnkNmT);
-        txpmtvfctnInfoTableInsert.setInstd_drct_pty("0000");
-        txpmtvfctnInfoTableInsert.setInstd_pty("0000");
+        txpmtvfctnInfoTableInsert.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
+        txpmtvfctnInfoTableInsert.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         txpmtvfctnInfoTableInsert.setCo_nm(reqBody.getCompanyName());
         txpmtvfctnInfoTableInsert.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
         txpmtvfctnInfoTableInsert.setTxpyr_id_nb(reqBody.getTaxPayerId());

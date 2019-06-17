@@ -27,6 +27,7 @@ public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
     public CCMS_900_001_02_CmonConf.GrpHdr getGrpHdr() {
         return GrpHdr;
     }
+
     public void setGrpHdr(CCMS_900_001_02_CmonConf.GrpHdr grpHdr) {
         GrpHdr = grpHdr;
     }
@@ -34,14 +35,16 @@ public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
     public CCMS_900_001_02_CmonConf.OrgnlGrpHdr getOrgnlGrpHdr() {
         return OrgnlGrpHdr;
     }
+
     public void setOrgnlGrpHdr(CCMS_900_001_02_CmonConf.OrgnlGrpHdr orgnlGrpHdr) {
         OrgnlGrpHdr = orgnlGrpHdr;
     }
 
-    public CCMS_900_001_02_CmonConf.CmonConfInf getCmonConf() {
+    public CCMS_900_001_02_CmonConf.CmonConfInf getCmonConfInf() {
         return CmonConfInf;
     }
-    public void setCmonConf(CCMS_900_001_02_CmonConf.CmonConfInf cmonConfInf) {
+
+    public void setCmonConfInf(CCMS_900_001_02_CmonConf.CmonConfInf cmonConfInf) {
         CmonConfInf = cmonConfInf;
     }
 

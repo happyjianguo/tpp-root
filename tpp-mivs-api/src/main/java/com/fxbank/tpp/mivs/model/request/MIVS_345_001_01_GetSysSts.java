@@ -157,8 +157,8 @@ public class MIVS_345_001_01_GetSysSts implements Serializable, SIGN_DATA {
 //        @XmlType(propOrder = { "InstdDrctPty", "InstdPty" })
         public static class InstdPty implements Serializable{
             private static final long serialVersionUID = -7963369455171749739L;
-            private String InstdDrctPty = "0000";
-            private String InstdPty = "0000";
+            private String InstdDrctPty = null;
+            private String InstdPty = null;
 
             /**
              * @return the instdDrctPty

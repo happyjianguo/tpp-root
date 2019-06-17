@@ -8,42 +8,42 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 /**
- * @Description: 登记信息联网核查申请请求报文
+ * @Description: 企业开销户状态反馈请求报文
  * @Author: 王鹏
- * @Date: 2019/5/20 16:33
+ * @Date: 2019/6/6 14:56
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "MsgHdr", "VryDef" })
-public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
-    private static final long serialVersionUID = 2671959651920079085L;
+@XmlType(propOrder = { "MsgHdr", "Fdbk" })
+public class MIVS_326_001_01_AcctInfoFdbk implements Serializable, SIGN_DATA {
+    private static final long serialVersionUID = 549446073281010017L;
     private MsgHdr MsgHdr = new MsgHdr();
-    private VryDef VryDef = new VryDef();
+    private Fdbk Fdbk = new Fdbk();
 
     @Override
     public String toString() {
-        return "登记信息联网核查申请请求报文[MIVS_320_001_01]";
+        return "企业开销户状态反馈请求报文[MIVS_326_001_01]";
     }
 
-    public MsgHdr getMsgHdr() {
+    public MIVS_326_001_01_AcctInfoFdbk.MsgHdr getMsgHdr() {
         return MsgHdr;
     }
 
-    public void setMsgHdr(MsgHdr msgHdr) {
+    public void setMsgHdr(MIVS_326_001_01_AcctInfoFdbk.MsgHdr msgHdr) {
         MsgHdr = msgHdr;
     }
 
-    public VryDef getVryDef() {
-        return VryDef;
+    public Fdbk getFdbk() {
+        return Fdbk;
     }
 
-    public void setVryDef(VryDef vryDef) {
-        VryDef = vryDef;
+    public void setFdbk(Fdbk fdbk) {
+        Fdbk = fdbk;
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "MsgId", "CreDtTm", "InstgPty", "InstdPty" })
-    public static class MsgHdr implements Serializable {
-        private static final long serialVersionUID = -1562462308783251754L;
+    public static class MsgHdr implements Serializable{
+        private static final long serialVersionUID = -581103924009687799L;
         private String MsgId = null;
         private String CreDtTm = null;
         private InstgPty InstgPty = new InstgPty();
@@ -65,25 +65,25 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
             CreDtTm = creDtTm;
         }
 
-        public InstgPty getInstgPty() {
+        public MIVS_326_001_01_AcctInfoFdbk.MsgHdr.InstgPty getInstgPty() {
             return InstgPty;
         }
 
-        public void setInstgPty(InstgPty instgPty) {
+        public void setInstgPty(MIVS_326_001_01_AcctInfoFdbk.MsgHdr.InstgPty instgPty) {
             InstgPty = instgPty;
         }
 
-        public InstdPty getInstdPty() {
+        public MIVS_326_001_01_AcctInfoFdbk.MsgHdr.InstdPty getInstdPty() {
             return InstdPty;
         }
 
-        public void setInstdPty(InstdPty instdPty) {
+        public void setInstdPty(MIVS_326_001_01_AcctInfoFdbk.MsgHdr.InstdPty instdPty) {
             InstdPty = instdPty;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
         public static class InstgPty implements Serializable{
-            private static final long serialVersionUID = -3831881346899516465L;
+            private static final long serialVersionUID = 7162761168675476519L;
             private String InstgDrctPty = null;
             private String DrctPtyNm = null;
             private String InstgPty = null;
@@ -124,7 +124,7 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
 
         @XmlAccessorType(XmlAccessType.FIELD)
         public static class InstdPty implements Serializable{
-            private static final long serialVersionUID = 8628377200680399121L;
+            private static final long serialVersionUID = -3747427290097139117L;
             private String InstdDrctPty = null;
             private String InstdPty = null;
 
@@ -147,16 +147,13 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "NmOfLglPrsn", "IdOfLglPrsn", "AgtNm", "AgtId", "OpNm" })
-    public static class VryDef implements Serializable{
-        private static final long serialVersionUID = 453675020908748650L;
-        private String EntNm = null; //企业名称
-        private String UniSocCdtCd = null; //统一社会信用代码
-        private String NmOfLglPrsn = null; //法定代表人或单位负责人姓名
-        private String IdOfLglPrsn = null; //法定代表人或单位负责人身份证件号
-        private String AgtNm = null; //代理人姓名
-        private String AgtId = null; //代理人身份证件号码
-        private String OpNm = null; //操作员姓名
+    @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "AcctSts", "ChngDt" })
+    public static class Fdbk implements Serializable{
+        private static final long serialVersionUID = -4775930107415652686L;
+        private String EntNm = null;
+        private String UniSocCdtCd = null;
+        private String AcctSts = null;
+        private String ChngDt = null;
 
         public String getEntNm() {
             return EntNm;
@@ -174,44 +171,20 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
             UniSocCdtCd = uniSocCdtCd;
         }
 
-        public String getNmOfLglPrsn() {
-            return NmOfLglPrsn;
+        public String getAcctSts() {
+            return AcctSts;
         }
 
-        public void setNmOfLglPrsn(String nmOfLglPrsn) {
-            NmOfLglPrsn = nmOfLglPrsn;
+        public void setAcctSts(String acctSts) {
+            AcctSts = acctSts;
         }
 
-        public String getIdOfLglPrsn() {
-            return IdOfLglPrsn;
+        public String getChngDt() {
+            return ChngDt;
         }
 
-        public void setIdOfLglPrsn(String idOfLglPrsn) {
-            IdOfLglPrsn = idOfLglPrsn;
-        }
-
-        public String getAgtNm() {
-            return AgtNm;
-        }
-
-        public void setAgtNm(String agtNm) {
-            AgtNm = agtNm;
-        }
-
-        public String getAgtId() {
-            return AgtId;
-        }
-
-        public void setAgtId(String agtId) {
-            AgtId = agtId;
-        }
-
-        public String getOpNm() {
-            return OpNm;
-        }
-
-        public void setOpNm(String opNm) {
-            OpNm = opNm;
+        public void setChngDt(String chngDt) {
+            ChngDt = chngDt;
         }
     }
 
@@ -226,15 +199,10 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
 //        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
 //        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
 //        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
-//        sb.append(this.getVryDef().getEntNm() + "|");
-//        sb.append(this.getVryDef().getUniSocCdtCd() == null ? ""
-//                : this.getVryDef().getUniSocCdtCd() + "|");
-//        sb.append(this.getVryDef().getNmOfLglPrsn() == null ? ""
-//                : this.getVryDef().getNmOfLglPrsn() + "|");
-//        sb.append(this.getVryDef().getIdOfLglPrsn());
-//        sb.append(this.getVryDef().getAgtNm());
-//        sb.append(this.getVryDef().getAgtId());
-//        sb.append(this.getVryDef().getOpNm() + "|");
+//        sb.append(this.getFdbk().getEntNm() + "|");
+//        sb.append(this.getFdbk().getUniSocCdtCd() + "|");
+//        sb.append(this.getFdbk().getAcctSts() + "|");
+//        sb.append(this.getFdbk().getChngDt() + "|");
 //        return sb.toString();
         return null;
     }

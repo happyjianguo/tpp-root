@@ -6,7 +6,8 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.mivs.dto.mivs.MIVS_348_001_01;
+import com.fxbank.tpp.mivs.dto.mivs.MIVS_326_001_01;
+import com.fxbank.tpp.mivs.model.CCMS_900_001_02_CmonConf;
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02;
 import com.fxbank.tpp.mivs.model.sim.CCMS_900_001_02;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
@@ -19,12 +20,12 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * @Description:
+ * @Description: 企业开销户状态反馈
  * @Author: 王鹏
- * @Date: 2019/5/16 17:34
+ * @Date: 2019/6/14 16:48
  */
-@Service("MIVS_348_001_01")
-public class SIMU_TxPmtVrfctnFdbk implements TradeExecutionStrategy {
+@Service("MIVS_326_001_01")
+public class SIMU_AcctInfoFdbk implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
 
@@ -40,18 +41,18 @@ public class SIMU_TxPmtVrfctnFdbk implements TradeExecutionStrategy {
     @Override
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
-        // 1、接收348请求
-        MIVS_348_001_01 mivs348 = (MIVS_348_001_01) dto;
-        // 2、根据347内容模拟返回990
+        // 1、接收326请求
+        MIVS_326_001_01 mivs326 = (MIVS_326_001_01) dto;
+        // 2、根据320内容模拟返回990
         CCMS_990_001_02 mivs = new CCMS_990_001_02(new MyLog(), 20190909, 122321, 12);
         mivs.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
         mivs.getHeader().setOrigReceiver("0000");
-        mivs.getHeader().setMesgID(mivs348.getHead().getMesgID());
+        mivs.getHeader().setMesgID(mivs326.getHead().getMesgID());
         mivs.getComConf().getConfInf().setMT("MT");
-        mivs.getComConf().getConfInf().setMsgId(mivs348.getHead().getMesgID());
+        mivs.getComConf().getConfInf().setMsgId(mivs326.getHead().getMesgID());
         mivs.getComConf().getConfInf().setMsgPrcCd("PM1I0000");
         mivs.getComConf().getConfInf().setMsgRefId("msgRefId");
-        mivs.getComConf().getConfInf().setOrigSndDt("2019-09-09");
+        mivs.getComConf().getConfInf().setOrigSndDt("20190909");
         mivs.getComConf().getConfInf().setOrigSndr("origSndr");
 
         try {
@@ -60,43 +61,40 @@ public class SIMU_TxPmtVrfctnFdbk implements TradeExecutionStrategy {
             e.printStackTrace();
         }
 
-        // 3、根据347内容模拟返回900
+        // 3、根据326内容模拟返回900
         CCMS_900_001_02 ccms900 = new CCMS_900_001_02(new MyLog(), 20190909, 122321, 13);
-//
-//        SimpleDateFormat forMatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        String creDtTm = forMatter.toString();
-//        myLog.debug(logger, "啊啊啊啊forMatter = " + forMatter);
-//        myLog.debug(logger, "creDtTm = " + creDtTm);
-        ccms900.getCmonConf().getGrpHdr().setMsgId(mivs348.getHead().getMesgID());
-        ccms900.getCmonConf().getGrpHdr().setCreDtTm(mivs348.getTxPmtVrfctnFdbk().getMsgHdr().getCreDtTm());
-        ccms900.getCmonConf().getGrpHdr().getInstgPty().setInstgDrctPty("313131000008");
-        ccms900.getCmonConf().getGrpHdr().getInstgPty().setInstgPty("313131000008");
-        ccms900.getCmonConf().getGrpHdr().getInstdPty().setInstdDrctPty("313131000008");
-        ccms900.getCmonConf().getGrpHdr().getInstdPty().setInstdPty("313131000008");
-        ccms900.getCmonConf().getGrpHdr().setSysCd("MIVS");
-        ccms900.getCmonConf().getGrpHdr().setRmk("我是个备注");
-        ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlMsgId(mivs348.getTxPmtVrfctnFdbk().getMsgHdr().getMsgId());
-        ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlInstgPty(mivs348.getTxPmtVrfctnFdbk().getMsgHdr().getInstgPty().getInstgDrctPty());
-        ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlMT("mivs.347.001.013");
-        ccms900.getCmonConf().getCmonConfInf().setPrcSts("PR07");
-        ccms900.getCmonConf().getCmonConfInf().setPrcCd("00000000");
-        ccms900.getCmonConf().getCmonConfInf().setPtyId("313131000008");
-        ccms900.getCmonConf().getCmonConfInf().setPtyPrcCd("PR07");
-        ccms900.getCmonConf().getCmonConfInf().setRjctInf("");
-        ccms900.getCmonConf().getCmonConfInf().setPrcDt(mivs348.getTxPmtVrfctnFdbk().getMsgHdr().getCreDtTm());
+        CCMS_900_001_02_CmonConf.GrpHdr grpHdr = ccms900.getCmonConf().getGrpHdr();
+        CCMS_900_001_02_CmonConf.CmonConfInf cmonConfInf = ccms900.getCmonConf().getCmonConfInf();
+        CCMS_900_001_02_CmonConf.OrgnlGrpHdr orgnlGrpHdr = ccms900.getCmonConf().getOrgnlGrpHdr();
 
+        ccms900.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
+        ccms900.getHeader().setOrigReceiver("0000");
+        ccms900.getHeader().setMesgID(mivs326.getHead().getMesgID());
+        grpHdr.getInstgPty().setInstgDrctPty("0000");
+        grpHdr.getInstgPty().setInstgPty("000012345678");
+        grpHdr.setMsgId(grpHdr.getMsgId());
+        orgnlGrpHdr.setOrgnlMsgId(mivs326.getHead().getMesgID());
+        orgnlGrpHdr.setOrgnlInstgPty(mivs326.getAcctInfoFdbk().getMsgHdr().getInstgPty().getInstgDrctPty());
+        orgnlGrpHdr.setOrgnlMT("FBDK");
+        cmonConfInf.setPrcSts("PR07");
+        cmonConfInf.setPrcCd("00000008");
+        /**
+         ccms900.getRtrIdVrfctn().getRspsn().getOprlErr().setProcSts("1111");
+         ccms900.getRtrIdVrfctn().getRspsn().getOprlErr().setProcCd("O3048");
+         ccms900.getRtrIdVrfctn().getRspsn().getOprlErr().setRjctinf("手机号码核查业务本行当日总量超限");
+         **/
 
         pmtsService.sendToPmtsNoWait(ccms900);
 
         /**
-         //3、根据347内容模拟返回911
+         //3、根据320内容模拟返回911
          CCMS_911_001_02 ccms911 = new CCMS_911_001_02(new MyLog(), 20190909, 122321, 13);
 
          ccms911.getHeader().setOrigSender("313131000008"); // TODO 通过机构号查询渠道接口获取（机构号查行号）
          ccms911.getHeader().setOrigReceiver("0000");
-         ccms911.getHeader().setMesgID(mivs348.getHead().getMesgID());
+         ccms911.getHeader().setMesgID(mivs326.getHead().getMesgID());
          ccms911.getDscrdMsgNtfctn().getDscrdInf().setMT("mivs.321.001.01");
-         ccms911.getDscrdMsgNtfctn().getDscrdInf().setMsgId(mivs348.getGetIdVrfctn().getMsgHdr().getMsgId());
+         ccms911.getDscrdMsgNtfctn().getDscrdInf().setMsgId(mivs326.getGetIdVrfctn().getMsgHdr().getMsgId());
          ccms911.getDscrdMsgNtfctn().getDscrdInf().setPrcCd("O1106");
          ccms911.getDscrdMsgNtfctn().getDscrdInf().setRjctInf("原报文类型非法");
          ccms911.getDscrdMsgNtfctn().getDscrdInf().setMsgRefId("msgRefId");
@@ -104,6 +102,6 @@ public class SIMU_TxPmtVrfctnFdbk implements TradeExecutionStrategy {
          ccms911.getDscrdMsgNtfctn().getDscrdInf().setOrigSndr("origSndr");
          pmtsService.sendToPmtsNoWait(ccms911);
          **/
-        return mivs348;
+        return mivs326;
     }
 }
