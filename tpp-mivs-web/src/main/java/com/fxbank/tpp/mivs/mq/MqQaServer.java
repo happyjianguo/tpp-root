@@ -49,6 +49,7 @@ public class MqQaServer {
 		gmo.options = gmo.options + MQC.MQGMO_SYNCPOINT;
 		gmo.options = gmo.options + MQC.MQGMO_WAIT;
 		gmo.options = gmo.options + MQC.MQGMO_FAIL_IF_QUIESCING;
+		gmo.options = gmo.options + MQC.MQGMO_ACCEPT_TRUNCATED_MSG;
 		gmo.waitInterval = mqManager.getWaitinterval();
 		qMgr = mqManager.getqMgr();
 		try {
@@ -58,7 +59,7 @@ public class MqQaServer {
 			queue = qMgr.accessQueue(mqManager.getQueue(), openOptions);
 			retrieve.characterSet = 819;
 
-			queue.get(retrieve, gmo);
+			queue.get(retrieve, gmo,4096000);
 			byte[] by = new byte[retrieve.getMessageLength()];
 			retrieve.readFully(by);
 			message = new String(by, "UTF-8");
