@@ -70,19 +70,22 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		REQ_20102 req = (REQ_20102) dto;
 		REP_20102 rep = new REP_20102();
 		
-		//TODO 获取交行账户信息	 301000000000  挡板交行行号	
-		rep.setActNo("6288880210000209903");
-		rep.setActBnk("301000000000");
-		rep.setActNam("ZZZ");
-		rep.setActTyp("5");
-		rep.setAmtLmt("0");
-		rep.setFee(1d);
-		
-		return rep;
+		String sbnkNo = req.getSbnkNo();//发起行行号
+		if(sbnkNo.substring(0, 3).equals("313")){
+			myLog.info(logger, "交易发起行为本行，启用挡板数据");
+			//TODO 获取交行账户信息	 301000000000  挡板交行行号	
+			//发起行行号为本行直接走挡板
+			rep.setActNo("6288880210000209903");
+			rep.setActBnk("301000000000");
+			rep.setActNam("挡板用户");
+			rep.setActTyp("5");
+			rep.setAmtLmt("0");
+			rep.setFee(1d);			
+			return rep;
+		}
+
 
 		
-		//TODO 后续连接交行系统请求打开注释
-		/**
 		
 		//1.插入流水表
 		//initRecord(req);
@@ -117,19 +120,18 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		
 		String acctStatus = esbRep_30013000201.getRepBody().getAcctStatus();
 		myLog.error(logger, "账户状态：" + acctStatus);
-//		if("A".equals(acctStatus)){
-//			//4.设置返回报文		
-//			rep.setActNo(req.getActNo());
-//			rep.setActTyp(esbRep_30013000201.getRepBody().));
-//			rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
-//		}else{
-//			myLog.error(logger, "交行查询本行卡余额，卡状态异常，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
-//			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10015);
-//			throw e2;
-//		}
+		if("A".equals(acctStatus)){
+			//4.设置返回报文		
+			rep.setActNo(req.getActNo());
+			rep.setActTyp("2");
+			rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
+		}else{
+			myLog.error(logger, "交行查询本行卡余额，卡状态异常，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10015);
+			throw e2;
+		}
 		return rep;
-		
-		*/
+
 	}
 	
 	/** 

@@ -65,11 +65,7 @@ public class QR_Key implements TradeExecutionStrategy {
 				reqDto.getSysTime(),reqDto.getSysTraceno());
 		passwordModel.setKeyModel(keyModel.trim());
 		passwordModel = safeService.genKey(passwordModel);
-		
-		
 
-		
-		
 		REP_10104 rep = new REP_10104();
 		
 		rep.setBlkLen(passwordModel.getKeyValue().length());

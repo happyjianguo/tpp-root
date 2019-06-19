@@ -6,11 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_BASE;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
+import cn.highsuccess.connPool.api.tssc.HisuTSSCAPI;
+import cn.highsuccess.connPool.api.tssc.HisuTSSCAPIResult;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -29,6 +33,9 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 
 	@Resource
 	private LogPool logPool;
+	
+    @Reference(version = "1.0.0")
+    private IBocmSafeService safeService;
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -38,8 +45,10 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 			String fixPack = pack.substring(0, pack.length() - 16);
 			myLog.info(logger, "WEB SERVER请求报文=[" + fixPack + "]");
 			String mac = pack.substring(pack.length() - 16);
-			myLog.info(logger, "mac=[" + mac + "]");
-			// 校验MAC TODO
+			myLog.info(logger, "校验MAC  mac=[" + mac + "]");
+			// 校验MAC		
+			safeService.verifyBocmMac(myLog, fixPack, mac);
+			
 			String txCode = "REQ_" + pack.substring(0, 5);
 			myLog.info(logger, "交易代码=[" + txCode + "]");
 			REQ_BASE reqBase = null;

@@ -6,6 +6,7 @@ plat_time NUMBER(6) NULL ,
 cur_time NUMBER(16) NULL ,
 source_type NVARCHAR2(20) NULL ,
 tx_branch NVARCHAR2(20) NULL ,
+tran_type NVARCHAR2(10) NULL ,
 tx_ind NVARCHAR2(2) NULL ,
 tx_code NVARCHAR2(10) NULL ,
 dc_flag NVARCHAR2(2) NULL ,
@@ -50,6 +51,7 @@ COMMENT ON COLUMN bocm_rcv_log.plat_time IS '交易时间';
 COMMENT ON COLUMN bocm_rcv_log.cur_time IS '交易时间戳';
 COMMENT ON COLUMN bocm_rcv_log.source_type IS '交易渠道';
 COMMENT ON COLUMN bocm_rcv_log.tx_branch IS '交易机构';
+COMMENT ON COLUMN bocm_rcv_log.tran_type IS '交易类型';
 COMMENT ON COLUMN bocm_rcv_log.tx_ind IS '现转标志；0现金、1转账、2 普通转账、3 隔日转账、9 其他';
 COMMENT ON COLUMN bocm_rcv_log.tx_code IS '交易代码';
 COMMENT ON COLUMN bocm_rcv_log.dc_flag IS '通存通兑标志；0通存、1通兑';

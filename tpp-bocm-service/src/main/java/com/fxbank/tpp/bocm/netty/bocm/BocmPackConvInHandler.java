@@ -2,15 +2,19 @@ package com.fxbank.tpp.bocm.netty.bocm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.netty.NettySyncClient;
 import com.fxbank.cip.base.netty.NettySyncSlot;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_BASE;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import io.netty.util.ReferenceCountUtil;
@@ -27,6 +31,9 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 	private MyLog myLog;
 
 	private Class<T> clazz;
+	
+    @Reference(version = "1.0.0")
+    private IBocmSafeService safeService;
 
 	public BocmPackConvInHandler(MyLog myLog, Class<T> clazz) {
 		this.myLog = myLog;
@@ -38,11 +45,13 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 		try {
 			StringBuffer pack = new StringBuffer((String) msg);
 			String mac = pack.substring(pack.length() - 16);
-			this.myLog.info(logger, "交行请求模拟接收报文  =[" + pack + "]");
+			this.myLog.info(logger, "接收报文  =[" + pack + "]");
 			this.myLog.info(logger, "mac=[" + mac + "]");
-			// TODO 校验MAC
-			
+
 			String fixPack = pack.substring(0, pack.length() - 16);
+			//校验MAC	
+//			safeService.verifyBocmMac(myLog, fixPack, mac);
+			
 			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();			
 			repBase = (REP_BASE)new FixedUtil(fixPack,"UTF-8").toBean(repBase.getClass());		
 			ctx.fireChannelRead(repBase);

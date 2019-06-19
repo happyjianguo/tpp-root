@@ -44,6 +44,15 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
     private String bocmTraceno;//交行流水
     
     /**
+     * 付款行人行行号
+     */
+    private String sndBankno;
+    /**
+     * 收款人行行号
+     */
+    private String rcvBankno;
+    
+    /**
      * 账户余额
      */
     private BigDecimal actBal;
@@ -161,6 +170,25 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
 	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
 	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getRcvBankno() {
+		return rcvBankno;
+	}
+
+	public void setRcvBankno(String rcvBankno) {
+		this.rcvBankno = rcvBankno;
+	}
+
+
+
 	
 	
 }

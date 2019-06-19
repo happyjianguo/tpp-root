@@ -32,6 +32,8 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	@Size(max = 20,message = "tx_branch交易机构最大长度是20")
 	private String txBranch; //交易机构
 	
+    private String tranType;
+	
 	@NotNull(message = "tx_ind现转标志不能为空")
 	@Size(max = 10,message = "tx_ind现转标志最大长度是10")
 	private String txInd; //现转标志
@@ -48,6 +50,11 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	private String txAmt;//交易金额
 	
     /**
+     * 账户余额
+     */
+    private BigDecimal actBal;
+	
+    /**
      * 手续费收取方式
      */
     private String feeFlag;
@@ -55,12 +62,14 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
      * 手续费
      */
     private BigDecimal fee;
+    
+    
     /**
-     * 发起行人行行号
+     * 付款行人行行号
      */
     private String sndBankno;
     /**
-     * 接收行人行行号
+     * 收款人行行号
      */
     private String rcvBankno;
     /**
@@ -407,5 +416,22 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	public void setPayeeActtp(String payeeActtp) {
 		this.payeeActtp = payeeActtp;
 	}
+
+	public String getTranType() {
+		return tranType;
+	}
+
+	public void setTranType(String tranType) {
+		this.tranType = tranType;
+	}
+
+	public BigDecimal getActBal() {
+		return actBal;
+	}
+
+	public void setActBal(BigDecimal actBal) {
+		this.actBal = actBal;
+	}
+
 	
 }

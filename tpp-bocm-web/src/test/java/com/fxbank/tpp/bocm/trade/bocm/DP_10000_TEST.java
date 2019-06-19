@@ -8,10 +8,13 @@ import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_BASE;
 import com.fxbank.tpp.bocm.model.REP_10000;
 import com.fxbank.tpp.bocm.model.REQ_10000;
+import com.fxbank.tpp.bocm.trade.esb.DB_BocmCashTest;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -25,6 +28,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DP_10000_TEST extends BASE_TEST {
+	
+	private static Logger logger = LoggerFactory.getLogger(DP_10000_TEST.class);
 	
 	private REQ_10000 req;
 	
@@ -79,6 +84,7 @@ public class DP_10000_TEST extends BASE_TEST {
 		
 		
 		String repData = super.comm(FixedUtil.toFixed(req,"utf-8"));
+		logger.info("他代本存现金测试返回："+repData);
 		REP_10000 rep = new REP_10000();
 		rep = (REP_10000)new FixedUtil(repData,"utf-8").toBean(rep.getClass());		
 		assertEquals(rep.getTmsgTyp(), "N");

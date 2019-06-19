@@ -1,7 +1,9 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -76,9 +78,14 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		
 		REQ_20000 req = (REQ_20000) dto;
-		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getRecBnk())){
+		String sbnkNo = req.getSbnkNo();//发起行行号
+		if(sbnkNo.substring(0, 3).equals("313")){
+			myLog.info(logger, "交易发起行为本行，启用挡板数据");
 			REP_20000 rep = new REP_20000();
+			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
+			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
+			
 			rep.setOtxnAmt(req.getTxnAmt());		
 			//JHF1-异地手续费JHF2-代理手续费
 			Double fee = new Double(5d);
@@ -235,7 +242,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		reqBody_30011000104.setSendBankCode(reqDto.getSbnkNo());
 		reqBody_30011000104.setBankCode(reqDto.getRecBnk());
 		reqBody_30011000104.setOthBankCode(reqDto.getPayBnk());
-		reqBody_30011000104.setSettlementDate(reqDto.getTtxnDat().toString());
+		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
@@ -264,6 +271,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTxBranch(reqDto.getSbnkNo());
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
+		record.setTranType("JH02");
 		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		record.setFeeFlag(reqDto.getFeeFlg());
@@ -275,13 +283,20 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setHostTraceno(rep.getRepBody().getReference());
 		record.setRetCode(rep.getRepSysHead().getRet().get(0).getRetCode());
 		record.setRetMsg(rep.getRepSysHead().getRet().get(0).getRetMsg());
-
-		record.setSndBankno(reqDto.getSbnkNo());
+	
+		//发起行   
+		//合作银行发起交易时，SBnkNo指合作银行总行行号（12位）         RBnkNo指合作银行发起交易网点行号
+		//交通银行发起交易时，SBnkNo指交行发起交易网点号（12位）     RBnkNo指合作银行总行行号
+		record.setSndBankno(reqDto.getPayBnk());
+		//接收行行号  统一填总行
 		record.setRcvBankno(reqDto.getRbnkNo());
 		record.setPayerBank(reqDto.getPayBnk());
 		record.setPayerActtp(reqDto.getPactTp());
 		record.setPayeeBank(reqDto.getRecBnk());
 		record.setPayeeActtp(reqDto.getRactTp());
+		
+		//手续费计算   sndBankno payerBank  payeeBank 
+		
 		
 		record.setPayerAcno(reqDto.getPactNo());
 		record.setPayerName(reqDto.getPayNam());
@@ -400,28 +415,38 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	@Override
 	public void hostTimeoutInitLog(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_20000 reqDto = (REQ_20000) dto;
+		REQ_20000 reqDto = (REQ_20000) dto;		
 		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
 		record.setSourceType(reqDto.getSourceType());
 		record.setTxBranch(reqDto.getSbnkNo());
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt()));
+		record.setTranType("JH02");
+		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
+		record.setFeeFlag(reqDto.getFeeFlg());
 		record.setFee(new BigDecimal(reqDto.getFee().toString()));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
+		
 		record.setHostState("3");
 		record.setHostTraceno("");
 		record.setRetCode("");
 		record.setRetMsg("核心记账超时");
-
-		record.setSndBankno(reqDto.getSbnkNo());
+	
+		//发起行   
+		//合作银行发起交易时，SBnkNo指合作银行总行行号（12位）         RBnkNo指合作银行发起交易网点行号
+		//交通银行发起交易时，SBnkNo指交行发起交易网点号（12位）     RBnkNo指合作银行总行行号
+		record.setSndBankno(reqDto.getPayBnk());
+		//接收行行号  统一填总行
 		record.setRcvBankno(reqDto.getRbnkNo());
 		record.setPayerBank(reqDto.getPayBnk());
 		record.setPayerActtp(reqDto.getPactTp());
 		record.setPayeeBank(reqDto.getRecBnk());
 		record.setPayeeActtp(reqDto.getRactTp());
+		
+		//手续费计算   sndBankno payerBank  payeeBank 
+		
 		
 		record.setPayerAcno(reqDto.getPactNo());
 		record.setPayerName(reqDto.getPayNam());
@@ -440,6 +465,8 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		//交易码
 		record.setTxCode(reqDto.getTtxnCd());
 		bocmRcvTraceService.rcvTraceInit(record);
+		myLog.info(logger,TRADE_DESC+"，核心记账超时，插入来账流水表");
+		
 	}
 	
 	public void updateOthSuccess(DataTransObject dto, ModelBase model) throws SysTradeExecuteException{

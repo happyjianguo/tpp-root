@@ -3,6 +3,7 @@ package com.fxbank.tpp.bocm.dto.bocm;
 import java.math.BigDecimal;
 
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+import com.fxbank.tpp.bocm.model.AmtBase;
 
 /**
  * @Descripttion: 交行来账余额查询
@@ -48,13 +49,11 @@ public class REP_10101 extends REP_BASE {
 	}
 
 	public Double getActBal() {
-		actBal = actBal/100;
 		return actBal;
 	}
 
 	public void setActBal(Double actBal) {
-		actBal = actBal*100;
-		this.actBal = actBal;
+		this.actBal = AmtBase.toPack(actBal);
 	}
     
     

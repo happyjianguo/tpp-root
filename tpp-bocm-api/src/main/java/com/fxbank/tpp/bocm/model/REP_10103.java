@@ -8,6 +8,7 @@
 */
 package com.fxbank.tpp.bocm.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,9 +48,10 @@ public class REP_10103 extends REP_BASE {
 	@FixedField(order = 8, desc = "循环内容")
     private List<Detail> filTxt = new ArrayList<Detail>();
 	
-    public static class Detail {
+    public static class Detail implements Serializable{
 
-    	//本方交易流水号填农商行流水号，对方交易流水号填交行流水号（如果存在），发起方流水号必输
+		private static final long serialVersionUID = -4336857650958576705L;
+		//本方交易流水号填农商行流水号，对方交易流水号填交行流水号（如果存在），发起方流水号必输
     	@FixedField(order = 81, len = 14, desc = "交易流水号")
     	private String TlogNo;
     	//对方交易流水号

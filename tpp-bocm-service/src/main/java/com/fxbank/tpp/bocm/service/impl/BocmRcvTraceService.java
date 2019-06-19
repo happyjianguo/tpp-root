@@ -55,6 +55,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		entity.setCurTime(System.currentTimeMillis());
 		entity.setSourceType(record.getSourceType());
 		entity.setTxBranch(record.getTxBranch());
+		entity.setTranType(record.getTranType());
 		entity.setTxInd(record.getTxInd());
 		entity.setTxCode(record.getTxCode());
 		entity.setDcFlag(record.getDcFlag());
@@ -153,7 +154,13 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		}
 		if(null != record.getActBal()){
 			bocmRcvLog.setActBal(record.getActBal());
-		}
+		}	
+		if(null != record.getSndBankno()) {
+			bocmRcvLog.setSndBankno(record.getSndBankno());
+		}	
+		if(null != record.getRcvBankno()) {
+			bocmRcvLog.setRcvBankno(record.getRcvBankno());
+		}	
 		
 		bocmRcvLogMapper.updateByPrimaryKeySelective(bocmRcvLog);
 	}
@@ -261,6 +268,13 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(model.getBocmTraceno());
+			
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
+			
 			modelList.add(model);
 		}
 		
@@ -331,6 +345,12 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(model.getBocmTraceno());
+			
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
 		}
 		
 		return model;
@@ -365,6 +385,12 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(model.getBocmTraceno());
+			
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
 		}
 		
 		return model;
@@ -400,7 +426,13 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setTxAmt(data.getTxAmt());
 			model.setTxInd(data.getTxInd());
 			model.setTxCode(data.getTxCode());
-
+			
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
+			
 			modelList.add(model);
 		}
 		

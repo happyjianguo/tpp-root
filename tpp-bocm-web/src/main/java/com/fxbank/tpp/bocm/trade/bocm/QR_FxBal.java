@@ -61,20 +61,17 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_10101 req = (REQ_10101) dto;
 		
-		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		REP_10101 rep = new REP_10101();
-		rep.setActNo("623166000009897");
-		rep.setActNam("ZZZ");
-		rep.setActBal(new Double(34.45));
-		return rep;
-
-	
-		//TODO 后续连接交行系统请求打开注释
-		/**
 		
-		//1.插入流水表
-		//initRecord(req);
-		//2.调用ESB余额查询
+		String sbnkNo = req.getSbnkNo();//发起行行号
+		if(sbnkNo.substring(0, 3).equals("313")){
+			myLog.info(logger, "交易发起行为本行，启用挡板数据");
+			REP_10101 rep = new REP_10101();
+			rep.setActNo("623166000009897");
+			rep.setActNam("挡板用户");
+			rep.setActBal(new Double(100));
+			return rep;
+		}
+		//调用ESB余额查询
 		ESB_REP_30013000201 esbRep_30013000201 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -94,14 +91,10 @@ public class QR_FxBal implements TradeExecutionStrategy {
 			retCode = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetCode();
 			retMsg = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
-			//updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
 			myLog.error(logger, "交行查询本行卡余额，本行核心查询失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10009);
 			throw e2;
 		}
-		
-		//3.更新流水表核心记账状态
-		//updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
 		
 		String acctStatus = esbRep_30013000201.getRepBody().getAcctStatus();
 		myLog.error(logger, "账户状态：" + acctStatus);
@@ -118,7 +111,7 @@ public class QR_FxBal implements TradeExecutionStrategy {
 
 		return rep;
 		
-		*/
+
 	}
 
 	/** 

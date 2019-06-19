@@ -47,23 +47,19 @@ public class REP_10000 extends REP_BASE {
 		this.otxnAmt = otxnAmt;
 	}
 
-	public Double getFee() {
-		fee = fee/100;
-		return fee;
+	public Double getFee() {		
+		return fee/100;
 	}
 
 	public void setFee(Double fee) {
-		fee = fee*100;
 		this.fee = fee;
 	}
 
 	public Double getActBal() {
-		actBal = actBal/100;
-		return actBal;
+		return actBal/100;
 	}
 
 	public void setActBal(Double actBal) {
-		actBal = actBal*100;
 		this.actBal = actBal;
 	}
 

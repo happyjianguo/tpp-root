@@ -24,7 +24,7 @@ public abstract class REQ_BASE extends ModelBase implements Serializable{
 	private String ttxnCd;
 
 	@FixedField(order = 2, len = 3, desc = "业务类型")
-	private String bbusTyp;
+	private String bbusTyp="000";
 
 	@FixedField(order = 3, len = 12, desc = "发起行行号")
 	private String sbnkNo;

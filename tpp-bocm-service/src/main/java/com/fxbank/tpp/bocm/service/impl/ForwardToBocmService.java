@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -14,6 +15,7 @@ import com.fxbank.tpp.bocm.model.REP_BASE;
 import com.fxbank.tpp.bocm.model.REQ_BASE;
 import com.fxbank.tpp.bocm.netty.bocm.BocmClient;
 import com.fxbank.tpp.bocm.service.IBocmMacService;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 
 @Service(version = "1.0.0")
@@ -24,8 +26,8 @@ public class ForwardToBocmService implements IForwardToBocmService {
 	@Resource
 	private BocmClient bocmClient;
 	
-	@Autowired
-    private IBocmMacService macService;
+	@Resource
+    private IBocmSafeService safeService;
 
 
 	@Override
@@ -37,13 +39,14 @@ public class ForwardToBocmService implements IForwardToBocmService {
 		T repModel = null;
 		
 		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,"UTF-8"));
-		myLog.info(logger, "组包发送交行报文");
+		myLog.info(logger, "请求交行服务端，组包发送交行报文");
 		String jsonReq = fixPack.toString();
 		//需要生成MAC
+		String mac = safeService.calcBocm(myLog, jsonReq);
 //		byte[] macBytes = jsonReq.getBytes();
 //		String mac = macService.calcBOCM(reqBase.getMylog(),macBytes);
 //		myLog.info(logger, "组包发送交行报文MAC:"+mac);
-		String mac = "FFFFFFFFFFFFFFFF";
+//		String mac = "FFFFFFFFFFFFFFFF";
 		try {
 			repModel = bocmClient.comm(myLog, reqBase, clazz,mac);
 		} catch (SysTradeExecuteException e) {

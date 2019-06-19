@@ -9,6 +9,8 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -29,6 +31,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10009;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10101;
+import com.fxbank.tpp.bocm.dto.bocm.REP_20000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10009;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
@@ -74,11 +77,13 @@ public class RV_Fx implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
+		myLog.info(logger, "交行向本行发起抹账交易");
 		REQ_10009 req = (REQ_10009) dto;
 		REP_10009 rep = new REP_10009();
 		
-		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getPayBnk())){
+		String sbnkNo = req.getSbnkNo();//发起行行号
+		if(sbnkNo.substring(0, 3).equals("313")){
+			myLog.info(logger, "交易发起行为本行，启用挡板数据");
 			return rep;
 		}
 
@@ -115,8 +120,9 @@ public class RV_Fx implements TradeExecutionStrategy {
 			hostReversalMsg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
 			hostDate = esbRep_30014000101.getRepSysHead().getTranDate();
 			hostTraceno = esbRep_30014000101.getRepSysHead().getReference();
-			//插入流水表
-			initRecord(req, hostDate, hostTraceno, "4", hostReversalCode, hostReversalMsg);
+			//更新流水表
+			updateHostRecord(req, hostDate, hostTraceno, "4",hostReversalCode, hostReversalMsg);
+			myLog.info(logger, "交行向本行发起抹账交易，更新流水表成功：核心流水号【"+hostTraceno+"】渠道流水号【"+req.getSysTraceno()+"】");
 		} catch (SysTradeExecuteException e) {
 			if("CIP_E_000004".equals(e.getRspCode())) {
 				//FX6203
@@ -125,7 +131,7 @@ public class RV_Fx implements TradeExecutionStrategy {
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203,e.getRspMsg()+"(抹账超时)");
 				throw e2;
 			}else{
-				//交易失败
+				//冲正失败
 				updateHostRecord(req, "", "", "5", e.getRspCode(), e.getRspMsg());
 				myLog.error(logger, "交行向本行发起抹账交易，本行核心抹账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg()+"(抹账失败)");
@@ -133,43 +139,6 @@ public class RV_Fx implements TradeExecutionStrategy {
 			}
 		}
 		return rep;
-	}
-	
-	private void initRecord(REQ_10009 reqDto, String hostDate, String hostTraceno,
-			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
-				reqDto.getSysTraceno());
-		record.setSourceType(reqDto.getSourceType());
-		record.setTxBranch(reqDto.getSbnkNo());
-		// 通存通兑标志；0通存、1通兑
-		record.setDcFlag("0");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt()));
-		//现转标志；0现金、1转账
-		record.setTxInd(reqDto.getTxnMod());
-		record.setHostState(hostState);
-		if(hostDate!=null){
-			record.setHostDate(Integer.parseInt(hostDate));
-		}		
-		record.setHostTraceno(hostTraceno);
-
-		record.setPayerAcno(reqDto.getPactNo());
-		record.setPayerName(reqDto.getPayNam());
-		record.setPayeeAcno(reqDto.getRactNo());
-		record.setPayeeName(reqDto.getRecNam());
-		record.setPrint("0");
-		record.setCheckFlag("1");
-		
-		record.setBocmState("0");
-		//交行流水号
-		record.setBocmTraceNo(reqDto.getSlogNo());		
-		record.setBocmDate(reqDto.getTtxnDat());
-		record.setBocmTime(reqDto.getTtxnTim());
-		//发起行行号
-		record.setBocmBranch(reqDto.getSbnkNo());
-		//交易码
-		record.setTxCode(reqDto.getTtxnCd());
-		bocmRcvTraceService.rcvTraceInit(record);
 	}
 	
 	private BocmRcvTraceUpdModel updateHostRecord(REQ_10009 reqDto, String hostDate, String hostTraceno,

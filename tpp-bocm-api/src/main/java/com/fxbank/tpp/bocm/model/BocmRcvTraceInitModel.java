@@ -11,7 +11,6 @@ package com.fxbank.tpp.bocm.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,6 +39,8 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	@NotNull(message = "tx_branch交易机构不能为空")
 	@Size(max = 20,message = "tx_branch交易机构最大长度是20")
 	private String txBranch; //交易机构
+	
+    private String tranType;
 	
 	@NotNull(message = "tx_ind现转标志不能为空")
 	@Size(max = 10,message = "tx_ind现转标志最大长度是10")
@@ -70,12 +71,13 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
      * 手续费
      */
     private BigDecimal fee;
+    
     /**
-     * 发起行人行行号
+     * 付款行人行行号
      */
     private String sndBankno;
     /**
-     * 接收行人行行号
+     * 收款人行行号
      */
     private String rcvBankno;
     /**
@@ -442,6 +444,15 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
 	}
+
+	public String getTranType() {
+		return tranType;
+	}
+
+	public void setTranType(String tranType) {
+		this.tranType = tranType;
+	}
+
 
 	
 

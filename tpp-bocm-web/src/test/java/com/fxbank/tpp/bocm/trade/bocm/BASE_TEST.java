@@ -7,10 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.bocm.model.REQ_BASE;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
@@ -23,8 +27,12 @@ public class BASE_TEST {
     
     @Reference(version = "1.0.0")
     private IBocmSafeService safeService;
+    
+    @Resource
+	private LogPool logPool;
 
     public String comm(String reqData) throws Exception {
+    	MyLog myLog = this.logPool.get();
         Socket socket = new Socket(BASE_TEST.IP, BASE_TEST.PORT);
         InputStream is = null;
         OutputStream os = null;
@@ -32,9 +40,11 @@ public class BASE_TEST {
         try {
         	
         	//添加MAC
-            reqData = reqData + "FFFFFFFFFFFFFFFF";
+            //reqData = reqData + "FFFFFFFFFFFFFFFF";
 //            safeService.
-            
+           String mac = safeService.calcBocm(myLog, reqData);
+           this.logger.info("MAC 【" + mac + "】");
+           reqData = reqData + mac;
             
             os = socket.getOutputStream();
             String reqLen = String.format("%08d", reqData.getBytes(BASE_TEST.CODING).length);
@@ -86,9 +96,9 @@ public class BASE_TEST {
         base.setTtxnTim(Integer.valueOf(sDate.substring(8))); 
         base.setSlogNo(String.format("%6s%08d", sDate.substring(2, 8),seq));
         
-//        header.settTxnDat(20190620);
-//        header.settTxnTim(154800);
-//        header.setsLogNo("20190620");
+//        base.setTtxnDat(20191204);
+//        base.setTtxnTim(141200);
+//        base.setSlogNo("20191204001");
     }
 
 }

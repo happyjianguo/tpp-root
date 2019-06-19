@@ -41,11 +41,15 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		entity.setCurTime(System.currentTimeMillis());
 		entity.setSourceType(record.getSourceType());
 		entity.setTxBranch(record.getTxBranch());
+		entity.setTranType(record.getTranType());
 		entity.setTxInd(record.getTxInd());
 		entity.setTxCode(record.getTxCode());
 		entity.setDcFlag(record.getDcFlag());
+		
 		BigDecimal txAmt = new BigDecimal(record.getTxAmt());
 		entity.setTxAmt(txAmt);
+		
+		entity.setActBal(record.getActBal());
 		
 		entity.setPayerAcno(record.getPayerAcno());
 		entity.setPayerName(record.getPayerName());
@@ -127,7 +131,16 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		}
 		if(null != record.getCheckFlag()) {
 			bocmSndLog.setCheckFlag(record.getCheckFlag());
-		}		
+		}	
+		if(null != record.getSndBankno()) {
+			bocmSndLog.setSndBankno(record.getSndBankno());
+		}	
+		if(null != record.getRcvBankno()) {
+			bocmSndLog.setRcvBankno(record.getRcvBankno());
+		}	
+		if(null != record.getActBal()) {
+			bocmSndLog.setActBal(record.getActBal());
+		}
 		bocmSndLogMapper.updateByPrimaryKeySelective(bocmSndLog);
 	}
 	
@@ -161,6 +174,12 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(model.getBocmTraceno());
+
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
 		}
 		return model;
 	}
@@ -194,6 +213,12 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(model.getBocmTraceno());
+			
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
 		}
 		return model;
 	}
@@ -230,6 +255,11 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setBocmDate(tpp.getBocmDate());
 			model.setBocmState(tpp.getBocmState());
 			model.setBocmTraceno(tpp.getBocmTraceno());
+
+			model.setSndBankno(tpp.getSndBankno());
+			model.setRcvBankno(tpp.getRcvBankno());
+			
+			
 			
 			sndTraceQueryModelList.add(model);
 		}
@@ -267,6 +297,8 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		tcexSndLog.setInfo(record.getInfo());
 		tcexSndLog.setCheckFlag(record.getCheckFlag());
 		
+		
+		
 		bocmSndLogMapper.insertSelective(tcexSndLog);
 	}
 
@@ -300,6 +332,13 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(model.getBocmTraceno());
+			
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
+			
 			modelList.add(model);
 		}
 		
@@ -335,6 +374,13 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setBocmTraceno(data.getBocmTraceno());
 			model.setTxAmt(data.getTxAmt());
             model.setTxInd(data.getTxInd());
+			model.setTxCode(data.getTxCode());
+
+			model.setSndBankno(data.getSndBankno());
+			model.setRcvBankno(data.getRcvBankno());
+			
+			model.setPayerActtp(data.getPayerActtp());
+			model.setPayeeActtp(data.getPayeeActtp());
 			
 			modelList.add(model);
 		}

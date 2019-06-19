@@ -17,6 +17,7 @@ import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.dto.bocm.REP_BASE;
 import com.fxbank.tpp.bocm.dto.bocm.REP_ERROR;
 import com.fxbank.tpp.bocm.service.IBocmMacService;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -38,7 +39,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 	private LogPool logPool;
 	
 	@Reference(version = "1.0.0")
-    private IBocmMacService macService;
+    private IBocmSafeService safeService;
 
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
@@ -75,21 +76,11 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		repDto.setTrspMsg(rspMsg);
 		repDto.setRlogNo(String.format("%06d%08d", reqDto.getSysDate()%1000000,reqDto.getSysTraceno()));
 
-		//生成MAC TODO
-		String mac = "FFFFFFFFFFFFFFFF";
-		
-
-
 		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(repDto,"UTF-8"));
-		fixPack.append(mac);
 		
-//		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(repDto,"UTF-8"));
-//		myLog.info(logger, "组包发送交行报文");
-//		String jsonReq = fixPack.toString();
-//		//需要生成MAC
-//		byte[] macBytes = jsonReq.getBytes();
-//		String mac = macService.calcBOCM(myLog,macBytes);
-//		fixPack.append(mac);
+		//生成MAC
+		String mac = safeService.calcBocm(myLog, fixPack.toString());		
+		fixPack.append(mac);
 		
 		myLog.info(logger, "组包发送交行报文MAC:"+mac);
 		myLog.info(logger, "WEB SERVER返回报文=[" + fixPack.toString() + "]");

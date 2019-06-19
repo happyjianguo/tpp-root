@@ -248,19 +248,20 @@ public abstract class BaseTradeT1 {
 						}
 					}catch (Exception e) {
 						retCode="error";
-						myLog.error(logger,"渠道流水号【"+dto.getSysTraceno()+"】记账结果查询失败："+e.getMessage());
+						myLog.error(logger,TRADE_DESC+"记账结果查询失败，返回超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
+						throw hostTimeoutException;
 					}				
 				}
-				return backMsgOnTradeHave(dto, revModel);
-//				try {
-//					//交易流水核心未记录重新发起核心记账
-//					model = hostCharge(dto);
-//				} catch (SysTradeExecuteException e) {
-//					myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
-//					throw e;
-//				}
-//				updateOthSuccess(dto, model);
-//				return backMsg(dto,model);
+//				return backMsgOnTradeHave(dto, revModel);
+				try {
+					//交易流水核心未记录重新发起核心记账
+					model = hostCharge(dto);
+				} catch (SysTradeExecuteException e) {
+					myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
+					throw e;
+				}
+				updateOthSuccess(dto, model);
+				return backMsg(dto,model);
 			}
 		}
 		

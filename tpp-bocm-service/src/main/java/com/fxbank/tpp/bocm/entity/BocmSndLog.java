@@ -44,6 +44,9 @@ public class BocmSndLog {
     @Column(name = "TX_BRANCH")
     private String txBranch;
 
+    @Column(name = "TRAN_TYPE")
+    private String tranType;
+    
     /**
      * null
      */
@@ -745,6 +748,14 @@ public class BocmSndLog {
 
 	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
+	}
+
+	public String getTranType() {
+		return tranType;
+	}
+
+	public void setTranType(String tranType) {
+		this.tranType = tranType;
 	}
     
     

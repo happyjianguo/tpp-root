@@ -7,6 +7,7 @@
     <result column="PLAT_TIME" jdbcType="DECIMAL" property="platTime" />
     <result column="SOURCE_TYPE" jdbcType="NVARCHAR" property="sourceType" />
     <result column="TX_BRANCH" jdbcType="NVARCHAR" property="txBranch" />
+    <result column="TRAN_TYPE" property="tranType" jdbcType="NVARCHAR" />
     <result column="TX_IND" jdbcType="NVARCHAR" property="txInd" />
     <result column="TX_CODE" jdbcType="NVARCHAR" property="txCode" />
     <result column="DC_FLAG" jdbcType="NVARCHAR" property="dcFlag" />
@@ -15,7 +16,7 @@
     <result column="FEE_FLAG" jdbcType="NVARCHAR" property="feeFlag" />
     <result column="FEE" jdbcType="DECIMAL" property="fee" />
     <result column="HOST_DATE" jdbcType="DECIMAL" property="hostDate" />
-    <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />   
+    <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />  
     <result column="SND_BANKNO" jdbcType="NVARCHAR" property="sndBankno" />
     <result column="RCV_BANKNO" jdbcType="NVARCHAR" property="rcvBankno" />
     <result column="PAYER_BANK" jdbcType="NVARCHAR" property="payerBank" />
@@ -43,7 +44,7 @@
     <result column="HOST_BRANCH" jdbcType="NVARCHAR" property="hostBranch" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap">
-    select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SOURCE_TYPE, TX_BRANCH, TX_IND, TX_CODE,DC_FLAG, 
+    select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SOURCE_TYPE, TX_BRANCH, TRAN_TYPE,TX_IND, TX_CODE,DC_FLAG, 
     TX_AMT, ACT_BAL, HOST_DATE, HOST_TRACENO, PAYER_ACNO, PAYER_NAME, PAYEE_ACNO, PAYEE_NAME, 
     BOCM_BRANCH, BOCM_DATE, BOCM_TRACENO, CHECK_FLAG, HOST_STATE, BOCM_STATE, TX_TEL, 
     CHK_TEL, AUTH_TEL, PRINT, INFO, RET_CODE, RET_MSG, HOST_BRANCH,
@@ -77,7 +78,7 @@
      plat_date=#{date} and dc_flag=#{flag} and host_state=1 and check_flag in ('2','3')
   </select>
   <select id="selectCheckedTrace" resultMap="BaseResultMap">
-    select plat_date, plat_trace, plat_time, source_type, tx_branch, tx_ind,tx_code, dc_flag, 
+    select plat_date, plat_trace, plat_time, source_type, tx_branch,tran_type, tx_ind,tx_code, dc_flag, 
     tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
     bocm_branch, bocm_date, bocm_traceno, check_flag, host_state, bocm_state, tx_tel, 
     chk_tel, auth_tel, print, info,ret_code,ret_msg,host_branch,

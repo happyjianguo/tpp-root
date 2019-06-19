@@ -30,7 +30,18 @@ public interface IBocmSafeService {
 	* @return SafeModel    返回类型 
 	* @throws 
 	*/
-	public BocmSafeModel transPin(BocmSafeModel model) throws SysTradeExecuteException;
+	public String transPinToFX(MyLog myLog, String srcAccount,String dstAccount,String srcPinBlock) throws SysTradeExecuteException;
+	
+	/** 
+	* @Title: transPin 
+	* @Description: 密码转加密
+	* @param @param model
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return SafeModel    返回类型 
+	* @throws 
+	*/
+	public String transPinToJH(MyLog myLog, String srcAccount,String dstAccount,String srcPinBlock) throws SysTradeExecuteException;
 	
 	/** 
 	* @Title: encryptPwd 
@@ -56,7 +67,7 @@ public interface IBocmSafeService {
 	
 	/** 
 	* @Title: verifyTownMac 
-	* @Description: 校验村镇请求mac 
+	* @Description: 校验交行请求mac 
 	* @param @param myLog
 	* @param @param dataToMAC
 	* @param @param mac
@@ -64,7 +75,7 @@ public interface IBocmSafeService {
 	* @return void    返回类型 
 	* @throws 
 	*/
-	public void verifyBocmMac(MyLog myLog,byte[] dataToMAC,String mac) throws SysTradeExecuteException;
+	public void verifyBocmMac(MyLog myLog,String dataToMAC,String mac) throws SysTradeExecuteException;
 
 	/** 
 	* @Title: verifyCityMac 
@@ -88,7 +99,7 @@ public interface IBocmSafeService {
 	* @return String    返回类型 
 	* @throws 
 	*/
-	public String calcBocm(MyLog myLog,byte[] dataToMAC) throws SysTradeExecuteException;
+	public String calcBocm(MyLog myLog,String dataToMAC) throws SysTradeExecuteException;
 	
 	/** 
 	* @Title: calcCITY 

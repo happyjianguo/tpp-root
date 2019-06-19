@@ -50,7 +50,7 @@ public class REP_10103 extends REP_BASE {
     	private String thdCod;	
     	//业务类型
     	@FixedField(order = 84, len = 3, desc = "业务类型")
-    	private String BbusTyp;
+    	private String BbusTyp="000";
     	//发起行行号
     	@FixedField(order = 85, len = 12, desc = "发起行行号")
     	private String SbnkNo;

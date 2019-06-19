@@ -12,6 +12,7 @@ import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.esb.REP_30063001201;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30063001201;
@@ -52,9 +53,13 @@ public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req10101);	//设置报文头中的行号信息
 		req10101.setActTyp(reqBody.getAcctType());
 		req10101.setActNo(reqBody.getCardNo());
-		req10101.setPin(super.convPin(reqBody.getPwd()));
+		req10101.setPin(super.convPin(dto,reqBody.getCardNo(),reqBody.getPwd()));
 
 		myLog.info(logger, "发送余额查询请求至交行");
+		
+		StringBuffer sb = new StringBuffer(FixedUtil.toFixed(req10101,"UTF-8"));
+		myLog.info(logger, sb.toString());
+		
 		REP_10101 rep10101 = forwardToBocmService.sendToBocm(req10101, REP_10101.class);
 
 		REP_30063001201 rep = new REP_30063001201();

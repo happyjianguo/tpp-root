@@ -44,7 +44,7 @@ public class CHK_10103 extends BASE_TEST {
 	public void ok() throws Exception {
 
 		
-		req.setFilNam("BUPS31322900000820190623.dat");
+		req.setFilNam("BUPS31322900000820201101.dat");
 		
 		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));
 		REP_10103 rep = new REP_10103();

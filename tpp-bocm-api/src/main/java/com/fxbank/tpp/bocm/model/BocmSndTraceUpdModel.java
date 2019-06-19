@@ -38,7 +38,21 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
 	//交易金额
 	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
 	private String txAmt;
+    
+    /**
+     * 付款行人行行号
+     */
+    private String sndBankno;
+    /**
+     * 收款人行行号
+     */
+    private String rcvBankno;
 	
+    /**
+     * 手续费
+     */
+    private BigDecimal fee;
+    
     /**
      * 账户余额
      */
@@ -343,6 +357,32 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
 	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
 	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getRcvBankno() {
+		return rcvBankno;
+	}
+
+	public void setRcvBankno(String rcvBankno) {
+		this.rcvBankno = rcvBankno;
+	}
+
+	public BigDecimal getFee() {
+		return fee;
+	}
+
+	public void setFee(BigDecimal fee) {
+		this.fee = fee;
+	}
+
+
 	
 	
 }

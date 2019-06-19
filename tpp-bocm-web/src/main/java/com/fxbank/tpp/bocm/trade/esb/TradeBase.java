@@ -1,18 +1,24 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
+import com.fxbank.tpp.bocm.model.BocmSafeModel;
 import com.fxbank.tpp.bocm.model.REQ_BASE;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
+import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 /**
@@ -23,6 +29,12 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 @Component
 public class TradeBase {
 	private static Logger logger = LoggerFactory.getLogger(TradeBase.class);
+	
+	@Reference(version = "1.0.0")
+    private IBocmSafeService safeService;
+	
+	@Resource
+	private LogPool logPool;
 
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
@@ -65,9 +77,28 @@ public class TradeBase {
 		reqBase.setRbnkNo(BANK_NUMBER); // 网点 取上面接口返回值
 	}
 
-	public String convPin(String oPin){
-		String nPin = oPin.substring(0,16);
-		//TODO
-		return nPin;
+	/**
+	 * 
+	* @Title: convPin 
+	* @Description: 密码Pin转加密
+	* @param @param dto
+	* @param @param acctNo
+	* @param @param oPin
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return String    返回类型 
+	* @throws
+	 */
+	public String convPin(DataTransObject dto, String acctNo, String oPin) throws SysTradeExecuteException{
+		BocmSafeModel passwordModel = new BocmSafeModel(logPool.get(), dto.getSysDate(), dto.getSysTime(),
+				dto.getSysTraceno());
+//		passwordModel.setAcctNo(acctNo);
+//		passwordModel.setPassword(oPin);
+//		BocmSafeModel pinModel = passwordService.transPin(passwordModel);
+		//TODO  询问加密平台tranpin的时候加密请求到交行的密码字段，交行密码字段为20位  加密平台转加密为32位
+//		return pinModel.getPassword().substring(16);
+//		String pin = safeService.transPinToJH(myLog, srcAccount, dstAccount, srcPinBlock);
+//		return pin;
+		return "123456";
 	}
 }

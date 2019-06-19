@@ -85,6 +85,7 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
      * 手续费
      */
     private BigDecimal fee;
+
     /**
      * 发起行人行行号
      */
@@ -475,5 +476,6 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
 	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
 	}
+
 	
 }

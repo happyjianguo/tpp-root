@@ -34,6 +34,10 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	public final static String TPP_E_000002 = "TPP_E_000002";
 	public final static String TPP_E_000003 = "TPP_E_000003";
 	public final static String TPP_E_000004 = "TPP_E_000004";
+	
+	
+	public final static String BOCM_JH_6203 = "JH6203";
+	public final static String BOCM_JH_0000 = "JH0000";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 

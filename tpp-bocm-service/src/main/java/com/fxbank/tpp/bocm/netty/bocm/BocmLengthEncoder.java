@@ -4,9 +4,11 @@ import com.fxbank.cip.base.log.MyLog;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.MessageToByteEncoder;
 
 /**
@@ -32,7 +34,7 @@ public class BocmLengthEncoder extends MessageToByteEncoder<Object> {
 		sb.append(String.format("%08d", msgStrLen));
 		sb.append(msgStr);
 		String reqPack = sb.toString();
-		this.myLog.info(logger, "发送请求报文=[" + reqPack);
+		this.myLog.info(logger, "发送请求报文到交行=[" + reqPack);
 		out.writeBytes(reqPack.getBytes(BocmClient.CODING));
 	}
 

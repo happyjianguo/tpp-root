@@ -12,6 +12,13 @@ import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_10101;
 import com.fxbank.tpp.bocm.model.REQ_10101;
 
+/**
+* @ClassName: QR_10101_TEST 
+* @Description: 交行查询本行卡余额
+* @author YePuLiang
+* @date 2019年6月18日 上午9:13:40 
+*
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class QR_10101_TEST extends BASE_TEST {

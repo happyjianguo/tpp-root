@@ -1,6 +1,8 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import com.alibaba.dubbo.config.annotation.Reference;
@@ -25,6 +27,7 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000203;
@@ -57,6 +60,9 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService bocmRcvTraceService;
+	
+    @Reference(version = "1.0.0")
+    private IBocmSafeService safeService;
 
 	@Resource
 	private LogPool logPool;
@@ -70,9 +76,14 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();		
 		REQ_20001 req = (REQ_20001) dto;
-		//挡板，本行模拟交行交易请求过来的行号为301000000000一个不存在的行号
-		if("301000000000".equals(req.getPayBnk())){
+		String sbnkNo = req.getSbnkNo();//发起行行号
+		if(sbnkNo.substring(0, 3).equals("313")){
+			myLog.info(logger, "交易发起行为本行，启用挡板数据");
 			REP_20001 rep = new REP_20001();
+			
+			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
+			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
 			rep.setOtxnAmt(req.getTxnAmt());		
 			//JHF1-异地手续费JHF2-代理手续费
 			Double fee = new Double(5d);
@@ -225,6 +236,9 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 //		reqBody_30011000104.setPassword(reqDto.getPin());
 		reqBody_30011000104.setPassword("6FA8753E6D318C213BB7339751E9268E");
 		
+		//TODO 交行转阜新pin
+//		String pin = safeService.transPinToFX(myLog, srcAccount, dstAccount, srcPinBlock);
+//		reqBody_30011000104.setPassword(pin);
 		
 		reqBody_30011000104.setTranType("JH01");
 		reqBody_30011000104.setTranCcy("CNY");
@@ -239,7 +253,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		reqBody_30011000104.setSendBankCode(reqDto.getSbnkNo());
 		reqBody_30011000104.setBankCode(reqDto.getPayBnk());
 		reqBody_30011000104.setOthBankCode(reqDto.getRecBnk());
-		reqBody_30011000104.setSettlementDate(reqDto.getTtxnDat().toString());
+		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
@@ -267,7 +281,8 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setSourceType(reqDto.getSourceType());
 		record.setTxBranch(reqDto.getSbnkNo());
 		// 通存通兑标志；0通存、1通兑
-		record.setDcFlag("0");
+		record.setDcFlag("1");
+		record.setTranType("JH01");
 		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		//现转标志；0现金、1转账
@@ -442,6 +457,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		//交易码
 		record.setTxCode(reqDto.getTtxnCd());
 		bocmRcvTraceService.rcvTraceInit(record);
+		myLog.info(logger,TRADE_DESC+"，核心记账超时，插入来账流水表");
 	}
 	
 	public void updateOthSuccess(DataTransObject dto, ModelBase model) throws SysTradeExecuteException{
