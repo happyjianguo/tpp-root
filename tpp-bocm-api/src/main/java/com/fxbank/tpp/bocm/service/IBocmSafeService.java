@@ -89,4 +89,30 @@ public interface IBocmSafeService {
 	*/
 	public String calcBocm(MyLog myLog,String dataToMAC) throws SysTradeExecuteException;
 	
+	/**
+	* @Title: updateMacKey 
+	* @Description: MAC密钥更新
+	* @param @param myLog
+	* @param @param value
+	* @param @param checkValue
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return String    返回类型 
+	* @throws
+	 */
+	public void updateMacKey(MyLog myLog,String keyValue,String checkValue) throws SysTradeExecuteException;
+	
+	/**
+	* @Title: updatePinKey 
+	* @Description: Pin密钥更新
+	* @param @param myLog
+	* @param @param value
+	* @param @param checkValue
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return String    返回类型 
+	* @throws
+	 */
+	public void updatePinKey(MyLog myLog,String keyValue,String checkValue) throws SysTradeExecuteException;
+	
 }

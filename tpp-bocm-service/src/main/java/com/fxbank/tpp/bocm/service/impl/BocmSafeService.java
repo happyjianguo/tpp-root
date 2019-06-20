@@ -238,4 +238,32 @@ public class BocmSafeService implements IBocmSafeService{
 		}
 	}
 
+	//更新mac密钥
+	public void updateMacKey(MyLog myLog, String keyValue, String checkValue) throws SysTradeExecuteException {
+		try {
+			HisuTSSCAPIResult result = hisuTSSCAPI.tsscStoreKey("JINP", "COUTER001", "XZMK", "JINP","COUTER001", "XZAK", keyValue, checkValue);
+			if (result.getErrCode() < 0) {
+				myLog.error(logger, "更新Mac密钥失败");
+				throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);
+			}
+		} catch (Exception e) {
+			myLog.error(logger, "更新Mac密钥失败", e);
+			throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);
+		}
+	}
+
+	@Override
+	public void updatePinKey(MyLog myLog, String keyValue, String checkValue) throws SysTradeExecuteException {
+		try {
+			HisuTSSCAPIResult result = hisuTSSCAPI.tsscStoreKey("JINP", "COUTER001", "XZMK", "JINP","COUTER001", "XZPK", keyValue, checkValue);
+			if (result.getErrCode() < 0) {
+				myLog.error(logger, "更新Pin密钥失败");
+				throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);
+			}
+		} catch (Exception e) {
+			myLog.error(logger, "更新Pin密钥失败", e);
+			throw new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000003);
+		}
+	}
+
 }

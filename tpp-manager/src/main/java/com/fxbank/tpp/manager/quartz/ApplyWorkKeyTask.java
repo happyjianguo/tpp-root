@@ -28,11 +28,16 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.MyJedis;
+import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.model.REP_10104;
+import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.model.REQ_10104;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 import redis.clients.jedis.Jedis;
@@ -62,6 +67,9 @@ public class ApplyWorkKeyTask {
 	@Reference(version = "1.0.0")
 	private IPublicService publicService;
 	
+    @Reference(version = "1.0.0")
+    private IBocmSafeService safeService;
+	
 	private final static String COMMON_PREFIX = "bocm_common.";
 	
 	@Resource
@@ -85,27 +93,63 @@ public class ApplyWorkKeyTask {
 		Integer sysTraceno = publicService.getSysTraceno();
 		
 		
-		REQ_10104 req10104 = new REQ_10104(myLog, date, sysTime, sysTraceno);
-		//密钥ID
-		req10104.setKeyId("RZAK");
-		//密钥类型
-		req10104.setKeyTyp(1);
-		//密钥长度
-		req10104.setKeyLen(1);
-		REP_10104 rep10104 = forwardToBocmService.sendToBocm(req10104, REP_10104.class);
-		
-		String keyValue = rep10104.getBlkVal();
-		String checkValue = rep10104.getChkVal();
-		
+		//交行总行行号
+		String JHNO = "";
+		//阜新银行总行行号
+		String FXNO = "";
 		try(Jedis jedis = myJedis.connect()){
-			//把从交行请求的key存储在redis中
-			jedis.set(COMMON_PREFIX+"BLKVALUE", keyValue);
-			//把从交行请求的校验码存储在redis中
-			jedis.set(COMMON_PREFIX+"CHKVALUE", checkValue);
+			//从redis中获取交行总行行号
+			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
+			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
         }
-		myLog.info(logger, "密钥定时完毕");
-		myLog.info(logger, "新申请的加密密钥："+keyValue);
-		myLog.info(logger, "新申请的校验码："+checkValue);
+		
+		//1.申请MAC key
+		REQ_10104 reqMac10104 = new REQ_10104(myLog, date, sysTime, sysTraceno);
+		reqMac10104.setSbnkNo(FXNO);
+		reqMac10104.setRbnkNo(FXNO);
+		//密钥ID
+		reqMac10104.setKeyId("RZAK");
+		//密钥类型
+		reqMac10104.setKeyTyp(1);
+		//密钥长度
+		reqMac10104.setKeyLen(16);
+		myLog.info(logger, "请求Mac密钥");
+		com.fxbank.tpp.bocm.model.REP_10104 repMac10104 = forwardToBocmService.sendToBocm(reqMac10104, com.fxbank.tpp.bocm.model.REP_10104.class);
+		
+		String macKeyValue = repMac10104.getBlkVal();
+		String macCheckValue = repMac10104.getChkVal();
+		myLog.info(logger, "Mac密钥密文值【"+macCheckValue+"】密钥校验值【"+macCheckValue+"】");
+		//Mac密钥 更新
+		//safeService.updateMacKey(myLog, macKeyValue, macCheckValue);
+		
+		
+		//1.申请Pin key
+		REQ_10104 reqPin10104 = new REQ_10104(myLog, date, sysTime, sysTraceno);
+		//密钥ID
+		reqPin10104.setKeyId("RZPK");
+		//密钥类型
+		reqPin10104.setKeyTyp(0);
+		//密钥长度
+		reqPin10104.setKeyLen(32);
+		myLog.info(logger, "请求Pin密钥");
+		com.fxbank.tpp.bocm.model.REP_10104 repPin10104 = forwardToBocmService.sendToBocm(reqPin10104, com.fxbank.tpp.bocm.model.REP_10104.class);
+		
+		String pinKeyValue = repPin10104.getBlkVal();
+		String pinCheckValue = repMac10104.getChkVal();
+		myLog.info(logger, "Pin密钥密文值【"+macCheckValue+"】密钥校验值【"+macCheckValue+"】");
+		//Pin密钥 更新
+		//safeService.updateMacKey(myLog, pinKeyValue, pinCheckValue);
+		
+		
+//		try(Jedis jedis = myJedis.connect()){
+//			//把从交行请求的key存储在redis中
+//			jedis.set(COMMON_PREFIX+"BLKVALUE", keyValue);
+//			//把从交行请求的校验码存储在redis中
+//			jedis.set(COMMON_PREFIX+"CHKVALUE", checkValue);
+//        }
+		myLog.info(logger, "密钥定时更新完毕");
+//		myLog.info(logger, "新申请的加密密钥："+keyValue);
+//		myLog.info(logger, "新申请的校验码："+checkValue);
 	}
 	
 	
@@ -146,5 +190,4 @@ public class ApplyWorkKeyTask {
 		bean.setTriggers(cronJobTrigger);
 		return bean;
 	}
-
 }

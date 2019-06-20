@@ -119,6 +119,16 @@ public class CityBocmCheckAcctTask {
 		Integer sysTime = publicService.getSysTime();
 		Integer sysTraceno = publicService.getSysTraceno();
 		
+		//交行总行行号
+		String JHNO = "";
+		//阜新银行总行行号
+		String FXNO = "";
+		try(Jedis jedis = myJedis.connect()){
+			//从redis中获取交行总行行号
+			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
+			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
+        }
+		
 		acctCheckErrService.delete(date.toString());
 		
 		
@@ -130,17 +140,8 @@ public class CityBocmCheckAcctTask {
 		reqDto.setSysTime(sysTime);
 		reqDto.setSysTraceno(sysTraceno);
 		req10103 = new REQ_10103(myLog, date, sysTime, sysTraceno);
-		req10103 = setBankno(myLog, date, sysTime, sysTraceno, txBrno, req10103);//设置报文头中的行号信息
-		
-		//交行总行行号
-		String JHNO = "";
-		//阜新银行总行行号
-		String FXNO = "";
-		try(Jedis jedis = myJedis.connect()){
-			//从redis中获取交行总行行号
-			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
-			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
-        }
+		req10103.setSbnkNo(FXNO);
+		req10103.setRbnkNo(FXNO);
 		
 		req10103.setFilNam("BUPS"+FXNO+date+".dat");	
 		//获取交行对账文件
@@ -255,52 +256,6 @@ public class CityBocmCheckAcctTask {
 		myLog.info(logger, "外围与交行对账成功");
 	}
 	
-	public REQ_10103 setBankno(MyLog myLog, int sysDate, int sysTime, int sysTraceno, String branchId, REQ_10103 reqBase) throws SysTradeExecuteException {
-		if(branchId == null){
-			myLog.error(logger, "发起机构号不能为空");
-			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
-			myLog.error(logger,e.getRspCode() + " | " + e.getRspMsg());
-			throw e;
-		}
-		
-		
-		//行号查询
-		ESB_REQ_30043003001 esbReq_30043003001 = new ESB_REQ_30043003001(myLog, sysDate, sysTime,
-				sysTraceno);
-//		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043003001.getReqSysHead(), dto).build();
-//		reqSysHead.setBranchId(branchId);
-		esbReq_30043003001.getReqSysHead().setBranchId(branchId);
-//		esbReq_30043003001.setReqSysHead(reqSysHead);
-		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
-		reqBody_30043003001.setBrchNoT4(branchId);
-		
-		
-	
-		
-		myLog.info(logger, "TradeBase通过本行机构号查询人行行号");
-		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,				
-				ESB_REP_30043003001.class);
-		//发起行人行行号
-		String BANK_NUMBER = esbRep_30043003001.getRepBody().getBankNumber();
-		//人行清算行号
-		String SETTLEMENT_BANK_NO = esbRep_30043003001.getRepBody().getSettlementBankNo();
-		// SBnkNo指合作银行总行行号（12位） RBnkNo指合作银行发起交易网点行号
-		// 交通银行发起交易时，SBnkNo指交行发起交易网点号（12位）     RBnkNo指合作银行总行行号
-		//注意：合作银行发起交易时，SBnkNo指合作银行总行行号（12位）
-        //                 RBnkNo指合作银行发起交易网点行号
-		//发起行行号
-		reqBase.setSbnkNo(SETTLEMENT_BANK_NO); // 总行 取上面接口返回值
-		//接收行行号 办理业务网点的总行行号
-		reqBase.setRbnkNo(BANK_NUMBER); // 网点 取上面接口返回值
-		
-
-		
-////		//发起行行号  313229000660
-//		reqBase.setSbnkNo("313229000660"); // 总行 取上面接口返回值
-////		//接收行行号 办理业务网点的总行行号
-//		reqBase.setRbnkNo("313229000660"); // 网点 取上面接口返回值
-		return reqBase;
-	}
 	
 	private String getTraceSrc(String thdCod, String txnMod){
 		//来账
