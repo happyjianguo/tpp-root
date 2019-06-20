@@ -76,18 +76,6 @@ public interface IBocmSafeService {
 	* @throws 
 	*/
 	public void verifyBocmMac(MyLog myLog,String dataToMAC,String mac) throws SysTradeExecuteException;
-
-	/** 
-	* @Title: verifyCityMac 
-	* @Description: 校验柜面请求mac
-	* @param @param myLog
-	* @param @param dataToMAC
-	* @param @param mac
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return void    返回类型 
-	* @throws 
-	*/
-	public void verifyCityMac(MyLog myLog,byte[] dataToMAC,String mac) throws SysTradeExecuteException;
 	
 	/** 
 	* @Title: calcTOWN 
@@ -101,15 +89,4 @@ public interface IBocmSafeService {
 	*/
 	public String calcBocm(MyLog myLog,String dataToMAC) throws SysTradeExecuteException;
 	
-	/** 
-	* @Title: calcCITY 
-	* @Description: 计算柜面请求mac
-	* @param @param myLog
-	* @param @param dataToMAC
-	* @param @return
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return String    返回类型 
-	* @throws 
-	*/
-	public String calcCITY(MyLog myLog,byte[] dataToMAC) throws SysTradeExecuteException;
 }
