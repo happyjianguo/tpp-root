@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
+
 /** 
 * @ClassName: REQ_20001 
 * @Description: IC卡通兑
