@@ -375,8 +375,8 @@ public class CityHostCheckAcctTasK {
 		try (Jedis jedis = myJedis.connect()) {
 			localPath = jedis.get(COMMON_PREFIX+"txt_path");
 		}
-		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+direction+"_"+fileName);
-		return localPath+File.separator+direction+"_"+fileName;
+		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+"HOST_"+fileName);
+		return localPath+File.separator+"HOST_"+fileName;
 	}
 	/**
 	 * @Title: loadFile @Description: 从文件传输平台下载文件 @param @param
@@ -431,6 +431,7 @@ public class CityHostCheckAcctTasK {
 	private void InitCheckLog(String localFile, MyLog myLog,Integer date,Integer sysTime,Integer sysTraceno) throws SysTradeExecuteException {
 		BufferedReader br = null;
 		myLog.info(logger, "账户变动信息入库开始");
+		int i = 0;
 		try {
 			dayCheckLogService.delete();
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(localFile)),"UTF-8"));
@@ -468,8 +469,10 @@ public class CityHostCheckAcctTasK {
                 model.setDirection(""); //来往账标识
                 
         		dayCheckLogService.dayCheckLogInit(model);
-        		myLog.info(logger, "核心记账流水【"+model.getHostTraceno()+"】入库，渠道日期【"+date+"】");
+        		i++;
+        		myLog.info(logger, "核心记账流水入库,核心流水号：【"+model.getHostTraceno()+"】交易类型【"+model.getTranType()+"】，渠道日期【"+date+"】");
 			}
+			myLog.info(logger, "记账日期【"+date+"】核心记账笔数【"+i+"】");
 
 		} catch (Exception e) {
             myLog.error(logger, "文件【"+localFile+"】插入失败", e);
@@ -591,8 +594,9 @@ public class CityHostCheckAcctTasK {
 				myLog.error(logger, "补数据SQL： insert into bocm_rcv_log (plat_date,plat_trace,tx_amt,host_date,host_traceno,host_state,check_flag) VALUES ("+model.getSettleDate()+","+model.getPlatTrace()+",'"+model.getTxAmt()
 				+"',"+model.getHostDate()+",'"+model.getHostTraceno()+"','1','1');");
 				myLog.error(logger, "柜面通【"+date+"】来帐对账失败,渠道数据丢失: 核心流水号【"+model.getHostTraceno()+"】核心日期为【"+model.getSysDate()+"】");
-				TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
-				throw e;
+				continue;
+				//TcexTradeExecuteException e = new TcexTradeExecuteException(TcexTradeExecuteException.TCEX_E_10003);
+				//throw e;
 				
 			}else {
 				String hostState = rcvTraceQueryModel.getHostState(); //渠道记录的核心状态

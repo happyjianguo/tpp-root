@@ -1,7 +1,5 @@
 package com.fxbank.tpp.bocm.dto.bocm;
 
-import java.math.BigDecimal;
-
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 import com.fxbank.tpp.bocm.model.AmtBase;
 

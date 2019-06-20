@@ -397,7 +397,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061001001 reqDto = (REQ_30061001001)dto;
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		req10001.setTxnAmt(Double.parseDouble(reqBody.getWthrAmtT()));//交易金额
-		//TODO 柜面的加密密码字段转交行密码字段加密
+		//柜面的加密密码字段转交行密码字段加密
 		String pin = super.convPin(reqDto,reqBody.getCardNoT3(),reqBody.getPwdT());
 		req10001.setPin(pin);
 //		req10001.setPin(reqBody.getPwdT());//交易密码
@@ -578,6 +578,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 
 		ESB_REQ_30011000104.REQ_BODY reqBody_30011000104 = esbReq_30011000104.getReqBody();
 		reqBody_30011000104.setBaseAcctNo(reqBody.getCardNoT3());
+		reqBody_30011000104.setPassword(reqBody.getPwdT());
 		reqBody_30011000104.setAcctName(reqBody.getNmT());
 		reqBody_30011000104.setTranType("JH13");
 		reqBody_30011000104.setChannelType("BU");

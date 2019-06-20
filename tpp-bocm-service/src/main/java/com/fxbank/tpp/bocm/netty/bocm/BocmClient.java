@@ -6,6 +6,7 @@ import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.netty.NettySyncClient;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class BocmClient {
     @Resource
     private MyJedis myJedis;
 
-    public <T> T comm(MyLog myLog, Object req, Class<T> clazz ,String MAC) throws SysTradeExecuteException {
+    public <T> T comm(MyLog myLog, Object req, Class<T> clazz ,IBocmSafeService safeService) throws SysTradeExecuteException {
         String ip = null;
         Integer port = 0;
         Integer timeOut = 0;
@@ -55,7 +56,7 @@ public class BocmClient {
         }
         myLog.info(logger, "连接信息：IP[" + ip + "],PORT[" + port + "],TIMEOUT[" + timeOut + "]");
 
-        BocmInitializer<T> initializer = new BocmInitializer<T>(myLog, req, clazz, MAC);
+        BocmInitializer<T> initializer = new BocmInitializer<T>(myLog, req, clazz, safeService);
         NettySyncClient<T> clientSync = new NettySyncClient<T>(myLog, initializer);
         T repData = clientSync.comm(ip, port, timeOut);
         return repData;

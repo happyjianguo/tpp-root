@@ -2,7 +2,6 @@ package com.fxbank.tpp.bocm.netty.bocm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.log.MyLog;
@@ -10,11 +9,11 @@ import com.fxbank.cip.base.netty.NettySyncClient;
 import com.fxbank.cip.base.netty.NettySyncSlot;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_BASE;
+import com.fxbank.tpp.bocm.model.REP_ERROR;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import io.netty.util.ReferenceCountUtil;
@@ -35,9 +34,10 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
     @Reference(version = "1.0.0")
     private IBocmSafeService safeService;
 
-	public BocmPackConvInHandler(MyLog myLog, Class<T> clazz) {
+	public BocmPackConvInHandler(MyLog myLog, Class<T> clazz, IBocmSafeService safeService) {
 		this.myLog = myLog;
 		this.clazz = clazz;
+		this.safeService = safeService;
 	}
 
 	@Override
@@ -50,10 +50,18 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 
 			String fixPack = pack.substring(0, pack.length() - 16);
 			//校验MAC	
-//			safeService.verifyBocmMac(myLog, fixPack, mac);
+			safeService.verifyBocmMac(myLog, fixPack, mac);
 			
-			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();			
-			repBase = (REP_BASE)new FixedUtil(fixPack,"UTF-8").toBean(repBase.getClass());		
+			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();	
+			if(fixPack.substring(0, 1).equals("N")){
+				repBase = (REP_BASE)new FixedUtil(fixPack,"UTF-8").toBean(repBase.getClass());
+			}else{
+				repBase = new REP_ERROR();
+				repBase = (REP_BASE)new FixedUtil(fixPack,"UTF-8").toBean(repBase.getClass());
+				this.myLog.info(logger, "相应错误码【" + repBase.getTrspCd() + "】");
+				this.myLog.info(logger, "错误描述【" + repBase.getTrspMsg() + "】");
+			}
+
 			ctx.fireChannelRead(repBase);
 		} finally {
 			ReferenceCountUtil.release(msg);

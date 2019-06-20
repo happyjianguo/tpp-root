@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REQ_BASE;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -24,21 +25,21 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 
 	private MyLog myLog;
 	
-	private String MAC;
+	private IBocmSafeService safeService;
 
-	public BocmPackConvOutHandler(MyLog myLog, String MAC) {
+	public BocmPackConvOutHandler(MyLog myLog, IBocmSafeService safeService) {
 		this.myLog = myLog;
-		this.MAC = MAC;
+		this.safeService = safeService;
 	}
 	
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
 		REQ_BASE reqBase = (REQ_BASE)msg;
 		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,"UTF-8"));
-		myLog.info(logger, "组包发送交行报文");		
-		//添加MAC
-		fixPack.append(MAC);
-		
+		myLog.info(logger, "组包发送交行报文");	
+		//生成MAC
+		String mac = safeService.calcBocm(myLog, fixPack.toString());		
+		fixPack.append(mac);		
 		ctx.writeAndFlush(fixPack.toString(), promise);
 	}
 

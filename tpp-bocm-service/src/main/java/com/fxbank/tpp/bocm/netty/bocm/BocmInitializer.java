@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.netty.NettySyncHandler;
 import com.fxbank.cip.base.netty.NettySyncSlot;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -20,13 +21,13 @@ public class BocmInitializer<T> extends ChannelInitializer<SocketChannel> {
     private MyLog myLog;
     private Object reqData;
     private Class<T> clazz;
-    private String MAC;
+    private IBocmSafeService safeService;
 
-    public BocmInitializer(MyLog myLog, Object reqData, Class<T> clazz, String MAC) {
+    public BocmInitializer(MyLog myLog, Object reqData, Class<T> clazz, IBocmSafeService safeService) {
         this.myLog = myLog;
         this.reqData = reqData;
         this.clazz = clazz;
-        this.MAC = MAC;
+        this.safeService = safeService;
     }
     
     @Override
@@ -34,8 +35,8 @@ public class BocmInitializer<T> extends ChannelInitializer<SocketChannel> {
         ChannelPipeline p = ch.pipeline();
         p.addLast(new BocmLenghtDecoder<T>(this.myLog));
         p.addLast(new BocmLengthEncoder(this.myLog));
-        p.addLast(new BocmPackConvInHandler<T>(this.myLog,clazz));
-        p.addLast(new BocmPackConvOutHandler(this.myLog,MAC));
+        p.addLast(new BocmPackConvInHandler<T>(this.myLog,clazz,safeService));
+        p.addLast(new BocmPackConvOutHandler(this.myLog,safeService));
         p.addLast(new NettySyncHandler<T>(this.myLog,this.reqData));
     }
 

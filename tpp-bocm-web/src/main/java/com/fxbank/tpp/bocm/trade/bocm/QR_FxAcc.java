@@ -8,8 +8,6 @@
 */
 package com.fxbank.tpp.bocm.trade.bocm;
 
-import java.math.BigDecimal;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -25,11 +23,10 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.bocm.REP_10101;
 import com.fxbank.tpp.bocm.dto.bocm.REP_20102;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_10101;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_20102;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
+import com.fxbank.tpp.bocm.exception.BocmTradeJHExecuteException;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
@@ -80,7 +77,8 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 			rep.setActNam("挡板用户");
 			rep.setActTyp("5");
 			rep.setAmtLmt("0");
-			rep.setFee(1d);			
+			rep.setFee(1d);		
+			
 			return rep;
 		}
 

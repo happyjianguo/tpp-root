@@ -41,14 +41,8 @@ public class ForwardToBocmService implements IForwardToBocmService {
 		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,"UTF-8"));
 		myLog.info(logger, "请求交行服务端，组包发送交行报文");
 		String jsonReq = fixPack.toString();
-		//需要生成MAC
-		String mac = safeService.calcBocm(myLog, jsonReq);
-//		byte[] macBytes = jsonReq.getBytes();
-//		String mac = macService.calcBOCM(reqBase.getMylog(),macBytes);
-//		myLog.info(logger, "组包发送交行报文MAC:"+mac);
-//		String mac = "FFFFFFFFFFFFFFFF";
 		try {
-			repModel = bocmClient.comm(myLog, reqBase, clazz,mac);
+			repModel = bocmClient.comm(myLog, reqBase, clazz, safeService);
 		} catch (SysTradeExecuteException e) {
 			myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg(), e);
 			throw e;

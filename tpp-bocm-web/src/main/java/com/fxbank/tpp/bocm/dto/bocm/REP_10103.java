@@ -8,13 +8,11 @@
 */
 package com.fxbank.tpp.bocm.dto.bocm;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 import com.fxbank.tpp.bocm.model.AmtBase;
-import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 
 /** 
 * @ClassName: REP_10103 

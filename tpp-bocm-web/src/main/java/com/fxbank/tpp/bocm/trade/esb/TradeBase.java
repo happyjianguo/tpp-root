@@ -90,15 +90,9 @@ public class TradeBase {
 	* @throws
 	 */
 	public String convPin(DataTransObject dto, String acctNo, String oPin) throws SysTradeExecuteException{
-		BocmSafeModel passwordModel = new BocmSafeModel(logPool.get(), dto.getSysDate(), dto.getSysTime(),
-				dto.getSysTraceno());
-//		passwordModel.setAcctNo(acctNo);
-//		passwordModel.setPassword(oPin);
-//		BocmSafeModel pinModel = passwordService.transPin(passwordModel);
-		//TODO  询问加密平台tranpin的时候加密请求到交行的密码字段，交行密码字段为20位  加密平台转加密为32位
-//		return pinModel.getPassword().substring(16);
-//		String pin = safeService.transPinToJH(myLog, srcAccount, dstAccount, srcPinBlock);
-//		return pin;
-		return "123456";
+		//Pin值转加密
+		String pin = safeService.transPinToJH(logPool.get(), acctNo, acctNo, oPin);
+		return pin;
+
 	}
 }
