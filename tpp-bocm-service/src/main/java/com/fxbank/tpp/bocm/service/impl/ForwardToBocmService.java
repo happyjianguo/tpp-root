@@ -38,7 +38,7 @@ public class ForwardToBocmService implements IForwardToBocmService {
 		reqBase.setSlogNo(String.format("%06d%08d", reqBase.getSysDate() % 1000000, reqBase.getSysTraceno()));
 		T repModel = null;
 		
-		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,"UTF-8"));
+		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,BocmClient.CODING));
 		myLog.info(logger, "请求交行服务端，组包发送交行报文");
 		String jsonReq = fixPack.toString();
 		try {

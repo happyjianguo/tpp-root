@@ -54,10 +54,10 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 			
 			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();	
 			if(fixPack.substring(0, 1).equals("N")){
-				repBase = (REP_BASE)new FixedUtil(fixPack,"UTF-8").toBean(repBase.getClass());
+				repBase = (REP_BASE)new FixedUtil(fixPack,BocmClient.CODING).toBean(repBase.getClass());
 			}else{
 				repBase = new REP_ERROR();
-				repBase = (REP_BASE)new FixedUtil(fixPack,"UTF-8").toBean(repBase.getClass());
+				repBase = (REP_BASE)new FixedUtil(fixPack,BocmClient.CODING).toBean(repBase.getClass());
 				this.myLog.info(logger, "相应错误码【" + repBase.getTrspCd() + "】");
 				this.myLog.info(logger, "错误描述【" + repBase.getTrspMsg() + "】");
 			}

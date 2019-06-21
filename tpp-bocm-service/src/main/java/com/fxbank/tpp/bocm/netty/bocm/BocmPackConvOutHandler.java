@@ -35,7 +35,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
 		REQ_BASE reqBase = (REQ_BASE)msg;
-		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,"UTF-8"));
+		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,BocmClient.CODING));
 		myLog.info(logger, "组包发送交行报文");	
 		//生成MAC
 		String mac = safeService.calcBocm(myLog, fixPack.toString());		
