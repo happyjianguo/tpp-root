@@ -100,10 +100,12 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		String JHNO = "";
 		//阜新银行总行行号
 		String FXNO = "";
+		String KeyId = "";
 		try(Jedis jedis = myJedis.connect()){
 			//从redis中获取交行总行行号
 			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
 			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
+			KeyId = jedis.get(COMMON_PREFIX+"KeyId");
         }
 		
 		//1.申请MAC key
@@ -111,7 +113,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		reqMac10104.setSbnkNo(FXNO);
 		reqMac10104.setRbnkNo(FXNO);
 		//密钥ID
-		reqMac10104.setKeyId("RZAK");
+		reqMac10104.setKeyId(KeyId);
 		//密钥类型
 		reqMac10104.setKeyTyp(1);
 		//密钥长度
@@ -129,7 +131,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		//1.申请Pin key
 		REQ_10104 reqPin10104 = new REQ_10104(myLog, date, sysTime, sysTraceno);
 		//密钥ID
-		reqPin10104.setKeyId("RZPK");
+		reqPin10104.setKeyId(KeyId);
 		//密钥类型
 		reqPin10104.setKeyTyp(0);
 		//密钥长度
