@@ -68,7 +68,13 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req20102);	//设置报文头中的行号信息
 		req20102.setActTyp(reqBody.getAcctTpT());		
 		req20102.setActNo(reqBody.getAcctNoT());
+		//TRNS_TP_T8（交易类型）00 存款  01 取款  02 转出  03 转入
 		req20102.setTxnTyp(reqBody.getTrnsTpT8());
+		String txnType = reqBody.getTrnsTpT8();
+		//TODO 转账时必输上送受理行卡开户分行
+		if(txnType.equals("02")||txnType.equals("03")){
+			req20102.setActBnk("313228077014");
+		}	
 		req20102.setFeeFlg(reqBody.getRcveWyT());
 		req20102.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		myLog.info(logger, "发送账号信息 查询请求至交行");
