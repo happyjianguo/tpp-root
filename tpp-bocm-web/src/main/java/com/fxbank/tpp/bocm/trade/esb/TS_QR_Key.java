@@ -125,6 +125,10 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		
 		String macKeyValue = repMac10104.getBlkVal();
 		String macCheckValue = repMac10104.getChkVal();
+		
+//		macKeyValue = "0BDBF4DEEA59C784";
+//		macCheckValue = "3F4311";
+		
 		myLog.info(logger, "Mac密钥密文值【"+macKeyValue+"】密钥校验值【"+macCheckValue+"】");
 		//Mac密钥 更新
 		safeService.updateMacKey(myLog, macKeyValue, macCheckValue);
