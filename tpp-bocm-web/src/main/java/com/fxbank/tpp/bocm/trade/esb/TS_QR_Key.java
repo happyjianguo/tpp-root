@@ -123,7 +123,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		String macCheckValue = repMac10104.getChkVal();
 		myLog.info(logger, "Mac密钥密文值【"+macKeyValue+"】密钥校验值【"+macCheckValue+"】");
 		//Mac密钥 更新
-		//safeService.updateMacKey(myLog, macKeyValue, macCheckValue);
+		safeService.updateMacKey(myLog, macKeyValue, macCheckValue);
 		
 		
 		//1.申请Pin key
@@ -140,7 +140,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		String pinKeyValue = repPin10104.getBlkVal();
 		String pinCheckValue = repMac10104.getChkVal();
 		myLog.info(logger, "Pin密钥密文值【"+pinKeyValue+"】密钥校验值【"+pinCheckValue+"】");
-//		safeService.updatePinKey(myLog, pinKeyValue, pinCheckValue);
+		safeService.updatePinKey(myLog, pinKeyValue, pinCheckValue);
 		
 		
 		return rep;
