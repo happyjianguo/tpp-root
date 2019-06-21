@@ -21,7 +21,8 @@ import com.fxbank.tpp.bocm.service.IBocmSafeService;
 public class BASE_TEST {
     private static Logger logger = LoggerFactory.getLogger(BASE_TEST.class);
 
-    private static final String IP = "127.0.0.1";
+//    private static final String IP = "127.0.0.1";
+    private static final String IP = "57.25.3.166";
     private static final Integer PORT = 6006;
     private static final String CODING = "UTF-8";
     
