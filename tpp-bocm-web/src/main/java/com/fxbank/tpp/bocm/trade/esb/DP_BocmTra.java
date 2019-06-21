@@ -452,7 +452,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061000701 reqDto = (REQ_30061000701)dto;
 		REQ_30061000701.REQ_BODY reqBody = reqDto.getReqBody();
 		req10000.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
-		req10000.setFeeFlg(reqBody.getRcveWyT());
+		req10000.setFeeFlg("0");
 		req10000.setFee(Double.parseDouble(reqBody.getFeeT3()));
 		req10000.setOprFlg(reqBody.getInWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
@@ -497,7 +497,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061000701 reqDto = (REQ_30061000701)dto;
 		REQ_30061000701.REQ_BODY reqBody = reqDto.getReqBody();
 		req20000.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
-		req20000.setFeeFlg(reqBody.getRcveWyT());
+		req20000.setFeeFlg("0");
 		req20000.setFee(Double.parseDouble(reqBody.getFeeT3()));
 		req20000.setOprFlg(reqBody.getInWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
