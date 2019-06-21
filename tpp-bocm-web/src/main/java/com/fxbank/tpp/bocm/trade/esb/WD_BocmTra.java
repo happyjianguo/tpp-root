@@ -471,6 +471,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 
 		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
+		reqBody_30011000104.setDirection("O");
 		
 		//我方银行账号
 //		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());

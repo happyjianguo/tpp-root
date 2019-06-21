@@ -409,8 +409,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setTranAmt(reqBody.getDpsAmtT());
 		reqBody_30011000104.setChannelType("BU");
 		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
-
 		reqBody_30011000104.setCollateFlag("Y");		
+		reqBody_30011000104.setDirection("O");
 		//SEND_BANK_CODE	 发起行行号
 		//BANK_CODE	                        我方银行行号
 		//OTH_BANK_CODE	            对方银行行号

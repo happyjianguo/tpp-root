@@ -590,6 +590,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());
 		//对方银行账号
 		reqBody_30011000104.setOthBankCode(reqBody.getOpnAcctBnkNoT7());
+		reqBody_30011000104.setDirection("O");
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);

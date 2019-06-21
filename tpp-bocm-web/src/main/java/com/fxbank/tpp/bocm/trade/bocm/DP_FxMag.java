@@ -263,6 +263,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");		
 		reqBody_30011000104.setCollateFlag("Y");
+		reqBody_30011000104.setDirection("I");
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);

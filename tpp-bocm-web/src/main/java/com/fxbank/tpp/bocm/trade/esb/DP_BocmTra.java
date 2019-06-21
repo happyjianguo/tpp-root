@@ -417,6 +417,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setOthBankCode(reqBody.getPyeeOpnBnkNoT1());
 		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
+		reqBody_30011000104.setDirection("O");
 		
 		//SEND_BANK_CODE	 发起行行号
 		//BANK_CODE	                        我方银行行号
