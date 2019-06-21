@@ -37,7 +37,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		REQ_BASE reqBase = (REQ_BASE)msg;
 		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,BocmClient.CODING));
 		myLog.info(logger, "组包发送交行报文");	
-		String tran_type = reqBase.getTtxnCd();
+
 		String mac = safeService.calcBocm(myLog, fixPack.toString());		
 		fixPack.append(mac);
 		ctx.writeAndFlush(fixPack.toString(), promise);

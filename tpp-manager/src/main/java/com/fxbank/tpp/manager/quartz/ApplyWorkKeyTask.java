@@ -31,7 +31,7 @@ import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.pub.service.IPublicService;
-import com.fxbank.tpp.bocm.model.REP_10104;
+import com.fxbank.tpp.bocm.model.REP_10104_MAC;
 import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.model.REQ_10104;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
@@ -114,7 +114,7 @@ public class ApplyWorkKeyTask {
 		//密钥长度
 		reqMac10104.setKeyLen(16);
 		myLog.info(logger, "请求Mac密钥");
-		com.fxbank.tpp.bocm.model.REP_10104 repMac10104 = forwardToBocmService.sendToBocm(reqMac10104, com.fxbank.tpp.bocm.model.REP_10104.class);
+		com.fxbank.tpp.bocm.model.REP_10104_MAC repMac10104 = forwardToBocmService.sendToBocm(reqMac10104, com.fxbank.tpp.bocm.model.REP_10104_MAC.class);
 		
 		String macKeyValue = repMac10104.getBlkVal();
 		String macCheckValue = repMac10104.getChkVal();
@@ -132,7 +132,7 @@ public class ApplyWorkKeyTask {
 		//密钥长度
 		reqPin10104.setKeyLen(32);
 		myLog.info(logger, "请求Pin密钥");
-		com.fxbank.tpp.bocm.model.REP_10104 repPin10104 = forwardToBocmService.sendToBocm(reqPin10104, com.fxbank.tpp.bocm.model.REP_10104.class);
+		com.fxbank.tpp.bocm.model.REP_10104_MAC repPin10104 = forwardToBocmService.sendToBocm(reqPin10104, com.fxbank.tpp.bocm.model.REP_10104_MAC.class);
 		
 		String pinKeyValue = repPin10104.getBlkVal();
 		String pinCheckValue = repMac10104.getChkVal();

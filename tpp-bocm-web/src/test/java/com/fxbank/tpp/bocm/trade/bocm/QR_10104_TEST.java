@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
-import com.fxbank.tpp.bocm.model.REP_10104;
+import com.fxbank.tpp.bocm.model.REP_10104_MAC;
 import com.fxbank.tpp.bocm.model.REQ_10104;
 
 
@@ -45,8 +45,8 @@ public class QR_10104_TEST extends BASE_TEST {
 		
 		
 		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));
-		REP_10104 rep = new REP_10104();
-		rep = (REP_10104)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
+		REP_10104_MAC rep = new REP_10104_MAC();
+		rep = (REP_10104_MAC)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
 		assertEquals(rep.getTmsgTyp(), "N");
 		assertEquals(rep.getTrspCd(), "FX0000");
 		

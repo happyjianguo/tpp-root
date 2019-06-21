@@ -29,6 +29,8 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.esb.REP_TS_10104;
 import com.fxbank.tpp.bocm.dto.esb.REQ_TS_10104;
+import com.fxbank.tpp.bocm.model.REP_10104_MAC;
+import com.fxbank.tpp.bocm.model.REP_10104_PIN;
 import com.fxbank.tpp.bocm.model.REQ_10104;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
@@ -119,7 +121,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		//密钥长度
 		reqMac10104.setKeyLen(16);
 		myLog.info(logger, "请求Mac密钥");
-		com.fxbank.tpp.bocm.model.REP_10104 repMac10104 = forwardToBocmService.sendToBocm(reqMac10104, com.fxbank.tpp.bocm.model.REP_10104.class);
+		REP_10104_MAC repMac10104 = forwardToBocmService.sendToBocm(reqMac10104, REP_10104_MAC.class);
 		
 		String macKeyValue = repMac10104.getBlkVal();
 		String macCheckValue = repMac10104.getChkVal();
@@ -137,7 +139,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		//密钥长度
 		reqPin10104.setKeyLen(32);
 		myLog.info(logger, "请求Pin密钥");
-		com.fxbank.tpp.bocm.model.REP_10104 repPin10104 = forwardToBocmService.sendToBocm(reqPin10104, com.fxbank.tpp.bocm.model.REP_10104.class);
+		REP_10104_PIN repPin10104 = forwardToBocmService.sendToBocm(reqPin10104, REP_10104_PIN.class);
 		
 		String pinKeyValue = repPin10104.getBlkVal();
 		String pinCheckValue = repMac10104.getChkVal();

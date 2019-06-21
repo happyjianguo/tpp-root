@@ -34,7 +34,7 @@ public class BocmLengthEncoder extends MessageToByteEncoder<Object> {
 		sb.append(String.format("%08d", msgStrLen));
 		sb.append(msgStr);
 		String reqPack = sb.toString();
-		this.myLog.info(logger, "发送请求报文到交行=[" + reqPack);
+		this.myLog.info(logger, "发送请求报文到交行=[" + reqPack+"]");
 		out.writeBytes(reqPack.getBytes(BocmClient.CODING));
 	}
 

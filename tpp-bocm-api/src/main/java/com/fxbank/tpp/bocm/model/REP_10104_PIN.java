@@ -1,9 +1,9 @@
 /**   
-* @Title: REP_10104.java 
+* @Title: REP_10104_PIN.java 
 * @Package com.fxbank.tpp.bocm.model 
 * @Description: TODO(用一句话描述该文件做什么) 
 * @author YePuLiang
-* @date 2019年5月23日 下午3:44:42 
+* @date 2019年6月21日 上午11:27:33 
 * @version V1.0   
 */
 package com.fxbank.tpp.bocm.model;
@@ -12,22 +12,22 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
 /** 
-* @ClassName: REP_10104 
-* @Description: 工作密钥申请
+* @ClassName: REP_10104_PIN 
+* @Description: TODO(这里用一句话描述这个类的作用) 
 * @author YePuLiang
-* @date 2019年5月23日 下午3:44:42 
+* @date 2019年6月21日 上午11:27:33 
 *  
 */
-public class REP_10104 extends REP_BASE {
+public class REP_10104_PIN extends REP_BASE {
 	
 	private static final long serialVersionUID = -6800285963364978524L;
 
 	@Deprecated
-	 public REP_10104() {
+	 public REP_10104_PIN() {
 		super(null, 0, 0, 0);
 	 }
 
-	 public REP_10104(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	 public REP_10104_PIN(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 	    super(mylog, sysDate, sysTime, sysTraceno);
 	 }
 	 
@@ -46,7 +46,7 @@ public class REP_10104 extends REP_BASE {
 		@FixedField(order = 9, len = 2, scale = 0, desc = "密钥校验值长度")
 	    private Integer chkLen;
 		
-		@FixedField(order = 10, len = 16, scale = 0, desc = "密钥校验值")
+		@FixedField(order = 10, len = 6, scale = 0, desc = "密钥校验值")
 	    private String chkVal;
 		
 
