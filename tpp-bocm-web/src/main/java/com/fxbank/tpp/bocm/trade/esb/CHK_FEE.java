@@ -86,7 +86,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm.";
+	private final static String COMMON_PREFIX = "bocm_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {

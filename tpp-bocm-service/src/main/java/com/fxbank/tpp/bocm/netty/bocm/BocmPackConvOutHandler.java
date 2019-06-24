@@ -37,10 +37,16 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		REQ_BASE reqBase = (REQ_BASE)msg;
 		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,BocmClient.CODING));
 		myLog.info(logger, "组包发送交行报文");	
-
-		String mac = safeService.calcBocm(myLog, fixPack.toString());		
-		myLog.info(logger, "调用加密平台生成Mac： 【"+mac+"】");	
-		fixPack.append(mac);
+		
+		String tran_type = reqBase.getTtxnCd();
+		if(tran_type.equals("10103")){
+			//mac申请和对账不进行mac验证
+		}else{
+			//校验MAC	联机交易Mac验证
+			String mac = safeService.calcBocm(myLog, fixPack.toString());	
+			fixPack.append(mac);
+			myLog.info(logger, "调用加密平台生成Mac： 【"+mac+"】");	
+		}			
 		ctx.writeAndFlush(fixPack.toString(), promise);
 	}
 
