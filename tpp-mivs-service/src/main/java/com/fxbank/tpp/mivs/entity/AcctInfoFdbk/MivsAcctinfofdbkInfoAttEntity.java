@@ -125,6 +125,13 @@ public class MivsAcctinfofdbkInfoAttEntity {
     /**
      * null
      */
+    @Column(name = "TRA_NM")
+    private String traNm;
+
+
+    /**
+     * null
+     */
     @Column(name = "UNI_SOC_CDT_CD")
     private String uniSocCdtCd;
 
@@ -502,6 +509,14 @@ public class MivsAcctinfofdbkInfoAttEntity {
      */
     public void setEntNm(String entNm) {
         this.entNm = entNm;
+    }
+
+    public String getTraNm() {
+        return traNm;
+    }
+
+    public void setTraNm(String traNm) {
+        this.traNm = traNm;
     }
 
     /**

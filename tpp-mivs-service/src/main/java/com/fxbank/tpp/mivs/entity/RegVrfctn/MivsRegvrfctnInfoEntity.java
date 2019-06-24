@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_REGVRFCTN_INFO")
+@Table(name = "mivs_regvrfctn_info")
 public class MivsRegvrfctnInfoEntity {
     /**
      * null
@@ -119,14 +119,38 @@ public class MivsRegvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "ENT_NM")
-    private String entNm;
+    @Column(name = "AGT_NM")
+    private String agtNm;
+
+    /**
+     * null
+     */
+    @Column(name = "AGT_ID")
+    private String agtId;
+
+    /**
+     * null
+     */
+    @Column(name = "OP_NM")
+    private String opNm;
+
+    /**
+     * null
+     */
+    @Column(name = "MARKET_TYPE")
+    private String marketType;
 
     /**
      * null
      */
     @Column(name = "UNI_SOC_CDT_CD")
     private String uniSocCdtCd;
+
+    /**
+     * null
+     */
+    @Column(name = "ENT_NM")
+    private String entNm;
 
     /**
      * null
@@ -143,20 +167,20 @@ public class MivsRegvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "AGT_NM")
-    private String agtNm;
+    @Column(name = "TRA_NM")
+    private String traNm;
 
     /**
      * null
      */
-    @Column(name = "AGT_ID")
-    private String agtId;
+    @Column(name = "NM")
+    private String nm;
 
     /**
      * null
      */
-    @Column(name = "OP_NM")
-    private String opNm;
+    @Column(name = "ID")
+    private String id;
 
     /**
      * null
@@ -550,70 +574,6 @@ public class MivsRegvrfctnInfoEntity {
 
     /**
      * null
-     * @return ENT_NM null
-     */
-    public String getEntNm() {
-        return entNm;
-    }
-
-    /**
-     * null
-     * @param entNm null
-     */
-    public void setEntNm(String entNm) {
-        this.entNm = entNm;
-    }
-
-    /**
-     * null
-     * @return UNI_SOC_CDT_CD null
-     */
-    public String getUniSocCdtCd() {
-        return uniSocCdtCd;
-    }
-
-    /**
-     * null
-     * @param uniSocCdtCd null
-     */
-    public void setUniSocCdtCd(String uniSocCdtCd) {
-        this.uniSocCdtCd = uniSocCdtCd;
-    }
-
-    /**
-     * null
-     * @return NM_OF_LGL_PRSN null
-     */
-    public String getNmOfLglPrsn() {
-        return nmOfLglPrsn;
-    }
-
-    /**
-     * null
-     * @param nmOfLglPrsn null
-     */
-    public void setNmOfLglPrsn(String nmOfLglPrsn) {
-        this.nmOfLglPrsn = nmOfLglPrsn;
-    }
-
-    /**
-     * null
-     * @return ID_OF_LGL_PRSN null
-     */
-    public String getIdOfLglPrsn() {
-        return idOfLglPrsn;
-    }
-
-    /**
-     * null
-     * @param idOfLglPrsn null
-     */
-    public void setIdOfLglPrsn(String idOfLglPrsn) {
-        this.idOfLglPrsn = idOfLglPrsn;
-    }
-
-    /**
-     * null
      * @return AGT_NM null
      */
     public String getAgtNm() {
@@ -658,6 +618,134 @@ public class MivsRegvrfctnInfoEntity {
      */
     public void setOpNm(String opNm) {
         this.opNm = opNm;
+    }
+
+    /**
+     * null
+     * @return MARKET_TYPE null
+     */
+    public String getMarketType() {
+        return marketType;
+    }
+
+    /**
+     * null
+     * @param marketType null
+     */
+    public void setMarketType(String marketType) {
+        this.marketType = marketType;
+    }
+
+    /**
+     * null
+     * @return UNI_SOC_CDT_CD null
+     */
+    public String getUniSocCdtCd() {
+        return uniSocCdtCd;
+    }
+
+    /**
+     * null
+     * @param uniSocCdtCd null
+     */
+    public void setUniSocCdtCd(String uniSocCdtCd) {
+        this.uniSocCdtCd = uniSocCdtCd;
+    }
+
+    /**
+     * null
+     * @return ENT_NM null
+     */
+    public String getEntNm() {
+        return entNm;
+    }
+
+    /**
+     * null
+     * @param entNm null
+     */
+    public void setEntNm(String entNm) {
+        this.entNm = entNm;
+    }
+
+    /**
+     * null
+     * @return NM_OF_LGL_PRSN null
+     */
+    public String getNmOfLglPrsn() {
+        return nmOfLglPrsn;
+    }
+
+    /**
+     * null
+     * @param nmOfLglPrsn null
+     */
+    public void setNmOfLglPrsn(String nmOfLglPrsn) {
+        this.nmOfLglPrsn = nmOfLglPrsn;
+    }
+
+    /**
+     * null
+     * @return ID_OF_LGL_PRSN null
+     */
+    public String getIdOfLglPrsn() {
+        return idOfLglPrsn;
+    }
+
+    /**
+     * null
+     * @param idOfLglPrsn null
+     */
+    public void setIdOfLglPrsn(String idOfLglPrsn) {
+        this.idOfLglPrsn = idOfLglPrsn;
+    }
+
+    /**
+     * null
+     * @return TRA_NM null
+     */
+    public String getTraNm() {
+        return traNm;
+    }
+
+    /**
+     * null
+     * @param traNm null
+     */
+    public void setTraNm(String traNm) {
+        this.traNm = traNm;
+    }
+
+    /**
+     * null
+     * @return NM null
+     */
+    public String getNm() {
+        return nm;
+    }
+
+    /**
+     * null
+     * @param nm null
+     */
+    public void setNm(String nm) {
+        this.nm = nm;
+    }
+
+    /**
+     * null
+     * @return ID null
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * null
+     * @param id null
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -930,53 +1018,5 @@ public class MivsRegvrfctnInfoEntity {
      */
     public void setRemark3(String remark3) {
         this.remark3 = remark3;
-    }
-
-    @Override
-    public String toString() {
-        return "MivsRegvrfctnInfoEntity{" +
-                "platDate=" + platDate +
-                ", platTrace=" + platTrace +
-                ", platTime=" + platTime +
-                ", systemId='" + systemId + '\'' +
-                ", tranDate='" + tranDate + '\'' +
-                ", seqNo='" + seqNo + '\'' +
-                ", tranTime='" + tranTime + '\'' +
-                ", userId='" + userId + '\'' +
-                ", branchId='" + branchId + '\'' +
-                ", mivsSts='" + mivsSts + '\'' +
-                ", msgId='" + msgId + '\'' +
-                ", creDtTm='" + creDtTm + '\'' +
-                ", instgDrctPty='" + instgDrctPty + '\'' +
-                ", drctPtyNm='" + drctPtyNm + '\'' +
-                ", instgPty='" + instgPty + '\'' +
-                ", ptyNm='" + ptyNm + '\'' +
-                ", instdDrctPty='" + instdDrctPty + '\'' +
-                ", instdPty='" + instdPty + '\'' +
-                ", entNm='" + entNm + '\'' +
-                ", uniSocCdtCd='" + uniSocCdtCd + '\'' +
-                ", nmOfLglPrsn='" + nmOfLglPrsn + '\'' +
-                ", idOfLglPrsn='" + idOfLglPrsn + '\'' +
-                ", agtNm='" + agtNm + '\'' +
-                ", agtId='" + agtId + '\'' +
-                ", opNm='" + opNm + '\'' +
-                ", pgNb=" + pgNb +
-                ", lastPgInd='" + lastPgInd + '\'' +
-                ", rslt='" + rslt + '\'' +
-                ", dataResrcDt='" + dataResrcDt + '\'' +
-                ", basInfoCnt=" + basInfoCnt +
-                ", coShrhdrfndInfoCnt=" + coShrhdrfndInfoCnt +
-                ", dirSupsrsgrInfoCnt=" + dirSupsrsgrInfoCnt +
-                ", chngInfoCnt=" + chngInfoCnt +
-                ", abnmlBizInfoCnt=" + abnmlBizInfoCnt +
-                ", illDscrtInfoCnt=" + illDscrtInfoCnt +
-                ", licNullCnt=" + licNullCnt +
-                ", procSts='" + procSts + '\'' +
-                ", procCd='" + procCd + '\'' +
-                ", rjctInf='" + rjctInf + '\'' +
-                ", remark1='" + remark1 + '\'' +
-                ", remark2='" + remark2 + '\'' +
-                ", remark3='" + remark3 + '\'' +
-                '}';
     }
 }

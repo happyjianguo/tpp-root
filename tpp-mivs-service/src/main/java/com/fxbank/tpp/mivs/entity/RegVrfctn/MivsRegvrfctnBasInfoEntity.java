@@ -78,8 +78,8 @@ public class MivsRegvrfctnBasInfoEntity {
     /**
      * null
      */
-    @Column(name = "ENT_NM")
-    private String entNm;
+    @Column(name = "MARKET_TYPE")
+    private String marketType;
 
     /**
      * null
@@ -92,6 +92,30 @@ public class MivsRegvrfctnBasInfoEntity {
      */
     @Column(name = "CO_TP")
     private String coTp;
+
+    /**
+     * null
+     */
+    @Column(name = "REG_STS")
+    private String regSts;
+
+    /**
+     * null
+     */
+    @Column(name = "REG_AUTH")
+    private String regAuth;
+
+    /**
+     * null
+     */
+    @Column(name = "DT_APPR")
+    private String dtAppr;
+
+    /**
+     * null
+     */
+    @Column(name = "ENT_NM")
+    private String entNm;
 
     /**
      * null
@@ -126,26 +150,38 @@ public class MivsRegvrfctnBasInfoEntity {
     /**
      * null
      */
-    @Column(name = "REG_STS")
-    private String regSts;
-
-    /**
-     * null
-     */
     @Column(name = "NM_OF_LGL_PRSN")
     private String nmOfLglPrsn;
 
     /**
      * null
      */
-    @Column(name = "REG_AUTH")
-    private String regAuth;
+    @Column(name = "TRA_NM")
+    private String traNm;
 
     /**
      * null
      */
-    @Column(name = "DT_APPR")
-    private String dtAppr;
+    @Column(name = "OP_LOC")
+    private String opLoc;
+
+    /**
+     * null
+     */
+    @Column(name = "FD_AMT")
+    private String fdAmt;
+
+    /**
+     * null
+     */
+    @Column(name = "DT_REG")
+    private String dtReg;
+
+    /**
+     * null
+     */
+    @Column(name = "NM")
+    private String nm;
 
     /**
      * null
@@ -331,18 +367,18 @@ public class MivsRegvrfctnBasInfoEntity {
 
     /**
      * null
-     * @return ENT_NM null
+     * @return MARKET_TYPE null
      */
-    public String getEntNm() {
-        return entNm;
+    public String getMarketType() {
+        return marketType;
     }
 
     /**
      * null
-     * @param entNm null
+     * @param marketType null
      */
-    public void setEntNm(String entNm) {
-        this.entNm = entNm;
+    public void setMarketType(String marketType) {
+        this.marketType = marketType;
     }
 
     /**
@@ -375,6 +411,70 @@ public class MivsRegvrfctnBasInfoEntity {
      */
     public void setCoTp(String coTp) {
         this.coTp = coTp;
+    }
+
+    /**
+     * null
+     * @return REG_STS null
+     */
+    public String getRegSts() {
+        return regSts;
+    }
+
+    /**
+     * null
+     * @param regSts null
+     */
+    public void setRegSts(String regSts) {
+        this.regSts = regSts;
+    }
+
+    /**
+     * null
+     * @return REG_AUTH null
+     */
+    public String getRegAuth() {
+        return regAuth;
+    }
+
+    /**
+     * null
+     * @param regAuth null
+     */
+    public void setRegAuth(String regAuth) {
+        this.regAuth = regAuth;
+    }
+
+    /**
+     * null
+     * @return DT_APPR null
+     */
+    public String getDtAppr() {
+        return dtAppr;
+    }
+
+    /**
+     * null
+     * @param dtAppr null
+     */
+    public void setDtAppr(String dtAppr) {
+        this.dtAppr = dtAppr;
+    }
+
+    /**
+     * null
+     * @return ENT_NM null
+     */
+    public String getEntNm() {
+        return entNm;
+    }
+
+    /**
+     * null
+     * @param entNm null
+     */
+    public void setEntNm(String entNm) {
+        this.entNm = entNm;
     }
 
     /**
@@ -459,22 +559,6 @@ public class MivsRegvrfctnBasInfoEntity {
 
     /**
      * null
-     * @return REG_STS null
-     */
-    public String getRegSts() {
-        return regSts;
-    }
-
-    /**
-     * null
-     * @param regSts null
-     */
-    public void setRegSts(String regSts) {
-        this.regSts = regSts;
-    }
-
-    /**
-     * null
      * @return NM_OF_LGL_PRSN null
      */
     public String getNmOfLglPrsn() {
@@ -491,34 +575,82 @@ public class MivsRegvrfctnBasInfoEntity {
 
     /**
      * null
-     * @return REG_AUTH null
+     * @return TRA_NM null
      */
-    public String getRegAuth() {
-        return regAuth;
+    public String getTraNm() {
+        return traNm;
     }
 
     /**
      * null
-     * @param regAuth null
+     * @param traNm null
      */
-    public void setRegAuth(String regAuth) {
-        this.regAuth = regAuth;
+    public void setTraNm(String traNm) {
+        this.traNm = traNm;
     }
 
     /**
      * null
-     * @return DT_APPR null
+     * @return OP_LOC null
      */
-    public String getDtAppr() {
-        return dtAppr;
+    public String getOpLoc() {
+        return opLoc;
     }
 
     /**
      * null
-     * @param dtAppr null
+     * @param opLoc null
      */
-    public void setDtAppr(String dtAppr) {
-        this.dtAppr = dtAppr;
+    public void setOpLoc(String opLoc) {
+        this.opLoc = opLoc;
+    }
+
+    /**
+     * null
+     * @return FD_AMT null
+     */
+    public String getFdAmt() {
+        return fdAmt;
+    }
+
+    /**
+     * null
+     * @param fdAmt null
+     */
+    public void setFdAmt(String fdAmt) {
+        this.fdAmt = fdAmt;
+    }
+
+    /**
+     * null
+     * @return DT_REG null
+     */
+    public String getDtReg() {
+        return dtReg;
+    }
+
+    /**
+     * null
+     * @param dtReg null
+     */
+    public void setDtReg(String dtReg) {
+        this.dtReg = dtReg;
+    }
+
+    /**
+     * null
+     * @return NM null
+     */
+    public String getNm() {
+        return nm;
+    }
+
+    /**
+     * null
+     * @param nm null
+     */
+    public void setNm(String nm) {
+        this.nm = nm;
     }
 
     /**

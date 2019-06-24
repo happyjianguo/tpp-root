@@ -21,6 +21,7 @@
     <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
     <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
     <result column="ENT_NM" property="entNm" jdbcType="NVARCHAR" />
+    <result column="TRA_NM" property="traNm" jdbcType="NVARCHAR" />
     <result column="UNI_SOC_CDT_CD" property="uniSocCdtCd" jdbcType="NVARCHAR" />
     <result column="ACCT_STS" property="acctSts" jdbcType="NVARCHAR" />
     <result column="CHNG_DT" property="chngDt" jdbcType="NVARCHAR" />
@@ -38,7 +39,7 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SYSTEM_ID, TRAN_DATE, SEQ_NO, TRAN_TIME, 
     USER_ID, BRANCH_ID, MIVS_STS, MSG_ID, CRE_DT_TM, INSTG_DRCT_PTY, DRCT_PTY_NM, INSTG_PTY, 
-    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, ENT_NM, UNI_SOC_CDT_CD, ACCT_STS, CHNG_DT, PROC_STS, 
+    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, ENT_NM, TRA_NM, UNI_SOC_CDT_CD, ACCT_STS, CHNG_DT, PROC_STS,
     PROC_CD, PTY_ID, PTY_PRC_CD, RJCT_INF, PRC_DT, NETG_RND, REMARK1, REMARK2, REMARK3
     from MIVS_ACCTINFOFDBK_INFO
   </select>

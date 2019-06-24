@@ -78,6 +78,12 @@ public class MivsRegvrfctnCosInfoEntity {
     /**
      * null
      */
+    @Column(name = "NATL_PRSN_FLAG")
+    private String natlPrsnFlag;
+
+    /**
+     * null
+     */
     @Column(name = "INVTR_NM")
     private String invtrNm;
 
@@ -285,6 +291,22 @@ public class MivsRegvrfctnCosInfoEntity {
      */
     public void setPgNb(Integer pgNb) {
         this.pgNb = pgNb;
+    }
+
+    /**
+     * null
+     * @return NATL_PRSN_FLAG null
+     */
+    public String getNatlPrsnFlag() {
+        return natlPrsnFlag;
+    }
+
+    /**
+     * null
+     * @param natlPrsnFlag null
+     */
+    public void setNatlPrsnFlag(String natlPrsnFlag) {
+        this.natlPrsnFlag = natlPrsnFlag;
     }
 
     /**

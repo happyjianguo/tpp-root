@@ -13,6 +13,7 @@
     <result column="ORIG_INSTG_DRCT_PTY" property="origInstgDrctPty" jdbcType="NVARCHAR" />
     <result column="ORIG_INSTG_PTY" property="origInstgPty" jdbcType="NVARCHAR" />
     <result column="PG_NB" property="pgNb" jdbcType="DECIMAL" />
+    <result column="NATL_PRSN_FLAG" property="natlPrsnFlag" jdbcType="NVARCHAR" />
     <result column="INVTR_NM" property="invtrNm" jdbcType="NVARCHAR" />
     <result column="INVTR_ID" property="invtrId" jdbcType="NVARCHAR" />
     <result column="SUBSCR_CPTL_CON_AMT" property="subscrCptlConAmt" jdbcType="NVARCHAR" />
@@ -22,8 +23,8 @@
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
     select INSTG_PTY, MSG_ID, CO_SHRHDRFND_INFO_NB, PLAT_DATE, PLAT_TRACE, PLAT_TIME, 
-    CRE_DT_TM, ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, PG_NB, INVTR_NM, INVTR_ID, 
-    SUBSCR_CPTL_CON_AMT, ACTL_CPTL_CON_AMT, SUBSCR_CPTL_CON_FM, SUBSCR_CPTL_CON_DT
+    CRE_DT_TM, ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, PG_NB, NATL_PRSN_FLAG, 
+    INVTR_NM, INVTR_ID, SUBSCR_CPTL_CON_AMT, ACTL_CPTL_CON_AMT, SUBSCR_CPTL_CON_FM, SUBSCR_CPTL_CON_DT
     from MIVS_REGVRFCTN_COS_INFO
   </select>
 </mapper>

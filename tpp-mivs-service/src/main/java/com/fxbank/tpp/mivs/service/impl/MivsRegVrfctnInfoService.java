@@ -56,10 +56,14 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         info.setPtyNm(mivsRegVrfctnInfoModel.getPty_nm());
         info.setInstdDrctPty(mivsRegVrfctnInfoModel.getInstd_drct_pty());
         info.setInstdPty(mivsRegVrfctnInfoModel.getInstd_pty());
+        info.setMarketType(mivsRegVrfctnInfoModel.getMarket_type());
         info.setEntNm(mivsRegVrfctnInfoModel.getEnt_nm());
         info.setUniSocCdtCd(mivsRegVrfctnInfoModel.getUni_soc_cdt_cd());
         info.setNmOfLglPrsn(mivsRegVrfctnInfoModel.getNm_of_lgl_prsn());
         info.setIdOfLglPrsn(mivsRegVrfctnInfoModel.getId_of_lgl_prsn());
+        info.setTraNm(mivsRegVrfctnInfoModel.getTra_nm());
+        info.setNm(mivsRegVrfctnInfoModel.getNm());
+        info.setId(mivsRegVrfctnInfoModel.getId());
         info.setAgtNm(mivsRegVrfctnInfoModel.getAgt_nm());
         info.setAgtId(mivsRegVrfctnInfoModel.getAgt_id());
         info.setOpNm(mivsRegVrfctnInfoModel.getOp_nm());
@@ -108,19 +112,34 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     basInfoEntity.setOrigInstgPty(Info.getOrig_instg_pty());
                     basInfoEntity.setPgNb(Info.getPg_nb());
                     basInfoEntity.setBasInfoNb(Info.getBas_info_nb());
-                    basInfoEntity.setEntNm(Info.getEnt_nm());
-                    basInfoEntity.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
-                    basInfoEntity.setCoTp(Info.getCo_tp());
-                    basInfoEntity.setDom(Info.getDom());
-                    basInfoEntity.setRegCptl(Info.getReg_cptl());
-                    basInfoEntity.setDtEst(Info.getDt_est());
-                    basInfoEntity.setOpPrdFrom(Info.getOp_prd_from());
-                    basInfoEntity.setOpPrdTo(Info.getOp_prd_to());
-                    basInfoEntity.setRegSts(Info.getReg_sts());
-                    basInfoEntity.setNmOfLglPrsn(Info.getNm_of_lgl_prsn());
-                    basInfoEntity.setRegSts(Info.getReg_auth());
-                    basInfoEntity.setBizScp(Info.getBiz_scp());
-                    basInfoEntity.setDtEst(Info.getDt_appr());
+                    basInfoEntity.setMarketType(Info.getMarket_type());
+//                    if(Info.getMarket_type().equals("ENT")){
+                        basInfoEntity.setEntNm(Info.getEnt_nm());
+                        basInfoEntity.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
+                        basInfoEntity.setCoTp(Info.getCo_tp());
+                        basInfoEntity.setDom(Info.getDom());
+                        basInfoEntity.setRegCptl(Info.getReg_cptl());
+                        basInfoEntity.setDtEst(Info.getDt_est());
+                        basInfoEntity.setOpPrdFrom(Info.getOp_prd_from());
+                        basInfoEntity.setOpPrdTo(Info.getOp_prd_to());
+                        basInfoEntity.setRegSts(Info.getReg_sts());
+                        basInfoEntity.setNmOfLglPrsn(Info.getNm_of_lgl_prsn());
+                        basInfoEntity.setRegAuth(Info.getReg_auth());
+                        basInfoEntity.setBizScp(Info.getBiz_scp());
+                        basInfoEntity.setDtAppr(Info.getDt_appr());
+//                    }else if(Info.getMarket_type().equals("TRA")){
+                        basInfoEntity.setTraNm(Info.getTra_nm());
+//                        basInfoEntity.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
+//                        basInfoEntity.setCoTp(Info.getCo_tp());
+                        basInfoEntity.setOpLoc(Info.getOp_loc());
+                        basInfoEntity.setFdAmt(Info.getFd_amt());
+                        basInfoEntity.setDtReg(Info.getDt_reg());
+//                        basInfoEntity.setRegSts(Info.getReg_sts());
+                        basInfoEntity.setNm(Info.getNm());
+//                        basInfoEntity.setRegAuth(Info.getReg_auth());
+//                        basInfoEntity.setBizScp(Info.getBiz_scp());
+//                        basInfoEntity.setDtAppr(Info.getDt_appr());
+//                    }
                     basInfoEntityMapper.insertSelective(basInfoEntity);
                 }
             }
@@ -140,6 +159,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     cosInfoEntity.setOrigInstgPty(Info.getOrig_instg_pty());
                     cosInfoEntity.setPgNb(Info.getPg_nb());
                     cosInfoEntity.setCoShrhdrfndInfoNb(Info.getCo_shrhdrfnd_info_nb());
+                    cosInfoEntity.setNatlPrsnFlag(Info.getNatl_prsn_flag());
                     cosInfoEntity.setInvtrNm(Info.getInvtr_nm());
                     cosInfoEntity.setSubscrCptlConAmt(Info.getSubscr_cptl_con_amt());
                     cosInfoEntity.setActlCptlConAmt(Info.getActl_cptl_con_amt());
@@ -329,6 +349,12 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     basInfoMsg.setReg_auth(Info.getRegAuth());
                     basInfoMsg.setBiz_scp(Info.getBizScp());
                     basInfoMsg.setDt_appr(Info.getDtAppr());
+                    basInfoMsg.setTra_nm(Info.getTraNm());
+                    basInfoMsg.setMarket_type(Info.getMarketType());
+                    basInfoMsg.setOp_loc(Info.getOpLoc());
+                    basInfoMsg.setFd_amt(Info.getFdAmt());
+                    basInfoMsg.setDt_reg(Info.getDtReg());
+                    basInfoMsg.setNm(Info.getNm());
                     basInfoArrayMsg.add(basInfoMsg);
                 }
                 infoModel.setBasInfo(basInfoArrayMsg);
@@ -345,6 +371,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     MivsRegVrfctnInfoModel.CoShrhdrFndInfo coShrhdrFndInfoMsg = new MivsRegVrfctnInfoModel.CoShrhdrFndInfo();
                     coShrhdrFndInfoMsg.setPg_nb(Info.getPgNb());
                     coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(Info.getCoShrhdrfndInfoNb());
+                    coShrhdrFndInfoMsg.setNatl_prsn_flag(Info.getNatlPrsnFlag());
                     coShrhdrFndInfoMsg.setInvtr_nm(Info.getInvtrNm());
                     coShrhdrFndInfoMsg.setInvtr_id(Info.getInvtrId());
                     coShrhdrFndInfoMsg.setSubscr_cptl_con_amt(Info.getSubscrCptlConAmt());
