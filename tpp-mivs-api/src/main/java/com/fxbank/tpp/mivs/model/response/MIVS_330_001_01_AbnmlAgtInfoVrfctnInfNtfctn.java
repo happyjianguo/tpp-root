@@ -133,39 +133,33 @@ public class MIVS_330_001_01_AbnmlAgtInfoVrfctnInfNtfctn implements Serializable
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = { "OrgnlInstgPty" })
     public static class AbnmlVrfctnInf implements Serializable{
-        private static final long serialVersionUID = -1154217781275692088L;
-        private OrgnlInstgPty OrgnlInstgPty = new OrgnlInstgPty();
+        private static final long serialVersionUID = 3207207101563741789L;
+        private String  OrgnlInstgPty = null;
+        private String AbnmlType = null;
+        private String DESC = null;
 
-        public OrgnlInstgPty getOrgnlInstgPty() {
+        public String getOrgnlInstgPty() {
             return OrgnlInstgPty;
         }
 
-        public void setOrgnlInstgPty(OrgnlInstgPty orgnlInstgPty) {
+        public void setOrgnlInstgPty(String orgnlInstgPty) {
             OrgnlInstgPty = orgnlInstgPty;
         }
 
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = { "AbnmlType","DESC" })
-        public static class OrgnlInstgPty implements Serializable{
-            private static final long serialVersionUID = 2525673050484716321L;
-            private String AbnmlType = null;
-            private String DESC = null;
+        public String getAbnmlType() {
+            return AbnmlType;
+        }
 
-            public String getAbnmlType() {
-                return AbnmlType;
-            }
+        public void setAbnmlType(String abnmlType) {
+            AbnmlType = abnmlType;
+        }
 
-            public void setAbnmlType(String abnmlType) {
-                AbnmlType = abnmlType;
-            }
+        public String getDESC() {
+            return DESC;
+        }
 
-            public String getDESC() {
-                return DESC;
-            }
-
-            public void setDESC(String DESC) {
-                this.DESC = DESC;
-            }
+        public void setDESC(String DESC) {
+            this.DESC = DESC;
         }
     }
 

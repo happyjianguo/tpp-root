@@ -29,6 +29,10 @@ public class MivsRegVrfctnInfoModel implements Serializable {
     private String pty_nm; //发起参与机构行名
     private String instd_drct_pty; //接收直接参与机构
     private String instd_pty; //接收参与机构
+    private String market_type;//主体类型
+    private String tra_nm;//字号名称
+    private String nm;//经营者姓名
+    private String id;//经营者证件号
     private String nm_of_lgl_prsn; //法定代表人或单位负责人姓名
     private String id_of_lgl_prsn; //法定代表人或单位负责人身份证件号
     private String ent_nm; //代理人姓名
@@ -71,6 +75,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_instg_pty; //原发起参与机构
         private Integer pg_nb; //页数号
         private Integer bas_info_nb; //条数号
+        private String market_type;
         private String ent_nm;
         private String uni_soc_cdt_cd;
         private String co_tp; //市场主体类型
@@ -83,7 +88,12 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String nm_of_lgl_prsn;//法定代表人或单位负责人姓名
         private String reg_auth; //登记机关
         private String biz_scp; //经营范围
-        private String dt_appr; //核准日期
+        private String dt_appr; //核准日期tra_nm NVARCHAR2(256) NULL,
+        private String tra_nm;
+        private String op_loc;
+        private String fd_amt;
+        private String dt_reg;
+        private String nm;
 
         public Integer getPlat_date() {
             return plat_date;
@@ -171,6 +181,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
 
         public void setBas_info_nb(Integer bas_info_nb) {
             this.bas_info_nb = bas_info_nb;
+        }
+
+        public String getMarket_type() {
+            return market_type;
+        }
+
+        public void setMarket_type(String market_type) {
+            this.market_type = market_type;
         }
 
         public String getEnt_nm() {
@@ -277,12 +295,53 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.dt_appr = dt_appr;
         }
 
+        public String getTra_nm() {
+            return tra_nm;
+        }
+
+        public void setTra_nm(String tra_nm) {
+            this.tra_nm = tra_nm;
+        }
+
+        public String getOp_loc() {
+            return op_loc;
+        }
+
+        public void setOp_loc(String op_loc) {
+            this.op_loc = op_loc;
+        }
+
+        public String getFd_amt() {
+            return fd_amt;
+        }
+
+        public void setFd_amt(String fd_amt) {
+            this.fd_amt = fd_amt;
+        }
+
+        public String getDt_reg() {
+            return dt_reg;
+        }
+
+        public void setDt_reg(String dt_reg) {
+            this.dt_reg = dt_reg;
+        }
+
+        public String getNm() {
+            return nm;
+        }
+
+        public void setNm(String nm) {
+            this.nm = nm;
+        }
+
         @Override
         public String toString() {
             return "BasInfo{" +
                     "plat_date=" + plat_date +
                     ", plat_trace=" + plat_trace +
                     ", plat_time=" + plat_time +
+                    ", instg_pty='" + instg_pty + '\'' +
                     ", msg_id='" + msg_id + '\'' +
                     ", cre_dt_tm='" + cre_dt_tm + '\'' +
                     ", orig_msg_id='" + orig_msg_id + '\'' +
@@ -290,6 +349,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
                     ", pg_nb=" + pg_nb +
                     ", bas_info_nb=" + bas_info_nb +
+                    ", market_type='" + market_type + '\'' +
                     ", ent_nm='" + ent_nm + '\'' +
                     ", uni_soc_cdt_cd='" + uni_soc_cdt_cd + '\'' +
                     ", co_tp='" + co_tp + '\'' +
@@ -303,6 +363,11 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     ", reg_auth='" + reg_auth + '\'' +
                     ", biz_scp='" + biz_scp + '\'' +
                     ", dt_appr='" + dt_appr + '\'' +
+                    ", tra_nm='" + tra_nm + '\'' +
+                    ", op_loc='" + op_loc + '\'' +
+                    ", fd_amt='" + fd_amt + '\'' +
+                    ", dt_reg='" + dt_reg + '\'' +
+                    ", nm='" + nm + '\'' +
                     '}';
         }
     }
@@ -322,6 +387,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         private String orig_instg_pty; //原发起参与机构
         private Integer pg_nb; //本报文页码
         private Integer co_shrhdrfnd_info_nb; //条数号
+        private String natl_prsn_flag;//自然人标识
         private String invtr_nm; //投资人名称
         private String invtr_id; //投资人证件号码或证件编号
         private String subscr_cptl_con_amt; //认缴出资额
@@ -409,6 +475,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
             this.pg_nb = pg_nb;
         }
 
+        public String getNatl_prsn_flag() {
+            return natl_prsn_flag;
+        }
+
+        public void setNatl_prsn_flag(String natl_prsn_flag) {
+            this.natl_prsn_flag = natl_prsn_flag;
+        }
+
         public Integer getCo_shrhdrfnd_info_nb() {
             return co_shrhdrfnd_info_nb;
         }
@@ -471,14 +545,15 @@ public class MivsRegVrfctnInfoModel implements Serializable {
                     "plat_date=" + plat_date +
                     ", plat_trace=" + plat_trace +
                     ", plat_time=" + plat_time +
-                    ", msg_id='" + msg_id + '\'' +
                     ", instg_pty='" + instg_pty + '\'' +
+                    ", msg_id='" + msg_id + '\'' +
                     ", cre_dt_tm='" + cre_dt_tm + '\'' +
                     ", orig_msg_id='" + orig_msg_id + '\'' +
                     ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
                     ", orig_instg_pty='" + orig_instg_pty + '\'' +
                     ", pg_nb=" + pg_nb +
                     ", co_shrhdrfnd_info_nb=" + co_shrhdrfnd_info_nb +
+                    ", natl_prsn_flag='" + natl_prsn_flag + '\'' +
                     ", invtr_nm='" + invtr_nm + '\'' +
                     ", invtr_id='" + invtr_id + '\'' +
                     ", subscr_cptl_con_amt='" + subscr_cptl_con_amt + '\'' +
@@ -1483,6 +1558,38 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         this.instd_pty = instd_pty;
     }
 
+    public String getMarket_type() {
+        return market_type;
+    }
+
+    public void setMarket_type(String market_type) {
+        this.market_type = market_type;
+    }
+
+    public String getTra_nm() {
+        return tra_nm;
+    }
+
+    public void setTra_nm(String tra_nm) {
+        this.tra_nm = tra_nm;
+    }
+
+    public String getNm() {
+        return nm;
+    }
+
+    public void setNm(String nm) {
+        this.nm = nm;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getNm_of_lgl_prsn() {
         return nm_of_lgl_prsn;
     }
@@ -1731,56 +1838,4 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         this.licInfo = licInfo;
     }
 
-    @Override
-    public String toString() {
-        return "MivsRegVrfctnInfoModel{" +
-                "plat_date=" + plat_date +
-                ", plat_trace=" + plat_trace +
-                ", plat_time=" + plat_time +
-                ", system_id='" + system_id + '\'' +
-                ", tran_date='" + tran_date + '\'' +
-                ", seq_no='" + seq_no + '\'' +
-                ", tran_time='" + tran_time + '\'' +
-                ", user_id='" + user_id + '\'' +
-                ", branch_id='" + branch_id + '\'' +
-                ", mivs_sts='" + mivs_sts + '\'' +
-                ", msg_id='" + msg_id + '\'' +
-                ", cre_dt_tm='" + cre_dt_tm + '\'' +
-                ", instg_drct_pty='" + instg_drct_pty + '\'' +
-                ", drct_pty_nm='" + drct_pty_nm + '\'' +
-                ", instg_pty='" + instg_pty + '\'' +
-                ", pty_nm='" + pty_nm + '\'' +
-                ", instd_drct_pty='" + instd_drct_pty + '\'' +
-                ", instd_pty='" + instd_pty + '\'' +
-                ", nm_of_lgl_prsn='" + nm_of_lgl_prsn + '\'' +
-                ", id_of_lgl_prsn='" + id_of_lgl_prsn + '\'' +
-                ", ent_nm='" + ent_nm + '\'' +
-                ", agt_id='" + agt_id + '\'' +
-                ", agt_nm='" + agt_nm + '\'' +
-                ", uni_soc_cdt_cd='" + uni_soc_cdt_cd + '\'' +
-                ", op_nm='" + op_nm + '\'' +
-                ", pg_nb=" + pg_nb +
-                ", last_pg_ind='" + last_pg_ind + '\'' +
-                ", rslt='" + rslt + '\'' +
-                ", data_resrc_dt='" + data_resrc_dt + '\'' +
-                ", bas_info_cnt=" + bas_info_cnt +
-                ", co_shrhdrfnd_info_cnt=" + co_shrhdrfnd_info_cnt +
-                ", dir_supsrsgr_info_cnt=" + dir_supsrsgr_info_cnt +
-                ", chng_info_cnt=" + chng_info_cnt +
-                ", abnml_biz_info_cnt=" + abnml_biz_info_cnt +
-                ", ill_dscrt_info_cnt=" + ill_dscrt_info_cnt +
-                ", lic_null_cnt=" + lic_null_cnt +
-                ", proc_sts='" + proc_sts + '\'' +
-                ", proc_cd='" + proc_cd + '\'' +
-                ", rjct_inf='" + rjct_inf + '\'' +
-                ", remark1='" + remark1 + '\'' +
-                ", remark2='" + remark2 + '\'' +
-                ", remark3='" + remark3 + '\'' +
-                ", basInfo=" + basInfo +
-                ", coShrhdrFndInfo=" + coShrhdrFndInfo +
-                ", dirSupSrMgrInfo=" + dirSupSrMgrInfo +
-                ", chngInfo=" + chngInfo +
-                ", licInfo=" + licInfo +
-                '}';
-    }
 }

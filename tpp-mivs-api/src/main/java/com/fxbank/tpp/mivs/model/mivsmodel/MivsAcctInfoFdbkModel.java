@@ -28,6 +28,7 @@ public class MivsAcctInfoFdbkModel implements Serializable {
     private String instd_drct_pty; //接收直接参与机构
     private String instd_pty; //接收参与机构
     private String ent_nm; //企业名称
+    private String tra_nm; //企业名称
     private String uni_soc_cdt_cd; //统一社会信用代码
     private String acct_sts; //账户状态标识
     private String chng_dt; //变更日期
@@ -194,6 +195,14 @@ public class MivsAcctInfoFdbkModel implements Serializable {
         this.ent_nm = ent_nm;
     }
 
+    public String getTra_nm() {
+        return tra_nm;
+    }
+
+    public void setTra_nm(String tra_nm) {
+        this.tra_nm = tra_nm;
+    }
+
     public String getUni_soc_cdt_cd() {
         return uni_soc_cdt_cd;
     }
@@ -320,6 +329,7 @@ public class MivsAcctInfoFdbkModel implements Serializable {
                 ", instd_drct_pty='" + instd_drct_pty + '\'' +
                 ", instd_pty='" + instd_pty + '\'' +
                 ", ent_nm='" + ent_nm + '\'' +
+                ", tra_nm='" + tra_nm + '\'' +
                 ", uni_soc_cdt_cd='" + uni_soc_cdt_cd + '\'' +
                 ", acct_sts='" + acct_sts + '\'' +
                 ", chng_dt='" + chng_dt + '\'' +

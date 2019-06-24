@@ -147,10 +147,11 @@ public class MIVS_326_001_01_AcctInfoFdbk implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "AcctSts", "ChngDt" })
+    @XmlType(propOrder = { "EntNm", "TraNm", "UniSocCdtCd", "AcctSts", "ChngDt" })
     public static class Fdbk implements Serializable{
-        private static final long serialVersionUID = -4775930107415652686L;
+        private static final long serialVersionUID = -646497094763301349L;
         private String EntNm = null;
+        private String TraNm = null;
         private String UniSocCdtCd = null;
         private String AcctSts = null;
         private String ChngDt = null;
@@ -161,6 +162,14 @@ public class MIVS_326_001_01_AcctInfoFdbk implements Serializable, SIGN_DATA {
 
         public void setEntNm(String entNm) {
             EntNm = entNm;
+        }
+
+        public String getTraNm() {
+            return TraNm;
+        }
+
+        public void setTraNm(String traNm) {
+            TraNm = traNm;
         }
 
         public String getUniSocCdtCd() {

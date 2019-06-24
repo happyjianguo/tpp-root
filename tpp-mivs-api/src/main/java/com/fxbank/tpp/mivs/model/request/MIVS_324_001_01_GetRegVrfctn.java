@@ -147,47 +147,29 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "NmOfLglPrsn", "IdOfLglPrsn", "AgtNm", "AgtId", "OpNm" })
+    @XmlType(propOrder = { "Ent", "SlfEplydPpl", "AgtNm", "AgtId", "OpNm" })
     public static class VryDef implements Serializable{
-        private static final long serialVersionUID = 453675020908748650L;
-        private String EntNm = null; //企业名称
-        private String UniSocCdtCd = null; //统一社会信用代码
-        private String NmOfLglPrsn = null; //法定代表人或单位负责人姓名
-        private String IdOfLglPrsn = null; //法定代表人或单位负责人身份证件号
+        private static final long serialVersionUID = 7036312448035278706L;
+        private Ent Ent = new Ent();
+        private SlfEplydPpl SlfEplydPpl = new SlfEplydPpl();
         private String AgtNm = null; //代理人姓名
         private String AgtId = null; //代理人身份证件号码
         private String OpNm = null; //操作员姓名
 
-        public String getEntNm() {
-            return EntNm;
+        public Ent getEnt() {
+            return Ent;
         }
 
-        public void setEntNm(String entNm) {
-            EntNm = entNm;
+        public void setEnt(Ent ent) {
+            Ent = ent;
         }
 
-        public String getUniSocCdtCd() {
-            return UniSocCdtCd;
+        public SlfEplydPpl getSlfEplydPpl() {
+            return SlfEplydPpl;
         }
 
-        public void setUniSocCdtCd(String uniSocCdtCd) {
-            UniSocCdtCd = uniSocCdtCd;
-        }
-
-        public String getNmOfLglPrsn() {
-            return NmOfLglPrsn;
-        }
-
-        public void setNmOfLglPrsn(String nmOfLglPrsn) {
-            NmOfLglPrsn = nmOfLglPrsn;
-        }
-
-        public String getIdOfLglPrsn() {
-            return IdOfLglPrsn;
-        }
-
-        public void setIdOfLglPrsn(String idOfLglPrsn) {
-            IdOfLglPrsn = idOfLglPrsn;
+        public void setSlfEplydPpl(SlfEplydPpl slfEplydPpl) {
+            SlfEplydPpl = slfEplydPpl;
         }
 
         public String getAgtNm() {
@@ -212,6 +194,88 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
 
         public void setOpNm(String opNm) {
             OpNm = opNm;
+        }
+
+        @XmlAccessorType(XmlAccessType.FIELD)
+        public static class Ent implements Serializable{
+            private static final long serialVersionUID = -637900312057806102L;
+            private String EntNm = null; //企业名称
+            private String UniSocCdtCd = null; //统一社会信用代码
+            private String NmOfLglPrsn = null; //法定代表人或单位负责人姓名
+            private String IdOfLglPrsn = null; //法定代表人或单位负责人身份证件号
+
+            public String getEntNm() {
+                return EntNm;
+            }
+
+            public void setEntNm(String entNm) {
+                EntNm = entNm;
+            }
+
+            public String getUniSocCdtCd() {
+                return UniSocCdtCd;
+            }
+
+            public void setUniSocCdtCd(String uniSocCdtCd) {
+                UniSocCdtCd = uniSocCdtCd;
+            }
+
+            public String getNmOfLglPrsn() {
+                return NmOfLglPrsn;
+            }
+
+            public void setNmOfLglPrsn(String nmOfLglPrsn) {
+                NmOfLglPrsn = nmOfLglPrsn;
+            }
+
+            public String getIdOfLglPrsn() {
+                return IdOfLglPrsn;
+            }
+
+            public void setIdOfLglPrsn(String idOfLglPrsn) {
+                IdOfLglPrsn = idOfLglPrsn;
+            }
+        }
+
+        @XmlAccessorType(XmlAccessType.FIELD)
+        public static class SlfEplydPpl implements Serializable{
+            private static final long serialVersionUID = 5514694792803947807L;
+            private String TraNm = null; //字号名称
+            private String UniSocCdtCd = null; //统一社会信用代码
+            private String Nm = null; //经营者姓名
+            private String Id = null; //经营者证件号
+
+            public String getTraNm() {
+                return TraNm;
+            }
+
+            public void setTraNm(String traNm) {
+                TraNm = traNm;
+            }
+
+            public String getUniSocCdtCd() {
+                return UniSocCdtCd;
+            }
+
+            public void setUniSocCdtCd(String uniSocCdtCd) {
+                UniSocCdtCd = uniSocCdtCd;
+            }
+
+            public String getNm() {
+                return Nm;
+            }
+
+            public void setNm(String nm) {
+                Nm = nm;
+            }
+
+            public String getId() {
+                return Id;
+            }
+
+            public void setId(String id) {
+                Id = id;
+            }
         }
     }
 

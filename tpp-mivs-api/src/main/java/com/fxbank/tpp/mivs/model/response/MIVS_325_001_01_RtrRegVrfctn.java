@@ -248,10 +248,11 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
             }
 
             @XmlAccessorType(XmlAccessType.FIELD)
-            @XmlType(propOrder = { "BasInfo","CoShrhdrFndInfo","DirSupSrMgrInfo","ChngInfo","AbnmlBizInfo","IllDscrtInfo","LicNull"})
+            @XmlType(propOrder = { "BasInfOfEnt","BasInfOfSlfEplydPpl","CoShrhdrFndInfo","DirSupSrMgrInfo","ChngInfo","AbnmlBizInfo","IllDscrtInfo","LicNull"})
             public static class RegInf implements Serializable{
                 private static final long serialVersionUID = -5365622990443907518L;
-                private List<BasInfo> BasInfo;
+                private List<BasInfOfEnt> BasInfOfEnt;
+                private List<BasInfOfSlfEplydPpl> BasInfOfSlfEplydPpl;
                 private List<CoShrhdrFndInfo> CoShrhdrFndInfo;
                 private List<DirSupSrMgrInfo> DirSupSrMgrInfo;
                 private List<ChngInfo> ChngInfo;
@@ -259,12 +260,20 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
                 private List<IllDscrtInfo> IllDscrtInfo;
                 private List<LicNull> LicNull;
 
-                public List<BasInfo> getBasInfo() {
-                    return BasInfo;
+                public List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt> getBasInfOfEnt() {
+                    return BasInfOfEnt;
                 }
 
-                public void setBasInfo(List<BasInfo> basInfo) {
-                    BasInfo = basInfo;
+                public void setBasInfOfEnt(List<BasInfOfEnt> basInfOfEnt) {
+                    BasInfOfEnt = basInfOfEnt;
+                }
+
+                public List<BasInfOfSlfEplydPpl> getBasInfOfSlfEplydPpl() {
+                    return BasInfOfSlfEplydPpl;
+                }
+
+                public void setBasInfOfSlfEplydPpl(List<BasInfOfSlfEplydPpl> basInfOfSlfEplydPpl) {
+                    BasInfOfSlfEplydPpl = basInfOfSlfEplydPpl;
                 }
 
                 public List<CoShrhdrFndInfo> getCoShrhdrFndInfo() {
@@ -316,9 +325,9 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
                 }
 
                 @XmlAccessorType(XmlAccessType.FIELD)
-                @XmlType(name = "RegInf.BasInfo")
-                public static class BasInfo implements Serializable{
-                    private static final long serialVersionUID = -2967462237131397416L;
+                @XmlType(name = "RegInf.BasInfOfEnt")
+                public static class BasInfOfEnt implements Serializable{
+                    private static final long serialVersionUID = -4838898094812856982L;
                     private String EntNm = null;
                     private String UniSocCdtCd = null;
                     private String CoTp = null;
@@ -458,15 +467,146 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
                 }
 
                 @XmlAccessorType(XmlAccessType.FIELD)
+                @XmlType(name = "RegInf.BasInfOfSlfEplydPpl")
+                public static class BasInfOfSlfEplydPpl implements Serializable{
+                    private static final long serialVersionUID = -1483567810192928176L;
+                    private String TraNm = null;
+                    private String UniSocCdtCd = null;
+                    private String CoTp = null;
+                    private String OpLoc = null;
+                    private String FdAmt = null;
+                    private String DtReg = null;
+                    private String RegSts = null;
+                    private String Nm = null;
+                    private String RegAuth = null;
+                    private String BizScp = null;
+                    private String DtAppr = null;
+
+                    public String getTraNm() {
+                        return TraNm;
+                    }
+
+                    public void setTraNm(String traNm) {
+                        TraNm = traNm;
+                    }
+
+                    public String getUniSocCdtCd() {
+                        return UniSocCdtCd;
+                    }
+
+                    public void setUniSocCdtCd(String uniSocCdtCd) {
+                        UniSocCdtCd = uniSocCdtCd;
+                    }
+
+                    public String getCoTp() {
+                        return CoTp;
+                    }
+
+                    public void setCoTp(String coTp) {
+                        CoTp = coTp;
+                    }
+
+                    public String getOpLoc() {
+                        return OpLoc;
+                    }
+
+                    public void setOpLoc(String opLoc) {
+                        OpLoc = opLoc;
+                    }
+
+                    public String getFdAmt() {
+                        return FdAmt;
+                    }
+
+                    public void setFdAmt(String fdAmt) {
+                        FdAmt = fdAmt;
+                    }
+
+                    public String getDtReg() {
+                        return DtReg;
+                    }
+
+                    public void setDtReg(String dtReg) {
+                        DtReg = dtReg;
+                    }
+
+                    public String getRegSts() {
+                        return RegSts;
+                    }
+
+                    public void setRegSts(String regSts) {
+                        RegSts = regSts;
+                    }
+
+                    public String getNm() {
+                        return Nm;
+                    }
+
+                    public void setNm(String nm) {
+                        Nm = nm;
+                    }
+
+                    public String getRegAuth() {
+                        return RegAuth;
+                    }
+
+                    public void setRegAuth(String regAuth) {
+                        RegAuth = regAuth;
+                    }
+
+                    public String getBizScp() {
+                        return BizScp;
+                    }
+
+                    public void setBizScp(String bizScp) {
+                        BizScp = bizScp;
+                    }
+
+                    public String getDtAppr() {
+                        return DtAppr;
+                    }
+
+                    public void setDtAppr(String dtAppr) {
+                        DtAppr = dtAppr;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "BasInfOfSlfEplydPpl{" +
+                                "TraNm='" + TraNm + '\'' +
+                                ", UniSocCdtCd='" + UniSocCdtCd + '\'' +
+                                ", CoTp='" + CoTp + '\'' +
+                                ", OpLoc='" + OpLoc + '\'' +
+                                ", FdAmt='" + FdAmt + '\'' +
+                                ", DtReg='" + DtReg + '\'' +
+                                ", RegSts='" + RegSts + '\'' +
+                                ", Nm='" + Nm + '\'' +
+                                ", RegAuth='" + RegAuth + '\'' +
+                                ", BizScp='" + BizScp + '\'' +
+                                ", DtAppr='" + DtAppr + '\'' +
+                                '}';
+                    }
+                }
+
+                @XmlAccessorType(XmlAccessType.FIELD)
                 @XmlType(name = "RegInf.CoShrhdrFndInfo")
                 public static class CoShrhdrFndInfo implements Serializable{
                     private static final long serialVersionUID = 6976244244556182886L;
+                    private String NatlPrsnFlag = null;
                     private String InvtrNm = null;
                     private String InvtrId = null;
                     private String SubscrCptlConAmt = null;
                     private String ActlCptlConAmt = null;
                     private String SubscrCptlConFm = null;
                     private String SubscrCptlConDt = null;
+
+                    public String getNatlPrsnFlag() {
+                        return NatlPrsnFlag;
+                    }
+
+                    public void setNatlPrsnFlag(String natlPrsnFlag) {
+                        NatlPrsnFlag = natlPrsnFlag;
+                    }
 
                     public String getInvtrNm() {
                         return InvtrNm;
@@ -519,7 +659,8 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
                     @Override
                     public String toString() {
                         return "CoShrhdrFndInfo{" +
-                                "InvtrNm='" + InvtrNm + '\'' +
+                                "NatlPrsnFlag='" + NatlPrsnFlag + '\'' +
+                                ", InvtrNm='" + InvtrNm + '\'' +
                                 ", InvtrId='" + InvtrId + '\'' +
                                 ", SubscrCptlConAmt='" + SubscrCptlConAmt + '\'' +
                                 ", ActlCptlConAmt='" + ActlCptlConAmt + '\'' +
