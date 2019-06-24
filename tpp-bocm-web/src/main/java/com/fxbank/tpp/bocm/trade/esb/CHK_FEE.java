@@ -1,14 +1,15 @@
 /**   
-* @Title: CityBocmCheckAcctTask.java 
-* @Package com.fxbank.tpp.manager.quartz 
+* @Title: CHK_FEE.java 
+* @Package com.fxbank.tpp.bocm.trade.esb 
 * @Description: TODO(用一句话描述该文件做什么) 
 * @author YePuLiang
-* @date 2019年5月24日 上午9:57:05 
+* @date 2019年6月22日 下午3:08:40 
 * @version V1.0   
 */
-package com.fxbank.tpp.manager.quartz;
+package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,60 +17,50 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
+import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
-import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
-import com.fxbank.tpp.bocm.model.REP_10103;
+import com.fxbank.tpp.bocm.model.REP_10103_FEE;
 import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.service.IBocmAcctCheckErrService;
 import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 import redis.clients.jedis.Jedis;
 
 /** 
-* @ClassName: CityBocmCheckAcctTask 
-* @Description: 渠道与交行对账定时任务
+* @ClassName: CHK_FEE 
+* @Description: TODO(这里用一句话描述这个类的作用) 
 * @author YePuLiang
-* @date 2019年5月24日 上午9:57:05 
+* @date 2019年6月22日 下午3:08:40 
 *  
 */
-@Configuration
-@Component
-@EnableScheduling
-public class CityBocmCheckAcctTask {
-	private static Logger logger = LoggerFactory.getLogger(CityBocmCheckAcctTask.class);
-
-	private static final String JOBNAME = "CityBocmCheckAcct";
-
-	@Reference(version = "1.0.0")
-	private IPublicService publicService;
+@Service("REQ_TS_CHK_FEE")
+public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
+	
+	private static Logger logger = LoggerFactory.getLogger(CHK_Bocm.class);
+	
+	@Resource
+	private LogPool logPool;
 	
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
@@ -85,17 +76,26 @@ public class CityBocmCheckAcctTask {
 	
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService rcvTraceService;
-
+	
 	@Reference(version = "1.0.0")
 	private IBocmAcctCheckErrService acctCheckErrService;
 	
+	@Reference(version = "1.0.0")
+	private IPublicService publicService;
+	
 	@Resource
 	private MyJedis myJedis;
-
-	private final static String COMMON_PREFIX = "bocm_common.";
 	
-	public void exec() throws Exception {
-		MyLog myLog = new MyLog();
+	private final static String COMMON_PREFIX = "bocm.";
+
+	@Override
+	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
+		
+		MyLog myLog = logPool.get();
+		REQ_30061800501 reqDto = (REQ_30061800501) dto;
+		REQ_30061800501.REQ_BODY reqBody = reqDto.getReqBody();
+		REP_30061800501 rep = new REP_30061800501();
+
 		// 交易机构
 		String txBrno = null;
 		// 柜员号
@@ -109,7 +109,13 @@ public class CityBocmCheckAcctTask {
 		
 		Integer sysDate = publicService.getSysDate("CIP");
 		SimpleDateFormat df=new SimpleDateFormat("yyyyMMdd");
-		Date d = df.parse(sysDate.toString());     
+		Date d = null;
+		try {
+			d = df.parse(sysDate.toString());
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}     
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(d);
 		//TODO  调试期间用当天后期修改
@@ -133,18 +139,18 @@ public class CityBocmCheckAcctTask {
 		
 		
 		REQ_10103 req10103 = null;
-		REP_10103 rep10103 = null;
+		REP_10103_FEE rep10103 = null;
 		
 		req10103 = new REQ_10103(myLog, date, sysTime, sysTraceno);
 		req10103.setSbnkNo(FXNO);
 		req10103.setRbnkNo(FXNO);
 		
-		req10103.setFilNam("BUPS"+FXNO+date+".dat");	
+		req10103.setFilNam("BFEE"+FXNO+date+".dat");	
 		//获取交行对账文件
 		myLog.info(logger, "外围与交行对账获取交行对账文件");
 		//获取交行交易流水信息
 		rep10103 = forwardToBocmService.sendToBocm(req10103, 
-				REP_10103.class);		
+				REP_10103_FEE.class);		
 		
 		//对账文件长度
 		int filLen = 0;
@@ -157,12 +163,12 @@ public class CityBocmCheckAcctTask {
 		filLen = rep10103.getFilLen();
 		tolCnt = rep10103.getTolCnt();
 		Double tolAmt = rep10103.getTolAmt();
-		List<REP_10103.Detail> tradList = rep10103.getFilTxt();
+		List<REP_10103_FEE.Detail> tradList = rep10103.getFilTxt();
 		
 		int snd = 0;
 		int rcv = 0;
 		//拆分对账文件与渠道对账		
-		for(REP_10103.Detail bocmTrace : tradList){
+		for(REP_10103_FEE.Detail bocmTrace : tradList){
 			
 			//获取交行交易流水号
 			String bocmTraceno = bocmTrace.getTlogNo();
@@ -250,8 +256,9 @@ public class CityBocmCheckAcctTask {
 //				+ "往账共【"+sndTotal+"】笔，其中已对账【"+sndCheckFlag2+"】笔，核心多出【"+sndCheckFlag3+"】笔，渠道多出【"+sndCheckFlag4+"】笔";
 
 		myLog.info(logger, "外围与交行对账成功");
+		
+		return rep;
 	}
-	
 	
 	private String getTraceSrc(String thdCod, String txnMod){
 		//来账
@@ -290,7 +297,7 @@ public class CityBocmCheckAcctTask {
 	
 	
 	private void checkBocmRcvLog(MyLog myLog,int sysDate,int sysTime,BocmRcvTraceQueryModel rcvTraceQueryModel,
-			REP_10103.Detail bocmTrace,String date) throws SysTradeExecuteException{
+			REP_10103_FEE.Detail bocmTrace,String date) throws SysTradeExecuteException{
 		//检查交行记账文件来账记录
 		String bocmTraceno = bocmTrace.getTlogNo();
 		int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
@@ -371,7 +378,7 @@ public class CityBocmCheckAcctTask {
 	}
 	
 	private void checkBocmSndLog(MyLog myLog,int sysDate,int sysTime,BocmSndTraceQueryModel sndTraceQueryModel,
-			REP_10103.Detail bocmTrace,String date) throws SysTradeExecuteException {
+			REP_10103_FEE.Detail bocmTrace,String date) throws SysTradeExecuteException {
 		
 		String bocmTraceno = bocmTrace.getTlogNo();
 		int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
@@ -451,42 +458,4 @@ public class CityBocmCheckAcctTask {
 		}
 	}
 
-	
-	@Bean(name = "cityBocmCheckAcctJobDetail")
-	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(CityBocmCheckAcctTask task) {// ScheduleTask为需要执行的任务
-		MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
-		jobDetail.setConcurrent(false);
-		jobDetail.setName(JOBNAME);
-		jobDetail.setGroup(QuartzJobConfigration.JOBGROUP);
-		jobDetail.setTargetObject(task);
-		jobDetail.setTargetMethod(QuartzJobConfigration.METHODNAME);
-		return jobDetail;
-	}
-
-	@Bean(name = "cityBocmCheckAcctJobTrigger")
-	public CronTriggerFactoryBean cityCheckAcctJobTrigger(
-			@Qualifier("cityBocmCheckAcctJobDetail") MethodInvokingJobDetailFactoryBean jobDetail) {
-		CronTriggerFactoryBean tigger = new CronTriggerFactoryBean();
-		tigger.setJobDetail(jobDetail.getObject());
-		String exp = null;
-		try (Jedis jedis = myJedis.connect()) {
-			exp = jedis.get(QuartzJobConfigration.TPP_CRON + JOBNAME);
-		}
-		if (exp == null) {
-			exp = "0 30 7 ? * *";
-		}
-		logger.info("任务[" + JOBNAME + "]启动[" + exp + "]");
-		tigger.setCronExpression(exp);
-		tigger.setName(JOBNAME);
-		return tigger;
-	}
-
-	@Bean(name = "cityBocmCheckAcctScheduler")
-	public SchedulerFactoryBean schedulerFactory(@Qualifier("cityBocmCheckAcctJobTrigger") Trigger cronJobTrigger) {
-		SchedulerFactoryBean bean = new SchedulerFactoryBean();
-		bean.setOverwriteExistingJobs(true);
-		bean.setStartupDelay(5);
-		bean.setTriggers(cronJobTrigger);
-		return bean;
-	}
 }

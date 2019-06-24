@@ -136,6 +136,8 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		
 		//1.申请Pin key
 		REQ_10104 reqPin10104 = new REQ_10104(myLog, date, sysTime, sysTraceno);
+		reqPin10104.setSbnkNo(FXNO);
+		reqPin10104.setRbnkNo(FXNO);
 		//密钥ID
 		reqPin10104.setKeyId(KeyId);
 		//密钥类型

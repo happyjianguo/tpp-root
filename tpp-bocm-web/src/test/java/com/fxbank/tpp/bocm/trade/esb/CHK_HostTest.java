@@ -1,3 +1,11 @@
+/**   
+* @Title: CHK_HostTest.java 
+* @Package com.fxbank.tpp.bocm.trade.esb 
+* @Description: TODO(用一句话描述该文件做什么) 
+* @author YePuLiang
+* @date 2019年6月24日 上午8:44:54 
+* @version V1.0   
+*/
 package com.fxbank.tpp.bocm.trade.esb;
 
 import static org.junit.Assert.assertEquals;
@@ -30,20 +38,21 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501.REQ_BODY;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
-* @ClassName: CHK_Bocm 
-* @Description: 本行对账测试 
+* @ClassName: CHK_HostTest 
+* @Description: TODO(这里用一句话描述这个类的作用) 
 * @author YePuLiang
-* @date 2019年5月7日 下午1:51:44 
+* @date 2019年6月24日 上午8:44:54 
 *  
 */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc	
-public class CHK_BocmTest {
-	private static Logger logger = LoggerFactory.getLogger(DB_BocmCashTest.class);
+public class CHK_HostTest {
+	private static Logger logger = LoggerFactory.getLogger(CHK_HostTest.class);
 	
 //	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
      private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
@@ -65,8 +74,8 @@ public class CHK_BocmTest {
 	public void init(){
 		req = new REQ_30061800501();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("TS_CHK_BOCM");
-		reqSysHead.setSceneId("");
+		reqSysHead.setServiceId("300618005");
+		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("BOCM");	//网联

@@ -39,6 +39,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		myLog.info(logger, "组包发送交行报文");	
 
 		String mac = safeService.calcBocm(myLog, fixPack.toString());		
+		myLog.info(logger, "调用加密平台生成Mac： 【"+mac+"】");	
 		fixPack.append(mac);
 		ctx.writeAndFlush(fixPack.toString(), promise);
 	}
