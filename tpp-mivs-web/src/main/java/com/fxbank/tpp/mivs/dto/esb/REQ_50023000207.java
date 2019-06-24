@@ -5,12 +5,10 @@ import com.fxbank.cip.base.dto.REQ_APP_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
-import java.util.List;
-
 /**
- * @Description: ESB“手机号码/纳税信息核查结果疑义反馈”请求报文
+ * @Description: 登记信息联网核查申请ESB请求报文
  * @Author: 王鹏
- * @Date: 2019/5/5 8:25
+ * @Date: 2019/5/20 16:40
  */
 public class REQ_50023000207 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
@@ -23,7 +21,7 @@ public class REQ_50023000207 extends REQ_BASE {
     private REQ_50023000207.REQ_BODY reqBody;
 
     public REQ_50023000207(){
-        super.txDesc = "手机号码/纳税信息核查结果疑义反馈";
+        super.txDesc = "登记信息联网核查";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -34,194 +32,166 @@ public class REQ_50023000207 extends REQ_BASE {
         this.reqAppHead = reqAppHead;
     }
 
+
     public REQ_SYS_HEAD getReqSysHead() {
         return reqSysHead;
     }
+
 
     public void setReqSysHead(REQ_SYS_HEAD reqSysHead) {
         this.reqSysHead = reqSysHead;
     }
 
+
     public REQ_50023000207.REQ_BODY getReqBody() {
         return reqBody;
     }
+
 
     public void setReqBody(REQ_50023000207.REQ_BODY reqBody) {
         this.reqBody = reqBody;
     }
 
     public class REQ_BODY {
-        @JSONField(name = "CHK_SYSTEM_ID")
-        private String sysInd;    // 核查系统标识 ：手机号为“MIIT”，纳税信息为“CSAT”
-        public String getSysInd() {
-            return sysInd;
-        }
-        public void setSysInd(String sysInd) {
-            this.sysInd = sysInd;
-        }
-
-        @JSONField(name = "ORIG_APPLY_MSG_ID")
-        private String orgnlDlvrgMsgId; //原申请报文标识号  原 mivs.320.001.01或mivs.322.001.01 的报文标识号
-        public String getOrgnlDlvrgMsgId() {
-            return orgnlDlvrgMsgId;
-        }
-        public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
-            this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
-        }
-
-        @JSONField(name = "ORIG_ANSWER_MSG_ID")
-        private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.321.001.01或mivs.323.001.01 的报文标识号
-        public String getOrgnlRcvgMsgId() {
-            return orgnlDlvrgMsgId;
-        }
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
-
-        @JSONField(name = "MOBILE_PHONE")
-        private String mobNb; // 手机号码
-        public String getMobNb() {
-            return mobNb;
-        }
-        public void setMobNb(String mobNb) {
-            this.mobNb = mobNb;
-        }
-
+        @JSONField(name = "MAKET_TYPE")
+        private String marketType;    //主体类型
+        @JSONField(name = "TRA_NM")
+        private String tranm;		//字号名称
         @JSONField(name = "NAME")
-        private String nm; // 姓名
+        private String nm;		//经营者姓名
+        @JSONField(name = "ID")
+        private String id;    //经营者证件号
+        @JSONField(name = "ENT_NAME")
+        private String entNm;    //企业名称
+        @JSONField(name = "SOCIAL_CODE")
+        private String uniSocCdtCd;		//统一社会信用代码
+        @JSONField(name = "NAME_OF_LGL_PRSN")
+        private String nmOfLglPrsn;		//法定代表人或单位负责人姓名
+        @JSONField(name = "ID_OF_LGL_PRSN")
+        private String idOfLglPrsn;    //法定代表人或单位负责人身份证件号
+        @JSONField(name = "AgtNm")
+        private String agtNm;    //代理人姓名
+        @JSONField(name = "AgtId")
+        private String agtId;    //代理人身份证件号码
+        @JSONField(name = "OPRTR_NAME")
+        private String opNm;		//操作员姓名
+        @JSONField(name = "RESERVE_FIELD1")
+        private String remarks1;		//备用字段1
+        @JSONField(name = "RESERVE_FIELD2")
+        private String remarks2;		//备用字段2
+        @JSONField(name = "RESERVE_FIELD3")
+        private String remarks3;		//备用字段3
+
+        public String getMarketType() {
+            return marketType;
+        }
+
+        public void setMarketType(String marketType) {
+            this.marketType = marketType;
+        }
+
+        public String getTranm() {
+            return tranm;
+        }
+
+        public void setTranm(String tranm) {
+            this.tranm = tranm;
+        }
+
         public String getNm() {
             return nm;
         }
+
         public void setNm(String nm) {
             this.nm = nm;
         }
 
-        @JSONField(name = "DOCUMENT_TYPE")
-        private String idTp; // 证件类型
-        public String getIdTp() {
-            return idTp;
-        }
-        public void setIdTp(String idTp) {
-            this.idTp = idTp;
-        }
-
-        @JSONField(name = "DOCUMENT_ID")
-        private String id; // 证件号码
         public String getId() {
             return id;
         }
+
         public void setId(String id) {
             this.id = id;
         }
 
-        @JSONField(name = "COMPANY_NAME")
-        private String coNm; // 单位名称
-        public String getCoNm() {
-            return coNm;
-        }
-        public void setCoNm(String coNm) {
-            this.coNm = coNm;
+        public String getEntNm() {
+            return entNm;
         }
 
-        @JSONField(name = "SOCIAL_CODE")
-        private String uniSocCdtCd; // 统一社会信用代码
+        public void setEntNm(String entNm) {
+            this.entNm = entNm;
+        }
+
         public String getUniSocCdtCd() {
             return uniSocCdtCd;
         }
+
         public void setUniSocCdtCd(String uniSocCdtCd) {
             this.uniSocCdtCd = uniSocCdtCd;
         }
 
-        @JSONField(name = "BIZ_REG_NO")
-        private String bizRegNb; // 工商注册号
-        public String getBizRegNb() {
-            return bizRegNb;
-        }
-        public void setBizRegNb(String bizRegNb) {
-            this.bizRegNb = bizRegNb;
+        public String getNmOfLglPrsn() {
+            return nmOfLglPrsn;
         }
 
-        @JSONField(name = "MOBILE_VER_RESULT")
-        private String rslt; // 手机号码核查结果
-        public String getRslt() {
-            return rslt;
-        }
-        public void setRslt(String rslt) {
-            this.rslt = rslt;
+        public void setNmOfLglPrsn(String nmOfLglPrsn) {
+            this.nmOfLglPrsn = nmOfLglPrsn;
         }
 
-        @JSONField(name = "DATA_SOURCE_DATE")
-        private String dataResrcDt; // 数据源日期
-        public String getDataResrcDt() {
-            return dataResrcDt;
-        }
-        public void setDataResrcDt(String dataResrcDt) {
-            this.dataResrcDt = dataResrcDt;
+        public String getIdOfLglPrsn() {
+            return idOfLglPrsn;
         }
 
-        @JSONField(name = "TXPYR_INFO_ARRAY")
-        private List<TMSGS> arrayMsg;//纳税信息数组
-
-        public List<TMSGS> getArrayMsg() {
-            return arrayMsg;
-        }
-        public void setArrayMsg(List<TMSGS> arrayMsg) {
-            this.arrayMsg = arrayMsg;
-        }
-        public class TMSGS{
-            @JSONField(name = "TAX_JDCY_CODE")
-            private String txAuthCd;//税务机关代码
-            public String getTxAuthCd() {
-                return txAuthCd;
-            }
-            public void setTxAuthCd(String txAuthCd) {
-                this.txAuthCd = txAuthCd;
-            }
-
-            @JSONField(name = "TAX_JDCY_NAME")
-            private String txAuthNm;//税务机关名称
-            public String getTxAuthNm() {
-                return txAuthNm;
-            }
-            public void setTxAuthNm(String txAuthNm) {
-                this.txAuthNm = txAuthNm;
-            }
-
-            @JSONField(name = "TXPYR_STATUS")
-            private String txpyrSts;//纳税人状态
-            public String getTxpyrSts() {
-                return txpyrSts;
-            }
-            public void setTxpyrSts(String txpyrSts) {
-                this.txpyrSts = txpyrSts;
-            }
+        public void setIdOfLglPrsn(String idOfLglPrsn) {
+            this.idOfLglPrsn = idOfLglPrsn;
         }
 
-        @JSONField(name = "RESPONSE_INFO")
-        private String cntt; // 疑似反馈内容
-        public String getCntt() {
-            return cntt;
-        }
-        public void setCntt(String cntt) {
-            this.cntt = cntt;
+        public String getAgtNm() {
+            return agtNm;
         }
 
-        @JSONField(name = "CONTACT_NAME")
-        private String contactNm; // 联系人姓名
-        public String getContactNm() {
-            return contactNm;
-        }
-        public void setContactNm(String contactNm) {
-            this.contactNm = contactNm;
+        public void setAgtNm(String agtNm) {
+            this.agtNm = agtNm;
         }
 
-        @JSONField(name = "CONTACT_TEL")
-        private String contactNb; // 联系人电话
-        public String getContactNb() {
-            return contactNb;
+        public String getAgtId() {
+            return agtId;
         }
-        public void setContactNb(String contactNb) {
-            this.contactNb = contactNb;
+
+        public void setAgtId(String agtId) {
+            this.agtId = agtId;
+        }
+
+        public String getOpNm() {
+            return opNm;
+        }
+
+        public void setOpNm(String opNm) {
+            this.opNm = opNm;
+        }
+
+        public String getRemarks1() {
+            return remarks1;
+        }
+
+        public void setRemarks1(String remarks1) {
+            this.remarks1 = remarks1;
+        }
+
+        public String getRemarks2() {
+            return remarks2;
+        }
+
+        public void setRemarks2(String remarks2) {
+            this.remarks2 = remarks2;
+        }
+
+        public String getRemarks3() {
+            return remarks3;
+        }
+
+        public void setRemarks3(String remarks3) {
+            this.remarks3 = remarks3;
         }
     }
 }
