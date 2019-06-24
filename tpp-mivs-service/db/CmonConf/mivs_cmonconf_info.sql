@@ -4,7 +4,7 @@ plat_date NUMBER(11) NOT NULL ,
 plat_trace NUMBER(11) NOT NULL ,
 plat_time NUMBER(11) NULL,
 tran_date NVARCHAR2(10) NULL ,
-seq_no NVARCHAR2(22) NOT NULL ,
+seq_no NVARCHAR2(22) NULL ,
 tran_time NVARCHAR2(10) NULL,
 msg_id NVARCHAR2(35) NOT NULL ,
 cre_dt_tm NVARCHAR2(20) NULL ,
@@ -32,9 +32,6 @@ COMMENT ON TABLE mivs_cmonconf_info IS '企业信息联网核查_通用处理确
 COMMENT ON COLUMN mivs_cmonconf_info.plat_date IS '平台日期';
 COMMENT ON COLUMN mivs_cmonconf_info.plat_trace IS '平台流水';
 COMMENT ON COLUMN mivs_cmonconf_info.plat_time IS '平台时间';
-COMMENT ON COLUMN mivs_cmonconf_info.tran_date IS '交易日期';
-COMMENT ON COLUMN mivs_cmonconf_info.seq_no IS '渠道流水';
-COMMENT ON COLUMN mivs_cmonconf_info.tran_time IS '交易时间';
 COMMENT ON COLUMN mivs_cmonconf_info.msg_id IS '报文标识号';
 COMMENT ON COLUMN mivs_cmonconf_info.cre_dt_tm IS '报文发送时间';
 COMMENT ON COLUMN mivs_cmonconf_info.instg_drct_pty IS '发起直接参与机构'

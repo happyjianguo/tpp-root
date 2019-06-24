@@ -11,6 +11,7 @@ orig_instg_drct_pty NVARCHAR2(14) NULL,
 orig_instg_pty NVARCHAR2(14) NULL,
 pg_nb NUMBER(10) NULL,
 abn_info_nb NUMBER NOT NULL,
+
 abnml_cause NVARCHAR2(200) NULL ,
 abnml_date NVARCHAR2(22) NULL,
 abnml_cause_dcsn_auth NVARCHAR2(128) NULL,

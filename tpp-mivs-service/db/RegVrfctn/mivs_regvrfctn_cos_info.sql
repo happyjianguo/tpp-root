@@ -11,6 +11,8 @@ orig_instg_drct_pty NVARCHAR2(14) NULL,
 orig_instg_pty NVARCHAR2(14) NULL,
 pg_nb NUMBER(10) NULL,
 co_shrhdrfnd_info_nb NUMBER NOT NULL,
+
+natl_prsn_flag NVARCHAR2(4) NULL,
 invtr_nm NVARCHAR2(200) NULL ,
 invtr_id NVARCHAR2(50) NULL,
 subscr_cptl_con_amt NVARCHAR2(30) NULL,
@@ -30,6 +32,7 @@ COMMENT ON COLUMN mivs_regvrfctn_cos_info.instg_pty IS '发起参与机构';
 COMMENT ON COLUMN mivs_regvrfctn_cos_info.msg_id IS '报文标识号';
 COMMENT ON COLUMN mivs_regvrfctn_cos_info.cre_dt_tm IS '报文发送时间';
 COMMENT ON COLUMN mivs_regvrfctn_cos_info.co_shrhdrfnd_info_nb IS '条数号';
+COMMENT ON COLUMN mivs_regvrfctn_cos_info.natl_prsn_flag IS '自然人标识';
 COMMENT ON COLUMN mivs_regvrfctn_cos_info.invtr_nm IS '投资人名称';
 COMMENT ON COLUMN mivs_regvrfctn_cos_info.invtr_id IS '投资人证件号码或证件编号';
 COMMENT ON COLUMN mivs_regvrfctn_cos_info.subscr_cptl_con_amt IS '认缴出资额';

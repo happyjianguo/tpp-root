@@ -20,6 +20,7 @@ instd_drct_pty NVARCHAR2(14) NULL ,
 instd_pty NVARCHAR2(14) NULL ,
 
 ent_nm NVARCHAR2(100) NULL ,
+tra_nm NVARCHAR2(256) NULL ,
 uni_soc_cdt_cd NVARCHAR2(18) NULL,
 acct_sts NVARCHAR2(4) NULL,
 chng_dt NVARCHAR2(140) NULL,
@@ -57,6 +58,7 @@ COMMENT ON COLUMN mivs_acctinfofdbk_info.pty_nm IS '发起参与机构行名';
 COMMENT ON COLUMN mivs_acctinfofdbk_info.instd_drct_pty IS '接收直接参与机构';
 COMMENT ON COLUMN mivs_acctinfofdbk_info.instd_pty IS '接收参与机构';
 COMMENT ON COLUMN mivs_acctinfofdbk_info.ent_nm IS '企业名称';
+COMMENT ON COLUMN mivs_acctinfofdbk_info.tra_nm IS '个体户名称';
 COMMENT ON COLUMN mivs_acctinfofdbk_info.uni_soc_cdt_cd IS '统一社会信用代码';
 COMMENT ON COLUMN mivs_acctinfofdbk_info.acct_sts IS '账户状态标识';
 COMMENT ON COLUMN mivs_acctinfofdbk_info.chng_dt IS '变更日期';

@@ -10,20 +10,28 @@ orig_msg_id NVARCHAR2(35) NULL,
 orig_instg_drct_pty NVARCHAR2(14) NULL,
 orig_instg_pty NVARCHAR2(14) NULL,
 pg_nb NUMBER(10) NULL,
-bas_info_nb NUMBER NOT NULL,
-ent_nm NVARCHAR2(20) NULL ,
+bas_info_nb NUMBER NULL,
+market_type NVARCHAR2(10) NULL,
+
 uni_soc_cdt_cd NVARCHAR2(18) NULL,
 co_tp NVARCHAR2(128) NULL,
+reg_sts NVARCHAR2(128) NULL,
+reg_auth NVARCHAR2(128) NULL,
+biz_scp CLOB NULL,
+dt_appr NVARCHAR2(20) NULL,
+ent_nm NVARCHAR2(100) NULL ,
 dom NVARCHAR2(512) NULL,
 reg_cptl NVARCHAR2(30) NULL,
 dt_est NVARCHAR2(20) NULL,
 op_prd_from NVARCHAR2(20) NULL,
 op_prd_to NVARCHAR2(20) NULL,
-reg_sts NVARCHAR2(128) NULL,
 nm_of_lgl_prsn NVARCHAR2(200) NULL,
-reg_auth NVARCHAR2(128) NULL,
-biz_scp CLOB NULL,
-dt_appr NVARCHAR2(20) NULL
+
+tra_nm NVARCHAR2(256) NULL,
+op_loc NVARCHAR2(200) NULL,
+fd_amt NVARCHAR2(30) NULL,
+dt_reg NVARCHAR2(20) NULL,
+nm NVARCHAR2(20) NULL
 );
 
 COMMENT ON TABLE mivs_regvrfctn_bas_info IS '企业信息联网核查_登记信息核查照面信息业务信息附表';
@@ -50,6 +58,12 @@ COMMENT ON COLUMN mivs_regvrfctn_bas_info.nm_of_lgl_prsn IS '法定代表人或�
 COMMENT ON COLUMN mivs_regvrfctn_bas_info.reg_auth IS '登记机关';
 COMMENT ON COLUMN mivs_regvrfctn_bas_info.biz_scp IS '经营范围';
 COMMENT ON COLUMN mivs_regvrfctn_bas_info.dt_appr IS '核准日期';
+
+COMMENT ON COLUMN mivs_regvrfctn_bas_info.tra_nm IS '字号名称';
+COMMENT ON COLUMN mivs_regvrfctn_bas_info.op_loc IS '经营场所';
+COMMENT ON COLUMN mivs_regvrfctn_bas_info.fd_amt IS '资金数额';
+COMMENT ON COLUMN mivs_regvrfctn_bas_info.dt_reg IS '成立日期';
+COMMENT ON COLUMN mivs_regvrfctn_bas_info.nm IS '经营者姓名';
 
 
 ALTER TABLE mivs_regvrfctn_bas_info ADD PRIMARY KEY (instg_pty, msg_id, bas_info_nb);

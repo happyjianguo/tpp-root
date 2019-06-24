@@ -18,14 +18,18 @@ instg_pty NVARCHAR2(14) NULL ,
 pty_nm NVARCHAR2(140) NULL ,
 instd_drct_pty NVARCHAR2(14) NULL ,
 instd_pty NVARCHAR2(14) NULL ,
-ent_nm NVARCHAR2(100) NULL ,
-uni_soc_cdt_cd NVARCHAR2(18) NULL ,
-nm_of_lgl_prsn NVARCHAR2(140) NULL,
-id_of_lgl_prsn NVARCHAR2(35) NULL,
 agt_nm NVARCHAR2(140) NULL,
 agt_id NVARCHAR2(35) NULL,
 op_nm NVARCHAR2(140) NULL,
-pg_nb NUMBER(10) NULL,
+market_type NVARCHAR2(10) NULL,
+uni_soc_cdt_cd NVARCHAR2(18) NULL ,
+ent_nm NVARCHAR2(100) NULL ,
+nm_of_lgl_prsn NVARCHAR2(140) NULL,
+id_of_lgl_prsn NVARCHAR2(35) NULL,
+tra_nm NVARCHAR2(256) NULL,
+nm NVARCHAR2(200) NULL,
+id NVARCHAR2(35) NULL,
+pg_nb NUMBER NULL,
 last_pg_ind NVARCHAR2(20) NULL,
 rslt NVARCHAR2(4) NULL,
 data_resrc_dt NVARCHAR2(20) NULL,
@@ -65,6 +69,7 @@ COMMENT ON COLUMN mivs_regvrfctn_info.instg_pty IS '发起参与机构';
 COMMENT ON COLUMN mivs_regvrfctn_info.pty_nm IS '发起参与机构行名';
 COMMENT ON COLUMN mivs_regvrfctn_info.instd_drct_pty IS '接收直接参与机构';
 COMMENT ON COLUMN mivs_regvrfctn_info.instd_pty IS '接收参与机构';
+COMMENT ON COLUMN mivs_regvrfctn_info.market_type IS '市场主体类型：ENT-企业，SLF-个体工商户';
 COMMENT ON COLUMN mivs_regvrfctn_info.nm_of_lgl_prsn IS '法定代表人或单位负责人姓名';
 COMMENT ON COLUMN mivs_regvrfctn_info.id_of_lgl_prsn IS '法定代表人或单位负责人身份证件号';
 COMMENT ON COLUMN mivs_regvrfctn_info.ent_nm IS '企业名称';
