@@ -102,7 +102,7 @@ public class TradeBase {
 //		return esbRep_30043003001;
 //	}
 
-	/*
+	/**
 	 * ESB日期转换成人行日期
 	 */
 	public String  dateToIsoDate(String idate) {

@@ -96,10 +96,17 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        vryDef.setEntNm(reqBody.getEntNm());
-        vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        vryDef.setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
-        vryDef.setIdOfLglPrsn(reqBody.getIdOfLglPrsn());
+        if(reqBody.getMarketType().equals("ENT")){
+            vryDef.getEnt().setEntNm(reqBody.getEntNm());
+            vryDef.getEnt().setUniSocCdtCd(reqBody.getUniSocCdtCd());
+            vryDef.getEnt().setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
+            vryDef.getEnt().setIdOfLglPrsn(reqBody.getIdOfLglPrsn());
+        }else if(reqBody.getMarketType().equals("TRA")){
+            vryDef.getSlfEplydPpl().setTraNm(reqBody.getTranm());
+            vryDef.getSlfEplydPpl().setUniSocCdtCd(reqBody.getUniSocCdtCd());
+            vryDef.getSlfEplydPpl().setNm(reqBody.getNm());
+            vryDef.getSlfEplydPpl().setId(reqBody.getId());
+        }
         vryDef.setAgtNm(reqBody.getAgtNm());
         vryDef.setAgtId(reqBody.getAgtId());
         vryDef.setOpNm(reqBody.getOpNm());
@@ -130,10 +137,14 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         regvrfctnInfoTableInsert.setPty_nm(bnkNmT);
         regvrfctnInfoTableInsert.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
         regvrfctnInfoTableInsert.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
+        regvrfctnInfoTableInsert.setMarket_type(reqBody.getMarketType());
         regvrfctnInfoTableInsert.setEnt_nm(reqBody.getEntNm());
         regvrfctnInfoTableInsert.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
         regvrfctnInfoTableInsert.setNm_of_lgl_prsn(reqBody.getNmOfLglPrsn());
         regvrfctnInfoTableInsert.setId_of_lgl_prsn(reqBody.getIdOfLglPrsn());
+        regvrfctnInfoTableInsert.setTra_nm(reqBody.getTranm());
+        regvrfctnInfoTableInsert.setNm(reqBody.getNm());
+        regvrfctnInfoTableInsert.setId(reqBody.getId());
         regvrfctnInfoTableInsert.setAgt_nm(reqBody.getAgtNm());
         regvrfctnInfoTableInsert.setAgt_id(reqBody.getAgtId());
         regvrfctnInfoTableInsert.setOp_nm(reqBody.getOpNm());
@@ -185,31 +196,49 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             MivsRegVrfctnInfoModel infoModel = mivsRegVrfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "all");
             myLog.debug(logger, "###infoModel :" + infoModel.toString());
             //赋BasInfo数据
-            List<REP_50023000203.BasInfo> basInfoArrayMsg = new ArrayList<REP_50023000203.BasInfo>();
+            List<REP_50023000203.BasInfoEnt> basInfoEntArrayMsg = new ArrayList<REP_50023000203.BasInfoEnt>();
+            List<REP_50023000203.BasInfOfSlfEplydPpl> basInfOfSlfEplydPplArrayMsg = new ArrayList<REP_50023000203.BasInfOfSlfEplydPpl>();
             if(infoModel.getBasInfo() != null && !infoModel.getBasInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.BasInfo Info:infoModel.getBasInfo()) {
-                    REP_50023000203.BasInfo basInfoArMsg = new REP_50023000203.BasInfo();
-                    basInfoArMsg.setPgNb(Info.getPg_nb());
-                    basInfoArMsg.setBasInfoNb(Info.getBas_info_nb());
-                    basInfoArMsg.setEntNm(Info.getEnt_nm());
-                    basInfoArMsg.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
-                    basInfoArMsg.setCoTp(Info.getCo_tp());
-                    basInfoArMsg.setDom(Info.getDom());
-                    basInfoArMsg.setRegCptl(Info.getReg_cptl());
-                    basInfoArMsg.setDtEst(Info.getDt_est());
-                    basInfoArMsg.setOpPrdFrom(Info.getOp_prd_from());
-                    basInfoArMsg.setOpPrdTo(Info.getOp_prd_to());
-                    basInfoArMsg.setRegSts(Info.getReg_sts());
-                    basInfoArMsg.setNmOfLglPrsn(Info.getNm_of_lgl_prsn());
-                    basInfoArMsg.setRegAuth(Info.getReg_auth());
-                    basInfoArMsg.setBizScp(Info.getBiz_scp());
-                    basInfoArMsg.setDtAppr(Info.getDt_appr());
-
-                    basInfoArrayMsg.add(basInfoArMsg);
+                    if(Info.getMarket_type().equals("ENT")) {
+                        REP_50023000203.BasInfoEnt basInfoArMsg = new REP_50023000203.BasInfoEnt();
+                        basInfoArMsg.setPgNb(Info.getPg_nb());
+                        basInfoArMsg.setEntNm(Info.getEnt_nm());
+                        basInfoArMsg.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
+                        basInfoArMsg.setCoTp(Info.getCo_tp());
+                        basInfoArMsg.setDom(Info.getDom());
+                        basInfoArMsg.setRegCptl(Info.getReg_cptl());
+                        basInfoArMsg.setDtEst(Info.getDt_est());
+                        basInfoArMsg.setOpPrdFrom(Info.getOp_prd_from());
+                        basInfoArMsg.setOpPrdTo(Info.getOp_prd_to());
+                        basInfoArMsg.setRegSts(Info.getReg_sts());
+                        basInfoArMsg.setNmOfLglPrsn(Info.getNm_of_lgl_prsn());
+                        basInfoArMsg.setRegAuth(Info.getReg_auth());
+                        basInfoArMsg.setBizScp(Info.getBiz_scp());
+                        basInfoArMsg.setDtAppr(Info.getDt_appr());
+                        basInfoEntArrayMsg.add(basInfoArMsg);
+                    }else if(Info.getMarket_type().equals("TRA")){
+                        REP_50023000203.BasInfOfSlfEplydPpl basInfoArMsg = new REP_50023000203.BasInfOfSlfEplydPpl();
+                        basInfoArMsg.setPgNb(Info.getPg_nb());
+                        basInfoArMsg.setTraNm(Info.getTra_nm());
+                        basInfoArMsg.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
+                        basInfoArMsg.setCoTp(Info.getCo_tp());
+                        basInfoArMsg.setOpLoc(Info.getOp_loc());
+                        basInfoArMsg.setFdAmt(Info.getFd_amt());
+                        basInfoArMsg.setDtReg(Info.getDt_reg());
+                        basInfoArMsg.setRegSts(Info.getReg_sts());
+                        basInfoArMsg.setNm(Info.getNm());
+                        basInfoArMsg.setRegAuth(Info.getReg_auth());
+                        basInfoArMsg.setBizScp(Info.getBiz_scp());
+                        basInfoArMsg.setDtAppr(Info.getDt_appr());
+                        basInfOfSlfEplydPplArrayMsg.add(basInfoArMsg);
+                    }
                 }
                 //插入ESB应答报文BasInfoList
-                myLog.debug(logger, "repBody.setBasInfoarrayMsg = " + basInfoArrayMsg.toString());
-                repBody.setBasInfoarrayMsg(basInfoArrayMsg);
+                myLog.debug(logger, "repBody.setBasInfoEntList = " + basInfoEntArrayMsg.toString());
+                repBody.setBasInfoEntList(basInfoEntArrayMsg);
+                myLog.debug(logger, "repBody.setBasInfOfSlfEplydPplList = " + basInfOfSlfEplydPplArrayMsg.toString());
+                repBody.setBasInfOfSlfEplydPplList(basInfOfSlfEplydPplArrayMsg);
             }
             //赋CoShrhdrFndInfo数据
             List<REP_50023000203.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<REP_50023000203.CoShrhdrFndInfo>();
@@ -228,7 +257,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 }
                 //插入ESB应答报文CoShrhdrFndInfo
                 myLog.debug(logger, "repBody.coShrhdrFndInfoArrayMsg = " + coShrhdrFndInfoArrayMsg.toString());
-                repBody.setCoShrhdrFndInfoarrayMsg(coShrhdrFndInfoArrayMsg);
+                repBody.setCoShrhdrFndInfoList(coShrhdrFndInfoArrayMsg);
             }
             //赋DirSupSrMgrInfo数据
             List<REP_50023000203.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<REP_50023000203.DirSupSrMgrInfo>();
@@ -243,7 +272,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 }
                 //插入ESB应答报文DirSupSrMgrInfoList
                 myLog.debug(logger, "repBody.dirSupSrMgrInfoArrayMsg = " + dirSupSrMgrInfoArrayMsg.toString());
-                repBody.setDirSupSrMgrInfoarrayMsg(dirSupSrMgrInfoArrayMsg);
+                repBody.setDirSupSrMgrInfoList(dirSupSrMgrInfoArrayMsg);
             }
             //赋ChngInfo数据
             List<REP_50023000203.ChngInfo> chngInfoArrayMsg = new ArrayList<REP_50023000203.ChngInfo>();
@@ -260,7 +289,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 }
                 //插入ESB应答报文chngInfoArrayMsg
                 myLog.debug(logger, "repBody.chngInfoArrayMsg = " + chngInfoArrayMsg.toString());
-                repBody.setChngInfoarrayMsg(chngInfoArrayMsg);
+                repBody.setChngInfoList(chngInfoArrayMsg);
             }
             //赋AbnmlBizInfo数据
             List<REP_50023000203.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<REP_50023000203.AbnmlBizInfo>();
@@ -279,7 +308,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 }
                 //插入ESB应答报文abnInfoArrayMsg
                 myLog.debug(logger, "repBody.abnInfoArrayMsg = " + abnInfoArrayMsg.toString());
-                repBody.setAbnmlBizInfoarrayMsg(abnInfoArrayMsg);
+                repBody.setAbnmlBizInfoList(abnInfoArrayMsg);
             }
             //赋IllDscrtInfo数据
             List<REP_50023000203.IllDscrtInfo> illInfoArrayMsg = new ArrayList<REP_50023000203.IllDscrtInfo>();
@@ -298,7 +327,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 }
                 //插入ESB应答报文illInfoArrayMsg
                 myLog.debug(logger, "repBody.illInfoArrayMsg = " + illInfoArrayMsg.toString());
-                repBody.setIllDscrtInfoarrayMsg(illInfoArrayMsg);
+                repBody.setIllDscrtInfoList(illInfoArrayMsg);
             }
             //赋LicNull数据
             List<REP_50023000203.LicNull> licNullArrayMsg = new ArrayList<REP_50023000203.LicNull>();
@@ -317,7 +346,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 }
                 //插入ESB应答报文licNullArrayMsg
                 myLog.debug(logger, "repBody.licNullArrayMsg = " + licNullArrayMsg.toString());
-                repBody.setLicNullarrayMsg(licNullArrayMsg);
+                repBody.setLicNullList(licNullArrayMsg);
             }
             //更新数据库状态赋值
             regVrfctnInfoTableUpdate.setMivs_sts("04");

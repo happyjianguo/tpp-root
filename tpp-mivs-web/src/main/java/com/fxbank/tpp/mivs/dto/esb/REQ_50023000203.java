@@ -53,7 +53,14 @@ public class REQ_50023000203 extends REQ_BASE {
     }
 
     public class REQ_BODY {
-
+        @JSONField(name = "MAKET_TYPE")
+        private String marketType;    //主体类型
+        @JSONField(name = "TRA_NM")
+        private String tranm;		//字号名称
+        @JSONField(name = "NAME")
+        private String nm;		//经营者姓名
+        @JSONField(name = "ID")
+        private String id;    //经营者证件号
         @JSONField(name = "ENT_NAME")
         private String entNm;    //企业名称
         @JSONField(name = "SOCIAL_CODE")
@@ -74,6 +81,38 @@ public class REQ_50023000203 extends REQ_BASE {
         private String remarks2;		//备用字段2
         @JSONField(name = "RESERVE_FIELD3")
         private String remarks3;		//备用字段3
+
+        public String getMarketType() {
+            return marketType;
+        }
+
+        public void setMarketType(String marketType) {
+            this.marketType = marketType;
+        }
+
+        public String getTranm() {
+            return tranm;
+        }
+
+        public void setTranm(String tranm) {
+            this.tranm = tranm;
+        }
+
+        public String getNm() {
+            return nm;
+        }
+
+        public void setNm(String nm) {
+            this.nm = nm;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
 
         public String getEntNm() {
             return entNm;

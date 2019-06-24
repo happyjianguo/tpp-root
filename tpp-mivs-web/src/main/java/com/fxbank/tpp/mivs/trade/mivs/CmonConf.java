@@ -72,6 +72,7 @@ public class CmonConf extends TradeBase implements TradeExecutionStrategy {
         mivsCmonConfModel.setRjct_inf(cmonConfInf.getRjctInf());;
         mivsCmonConfModel.setPrc_dt(cmonConfInf.getPrcDt());
         mivsCmonConfModel.setNetg_rnd(cmonConfInf.getNetgRnd());
+        myLog.debug(logger,"mivsCmonConfModel.toString() 为："+mivsCmonConfModel.toString());
         mivsCmonConfService.insertStart(mivsCmonConfModel);
 
         super.jedisPublish(myLog,channel.getBytes(), b900);

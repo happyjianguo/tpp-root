@@ -72,7 +72,10 @@ public class SIMU_AcctInfoFdbk implements TradeExecutionStrategy {
         ccms900.getHeader().setMesgID(mivs326.getHead().getMesgID());
         grpHdr.getInstgPty().setInstgDrctPty("0000");
         grpHdr.getInstgPty().setInstgPty("000012345678");
-        grpHdr.setMsgId(grpHdr.getMsgId());
+        grpHdr.setMsgId(mivs326.getHead().getMesgID());
+        grpHdr.setCreDtTm(mivs326.getAcctInfoFdbk().getMsgHdr().getCreDtTm());
+        grpHdr.setSysCd("ACCT");
+        grpHdr.setRmk("900回复");
         orgnlGrpHdr.setOrgnlMsgId(mivs326.getHead().getMesgID());
         orgnlGrpHdr.setOrgnlInstgPty(mivs326.getAcctInfoFdbk().getMsgHdr().getInstgPty().getInstgDrctPty());
         orgnlGrpHdr.setOrgnlMT("FBDK");

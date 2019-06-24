@@ -75,9 +75,9 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             regvrfctnInfoUmasAndIatt.setData_resrc_dt(vrfctnInf.getDataResrcDt());
             /*数据库中附表数据赋值开始*/
             //取循环数据BasInfo附表数据
-            List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfo> basInfoList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getBasInfo();
-            myLog.info(logger, "*** basInfoList的值为:" + basInfoList.toString());
-            if(basInfoList != null && !basInfoList.isEmpty()) {
+            List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt> basInfoOfEntList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getBasInfOfEnt();
+            if(basInfoOfEntList != null && !basInfoOfEntList.isEmpty()) {
+                myLog.info(logger, "*** basInfoOfEntList的值为:" + basInfoOfEntList.toString());
                 //赋循环数据BasInfo附表数据
                 List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
                 myLog.info(logger,"照面信息的条数 = " + regvrfctnInfoTablSelectMaster.getBas_info_cnt());
@@ -88,7 +88,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     basInfoCnt = regvrfctnInfoTablSelectMaster.getBas_info_cnt();
                 }
                 int basInfoNb = 0;
-                for (MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfo Info:basInfoList) {
+                for (MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt Info:basInfoOfEntList) {
                     MivsRegVrfctnInfoModel.BasInfo basInfoMsg = new MivsRegVrfctnInfoModel.BasInfo();
                     basInfoMsg.setPlat_date(mivs325.getSysDate());
                     basInfoMsg.setPlat_trace(mivs325.getSysTraceno());
@@ -101,6 +101,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     basInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
                     basInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     basInfoMsg.setBas_info_nb(++basInfoNb);
+                    basInfoMsg.setMarket_type("ENT");
                     basInfoMsg.setEnt_nm(Info.getEntNm());
                     basInfoMsg.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
                     basInfoMsg.setCo_tp(Info.getCoTp());
@@ -121,10 +122,55 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 regvrfctnInfoUmasAndIatt.setBas_info_cnt(basInfoCnt);
             }
 
+            List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfSlfEplydPpl> basInfOfSlfEplydPplList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getBasInfOfSlfEplydPpl();
+            if(basInfOfSlfEplydPplList != null && !basInfOfSlfEplydPplList.isEmpty()) {
+                myLog.info(logger, "*** basInfOfSlfEplydPplList的值为:" + basInfOfSlfEplydPplList.toString());
+                //赋循环数据BasInfo附表数据
+                List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
+                myLog.info(logger,"照面信息的条数 = " + regvrfctnInfoTablSelectMaster.getBas_info_cnt());
+                int basInfoCnt;
+                if(regvrfctnInfoTablSelectMaster.getBas_info_cnt() == null ){
+                    basInfoCnt = 0;
+                }else{
+                    basInfoCnt = regvrfctnInfoTablSelectMaster.getBas_info_cnt();
+                }
+                int basInfoNb = 0;
+                for (MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfSlfEplydPpl Info:basInfOfSlfEplydPplList) {
+                    MivsRegVrfctnInfoModel.BasInfo basInfoMsg = new MivsRegVrfctnInfoModel.BasInfo();
+                    basInfoMsg.setPlat_date(mivs325.getSysDate());
+                    basInfoMsg.setPlat_trace(mivs325.getSysTraceno());
+                    basInfoMsg.setPlat_time(mivs325.getSysTime());
+                    basInfoMsg.setInstg_pty(msgHdr.getInstgPty().getInstgPty());
+                    basInfoMsg.setMsg_id(msgHdr.getMsgId());
+                    basInfoMsg.setCre_dt_tm(msgHdr.getCreDtTm());
+                    basInfoMsg.setOrig_msg_id(orgnlBizQry.getMsgId());
+                    basInfoMsg.setOrig_instg_drct_pty(orgnlBizQry.getInstgPty().getInstgDrctPty());
+                    basInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+                    basInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
+                    basInfoMsg.setBas_info_nb(++basInfoNb);
+                    basInfoMsg.setMarket_type("TRA");
+                    basInfoMsg.setTra_nm(Info.getTraNm());
+                    basInfoMsg.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
+                    basInfoMsg.setCo_tp(Info.getCoTp());
+                    basInfoMsg.setOp_loc(Info.getOpLoc());
+                    basInfoMsg.setFd_amt(Info.getFdAmt());
+                    basInfoMsg.setDt_reg(Info.getDtReg());
+                    basInfoMsg.setNm(Info.getNm());
+                    basInfoMsg.setReg_sts(Info.getRegSts());;
+                    basInfoMsg.setReg_auth(Info.getRegAuth());
+                    basInfoMsg.setBiz_scp(Info.getBizScp());
+                    basInfoMsg.setDt_appr(Info.getDtAppr());
+                    ++basInfoCnt;
+                    basInfoArrayMsg.add(basInfoMsg);
+                }
+                regvrfctnInfoUmasAndIatt.setBasInfo(basInfoArrayMsg);
+                regvrfctnInfoUmasAndIatt.setBas_info_cnt(basInfoCnt);
+            }
+
             //取循环数据CoShrhdrFndInfo附表数据
             List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.CoShrhdrFndInfo> coShrhdrFndInfoList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getCoShrhdrFndInfo();
-            myLog.info(logger, "*** coShrhdrFndInfoList的值为:" + coShrhdrFndInfoList.toString());
             if(coShrhdrFndInfoList != null && !coShrhdrFndInfoList.isEmpty()) {
+                myLog.info(logger, "*** coShrhdrFndInfoList的值为:" + coShrhdrFndInfoList.toString());
                 //赋循环数据CoShrhdrFndInfo附表数据
                 List<MivsRegVrfctnInfoModel.CoShrhdrFndInfo> coShrhdrFndInfosArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.CoShrhdrFndInfo>();
                 myLog.info(logger,"企业股东及出资信息的条数 = " + regvrfctnInfoTablSelectMaster.getCo_shrhdrfnd_info_cnt());
@@ -148,6 +194,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                     coShrhdrFndInfoMsg.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
                     coShrhdrFndInfoMsg.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
                     coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(++coShrhdrFndInfoNb);
+                    coShrhdrFndInfoMsg.setNatl_prsn_flag(Info.getNatlPrsnFlag());
                     coShrhdrFndInfoMsg.setInvtr_nm(Info.getInvtrNm());
                     coShrhdrFndInfoMsg.setInvtr_id(Info.getInvtrId());
                     coShrhdrFndInfoMsg.setSubscr_cptl_con_amt(Info.getSubscrCptlConAmt());
@@ -163,8 +210,8 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
 
             //取循环数据DirSupSrMgrInfo附表数据
             List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.DirSupSrMgrInfo> dirSupSrMgrInfoList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getDirSupSrMgrInfo();
-            myLog.info(logger, "*** dirSupSrMgrInfoList的值为:" + dirSupSrMgrInfoList.toString());
             if(dirSupSrMgrInfoList != null && !dirSupSrMgrInfoList.isEmpty()) {
+                myLog.info(logger, "*** dirSupSrMgrInfoList的值为:" + dirSupSrMgrInfoList.toString());
                 //赋循环数据DirSupSrMgrInfo附表数据
                 List<MivsRegVrfctnInfoModel.DirSupSrMgrInfo> dirSupSrMgrInfosArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.DirSupSrMgrInfo>();
                 myLog.info(logger,"董事监事及高管信息的条数 = " + regvrfctnInfoTablSelectMaster.getDir_supsrsgr_info_cnt());
@@ -199,8 +246,8 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
 
             //取循环数据ChngInfo附表数据
             List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.ChngInfo> chngInfoList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getChngInfo();
-            myLog.info(logger, "*** chngInfoList的值为:" + chngInfoList.toString());
             if(chngInfoList != null && !chngInfoList.isEmpty()) {
+                myLog.info(logger, "*** chngInfoList的值为:" + chngInfoList.toString());
                 //赋循环数据ChngInfo附表数据
                 List<MivsRegVrfctnInfoModel.ChngInfo> chngInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.ChngInfo>();
                 myLog.info(logger,"变更信息的条数 = " + regvrfctnInfoTablSelectMaster.getChng_info_cnt());
@@ -237,8 +284,8 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
 
             //取循环数据AbnmlBizInfo附表数据
             List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.AbnmlBizInfo> abnmlBizInfoList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getAbnmlBizInfo();
-            myLog.info(logger, "*** abnmlBizInfoList的值为:" + abnmlBizInfoList.toString());
             if(abnmlBizInfoList != null && !abnmlBizInfoList.isEmpty()) {
+                myLog.info(logger, "*** abnmlBizInfoList的值为:" + abnmlBizInfoList.toString());
                 //赋循环数据AbnmlBizInfo附表数据
                 List<MivsRegVrfctnInfoModel.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.AbnmlBizInfo>();
                 myLog.info(logger,"异常经营信息的条数 = " + regvrfctnInfoTablSelectMaster.getAbnml_biz_info_cnt());
@@ -277,8 +324,8 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
 
             //取循环数据IllDscrtInfo附表数据
             List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.IllDscrtInfo> illDscrtInfoList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getIllDscrtInfo();
-            myLog.info(logger, "*** illDscrtInfoList的值为:" + illDscrtInfoList.toString());
             if(illDscrtInfoList != null && !illDscrtInfoList.isEmpty()) {
+                myLog.info(logger, "*** illDscrtInfoList的值为:" + illDscrtInfoList.toString());
                 //赋循环数据IllDscrtInfo附表数据
                 List<MivsRegVrfctnInfoModel.IllDscrtInfo> illInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.IllDscrtInfo>();
                 myLog.info(logger,"严重违法失信信息的条数 = " + regvrfctnInfoTablSelectMaster.getIll_dscrt_info_cnt());
@@ -317,8 +364,8 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
 
             //取循环数据LicNull附表数据
             List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.LicNull> licNullList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getLicNull();
-            myLog.info(logger, "*** licNullList的值为:" + licNullList.toString());
             if(licNullList != null && !licNullList.isEmpty()) {
+                myLog.info(logger, "*** licNullList的值为:" + licNullList.toString());
                 //赋循环数据LicNull附表数据
                 List<MivsRegVrfctnInfoModel.LicInfo> licInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.LicInfo>();
                 myLog.info(logger,"营业执照作废声明的条数 = " + regvrfctnInfoTablSelectMaster.getLic_null_cnt());

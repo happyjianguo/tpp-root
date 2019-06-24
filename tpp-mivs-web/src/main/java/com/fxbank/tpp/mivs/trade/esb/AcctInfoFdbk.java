@@ -98,6 +98,7 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
         fdbk.setEntNm(reqBody.getEntNm());
+        fdbk.setTraNm(reqBody.getTraNm());
         fdbk.setUniSocCdtCd(reqBody.getUniSocCdtCd());
         fdbk.setAcctSts(reqBody.getAcctSts());
         fdbk.setChngDt(dateToIsoDate(reqBody.getChngDt()));
@@ -129,6 +130,7 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         mivsAcctInfoFdbkModelInsert.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
         mivsAcctInfoFdbkModelInsert.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         mivsAcctInfoFdbkModelInsert.setEnt_nm(fdbk.getEntNm());
+        mivsAcctInfoFdbkModelInsert.setTra_nm(fdbk.getTraNm());
         mivsAcctInfoFdbkModelInsert.setUni_soc_cdt_cd(fdbk.getUniSocCdtCd());
         mivsAcctInfoFdbkModelInsert.setAcct_sts(fdbk.getAcctSts());
         mivsAcctInfoFdbkModelInsert.setChng_dt(fdbk.getChngDt());

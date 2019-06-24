@@ -51,12 +51,12 @@ public class REQ_50023000204 extends REQ_BASE {
     public class REQ_BODY {
         @JSONField(name = "ENT_NAME")
         private String entNm;    //企业名称
+        @JSONField(name = "TRA_NAME")
+        private String traNm;    //个体户名称
         @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;        //统一社会信用代码
         @JSONField(name = "ACCT_STS")
         private String acctSts;        //账户状态标识
-        @JSONField(name = "ID_OF_LGL_PRSN")
-        private String idOfLglPrsn;    //法定代表人或单位负责人身份证件号
         @JSONField(name = "CHNG_DT")
         private String chngDt;    //变更日期
         @JSONField(name = "RESERVE_FIELD1")
@@ -74,6 +74,14 @@ public class REQ_50023000204 extends REQ_BASE {
             this.entNm = entNm;
         }
 
+        public String getTraNm() {
+            return traNm;
+        }
+
+        public void setTraNm(String traNm) {
+            this.traNm = traNm;
+        }
+
         public String getUniSocCdtCd() {
             return uniSocCdtCd;
         }
@@ -88,14 +96,6 @@ public class REQ_50023000204 extends REQ_BASE {
 
         public void setAcctSts(String acctSts) {
             this.acctSts = acctSts;
-        }
-
-        public String getIdOfLglPrsn() {
-            return idOfLglPrsn;
-        }
-
-        public void setIdOfLglPrsn(String idOfLglPrsn) {
-            this.idOfLglPrsn = idOfLglPrsn;
         }
 
         public String getChngDt() {

@@ -58,32 +58,46 @@ public class REP_50023000203 extends REP_BASE {
         private String dataResrcD;
 
         //循环开始
-        @JSONField(name = "BasInfo")
-        private List<BasInfo> basInfoarrayMsg;//企业股东及出资信息部分
+        @JSONField(name = "BasInfoEnt")
+        private List<BasInfoEnt> basInfoEntList;//企业照面信息部分
+
+        //循环开始
+        @JSONField(name = "BasInfOfSlfEplydPpl")
+        private List<BasInfOfSlfEplydPpl> basInfOfSlfEplydPplList;//个体户照面信息部分
 
         //循环开始
         @JSONField(name = "CoShrhdrFndInfo")
-        private List<CoShrhdrFndInfo> coShrhdrFndInfoarrayMsg;//企业股东及出资信息部分
+        private List<CoShrhdrFndInfo> coShrhdrFndInfoList;//企业股东及出资信息部分
 
         //循环开始
         @JSONField(name = "DirSupSrMgrInfo")
-        private List<DirSupSrMgrInfo> dirSupSrMgrInfoarrayMsg;//董事监事及高管信息
+        private List<DirSupSrMgrInfo> dirSupSrMgrInfoList;//董事监事及高管信息
 
         //循环开始
         @JSONField(name = "ChngInfo")
-        private List<ChngInfo> chngInfoarrayMsg;//变更信息
+        private List<ChngInfo> chngInfoList;//变更信息
 
         //循环开始
         @JSONField(name = "AbnmlBizInfo")
-        private List<AbnmlBizInfo> abnmlBizInfoarrayMsg;//异常经营信息
+        private List<AbnmlBizInfo> abnmlBizInfoList;//异常经营信息
 
         //循环开始
         @JSONField(name = "IllDscrtInfo")
-        private List<IllDscrtInfo> illDscrtInfoarrayMsg;//严重违法失信信息
+        private List<IllDscrtInfo> illDscrtInfoList;//严重违法失信信息
 
         //循环开始
         @JSONField(name = "LicNull")
-        private List<LicNull> licNullarrayMsg;//营业执照作废声明
+        private List<LicNull> licNullList;//营业执照作废声明
+
+        //以下信息 当“纳税信息核查结果”为非“MCHD” 时填
+        @JSONField(name = "MSG_RFS_STATUS")
+        private String procSts;//申请报文拒绝状态
+
+        @JSONField(name = "MSG_RFS_CODE")
+        private String procCd;//申请报文拒绝码
+
+        @JSONField(name = "MSG_RFS_INFO")
+        private String rjctinf;//申请报文拒绝信息
 
         public String getRslt() {
             return rslt;
@@ -101,71 +115,69 @@ public class REP_50023000203 extends REP_BASE {
             this.dataResrcD = dataResrcD;
         }
 
-        public List<BasInfo> getBasInfoarrayMsg() {
-            return basInfoarrayMsg;
+        public List<BasInfoEnt> getBasInfoEntList() {
+            return basInfoEntList;
         }
 
-        public void setBasInfoarrayMsg(List<BasInfo> basInfoarrayMsg) {
-            this.basInfoarrayMsg = basInfoarrayMsg;
+        public void setBasInfoEntList(List<BasInfoEnt> basInfoEntList) {
+            this.basInfoEntList = basInfoEntList;
         }
 
-        public List<CoShrhdrFndInfo> getCoShrhdrFndInfoarrayMsg() {
-            return coShrhdrFndInfoarrayMsg;
+        public List<BasInfOfSlfEplydPpl> getBasInfOfSlfEplydPplList() {
+            return basInfOfSlfEplydPplList;
         }
 
-        public void setCoShrhdrFndInfoarrayMsg(List<CoShrhdrFndInfo> coShrhdrFndInfoarrayMsg) {
-            this.coShrhdrFndInfoarrayMsg = coShrhdrFndInfoarrayMsg;
+        public void setBasInfOfSlfEplydPplList(List<BasInfOfSlfEplydPpl> basInfOfSlfEplydPplList) {
+            this.basInfOfSlfEplydPplList = basInfOfSlfEplydPplList;
         }
 
-        public List<DirSupSrMgrInfo> getDirSupSrMgrInfoarrayMsg() {
-            return dirSupSrMgrInfoarrayMsg;
+        public List<CoShrhdrFndInfo> getCoShrhdrFndInfoList() {
+            return coShrhdrFndInfoList;
         }
 
-        public void setDirSupSrMgrInfoarrayMsg(List<DirSupSrMgrInfo> dirSupSrMgrInfoarrayMsg) {
-            this.dirSupSrMgrInfoarrayMsg = dirSupSrMgrInfoarrayMsg;
+        public void setCoShrhdrFndInfoList(List<CoShrhdrFndInfo> coShrhdrFndInfoList) {
+            this.coShrhdrFndInfoList = coShrhdrFndInfoList;
         }
 
-        public List<ChngInfo> getChngInfoarrayMsg() {
-            return chngInfoarrayMsg;
+        public List<DirSupSrMgrInfo> getDirSupSrMgrInfoList() {
+            return dirSupSrMgrInfoList;
         }
 
-        public void setChngInfoarrayMsg(List<ChngInfo> chngInfoarrayMsg) {
-            this.chngInfoarrayMsg = chngInfoarrayMsg;
+        public void setDirSupSrMgrInfoList(List<DirSupSrMgrInfo> dirSupSrMgrInfoList) {
+            this.dirSupSrMgrInfoList = dirSupSrMgrInfoList;
         }
 
-        public List<AbnmlBizInfo> getAbnmlBizInfoarrayMsg() {
-            return abnmlBizInfoarrayMsg;
+        public List<ChngInfo> getChngInfoList() {
+            return chngInfoList;
         }
 
-        public void setAbnmlBizInfoarrayMsg(List<AbnmlBizInfo> abnmlBizInfoarrayMsg) {
-            this.abnmlBizInfoarrayMsg = abnmlBizInfoarrayMsg;
+        public void setChngInfoList(List<ChngInfo> chngInfoList) {
+            this.chngInfoList = chngInfoList;
         }
 
-        public List<IllDscrtInfo> getIllDscrtInfoarrayMsg() {
-            return illDscrtInfoarrayMsg;
+        public List<AbnmlBizInfo> getAbnmlBizInfoList() {
+            return abnmlBizInfoList;
         }
 
-        public void setIllDscrtInfoarrayMsg(List<IllDscrtInfo> illDscrtInfoarrayMsg) {
-            this.illDscrtInfoarrayMsg = illDscrtInfoarrayMsg;
+        public void setAbnmlBizInfoList(List<AbnmlBizInfo> abnmlBizInfoList) {
+            this.abnmlBizInfoList = abnmlBizInfoList;
         }
 
-        public List<LicNull> getLicNullarrayMsg() {
-            return licNullarrayMsg;
+        public List<IllDscrtInfo> getIllDscrtInfoList() {
+            return illDscrtInfoList;
         }
 
-        public void setLicNullarrayMsg(List<LicNull> licNullarrayMsg) {
-            this.licNullarrayMsg = licNullarrayMsg;
+        public void setIllDscrtInfoList(List<IllDscrtInfo> illDscrtInfoList) {
+            this.illDscrtInfoList = illDscrtInfoList;
         }
 
-        //以下信息 当“纳税信息核查结果”为非“MCHD” 时填
-        @JSONField(name = "MSG_RFS_STATUS")
-        private String procSts;//申请报文拒绝状态
+        public List<LicNull> getLicNullList() {
+            return licNullList;
+        }
 
-        @JSONField(name = "MSG_RFS_CODE")
-        private String procCd;//申请报文拒绝码
-
-        @JSONField(name = "MSG_RFS_INFO")
-        private String rjctinf;//申请报文拒绝信息
+        public void setLicNullList(List<LicNull> licNullList) {
+            this.licNullList = licNullList;
+        }
 
         public String getProcSts() {
             return procSts;
@@ -196,13 +208,14 @@ public class REP_50023000203 extends REP_BASE {
             return "REP_BODY{" +
                     "rslt='" + rslt + '\'' +
                     ", dataResrcD='" + dataResrcD + '\'' +
-                    ", basInfoarrayMsg=" + basInfoarrayMsg +
-                    ", coShrhdrFndInfoarrayMsg=" + coShrhdrFndInfoarrayMsg +
-                    ", dirSupSrMgrInfoarrayMsg=" + dirSupSrMgrInfoarrayMsg +
-                    ", chngInfoarrayMsg=" + chngInfoarrayMsg +
-                    ", abnmlBizInfoarrayMsg=" + abnmlBizInfoarrayMsg +
-                    ", illDscrtInfoarrayMsg=" + illDscrtInfoarrayMsg +
-                    ", licNullarrayMsg=" + licNullarrayMsg +
+                    ", basInfoEntList=" + basInfoEntList +
+                    ", basInfOfSlfEplydPplList=" + basInfOfSlfEplydPplList +
+                    ", coShrhdrFndInfoList=" + coShrhdrFndInfoList +
+                    ", dirSupSrMgrInfoList=" + dirSupSrMgrInfoList +
+                    ", chngInfoList=" + chngInfoList +
+                    ", abnmlBizInfoList=" + abnmlBizInfoList +
+                    ", illDscrtInfoList=" + illDscrtInfoList +
+                    ", licNullList=" + licNullList +
                     ", procSts='" + procSts + '\'' +
                     ", procCd='" + procCd + '\'' +
                     ", rjctinf='" + rjctinf + '\'' +
@@ -211,13 +224,13 @@ public class REP_50023000203 extends REP_BASE {
     }
 
     //以下信息 当“纳税信息核查结果”为“MCHD” 时填
-    public static class BasInfo{
+    public static class BasInfoEnt{
 
         @JSONField(name ="PGNB")
         private Integer pgNb;
 
-        @JSONField(name ="BasInfoNb")
-        private Integer basInfoNb;
+        @JSONField(name ="MARKETTYPE")
+        private Integer marketType;
 
         @JSONField(name = "EntNm")
         private String entNm;
@@ -258,10 +271,6 @@ public class REP_50023000203 extends REP_BASE {
         @JSONField(name = "dtAppr")
         private String dtAppr;
 
-        public Integer getBasInfoNb() {
-            return basInfoNb;
-        }
-
         public Integer getPgNb() {
             return pgNb;
         }
@@ -270,8 +279,12 @@ public class REP_50023000203 extends REP_BASE {
             this.pgNb = pgNb;
         }
 
-        public void setBasInfoNb(Integer basInfoNb) {
-            this.basInfoNb = basInfoNb;
+        public Integer getMarketType() {
+            return marketType;
+        }
+
+        public void setMarketType(Integer marketType) {
+            this.marketType = marketType;
         }
 
         public String getEntNm() {
@@ -382,7 +395,7 @@ public class REP_50023000203 extends REP_BASE {
         public String toString() {
             return "BasInfo{" +
                     "pgNb=" + pgNb +
-                    ", basInfoNb=" + basInfoNb + '\'' +
+                    ", marketType=" + marketType + '\'' +
                     ", entNm='" + entNm + '\'' +
                     ", uniSocCdtCd='" + uniSocCdtCd + '\'' +
                     ", coTp='" + coTp + '\'' +
@@ -400,6 +413,171 @@ public class REP_50023000203 extends REP_BASE {
         }
     }
 
+    public static class BasInfOfSlfEplydPpl {
+
+        @JSONField(name = "PGNB")
+        private Integer pgNb;
+
+        @JSONField(name = "MARKETTYPE")
+        private Integer marketType;
+
+        @JSONField(name = "TraNm")
+        private String traNm;
+
+        @JSONField(name = "UniSocCdtCd")
+        private String uniSocCdtCd;
+
+        @JSONField(name = "CoTp")
+        private String coTp;
+
+        @JSONField(name = "OpLoc")
+        private String opLoc;
+
+        @JSONField(name = "FdAmt")
+        private String fdAmt;
+
+        @JSONField(name = "DtReg")
+        private String dtReg;
+
+        @JSONField(name = "RegSts")
+        private String regSts;
+
+        @JSONField(name = "Nm")
+        private String nm;
+
+        @JSONField(name = "RegAuth")
+        private String regAuth;
+
+        @JSONField(name = "BizScp")
+        private String bizScp;
+
+        @JSONField(name = "dtAppr")
+        private String dtAppr;
+
+        public Integer getPgNb() {
+            return pgNb;
+        }
+
+        public void setPgNb(Integer pgNb) {
+            this.pgNb = pgNb;
+        }
+
+        public Integer getMarketType() {
+            return marketType;
+        }
+
+        public void setMarketType(Integer marketType) {
+            this.marketType = marketType;
+        }
+
+        public String getTraNm() {
+            return traNm;
+        }
+
+        public void setTraNm(String traNm) {
+            this.traNm = traNm;
+        }
+
+        public String getUniSocCdtCd() {
+            return uniSocCdtCd;
+        }
+
+        public void setUniSocCdtCd(String uniSocCdtCd) {
+            this.uniSocCdtCd = uniSocCdtCd;
+        }
+
+        public String getCoTp() {
+            return coTp;
+        }
+
+        public void setCoTp(String coTp) {
+            this.coTp = coTp;
+        }
+
+        public String getOpLoc() {
+            return opLoc;
+        }
+
+        public void setOpLoc(String opLoc) {
+            this.opLoc = opLoc;
+        }
+
+        public String getFdAmt() {
+            return fdAmt;
+        }
+
+        public void setFdAmt(String fdAmt) {
+            this.fdAmt = fdAmt;
+        }
+
+        public String getDtReg() {
+            return dtReg;
+        }
+
+        public void setDtReg(String dtReg) {
+            this.dtReg = dtReg;
+        }
+
+        public String getRegSts() {
+            return regSts;
+        }
+
+        public void setRegSts(String regSts) {
+            this.regSts = regSts;
+        }
+
+        public String getNm() {
+            return nm;
+        }
+
+        public void setNm(String nm) {
+            this.nm = nm;
+        }
+
+        public String getRegAuth() {
+            return regAuth;
+        }
+
+        public void setRegAuth(String regAuth) {
+            this.regAuth = regAuth;
+        }
+
+        public String getBizScp() {
+            return bizScp;
+        }
+
+        public void setBizScp(String bizScp) {
+            this.bizScp = bizScp;
+        }
+
+        public String getDtAppr() {
+            return dtAppr;
+        }
+
+        public void setDtAppr(String dtAppr) {
+            this.dtAppr = dtAppr;
+        }
+
+        @Override
+        public String toString() {
+            return "BasInfOfSlfEplydPpl{" +
+                    "pgNb=" + pgNb +
+                    ", marketType=" + marketType +
+                    ", traNm='" + traNm + '\'' +
+                    ", uniSocCdtCd='" + uniSocCdtCd + '\'' +
+                    ", coTp='" + coTp + '\'' +
+                    ", opLoc='" + opLoc + '\'' +
+                    ", fdAmt='" + fdAmt + '\'' +
+                    ", dtReg='" + dtReg + '\'' +
+                    ", regSts='" + regSts + '\'' +
+                    ", nm='" + nm + '\'' +
+                    ", regAuth='" + regAuth + '\'' +
+                    ", bizScp='" + bizScp + '\'' +
+                    ", dtAppr='" + dtAppr + '\'' +
+                    '}';
+        }
+    }
+
     public static class CoShrhdrFndInfo {
 
         @JSONField(name ="PGNB")
@@ -407,6 +585,9 @@ public class REP_50023000203 extends REP_BASE {
 
         @JSONField(name ="CoShrhdrfndInfoNb")
         private Integer coShrhdrfndInfoNb;
+
+        @JSONField(name ="NatlPrsnFlag")
+        private Integer natlPrsnFlag;
 
         @JSONField(name = "InvtrNm")
         private String invtrNm;
@@ -440,6 +621,14 @@ public class REP_50023000203 extends REP_BASE {
 
         public void setCoShrhdrfndInfoNb(Integer coShrhdrfndInfoNb) {
             this.coShrhdrfndInfoNb = coShrhdrfndInfoNb;
+        }
+
+        public Integer getNatlPrsnFlag() {
+            return natlPrsnFlag;
+        }
+
+        public void setNatlPrsnFlag(Integer natlPrsnFlag) {
+            this.natlPrsnFlag = natlPrsnFlag;
         }
 
         public String getInvtrNm() {
@@ -494,7 +683,8 @@ public class REP_50023000203 extends REP_BASE {
         public String toString() {
             return "CoShrhdrFndInfo{" +
                     "pgNb=" + pgNb +
-                    ", coShrhdrfndInfoNb=" + coShrhdrfndInfoNb + '\'' +
+                    ", coShrhdrfndInfoNb=" + coShrhdrfndInfoNb +
+                    ", natlPrsnFlag=" + natlPrsnFlag +
                     ", invtrNm='" + invtrNm + '\'' +
                     ", invtrId='" + invtrId + '\'' +
                     ", subscrCptlConAmt='" + subscrCptlConAmt + '\'' +

@@ -74,35 +74,76 @@ public class SIMU_GetRegVrfctn implements TradeExecutionStrategy {
         vrfctnInf.setRslt("MCHD");
         vrfctnInf.setDataResrcDt("2019-04-29");
 
+        int flag = 0;
         //赋循环数据
-        //BasInfo
-        List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfo> basInfoList = new ArrayList<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfo>();
-        for (int i=0 ; i<1; i++) {
-            MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfo basInfoListarraymsg = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfo();
-            basInfoListarraymsg.setEntNm("照面信息");
-            basInfoListarraymsg.setUniSocCdtCd("1231245434231235");
-            basInfoListarraymsg.setCoTp("一二三四五");
-			basInfoListarraymsg.setDom("北京市海淀区");
-			basInfoListarraymsg.setRegCptl("10000000.23");
-			basInfoListarraymsg.setDtEst("2015-01-01");
-			basInfoListarraymsg.setOpPrdFrom("2015-01-01");
-			basInfoListarraymsg.setOpPrdTo("2025-01-01");
-			basInfoListarraymsg.setRegSts("XXX");
-			basInfoListarraymsg.setNmOfLglPrsn("老苗");
-			basInfoListarraymsg.setRegAuth("登记机关");
-			basInfoListarraymsg.setBizScp("经营范围");
-			basInfoListarraymsg.setDtAppr("2019-06-01");
-            basInfoList.add(basInfoListarraymsg);
+        //BasInfOfEnt
+        if(flag == 0) {
+            List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt> basInfoList = new ArrayList<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt>();
+            for (int i = 0; i < 1; i++) {
+                MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt basInfoListarraymsg = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt();
+                basInfoListarraymsg.setEntNm("企业照面信息");
+                basInfoListarraymsg.setUniSocCdtCd("1231245434231235");
+                basInfoListarraymsg.setCoTp("一二三四五");
+                basInfoListarraymsg.setDom("北京市海淀区");
+                basInfoListarraymsg.setRegCptl("10000000.23");
+                basInfoListarraymsg.setDtEst("2015-01-01");
+                basInfoListarraymsg.setOpPrdFrom("2015-01-01");
+                basInfoListarraymsg.setOpPrdTo("2025-01-01");
+                basInfoListarraymsg.setRegSts("XXX");
+                basInfoListarraymsg.setNmOfLglPrsn("老苗");
+                basInfoListarraymsg.setRegAuth("登记机关");
+                basInfoListarraymsg.setBizScp("经营范围：" +
+                        "互联网科技：网络通信科技产品领域内的技术开发、技术咨询、技术转让、技术服务，计算机网络工程，" +
+                        "计算机软件开发及维护，计算机辅助设备的安装及维修，电子产品的安装和销售，" +
+                        "计算机及相关产品（除计算机信息系统安全专用产品）、办公用品的销售，企业管理咨询（除经纪）。" +
+                        "广告文化：组织文化艺术交流活动；文艺创作；体育运动项目经营（高危险性体育项目除外）；承办展览展示；" +
+                        "婚庆服务；摄影服务；摄像服务；公共关系服务；礼仪服务；模特服务；会议服务；大型活动组织服务；" +
+                        "经济信息咨询；婚纱礼服出租；花卉租摆；舞台策划；摄影器材租赁；舞台灯光音响设计；电脑图文设计；" +
+                        "电脑动画设计；设计、制作、代理、发布广告。");
+                basInfoListarraymsg.setDtAppr("2019-06-01");
+                basInfoList.add(basInfoListarraymsg);
+            }
+            myLog.info(logger, "basInfoList循环列表内容为：" + basInfoList.toString());
+            if (basInfoList != null && !basInfoList.isEmpty()) {
+                mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().setBasInfOfEnt(basInfoList);
+            }
         }
-		myLog.info(logger,"basInfoList循环列表内容为：" + basInfoList.toString());
-        if(basInfoList !=null && !basInfoList.isEmpty()){
-            mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().setBasInfo(basInfoList);
+        else {
+            //BasInfOfSlfEplydPpl
+            List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfSlfEplydPpl> basInfOfSlfEplydPplList = new ArrayList<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfSlfEplydPpl>();
+            for (int i = 0; i < 1; i++) {
+                MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfSlfEplydPpl basInfOfSlfEplydPplListarraymsg = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfSlfEplydPpl();
+                basInfOfSlfEplydPplListarraymsg.setTraNm("个体户照面信息");
+                basInfOfSlfEplydPplListarraymsg.setUniSocCdtCd("1231245434231235");
+                basInfOfSlfEplydPplListarraymsg.setCoTp("一二三四五");
+                basInfOfSlfEplydPplListarraymsg.setOpLoc("辽宁省沈阳市康平县");
+                basInfOfSlfEplydPplListarraymsg.setFdAmt("10000000.23");
+                basInfOfSlfEplydPplListarraymsg.setDtReg("2015-01-01");
+                basInfOfSlfEplydPplListarraymsg.setRegSts("XXX");
+                basInfOfSlfEplydPplListarraymsg.setNm("杨阿比");
+                basInfOfSlfEplydPplListarraymsg.setRegAuth("登记机关");
+                basInfOfSlfEplydPplListarraymsg.setBizScp("经营范围：" +
+                        "互联网科技：网络通信科技产品领域内的技术开发、技术咨询、技术转让、技术服务，计算机网络工程，" +
+                        "计算机软件开发及维护，计算机辅助设备的安装及维修，电子产品的安装和销售，" +
+                        "计算机及相关产品（除计算机信息系统安全专用产品）、办公用品的销售，企业管理咨询（除经纪）。" +
+                        "广告文化：组织文化艺术交流活动；文艺创作；体育运动项目经营（高危险性体育项目除外）；承办展览展示；" +
+                        "婚庆服务；摄影服务；摄像服务；公共关系服务；礼仪服务；模特服务；会议服务；大型活动组织服务；" +
+                        "经济信息咨询；婚纱礼服出租；花卉租摆；舞台策划；摄影器材租赁；舞台灯光音响设计；电脑图文设计；" +
+                        "电脑动画设计；设计、制作、代理、发布广告。");
+                basInfOfSlfEplydPplListarraymsg.setDtAppr("2019-06-01");
+                basInfOfSlfEplydPplList.add(basInfOfSlfEplydPplListarraymsg);
+            }
+            myLog.info(logger, "basInfOfSlfEplydPplList循环列表内容为：" + basInfOfSlfEplydPplList.toString());
+            if (basInfOfSlfEplydPplList != null && !basInfOfSlfEplydPplList.isEmpty()) {
+                mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().setBasInfOfSlfEplydPpl(basInfOfSlfEplydPplList);
+            }
         }
 
         //CoShrhdrFndInfo
         List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.CoShrhdrFndInfo> coShrhdrFndInfoList = new ArrayList<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.CoShrhdrFndInfo>();
         for (int i=0 ; i<2; i++) {
             MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.CoShrhdrFndInfo coShrhdrFndInfoListarraymsg = new MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.CoShrhdrFndInfo();
+            coShrhdrFndInfoListarraymsg.setNatlPrsnFlag("NATL");
             coShrhdrFndInfoListarraymsg.setInvtrNm("企业股东及出资信息"+i);
             coShrhdrFndInfoListarraymsg.setInvtrId("2251231436256000"+i);
             coShrhdrFndInfoListarraymsg.setSubscrCptlConAmt("88800.23");
