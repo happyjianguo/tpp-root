@@ -88,10 +88,18 @@ public class GetRegVrfctnTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setEntNm("未来简史");
-        reqBody.setUniSocCdtCd("123456789012345678");
-        reqBody.setNmOfLglPrsn("杨小啊");
-        reqBody.setIdOfLglPrsn("210902199802048891");
+        reqBody.setMarketType("ENT");
+        if(reqBody.getMarketType().equals("ENT")){
+            reqBody.setEntNm("未来简史");
+            reqBody.setUniSocCdtCd("123456789012345678");
+            reqBody.setNmOfLglPrsn("杨小啊");
+            reqBody.setIdOfLglPrsn("210902199802048891");
+        }else if(reqBody.getMarketType().equals("TRA")){
+            reqBody.setTranm("个体户");
+            reqBody.setUniSocCdtCd("123456789012345678");
+            reqBody.setNm("杨小啊");
+            reqBody.setId("210902199802048891");
+        }
         reqBody.setAgtNm("鼎鼎");
         reqBody.setAgtId("2121379871230061237");
         reqBody.setOpNm("张三");
