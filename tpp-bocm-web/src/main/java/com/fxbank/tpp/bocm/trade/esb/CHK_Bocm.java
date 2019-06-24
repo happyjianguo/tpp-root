@@ -127,6 +127,8 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		Integer sysTime = publicService.getSysTime();
 		Integer sysTraceno = publicService.getSysTraceno();
 		
+		date = Integer.parseInt(reqBody.getStmtDtT2());
+		
 		//交行总行行号
 		String JHNO = "";
 		//阜新银行总行行号
@@ -138,14 +140,17 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
         }
 		
 		acctCheckErrService.delete(date.toString());
-		
-		
+				
 		REQ_10103 req10103 = null;
 		REP_10103 rep10103 = null;
 		
 		req10103 = new REQ_10103(myLog, date, sysTime, sysTraceno);
 		req10103.setSbnkNo(FXNO);
 		req10103.setRbnkNo(FXNO);
+		
+//		FXNO = "313229000563";		
+//		req10103.setRbnkNo("313229000563");		
+//		FXNO = "313229000563";
 		
 		req10103.setFilNam("BUPS"+FXNO+date+".dat");	
 		//获取交行对账文件

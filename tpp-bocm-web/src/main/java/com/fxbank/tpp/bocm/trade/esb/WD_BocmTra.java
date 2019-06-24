@@ -81,7 +81,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061000801 rep = new REP_30061000801();
 		//1. 交行记账   
-		int bocmDate = 0;
+		int bocmDate = 20190624;
 		int bocmTime = 0;
 		String cardTypeName = "";
 		//原发起方交易流水 交行记账流水号
@@ -95,11 +95,12 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		// IC_CARD_FLG_T4判断IC卡磁条卡标志   IC卡和磁条卡走不同的交行接口
 		if("2".equals(reqBody.getIcCardFlgT4())){
 			oTxnCd = "10001";
-			req10001 = new REQ_10001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
+			
+			req10001 = new REQ_10001(myLog, bocmDate, reqDto.getSysTime(), reqDto.getSysTraceno());
 			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001); // 设置报文头中的行号信息
 		}else{
 			oTxnCd = "20001";
-			req20001 = new REQ_20001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
+			req20001 = new REQ_20001(myLog, bocmDate, reqDto.getSysTime(), reqDto.getSysTraceno());
 			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001); // 设置报文头中的行号信息
 		}	
 		

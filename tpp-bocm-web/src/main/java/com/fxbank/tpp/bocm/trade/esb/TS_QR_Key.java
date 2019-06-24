@@ -148,7 +148,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		REP_10104_PIN repPin10104 = forwardToBocmService.sendToBocm(reqPin10104, REP_10104_PIN.class);
 		
 		String pinKeyValue = repPin10104.getBlkVal();
-		String pinCheckValue = repMac10104.getChkVal();
+		String pinCheckValue = repPin10104.getChkVal();
 		myLog.info(logger, "Pin密钥密文值【"+pinKeyValue+"】密钥校验值【"+pinCheckValue+"】");
 		safeService.updatePinKey(myLog, pinKeyValue, pinCheckValue);
 		
