@@ -16,7 +16,6 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.dto.bocm.REP_BASE;
 import com.fxbank.tpp.bocm.dto.bocm.REP_ERROR;
-import com.fxbank.tpp.bocm.service.IBocmMacService;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import io.netty.channel.ChannelHandler.Sharable;
