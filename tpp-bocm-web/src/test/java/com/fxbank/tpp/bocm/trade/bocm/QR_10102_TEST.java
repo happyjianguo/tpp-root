@@ -24,7 +24,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_20102;
-import com.fxbank.tpp.bocm.model.REQ_20102;
+import com.fxbank.tpp.bocm.model.REQ_10102;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
@@ -36,29 +36,28 @@ import com.fxbank.tpp.esb.service.ISafeService;
 */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class QR_20102_TEST extends BASE_TEST {
+public class QR_10102_TEST extends BASE_TEST {
 	
 private static Logger logger = LoggerFactory.getLogger(WD_10001_TEST.class);
 	
 	@Resource
 	private LogPool logPool;
 	
-	private REQ_20102 req;
+	private REQ_10102 req;
 	
 	@Reference(version = "1.0.0")
 	private ISafeService passwordService;
 	
 	@Before
 	public void init(){
-		req = new REQ_20102();
-		super.initReqHeader("20102", req);
+		req = new REQ_10102();
+		super.initReqHeader("10102", req);
 	}
 	
 	@Test
 	public void ok() throws Exception {
 		//查询账户信息
 		req.setActNo("623166001016830991");
-		req.setActBnk("313229000442");
 		//00 存款01 取款02 转出03 转入	
 		req.setActTyp("2");
 		req.setTxnTyp("00");

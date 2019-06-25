@@ -11,15 +11,15 @@ package com.fxbank.tpp.bocm.dto.bocm;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
 /** 
-* @ClassName: REQ_20102 
+* @ClassName: REQ_10102 
 * @Description: 账户信息查询
 * @author YePuLiang
 * @date 2019年5月6日 上午10:10:10 
 *  
 */
-public class REQ_20102 extends REQ_BASE {
+public class REQ_10102 extends REQ_BASE {
 	
-    public REQ_20102() {
+    public REQ_10102() {
         super.txDesc = "账户信息查询";
         super.log = false;
 	}
@@ -36,13 +36,10 @@ public class REQ_20102 extends REQ_BASE {
 	@FixedField(order = 11, len = 2, desc = "交易类型")
 	private String txnTyp;
 	
-	@FixedField(order = 12, len = 12, desc = "开户行行号")
-	private String actBnk;
-	
-	@FixedField(order = 13, len = 1, desc = "手续费收取方式")
+	@FixedField(order = 12, len = 1, desc = "手续费收取方式")
 	private String feeFlg;
 	
-	@FixedField(order = 14, len = 15, desc = "交易金额")
+	@FixedField(order = 13, len = 15, desc = "交易金额")
 	private Double txnAmt;
 	
 
@@ -76,14 +73,6 @@ public class REQ_20102 extends REQ_BASE {
 
 	public void setTxnTyp(String txnTyp) {
 		this.txnTyp = txnTyp;
-	}
-
-	public String getActBnk() {
-		return actBnk;
-	}
-
-	public void setActBnk(String actBnk) {
-		this.actBnk = actBnk;
 	}
 
 	public String getFeeFlg() {

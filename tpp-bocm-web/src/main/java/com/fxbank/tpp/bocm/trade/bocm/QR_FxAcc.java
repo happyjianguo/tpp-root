@@ -23,8 +23,8 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.bocm.REP_20102;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_20102;
+import com.fxbank.tpp.bocm.dto.bocm.REP_10102;
+import com.fxbank.tpp.bocm.dto.bocm.REQ_10102;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.exception.BocmTradeJHExecuteException;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
@@ -64,8 +64,8 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_20102 req = (REQ_20102) dto;
-		REP_20102 rep = new REP_20102();
+		REQ_10102 req = (REQ_10102) dto;
+		REP_10102 rep = new REP_10102();
 		
 		String sbnkNo = req.getSbnkNo();//发起行行号
 		if(sbnkNo.substring(0, 3).equals("313")){
@@ -141,7 +141,7 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 	* @return ESB_REP_30011000103    返回类型 
 	* @throws 
 	*/
-	private ESB_REP_30013000201 hostQuery(REQ_20102 reqDto) throws SysTradeExecuteException {
+	private ESB_REP_30013000201 hostQuery(REQ_10102 reqDto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		// 交易机构
 		String txBrno = null;

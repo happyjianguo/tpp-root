@@ -26,7 +26,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.esb.REP_30063001301;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30063001301;
 import com.fxbank.tpp.bocm.model.REP_20102;
-import com.fxbank.tpp.bocm.model.REQ_20102;
+import com.fxbank.tpp.bocm.model.REQ_10102;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30063000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30063000103;
@@ -64,23 +64,19 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		REQ_30063001301 reqDto = (REQ_30063001301) dto;
 		REQ_30063001301.REQ_BODY reqBody = reqDto.getReqBody();
 
-		REQ_20102 req20102 = new REQ_20102(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
-		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req20102);	//设置报文头中的行号信息
-		req20102.setActTyp(reqBody.getAcctTpT());		
-		req20102.setActNo(reqBody.getAcctNoT());
+		REQ_10102 req10102 = new REQ_10102(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
+		super.setBankno(myLog, dto, reqDto.getReqSysHead().getBranchId(), req10102);	//设置报文头中的行号信息
+		req10102.setActTyp(reqBody.getAcctTpT());		
+		req10102.setActNo(reqBody.getAcctNoT());
 		//TRNS_TP_T8（交易类型）00 存款  01 取款  02 转出  03 转入
-		req20102.setTxnTyp(reqBody.getTrnsTpT8());
+		req10102.setTxnTyp(reqBody.getTrnsTpT8());
 		String txnType = reqBody.getTrnsTpT8();
-		//TODO 转账时必输上送受理行卡开户分行
-		if(txnType.equals("02")||txnType.equals("03")){
-			req20102.setActBnk("313228077014");
-		}	
-		req20102.setFeeFlg(reqBody.getRcveWyT());
-		req20102.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
+		req10102.setFeeFlg(reqBody.getRcveWyT());
+		req10102.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		myLog.info(logger, "发送账号信息 查询请求至交行");
 		
 		//TODO 转换正式交行请求
-		REP_20102 rep20102 = forwardToBocmService.sendToBocm(req20102, REP_20102.class);
+		REP_20102 rep20102 = forwardToBocmService.sendToBocm(req10102, REP_20102.class);
 		
 		
 

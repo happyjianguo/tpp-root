@@ -12,13 +12,13 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 import com.fxbank.tpp.bocm.model.AmtBase;
 
 /** 
-* @ClassName: REP_20102 
+* @ClassName: REP_10102 
 * @Description: TODO(这里用一句话描述这个类的作用) 
 * @author YePuLiang
 * @date 2019年5月6日 上午10:18:35 
 *  
 */
-public class REP_20102 extends REP_BASE {
+public class REP_10102 extends REP_BASE {
 	
 	@FixedField(order = 5, len = 3, desc = "币种")
 	private String ccyCod="CNY";
