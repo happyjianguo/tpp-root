@@ -20,16 +20,16 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 * @date 2019年5月9日 上午10:47:29 
 *  
 */
-public class REP_20102 extends REP_BASE {
+public class REP_10102 extends REP_BASE {
 	
 	private static final long serialVersionUID = -1624248808632530084L;
 
 	@Deprecated
-	public REP_20102() {
+	public REP_10102() {
 		super(null, 0, 0, 0);
 	}
 
-    public REP_20102(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+    public REP_10102(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
     }
     
