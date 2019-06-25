@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_10104.java 
-* @Package com.fxbank.tpp.bocm.dto.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月23日 下午3:22:44 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.bocm;
 
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;

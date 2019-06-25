@@ -57,8 +57,7 @@ public class TradeBase {
 
 		myLog.info(logger, "TradeBase通过本行机构号查询人行行号");
 		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,				
-				ESB_REP_30043003001.class);
-		
+				ESB_REP_30043003001.class);	
 		//发起行人行行号
 		String BANK_NUMBER = esbRep_30043003001.getRepBody().getBankNumber();
 		//人行清算行号

@@ -1,14 +1,4 @@
-/**   
-* @Title: REQ_20102.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月9日 上午10:43:14 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
-
-import java.math.BigDecimal;
 
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;

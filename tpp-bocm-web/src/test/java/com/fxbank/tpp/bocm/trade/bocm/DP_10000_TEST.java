@@ -50,29 +50,16 @@ public class DP_10000_TEST extends BASE_TEST {
 		
 		req.setTxnMod("0");
 		
-//		//业务模式  0现金  1转账
-//		req.setTxnMod("1");
-//		
-//		//本行卡付款转账
-//		//付款人开户行号
-//		req.setPayBnk("623166000001");
-//		//付款人账户类型
-//		req.setPactTp("2");
-//		//付款人账号
-//		req.setPactNo("6288880210000209903");
-//		//付款人名称
-//		req.setPayNam("测试");
-		
 		//收款人开户行号
 		req.setRecBnk("313229000442");
 		//收款人账户类型
 		req.setRactTp("2");
 		//收款人账号 6288880210000209903 622126010001048643
-		req.setRactNo("623166001016830991");
+		req.setRactNo("623166099020908241");
 		//收款人名称
 		req.setRecNam("测试");
 		
-		req.setSecMag("623166001016830991=4912567019123456");
+		req.setSecMag("623166099020908241=4912567019123456");
 		
 		
 		

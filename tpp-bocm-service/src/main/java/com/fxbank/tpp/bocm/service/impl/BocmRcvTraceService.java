@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmRcvTraceService.java 
-* @Package com.fxbank.tpp.bocm.service.impl 
-* @Description: 交行来账处理
-* @author YePuLiang
-* @date 2019年4月16日 上午8:59:46 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.service.impl;
 
 import java.math.BigDecimal;

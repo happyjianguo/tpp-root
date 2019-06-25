@@ -67,7 +67,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm.";
+	private final static String COMMON_PREFIX = "bocm_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -75,10 +75,6 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		REQ_10000 req = (REQ_10000) dto;
 		String sbnkNo = req.getSbnkNo();//发起行行号
 		if(sbnkNo.substring(0, 3).equals("313")){
-			if(1==1){
-				BocmTradeJHExecuteException e = new BocmTradeJHExecuteException(BocmTradeJHExecuteException.JH_6203);		
-				throw e;
-			}
 			myLog.info(logger, "交易发起行为本行，启用挡板数据");
 			REP_10000 rep = new REP_10000();
 			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -93,12 +89,13 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 			return rep;
 		}
 		
-//		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
-//		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
-//			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10014,"交易流水号为空");
-//			throw e2;
-//		}
-		
+		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
+		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10014,"交易流水号为空");
+			throw e2;
+		}
+		super.hostErrorException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
+		super.acctStatusException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10016);
 		super.cardValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
 		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
@@ -121,8 +118,8 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		// 柜员号
 		String txTel = null;
 		try (Jedis jedis = myJedis.connect()) {
-			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-			txTel = jedis.get(COMMON_PREFIX + "txtel");
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
 		}
 
 		ESB_REQ_30033000203 esbReq_30033000203 = new ESB_REQ_30033000203(myLog, reqDto.getSysDate(),
@@ -215,9 +212,12 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
+		// 加密节点编码
+		String sourceNo = null;
 		try (Jedis jedis = myJedis.connect()) {
-			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-			txTel = jedis.get(COMMON_PREFIX + "txtel");
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
+			sourceNo = jedis.get(COMMON_PREFIX + "SOURCE");
 		}
 
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
@@ -226,7 +226,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 				.setBranchId(txBrno).setUserId(txTel).build();
 		
 		
-		reqSysHead.setSourceBranchNo("PINP|pinpToesb|RZPK|64510637BCD9|");
+		reqSysHead.setSourceBranchNo(sourceNo);
 		reqSysHead.setSourceType("BU");
 
 		

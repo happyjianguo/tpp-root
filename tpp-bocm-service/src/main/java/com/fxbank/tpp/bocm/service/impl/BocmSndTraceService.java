@@ -21,7 +21,7 @@ import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 
 /** 
 * @ClassName: SndTraceService.java
-* @Description: 
+* @Description: 交行往账实现
 * @author YePuLiang
 * @date  2019年3月19日 上午10:58:27   
 */

@@ -40,7 +40,7 @@ import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: QR_Key 
-* @Description: 工作密钥申请
+* @Description: 交行工作密钥申请
 * @author YePuLiang
 * @date 2019年5月23日 下午3:17:16 
 *  
@@ -90,8 +90,7 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		}     
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(d);
-		//TODO  调试期间用当天后期修改
-//		cal.add(Calendar.DATE, -1);  //减1天
+
 		
 		Integer date = Integer.parseInt(df.format(cal.getTime()));
 		Integer sysTime = publicService.getSysTime();

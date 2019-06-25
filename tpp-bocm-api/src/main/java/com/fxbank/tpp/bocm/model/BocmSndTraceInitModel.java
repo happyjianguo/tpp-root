@@ -12,7 +12,7 @@ import com.fxbank.cip.base.model.ModelBase;
 
 /** 
 * @ClassName: SndTraceInitModel 
-* @Description: 发送流水表登记模型 
+* @Description: 往账流水表登记模型 
 * @author YePuLiang
 * @date 2019年04月15日 下午1:38:29 
 *  

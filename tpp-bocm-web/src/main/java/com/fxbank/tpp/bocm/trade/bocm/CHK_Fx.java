@@ -1,11 +1,3 @@
-/**   
-* @Title: CHK_Fx.java 
-* @Package com.fxbank.tpp.bocm.trade.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月6日 上午10:02:07 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.io.BufferedReader;
@@ -339,8 +331,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 	private REP_10103.Detail modelToSndTradDetail(BocmSndTraceQueryModel model){
 		REP_10103.Detail chk = new REP_10103.Detail();
 		
-		//本方交易流水号  TlogNo长度不足前补‘0’，例如农商行生成对账文件给交行，本方交易流水号填农商行流水号，对方交易流水号填交行流水号（如果存在），发起方流水号必输
-		
+		//本方交易流水号  TlogNo长度不足前补‘0’，例如农商行生成对账文件给交行，本方交易流水号填农商行流水号，对方交易流水号填交行流水号（如果存在），发起方流水号必输		
 		//对方交易流水号 logNo 长度不足前补‘0’，发起方流水号必输
 		//给交行返回交易流水
 		chk.setTlogNo(String.format("%06d%08d", model.getSysDate()%1000000,model.getSysTraceno()));
@@ -438,12 +429,9 @@ public class CHK_Fx implements TradeExecutionStrategy {
 				aceModel.setTxAmt(model.getTxAmt());
 				aceModel.setMsg("渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】，渠道流水【"+model.getPlatTrace()+"】，交易类型【"+model.getTranType()+"】");
 				acctCheckErrService.insert(aceModel);	
-//				myLog.error(logger, "柜面通【"+date+"】来帐对账失败,渠道数据丢失: 交易类型【"+model.getTranType()+"】核心流水号【"+model.getHostTraceno()+"】核心日期为【"+model.getSysDate()+"】渠道流水号：【"+model.getPlatTrace()+"】");
-				myLog.error(logger, "补数据SQL： insert into bocm_rcv_log (plat_date,plat_trace,tx_amt,host_date,host_traceno,host_state,check_flag) VALUES ("+model.getSettleDate()+","+model.getPlatTrace()+",'"+model.getTxAmt()
-							+"',"+model.getHostDate()+",'"+model.getHostTraceno()+"','1','1');");
-				continue;
-//				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
-//				throw e;
+				myLog.error(logger, "柜面通【"+date+"】来帐对账失败,渠道数据丢失: 交易类型【"+model.getTranType()+"】核心流水号【"+model.getHostTraceno()+"】核心日期为【"+model.getSysDate()+"】渠道流水号：【"+model.getPlatTrace()+"】");
+				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+				throw e;
 			}else {
 				//渠道记录的核心状态
 				String hostState = rcvTraceQueryModel.getHostState(); 
@@ -452,7 +440,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
-					//myLog.info(logger,"渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
+					myLog.info(logger,"渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
 					i++;
 				}else if(hostState.equals("0")||hostState.equals("3")||hostState.equals("5")||hostState.equals("6")) {
 					//核心记账成功，渠道状态为超时、冲正超时、冲正失败，修改渠道状态为成功

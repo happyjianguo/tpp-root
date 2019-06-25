@@ -6,7 +6,13 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_BASE;
 import com.fxbank.cip.base.model.ESB_REQ_APP_HEAD;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
-
+/**
+* @ClassName: ESB_REQ_30033000202 
+* @Description:IC卡验证应答报文
+* @author YePuLiang
+* @date 2019年6月25日 下午2:08:53 
+*
+ */
 public class ESB_REQ_30033000202 extends ESB_BASE {
 
 	private static final long serialVersionUID = -1360950203845217850L;

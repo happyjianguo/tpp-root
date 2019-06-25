@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmDayCheckLogInitModel.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月7日 上午9:30:03 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
@@ -18,7 +10,7 @@ import com.fxbank.cip.base.model.ModelBase;
 
 /** 
 * @ClassName: BocmDayCheckLogInitModel 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 交通柜面通日终对账日志模型
 * @author YePuLiang
 * @date 2019年5月7日 上午9:30:03 
 *  
@@ -29,7 +21,6 @@ public class BocmDayCheckLogInitModel extends ModelBase implements Serializable 
 
 	public BocmDayCheckLogInitModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**

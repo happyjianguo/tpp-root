@@ -1,12 +1,8 @@
 package com.fxbank.tpp.bocm.model;
 
-import java.math.BigDecimal;
-
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
-import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.cip.base.pkg.tag.TagAnno.TagField;
-
 
 /** 
 * @ClassName: REQ_10000 

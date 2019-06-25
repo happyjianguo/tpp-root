@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_10103_FEE.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月22日 下午5:05:16 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
@@ -17,7 +9,7 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
 /** 
 * @ClassName: REP_10103_FEE 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 手续费对账文件应答 
 * @author YePuLiang
 * @date 2019年6月22日 下午5:05:16 
 *  

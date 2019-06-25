@@ -11,7 +11,7 @@ import com.fxbank.cip.base.model.ModelBase;
 
 /** 
 * @ClassName: SndTraceUpdModel 
-* @Description: 往账更新 
+* @Description: 往账更新模型
 * @author YePuLiang
 * @date 2019年04月15日 下午1:38:29 
 *  

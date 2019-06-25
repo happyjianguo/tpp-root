@@ -8,12 +8,18 @@ import com.fxbank.cip.base.common.MyMapper;
 import com.fxbank.tpp.bocm.entity.BocmSndLog;
 
 public interface BocmSndLogMapper extends MyMapper<BocmSndLog> {
-    List<BocmSndLog> selectAll();
-    List<BocmSndLog> selectSndTrace(String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag);
-    String selectDtSndTotalNum(@Param("date") String date, @Param("flag") String flag);
-    String selectDtSndTotalSum(@Param("date") String date,@Param("flag") String flag);
-    List<BocmSndLog> selectCheckedTrace(String date);
-    String selectTraceNum(@Param("date") String date,@Param("checkFlag") String checkFlag);
     
+	List<BocmSndLog> selectAll();
+    //获取往账记录
+    List<BocmSndLog> selectSndTrace(String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag);
+    //获取对账流水笔数
+    String selectDtSndTotalNum(@Param("date") String date, @Param("flag") String flag);
+    //获取对账流水金额
+    String selectDtSndTotalSum(@Param("date") String date,@Param("flag") String flag);
+    //获取对账流水笔数
+    List<BocmSndLog> selectCheckedTrace(String date);
+    //通过对账标志 获取该标志对账流水数量
+    String selectTraceNum(@Param("date") String date,@Param("checkFlag") String checkFlag);
+    //获取往账对账总金额
     String selectChkSndTotalSum(@Param("date") String date);
 }

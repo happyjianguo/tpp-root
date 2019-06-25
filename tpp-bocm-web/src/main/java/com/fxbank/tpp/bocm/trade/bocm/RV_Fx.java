@@ -1,16 +1,4 @@
-/**   
-* @Title: RV_Fx.java 
-* @Package com.fxbank.tpp.bocm.trade.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月6日 上午8:09:42 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.bocm;
-
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -30,12 +18,8 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10009;
-import com.fxbank.tpp.bocm.dto.bocm.REP_10101;
-import com.fxbank.tpp.bocm.dto.bocm.REP_20000;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10009;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
-import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
@@ -124,7 +108,7 @@ public class RV_Fx implements TradeExecutionStrategy {
 			updateHostRecord(req, hostDate, hostTraceno, "4",hostReversalCode, hostReversalMsg);
 			myLog.info(logger, "交行向本行发起抹账交易，更新流水表成功：核心流水号【"+hostTraceno+"】渠道流水号【"+req.getSysTraceno()+"】");
 		} catch (SysTradeExecuteException e) {
-			if("CIP_E_000004".equals(e.getRspCode())) {
+			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
 				//FX6203
 				updateHostRecord(req, "", "", "6", e.getRspCode(), e.getRspMsg());
 				myLog.error(logger, "交行向本行发起抹账交易，本行核心抹账超时，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());

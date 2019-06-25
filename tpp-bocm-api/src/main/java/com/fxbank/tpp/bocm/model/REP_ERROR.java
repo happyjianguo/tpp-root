@@ -9,7 +9,9 @@ import com.fxbank.cip.base.log.MyLog;
  */
 public class REP_ERROR extends REP_BASE {
 
-    @Deprecated
+	private static final long serialVersionUID = 1793661948627769203L;
+
+	@Deprecated
 	public REP_ERROR() {
 		super(null, 0, 0, 0);
 	}

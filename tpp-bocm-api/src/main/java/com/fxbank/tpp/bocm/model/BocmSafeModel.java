@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmSafeModel.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月23日 下午3:55:26 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;

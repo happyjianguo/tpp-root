@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_30061800501.java 
-* @Package com.fxbank.tpp.bocm.dto.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月6日 下午5:37:44 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -15,7 +7,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
 * @ClassName: REP_30061800501 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 本行柜面第三方对账
 * @author YePuLiang
 * @date 2019年5月6日 下午5:37:44 
 *  

@@ -15,7 +15,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
 * @ClassName: REP_30033000202 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: IC卡验证应答
 * @author YePuLiang
 * @date 2019年4月24日 上午8:26:05 
 *  

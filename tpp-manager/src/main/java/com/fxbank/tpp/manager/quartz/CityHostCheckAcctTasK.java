@@ -127,8 +127,7 @@ public class CityHostCheckAcctTasK {
 		Date d = df.parse(sysDate.toString());     
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(d);
-		//TODO  调试期间用当天后期修改
-//		cal.add(Calendar.DATE, -1);  //减1天
+		cal.add(Calendar.DATE, -1);  //减1天
 		
 		Integer date = Integer.parseInt(df.format(cal.getTime()));
 		Integer sysTime = publicService.getSysTime();

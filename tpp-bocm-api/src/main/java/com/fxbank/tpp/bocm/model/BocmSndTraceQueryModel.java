@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmSndTraceQueryModel.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年4月25日 上午8:55:02 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
@@ -16,7 +8,7 @@ import com.fxbank.cip.base.model.ModelBase;
 
 /** 
 * @ClassName: BocmSndTraceQueryModel 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 往账流水表查询模型 
 * @author YePuLiang
 * @date 2019年4月25日 上午8:55:02 
 *  

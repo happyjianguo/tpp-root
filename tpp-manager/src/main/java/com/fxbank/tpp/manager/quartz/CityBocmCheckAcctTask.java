@@ -1,11 +1,3 @@
-/**   
-* @Title: CityBocmCheckAcctTask.java 
-* @Package com.fxbank.tpp.manager.quartz 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月24日 上午9:57:05 
-* @version V1.0   
-*/
 package com.fxbank.tpp.manager.quartz;
 
 import java.math.BigDecimal;
@@ -30,14 +22,12 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.MyJedis;
-import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
-import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
 import com.fxbank.tpp.bocm.model.REP_10103;
@@ -47,8 +37,6 @@ import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 import redis.clients.jedis.Jedis;
@@ -112,8 +100,7 @@ public class CityBocmCheckAcctTask {
 		Date d = df.parse(sysDate.toString());     
 		Calendar cal=Calendar.getInstance();
 		cal.setTime(d);
-		//TODO  调试期间用当天后期修改
-//		cal.add(Calendar.DATE, -1);  //减1天
+		cal.add(Calendar.DATE, -1);  //减1天
 		
 		Integer date = Integer.parseInt(df.format(cal.getTime()));
 		Integer sysTime = publicService.getSysTime();

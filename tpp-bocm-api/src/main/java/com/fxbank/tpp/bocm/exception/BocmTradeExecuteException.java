@@ -14,6 +14,7 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	
 	private static final long serialVersionUID = 1767308581692333362L;
 
+	//交行调用渠道返回的异常定义
 	public final static String BOCM_E_10001 = "FX0001";
 	public final static String BOCM_E_10002 = "FX0002";
 	public final static String BOCM_E_10003 = "FX0003";
@@ -28,16 +29,16 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 	public final static String BOCM_E_10013 = "FX0013";
 	public final static String BOCM_E_10014 = "FX0014";
 	public final static String BOCM_E_10015 = "FX0015";
+	public final static String BOCM_E_10016 = "FX0016";
 	public final static String BOCM_E_11007 = "FX1007";
 	public final static String BOCM_E_16203 = "FX6203";
+	
+	//调用加密平台定义的异常
 	public final static String TPP_E_000001 = "TPP_E_000001";
 	public final static String TPP_E_000002 = "TPP_E_000002";
 	public final static String TPP_E_000003 = "TPP_E_000003";
 	public final static String TPP_E_000004 = "TPP_E_000004";
 	
-	
-	public final static String BOCM_JH_6203 = "JH6203";
-	public final static String BOCM_JH_0000 = "JH0000";
 
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 
@@ -58,6 +59,7 @@ public class BocmTradeExecuteException extends SysTradeExecuteException {
 			put(BOCM_E_10013, "柜面通对账失败");
 			put(BOCM_E_10014, "无交易流水号");
 			put(BOCM_E_10015, "卡状态异常");
+			put(BOCM_E_10016, "账户不存在或已经销户");
 			put(BOCM_E_11007, "无此记录");
 			put(BOCM_E_16203, "交易超时");
 			put(TPP_E_000001, "调用加密平台PIN转加密失败");

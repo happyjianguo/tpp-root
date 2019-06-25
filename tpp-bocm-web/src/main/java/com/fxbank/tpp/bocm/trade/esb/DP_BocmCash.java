@@ -90,7 +90,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();			
 		} catch (SysTradeExecuteException e) {
 			//接收ESB报文应答超时
-			if("CIP_E_000004".equals(e.getRspCode())) {		
+			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {		
 				//记录记账状态为超时，继续执行交易流程
 				initRecord(reqDto, hostDate, hostTraceno, "3", retCode, retMsg);
 				myLog.error(logger, "交行卡存现金，本行核心记账接收ESB报文应答超时，渠道日期" + reqDto.getSysDate() + 

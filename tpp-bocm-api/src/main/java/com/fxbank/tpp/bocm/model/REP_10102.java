@@ -8,14 +8,12 @@
 */
 package com.fxbank.tpp.bocm.model;
 
-import java.math.BigDecimal;
-
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
 /** 
-* @ClassName: REP_20102 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @ClassName: REP_10102 
+* @Description:账户信息应答
 * @author YePuLiang
 * @date 2019年5月9日 上午10:47:29 
 *  

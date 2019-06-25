@@ -1,11 +1,3 @@
-/**   
-* @Title: TS_10103.java 
-* @Package com.fxbank.tpp.bocm.trade.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月12日 下午4:44:16 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.io.BufferedReader;
@@ -17,14 +9,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.dcfs.esb.ftp.client.FtpClientConfigSet;
 import com.dcfs.esb.ftp.client.FtpGet;
 import com.dcfs.esb.ftp.server.error.FtpException;
@@ -66,24 +53,11 @@ public class TS_10103 {
 	
 	private static Logger logger = LoggerFactory.getLogger(TS_10103.class);
 	
-    public TS_10103(LogPool logPool, IForwardToESBService forwardToESBService, IForwardToTownService forwardToTownService,
-    		IBocmDayCheckLogService dayCheckLogService,IBocmSndTraceService sndTraceService,
-    		 IBocmRcvTraceService rcvTraceService,IBocmAcctCheckErrService acctCheckErrService,MyJedis myJedis) {
-    	this.logPool = logPool;
-    	this.forwardToESBService = forwardToESBService;
-    	this.forwardToTownService = forwardToTownService;
-    	this.dayCheckLogService = dayCheckLogService;
-    	this.sndTraceService = sndTraceService;
-    	this.rcvTraceService = rcvTraceService;
-    	this.acctCheckErrService = acctCheckErrService;
-    	this.myJedis = myJedis;
-    }
-	
 	private LogPool logPool;
 	
 	private IForwardToESBService forwardToESBService;
 	
-	private IForwardToTownService forwardToTownService;
+	private IForwardToTownService forwardToBocmService;
 	
 	private IBocmDayCheckLogService dayCheckLogService;
 	
@@ -96,6 +70,19 @@ public class TS_10103 {
 	private MyJedis myJedis;
 	
 	private final static String COMMON_PREFIX = "bocm_common.";
+	
+    public TS_10103(LogPool logPool, IForwardToESBService forwardToESBService, IForwardToTownService forwardToBocmService,
+    		IBocmDayCheckLogService dayCheckLogService,IBocmSndTraceService sndTraceService,
+    		 IBocmRcvTraceService rcvTraceService,IBocmAcctCheckErrService acctCheckErrService,MyJedis myJedis) {
+    	this.logPool = logPool;
+    	this.forwardToESBService = forwardToESBService;
+    	this.forwardToBocmService = forwardToBocmService;
+    	this.dayCheckLogService = dayCheckLogService;
+    	this.sndTraceService = sndTraceService;
+    	this.rcvTraceService = rcvTraceService;
+    	this.acctCheckErrService = acctCheckErrService;
+    	this.myJedis = myJedis;
+    }
 
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();

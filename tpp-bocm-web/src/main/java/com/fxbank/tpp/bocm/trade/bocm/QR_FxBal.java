@@ -1,7 +1,5 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
-import java.math.BigDecimal;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -17,16 +15,11 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.bocm.REP_10001;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10101;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10101;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_20000;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
-import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
-import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000201;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
@@ -71,7 +64,6 @@ public class QR_FxBal implements TradeExecutionStrategy {
 			rep.setActBal(new Double(100));
 			return rep;
 		}
-		//调用ESB余额查询
 		ESB_REP_30013000201 esbRep_30013000201 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -84,7 +76,7 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		REP_10101 rep = new REP_10101();
 	
 		try {
-			//调用核心查询余额
+			//1.调用核心查询余额
 			esbRep_30013000201 = hostQuery(req);
 			hostDate = esbRep_30013000201.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30013000201.getRepSysHead().getReference();
@@ -98,6 +90,7 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		
 		String acctStatus = esbRep_30013000201.getRepBody().getAcctStatus();
 		myLog.error(logger, "账户状态：" + acctStatus);
+		//2.设置返回报文	
 		if("A".equals(acctStatus)){
 			//4.设置返回报文		
 			rep.setActNo(req.getActNo());
@@ -108,7 +101,6 @@ public class QR_FxBal implements TradeExecutionStrategy {
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10015);
 			throw e2;
 		}
-
 		return rep;
 		
 
@@ -130,8 +122,8 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		// 柜员号
 		String txTel = null;
 		try (Jedis jedis = myJedis.connect()) {
-			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-			txTel = jedis.get(COMMON_PREFIX + "txtel");
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
 		}
 
 		ESB_REQ_30013000201 esbReq_30013000201 = new ESB_REQ_30013000201(myLog, reqDto.getSysDate(),

@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_TS_CHK_BOCM.java 
-* @Package com.fxbank.tpp.bocm.dto.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月22日 下午2:49:03 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -15,7 +7,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
 * @ClassName: REP_TS_CHK_BOCM 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 模拟交行对账应答
 * @author YePuLiang
 * @date 2019年6月22日 下午2:49:03 
 *  

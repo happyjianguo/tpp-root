@@ -4,7 +4,13 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
@@ -16,11 +22,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.bocm.REP_10000;
-import com.fxbank.tpp.bocm.dto.bocm.REP_20000;
 import com.fxbank.tpp.bocm.dto.bocm.REP_20001;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_20000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_20001;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
@@ -29,18 +31,16 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000203;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
+
 import redis.clients.jedis.Jedis;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 
 /** 
@@ -70,7 +70,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm.";
+	private final static String COMMON_PREFIX = "bocm_common.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -79,8 +79,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		String sbnkNo = req.getSbnkNo();//发起行行号
 		if(sbnkNo.substring(0, 3).equals("313")){
 			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			REP_20001 rep = new REP_20001();
-			
+			REP_20001 rep = new REP_20001();		
 			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
 			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
@@ -98,7 +97,9 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 			throw e2;
 		}
 		
-		super.cardValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008);
+		super.hostErrorException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
+		super.acctStatusException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10016);
+		super.cardValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
 		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.TRADE_DESC = "交行向本行发起IC卡通兑记账请求";
@@ -114,8 +115,8 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		// 柜员号
 		String txTel = null;
 		try (Jedis jedis = myJedis.connect()) {
-			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-			txTel = jedis.get(COMMON_PREFIX + "txtel");
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
 		}
 
 		ESB_REQ_30033000202 esbReq_30033000202 = new ESB_REQ_30033000202(myLog, reqDto.getSysDate(),
@@ -213,8 +214,8 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		// 柜员号
 		String txTel = null;
 		try (Jedis jedis = myJedis.connect()) {
-			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-			txTel = jedis.get(COMMON_PREFIX + "txtel");
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
 		}
 
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),

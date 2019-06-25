@@ -1,11 +1,3 @@
-/**   
-* @Title: REQ_30014000101.java 
-* @Package com.fxbank.tpp.bocm.dto.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年4月29日 上午8:41:37 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -16,7 +8,7 @@ import com.fxbank.tpp.bocm.dto.esb.REQ_30011000104.REQ_BODY;
 
 /** 
 * @ClassName: REQ_30014000101 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 模拟核心冲正 
 * @author YePuLiang
 * @date 2019年4月29日 上午8:41:37 
 *  

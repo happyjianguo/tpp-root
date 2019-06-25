@@ -1,11 +1,3 @@
-/**   
-* @Title: IBocmSafeService.java 
-* @Package com.fxbank.tpp.bocm.service 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月23日 下午3:53:50 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.service;
 
 import com.fxbank.cip.base.exception.SysTradeExecuteException;

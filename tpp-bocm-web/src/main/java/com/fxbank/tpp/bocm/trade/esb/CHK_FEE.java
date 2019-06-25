@@ -1,11 +1,3 @@
-/**   
-* @Title: CHK_FEE.java 
-* @Package com.fxbank.tpp.bocm.trade.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月22日 下午3:08:40 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
@@ -49,7 +41,7 @@ import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: CHK_FEE 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 交行手续费对账
 * @author YePuLiang
 * @date 2019年6月22日 下午3:08:40 
 *  

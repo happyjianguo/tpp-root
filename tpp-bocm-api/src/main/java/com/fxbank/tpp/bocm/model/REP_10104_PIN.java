@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_10104_PIN.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月21日 上午11:27:33 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import com.fxbank.cip.base.log.MyLog;
@@ -13,7 +5,7 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
 /** 
 * @ClassName: REP_10104_PIN 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: PIN密钥申请应答
 * @author YePuLiang
 * @date 2019年6月21日 上午11:27:33 
 *  

@@ -1,11 +1,3 @@
-/**   
-* @Title: CHK_Bocm.java 
-* @Package com.fxbank.tpp.bocm.trade.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月6日 下午5:18:44 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
@@ -51,7 +43,7 @@ import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: CHK_Bocm 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 交行对账
 * @author YePuLiang
 * @date 2019年5月6日 下午5:18:44 
 *  

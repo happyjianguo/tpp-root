@@ -265,7 +265,6 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//5. 核心记账成功，更新流水表核心记账状态
 		updateHostRecord(reqDto, hostDate, hostTraceno, "1", retCode, retMsg);
 		myLog.info(logger, "交行卡付款转账，本行核心记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
-
 		return rep;
 	}
 	

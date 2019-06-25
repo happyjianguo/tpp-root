@@ -3,7 +3,6 @@ package com.fxbank.tpp.bocm.model;
 import java.io.Serializable;
 
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.model.FIXP_SERIAL;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 

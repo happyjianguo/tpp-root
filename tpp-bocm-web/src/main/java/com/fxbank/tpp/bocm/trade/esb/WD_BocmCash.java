@@ -1,11 +1,3 @@
-/**   
-* @Title: WD_BocmCash.java 
-* @Package com.fxbank.tpp.bocm.trade.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年4月16日 下午3:03:04 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
@@ -87,8 +79,6 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		String bocmTraceNo = null;
 		int bocmDate = 0;
 		int bocmTime = 0;
-		//卡类型  磁条还是IC卡
-		//String IC_CARD_FLG_T4 = reqBody.getIcCardFlgT4();//IC卡磁条卡标志
 		//卡类型名称
 		String cardTypeName = "";
 		//原交易代码
@@ -229,7 +219,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();			
 			accounting_branch = esbRep_30011000104.getRepBody().getAcctBranch();
 		}catch(SysTradeExecuteException e) {			
-			if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000004)) { // ESB超时	
+			if (SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) { // ESB超时	
 				//本行记账超时，如果冲正也超时，提示交易失败（不出钱），核心记账超时，核心冲正超时。（交行记账成功，交易结果以本行为主，对账不返回）在完美一点把交行的冲正加上				
 				//超时处理是交易失败方向走还是往				
 				//提示超时;
@@ -257,7 +247,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				}catch(SysTradeExecuteException e1) {
 					//对于冲正失败处理：返回交易失败，对账的时候忽略核心记账的成功状态
 					//接收ESB报文应答超时
-					if("CIP_E_000004".equals(e1.getRspCode())) {
+					if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
 						updateHostCheck(reqDto, "", "", "6", e.getRspCode(), e.getRspMsg(),"0");
 						myLog.error(logger, "交行卡取现金，本行核心冲正超时，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);

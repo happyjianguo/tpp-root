@@ -39,13 +39,14 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		myLog.info(logger, "组包发送交行报文");	
 		
 		String tran_type = reqBase.getTtxnCd();
-		if(tran_type.equals("10103")){
-			//mac申请和对账不进行mac验证
-		}else{
+		//REQ_BASE交行通讯请求基础类checkMac是否为true（默认true），fasle不校验mac
+		if(reqBase.isCheckMac()==true){
 			//校验MAC	联机交易Mac验证
 			String mac = safeService.calcBocm(myLog, fixPack.toString());	
 			fixPack.append(mac);
-			myLog.info(logger, "调用加密平台生成Mac： 【"+mac+"】");	
+			myLog.info(logger, "调用加密平台生成Mac： 【"+mac+"】");		
+		}else{
+			//特殊交易不进行mac验证（对账），在初始化报文时赋值checkmac为false
 		}			
 		ctx.writeAndFlush(fixPack.toString(), promise);
 	}

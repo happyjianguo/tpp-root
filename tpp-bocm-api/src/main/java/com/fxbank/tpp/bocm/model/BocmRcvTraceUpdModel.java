@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmRcvTraceUpdModel.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: 接收日志流水表更新模型
-* @author YePuLiang
-* @date 2019年4月16日 上午8:32:07 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
@@ -16,7 +8,7 @@ import com.fxbank.cip.base.model.ModelBase;
 
 /** 
 * @ClassName: BocmRcvTraceUpdModel 
-* @Description: 接收日志流水表更新模型
+* @Description: 来账流水表更新模型
 * @author YePuLiang
 * @date 2019年4月16日 上午8:32:07 
 *  

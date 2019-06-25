@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_TS_10104.java 
-* @Package com.fxbank.tpp.bocm.dto.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月20日 上午9:50:05 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -16,7 +8,7 @@ import com.fxbank.tpp.bocm.dto.esb.REP_30063001301.REQ_BODY;
 
 /** 
 * @ClassName: REP_TS_10104 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 模拟工作密钥申请应答
 * @author YePuLiang
 * @date 2019年6月20日 上午9:50:05 
 *  

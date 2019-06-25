@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_10103.java 
-* @Package com.fxbank.tpp.bocm.dto.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月6日 下午3:47:32 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.bocm;
 
 import java.util.ArrayList;

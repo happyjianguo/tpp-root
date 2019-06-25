@@ -1,17 +1,4 @@
-/**   
-* @Title: Apply_Key.java 
-* @Package com.fxbank.tpp.bocm.trade.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月23日 下午3:07:03 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.bocm;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -35,7 +22,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 /** 
 * @ClassName: QR_Key 
-* @Description: 工作秘钥申请
+* @Description: 模拟工作秘钥申请
 * @author YePuLiang
 * @date 2019年5月23日 下午3:07:03 
 *  

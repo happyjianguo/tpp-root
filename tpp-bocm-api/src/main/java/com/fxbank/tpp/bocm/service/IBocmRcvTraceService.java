@@ -1,11 +1,3 @@
-/**   
-* @Title: IBocmRcvTraceService.java 
-* @Package com.fxbank.tpp.bocm.service 
-* @Description: 交行来账流水保存
-* @author YePuLiang
-* @date 2019年4月16日 上午8:28:39 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.service;
 
 import java.util.List;

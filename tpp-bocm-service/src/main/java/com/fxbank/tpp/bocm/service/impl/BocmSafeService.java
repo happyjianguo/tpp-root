@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmSafeService.java 
-* @Package com.fxbank.tpp.bocm.service.impl 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月23日 下午3:58:35 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.service.impl;
 
 import javax.annotation.Resource;

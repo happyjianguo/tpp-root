@@ -15,6 +15,13 @@ import com.fxbank.tpp.bocm.netty.bocm.BocmClient;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 
+/**
+* @ClassName: ForwardToBocmService 
+* @Description: 与交行通讯请求实现
+* @author YePuLiang
+* @date 2019年6月25日 下午1:49:58 
+*
+ */
 @Service(version = "1.0.0")
 public class ForwardToBocmService implements IForwardToBocmService {
 

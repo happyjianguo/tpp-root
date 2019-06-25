@@ -1,11 +1,3 @@
-/**   
-* @Title: QR_FxAcc.java 
-* @Package com.fxbank.tpp.bocm.trade.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月6日 上午10:54:43 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import javax.annotation.Resource;
@@ -41,7 +33,7 @@ import redis.clients.jedis.Jedis;
 * @date 2019年5月6日 上午10:54:43 
 *  
 */
-@Service("REQ_20102")
+@Service("REQ_10102")
 public class QR_FxAcc implements TradeExecutionStrategy {
 	
 	private static Logger logger = LoggerFactory.getLogger(DP_FxICC.class);
@@ -81,13 +73,6 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 			
 			return rep;
 		}
-
-
-		
-		
-		//1.插入流水表
-		//initRecord(req);
-		//2.调用ESB余额查询
 		ESB_REP_30013000201 esbRep_30013000201 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -100,26 +85,21 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 
 	
 		try {
-			//调用核心查询余额
+			//1.调用核心查询账户信息
 			esbRep_30013000201 = hostQuery(req);
 			hostDate = esbRep_30013000201.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30013000201.getRepSysHead().getReference();
 			retCode = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetCode();
 			retMsg = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
-			//updateHostRecord(req, "", "", "2", e.getRspCode(), e.getRspMsg());
 			myLog.error(logger, "交行查询本行卡余额，本行核心查询失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10009);
 			throw e2;
-		}
-		
-		//3.更新流水表核心记账状态
-		//updateHostRecord(req, hostDate, hostTraceno, "1", retCode, retMsg);
-		
+		}		
 		String acctStatus = esbRep_30013000201.getRepBody().getAcctStatus();
 		myLog.error(logger, "账户状态：" + acctStatus);
-		if("A".equals(acctStatus)){
-			//4.设置返回报文		
+		//2.设置返回报文	
+		if("A".equals(acctStatus)){				
 			rep.setActNo(req.getActNo());
 			rep.setActTyp("2");
 			rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
@@ -148,8 +128,8 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		// 柜员号
 		String txTel = null;
 		try (Jedis jedis = myJedis.connect()) {
-			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-			txTel = jedis.get(COMMON_PREFIX + "txtel");
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
 		}
 
 		ESB_REQ_30013000201 esbReq_30013000201 = new ESB_REQ_30013000201(myLog, reqDto.getSysDate(),

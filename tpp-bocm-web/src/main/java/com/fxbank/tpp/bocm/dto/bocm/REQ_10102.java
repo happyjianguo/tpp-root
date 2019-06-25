@@ -1,11 +1,3 @@
-/**   
-* @Title: REQ_20102.java 
-* @Package com.fxbank.tpp.bocm.dto.bocm 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月6日 上午10:10:10 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.bocm;
 
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;

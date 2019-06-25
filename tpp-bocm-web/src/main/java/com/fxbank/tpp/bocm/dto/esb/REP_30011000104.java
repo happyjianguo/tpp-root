@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_30011000104.java 
-* @Package com.fxbank.tpp.bocm.dto.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年4月25日 上午10:34:44 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.esb;
 
 import java.io.Serializable;
@@ -18,7 +10,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
 * @ClassName: REP_30011000104 
-* @Description: 模拟核心记账返回 
+* @Description: 核心记账返回 
 * @author YePuLiang
 * @date 2019年4月25日 上午10:34:44 
 *  

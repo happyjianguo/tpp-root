@@ -1,11 +1,3 @@
-/**   
-* @Title: REQ_10104.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月23日 下午3:43:17 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import com.fxbank.cip.base.log.MyLog;
@@ -13,7 +5,7 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
 /** 
 * @ClassName: REQ_10104 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 密钥申请请求
 * @author YePuLiang
 * @date 2019年5月23日 下午3:43:17 
 *  

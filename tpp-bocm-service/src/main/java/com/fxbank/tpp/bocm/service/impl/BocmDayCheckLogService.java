@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmDayCheckLogService.java 
-* @Package com.fxbank.tpp.bocm.service.impl 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月7日 上午9:34:17 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.service.impl;
 
 import java.util.ArrayList;
@@ -24,7 +16,7 @@ import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
 
 /** 
 * @ClassName: BocmDayCheckLogService 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 对账数据接口实现
 * @author YePuLiang
 * @date 2019年5月7日 上午9:34:17 
 *  

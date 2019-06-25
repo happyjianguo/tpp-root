@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmRcvTraceInitModel.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年4月16日 上午8:31:45 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
@@ -19,7 +11,7 @@ import com.fxbank.cip.base.model.ModelBase;
 
 /** 
 * @ClassName: BocmRcvTraceInitModel 
-* @Description: 接收日志流水表登记模型
+* @Description: 来账流水表登记模型
 * @author YePuLiang
 * @date 2019年4月16日 上午8:31:45 
 *  

@@ -1,11 +1,3 @@
-/**   
-* @Title: REP_30033000202.java 
-* @Package com.fxbank.tpp.bocm.dto.esb.simu 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年4月24日 上午8:26:05 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -14,8 +6,8 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
-* @ClassName: REP_30033000202 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @ClassName: REP_30033000203 
+* @Description: 磁条卡验证校验应答
 * @author YePuLiang
 * @date 2019年4月24日 上午8:26:05 
 *  

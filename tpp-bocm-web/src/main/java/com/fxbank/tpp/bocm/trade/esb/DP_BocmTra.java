@@ -95,7 +95,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			myLog.info(logger, "本行卡付款转账，本行核心记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 		} catch (SysTradeExecuteException e) {
 			//接收ESB报文应答超时
-			if("CIP_E_000004".equals(e.getRspCode())) {		
+			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {		
 				//记录记账状态为超时，继续执行交易流程
 				initRecord(reqDto, hostDate, hostTraceno, "3", retCode, retMsg);
 				myLog.error(logger, "本行卡付款转账，本行核心记账接收ESB报文应答超时，渠道日期" + reqDto.getSysDate() + 
@@ -419,20 +419,9 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("O");
 		
-		//SEND_BANK_CODE	 发起行行号
-		//BANK_CODE	                        我方银行行号
-		//OTH_BANK_CODE	            对方银行行号
 		reqBody_30011000104.setSendBankCode("313226090656");
 		reqBody_30011000104.setBankCode(reqBody.getPyrOpnBnkNoT2());
 		reqBody_30011000104.setOthBankCode(reqBody.getPyeeOpnBnkNoT1());
-		
-//		if(1==1){
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000006);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);	
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);			
-//			throw e;
-//		}
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);

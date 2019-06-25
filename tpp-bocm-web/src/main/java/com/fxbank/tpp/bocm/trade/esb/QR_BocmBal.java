@@ -57,9 +57,6 @@ public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 
 		myLog.info(logger, "发送余额查询请求至交行");
 		
-		StringBuffer sb = new StringBuffer(FixedUtil.toFixed(req10101,"UTF-8"));
-		myLog.info(logger, sb.toString());
-		
 		REP_10101 rep10101 = forwardToBocmService.sendToBocm(req10101, REP_10101.class);
 
 		REP_30063001201 rep = new REP_30063001201();

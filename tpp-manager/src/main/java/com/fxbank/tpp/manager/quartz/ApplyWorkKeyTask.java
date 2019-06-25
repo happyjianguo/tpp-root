@@ -1,11 +1,3 @@
-/**   
-* @Title: ApplyWorkKeyTask.java 
-* @Package com.fxbank.tpp.manager.quartz 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月26日 下午8:30:04 
-* @version V1.0   
-*/
 package com.fxbank.tpp.manager.quartz;
 
 import java.text.SimpleDateFormat;
@@ -28,17 +20,13 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.MyJedis;
-import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.model.REP_10104_MAC;
 import com.fxbank.tpp.bocm.model.REP_10104_PIN;
-import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.model.REQ_10104;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 import redis.clients.jedis.Jedis;
@@ -78,31 +66,23 @@ public class ApplyWorkKeyTask {
 	
 	public void exec() throws Exception {
 		MyLog myLog = new MyLog();
-		myLog.info(logger, "密钥定时更新");
-		
-		
+		myLog.info(logger, "密钥定时更新");	
 		Integer sysDate = publicService.getSysDate("CIP");
 		SimpleDateFormat df=new SimpleDateFormat("yyyyMMdd");
 		Date d = df.parse(sysDate.toString());     
 		Calendar cal=Calendar.getInstance();
-		cal.setTime(d);
-		
+		cal.setTime(d);		
 		Integer date = Integer.parseInt(df.format(cal.getTime()));
 		Integer sysTime = publicService.getSysTime();
-		Integer sysTraceno = publicService.getSysTraceno();
-				
-		//交行总行行号
-		String JHNO = "";
+		Integer sysTraceno = publicService.getSysTraceno();				
 		//阜新银行总行行号
 		String FXNO = "";
 		String KeyId = "";
 		try(Jedis jedis = myJedis.connect()){
-			//从redis中获取交行总行行号
-			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
+			//从redis中获取总行行号
 			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
 			KeyId = jedis.get(COMMON_PREFIX+"KeyId");
-        }
-		
+        }		
 		//1.申请MAC key
 		REQ_10104 reqMac10104 = new REQ_10104(myLog, date, sysTime, sysTraceno);
 		reqMac10104.setSbnkNo(FXNO);

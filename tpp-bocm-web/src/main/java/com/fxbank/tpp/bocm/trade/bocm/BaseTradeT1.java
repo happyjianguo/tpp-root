@@ -22,11 +22,64 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 
 /**
- * @Description: 1号交易模版。适用场景：判断交易状态->核心记账,日终对账以银行为准。
+ * @Description: 来账交易模版。适用场景：判断交易状态->核心记账,日终对账以银行为准。
  * @Author: 周勇沩
  * @Date: 2019-05-20 22:53:50
  */
 public abstract class BaseTradeT1 {
+	
+	/** 
+	* @Fields hostTimeoutException : 核心记账超时，提示处理失败
+	*/ 
+	public SysTradeExecuteException hostTimeoutException = null;
+	
+	/** 
+	* @Fields hostTimeoutException : 核心记账失败
+	*/ 
+	public SysTradeExecuteException hostErrorException = null;
+	
+	/** 
+	* @Fields hostTimeoutException : 核心记账超时，提示处理失败
+	*/ 
+	public SysTradeExecuteException acctStatusException = null;
+	
+	/** 
+	* @Fields hostTimeoutException : 磁条卡验证
+	*/ 
+	public SysTradeExecuteException cardValidateException = null;
+
+	/** 
+	* @Fields othTimeoutException : 第三方记账超时，提示第三方记账超时
+	*/ 
+	public SysTradeExecuteException othTimeoutException = null;
+	
+	/** 
+	* @Fields TRADE_DESC : 交易描述
+	*/ 
+	public String TRADE_DESC = "";
+	
+	public Logger logger = null;
+	
+	/** 
+	* @Fields ESB_TIMEOUT_CODE : 核心超时ESB响应码
+	*/ 
+	private static final String ESB_TIMEOUT_CODE1 = "ESB_E_000052";
+	
+	/** 
+	* @Fields ESB_TIMEOUT_CODE2 :  核心超时ESB响应码
+	*/ 
+	private static final String ESB_TIMEOUT_CODE2 = "ES000033";
+	
+	/** 
+	* @Fields othTimeoutQuery : 第三方记账超时，是否发起查询该笔交易 
+	*/ 
+	public Boolean othTimeoutQuery = false;
+	
+	@Resource
+	private LogPool logPool;
+	
+	@Reference(version = "1.0.0")
+	private IBocmRcvTraceService bocmRcvTraceService;
 
 	/**
 	* @Title: validateMag 
@@ -118,6 +171,15 @@ public abstract class BaseTradeT1 {
 	*/
 	public abstract DataTransObject backMsgOnTradeHave(DataTransObject dto,ModelBase model) throws SysTradeExecuteException;
 	
+	/**
+	* @Title: queryRcvTrace 
+	* @Description: 查询来账信息 
+	* @param @param req
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return BocmRcvTraceQueryModel    返回类型 
+	* @throws
+	 */
 	public abstract BocmRcvTraceQueryModel queryRcvTrace(DataTransObject req) throws SysTradeExecuteException;
 		
 	
@@ -145,48 +207,7 @@ public abstract class BaseTradeT1 {
 	}
 	
 	
-	/** 
-	* @Fields hostTimeoutException : 核心记账超时，提示处理失败
-	*/ 
-	public SysTradeExecuteException hostTimeoutException = null;
-	
-	/** 
-	* @Fields hostTimeoutException : 磁条卡验证
-	*/ 
-	public SysTradeExecuteException cardValidateException = null;
 
-	/** 
-	* @Fields othTimeoutException : 第三方记账超时，提示第三方记账超时
-	*/ 
-	public SysTradeExecuteException othTimeoutException = null;
-	
-	/** 
-	* @Fields TRADE_DESC : 交易描述
-	*/ 
-	public String TRADE_DESC = "";
-	
-	public Logger logger = null;
-	
-	/** 
-	* @Fields ESB_TIMEOUT_CODE : 核心超时ESB响应码
-	*/ 
-	private static final String ESB_TIMEOUT_CODE1 = "ESB_E_000052";
-	
-	/** 
-	* @Fields ESB_TIMEOUT_CODE2 :  核心超时ESB响应码
-	*/ 
-	private static final String ESB_TIMEOUT_CODE2 = "ES000033";
-	
-	/** 
-	* @Fields othTimeoutQuery : 第三方记账超时，是否发起查询该笔交易 
-	*/ 
-	public Boolean othTimeoutQuery = false;
-	
-	@Resource
-	private LogPool logPool;
-	
-	@Reference(version = "1.0.0")
-	private IBocmRcvTraceService bocmRcvTraceService;
 
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {		
 		
@@ -194,25 +215,25 @@ public abstract class BaseTradeT1 {
 		MyLog myLog = logPool.get();
 		myLog.info(logger, TRADE_DESC);
 		
-		//磁条卡二磁道校验
-		try {
-			myLog.info(logger, "磁条卡二磁道校验");	
-			validateMag(dto);
-		} catch (SysTradeExecuteException e) {
-			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败");	
-			throw cardValidateException;
-		}
+//		//磁条卡二磁道校验
+//		try {
+//			myLog.info(logger, "磁条卡二磁道校验");	
+//			validateMag(dto);
+//		} catch (SysTradeExecuteException e) {
+//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败");	
+//			throw cardValidateException;
+//		}
+//		
+//		//IC卡校验
+//		try {
+//			myLog.info(logger, "IC卡55域校验");	
+//			validateIC(dto);
+//		} catch (SysTradeExecuteException e) {
+//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败");	
+//			throw cardValidateException;
+//		}
 		
-		//IC卡校验
-		try {
-			myLog.info(logger, "IC卡55域校验");	
-			validateIC(dto);
-		} catch (SysTradeExecuteException e) {
-			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败");	
-			throw cardValidateException;
-		}
-		
-		
+		//递归调用来账查询
 		BocmRcvTraceQueryModel revModel = checkBocmRcvTrace(dto,1);	
 		String timeoutFlag="0";
 		
@@ -236,6 +257,7 @@ public abstract class BaseTradeT1 {
 					//调用核心接口确认该笔流水是否入账成功
 					myLog.info(logger, TRADE_DESC+",核心记账超时,查询交易是否存在");	
 					try {
+						//核心记账结果查询
 						model = hostTranResult(dto);							
 						ESB_REP_30043000101 esbRep_30043000101 = (ESB_REP_30043000101)model;
 						myLog.info(logger,"记账结果查询："+esbRep_30043000101.getRepBody().getAcctResult());
@@ -244,6 +266,7 @@ public abstract class BaseTradeT1 {
 						if(esbRep_30043000101.getRepBody().getAcctResult().equals("00")) {
 							hostDate = esbRep_30043000101.getRepBody().getTranDate();
 							hostTraceno = esbRep_30043000101.getRepBody().getReference();
+							//如果查询到结果，返回交易信息
 							return backMsgOnTradeHave(dto, revModel);
 						}
 					}catch (Exception e) {
@@ -252,13 +275,13 @@ public abstract class BaseTradeT1 {
 						throw hostTimeoutException;
 					}				
 				}
-//				return backMsgOnTradeHave(dto, revModel);
 				try {
+					myLog.info(logger,TRADE_DESC+"核心未查询到交易记录，重新发起记账交易，渠道日期【"+dto.getSysDate()+"】渠道流水号【"+dto.getSysTraceno()+"】");
 					//交易流水核心未记录重新发起核心记账
 					model = hostCharge(dto);
 				} catch (SysTradeExecuteException e) {
-					myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
-					throw e;
+					myLog.error(logger,TRADE_DESC+"重发交易核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
+					throw hostErrorException;
 				}
 				updateOthSuccess(dto, model);
 				return backMsg(dto,model);
@@ -278,8 +301,11 @@ public abstract class BaseTradeT1 {
 				myLog.error(logger,TRADE_DESC+"核心记账超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 				throw hostTimeoutException;
 			} else {
+				if(e.getRspCode().equals("RB4005")){
+					throw acctStatusException;
+				}
 				myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
-				throw e;
+				throw hostErrorException;
 			}
 		}
 		// 主机成功登记

@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmTradeJHExecuteException.java 
-* @Package com.fxbank.tpp.bocm.exception 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月18日 下午1:40:32 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.exception;
 
 import java.util.HashMap;

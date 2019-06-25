@@ -3,7 +3,6 @@ package com.fxbank.tpp.bocm.model;
 import java.io.Serializable;
 
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.model.FIXP_SERIAL;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 
@@ -15,6 +14,8 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 public abstract class REQ_BASE extends ModelBase implements Serializable{
 	
 	private static final long serialVersionUID = -6652288226005628489L;
+	
+	private boolean CheckMac = true;
 
 	public REQ_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
@@ -96,6 +97,16 @@ public abstract class REQ_BASE extends ModelBase implements Serializable{
 	public void setSlogNo(String slogNo) {
 		this.slogNo = slogNo;
 	}
+
+	public boolean isCheckMac() {
+		return CheckMac;
+	}
+
+	public void setCheckMac(boolean checkMac) {
+		CheckMac = checkMac;
+	}
+
+
 
 	
 	

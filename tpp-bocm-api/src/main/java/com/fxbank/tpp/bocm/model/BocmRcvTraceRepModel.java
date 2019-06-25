@@ -1,11 +1,3 @@
-/**   
-* @Title: BocmRcvTraceRepModel.java 
-* @Package com.fxbank.tpp.bocm.model 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月7日 上午11:06:13 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
@@ -18,7 +10,7 @@ import com.fxbank.cip.base.model.ModelBase;
 
 /** 
 * @ClassName: BocmRcvTraceRepModel 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 来账补账模型
 * @author YePuLiang
 * @date 2019年5月7日 上午11:06:13 
 *  

@@ -1,11 +1,3 @@
-/**   
-* @Title: QR_BocmAcc.java 
-* @Package com.fxbank.tpp.bocm.trade.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年5月9日 上午10:24:56 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.esb;
 
 import javax.annotation.Resource;
@@ -25,7 +17,7 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.esb.REP_30063001301;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30063001301;
-import com.fxbank.tpp.bocm.model.REP_20102;
+import com.fxbank.tpp.bocm.model.REP_10102;
 import com.fxbank.tpp.bocm.model.REQ_10102;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30063000103;
@@ -34,7 +26,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 /** 
 * @ClassName: QR_BocmAcc 
-* @Description: 账户信息查询
+* @Description: 柜面账户信息查询
 * @author YePuLiang
 * @date 2019年5月9日 上午10:24:56 
 *  
@@ -70,26 +62,22 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		req10102.setActNo(reqBody.getAcctNoT());
 		//TRNS_TP_T8（交易类型）00 存款  01 取款  02 转出  03 转入
 		req10102.setTxnTyp(reqBody.getTrnsTpT8());
-		String txnType = reqBody.getTrnsTpT8();
 		req10102.setFeeFlg(reqBody.getRcveWyT());
 		req10102.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
 		myLog.info(logger, "发送账号信息 查询请求至交行");
 		
-		//TODO 转换正式交行请求
-		REP_20102 rep20102 = forwardToBocmService.sendToBocm(req10102, REP_20102.class);
+		REP_10102 rep10102 = forwardToBocmService.sendToBocm(req10102, REP_10102.class);
 		
 		
 
 		REP_30063001301 rep = new REP_30063001301();
 		REP_30063001301.REQ_BODY repBody = rep.getReqBody();
 		//姓名
-		repBody.setNaT1(rep20102.getActNam());
+		repBody.setNaT1(rep10102.getActNam());
 		//手续费
-		repBody.setFeeT3(rep20102.getFee().toString());
-		
-		//TODO 手续费查询
-		
-		ESB_REP_30063000103 esbRep_30063000103 = queryFee(reqDto,rep20102);
+		repBody.setFeeT3(rep10102.getFee().toString());		
+		//查询手续费		
+		ESB_REP_30063000103 esbRep_30063000103 = queryFee(reqDto,rep10102);
 		ESB_REP_30063000103.Fee fee = esbRep_30063000103.getRepBody().getFeeDetail().get(0);
 		
 		if(fee.getFeeAmt()==null||fee.getFeeAmt().equals("")){
@@ -97,17 +85,14 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		}else{
 			repBody.setHndlPymntFeeT5(fee.getFeeAmt());
 		}
-		
-		
-//		repBody.setHndlPymntFeeT5("1");
 		//开户行号
-		repBody.setPyeeOpnBnkNoT1(rep20102.getActBnk());
+		repBody.setPyeeOpnBnkNoT1(rep10102.getActBnk());
 		//账户类型
-		repBody.setAcctTpT(rep20102.getActTyp());
+		repBody.setAcctTpT(rep10102.getActTyp());
 		return rep;
 	}
 	
-	public ESB_REP_30063000103 queryFee(REQ_30063001301 reqDto,REP_20102 rep20102) throws SysTradeExecuteException {
+	public ESB_REP_30063000103 queryFee(REQ_30063001301 reqDto,REP_10102 rep20102) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		// 交易机构
 		String txBrno = null;
