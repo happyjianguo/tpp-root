@@ -67,7 +67,6 @@ public class BocmAcctCheckErrService implements IBocmAcctCheckErrService{
 		ace.setPayerAcno(model.getPayerAcno());
 		ace.setPayerName(model.getPayerName());
 		ace.setMsg(model.getMsg());
-		
 		mapper.insertSelective(ace);
 	}
 

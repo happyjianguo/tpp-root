@@ -39,7 +39,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		myLog.info(logger, "组包发送交行报文");	
 		
 		String tran_type = reqBase.getTtxnCd();
-		//REQ_BASE交行通讯请求基础类checkMac是否为true（默认true），fasle不校验mac
+		//REQ_BASE交行通讯请求基础类checkMac是否为true（默认true），fasle不添加Mac校验
 		if(reqBase.isCheckMac()==true){
 			//校验MAC	联机交易Mac验证
 			String mac = safeService.calcBocm(myLog, fixPack.toString());	

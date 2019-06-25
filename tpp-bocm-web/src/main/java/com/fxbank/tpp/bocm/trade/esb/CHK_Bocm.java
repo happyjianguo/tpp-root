@@ -249,11 +249,6 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		
 		myLog.info(logger, "外围与交行对账结束");
 		
-		
-//		int sndTotal = Integer.parseInt(sndCheckFlag2)+Integer.parseInt(sndCheckFlag3)+Integer.parseInt(sndCheckFlag4);
-//		String s = "柜面通【"+date+"】对账统计：来账共【"+rcvTotal+"】笔，其中已对账【"+rcvCheckFlag2+"】笔，核心多出【"+rcvCheckFlag3+"】笔，渠道多出【"+rcvCheckFlag4+"】笔;"
-//				+ "往账共【"+sndTotal+"】笔，其中已对账【"+sndCheckFlag2+"】笔，核心多出【"+sndCheckFlag3+"】笔，渠道多出【"+sndCheckFlag4+"】笔";
-
 		myLog.info(logger, "外围与交行对账成功");
 		
 		return rep;

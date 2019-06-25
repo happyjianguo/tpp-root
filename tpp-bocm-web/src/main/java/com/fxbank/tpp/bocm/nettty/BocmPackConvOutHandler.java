@@ -75,13 +75,14 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		repDto.setTrspMsg(rspMsg);
 		repDto.setRlogNo(String.format("%06d%08d", reqDto.getSysDate()%1000000,reqDto.getSysTraceno()));
 
-		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(repDto,"UTF-8"));
+		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(repDto,ServerInitializer.CODING));
 		
-		//生成MAC
-		String mac = safeService.calcBocm(myLog, fixPack.toString());		
-		fixPack.append(mac);
-		
-		myLog.info(logger, "组包发送交行报文MAC:"+mac);
+		if(repDto.isCheckMac()){
+			//生成MAC
+			String mac = safeService.calcBocm(myLog, fixPack.toString());		
+			fixPack.append(mac);
+			myLog.info(logger, "组包发送交行报文MAC:"+mac);
+		}
 		myLog.info(logger, "WEB SERVER返回报文=[" + fixPack.toString() + "]");
 		ctx.writeAndFlush(fixPack.toString(),promise);
 		ctx.close();

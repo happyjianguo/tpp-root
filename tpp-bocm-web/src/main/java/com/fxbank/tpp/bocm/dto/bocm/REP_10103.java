@@ -8,12 +8,18 @@ import com.fxbank.tpp.bocm.model.AmtBase;
 
 /** 
 * @ClassName: REP_10103 
-* @Description: 对账文件获取
+* @Description: 对账文件响应
 * @author YePuLiang
 * @date 2019年5月6日 下午3:47:32 
 *  
 */
 public class REP_10103 extends REP_BASE {
+	
+    public REP_10103() {
+        super.txDesc = "对账文件响应";
+        super.setCheckMac(false);
+	}
+	
 	
 	@FixedField(order = 5, len = 8, desc = "文件长度")
     private Integer filLen;

@@ -22,10 +22,12 @@ public class REP_10103 extends REP_BASE {
     @Deprecated
 	public REP_10103() {
 		super(null, 0, 0, 0);
+		super.setCheckMac(false);
 	}
 
     public REP_10103(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
+        super.setCheckMac(false);
     }
 
 	@FixedField(order = 5, len = 8, desc = "文件长度")

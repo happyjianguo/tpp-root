@@ -42,14 +42,18 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 		MyLog myLog = logPool.get();
 		try {
 			StringBuffer pack = new StringBuffer((String) msg);
-			String fixPack = pack.substring(0, pack.length() - 16);
-			myLog.info(logger, "WEB SERVER请求报文=[" + fixPack + "]");
-			String mac = pack.substring(pack.length() - 16);
-			myLog.info(logger, "校验MAC  mac=[" + mac + "]");
-			// 校验MAC		
-			safeService.verifyBocmMac(myLog, fixPack, mac);
-			
 			String txCode = "REQ_" + pack.substring(0, 5);
+			String fixPack = null;
+			if(txCode.equals("REQ_10103")){
+				fixPack = pack.toString();
+			}else{
+				fixPack = pack.substring(0, pack.length() - 16);
+				String mac = pack.substring(pack.length() - 16);
+				myLog.info(logger, "校验MAC  mac=[" + mac + "]");
+				// 校验MAC		
+				safeService.verifyBocmMac(myLog, fixPack, mac);
+			}
+			myLog.info(logger, "阜新银行服务端接收请求报文=[" + fixPack + "]");
 			myLog.info(logger, "交易代码=[" + txCode + "]");
 			REQ_BASE reqBase = null;
 			Class<?> bocmClass = null;
@@ -63,7 +67,7 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 			
 			
 			reqBase = (REQ_BASE) bocmClass.newInstance();			
-			reqBase = (REQ_BASE)new FixedUtil(fixPack,"UTF-8").toBean(reqBase.getClass());			
+			reqBase = (REQ_BASE)new FixedUtil(fixPack,ServerInitializer.CODING).toBean(reqBase.getClass());			
 			reqBase.setTxCode(txCode);
 			reqBase.setSourceType("BU");
 			ctx.fireChannelRead(reqBase);

@@ -38,12 +38,11 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501.REQ_BODY;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
 * @ClassName: CHK_HostTest 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 外围与核心对账测试
 * @author YePuLiang
 * @date 2019年6月24日 上午8:44:54 
 *  
@@ -102,7 +101,7 @@ public class CHK_HostTest {
 	public void payOk() throws Exception {
 		logger.info("本行与三方对账");
 		//对账日期
-		reqBody.setStmtDtT2("20190620");
+		reqBody.setStmtDtT2("20190530");
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));

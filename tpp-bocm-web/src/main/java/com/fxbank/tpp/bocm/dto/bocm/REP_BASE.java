@@ -10,6 +10,8 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
  */
 public abstract class REP_BASE extends DataTransObject{
 	
+	private boolean checkMac = true;
+	
 	@FixedField(order = 1, len = 1, desc = "响应类型")
 	private String tmsgTyp;
 	
@@ -45,6 +47,12 @@ public abstract class REP_BASE extends DataTransObject{
 	}
 	public void setRlogNo(String rlogNo) {
 		this.rlogNo = rlogNo;
+	}
+	public boolean isCheckMac() {
+		return checkMac;
+	}
+	public void setCheckMac(boolean checkMac) {
+		this.checkMac = checkMac;
 	}
 	
 	

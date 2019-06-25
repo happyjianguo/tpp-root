@@ -48,15 +48,17 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 			this.myLog.info(logger, "接收报文  =[" + pack + "]");
 			this.myLog.info(logger, "mac=[" + mac + "]");
 
-			String fixPack = pack.substring(0, pack.length() - 16);
-			if(mac.equals("0000000000000000")){
-				//对账交易返回mac为0000000000000000不校验
-			}else{
-				//校验MAC	联机交易Mac验证
-				safeService.verifyBocmMac(myLog, fixPack, mac);			
-			}
-
+			String fixPack = null;
 			REP_BASE repBase = (REP_BASE) this.clazz.newInstance();	
+			//判断行通讯应答基础类是否校验mac
+			if(repBase.isCheckMac()){
+				//校验MAC	联机交易Mac验证
+				safeService.verifyBocmMac(myLog, fixPack, mac);	
+				fixPack = pack.substring(0, pack.length() - 16);
+			}else{
+				fixPack = pack.toString();
+			}
+			
 			if(fixPack.substring(0, 1).equals("N")){
 				repBase = (REP_BASE)new FixedUtil(fixPack,BocmClient.CODING).toBean(repBase.getClass());
 			}else{
