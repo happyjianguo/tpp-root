@@ -20,18 +20,18 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 * @date 2019年5月9日 上午10:43:14 
 *  
 */
-public class REQ_20102 extends REQ_BASE {
+public class REQ_10102 extends REQ_BASE {
 	
 	private static final long serialVersionUID = -83548845382386681L;
 	
     @Deprecated
-	public REQ_20102() {
+	public REQ_10102() {
 		super(null, 0, 0, 0);
 	}
 
-    public REQ_20102(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+    public REQ_10102(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
-        super.setTtxnCd("20102");
+        super.setTtxnCd("10102");
     }
 
 	@FixedField(order = 8, len = 3, desc = "币种")
@@ -46,13 +46,10 @@ public class REQ_20102 extends REQ_BASE {
 	@FixedField(order = 11, len = 2, desc = "交易类型")
 	private String txnTyp;
 	
-	@FixedField(order = 12, len = 12, desc = "开户行行号")
-	private String actBnk;
-	
-	@FixedField(order = 13, len = 1, desc = "手续费收取方式")
+	@FixedField(order = 12, len = 1, desc = "手续费收取方式")
 	private String feeFlg;
 	
-	@FixedField(order = 14, len = 15, desc = "交易金额")
+	@FixedField(order = 13, len = 15, desc = "交易金额")
 	private Double txnAmt;
 	
 
@@ -86,14 +83,6 @@ public class REQ_20102 extends REQ_BASE {
 
 	public void setTxnTyp(String txnTyp) {
 		this.txnTyp = txnTyp;
-	}
-
-	public String getActBnk() {
-		return actBnk;
-	}
-
-	public void setActBnk(String actBnk) {
-		this.actBnk = actBnk;
 	}
 
 	public String getFeeFlg() {
