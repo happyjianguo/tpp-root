@@ -6,11 +6,11 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /**
- * @Description: ESB“手机号码核查结果疑义反馈”应答报文 mivs.347.001.01
+ * @Description: 企业开销户状态反馈ESB应答报文
  * @Author: 王鹏
- * @Date: 2019/5/5 8:25
+ * @Date: 2019/6/6 15:06
  */
-public class REP_50023000203 extends REP_BASE {
+public class REP_50023000210 extends REP_BASE {
 
     @JSONField(name = "APP_HEAD")
     private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -19,12 +19,11 @@ public class REP_50023000203 extends REP_BASE {
     private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
     @JSONField(name = "BODY")
-    private REP_50023000203.REP_BODY repBody = new REP_50023000203.REP_BODY();
+    private REP_50023000210.REP_BODY repBody = new REP_50023000210.REP_BODY();
 
     public REP_APP_HEAD getRepAppHead() {
         return repAppHead;
     }
-
 
     public void setRepAppHead(REP_APP_HEAD repAppHead) {
         this.repAppHead = repAppHead;
@@ -34,25 +33,17 @@ public class REP_50023000203 extends REP_BASE {
         return repSysHead;
     }
 
-
-
     public void setRepSysHead(REP_SYS_HEAD repSysHead) {
         this.repSysHead = repSysHead;
     }
 
-
-
-    public REP_50023000203.REP_BODY getRepBody() {
+    public REP_50023000210.REP_BODY getRepBody() {
         return repBody;
     }
 
-
-
-    public void setRepBody(REP_50023000203.REP_BODY repBody) {
+    public void setRepBody(REP_50023000210.REP_BODY repBody) {
         this.repBody = repBody;
     }
-
-
 
     public class REP_BODY {
 

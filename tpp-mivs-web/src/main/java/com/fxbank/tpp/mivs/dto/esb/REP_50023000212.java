@@ -6,11 +6,11 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /**
- * @Description:
+ * @Description: 企业信息联网核查查业务受理时间查询ESB应答报文
  * @Author: 王鹏
- * @Date: 2019/6/24 10:31
+ * @Date: 2019/4/30 11:16
  */
-public class REP_50023000205 extends REP_BASE {
+public class REP_50023000212 extends REP_BASE {
 
     @JSONField(name = "APP_HEAD")
     private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -19,7 +19,7 @@ public class REP_50023000205 extends REP_BASE {
     private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
     @JSONField(name = "BODY")
-    private REP_50023000205.REP_BODY repBody = new REP_50023000205.REP_BODY();
+    private REP_BODY repBody = new REP_BODY();
 
     public REP_APP_HEAD getRepAppHead() {
         return repAppHead;
@@ -42,13 +42,13 @@ public class REP_50023000205 extends REP_BASE {
 
 
 
-    public REP_50023000205.REP_BODY getRepBody() {
+    public REP_BODY getRepBody() {
         return repBody;
     }
 
 
 
-    public void setRepBody(REP_50023000205.REP_BODY repBody) {
+    public void setRepBody(REP_BODY repBody) {
         this.repBody = repBody;
     }
 
@@ -56,28 +56,28 @@ public class REP_50023000205 extends REP_BASE {
 
     public class REP_BODY {
 
-        @JSONField(name = "OrgnlQueDt")
+        @JSONField(name = "OLD_QUERY_DATE")
         private String orgnlQueDt;//纳税核查结果
 
-        @JSONField(name = "ProcSts")
+        @JSONField(name = "MSG_RFS_STATUS")
         private String procSts;//申请报文处理状态
 
-        @JSONField(name = "ProcCd")
+        @JSONField(name = "MSG_RFS_CODE")
         private String procCd;//申请报文处理码
 
-        @JSONField(name = "RjctInf")
+        @JSONField(name = "MSG_RFS_INFO")
         private String rjctInf;//申请报文拒绝信息
 
-        @JSONField(name = "SysInd")
+        @JSONField(name = "CHK_SYSTEM_ID")
         private String sysInd;//核查系统标识
 
-        @JSONField(name = "SvcInd")
+        @JSONField(name = "QUERY_DATE_BUSI_STS")
         private String svcInd;//
 
-        @JSONField(name = "SysOpTm")
+        @JSONField(name = "QUERY_DATE_ACPT_START_TM")
         private String sysOpTm;//
 
-        @JSONField(name = "SysClTm")
+        @JSONField(name = "QUERY_DATE_ACPT_END_TM")
         private String sysClTm;//
 
         public String getOrgnlQueDt() {

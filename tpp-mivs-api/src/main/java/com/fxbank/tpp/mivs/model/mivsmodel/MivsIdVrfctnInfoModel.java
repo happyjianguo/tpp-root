@@ -27,6 +27,8 @@ public class MivsIdVrfctnInfoModel implements Serializable {
     private String pty_nm; //发起参与机构行名
     private String instd_drct_pty; //接收直接参与机构
     private String instd_pty; //接收参与机构
+    private String rcv_msg_id; //报文标识号
+    private String rcv_cre_dt_tm; //报文发送时间
     private String mob_nb; //手机号
     private String nm; //姓名
     private String id_tp; //证件类型
@@ -46,6 +48,20 @@ public class MivsIdVrfctnInfoModel implements Serializable {
     private String remark1; //备用字段1
     private String remark2; //备用字段2
     private String remark3; //备用字段3
+
+    private Integer start_dt;
+    private Integer end_dt;
+
+    private String sys_ind;
+    private String orig_dlv_msgid;
+    private String orig_rcv_msgid;
+    private String cntt;
+    private String contact_nm;
+    private String contact_nb;
+    private String pty_id;//拒绝业务的参与机构行号
+    private String pty_prc_cd; //参与机构业务拒绝码
+    private String prc_dt; //处理日期（终态日期）
+    private String netg_rnd; //轧差场次
 
     public Integer getPlat_date() {
         return plat_date;
@@ -189,6 +205,22 @@ public class MivsIdVrfctnInfoModel implements Serializable {
 
     public void setInstd_pty(String instd_pty) {
         this.instd_pty = instd_pty;
+    }
+
+    public String getRcv_msg_id() {
+        return rcv_msg_id;
+    }
+
+    public void setRcv_msg_id(String rcv_msg_id) {
+        this.rcv_msg_id = rcv_msg_id;
+    }
+
+    public String getRcv_cre_dt_tm() {
+        return rcv_cre_dt_tm;
+    }
+
+    public void setRcv_cre_dt_tm(String rcv_cre_dt_tm) {
+        this.rcv_cre_dt_tm = rcv_cre_dt_tm;
     }
 
     public String getMob_nb() {
@@ -343,9 +375,105 @@ public class MivsIdVrfctnInfoModel implements Serializable {
         this.remark3 = remark3;
     }
 
+    public Integer getStart_dt() {
+        return start_dt;
+    }
+
+    public void setStart_dt(Integer start_dt) {
+        this.start_dt = start_dt;
+    }
+
+    public Integer getEnd_dt() {
+        return end_dt;
+    }
+
+    public void setEnd_dt(Integer end_dt) {
+        this.end_dt = end_dt;
+    }
+
+    public String getSys_ind() {
+        return sys_ind;
+    }
+
+    public void setSys_ind(String sys_ind) {
+        this.sys_ind = sys_ind;
+    }
+
+    public String getOrig_dlv_msgid() {
+        return orig_dlv_msgid;
+    }
+
+    public void setOrig_dlv_msgid(String orig_dlv_msgid) {
+        this.orig_dlv_msgid = orig_dlv_msgid;
+    }
+
+    public String getOrig_rcv_msgid() {
+        return orig_rcv_msgid;
+    }
+
+    public void setOrig_rcv_msgid(String orig_rcv_msgid) {
+        this.orig_rcv_msgid = orig_rcv_msgid;
+    }
+
+    public String getCntt() {
+        return cntt;
+    }
+
+    public void setCntt(String cntt) {
+        this.cntt = cntt;
+    }
+
+    public String getContact_nm() {
+        return contact_nm;
+    }
+
+    public void setContact_nm(String contact_nm) {
+        this.contact_nm = contact_nm;
+    }
+
+    public String getContact_nb() {
+        return contact_nb;
+    }
+
+    public void setContact_nb(String contact_nb) {
+        this.contact_nb = contact_nb;
+    }
+
+    public String getPty_id() {
+        return pty_id;
+    }
+
+    public void setPty_id(String pty_id) {
+        this.pty_id = pty_id;
+    }
+
+    public String getPty_prc_cd() {
+        return pty_prc_cd;
+    }
+
+    public void setPty_prc_cd(String pty_prc_cd) {
+        this.pty_prc_cd = pty_prc_cd;
+    }
+
+    public String getPrc_dt() {
+        return prc_dt;
+    }
+
+    public void setPrc_dt(String prc_dt) {
+        this.prc_dt = prc_dt;
+    }
+
+    public String getNetg_rnd() {
+        return netg_rnd;
+    }
+
+    public void setNetg_rnd(String netg_rnd) {
+        this.netg_rnd = netg_rnd;
+    }
+
     @Override
     public String toString() {
-        return "MivsIdVrfctnTable{" +
+        return "MivsIdVrfctnInfoModel{" +
                 "plat_date=" + plat_date +
                 ", plat_trace=" + plat_trace +
                 ", plat_time=" + plat_time +
@@ -383,6 +511,18 @@ public class MivsIdVrfctnInfoModel implements Serializable {
                 ", remark1='" + remark1 + '\'' +
                 ", remark2='" + remark2 + '\'' +
                 ", remark3='" + remark3 + '\'' +
+                ", start_dt=" + start_dt +
+                ", end_dt=" + end_dt +
+                ", sys_ind='" + sys_ind + '\'' +
+                ", orig_dlv_msgid='" + orig_dlv_msgid + '\'' +
+                ", orig_rcv_msgid='" + orig_rcv_msgid + '\'' +
+                ", cntt='" + cntt + '\'' +
+                ", contact_nm='" + contact_nm + '\'' +
+                ", contact_nb='" + contact_nb + '\'' +
+                ", pty_id='" + pty_id + '\'' +
+                ", pty_prc_cd='" + pty_prc_cd + '\'' +
+                ", prc_dt='" + prc_dt + '\'' +
+                ", netg_rnd='" + netg_rnd + '\'' +
                 '}';
     }
 }

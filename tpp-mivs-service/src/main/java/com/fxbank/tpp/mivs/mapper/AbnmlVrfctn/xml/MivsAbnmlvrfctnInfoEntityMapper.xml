@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.AbnmlVrfctn.MivsAbnmlvrfctnInfoEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.AbnmlVrfctn.MivsAbnmlvrfctnInfoEntity" >
+    <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <id column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
+    <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
+    <result column="MIVS_STS" property="mivsSts" jdbcType="NVARCHAR" />
+    <result column="CRE_DT_TM" property="creDtTm" jdbcType="NVARCHAR" />
+    <result column="INSTG_DRCT_PTY" property="instgDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
+    <result column="BRANCH_ID" property="branchId" jdbcType="NVARCHAR" />
+    <result column="ORGNL_INSTG_PTY" property="orgnlInstgPty" jdbcType="NVARCHAR" />
+    <result column="CO_NM" property="coNm" jdbcType="NVARCHAR" />
+    <result column="UNI_SOC_CDT_CD" property="uniSocCdtCd" jdbcType="NVARCHAR" />
+    <result column="MOB_NB" property="mobNb" jdbcType="NVARCHAR" />
+    <result column="NM" property="nm" jdbcType="NVARCHAR" />
+    <result column="ABNML_TYPE" property="abnmlType" jdbcType="NVARCHAR" />
+    <result column="DESCRIP" property="descrip" jdbcType="NVARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PLAT_DATE, PLAT_TRACE, MSG_ID, PLAT_TIME, MIVS_STS, CRE_DT_TM, INSTG_DRCT_PTY, 
+    INSTG_PTY, INSTD_DRCT_PTY, INSTD_PTY, BRANCH_ID, ORGNL_INSTG_PTY, CO_NM, UNI_SOC_CDT_CD, 
+    MOB_NB, NM, ABNML_TYPE, DESCRIP
+    from MIVS_ABNMLVRFCTN_INFO
+  </select>
+</mapper>

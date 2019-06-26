@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "mivs_idvrfctn_info")
-public class MivsIdvrfctnInfoEntity {
+@Table(name = "mivs_idvrfctn_fdbk")
+public class MivsIdvrfctnFdbkEntity {
     /**
      * null
      */
@@ -131,6 +131,24 @@ public class MivsIdvrfctnInfoEntity {
     /**
      * null
      */
+    @Column(name = "SYS_IND")
+    private String sysInd;
+
+    /**
+     * null
+     */
+    @Column(name = "ORIG_DLV_MSGID")
+    private String origDlvMsgid;
+
+    /**
+     * null
+     */
+    @Column(name = "ORIG_RCV_MSGID")
+    private String origRcvMsgid;
+
+    /**
+     * null
+     */
     @Column(name = "MOB_NB")
     private String mobNb;
 
@@ -167,44 +185,26 @@ public class MivsIdvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "OP_NM")
-    private String opNm;
-
-    /**
-     * null
-     */
     @Column(name = "RSLT")
     private String rslt;
 
     /**
      * null
      */
-    @Column(name = "MOB_CRR")
-    private String mobCrr;
+    @Column(name = "CNTT")
+    private String cntt;
 
     /**
      * null
      */
-    @Column(name = "LOC_MOB_NB")
-    private String locMobNb;
+    @Column(name = "CONTACT_NM")
+    private String contactNm;
 
     /**
      * null
      */
-    @Column(name = "LOC_NM_MOB_NB")
-    private String locNmMobNb;
-
-    /**
-     * null
-     */
-    @Column(name = "CD_TP")
-    private String cdTp;
-
-    /**
-     * null
-     */
-    @Column(name = "STS")
-    private String sts;
+    @Column(name = "CONTACT_NB")
+    private String contactNb;
 
     /**
      * null
@@ -221,8 +221,32 @@ public class MivsIdvrfctnInfoEntity {
     /**
      * null
      */
+    @Column(name = "PTY_ID")
+    private String ptyId;
+
+    /**
+     * null
+     */
+    @Column(name = "PTY_PRC_CD")
+    private String ptyPrcCd;
+
+    /**
+     * null
+     */
     @Column(name = "RJCT_INF")
     private String rjctInf;
+
+    /**
+     * null
+     */
+    @Column(name = "PRC_DT")
+    private String prcDt;
+
+    /**
+     * null
+     */
+    @Column(name = "NETG_RND")
+    private String netgRnd;
 
     /**
      * null
@@ -564,6 +588,54 @@ public class MivsIdvrfctnInfoEntity {
 
     /**
      * null
+     * @return SYS_IND null
+     */
+    public String getSysInd() {
+        return sysInd;
+    }
+
+    /**
+     * null
+     * @param sysInd null
+     */
+    public void setSysInd(String sysInd) {
+        this.sysInd = sysInd;
+    }
+
+    /**
+     * null
+     * @return ORIG_DLV_MSGID null
+     */
+    public String getOrigDlvMsgid() {
+        return origDlvMsgid;
+    }
+
+    /**
+     * null
+     * @param origDlvMsgid null
+     */
+    public void setOrigDlvMsgid(String origDlvMsgid) {
+        this.origDlvMsgid = origDlvMsgid;
+    }
+
+    /**
+     * null
+     * @return ORIG_RCV_MSGID null
+     */
+    public String getOrigRcvMsgid() {
+        return origRcvMsgid;
+    }
+
+    /**
+     * null
+     * @param origRcvMsgid null
+     */
+    public void setOrigRcvMsgid(String origRcvMsgid) {
+        this.origRcvMsgid = origRcvMsgid;
+    }
+
+    /**
+     * null
      * @return MOB_NB null
      */
     public String getMobNb() {
@@ -660,22 +732,6 @@ public class MivsIdvrfctnInfoEntity {
 
     /**
      * null
-     * @return OP_NM null
-     */
-    public String getOpNm() {
-        return opNm;
-    }
-
-    /**
-     * null
-     * @param opNm null
-     */
-    public void setOpNm(String opNm) {
-        this.opNm = opNm;
-    }
-
-    /**
-     * null
      * @return RSLT null
      */
     public String getRslt() {
@@ -692,82 +748,50 @@ public class MivsIdvrfctnInfoEntity {
 
     /**
      * null
-     * @return MOB_CRR null
+     * @return CNTT null
      */
-    public String getMobCrr() {
-        return mobCrr;
+    public String getCntt() {
+        return cntt;
     }
 
     /**
      * null
-     * @param mobCrr null
+     * @param cntt null
      */
-    public void setMobCrr(String mobCrr) {
-        this.mobCrr = mobCrr;
+    public void setCntt(String cntt) {
+        this.cntt = cntt;
     }
 
     /**
      * null
-     * @return LOC_MOB_NB null
+     * @return CONTACT_NM null
      */
-    public String getLocMobNb() {
-        return locMobNb;
+    public String getContactNm() {
+        return contactNm;
     }
 
     /**
      * null
-     * @param locMobNb null
+     * @param contactNm null
      */
-    public void setLocMobNb(String locMobNb) {
-        this.locMobNb = locMobNb;
+    public void setContactNm(String contactNm) {
+        this.contactNm = contactNm;
     }
 
     /**
      * null
-     * @return LOC_NM_MOB_NB null
+     * @return CONTACT_NB null
      */
-    public String getLocNmMobNb() {
-        return locNmMobNb;
+    public String getContactNb() {
+        return contactNb;
     }
 
     /**
      * null
-     * @param locNmMobNb null
+     * @param contactNb null
      */
-    public void setLocNmMobNb(String locNmMobNb) {
-        this.locNmMobNb = locNmMobNb;
-    }
-
-    /**
-     * null
-     * @return CD_TP null
-     */
-    public String getCdTp() {
-        return cdTp;
-    }
-
-    /**
-     * null
-     * @param cdTp null
-     */
-    public void setCdTp(String cdTp) {
-        this.cdTp = cdTp;
-    }
-
-    /**
-     * null
-     * @return STS null
-     */
-    public String getSts() {
-        return sts;
-    }
-
-    /**
-     * null
-     * @param sts null
-     */
-    public void setSts(String sts) {
-        this.sts = sts;
+    public void setContactNb(String contactNb) {
+        this.contactNb = contactNb;
     }
 
     /**
@@ -804,6 +828,38 @@ public class MivsIdvrfctnInfoEntity {
 
     /**
      * null
+     * @return PTY_ID null
+     */
+    public String getPtyId() {
+        return ptyId;
+    }
+
+    /**
+     * null
+     * @param ptyId null
+     */
+    public void setPtyId(String ptyId) {
+        this.ptyId = ptyId;
+    }
+
+    /**
+     * null
+     * @return PTY_PRC_CD null
+     */
+    public String getPtyPrcCd() {
+        return ptyPrcCd;
+    }
+
+    /**
+     * null
+     * @param ptyPrcCd null
+     */
+    public void setPtyPrcCd(String ptyPrcCd) {
+        this.ptyPrcCd = ptyPrcCd;
+    }
+
+    /**
+     * null
      * @return RJCT_INF null
      */
     public String getRjctInf() {
@@ -816,6 +872,38 @@ public class MivsIdvrfctnInfoEntity {
      */
     public void setRjctInf(String rjctInf) {
         this.rjctInf = rjctInf;
+    }
+
+    /**
+     * null
+     * @return PRC_DT null
+     */
+    public String getPrcDt() {
+        return prcDt;
+    }
+
+    /**
+     * null
+     * @param prcDt null
+     */
+    public void setPrcDt(String prcDt) {
+        this.prcDt = prcDt;
+    }
+
+    /**
+     * null
+     * @return NETG_RND null
+     */
+    public String getNetgRnd() {
+        return netgRnd;
+    }
+
+    /**
+     * null
+     * @param netgRnd null
+     */
+    public void setNetgRnd(String netgRnd) {
+        this.netgRnd = netgRnd;
     }
 
     /**

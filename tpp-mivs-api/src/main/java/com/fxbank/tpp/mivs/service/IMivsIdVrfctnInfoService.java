@@ -2,6 +2,8 @@ package com.fxbank.tpp.mivs.service;
 
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsIdVrfctnInfoModel;
 
+import java.util.List;
+
 /**
  * @Description: 手机号核查表操作接口
  * @Author: 王鹏
@@ -21,4 +23,25 @@ public interface IMivsIdVrfctnInfoService {
      * @param mivsIdVrfctnInfoModel
      */
     void updateSts(MivsIdVrfctnInfoModel mivsIdVrfctnInfoModel);
+
+    /**
+     * 查询数据库表信息
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    List<MivsIdVrfctnInfoModel> selectResult(MivsIdVrfctnInfoModel mivsIdVrfctnInfoModel);
+
+    /**
+     * 新增手机号核查反馈表数据
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    void insertFdbk(MivsIdVrfctnInfoModel mivsIdVrfctnInfoModel);
+
+    /**
+     * 更新数据库表状态信息
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    void updateFdbk(MivsIdVrfctnInfoModel mivsIdVrfctnInfoModel);
 }

@@ -117,34 +117,22 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
         public static class InstgPty implements Serializable{
             private static final long serialVersionUID = -4783744123340710335L;
             private String InstgDrctPty = null;
-            private String DrctPtyNm = null;
+            private String InstgPty = null;
 
-            /**
-             * @return the instgDrctPty
-             */
             public String getInstgDrctPty() {
                 return InstgDrctPty;
             }
 
-            /**
-             * @param instgDrctPty the instgDrctPty to set
-             */
             public void setInstgDrctPty(String instgDrctPty) {
-                this.InstgDrctPty = instgDrctPty;
+                InstgDrctPty = instgDrctPty;
             }
 
-            /**
-             * @return the drctPtyNm
-             */
-            public String getDrctPtyNm() {
-                return DrctPtyNm;
+            public String getInstgPty() {
+                return InstgPty;
             }
 
-            /**
-             * @param drctPtyNm the drctPtyNm to set
-             */
-            public void setDrctPtyNm(String drctPtyNm) {
-                this.DrctPtyNm = drctPtyNm;
+            public void setInstgPty(String instgPty) {
+                InstgPty = instgPty;
             }
         }
 

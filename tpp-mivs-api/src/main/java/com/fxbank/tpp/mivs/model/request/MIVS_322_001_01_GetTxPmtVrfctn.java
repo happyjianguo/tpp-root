@@ -21,7 +21,7 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
 
     @Override
     public String toString() {
-        return "纳税信息联网核查申请报文[MIVS_320_001_01]";
+        return "纳税信息联网核查申请报文[MIVS_322_001_01]";
     }
 
     /**

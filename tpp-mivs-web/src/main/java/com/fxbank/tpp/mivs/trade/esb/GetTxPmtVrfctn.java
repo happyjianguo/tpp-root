@@ -9,8 +9,8 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000202;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000202;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000204;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000204;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_323_001_01;
@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/4/29 10:53
  */
-@Service("REQ_50023000202")
+@Service("REQ_50023000204")
 public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
@@ -61,8 +61,8 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_50023000202 req = (REQ_50023000202) dto;//接收ESB请求报文
-        REQ_50023000202.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000204 req = (REQ_50023000204) dto;//接收ESB请求报文
+        REQ_50023000204.REQ_BODY reqBody = req.getReqBody();
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -141,8 +141,8 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
         //收到人行通讯回执，准备更新数据库状态
-        REP_50023000202 rep = new REP_50023000202();
-        REP_50023000202.REP_BODY repBody = rep.getRepBody();
+        REP_50023000204 rep = new REP_50023000204();
+        REP_50023000204.REP_BODY repBody = rep.getRepBody();
         MivsTxpmtVrfctnInfoModel txpmtvfctnInfoTableUpdate = new MivsTxpmtVrfctnInfoModel();
         //更新数据的主键赋值
         txpmtvfctnInfoTableUpdate.setPlat_date(req.getSysDate());
@@ -173,10 +173,10 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             MivsTxpmtVrfctnInfoModel infoModel = mivsTxpmtvfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "all");
             myLog.debug(logger, "###infoModel :" + infoModel.toString());
             //赋循环数据
-            List<REP_50023000202.TXPYR_INFO_ARRAY> arrayMsg = new ArrayList<REP_50023000202.TXPYR_INFO_ARRAY>();
+            List<REP_50023000204.TXPYR_INFO_ARRAY> arrayMsg = new ArrayList<REP_50023000204.TXPYR_INFO_ARRAY>();
             if(infoModel.getTxpmtInfList() != null && !infoModel.getTxpmtInfList().isEmpty()) {
                 for (MivsTxpmtVrfctnInfoModel.TxpmtInf Info:infoModel.getTxpmtInfList()) {
-                    REP_50023000202.TXPYR_INFO_ARRAY txpyrInfoArray = new REP_50023000202.TXPYR_INFO_ARRAY();
+                    REP_50023000204.TXPYR_INFO_ARRAY txpyrInfoArray = new REP_50023000204.TXPYR_INFO_ARRAY();
                     //赋值纳税核查信息附表数据
                     txpyrInfoArray.setTxpmtInfNb(Info.getTxpmt_inf_nb());
                     txpyrInfoArray.setTxAuthCd(Info.getTx_auth_cd());

@@ -140,9 +140,5 @@ public class REP_50023000201 extends REP_BASE {
 		public void setSts(String sts) {
 			this.sts = sts;
 		}
-
-
-
-
 	}
 }

@@ -9,8 +9,8 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000203;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000203;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000207;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000207;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.dto.mivs.MIVS_325_001_01;
@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/5/20 15:28
  */
-@Service("REQ_50023000203")
+@Service("REQ_50023000207")
 public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
@@ -61,8 +61,8 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_50023000203 req = (REQ_50023000203) dto;//接收ESB请求报文
-        REQ_50023000203.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000207 req = (REQ_50023000207) dto;//接收ESB请求报文
+        REQ_50023000207.REQ_BODY reqBody = req.getReqBody();
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -160,8 +160,8 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         myLog.info(logger, "324报文同步通道编号=[" + channel + "]");
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
 
-        REP_50023000203 rep = new REP_50023000203();
-        REP_50023000203.REP_BODY repBody = rep.getRepBody();
+        REP_50023000207 rep = new REP_50023000207();
+        REP_50023000207.REP_BODY repBody = rep.getRepBody();
 
         //收到人行通讯回执，准备更新数据库状态
         MivsRegVrfctnInfoModel regVrfctnInfoTableUpdate = new MivsRegVrfctnInfoModel();
@@ -196,12 +196,12 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             MivsRegVrfctnInfoModel infoModel = mivsRegVrfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "all");
             myLog.debug(logger, "###infoModel :" + infoModel.toString());
             //赋BasInfo数据
-            List<REP_50023000203.BasInfoEnt> basInfoEntArrayMsg = new ArrayList<REP_50023000203.BasInfoEnt>();
-            List<REP_50023000203.BasInfOfSlfEplydPpl> basInfOfSlfEplydPplArrayMsg = new ArrayList<REP_50023000203.BasInfOfSlfEplydPpl>();
+            List<REP_50023000207.BasInfoEnt> basInfoEntArrayMsg = new ArrayList<REP_50023000207.BasInfoEnt>();
+            List<REP_50023000207.BasInfOfSlfEplydPpl> basInfOfSlfEplydPplArrayMsg = new ArrayList<REP_50023000207.BasInfOfSlfEplydPpl>();
             if(infoModel.getBasInfo() != null && !infoModel.getBasInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.BasInfo Info:infoModel.getBasInfo()) {
                     if(Info.getMarket_type().equals("ENT")) {
-                        REP_50023000203.BasInfoEnt basInfoArMsg = new REP_50023000203.BasInfoEnt();
+                        REP_50023000207.BasInfoEnt basInfoArMsg = new REP_50023000207.BasInfoEnt();
                         basInfoArMsg.setPgNb(Info.getPg_nb());
                         basInfoArMsg.setEntNm(Info.getEnt_nm());
                         basInfoArMsg.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
@@ -218,7 +218,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                         basInfoArMsg.setDtAppr(Info.getDt_appr());
                         basInfoEntArrayMsg.add(basInfoArMsg);
                     }else if(Info.getMarket_type().equals("TRA")){
-                        REP_50023000203.BasInfOfSlfEplydPpl basInfoArMsg = new REP_50023000203.BasInfOfSlfEplydPpl();
+                        REP_50023000207.BasInfOfSlfEplydPpl basInfoArMsg = new REP_50023000207.BasInfOfSlfEplydPpl();
                         basInfoArMsg.setPgNb(Info.getPg_nb());
                         basInfoArMsg.setTraNm(Info.getTra_nm());
                         basInfoArMsg.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
@@ -241,10 +241,10 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 repBody.setBasInfOfSlfEplydPplList(basInfOfSlfEplydPplArrayMsg);
             }
             //赋CoShrhdrFndInfo数据
-            List<REP_50023000203.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<REP_50023000203.CoShrhdrFndInfo>();
+            List<REP_50023000207.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<REP_50023000207.CoShrhdrFndInfo>();
             if(infoModel.getCoShrhdrFndInfo() != null && !infoModel.getCoShrhdrFndInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.CoShrhdrFndInfo Info:infoModel.getCoShrhdrFndInfo()) {
-                    REP_50023000203.CoShrhdrFndInfo coShrhdrFndInfoMsg = new REP_50023000203.CoShrhdrFndInfo();
+                    REP_50023000207.CoShrhdrFndInfo coShrhdrFndInfoMsg = new REP_50023000207.CoShrhdrFndInfo();
                     coShrhdrFndInfoMsg.setPgNb(Info.getPg_nb());
                     coShrhdrFndInfoMsg.setCoShrhdrfndInfoNb(Info.getCo_shrhdrfnd_info_nb());
                     coShrhdrFndInfoMsg.setInvtrNm(Info.getInvtr_nm());
@@ -260,10 +260,10 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 repBody.setCoShrhdrFndInfoList(coShrhdrFndInfoArrayMsg);
             }
             //赋DirSupSrMgrInfo数据
-            List<REP_50023000203.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<REP_50023000203.DirSupSrMgrInfo>();
+            List<REP_50023000207.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<REP_50023000207.DirSupSrMgrInfo>();
             if(infoModel.getDirSupSrMgrInfo() != null && !infoModel.getDirSupSrMgrInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.DirSupSrMgrInfo Info:infoModel.getDirSupSrMgrInfo()) {
-                    REP_50023000203.DirSupSrMgrInfo dirSupSrMgrInfoMsg = new REP_50023000203.DirSupSrMgrInfo();
+                    REP_50023000207.DirSupSrMgrInfo dirSupSrMgrInfoMsg = new REP_50023000207.DirSupSrMgrInfo();
                     dirSupSrMgrInfoMsg.setPgNb(Info.getPg_nb());
                     dirSupSrMgrInfoMsg.setDirSupSrMgrInfoNb(Info.getDir_supsrsgr_info_nb());
                     dirSupSrMgrInfoMsg.setNm(Info.getNm());
@@ -275,10 +275,10 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 repBody.setDirSupSrMgrInfoList(dirSupSrMgrInfoArrayMsg);
             }
             //赋ChngInfo数据
-            List<REP_50023000203.ChngInfo> chngInfoArrayMsg = new ArrayList<REP_50023000203.ChngInfo>();
+            List<REP_50023000207.ChngInfo> chngInfoArrayMsg = new ArrayList<REP_50023000207.ChngInfo>();
             if(infoModel.getChngInfo() != null && !infoModel.getChngInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.ChngInfo Info:infoModel.getChngInfo()) {
-                    REP_50023000203.ChngInfo chngInfoMsg = new REP_50023000203.ChngInfo();
+                    REP_50023000207.ChngInfo chngInfoMsg = new REP_50023000207.ChngInfo();
                     chngInfoMsg.setPgNb(Info.getPg_nb());
                     chngInfoMsg.setChngInfoNb(Info.getChng_info_nb());
                     chngInfoMsg.setChngItm(Info.getChng_itm());
@@ -292,10 +292,10 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 repBody.setChngInfoList(chngInfoArrayMsg);
             }
             //赋AbnmlBizInfo数据
-            List<REP_50023000203.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<REP_50023000203.AbnmlBizInfo>();
+            List<REP_50023000207.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<REP_50023000207.AbnmlBizInfo>();
             if(infoModel.getAbnmlBizInfo() != null && !infoModel.getAbnmlBizInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.AbnmlBizInfo Info:infoModel.getAbnmlBizInfo()) {
-                    REP_50023000203.AbnmlBizInfo abnInfoMsg = new REP_50023000203.AbnmlBizInfo();
+                    REP_50023000207.AbnmlBizInfo abnInfoMsg = new REP_50023000207.AbnmlBizInfo();
                     abnInfoMsg.setPgNb(Info.getPg_nb());
                     abnInfoMsg.setAbnInfoNb(Info.getAbn_info_nb());
                     abnInfoMsg.setAbnmlCause(Info.getAbnml_cause());
@@ -311,10 +311,10 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 repBody.setAbnmlBizInfoList(abnInfoArrayMsg);
             }
             //赋IllDscrtInfo数据
-            List<REP_50023000203.IllDscrtInfo> illInfoArrayMsg = new ArrayList<REP_50023000203.IllDscrtInfo>();
+            List<REP_50023000207.IllDscrtInfo> illInfoArrayMsg = new ArrayList<REP_50023000207.IllDscrtInfo>();
             if(infoModel.getIllDscrtInfo() != null && !infoModel.getIllDscrtInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.IllDscrtInfo Info:infoModel.getIllDscrtInfo()) {
-                    REP_50023000203.IllDscrtInfo illInfoMsg = new REP_50023000203.IllDscrtInfo();
+                    REP_50023000207.IllDscrtInfo illInfoMsg = new REP_50023000207.IllDscrtInfo();
                     illInfoMsg.setPgNb(Info.getPg_nb());
                     illInfoMsg.setIllInfoNb(Info.getIll_info_nb());
                     illInfoMsg.setIllDscrtCause(Info.getIll_dscrt_cause());
@@ -330,10 +330,10 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 repBody.setIllDscrtInfoList(illInfoArrayMsg);
             }
             //赋LicNull数据
-            List<REP_50023000203.LicNull> licNullArrayMsg = new ArrayList<REP_50023000203.LicNull>();
+            List<REP_50023000207.LicNull> licNullArrayMsg = new ArrayList<REP_50023000207.LicNull>();
             if(infoModel.getLicInfo() != null && !infoModel.getLicInfo().isEmpty()) {
                 for (MivsRegVrfctnInfoModel.LicInfo Info:infoModel.getLicInfo()) {
-                    REP_50023000203.LicNull licNullMsg = new REP_50023000203.LicNull();
+                    REP_50023000207.LicNull licNullMsg = new REP_50023000207.LicNull();
                     licNullMsg.setPgNb(Info.getPg_nb());
                     licNullMsg.setLicInfoNb(Info.getPlat_time());
                     licNullMsg.setOrgnlOrCp(Info.getOrgnl_or_cp());

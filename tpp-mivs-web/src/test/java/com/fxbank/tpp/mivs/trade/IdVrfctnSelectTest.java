@@ -8,8 +8,8 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000204;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000204;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000202;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000202;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ import com.fxbank.tpp.esb.service.ISafeService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GetTxPmtVrfctnTest {
+public class IdVrfctnSelectTest {
 
 
     private static Logger logger = LoggerFactory.getLogger(GetTxPmtVrfctnTest.class);
@@ -52,19 +52,19 @@ public class GetTxPmtVrfctnTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_50023000204 req ;
+    private REQ_50023000202 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_50023000204.REQ_BODY reqBody ;
+    private REQ_50023000202.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_50023000204();
+        req = new REQ_50023000202();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("04");
+        reqSysHead.setSceneId("02");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -90,10 +90,13 @@ public class GetTxPmtVrfctnTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setCompanyName("阜新银行开发中心");
-        reqBody.setUniSocCdtCd("123456789012345678");
-//        reqBody.setTaxPayerId("19989898");
-        reqBody.setOpNm("李四");
+        reqBody.setOrigBranchId("02002");
+        reqBody.setOrigUserId("002241");
+//        reqBody.setMobNb("17702499222");
+//        reqBody.setNm("王鹏");
+//        reqBody.setIdTp("IC00");
+//        reqBody.setId("210904198703261013");
+//        reqBody.setUniSocCdtCd("123456789123456789");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();
@@ -107,7 +110,7 @@ public class GetTxPmtVrfctnTest {
         int status = mvcResult.getResponse().getStatus();
         assertEquals(status, 200);
         String repContent = mvcResult.getResponse().getContentAsString();
-        REP_50023000204 rep = JsonUtil.toBean(repContent, REP_50023000204.class);
+        REP_50023000202 rep = JsonUtil.toBean(repContent, REP_50023000202.class);
     }
 
 

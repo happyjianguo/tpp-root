@@ -5,10 +5,12 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
+import java.util.List;
+
 /**
- * @Description: 企业开销户状态反馈ESB应答报文
+ * @Description: 纳税信息联网核ESB应答报文
  * @Author: 王鹏
- * @Date: 2019/6/6 15:06
+ * @Date: 2019/4/29 9:29.
  */
 public class REP_50023000204 extends REP_BASE {
 
@@ -24,6 +26,7 @@ public class REP_50023000204 extends REP_BASE {
     public REP_APP_HEAD getRepAppHead() {
         return repAppHead;
     }
+
 
     public void setRepAppHead(REP_APP_HEAD repAppHead) {
         this.repAppHead = repAppHead;
@@ -47,26 +50,50 @@ public class REP_50023000204 extends REP_BASE {
 
     public class REP_BODY {
 
-        @JSONField(name = "ProcSts")
-        private String procSts;//申请报文处理状态
+        @JSONField(name = "TXPYR_INFO_VER_RESULT")
+        private String rslt;//纳税核查结果
 
-        @JSONField(name = "ProcCd")
-        private String procCd;//申请报文处理码
+        //“数据源日期”为税务总局所返回数据的实际收集日期，目前为一般为 T-3
+        @JSONField(name = "DATA_SOURCE_DATE")
+        private String dataResrcD;//数据源日期
 
-        @JSONField(name="PtyId")
-        private String ptyId;//拒绝业务的参与机构行号
+        //循环开始TXPYR_INFO_ARRAY
+        @JSONField(name = "TXPYR_INFO_ARRAY")
+        private List<TXPYR_INFO_ARRAY> arrayMsg;//纳税信息数组
 
-        @JSONField(name = "PtyPrcCd")
-        private String ptyPrcCd;//参与机构业务拒绝码
+        //以下信息 当“纳税信息核查结果”为非“MCHD” 时填
+        @JSONField(name = "MSG_RFS_STATUS")
+        private String procSts;//申请报文拒绝状态
 
-        @JSONField(name = "RjctInf")
-        private String rjctInf;//申请报文拒绝信息
+        @JSONField(name = "MSG_RFS_CODE")
+        private String procCd;//申请报文拒绝码
 
-        @JSONField(name = "PrcDt")
-        private String prcDt;//处理日期（终态日期）
+        @JSONField(name = "MSG_RFS_INFO")
+        private String rjctinf;//申请报文拒绝信息
 
-        @JSONField(name = "NetgRnd")
-        private String netgRnd;//轧差场次
+        public String getRslt() {
+            return rslt;
+        }
+
+        public void setRslt(String rslt) {
+            this.rslt = rslt;
+        }
+
+        public String getDataResrcD() {
+            return dataResrcD;
+        }
+
+        public void setDataResrcD(String dataResrcD) {
+            this.dataResrcD = dataResrcD;
+        }
+
+        public List<TXPYR_INFO_ARRAY> getArrayMsg() {
+            return arrayMsg;
+        }
+
+        public void setArrayMsg(List<TXPYR_INFO_ARRAY> arrayMsg) {
+            this.arrayMsg = arrayMsg;
+        }
 
         public String getProcSts() {
             return procSts;
@@ -84,44 +111,60 @@ public class REP_50023000204 extends REP_BASE {
             this.procCd = procCd;
         }
 
-        public String getPtyId() {
-            return ptyId;
+        public String getRjctinf() {
+            return rjctinf;
         }
 
-        public void setPtyId(String ptyId) {
-            this.ptyId = ptyId;
+        public void setRjctinf(String rjctinf) {
+            this.rjctinf = rjctinf;
+        }
+    }
+
+    //以下信息 当“纳税信息核查结果”为“MCHD” 时填
+    public static class TXPYR_INFO_ARRAY {
+        @JSONField(name = "TXPMT_INF_NB")
+        private Integer txpmtInfNb;//税务机关代码
+
+        @JSONField(name = "TAX_JDCY_CODE")
+        private String txAuthCd;//税务机关代码
+
+        @JSONField(name = "TAX_JDCY_NAME")
+        private String txAuthNm;//税务机关名称
+
+        @JSONField(name = "TXPYR_STATUS")
+        private String txpyrSts;//纳税人状态
+
+        public Integer getTxpmtInfNb() {
+            return txpmtInfNb;
         }
 
-        public String getPtyPrcCd() {
-            return ptyPrcCd;
+        public void setTxpmtInfNb(Integer txpmtInfNb) {
+            this.txpmtInfNb = txpmtInfNb;
         }
 
-        public void setPtyPrcCd(String ptyPrcCd) {
-            this.ptyPrcCd = ptyPrcCd;
+        public String getTxAuthCd() {
+            return txAuthCd;
         }
 
-        public String getRjctInf() {
-            return rjctInf;
+        public void setTxAuthCd(String txAuthCd) {
+            this.txAuthCd = txAuthCd;
         }
 
-        public void setRjctInf(String rjctInf) {
-            this.rjctInf = rjctInf;
+        public String getTxAuthNm() {
+            return txAuthNm;
         }
 
-        public String getPrcDt() {
-            return prcDt;
+        public void setTxAuthNm(String txAuthNm) {
+            this.txAuthNm = txAuthNm;
         }
 
-        public void setPrcDt(String prcDt) {
-            this.prcDt = prcDt;
+        public String getTxpyrSts() {
+            return txpyrSts;
         }
 
-        public String getNetgRnd() {
-            return netgRnd;
+        public void setTxpyrSts(String txpyrSts) {
+            this.txpyrSts = txpyrSts;
         }
-
-        public void setNetgRnd(String netgRnd) {
-            this.netgRnd = netgRnd;
-        }
+        //循环结束
     }
 }

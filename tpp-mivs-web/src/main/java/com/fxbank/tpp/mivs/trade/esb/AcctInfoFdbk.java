@@ -10,8 +10,8 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000204;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000204;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000210;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000210;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_900_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
  * @Date: 2019/6/6 14:35
  */
 
-@Service("REQ_50023000204")
+@Service("REQ_50023000210")
 public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
@@ -61,8 +61,8 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_50023000204 req = (REQ_50023000204) dto;
-        REQ_50023000204.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000210 req = (REQ_50023000210) dto;
+        REQ_50023000210.REQ_BODY reqBody = req.getReqBody();
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -151,7 +151,7 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         mivsAcctInfoFdbkModelUpdate.setPlat_date(req.getSysDate());
         mivsAcctInfoFdbkModelUpdate.setPlat_trace(req.getSysTraceno());
 
-        REP_50023000204 rep = new REP_50023000204();
+        REP_50023000210 rep = new REP_50023000210();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
             CCMS_911_001_02 ccms911 = (CCMS_911_001_02)dtoBase;
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
@@ -162,21 +162,12 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
             mivsAcctInfoFdbkModelUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
 
             throw e;
-        }else if(dtoBase.getHead().getMesgType().equals("ccms.900.001.02")){
+        }else if(dtoBase.getHead().getMesgType().equals("ccms.900.001.02")){//通用处理确认报文
 
             CCMS_900_001_02 ccms900 = (CCMS_900_001_02)dtoBase;
             CCMS_900_001_02_CmonConf.CmonConfInf cmonConfInf = ccms900.getCmonConf().getCmonConfInf();
 
-            REP_50023000204.REP_BODY repBody = rep.getRepBody();
-            if(cmonConfInf.getRjctInf()!=null) {
-                MivsTradeExecuteException e = new MivsTradeExecuteException(cmonConfInf.getPrcCd(),cmonConfInf.getRjctInf());
-
-                mivsAcctInfoFdbkModelUpdate.setMivs_sts("03");
-                mivsAcctInfoFdbkModelUpdate.setProc_cd(cmonConfInf.getPrcCd());
-                mivsAcctInfoFdbkModelUpdate.setProc_sts(cmonConfInf.getPrcSts());
-                mivsAcctInfoFdbkModelUpdate.setRjct_inf(cmonConfInf.getRjctInf());
-                throw e;
-            }
+            REP_50023000210.REP_BODY repBody = rep.getRepBody();
 
             //返回ESB报文
             repBody.setProcSts(cmonConfInf.getPrcSts());
