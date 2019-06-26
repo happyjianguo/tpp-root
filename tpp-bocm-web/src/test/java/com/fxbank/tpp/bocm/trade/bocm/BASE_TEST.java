@@ -43,7 +43,7 @@ public class BASE_TEST {
         	//添加MAC
             //reqData = reqData + "FFFFFFFFFFFFFFFF";
 //            safeService.
-           String mac = safeService.calcBocm(myLog, reqData);
+           String mac = safeService.calcBocmMac(myLog, reqData);
            this.logger.info("MAC 【" + mac + "】");
            reqData = reqData + mac;
             

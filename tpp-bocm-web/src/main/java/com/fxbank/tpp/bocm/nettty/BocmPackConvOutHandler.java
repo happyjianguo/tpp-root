@@ -79,7 +79,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		
 		if(repDto.isCheckMac()){
 			//生成MAC
-			String mac = safeService.calcBocm(myLog, fixPack.toString());		
+			String mac = safeService.calcBocmMac(myLog, fixPack.toString());		
 			fixPack.append(mac);
 			myLog.info(logger, "组包发送交行报文MAC:"+mac);
 		}
