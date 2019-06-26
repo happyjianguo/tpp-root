@@ -20,173 +20,76 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
 	public BocmSndTraceQueryModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
-	
-	/**
-     * 渠道日期
-     */
+
+    //渠道日期
     private Integer platDate;
-
-    /**
-     * 渠道流水
-     */
+    //渠道流水
     private Integer platTrace;
-
-    /**
-     * 交易时间
-     */
+    //交易时间
     private Integer platTime;
-
-    /**
-     * 交易渠道
-     */
+    //交易渠道
     private String sourceType;
-
-    /**
-     * 交易机构
-     */
+    //交易机构
     private String txBranch;
-
-    /**
-     * 现转标志
-     */
+    //现转标志
     private String txInd;
-    /**
-     * 交易代码
-     */
+    //交易代码
     private String txCode;
-
-    /**
-     * 通存通兑标志
-     */
+    //通存通兑标志
     private String dcFlag;
-
-    /**
-     * 交易金额
-     */
+    //交易金额
     private BigDecimal txAmt;
-    
-    /**
-     * 账户余额
-     */
+    //账户余额
     private BigDecimal actBal;
-    /**
-     * 手续费收取方式
-     */
+    //手续费收取方式
     private String feeFlag;
-    /**
-     * 手续费
-     */
+    //手续费
     private BigDecimal fee;
-
-    /**
-     * 发起行人行行号
-     */
+    //发起行人行行号
     private String sndBankno;
-    /**
-     * 接收行人行行号
-     */
+    //接收行人行行号
     private String rcvBankno;
-    /**
-     * 付款人开户行
-     */
+    //付款人开户行
     private String payerBank;
-    /**
-     * 收款人开户行
-     */
+    //收款人开户行
     private String payerActtp;
-    /**
-     * 收款人开户行
-     */
+    //收款人开户行
     private String payeeBank;
-    /**
-     * 收款人开户行
-     */
+    //收款人开户行
     private String payeeActtp;
-    
-    
-    /**
-     * 核心日期
-     */
+    //核心日期
     private Integer hostDate;
-
-    /**
-     * 核心流水
-     */
+    //核心流水
     private String hostTraceno;
-
-    /**
-     * 付款人账户
-     */
+    //付款人账户
     private String payerAcno;
-
-    /**
-     * 付款人户名
-     */
+    //付款人户名
     private String payerName;
-
-    /**
-     * 收款人账户
-     */
+    //收款人账户
     private String payeeAcno;
-
-    /**
-     * 收款人户名
-     */
+    //收款人户名
     private String payeeName;
-
-    /**
-     * 村镇机构
-     */
+    //村镇机构
     private String bocmBranch;
-
-    /**
-     * 村镇日期
-     */
+    //村镇日期
     private Integer bocmDate;
-
-    /**
-     * 村镇流水
-     */
+    //村镇流水
     private String bocmTraceno;
-
-    /**
-     * 对账标志
-     */
+    //对账标志
     private String checkFlag;
-
-    /**
-     * 核心记账状态
-     */
+    //核心记账状态
     private String hostState;
-
-    /**
-     * 村镇记账状态
-     */
+    //村镇记账状态
     private String bocmState;
-
-    /**
-     * 交易柜员
-     */
+    //交易柜员
     private String txTel;
-
-    /**
-     * 复核员
-     */
+    //复核员
     private String chkTel;
-
-    /**
-     * 授权员
-     */
+    //授权员
     private String authTel;
-
-    /**
-     * 打印次数
-     */
+    //打印次数
     private String print;
-
-    /**
-     * 摘要
-     */
+    //摘要
     private String info;
 
 	public Integer getPlatDate() {

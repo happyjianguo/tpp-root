@@ -216,18 +216,21 @@ public class WD_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
+		// 加密节点编码
+		String sourceNo = null;
 		try (Jedis jedis = myJedis.connect()) {
 			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
 			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
+			sourceNo = jedis.get(COMMON_PREFIX + "SOURCE");
 		}
 
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000104.getReqSysHead(), reqDto)
-				.setBranchId(txBrno).setUserId(txTel).build();
-		
-		reqSysHead.setSourceBranchNo("PINP|pinpToesb|RZPK|64510637BCD9|");
-		reqSysHead.setSourceType("BU");
+				.setBranchId(txBrno).setUserId(txTel).build();	
+		reqSysHead.setSourceBranchNo(sourceNo);
+		reqSysHead.setSourceType("BU");	
+		esbReq_30011000104.setReqSysHead(reqSysHead);
 		reqSysHead.setDestBranchNo(txBrno);
 		
 		esbReq_30011000104.setReqSysHead(reqSysHead);
@@ -287,8 +290,17 @@ public class WD_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
+		// 交易机构
+		String txBrno = null;
+		// 柜员号
+		String txTel = null;
+		try (Jedis jedis = myJedis.connect()) {
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
+		}	
 		record.setSourceType(reqDto.getSourceType());
-		record.setTxBranch(reqDto.getSbnkNo());
+		record.setTxBranch(txBrno);
+		record.setTxTel(txTel);
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("1");
 		record.setTranType("JH01");
@@ -432,8 +444,17 @@ public class WD_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		BocmRcvTraceInitModel record = new BocmRcvTraceInitModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
+		// 交易机构
+		String txBrno = null;
+		// 柜员号
+		String txTel = null;
+		try (Jedis jedis = myJedis.connect()) {
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
+		}	
 		record.setSourceType(reqDto.getSourceType());
-		record.setTxBranch(reqDto.getSbnkNo());
+		record.setTxBranch(txBrno);
+		record.setTxTel(txTel);
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("1");
 		record.setTranType("JH01");

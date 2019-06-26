@@ -75,8 +75,8 @@ private static Logger logger = LoggerFactory.getLogger(WD_10001_TEST.class);
 		//付款人账户类型
 		req.setPactTp("2");
 		//付款人账号
-		req.setPactNo("623166001016830991");
-		req.setSecMag("623166001016830991=4912567019123456");
+		req.setPactNo("623166099020908241");
+		req.setSecMag("623166099020908241=4912567019123456");
 		//付款人名称
 		req.setPayNam("测试");
 		//付款人密码

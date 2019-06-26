@@ -366,11 +366,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		record.setTxBranch(reqSysHead.getBranchId());
 		record.setChkTel(reqSysHead.getApprUserId());
 		record.setAuthTel(reqSysHead.getAuthUserId());
-//		record.setAuthTel(record.getAuthTel());
-//		record.setTxTel(record.getTxTel());
-//		record.setChkTel(record.getChkTel());
-//		record.setPrint(record.getPrint());
-//		record.setInfo(record.getInfo());		
+	
 		bocmSndTraceService.sndTraceInit(record);
 	}
 	
@@ -390,7 +386,6 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		//柜面的加密密码字段转交行密码字段加密
 		String pin = super.convPin(reqDto,reqBody.getCardNoT3(),reqBody.getPwdT());
 		req10001.setPin(pin);
-//		req10001.setPin(reqBody.getPwdT());//交易密码
 		req10001.setOprFlg("0");//卡输入方式  通兑必须刷卡
 		req10001.setTxnMod("0");//业务模式 0 现金 1 转账（实时转账）
 		req10001.setPayBnk(reqBody.getOpnAcctBnkNoT7());//付款人开户行行号

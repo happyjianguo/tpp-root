@@ -19,12 +19,16 @@ public class BocmSafeModel extends ModelBase implements Serializable {
 	public BocmSafeModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
-
-	private String password;//密码
-	private String acctNo;// 账号
-	private String keyValue;//工作密钥密文
-	private String checkValue;// 工作密钥校验值
-	private String keyModel;//申请密钥类型
+	//密码
+	private String password;
+	// 账号
+	private String acctNo;
+	//工作密钥密文
+	private String keyValue;
+	// 工作密钥校验值
+	private String checkValue;
+	//申请密钥类型
+	private String keyModel;
 
 	public String getPassword() {
 		return password;

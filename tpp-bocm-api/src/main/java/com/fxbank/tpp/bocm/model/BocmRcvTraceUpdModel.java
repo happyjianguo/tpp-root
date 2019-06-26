@@ -21,43 +21,37 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 	
-	private String bocmBranch;//交行机构 
-	
-    private Integer hostDate;//核心日期
-    
-    private String hostState;//核心记账状态
-
-    private String hostTraceno;//核心流水
-
-    private Integer bocmDate;//交行日期
-    
-    private Integer bocmTime;//交行时间
-
-    private String bocmTraceno;//交行流水
-    
-    /**
-     * 付款行人行行号
-     */
+	//交行机构 
+	private String bocmBranch;
+	//核心日期
+    private Integer hostDate;
+    //核心记账状态
+    private String hostState;
+    //核心流水
+    private String hostTraceno;
+    //交行日期
+    private Integer bocmDate;
+    //交行时间
+    private Integer bocmTime;
+    //交行流水
+    private String bocmTraceno;
+    //付款行人行行号
     private String sndBankno;
-    /**
-     * 收款人行行号
-     */
+    //收款人行行号
     private String rcvBankno;
-    
-    /**
-     * 账户余额
-     */
+    //账户余额
     private BigDecimal actBal;
+    //对账标志
+    private String checkFlag;
+    //交行记账状态
+    private String bocmState;
+    //核心反馈响应码
+    private String retCode;
+    //核心反馈响应信息
+    private String retMsg;
+    //核心记账机构
+    private String hostBranch;
 
-    private String checkFlag;//对账标志
-
-    private String bocmState;//交行记账状态
-    
-    private String retCode;//核心反馈响应码
-    
-    private String retMsg;//核心反馈响应信息
-    
-    private String hostBranch;//核心记账机构
 
 	public String getHostBranch() {
 		return hostBranch;

@@ -3,9 +3,6 @@ package com.fxbank.tpp.bocm.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Size;
-
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 
@@ -24,72 +21,44 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
 	//交易渠道
-	@Size(max = 20,message = "source_type交易渠道最大长度是20")
 	private String sourceType; 
 	//交易机构
-	@Size(max = 20,message = "tx_branch交易机构最大长度是20")
 	private String txBranch; 
 	//现转标志
-	@Size(max = 10,message = "tx_ind现转标志最大长度是10")
 	private String txInd; 
 	//通存通兑标志
-	@Size(max = 10,message = "dc_flag通存通兑标志最大长度是10")
 	private String dcFlag; 
 	//交易金额
-	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
 	private String txAmt;
-    
-    /**
-     * 付款行人行行号
-     */
+    //付款行人行行号
     private String sndBankno;
-    /**
-     * 收款人行行号
-     */
+    //收款人行行号
     private String rcvBankno;
-	
-    /**
-     * 手续费
-     */
+    //手续费
     private BigDecimal fee;
-    
-    /**
-     * 账户余额
-     */
+    //账户余额
     private BigDecimal actBal;
-	
 	//付款人账户
-	@Size(max = 50,message = "payer_acno付款人账户最大长度是50")
 	private String payerAcno; 
 	//付款人户名
-	@Size(max = 100,message = "payer_name付款人户名最大长度是100")
 	private String payerName; 
 	//收款人账户
-	@Size(max = 50,message = "payee_acno收款人账户最大长度是50")
 	private String payeeAcno; 
 	//收款人户名
-	@Size(max = 100,message = "payee_name收款人户名最大长度是100")
 	private String payeeName; 
 	//村镇机构
-	@Size(max = 20,message = "bocm_branch村镇机构最大长度是20")
 	private String bocmBranch; 
 	//核心记账状态
-	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
 	private String hostState; 
 	//交易柜员
-	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
 	private String txTel; 
 	//复核员
-	@Size(max = 30,message = "chk_tel复核员最大长度是30")
 	private String chkTel; 
 	//授权员
-	@Size(max = 30,message = "auth_tel授权员最大长度是30")
 	private String authTel; 
 	//打印次数
-	@Size(max = 10,message = "print打印次数最大长度是10")
 	private String print; 
 	//摘要
-	@Size(max = 255,message = "info摘要最大长度是255")
 	private String info; 
 	//渠道日期
     private Integer platDate; 

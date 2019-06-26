@@ -14,8 +14,10 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 public abstract class REQ_BASE extends ModelBase implements Serializable{
 	
 	private static final long serialVersionUID = -6652288226005628489L;
-	
+	//是否校验mac
 	private boolean CheckMac = true;
+	//是否有mac
+	private boolean haveMac = true;
 
 	public REQ_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
@@ -104,6 +106,14 @@ public abstract class REQ_BASE extends ModelBase implements Serializable{
 
 	public void setCheckMac(boolean checkMac) {
 		CheckMac = checkMac;
+	}
+
+	public boolean isHaveMac() {
+		return haveMac;
+	}
+
+	public void setHaveMac(boolean haveMac) {
+		this.haveMac = haveMac;
 	}
 
 

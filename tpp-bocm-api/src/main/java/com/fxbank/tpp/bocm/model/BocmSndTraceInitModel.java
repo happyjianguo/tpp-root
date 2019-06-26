@@ -24,97 +24,76 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	public BocmSndTraceInitModel(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
 	}
+	 //交易渠道
 	@NotNull(message = "source_type交易渠道不能为空")
 	@Size(max = 20,message = "source_type交易渠道最大长度是20")
-	private String sourceType; //交易渠道
-	
+	private String sourceType;
+	//交易机构
 	@NotNull(message = "tx_branch交易机构不能为空")
 	@Size(max = 20,message = "tx_branch交易机构最大长度是20")
-	private String txBranch; //交易机构
-	
+	private String txBranch; 
+	//交易类型
     private String tranType;
-	
+    //现转标志
 	@NotNull(message = "tx_ind现转标志不能为空")
 	@Size(max = 10,message = "tx_ind现转标志最大长度是10")
-	private String txInd; //现转标志
-	
+	private String txInd; 
+	//交易代码
 	@Size(max = 10,message = "tx_code交易代码最大长度是10")
-	private String txCode; //交易代码
-	
+	private String txCode; 
+	//通存通兑标志
 	@NotNull(message = "dc_flag通存通兑标志不能为空")
 	@Size(max = 10,message = "dc_flag通存通兑标志最大长度是10")
-	private String dcFlag; //通存通兑标志
-	
+	private String dcFlag; 
+	//交易金额
 	@NotNull(message = "tx_amt交易金额不能为空")
 	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
-	private String txAmt;//交易金额
-	
-    /**
-     * 账户余额
-     */
+	private String txAmt;
+    //账户余额
     private BigDecimal actBal;
-	
-    /**
-     * 手续费收取方式
-     */
+    //手续费收取方式
     private String feeFlag;
-    /**
-     * 手续费
-     */
-    private BigDecimal fee;
-    
-    
-    /**
-     * 付款行人行行号
-     */
+    //手续费
+    private BigDecimal fee;  
+    //付款行人行行号
     private String sndBankno;
-    /**
-     * 收款人行行号
-     */
+    //收款人行行号
     private String rcvBankno;
-    /**
-     * 付款人开户行
-     */
+    //付款人开户行
     private String payerBank;
-    /**
-     * 收款人开户行
-     */
+    //收款人开户行
     private String payerActtp;
-    /**
-     * 收款人开户行
-     */
+    //收款人开户行
     private String payeeBank;
-    /**
-     * 收款人开户行
-     */
+    //收款人开户行
     private String payeeActtp;
-	
+    //付款人账户
 	@Size(max = 50,message = "payer_acno付款人账户最大长度是50")
-	private String payerAcno; //付款人账户
-	
+	private String payerAcno; 
+	//付款人户名
 	@Size(max = 100,message = "payer_name付款人户名最大长度是100")
-	private String payerName; //付款人户名
-	
+	private String payerName; 
+	//收款人账户
 	@Size(max = 50,message = "payee_acno收款人账户最大长度是50")
-	private String payeeAcno; //收款人账户
-	
+	private String payeeAcno; 
+	//收款人户名
 	@Size(max = 100,message = "payee_name收款人户名最大长度是100")
-	private String payeeName; //收款人户名
-	
+	private String payeeName; 
+	//交行机构
 	@Size(max = 20,message = "bocm_branch村镇机构最大长度是20")
-	private String bocmBranch; //交行机构
-	
+	private String bocmBranch; 
+	//核心记账状态
 	@NotNull(message = "host_state核心记账状态不能为空")
 	@Size(max = 10,message = "host_state核心记账状态最大长度是10")
-	private String hostState; //核心记账状态
-	
-    private Integer hostDate;//核心日期
-
-    private String hostTraceno;//核心流水
-    
-    private String retCode;//核心反馈响应码
-    
-    private String retMsg;//核心反馈响应信息
+	private String hostState; 
+	//核心日期
+    private Integer hostDate;
+    //核心流水
+    private String hostTraceno;
+    //核心反馈响应码
+    private String retCode;
+    //核心反馈响应信息
+    private String retMsg;
 	
 	@NotNull(message = "bocm_state交行记账状态不能为空")
 	@Size(max = 10,message = "bocm_state交行记账状态最大长度是10")

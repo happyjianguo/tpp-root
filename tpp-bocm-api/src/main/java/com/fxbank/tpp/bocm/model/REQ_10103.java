@@ -17,12 +17,15 @@ public class REQ_10103 extends REQ_BASE {
     @Deprecated
 	public REQ_10103() {
 		super(null, 0, 0, 0);
+        super.setCheckMac(false);
+        super.setHaveMac(false);		
 	}
 
     public REQ_10103(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
         super.setTtxnCd("10103");
         super.setCheckMac(false);
+        super.setHaveMac(false);
     }
 
 	@FixedField(order = 8, len = 28, desc = "文件名称")

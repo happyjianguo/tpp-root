@@ -18,6 +18,7 @@ public class REP_10103 extends REP_BASE {
     public REP_10103() {
         super.txDesc = "对账文件响应";
         super.setCheckMac(false);
+        super.setHaveMac(false);
 	}
 	
 	

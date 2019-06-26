@@ -22,6 +22,7 @@ public class REQ_10104 extends REQ_BASE {
     public REQ_10104(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
         super.setTtxnCd("10104");
+        super.setCheckMac(false);
     }
     
     @FixedField(order = 8, len = 2, desc = "应用代码")
