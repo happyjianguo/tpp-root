@@ -119,6 +119,18 @@ public class MivsRegvrfctnInfoEntity {
     /**
      * null
      */
+    @Column(name = "RCV_MSG_ID")
+    private String rcvMsgId;
+
+    /**
+     * null
+     */
+    @Column(name = "RCV_CRE_DT_TM")
+    private String rcvCreDtTm;
+
+    /**
+     * null
+     */
     @Column(name = "AGT_NM")
     private String agtNm;
 
@@ -570,6 +582,22 @@ public class MivsRegvrfctnInfoEntity {
      */
     public void setInstdPty(String instdPty) {
         this.instdPty = instdPty;
+    }
+
+    public String getRcvMsgId() {
+        return rcvMsgId;
+    }
+
+    public void setRcvMsgId(String rcvMsgId) {
+        this.rcvMsgId = rcvMsgId;
+    }
+
+    public String getRcvCreDtTm() {
+        return rcvCreDtTm;
+    }
+
+    public void setRcvCreDtTm(String rcvCreDtTm) {
+        this.rcvCreDtTm = rcvCreDtTm;
     }
 
     /**

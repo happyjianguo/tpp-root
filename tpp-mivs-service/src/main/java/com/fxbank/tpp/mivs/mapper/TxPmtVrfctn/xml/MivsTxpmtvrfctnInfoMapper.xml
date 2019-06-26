@@ -20,6 +20,8 @@
     <result column="PTY_NM" property="ptyNm" jdbcType="NVARCHAR" />
     <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
     <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
+    <result column="RCV_MSG_ID" jdbcType="NVARCHAR" property="rcvMsgId" />
+    <result column="RCV_CRE_DT_TM" jdbcType="NVARCHAR" property="rcvCreDtTm" />
     <result column="CO_NM" property="coNm" jdbcType="NVARCHAR" />
     <result column="UNI_SOC_CDT_CD" property="uniSocCdtCd" jdbcType="NVARCHAR" />
     <result column="TXPYR_ID_NB" property="txpyrIdNb" jdbcType="NVARCHAR" />
@@ -37,7 +39,7 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SYSTEM_ID, TRAN_DATE, SEQ_NO, TRAN_TIME, 
     USER_ID, BRANCH_ID, MIVS_STS, MSG_ID, CRE_DT_TM, INSTG_DRCT_PTY, DRCT_PTY_NM, INSTG_PTY, 
-    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, CO_NM, UNI_SOC_CDT_CD, TXPYR_ID_NB, OP_NM, RSLT, 
+    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, RCV_MSG_ID, RCV_CRE_DT_TM, CO_NM, UNI_SOC_CDT_CD, TXPYR_ID_NB, OP_NM, RSLT,
     DATA_RESRC_DT, TXPMT_INF_CNT, PROC_STS, PROC_CD, RJCT_INF, REMARK1, REMARK2, REMARK3
     from MIVS_TXPMTVFCTN_INFO
   </select>

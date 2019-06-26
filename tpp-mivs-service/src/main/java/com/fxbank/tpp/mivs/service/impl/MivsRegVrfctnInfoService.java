@@ -77,6 +77,8 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         info.setPlatDate(mivsRegVrfctnInfoModel.getPlat_date());
         info.setPlatTrace(mivsRegVrfctnInfoModel.getPlat_trace());
         info.setMivsSts(mivsRegVrfctnInfoModel.getMivs_sts());
+        info.setRcvMsgId(mivsRegVrfctnInfoModel.getRcv_msg_id());
+        info.setRcvCreDtTm(mivsRegVrfctnInfoModel.getCre_dt_tm());
         info.setProcCd(mivsRegVrfctnInfoModel.getProc_cd());
         info.setProcSts(mivsRegVrfctnInfoModel.getProc_sts());
         info.setRjctInf(mivsRegVrfctnInfoModel.getRjct_inf());
@@ -312,6 +314,8 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         infoModel.setPty_nm(mivsRegvrfctnInfoEntity.getPtyNm());
         infoModel.setInstg_drct_pty(mivsRegvrfctnInfoEntity.getInstgDrctPty());
         infoModel.setInstd_pty(mivsRegvrfctnInfoEntity.getInstdPty());
+        infoModel.setRcv_msg_id(mivsRegvrfctnInfoEntity.getRcvMsgId());
+        infoModel.setRcv_cre_dt_tm(mivsRegvrfctnInfoEntity.getRcvCreDtTm());
         infoModel.setPg_nb(mivsRegvrfctnInfoEntity.getPgNb());
         infoModel.setLast_pg_ind(mivsRegvrfctnInfoEntity.getLastPgInd());
         infoModel.setRslt(mivsRegvrfctnInfoEntity.getRslt());
