@@ -2,7 +2,6 @@ package com.fxbank.tpp.bocm.netty.bocm;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
@@ -12,7 +11,6 @@ import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
 import io.netty.channel.ChannelPromise;
-import io.netty.channel.ChannelHandler.Sharable;
 
 /**
  * @Description: 交行客户端请求组包
@@ -37,8 +35,6 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 		REQ_BASE reqBase = (REQ_BASE)msg;
 		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,BocmClient.CODING));
 		myLog.info(logger, "组包发送交行报文");	
-		
-		String tran_type = reqBase.getTtxnCd();
 		//REQ_BASE交行通讯请求基础类checkMac是否为true（默认true），fasle不添加Mac校验
 		if(reqBase.isCheckMac()==true){
 			//校验MAC	联机交易Mac验证
@@ -47,6 +43,7 @@ public class BocmPackConvOutHandler extends ChannelOutboundHandlerAdapter {
 			myLog.info(logger, "调用加密平台生成Mac： 【"+mac+"】");		
 		}else{
 			//特殊交易不进行mac验证（对账），在初始化报文时赋值checkmac为false
+			myLog.info(logger, "不校验mac");		
 		}			
 		ctx.writeAndFlush(fixPack.toString(), promise);
 	}

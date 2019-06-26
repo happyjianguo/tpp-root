@@ -3,7 +3,6 @@ package com.fxbank.tpp.bocm.netty.bocm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.netty.NettySyncClient;
 import com.fxbank.cip.base.netty.NettySyncSlot;
