@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.common.MyJedis;
@@ -25,6 +26,7 @@ import redis.clients.jedis.Jedis;
 *  
 */
 @Service(version = "1.0.0")
+@Component
 public class BocmSafeService implements IBocmSafeService{
 
 	private static Logger logger = LoggerFactory.getLogger(BocmSafeService.class);

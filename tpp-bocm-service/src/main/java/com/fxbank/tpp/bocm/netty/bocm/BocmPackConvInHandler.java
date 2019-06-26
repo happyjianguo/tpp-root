@@ -31,7 +31,6 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 
 	private Class<T> clazz;
 	
-    @Reference(version = "1.0.0")
     private IBocmSafeService safeService;
 
 	public BocmPackConvInHandler(MyLog myLog, Class<T> clazz, IBocmSafeService safeService) {
@@ -53,17 +52,16 @@ public class BocmPackConvInHandler<T> extends ChannelInboundHandlerAdapter {
 			//判断行通讯应答基础类是否校验mac
 			if(repBase.isCheckMac()){
 				//校验MAC	联机交易Mac验证
-				safeService.verifyBocmMac(myLog, fixPack, mac);	
 				fixPack = pack.substring(0, pack.length() - 16);
+				safeService.verifyBocmMac(myLog, fixPack, mac);	
 			}else{
 				fixPack = pack.toString();
 			}
 			
 			if(fixPack.substring(0, 1).equals("N")){
-				repBase = (REP_BASE)new FixedUtil(fixPack,BocmClient.CODING).toBean(repBase.getClass());
+				repBase = (REP_BASE)new FixedUtil(fixPack,BocmClient.CODING).toBean(clazz);
 			}else{
-				repBase = new REP_ERROR();
-				repBase = (REP_BASE)new FixedUtil(fixPack,BocmClient.CODING).toBean(repBase.getClass());
+				repBase = (REP_BASE)new FixedUtil(fixPack,BocmClient.CODING).toBean(REP_ERROR.class);
 				this.myLog.info(logger, "相应错误码【" + repBase.getTrspCd() + "】");
 				this.myLog.info(logger, "错误描述【" + repBase.getTrspMsg() + "】");
 			}
