@@ -550,10 +550,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
-//		try (Jedis jedis = myJedis.connect()) {
-//			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-//			txTel = jedis.get(COMMON_PREFIX + "txtel");
-//		}
+
 		txTel = reqDto.getReqSysHead().getUserId();
 		txBrno = reqDto.getReqSysHead().getBranchId();
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
@@ -645,10 +642,6 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
-//		try (Jedis jedis = myJedis.connect()) {
-//			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
-//			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
-//		}
 		
 		txTel = reqDto.getReqSysHead().getUserId();
 		txBrno = reqDto.getReqSysHead().getBranchId();

@@ -383,10 +383,6 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
-//		try (Jedis jedis = myJedis.connect()) {
-//			txBrno = jedis.get(COMMON_PREFIX + "txbrno");
-//			txTel = jedis.get(COMMON_PREFIX + "txtel");
-//		}
 
 		txTel = reqDto.getReqSysHead().getUserId();
 		txBrno = reqDto.getReqSysHead().getBranchId();
