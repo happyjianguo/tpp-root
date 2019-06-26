@@ -75,7 +75,6 @@ public class REQ_10009 extends REQ_BASE {
     
 	@FixedField(order = 27, len = 60, desc = "附言")
     private String remark;
-    
 
 	public String getOlogNo() {
 		return ologNo;
@@ -102,12 +101,10 @@ public class REQ_10009 extends REQ_BASE {
 	}
 
 	public Double getTxnAmt() {
-		txnAmt = txnAmt/100;
 		return txnAmt;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		txnAmt = txnAmt*100;
 		this.txnAmt = txnAmt;
 	}
 
@@ -238,12 +235,5 @@ public class REQ_10009 extends REQ_BASE {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-
- 
-
-
-
    
-
 }

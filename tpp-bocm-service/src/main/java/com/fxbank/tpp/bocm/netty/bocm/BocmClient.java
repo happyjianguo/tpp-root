@@ -25,15 +25,18 @@ public class BocmClient {
     private static Logger logger = LoggerFactory.getLogger(BocmClient.class);
 
     public static final String CODING = "GB18030";
-    public static final String PREFIX = "bocm-service.";
+    public static final String PREFIX = "bocm.";
     public static final String BOCM_IP_KEY = PREFIX + "bocm_ip";
     public static final String BOCM_PORT_KEY = PREFIX + "bocm_port";
     public static final String BOCM_TIMEOUT_KEY = PREFIX + "bocm_timeout";
 
     @Resource
     private MyJedis myJedis;
+    
+	@Resource
+    private IBocmSafeService safeService;
 
-    public <T> T comm(MyLog myLog, Object req, Class<T> clazz ,IBocmSafeService safeService) throws SysTradeExecuteException {
+    public <T> T comm(MyLog myLog, Object req, Class<T> clazz) throws SysTradeExecuteException {
         String ip = null;
         Integer port = 0;
         Integer timeOut = 0;

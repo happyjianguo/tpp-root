@@ -29,7 +29,7 @@ public class BocmSafeService implements IBocmSafeService{
 
 	private static Logger logger = LoggerFactory.getLogger(BocmSafeService.class);
 	
-	private final static String COMMON_PREFIX = "bocm_common.";
+	private final static String COMMON_PREFIX = "bocm.";
 
 	@Resource
 	private MyJedis myJedis;

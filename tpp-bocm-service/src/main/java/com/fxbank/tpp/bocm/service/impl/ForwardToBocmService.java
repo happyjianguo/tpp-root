@@ -29,10 +29,6 @@ public class ForwardToBocmService implements IForwardToBocmService {
 
 	@Resource
 	private BocmClient bocmClient;
-	
-	@Resource
-    private IBocmSafeService safeService;
-
 
 	@Override
 	public <T extends REP_BASE> T sendToBocm(REQ_BASE reqBase, Class<T> clazz) throws SysTradeExecuteException {
@@ -46,7 +42,7 @@ public class ForwardToBocmService implements IForwardToBocmService {
 		myLog.info(logger, "请求交行服务端，组包发送交行报文");
 		String jsonReq = fixPack.toString();
 		try {
-			repModel = bocmClient.comm(myLog, reqBase, clazz, safeService);
+			repModel = bocmClient.comm(myLog, reqBase, clazz);
 		} catch (SysTradeExecuteException e) {
 			myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg(), e);
 			throw e;

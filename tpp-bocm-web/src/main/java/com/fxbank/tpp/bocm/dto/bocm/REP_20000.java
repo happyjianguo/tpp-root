@@ -29,7 +29,7 @@ public class REP_20000 extends REP_BASE {
 	}
 
 	public void setOtxnAmt(Double otxnAmt) {
-		this.otxnAmt = AmtBase.toPack(otxnAmt);
+		this.otxnAmt = otxnAmt;
 	}
 
 	public Double getFee() {
@@ -37,7 +37,7 @@ public class REP_20000 extends REP_BASE {
 	}
 
 	public void setFee(Double fee) {
-		this.fee = AmtBase.toPack(fee);
+		this.fee = fee;
 	}
 
 	public Double getActBal() {
@@ -45,7 +45,7 @@ public class REP_20000 extends REP_BASE {
 	}
 
 	public void setActBal(Double actBal) {
-		this.actBal = AmtBase.toPack(actBal);
+		this.actBal = actBal;
 	}
 
 

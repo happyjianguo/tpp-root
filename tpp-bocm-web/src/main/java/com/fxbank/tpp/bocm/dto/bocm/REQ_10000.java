@@ -98,23 +98,13 @@ public class REQ_10000 extends REQ_BASE {
 	public void setCcyCod(String ccyCod) {
 		this.ccyCod = ccyCod;
 	}
-	
-	
 
 	public Double getTxnAmt() {
-		return txnAmt/100;
+		return txnAmt;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
 		this.txnAmt = txnAmt;
-	}
-
-	public Double getFee() {		
-		return fee = fee/100;
-	}
-
-	public void setFee(Double fee) {
-		this.fee = fee;
 	}
 
 	public String getFeeFlg() {
@@ -123,6 +113,14 @@ public class REQ_10000 extends REQ_BASE {
 
 	public void setFeeFlg(String feeFlg) {
 		this.feeFlg = feeFlg;
+	}
+
+	public Double getFee() {
+		return fee;
+	}
+
+	public void setFee(Double fee) {
+		this.fee = fee;
 	}
 
 	public String getOprFlg() {
@@ -149,6 +147,22 @@ public class REQ_10000 extends REQ_BASE {
 		this.payBnk = payBnk;
 	}
 
+	public String getPactTp() {
+		return pactTp;
+	}
+
+	public void setPactTp(String pactTp) {
+		this.pactTp = pactTp;
+	}
+
+	public String getPactNo() {
+		return pactNo;
+	}
+
+	public void setPactNo(String pactNo) {
+		this.pactNo = pactNo;
+	}
+
 	public String getPayNam() {
 		return payNam;
 	}
@@ -171,24 +185,6 @@ public class REQ_10000 extends REQ_BASE {
 
 	public void setRecBnk(String recBnk) {
 		this.recBnk = recBnk;
-	}
-
-
-
-	public String getPactTp() {
-		return pactTp;
-	}
-
-	public void setPactTp(String pactTp) {
-		this.pactTp = pactTp;
-	}
-
-	public String getPactNo() {
-		return pactNo;
-	}
-
-	public void setPactNo(String pactNo) {
-		this.pactNo = pactNo;
 	}
 
 	public String getRactTp() {
@@ -286,5 +282,7 @@ public class REQ_10000 extends REQ_BASE {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
+
     
 }

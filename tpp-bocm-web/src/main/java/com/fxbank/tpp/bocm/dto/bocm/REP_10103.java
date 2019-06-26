@@ -147,25 +147,23 @@ public class REP_10103 extends REP_BASE {
 		public void setCcyCod(String ccyCod) {
 			this.ccyCod = ccyCod;
 		}
-
+		public Double getTxnAmt() {
+			return txnAmt;
+		}
+		public void setTxnAmt(Double txnAmt) {
+			this.txnAmt = txnAmt;
+		}
 		public String getFeeFlg() {
 			return feeFlg;
 		}
 		public void setFeeFlg(String feeFlg) {
 			this.feeFlg = feeFlg;
 		}
-
-		public Double getTxnAmt() {		
-			return txnAmt;
-		}
-		public void setTxnAmt(Double txnAmt) {
-			this.txnAmt = AmtBase.toPack(txnAmt);
-		}
 		public Double getFee() {
 			return fee;
 		}
 		public void setFee(Double fee) {
-			this.fee = AmtBase.toPack(fee);
+			this.fee = fee;
 		}
 		public String getTxnMod() {
 			return txnMod;
@@ -227,9 +225,6 @@ public class REP_10103 extends REP_BASE {
 		public void setTxnSts(String txnSts) {
 			this.txnSts = txnSts;
 		}
-
-
-    	
     	
     }
 
@@ -258,13 +253,8 @@ public class REP_10103 extends REP_BASE {
 	}
 
 	public void setTolAmt(Double tolAmt) {
-		this.tolAmt = AmtBase.toPack(tolAmt);
+		this.tolAmt = tolAmt;
 	}
-
-
-	
-	
-
 
 	public List<Detail> getFilTxt() {
 		return filTxt;

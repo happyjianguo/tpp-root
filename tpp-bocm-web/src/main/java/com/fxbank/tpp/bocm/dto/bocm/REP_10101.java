@@ -51,8 +51,10 @@ public class REP_10101 extends REP_BASE {
 	}
 
 	public void setActBal(Double actBal) {
-		this.actBal = AmtBase.toPack(actBal);
+		this.actBal = actBal;
 	}
+
+
     
     
 

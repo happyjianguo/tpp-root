@@ -81,7 +81,7 @@ public class REP_10102 extends REP_BASE {
 	}
 
 	public void setFee(Double fee) {
-		this.fee = AmtBase.toPack(fee);;
+		this.fee = fee;
 	}
 
 	public String getActAdr() {
@@ -99,9 +99,5 @@ public class REP_10102 extends REP_BASE {
 	public void setAmtLmt(String amtLmt) {
 		this.amtLmt = amtLmt;
 	}
-	
 
-
-	
-	
 }

@@ -41,7 +41,7 @@ public class QR_Key implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm_common.";
+	private final static String COMMON_PREFIX = "bocm.";
 	
 	@Resource
 	private LogPool logPool;

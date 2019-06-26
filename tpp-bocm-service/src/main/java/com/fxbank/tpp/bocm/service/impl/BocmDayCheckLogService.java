@@ -51,7 +51,6 @@ public class BocmDayCheckLogService implements IBocmDayCheckLogService {
 	public List<BocmDayCheckLogInitModel> getDayCheckLog(MyLog myLog,Integer sysTime, Integer sysTraceno,Integer platDate) throws SysTradeExecuteException {
 		BocmChkLog tcexChkLog = new BocmChkLog();
 		tcexChkLog.setPlatDate(platDate);
-		//tcexChkLog.setDirection(direction);
 		
 		List<BocmChkLog> tcexChkLogList = mapper.select(tcexChkLog);
 		List<BocmDayCheckLogInitModel> dayCheckLogInitModelList = new ArrayList<BocmDayCheckLogInitModel>();

@@ -59,7 +59,7 @@ public class ApplyWorkKeyTask {
     @Reference(version = "1.0.0")
     private IBocmSafeService safeService;
 	
-	private final static String COMMON_PREFIX = "bocm_common.";
+	private final static String COMMON_PREFIX = "bocm.";
 	
 	@Resource
 	private MyJedis myJedis;

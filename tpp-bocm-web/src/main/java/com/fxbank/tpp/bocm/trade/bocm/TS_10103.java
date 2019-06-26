@@ -69,7 +69,7 @@ public class TS_10103 {
 
 	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm_common.";
+	private final static String COMMON_PREFIX = "bocm.";
 	
     public TS_10103(LogPool logPool, IForwardToESBService forwardToESBService, IForwardToTownService forwardToBocmService,
     		IBocmDayCheckLogService dayCheckLogService,IBocmSndTraceService sndTraceService,

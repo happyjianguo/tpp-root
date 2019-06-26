@@ -95,6 +95,22 @@ public class REQ_10001 extends REQ_BASE {
 		this.ccyCod = ccyCod;
 	}
 
+	public Double getTxnAmt() {
+		return txnAmt;
+	}
+
+	public void setTxnAmt(Double txnAmt) {
+		this.txnAmt = txnAmt;
+	}
+
+	public String getPin() {
+		return pin;
+	}
+
+	public void setPin(String pin) {
+		this.pin = pin;
+	}
+
 	public String getOprFlg() {
 		return oprFlg;
 	}
@@ -119,6 +135,26 @@ public class REQ_10001 extends REQ_BASE {
 		this.payBnk = payBnk;
 	}
 
+	public String getPactTp() {
+		return pactTp;
+	}
+
+	public void setPactTp(String pactTp) {
+		this.pactTp = pactTp;
+	}
+
+	public String getPactNo() {
+		return pactNo;
+	}
+
+	public void setPactNo(String pactNo) {
+		this.pactNo = pactNo;
+	}
+
+	public String getPayNam() {
+		return payNam;
+	}
+
 	public void setPayNam(String payNam) {
 		this.payNam = payNam;
 	}
@@ -139,7 +175,21 @@ public class REQ_10001 extends REQ_BASE {
 		this.recBnk = recBnk;
 	}
 
+	public String getRactTp() {
+		return ractTp;
+	}
 
+	public void setRactTp(String ractTp) {
+		this.ractTp = ractTp;
+	}
+
+	public String getRactNo() {
+		return ractNo;
+	}
+
+	public void setRactNo(String ractNo) {
+		this.ractNo = ractNo;
+	}
 
 	public String getRecNam() {
 		return recNam;
@@ -219,58 +269,6 @@ public class REQ_10001 extends REQ_BASE {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	public String getPin() {
-		return pin;
-	}
-
-	public void setPin(String pin) {
-		this.pin = pin;
-	}
-
-	public Double getTxnAmt() {
-		return txnAmt/100;
-	}
-
-	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = txnAmt;
-	}
-
-	public String getPactTp() {
-		return pactTp;
-	}
-
-	public void setPactTp(String pactTp) {
-		this.pactTp = pactTp;
-	}
-
-	public String getPactNo() {
-		return pactNo;
-	}
-
-	public void setPactNo(String pactNo) {
-		this.pactNo = pactNo;
-	}
-
-	public String getRactTp() {
-		return ractTp;
-	}
-
-	public void setRactTp(String ractTp) {
-		this.ractTp = ractTp;
-	}
-
-	public String getRactNo() {
-		return ractNo;
-	}
-
-	public void setRactNo(String ractNo) {
-		this.ractNo = ractNo;
-	}
-
-	public String getPayNam() {
-		return payNam;
 	}
 
 }

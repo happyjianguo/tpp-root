@@ -80,7 +80,7 @@ public class CityBocmCheckAcctTask {
 	@Resource
 	private MyJedis myJedis;
 
-	private final static String COMMON_PREFIX = "bocm_common.";
+	private final static String COMMON_PREFIX = "bocm.";
 	
 	public void exec() throws Exception {
 		MyLog myLog = new MyLog();
