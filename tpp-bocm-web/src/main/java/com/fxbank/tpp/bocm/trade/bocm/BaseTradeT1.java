@@ -5,21 +5,15 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
-import com.fxbank.cip.base.constant.CIP;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.model.ModelBase;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000203;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
-import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 
 /**
  * @Description: 来账交易模版。适用场景：判断交易状态->核心记账,日终对账以银行为准。

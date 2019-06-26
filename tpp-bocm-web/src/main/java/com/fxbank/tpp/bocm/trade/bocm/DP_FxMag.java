@@ -23,17 +23,15 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10000;
-import com.fxbank.tpp.bocm.dto.bocm.REP_20000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
-import com.fxbank.tpp.bocm.exception.BocmTradeJHExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
-import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000203;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
@@ -181,7 +179,6 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	public DataTransObject backMsgOnTradeHave(DataTransObject dto,ModelBase rcvModel) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		myLog.info(logger, "交易已经存在，根据渠道记录的数据返回报文");
-		REQ_10000 reqDto = (REQ_10000) dto;
 		REP_10000 rep = new REP_10000();
 		BocmRcvTraceQueryModel model = (BocmRcvTraceQueryModel)rcvModel;
 		//通过model组装返回报文		

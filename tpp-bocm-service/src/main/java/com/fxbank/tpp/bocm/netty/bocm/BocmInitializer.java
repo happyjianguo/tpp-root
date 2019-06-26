@@ -1,10 +1,7 @@
 package com.fxbank.tpp.bocm.netty.bocm;
 
-import org.springframework.stereotype.Component;
-
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.netty.NettySyncHandler;
-import com.fxbank.cip.base.netty.NettySyncSlot;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
 import io.netty.channel.ChannelInitializer;

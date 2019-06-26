@@ -18,7 +18,6 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10102;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10102;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
-import com.fxbank.tpp.bocm.exception.BocmTradeJHExecuteException;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
@@ -74,23 +73,9 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 			return rep;
 		}
 		ESB_REP_30013000201 esbRep_30013000201 = null;
-		//核心记账日期
-		String hostDate = null;
-		//核心记账流水号
-		String hostTraceno = null;
-		//核心记账返回状态码
-		String retCode = null;
-		//核心记账返回状态信息
-		String retMsg = null;
-
-	
 		try {
 			//1.调用核心查询账户信息
 			esbRep_30013000201 = hostQuery(req);
-			hostDate = esbRep_30013000201.getRepSysHead().getRunDate();
-			hostTraceno = esbRep_30013000201.getRepSysHead().getReference();
-			retCode = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetCode();
-			retMsg = esbRep_30013000201.getRepSysHead().getRet().get(0).getRetMsg();
 		} catch (SysTradeExecuteException e) {
 			myLog.error(logger, "交行查询本行卡余额，本行核心查询失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10009);

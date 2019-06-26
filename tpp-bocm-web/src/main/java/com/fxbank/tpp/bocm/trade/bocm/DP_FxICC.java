@@ -182,7 +182,6 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	public DataTransObject backMsgOnTradeHave(DataTransObject dto,ModelBase rcvModel) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		myLog.info(logger, "交易已经存在，根据渠道记录的数据返回报文");
-		REQ_20000 reqDto = (REQ_20000) dto;
 		REP_20000 rep = new REP_20000();
 		BocmRcvTraceQueryModel model = (BocmRcvTraceQueryModel)rcvModel;
 		//通过model组装返回报文		

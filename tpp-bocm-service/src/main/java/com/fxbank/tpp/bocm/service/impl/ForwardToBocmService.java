@@ -8,11 +8,9 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_BASE;
 import com.fxbank.tpp.bocm.model.REQ_BASE;
 import com.fxbank.tpp.bocm.netty.bocm.BocmClient;
-import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 
 /**
@@ -37,10 +35,7 @@ public class ForwardToBocmService implements IForwardToBocmService {
 		reqBase.setTtxnTim(reqBase.getSysTime());
 		reqBase.setSlogNo(String.format("%06d%08d", reqBase.getSysDate() % 1000000, reqBase.getSysTraceno()));
 		T repModel = null;
-		
-		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(reqBase,BocmClient.CODING));
 		myLog.info(logger, "请求交行服务端，组包发送交行报文");
-		String jsonReq = fixPack.toString();
 		try {
 			repModel = bocmClient.comm(myLog, reqBase, clazz);
 		} catch (SysTradeExecuteException e) {

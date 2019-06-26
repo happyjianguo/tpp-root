@@ -15,7 +15,6 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.bocm.REP_10104;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_10104;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -41,8 +40,6 @@ public class QR_Key implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm.";
-	
 	@Resource
 	private LogPool logPool;
 	
@@ -56,7 +53,6 @@ public class QR_Key implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_10104 reqDto = (REQ_10104) dto;
 		REP_10104 rep = new REP_10104();
 		rep.setBlkVal("密文值");
 		rep.setChkVal("密钥 校验值");

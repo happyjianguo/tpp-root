@@ -22,8 +22,6 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
-import com.fxbank.tpp.bocm.dto.esb.REP_TS_CHK_BOCM;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
 import com.fxbank.tpp.bocm.dto.esb.REQ_TS_CHK_BOCM;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
