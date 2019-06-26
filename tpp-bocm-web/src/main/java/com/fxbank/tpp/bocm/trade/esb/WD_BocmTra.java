@@ -473,19 +473,14 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("O");
 		
-		//我方银行账号
-//		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
-		//对方银行账号
-//		reqBody_30011000104.setOthBankCode(reqBody.getPyrOpnBnkNoT2());
+//		我方银行账号
+		reqBody_30011000104.setBankCode(reqBody.getPyeeOpnBnkNoT6());
+//		对方银行账号
+		reqBody_30011000104.setOthBankCode(reqBody.getPyrOpnBnkNoT2());
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
 		
-//		if(1==1){
-//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
-////			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
-//			throw e;
-//		}
 		
 		
 		return esbRep_30011000104;
