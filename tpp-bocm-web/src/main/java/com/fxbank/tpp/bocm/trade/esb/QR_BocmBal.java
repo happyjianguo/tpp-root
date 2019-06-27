@@ -19,6 +19,7 @@ import com.fxbank.tpp.bocm.dto.esb.REQ_30063001201;
 import com.fxbank.tpp.bocm.model.REP_10101;
 import com.fxbank.tpp.bocm.model.REQ_10101;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 /**
@@ -61,7 +62,9 @@ public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 
 		REP_30063001201 rep = new REP_30063001201();
 		rep.getReqBody().setAcctName(rep10101.getActNam());
-		rep.getReqBody().setBal(rep10101.getActBal().doubleValue());
+		
+		double amt = NumberUtil.removePoint(rep10101.getActBal());
+		rep.getReqBody().setBal(amt);
 		return rep;
 	}
 

@@ -552,7 +552,11 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	public REP_10001 magCardCharge(DataTransObject dto, REQ_10001 req10001) throws SysTradeExecuteException { 
 		REQ_30061000801 reqDto = (REQ_30061000801)dto;
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
-		req10001.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
+		
+		//交易金额
+		String amt = reqBody.getTrsrAmtT3();
+		//交易金额补零
+		req10001.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(amt)));
 		//pin转加密
 		String pin = super.convPin(reqDto,reqBody.getPyrAcctNoT2(),reqBody.getPwdT());
 		req10001.setPin(pin);
@@ -594,7 +598,11 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	public REP_20001 iCCardCharge(DataTransObject dto,REQ_20001 req20001) throws SysTradeExecuteException {
 		REQ_30061000801 reqDto = (REQ_30061000801)dto;
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
-		req20001.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
+		
+		//交易金额
+		String amt = reqBody.getTrsrAmtT3();
+		//交易金额补零
+		req20001.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(amt)));
 		//pin转加密
 		String pin = super.convPin(reqDto,reqBody.getPyrAcctNoT2(),reqBody.getPwdT());
 		req20001.setPin(pin);

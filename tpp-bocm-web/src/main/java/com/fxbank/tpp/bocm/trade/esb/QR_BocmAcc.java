@@ -20,6 +20,7 @@ import com.fxbank.tpp.bocm.dto.esb.REQ_30063001301;
 import com.fxbank.tpp.bocm.model.REP_10102;
 import com.fxbank.tpp.bocm.model.REQ_10102;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30063000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30063000103;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -63,7 +64,11 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		//TRNS_TP_T8（交易类型）00 存款  01 取款  02 转出  03 转入
 		req10102.setTxnTyp(reqBody.getTrnsTpT8());
 		req10102.setFeeFlg(reqBody.getRcveWyT());
-		req10102.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
+		
+		//交易金额
+		String amt = reqBody.getTrsrAmtT3();
+		//交易金额补零
+		req10102.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(amt)));
 		myLog.info(logger, "发送账号信息 查询请求至交行");
 		
 		REP_10102 rep10102 = forwardToBocmService.sendToBocm(req10102, REP_10102.class);
@@ -74,8 +79,11 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		REP_30063001301.REQ_BODY repBody = rep.getReqBody();
 		//姓名
 		repBody.setNaT1(rep10102.getActNam());
+		
+		String jhFee = NumberUtil.removePointToString(rep10102.getFee());
 		//手续费
-		repBody.setFeeT3(rep10102.getFee().toString());		
+		repBody.setFeeT3(jhFee);
+
 		//查询手续费		
 		ESB_REP_30063000103 esbRep_30063000103 = queryFee(reqDto,rep10102);
 		ESB_REP_30063000103.Fee fee = esbRep_30063000103.getRepBody().getFeeDetail().get(0);
