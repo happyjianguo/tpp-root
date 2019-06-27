@@ -16,8 +16,6 @@ public abstract class REP_BASE extends ModelBase implements Serializable{
 	private static final long serialVersionUID = 6311109021156971900L;
 	//是否校验mac
 	private boolean checkMac = true;
-	//是否有mac
-	private boolean haveMac = true;
 
 	public REP_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
 		super(mylog, sysDate, sysTime, sysTraceno);
@@ -65,11 +63,6 @@ public abstract class REP_BASE extends ModelBase implements Serializable{
 	public void setCheckMac(boolean checkMac) {
 		this.checkMac = checkMac;
 	}
-	public boolean isHaveMac() {
-		return haveMac;
-	}
-	public void setHaveMac(boolean haveMac) {
-		this.haveMac = haveMac;
-	}
+
 	
 }

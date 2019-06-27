@@ -108,7 +108,7 @@ public class REQ_10001 extends REQ_BASE {
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = AmtBase.toPack(txnAmt);
+		this.txnAmt = txnAmt;
 	}
 
 	public String getPin() {
@@ -278,6 +278,7 @@ public class REQ_10001 extends REQ_BASE {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+
 
 
 

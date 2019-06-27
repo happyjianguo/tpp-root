@@ -41,7 +41,6 @@ public class REQ_10102 extends REQ_BASE {
 	
 	@FixedField(order = 13, len = 15, desc = "交易金额")
 	private Double txnAmt;
-	
 
 	public String getCcyCod() {
 		return ccyCod;
@@ -88,8 +87,7 @@ public class REQ_10102 extends REQ_BASE {
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = AmtBase.toPack(txnAmt);
+		this.txnAmt = txnAmt;
 	}
-
 
 }

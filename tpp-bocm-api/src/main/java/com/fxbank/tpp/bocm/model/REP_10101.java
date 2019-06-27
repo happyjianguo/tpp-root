@@ -58,13 +58,13 @@ public class REP_10101 extends REP_BASE {
 	}
 
 	public Double getActBal() {
-		actBal = actBal/100;
 		return actBal;
 	}
 
 	public void setActBal(Double actBal) {
-		actBal = actBal*100;
 		this.actBal = actBal;
 	}
+
+
 
 }

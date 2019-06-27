@@ -76,6 +76,10 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
     private Integer bocmTime;
     //交行流水
     private String bocmTraceno;
+    //交行返回相应码
+    private String bocmRepcd;
+    //交行返回相应信息
+    private String bocmRepmsg;
     //对账标志
     private String checkFlag;
     //交行记账状态
@@ -349,6 +353,22 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setFee(BigDecimal fee) {
 		this.fee = fee;
+	}
+
+	public String getBocmRepcd() {
+		return bocmRepcd;
+	}
+
+	public void setBocmRepcd(String bocmRepcd) {
+		this.bocmRepcd = bocmRepcd;
+	}
+
+	public String getBocmRepmsg() {
+		return bocmRepmsg;
+	}
+
+	public void setBocmRepmsg(String bocmRepmsg) {
+		this.bocmRepmsg = bocmRepmsg;
 	}
 
 

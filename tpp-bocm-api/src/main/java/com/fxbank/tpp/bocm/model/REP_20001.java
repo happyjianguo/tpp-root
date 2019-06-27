@@ -33,17 +33,15 @@ public class REP_20001 extends REP_BASE {
     private Double actBal;
 
 	public Double getOtxnAmt() {
-		otxnAmt = otxnAmt/100;
 		return otxnAmt;
 	}
 
 	public void setOtxnAmt(Double otxnAmt) {
-		otxnAmt = otxnAmt*100;
 		this.otxnAmt = otxnAmt;
 	}
 
-	public Double getFee() {		
-		return fee/100;
+	public Double getFee() {
+		return fee;
 	}
 
 	public void setFee(Double fee) {
@@ -51,12 +49,13 @@ public class REP_20001 extends REP_BASE {
 	}
 
 	public Double getActBal() {
-		return actBal/100;
+		return actBal;
 	}
 
 	public void setActBal(Double actBal) {
 		this.actBal = actBal;
 	}
+
 
 	
 

@@ -105,6 +105,11 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
     private Integer bocmTime;
     //交行流水
     private String bocmTraceno;
+    //交行返回相应码
+    private String bocmRepcd;
+    //交行返回相应信息
+    private String bocmRepmsg;
+    
 	
 	@NotNull(message = "tx_tel交易柜员不能为空")
 	@Size(max = 30,message = "tx_tel交易柜员最大长度是30")
@@ -410,6 +415,22 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 
 	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
+	}
+
+	public String getBocmRepcd() {
+		return bocmRepcd;
+	}
+
+	public void setBocmRepcd(String bocmRepcd) {
+		this.bocmRepcd = bocmRepcd;
+	}
+
+	public String getBocmRepmsg() {
+		return bocmRepmsg;
+	}
+
+	public void setBocmRepmsg(String bocmRepmsg) {
+		this.bocmRepmsg = bocmRepmsg;
 	}
 
 	

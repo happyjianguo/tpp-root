@@ -96,7 +96,7 @@ public class REP_10102 extends REP_BASE {
 	}
 
 	public Double getFee() {
-		return fee/100;
+		return fee;
 	}
 
 	public void setFee(Double fee) {
@@ -118,6 +118,8 @@ public class REP_10102 extends REP_BASE {
 	public void setAmtLmt(String amtLmt) {
 		this.amtLmt = amtLmt;
 	}
+
+
 	
 	
 	

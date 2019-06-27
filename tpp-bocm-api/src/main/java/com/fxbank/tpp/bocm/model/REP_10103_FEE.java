@@ -22,13 +22,11 @@ public class REP_10103_FEE extends REP_BASE {
 	public REP_10103_FEE() {
 		super(null, 0, 0, 0);
         super.setCheckMac(false);
-        super.setHaveMac(false);
 	}
 
     public REP_10103_FEE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
         super.setCheckMac(false);
-        super.setHaveMac(false);
     }
 
 	@FixedField(order = 5, len = 8, desc = "文件长度")
@@ -163,37 +161,35 @@ public class REP_10103_FEE extends REP_BASE {
 		public void setCcyCod(String ccyCod) {
 			this.ccyCod = ccyCod;
 		}
-
+		public Double getTxnAmt() {
+			return txnAmt;
+		}
+		public void setTxnAmt(Double txnAmt) {
+			this.txnAmt = txnAmt;
+		}
 		public String getFeeFlg() {
 			return feeFlg;
 		}
 		public void setFeeFlg(String feeFlg) {
 			this.feeFlg = feeFlg;
 		}
-
-		public Double getTxnAmt() {
-			if(txnAmt!=null){
-				txnAmt = txnAmt/100;
-			}			
-			return txnAmt;
-		}
-		public void setTxnAmt(Double txnAmt) {
-			if(txnAmt!=null){
-				txnAmt = txnAmt*100;
-				this.txnAmt = txnAmt;
-			}
-		}
 		public Double getFee() {
-			if(fee!=null){
-				fee = fee/100;
-			}
 			return fee;
 		}
 		public void setFee(Double fee) {
-			if(fee!=null){
-				fee = fee*100;
-			}
 			this.fee = fee;
+		}
+		public Double getProxyFee() {
+			return ProxyFee;
+		}
+		public void setProxyFee(Double proxyFee) {
+			ProxyFee = proxyFee;
+		}
+		public String getProxyFlg() {
+			return ProxyFlg;
+		}
+		public void setProxyFlg(String proxyFlg) {
+			ProxyFlg = proxyFlg;
 		}
 		public String getTxnMod() {
 			return txnMod;
@@ -255,15 +251,8 @@ public class REP_10103_FEE extends REP_BASE {
 		public void setTxnSts(String txnSts) {
 			this.txnSts = txnSts;
 		}
-
-
-    	
     	
     }
-
-
-
-
 
 	public Integer getFilLen() {
 		return filLen;
@@ -289,11 +278,6 @@ public class REP_10103_FEE extends REP_BASE {
 		this.tolAmt = tolAmt;
 	}
 
-
-	
-	
-
-
 	public List<Detail> getFilTxt() {
 		return filTxt;
 	}
@@ -301,4 +285,6 @@ public class REP_10103_FEE extends REP_BASE {
 	public void setFilTxt(List<Detail> filTxt) {
 		this.filTxt = filTxt;
 	}
+
+
 }
