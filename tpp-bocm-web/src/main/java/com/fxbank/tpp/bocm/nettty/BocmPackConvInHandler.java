@@ -51,7 +51,7 @@ public class BocmPackConvInHandler extends ChannelInboundHandlerAdapter {
 				String mac = pack.substring(pack.length() - 16);
 				myLog.info(logger, "校验MAC  mac=[" + mac + "]");
 				// 校验MAC		
-//				safeService.verifyBocmMac(myLog, fixPack, mac);
+				safeService.verifyBocmMac(myLog, fixPack, mac);
 			}
 			myLog.info(logger, "阜新银行服务端接收请求报文=[" + fixPack + "]");
 			myLog.info(logger, "交易代码=[" + txCode + "]");
