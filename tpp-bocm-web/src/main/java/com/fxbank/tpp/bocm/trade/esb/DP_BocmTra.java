@@ -457,11 +457,9 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req10000.setThdMag(reqBody.getThrTrkInfoT1());
 		req10000.setRemark(reqBody.getNoteT2());
         
-		//TODO 转换正式交行请求
 		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
 				REP_10000.class);
-
-		
+	
 		return rep_10000;
 
 		

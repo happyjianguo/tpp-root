@@ -106,7 +106,7 @@ public class REQ_20000 extends REQ_BASE {
 	}
 
 	public Double getTxnAmt() {
-		return txnAmt/100;
+		return txnAmt;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
@@ -122,7 +122,7 @@ public class REQ_20000 extends REQ_BASE {
 	}
 
 	public Double getFee() {
-		return fee/100;
+		return fee;
 	}
 
 	public void setFee(Double fee) {
@@ -273,8 +273,6 @@ public class REQ_20000 extends REQ_BASE {
 		this.seqNo = seqNo;
 	}
 
-
-
 	public String getARQC() {
 		return ARQC;
 	}
@@ -314,9 +312,7 @@ public class REQ_20000 extends REQ_BASE {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-    
 
 
-   
 
 }

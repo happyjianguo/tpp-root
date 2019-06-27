@@ -31,6 +31,8 @@
     <result column="BOCM_DATE" jdbcType="DECIMAL" property="bocmDate" />
     <result column="BOCM_TIME" jdbcType="DECIMAL" property="bocmTime" />
     <result column="BOCM_TRACENO" jdbcType="NVARCHAR" property="bocmTraceno" />
+    <result column="BOCM_REPCD" jdbcType="NVARCHAR" property="bocmRepcd" />
+    <result column="BOCM_REPMSG" jdbcType="NVARCHAR" property="bocmRepmsg" />
     <result column="CHECK_FLAG" jdbcType="NVARCHAR" property="checkFlag" />
     <result column="HOST_STATE" jdbcType="NVARCHAR" property="hostState" />
     <result column="BOCM_STATE" jdbcType="NVARCHAR" property="bocmState" />
@@ -46,7 +48,7 @@
   <select id="selectAll" resultMap="BaseResultMap">
     select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SOURCE_TYPE, TX_BRANCH,TRAN_TYPE, TX_IND, TX_CODE,DC_FLAG, 
     TX_AMT, ACT_BAL, HOST_DATE, HOST_TRACENO, PAYER_ACNO, PAYER_NAME, PAYEE_ACNO, PAYEE_NAME, 
-    BOCM_BRANCH, BOCM_DATE, BOCM_TRACENO, CHECK_FLAG, HOST_STATE, BOCM_STATE, TX_TEL, 
+    BOCM_BRANCH, BOCM_DATE, BOCM_TRACENO, BOCM_REPCD,BOCM_REPMSG,CHECK_FLAG, HOST_STATE, BOCM_STATE, TX_TEL, 
     CHK_TEL, AUTH_TEL, PRINT, INFO, RET_CODE, RET_MSG,  HOST_BRANCH,
     FEE_FLAG,FEE,SND_BANKNO,RCV_BANKNO,PAYER_BANK,PAYER_ACTTP,PAYEE_BANK,PAYEE_ACTTP
     from BOCM_SND_LOG

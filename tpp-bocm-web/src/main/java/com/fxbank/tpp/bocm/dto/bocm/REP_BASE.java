@@ -11,8 +11,6 @@ import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
 public abstract class REP_BASE extends DataTransObject{
 	//是否校验mac
 	private boolean checkMac = true;
-	//是否有mac
-	private boolean haveMac = true;
 	
 	@FixedField(order = 1, len = 1, desc = "响应类型")
 	private String tmsgTyp;
@@ -56,13 +54,5 @@ public abstract class REP_BASE extends DataTransObject{
 	public void setCheckMac(boolean checkMac) {
 		this.checkMac = checkMac;
 	}
-	public boolean isHaveMac() {
-		return haveMac;
-	}
-	public void setHaveMac(boolean haveMac) {
-		this.haveMac = haveMac;
-	}
-	
-	
-	
+
 }

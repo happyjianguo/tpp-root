@@ -184,6 +184,18 @@ public class BocmSndLog {
      */
     @Column(name = "BOCM_TRACENO")
     private String bocmTraceno;
+    
+    /**
+     * null
+     */
+    @Column(name = "BOCM_REPCD")
+    private String bocmRepcd;
+    
+    /**
+     * null
+     */
+    @Column(name = "BOCM_REPMSG")
+    private String bocmRepmsg;
 
     /**
      * null
@@ -756,6 +768,22 @@ public class BocmSndLog {
 
 	public void setTranType(String tranType) {
 		this.tranType = tranType;
+	}
+
+	public String getBocmRepcd() {
+		return bocmRepcd;
+	}
+
+	public void setBocmRepcd(String bocmRepcd) {
+		this.bocmRepcd = bocmRepcd;
+	}
+
+	public String getBocmRepmsg() {
+		return bocmRepmsg;
+	}
+
+	public void setBocmRepmsg(String bocmRepmsg) {
+		this.bocmRepmsg = bocmRepmsg;
 	}
     
     

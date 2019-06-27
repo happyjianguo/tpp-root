@@ -103,7 +103,7 @@ public class REQ_20001 extends REQ_BASE {
 	}
 
 	public Double getTxnAmt() {
-		return txnAmt/100;
+		return txnAmt;
 	}
 
 	public void setTxnAmt(Double txnAmt) {
@@ -301,12 +301,7 @@ public class REQ_20001 extends REQ_BASE {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
-    
 
 
-
-
-   
 
 }

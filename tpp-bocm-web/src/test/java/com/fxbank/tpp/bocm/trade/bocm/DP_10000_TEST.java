@@ -43,7 +43,7 @@ public class DP_10000_TEST extends BASE_TEST {
 	public void ok() throws Exception {
 
 		
-		req.setTxnAmt(190.09d);
+		req.setTxnAmt(10000d);
 		req.setFeeFlg("0");
 		req.setFee(0.1d);
 		req.setOprFlg("0");

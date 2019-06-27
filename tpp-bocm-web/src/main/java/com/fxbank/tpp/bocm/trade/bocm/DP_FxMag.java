@@ -29,6 +29,7 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
@@ -160,8 +161,10 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 				fee = Double.valueOf(temp.getFeeAmt());
 			}
 		}
-		rep.setFee(fee);
-		rep.setActBal(Double.valueOf(repPayment.getRepBody().getAvailBal()));
+		rep.setFee(NumberUtil.addPoint(fee));
+		//响应报文金额字段需要补小数位乘100
+		Double actBal = NumberUtil.addPoint(Double.valueOf(repPayment.getRepBody().getAvailBal()));
+		rep.setActBal(actBal);
 		return rep;
 	}
 	
@@ -181,15 +184,15 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		myLog.info(logger, "交易已经存在，根据渠道记录的数据返回报文");
 		REP_10000 rep = new REP_10000();
 		BocmRcvTraceQueryModel model = (BocmRcvTraceQueryModel)rcvModel;
-		//通过model组装返回报文		
-		rep.setOtxnAmt(Double.parseDouble(model.getTxAmt().toString()));
+		//通过model组装返回报文	
+		//响应报文金额字段需要补小数位乘100
+		rep.setOtxnAmt(NumberUtil.addPoint(Double.parseDouble(model.getTxAmt().toString())));
 		if(model.getActBal()!=null){
-			rep.setActBal(Double.parseDouble(model.getActBal().toString()));
+			rep.setActBal(NumberUtil.addPoint(Double.parseDouble(model.getActBal().toString())));
 		}
 		if(model.getFee()!=null){
-			rep.setFee(Double.parseDouble(model.getFee().toString()));
-		}
-	
+			rep.setFee(NumberUtil.addPoint(Double.parseDouble(model.getFee().toString())));
+		}	
 		return rep;
 	}
 	
@@ -239,7 +242,9 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		reqBody_30011000104.setTranType("JH02");
 		reqBody_30011000104.setTranCcy("CNY");
-		reqBody_30011000104.setTranAmt(reqDto.getTxnAmt().toString());
+		//精度转换，请求报文后两位为小数位需要除100
+		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
+		reqBody_30011000104.setTranAmt(txnAmt.toString());
 		reqBody_30011000104.setWithdrawalType("P");
 	
 		reqBody_30011000104.setChannelType("BU");

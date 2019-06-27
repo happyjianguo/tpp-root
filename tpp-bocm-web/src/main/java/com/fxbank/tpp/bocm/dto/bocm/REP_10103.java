@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
-import com.fxbank.tpp.bocm.model.AmtBase;
 
 /** 
 * @ClassName: REP_10103 
@@ -18,7 +17,6 @@ public class REP_10103 extends REP_BASE {
     public REP_10103() {
         super.txDesc = "对账文件响应";
         super.setCheckMac(false);
-        super.setHaveMac(false);
 	}
 	
 	

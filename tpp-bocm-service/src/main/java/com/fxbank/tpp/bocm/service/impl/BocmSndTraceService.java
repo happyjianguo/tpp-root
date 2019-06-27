@@ -123,6 +123,12 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		if(null != record.getBocmTraceno()) {
 			bocmSndLog.setBocmTraceno(record.getBocmTraceno());
 		}
+		if(null != record.getBocmRepcd()) {
+			bocmSndLog.setBocmRepcd(record.getBocmRepcd());
+		}
+		if(null != record.getBocmRepmsg()) {
+			bocmSndLog.setBocmRepmsg(record.getBocmRepmsg());
+		}
 		if(null != record.getRetCode()) {
 			bocmSndLog.setRetCode(record.getRetCode());
 		}

@@ -74,7 +74,6 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061001001 reqDto = (REQ_30061001001) dto;
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061001001 rep = new REP_30061001001();
-		//1.交行记账    IC卡和磁条卡走不同的交行接口
 		//交行记账流水号  原发起方交易流水
 		String bocmTraceNo = null;
 		int bocmDate = 0;
@@ -87,105 +86,71 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REP_20001 rep20001 = null;
 		REQ_10001 req10001 = null;
 		REQ_20001 req20001 = null;
-		
+		String rbnkNo = "";
+		String actBal = "";
 		if("2".equals(reqBody.getIcCardFlgT4())){
 			oTxnCd = "10001";
 			cardTypeName = "磁条卡";
 			req10001 = new REQ_10001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001); // 设置报文头中的行号信息
+			rbnkNo = req10001.getRbnkNo();
 		}else{
 			cardTypeName = "IC卡";
 			oTxnCd = "20001";
 			req20001 = new REQ_20001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001); // 设置报文头中的行号信息
-		}	
-		
-
-			//磁条卡的通兑10001
-			try {
-				if("10001".equals(oTxnCd)){
-					myLog.info(logger, "发送磁条卡通兑请求至交行");
-					rep10001 = magCardCharge(reqDto,req10001);
-					bocmTraceNo = rep10001.getRlogNo();
-					bocmDate = rep10001.getSysDate();
-					bocmTime = rep10001.getSysTime();
-					
-					String fee = rep10001.getFee().toString();
-					String actBal = rep10001.getActBal().toString();	
-					//手续费
-					rep.getRepBody().setFeeT3(fee);
-					//余额
-					rep.getRepBody().setBalance3T(actBal);	
-					
-					//插入流水表
-					//交行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败， 6-冲正超时
-					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "1",req10001.getRbnkNo(),actBal);
-					
-				}else{
-					myLog.info(logger, "发送IC卡通兑请求至交行");
-					rep20001 = iCCardCharge(reqDto,req20001);
-					bocmTraceNo = rep20001.getRlogNo();
-					
-					String fee = rep20001.getFee().toString();
-					String actBal = rep20001.getActBal().toString();
-					//手续费
-					rep.getRepBody().setFeeT3(fee);
-					//余额
-					rep.getRepBody().setBalance3T(actBal);
-					
-					//插入流水表
-					//交行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败， 6-冲正超时
-					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "1",req20001.getRbnkNo(),actBal);
-				}
+			rbnkNo = req20001.getRbnkNo();
+		}			
+		try {
+			//1.交行记账    IC卡和磁条卡走不同的交行接口
+			if("10001".equals(oTxnCd)){
+				myLog.info(logger, "发送磁条卡通兑请求至交行");
+				rep10001 = magCardCharge(reqDto,req10001);
+				bocmTraceNo = rep10001.getRlogNo();
+				bocmDate = rep10001.getSysDate();
+				bocmTime = rep10001.getSysTime();
 				
-				myLog.info(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+				String fee = rep10001.getFee().toString();
+				actBal = rep10001.getActBal().toString();	
+				//手续费
+				rep.getRepBody().setFeeT3(fee);
+				//余额
+				rep.getRepBody().setBalance3T(actBal);										
+			}else{
+				myLog.info(logger, "发送IC卡通兑请求至交行");
+				rep20001 = iCCardCharge(reqDto,req20001);
+				bocmTraceNo = rep20001.getRlogNo();
 				
-			} catch (SysTradeExecuteException e) {
-				// 如果不是账务类请求，可以不用分类处理应答码，统一当成失败处理即可
-				// 如果交易不关心返回的异常类型，直接可以不捕获，直接省略catch，抛出异常即可
-				if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000006) // 生成请求失败
-						|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000007)
-						|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000008)) {
-					//交行核心记账报错，交易失败
-					myLog.error(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账失败，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());
-					throw e2;
-				}else if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000009)||e.getRspCode().equals("JH6203")) { // 接收交行返回结果超时
-					//'交通银行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败';
-					myLog.error(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账返回结果超时，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					try {
-						myLog.error(logger, "发送"+cardTypeName+"通兑抹账请求至交行");
-						bocmReversal(reqDto,bocmTraceNo,oTxnCd);
-						initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "3","","");
-					    myLog.info(logger, "交行卡取现金，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno());
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
-						throw e2;
-					}catch(SysTradeExecuteException e1) {
-						myLog.error(logger, "交行卡取现金，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
-								"渠道流水号" + reqDto.getSysTraceno(), e1);
-						initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "3","","");
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
-						throw e2;
-					}
-				}else { // 目标系统应答失败
-							// 确认是否有冲正操作
-					//交行核心记账报错，交易失败
-					myLog.error(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账失败，渠道日期" + reqDto.getSysDate() + 
-							"渠道流水号" + reqDto.getSysTraceno(), e);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());
-					throw e2;
-				}
-			}catch (Exception e) { // 其它未知错误，可以当成超时处理
-				// 确认是否有冲正操作
-				myLog.error(logger, "交行卡取现金，交行磁条卡通兑记账其它未知错误，渠道日期" + reqDto.getSysDate() + 
+				String fee = rep20001.getFee().toString();
+				actBal = rep20001.getActBal().toString();
+				//手续费
+				rep.getRepBody().setFeeT3(fee);
+				//余额
+				rep.getRepBody().setBalance3T(actBal);					
+			}						
+		} catch (SysTradeExecuteException e) {
+			// 如果不是账务类请求，可以不用分类处理应答码，统一当成失败处理即可
+			// 如果交易不关心返回的异常类型，直接可以不捕获，直接省略catch，抛出异常即可
+			if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000006) // 生成请求失败
+					|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000007)
+					|| e.getRspCode().equals(SysTradeExecuteException.CIP_E_000008)) {
+				//交行核心记账报错，交易失败
+				myLog.error(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账失败，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno(), e);
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());
+				throw e2;
+			}else if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000009)||e.getRspCode().equals("JH6203")) { // 接收交行返回结果超时
+				//'交通银行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败';
+				myLog.error(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账返回结果超时，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);
 				try {
+					//登记流水表，记录请求交行记账为超时
+					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "3","","");
+					myLog.error(logger, "交行卡取现金，交行"+cardTypeName+"交行系统记账超时，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e);
 					myLog.error(logger, "发送"+cardTypeName+"通兑抹账请求至交行");
 					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
-					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "2","","");
+					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "4","","");
 				    myLog.info(logger, "交行卡取现金，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno());
 					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
@@ -193,12 +158,46 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				}catch(SysTradeExecuteException e1) {
 					myLog.error(logger, "交行卡取现金，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
-					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "2","","");
+					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5","","");
 					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
 					throw e2;
 				}
-			}						
-		//3.核心记账  暂时不考虑延时转账
+			}else { // 目标系统应答失败
+						// 确认是否有冲正操作
+				//交行核心记账报错，交易失败
+				myLog.error(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账失败，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno(), e);
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());
+				throw e2;
+			}
+		}catch (Exception e) { // 其它未知错误，可以当成超时处理
+			// 确认是否有冲正操作
+			myLog.error(logger, "交行卡取现金，交行磁条卡通兑记账其它未知错误，渠道日期" + reqDto.getSysDate() + 
+					"渠道流水号" + reqDto.getSysTraceno(), e);
+			try {
+				//登记流水表，记录请求交行记账为超时
+				initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "3","","");
+				myLog.error(logger, "发送"+cardTypeName+"通兑抹账请求至交行");
+				bocmReversal(reqDto,bocmTraceNo,oTxnCd);
+				initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "4","","");
+			    myLog.info(logger, "交行卡取现金，交行磁条卡通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno());
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
+				throw e2;
+			}catch(SysTradeExecuteException e1) {
+				myLog.error(logger, "交行卡取现金，交行磁条卡通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
+						"渠道流水号" + reqDto.getSysTraceno(), e1);
+				initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5","","");
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
+				throw e2;
+			}
+		}		
+		//2.插入流水表
+		//交行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败， 6-冲正超时
+		initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "1",rbnkNo,actBal);		
+		myLog.info(logger, "交行卡取现金，交行"+cardTypeName+"通兑记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());	
+	
+					
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -211,6 +210,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		//记账机构
 		String accounting_branch = null;
 		try {
+			//3.核心记账  暂时不考虑延时转账
 			myLog.info(logger, "发送交行卡取现金核心记账请求");
 			esbRep_30011000104 = hostCharge(reqDto);
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();//核心日期
@@ -290,7 +290,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				}
 			}
 		}
-		//5.更新流水表核心记账状态
+		//4.更新流水表核心记账状态
 		myLog.info(logger, "交行卡取现金核心记账成功，渠道日期" + reqDto.getSysDate() + 
 				"渠道流水号" + reqDto.getSysTraceno());
 		updateHostRecord(reqDto, hostDate, hostTraceno, "1", retCode, retMsg,accounting_branch);

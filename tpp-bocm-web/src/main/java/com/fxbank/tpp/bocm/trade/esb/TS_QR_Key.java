@@ -85,7 +85,6 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		try {
 			d = df.parse(sysDate.toString());
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}     
 		Calendar cal=Calendar.getInstance();

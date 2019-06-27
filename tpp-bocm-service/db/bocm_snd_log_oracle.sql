@@ -30,6 +30,8 @@ bocm_branch NVARCHAR2(20) NULL ,
 bocm_date NUMBER(11) NULL ,
 bocm_time NUMBER(6) NULL ,
 bocm_traceno NVARCHAR2(20) NULL ,
+bocm_repcd NVARCHAR2(6) NULL ,
+bocm_repmsg NVARCHAR2(30) NULL ,
 check_flag NVARCHAR2(10) NULL ,
 host_state NVARCHAR2(10) NULL ,
 bocm_state NVARCHAR2(10) NULL ,
@@ -75,6 +77,8 @@ COMMENT ON COLUMN bocm_snd_log.bocm_branch IS '交通银行记账机构';
 COMMENT ON COLUMN bocm_snd_log.bocm_date IS '交通银行日期';
 COMMENT ON COLUMN bocm_snd_log.bocm_time IS '交通银行时间';
 COMMENT ON COLUMN bocm_snd_log.bocm_traceno IS '交通银行流水';
+COMMENT ON COLUMN bocm_snd_log.bocm_repcd IS '交通银行返回相应码';
+COMMENT ON COLUMN bocm_snd_log.bocm_repmsg IS '交通银行返回相应信息';
 COMMENT ON COLUMN bocm_snd_log.check_flag IS '对账标志，0-不对账,1-未对账，2-已对账，3-核心多，4-渠道多，5.交行记账失败本行记账成功';
 COMMENT ON COLUMN bocm_snd_log.host_state IS '核心记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时';
 COMMENT ON COLUMN bocm_snd_log.bocm_state IS '交通银行记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时';
