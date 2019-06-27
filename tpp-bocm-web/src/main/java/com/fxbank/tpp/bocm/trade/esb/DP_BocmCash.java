@@ -117,14 +117,17 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		int bocmTime = 0;
 		//账户余额
 		String actBal = "0";
+		//手续费
 		String fee = "";
+		//交行响应码
+		String bocmRepcd = "";
+		//交行响应信息
+		String bocmRepmsg = "";
 		//3.交行记账.通过标识判断调用磁条卡记账还是ic卡记账
 		//IC_CARD_FLG_T4判断IC卡磁条卡标志
 		String cardTypeName = "";
 		//原交易代码，用于判断请求磁条卡交易还是IC卡交易
 		String oTxnCd = null;
-		String bocmRepcd = "";
-		String bocmRepmsg = "";
 		REP_10000 rep10000 = null;
 		REP_20000 rep20000 = null;
 		REQ_10000 req10000 = null;
@@ -153,8 +156,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				bocmTime = rep10000.getSysTime();
 				fee = rep10000.getFee().toString();
 				actBal = rep10000.getActBal().toString();
-				rep.getRepBody().setOpnAcctBnkFeeT(fee);
-				rep.getRepBody().setAcctBalT2(actBal);	
 				bocmRepcd = rep10000.getTrspCd();
 				bocmRepmsg = rep10000.getTrspMsg();
 				
@@ -167,8 +168,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				bocmTime = rep20000.getSysTime();
 				fee = rep20000.getFee().toString();
 				actBal = rep20000.getActBal().toString();
-				rep.getRepBody().setOpnAcctBnkFeeT(fee);
-				rep.getRepBody().setAcctBalT2(actBal);	
 				bocmRepcd = rep20000.getTrspCd();
 				bocmRepmsg = rep20000.getTrspMsg();
 			}		
@@ -226,8 +225,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						bocmTime = rep10000.getSysTime();
 						fee = rep10000.getFee().toString();
 						actBal = rep10000.getActBal().toString();
-						rep.getRepBody().setOpnAcctBnkFeeT(fee);
-						rep.getRepBody().setAcctBalT2(actBal);	
 						bocmRepcd = rep10000.getTrspCd();
 						bocmRepmsg = rep10000.getTrspMsg();
 					}else{
@@ -237,8 +234,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						bocmTime = rep20000.getSysTime();
 						fee = rep20000.getFee().toString();
 						actBal = rep20000.getActBal().toString();
-						rep.getRepBody().setOpnAcctBnkFeeT(fee);
-						rep.getRepBody().setAcctBalT2(actBal);	
 						bocmRepcd = rep20000.getTrspCd();
 						bocmRepmsg = rep20000.getTrspMsg();
 					}
@@ -301,8 +296,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 					bocmTime = rep10000.getSysTime();
 					fee = rep10000.getFee().toString();
 					actBal = rep10000.getActBal().toString();
-					rep.getRepBody().setOpnAcctBnkFeeT(fee);
-					rep.getRepBody().setAcctBalT2(actBal);	
 					bocmRepcd = rep10000.getTrspCd();
 					bocmRepmsg = rep10000.getTrspMsg();
 				}else{
@@ -312,8 +305,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 					bocmTime = rep20000.getSysTime();
 					fee = rep20000.getFee().toString();
 					actBal = rep20000.getActBal().toString();
-					rep.getRepBody().setOpnAcctBnkFeeT(fee);
-					rep.getRepBody().setAcctBalT2(actBal);	
 					bocmRepcd = rep20000.getTrspCd();
 					bocmRepmsg = rep20000.getTrspMsg();
 				}
@@ -436,6 +427,9 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		//BANK_CODE	                        我方银行行号
 		//OTH_BANK_CODE	            对方银行行号
 		
+		reqBody_30011000104.setOthBaseAcctNo(reqBody.getCardNoT3());
+		reqBody_30011000104.setOthBaseAcctName(reqBody.getNaT1());
+		
 		//OpnAcctBnkNoT8开户行号
 		reqBody_30011000104.setOthBankCode(reqBody.getOpnAcctBnkNoT8());
 		//手续费收取方式  TT-账户内扣 CA-现金
@@ -456,12 +450,19 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ModelBase magCardCharge(DataTransObject dto, REQ_10000 req10000) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
-		req10000.setTxnAmt(Double.parseDouble(reqBody.getDpsAmtT()));
+		//交易金额
+		String amt = reqBody.getDpsAmtT();
+		//交易金额补零
+		req10000.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(amt)));
+		//手续费收取方式
 		req10000.setFeeFlg("0");
-		req10000.setFee(Double.parseDouble(reqBody.getFeeT3()));
+		//手续费
+		String fee = reqBody.getFeeT3();
+		//手续费补零
+		req10000.setFee(NumberUtil.addPoint(Double.parseDouble(fee)));
+		
 		req10000.setOprFlg(reqBody.getRdCardWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
 		req10000.setTxnMod("0");
@@ -474,9 +475,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req10000.setAgIdTp(reqBody.getAgentCrtfT());
 		req10000.setAgIdNo(reqBody.getAgentCrtfNoT());
 		req10000.setSecMag(reqBody.getScdTrkInfoT2());
-		req10000.setThdMag(reqBody.getThrTrkInfoT1());
-		myLog.info(logger, "向交行发送发送磁条卡现金通存请求报文");
-		
+		req10000.setThdMag(reqBody.getThrTrkInfoT1());	
 		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
 				REP_10000.class);		
 		return rep_10000;
@@ -491,12 +490,18 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ModelBase iCCardCharge(DataTransObject dto, REQ_20000 req20000) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
-		req20000.setTxnAmt(Double.parseDouble(reqBody.getDpsAmtT()));
+		//交易金额
+		String amt = reqBody.getDpsAmtT();
+		//交易金额补零
+		req20000.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(amt)));
+		//手续费收取方式
 		req20000.setFeeFlg("0");
-		req20000.setFee(Double.parseDouble(reqBody.getFeeT3()));
+		//手续费
+		String fee = reqBody.getFeeT3();
+		//手续费补零
+		req20000.setFee(NumberUtil.addPoint(Double.parseDouble(fee)));
 		req20000.setOprFlg(reqBody.getRdCardWyT());
 		//业务模式，0 现金1 转账（即实时转账）9 其他
 		req20000.setTxnMod("0");

@@ -68,6 +68,8 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		entity.setBocmDate(record.getBocmDate());
 		entity.setBocmTime(record.getBocmTime());
 		entity.setBocmTraceno(record.getBocmTraceno());
+		entity.setBocmRepcd(record.getBocmRepcd());
+		entity.setBocmRepmsg(record.getBocmRepmsg());
 		entity.setRetCode(record.getRetCode());
 		entity.setRetMsg(record.getRetMsg());
 		
