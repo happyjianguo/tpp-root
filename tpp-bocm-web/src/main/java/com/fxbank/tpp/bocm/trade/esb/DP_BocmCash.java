@@ -30,6 +30,7 @@ import com.fxbank.tpp.bocm.model.REQ_10000;
 import com.fxbank.tpp.bocm.model.REQ_20000;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
@@ -325,6 +326,11 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				//如果还是超时返回成功，防止短款					
 			}
 		}	
+		
+		fee = NumberUtil.removePointToString(Double.parseDouble(fee));
+		actBal = NumberUtil.removePointToString(Double.parseDouble(actBal));
+		rep.getRepBody().setOpnAcctBnkFeeT(fee);
+		rep.getRepBody().setAcctBalT2(actBal);	
 		//5.交行记账成功，更新流水表交行记账状态
 		updateBocmRecord(reqDto,bocmDate,bocmTime,bocmTraceNo,"1",actBal,bocmRepcd,bocmRepmsg);
 		myLog.info(logger, "交行卡存现金，交行"+cardTypeName+"通存记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());

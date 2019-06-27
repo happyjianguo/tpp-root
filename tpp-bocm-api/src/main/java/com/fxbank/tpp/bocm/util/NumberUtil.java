@@ -35,4 +35,8 @@ public class NumberUtil {
 	public static double removePoint(double d){	
 	    return d/100;
 	}
+	
+	public static String removePointToString(double d){	
+	    return String.valueOf(d/100);
+	}
 }
