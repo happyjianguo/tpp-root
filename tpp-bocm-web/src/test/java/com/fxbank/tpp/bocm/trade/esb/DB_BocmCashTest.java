@@ -80,11 +80,9 @@ public class DB_BocmCashTest {
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("MT");	//网联
-//		reqSysHead.setSourceType("302200");	//银联
 		reqSysHead.setBranchId("01016");
 		reqSysHead.setUserId("000917");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
-//		reqSysHead.setTranDate("");
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
 		reqSysHead.setUserLang("CHINESE");
 		reqSysHead.setSeqNo(String.valueOf(Math.abs(new Random().nextInt())));
@@ -122,7 +120,6 @@ public class DB_BocmCashTest {
 		reqBody.setRdCardWyT("0");//存款时必输  0刷卡 1手工输入
 		reqBody.setOpnAcctBnkNoT8("301100000015");//开户行号
 		//15	居民身份证        
-		reqBody.setIdTpT2("15");
 		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
 		reqBody.setIcCardFlgT4("2");//IC卡磁条卡标志   0磁条卡  1IC卡
 		String macDataStr = JsonUtil.toJson(reqBody);
