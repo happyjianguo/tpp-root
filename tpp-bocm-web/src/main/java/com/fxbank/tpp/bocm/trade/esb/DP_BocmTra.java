@@ -101,7 +101,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				initRecord(reqDto, hostDate, hostTraceno, "3", retCode, retMsg);
 				myLog.error(logger, "本行卡付款转账，本行核心记账接收ESB报文应答超时，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);	
-				SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+"核心记账超时，请核对记账状态，如果记账成功请进行抹账处理");
+				SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+"核心记账超时,请核对记账状态，如果记账成功请进行抹账处理");
 				throw e2;
 			//其他错误
 			}else {
