@@ -106,12 +106,15 @@ public class DB_BocmCashTest {
 		reqBody.setCcyT("CNY");
 		reqBody.setNaT1("姓名");//姓名
 		reqBody.setCardNoT3("6222600530011742438");//卡号
-		reqBody.setDpsAmtT("401.00");//存款金额
+		reqBody.setDpsAmtT("10.00");//存款金额
 		reqBody.setFeeT3("1.00");//手续费
 		reqBody.setAcctBalT3("1000.00");//账户余额
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费
-		reqBody.setHldrGlblIdT("201101");//身份证号
-		reqBody.setAgentCrtfNoT("201101");//代理人身份证
+		//证件类型
+		reqBody.setIdTpT2("15");
+		//证件号码
+//		reqBody.setHldrGlblIdT("210101");
+//		reqBody.setAgentCrtfNoT("201101");//代理人身份证
 		reqBody.setRcveWyT("0");//收取方式  0 账户内扣  1 现金外收
 		
 		//账户类型  0 银行账号 1 贷记卡 2 借记卡 3其他 通存业务模式为1时必需
