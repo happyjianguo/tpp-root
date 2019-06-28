@@ -39,9 +39,11 @@ public class ForwardToBocmService implements IForwardToBocmService {
 		try {
 			repModel = bocmClient.comm(myLog, reqBase, clazz);
 		} catch (SysTradeExecuteException e) {
+			myLog.error(logger, "交易异常"+e.getRspCode()+"||"+e.getRspMsg());
 			myLog.error(logger, e.getRspCode() + " | " + e.getRspMsg(), e);
 			throw e;
 		} catch (Exception e) {
+			myLog.error(logger, "其他异常:"+e.getMessage()+"||");
 			SysTradeExecuteException e1 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999,
 					e.getMessage());
 			myLog.error(logger, e1.getRspCode() + " | " + e1.getRspMsg(), e);
