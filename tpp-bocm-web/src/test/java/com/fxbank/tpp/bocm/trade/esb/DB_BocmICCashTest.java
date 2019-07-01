@@ -51,9 +51,9 @@ import com.fxbank.tpp.esb.service.ISafeService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc	
-public class DB_BocmCashTest {
+public class DB_BocmICCashTest {
 	
-	private static Logger logger = LoggerFactory.getLogger(DB_BocmCashTest.class);
+	private static Logger logger = LoggerFactory.getLogger(DB_BocmICCashTest.class);
 	
 //	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
      private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
@@ -110,6 +110,8 @@ public class DB_BocmCashTest {
 		reqBody.setFeeT3("1.00");//手续费
 		reqBody.setAcctBalT3("1000.00");//账户余额
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费
+		reqBody.setRdCardWyT("1");
+		reqBody.setAcctTpT("2");
 		//证件类型
 		reqBody.setIdTpT2("15");
 		//证件号码
@@ -123,8 +125,10 @@ public class DB_BocmCashTest {
 		reqBody.setRdCardWyT("0");//存款时必输  0刷卡 1手工输入
 		reqBody.setOpnAcctBnkNoT8("301100000015");//开户行号
 		//15	居民身份证        
-		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
-		reqBody.setIcCardFlgT4("2");//IC卡磁条卡标志   0磁条卡  1IC卡
+//		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
+		reqBody.setIcCard9f09T("A0000003330101");
+		
+		reqBody.setIcCardFlgT4("5");//IC卡磁条卡标志   磁条卡  2  IC卡  5
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
