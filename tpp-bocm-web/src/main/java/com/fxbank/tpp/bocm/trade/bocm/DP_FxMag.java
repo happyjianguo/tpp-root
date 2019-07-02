@@ -94,9 +94,8 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 			throw e2;
 		}
 		super.hostErrorException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
-		super.acctStatusException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10016);
 		super.cardValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
-		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
+		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203,"timeout");
 		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.TRADE_DESC = "交行向本行发起磁条卡通存记账请求";
 		super.othTimeoutQuery = false;
@@ -206,6 +205,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {
+		
 		REQ_10000 reqDto = (REQ_10000) dto;
 		MyLog myLog = logPool.get();
 		// 交易机构
@@ -302,10 +302,15 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTranType("JH02");
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
+		
+		
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		String fee = NumberUtil.removePointToString(reqDto.getFee());
+		record.setTxAmt(new BigDecimal(txnAmt));
+		record.setFee(new BigDecimal(fee));
+		
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		record.setFeeFlag(reqDto.getFeeFlg());
-		record.setFee(new BigDecimal(reqDto.getFee().toString()));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		record.setHostState("1");
@@ -461,9 +466,12 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTranType("JH02");
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		String fee = NumberUtil.removePointToString(reqDto.getFee());
+		record.setTxAmt(new BigDecimal(txnAmt));
+		record.setFee(new BigDecimal(fee));
+		
 		record.setFeeFlag(reqDto.getFeeFlg());
-		record.setFee(new BigDecimal(reqDto.getFee().toString()));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		record.setHostState("3");
@@ -502,6 +510,20 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTxCode(reqDto.getTtxnCd());
 		bocmRcvTraceService.rcvTraceInit(record);	
 		myLog.info(logger,TRADE_DESC+"，核心记账超时，插入来账流水表");
+	}
+	
+	public void updateTimeoutSuccess(DataTransObject dto, ModelBase model) throws SysTradeExecuteException{
+		MyLog myLog = logPool.get();
+		REQ_10000 reqDto = (REQ_10000) dto;
+		ESB_REP_30043000101 rep = (ESB_REP_30043000101) model;
+		BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
+				reqDto.getSysTraceno());		
+		record.setHostState("1");
+		record.setHostTraceno(rep.getRepBody().getReference());
+		record.setRetCode(rep.getRepSysHead().getRet().get(0).getRetCode());
+		record.setRetMsg(rep.getRepSysHead().getRet().get(0).getRetMsg());
+		bocmRcvTraceService.rcvTraceUpd(record);
+
 	}
 	
 	public void updateOthSuccess(DataTransObject dto, ModelBase model) throws SysTradeExecuteException{

@@ -23,6 +23,7 @@ import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.bocm.REP_20001;
+import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_20001;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
@@ -30,6 +31,7 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
@@ -98,7 +100,6 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		}
 		
 		super.hostErrorException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
-		super.acctStatusException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10016);
 		super.cardValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
 		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
@@ -293,7 +294,10 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("1");
 		record.setTranType("JH01");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
+
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		record.setTxAmt(new BigDecimal(txnAmt));
+		
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
@@ -443,8 +447,8 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTxTel(txTel);
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("1");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt()));
-//		record.setFee(new BigDecimal(reqDto.getFee().toString()));
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		record.setTxAmt(new BigDecimal(txnAmt));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		record.setHostState("3");
@@ -477,6 +481,20 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTxCode(reqDto.getTtxnCd());
 		bocmRcvTraceService.rcvTraceInit(record);
 		myLog.info(logger,TRADE_DESC+"，核心记账超时，插入来账流水表");
+	}
+	
+	public void updateTimeoutSuccess(DataTransObject dto, ModelBase model) throws SysTradeExecuteException{
+		MyLog myLog = logPool.get();
+		REQ_10000 reqDto = (REQ_10000) dto;
+		ESB_REP_30043000101 rep = (ESB_REP_30043000101) model;
+		BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
+				reqDto.getSysTraceno());		
+		record.setHostState("1");
+		record.setHostTraceno(rep.getRepBody().getReference());
+		record.setRetCode(rep.getRepSysHead().getRet().get(0).getRetCode());
+		record.setRetMsg(rep.getRepSysHead().getRet().get(0).getRetMsg());
+		bocmRcvTraceService.rcvTraceUpd(record);
+
 	}
 	
 	public void updateOthSuccess(DataTransObject dto, ModelBase model) throws SysTradeExecuteException{

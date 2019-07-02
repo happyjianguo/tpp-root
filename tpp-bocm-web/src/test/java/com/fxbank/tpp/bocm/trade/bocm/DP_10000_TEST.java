@@ -2,14 +2,6 @@ package com.fxbank.tpp.bocm.trade.bocm;
 
 import static org.junit.Assert.assertEquals;
 
-import java.math.BigDecimal;
-
-import com.fxbank.cip.base.pkg.fixed.FixedUtil;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_BASE;
-import com.fxbank.tpp.bocm.model.REP_10000;
-import com.fxbank.tpp.bocm.model.REQ_10000;
-import com.fxbank.tpp.bocm.trade.esb.DB_BocmCashTest;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
+import com.fxbank.tpp.bocm.model.REP_10000;
+import com.fxbank.tpp.bocm.model.REP_BASE;
+import com.fxbank.tpp.bocm.model.REP_ERROR;
+import com.fxbank.tpp.bocm.model.REQ_10000;
+import com.fxbank.tpp.bocm.nettty.ServerInitializer;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 
 /**
 * @ClassName: DP_10000_TEST 
@@ -41,11 +41,10 @@ public class DP_10000_TEST extends BASE_TEST {
 	
 	@Test
 	public void ok() throws Exception {
-
 		
-		req.setTxnAmt(10000d);
+		req.setTxnAmt(NumberUtil.addPoint(100d));
 		req.setFeeFlg("0");
-		req.setFee(0.1d);
+		req.setFee(NumberUtil.addPoint(1d));
 		req.setOprFlg("0");
 		
 		req.setTxnMod("0");
@@ -56,6 +55,8 @@ public class DP_10000_TEST extends BASE_TEST {
 		req.setRactTp("2");
 		//收款人账号 6288880210000209903 622126010001048643
 		req.setRactNo("623166099020908241");
+		req.setCuIdTp("15");
+		req.setCuIdNo("1234");
 		//收款人名称
 		req.setRecNam("测试");
 		
@@ -65,17 +66,26 @@ public class DP_10000_TEST extends BASE_TEST {
 		
 		
 		
-//		req.setTtxnDat(20190531);
-//		req.setTtxnTim(82520);
-//		req.setSlogNo("19053199440952");
+		req.setTtxnDat(20190701);
+		req.setTtxnTim(145033);
+		req.setSlogNo("19070159840880");
 		
-		
-		String repData = super.comm(FixedUtil.toFixed(req,"utf-8"));
-		logger.info("他代本存现金测试返回："+repData);
 		REP_10000 rep = new REP_10000();
-		rep = (REP_10000)new FixedUtil(repData,"utf-8").toBean(rep.getClass());		
-		assertEquals(rep.getTmsgTyp(), "N");
-		assertEquals(rep.getTrspCd(), "FX0000");
+		String repData = super.comm(FixedUtil.toFixed(req,ServerInitializer.CODING));
+		logger.info("他代本存现金测试返回："+repData);
+		REP_BASE repBase = new REP_ERROR();
+		if(repData.substring(0, 1).equals("N")){		
+			rep = (REP_10000)new FixedUtil(repData,ServerInitializer.CODING).toBean(rep.getClass());	
+			rep = (REP_10000)new FixedUtil(repData,ServerInitializer.CODING).toBean(rep.getClass());		
+			assertEquals(rep.getTmsgTyp(), "N");
+			assertEquals(rep.getTrspCd(), "FX0000");
+		}else{
+			repBase = (REP_ERROR)new FixedUtil(repData,ServerInitializer.CODING).toBean(REP_ERROR.class);
+			logger.info("相应错误码【" + repBase.getTrspCd() + "】");
+			logger.info("错误描述【" + repBase.getTrspMsg() + "】");
+			assertEquals(rep.getTmsgTyp(), "N");
+		}
+
 	}
 	
 }

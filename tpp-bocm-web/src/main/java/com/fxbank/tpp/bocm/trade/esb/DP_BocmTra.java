@@ -36,8 +36,6 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
-import redis.clients.jedis.Jedis;
-
 
 /** 
 * @ClassName: DP_BocmTrsr 
@@ -64,8 +62,6 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 
 	@Resource
 	private MyJedis myJedis;
-	
-	private final static String COMMON_PREFIX = "bocm.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {

@@ -21,7 +21,7 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 @Component("serverInitializer")
 public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 
-	public static final String CODING="GB18030";
+	public static final String CODING="UTF-8";
 
 	@Autowired
 	private BocmLengthEncoder bocmLengthEncoder;
