@@ -24,6 +24,7 @@ rcv_cre_dt_tm NVARCHAR2(20) NULL ,
 sys_ind NVARCHAR2(4) NULL ,
 orig_dlv_msgid NVARCHAR2(35) NULL ,
 orig_rcv_msgid NVARCHAR2(35) NULL,
+
 mob_nb NVARCHAR2(20) NULL ,
 nm NVARCHAR2(140) NULL ,
 id_tp NVARCHAR2(4) NULL,

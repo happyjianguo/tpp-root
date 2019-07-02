@@ -21,7 +21,7 @@ instd_pty NVARCHAR2(14) NULL ,
 rcv_msg_id NVARCHAR2(35) NULL ,
 rcv_cre_dt_tm NVARCHAR2(20) NULL ,
 
-co_nm NVARCHAR2(20) NULL ,
+co_nm NVARCHAR2(300) NULL ,
 uni_soc_cdt_cd NVARCHAR2(18) NULL,
 txpyr_id_nb NVARCHAR2(20) NULL,
 op_nm NVARCHAR2(140) NULL,
@@ -31,6 +31,7 @@ txpmt_inf_cnt NUMBER NULL,
 proc_sts NVARCHAR2(4) NULL,
 proc_cd NVARCHAR2(8) NULL,
 rjct_inf NVARCHAR2(120) NULL,
+fdbk_flag NVARCHAR2(2) NULL,
 remark1 NVARCHAR2(100) NULL,
 remark2 NVARCHAR2(100) NULL,
 remark3 NVARCHAR2(100) NULL
@@ -66,6 +67,7 @@ COMMENT ON COLUMN mivs_txpmtvrfctn_info.txpmt_inf_cnt IS '纳税信息条数';
 COMMENT ON COLUMN mivs_txpmtvrfctn_info.proc_sts IS '申请报文拒绝状态';
 COMMENT ON COLUMN mivs_txpmtvrfctn_info.proc_cd IS '申请报文拒绝码';
 COMMENT ON COLUMN mivs_txpmtvrfctn_info.rjct_inf IS '申请报文拒绝信息';
+COMMENT ON COLUMN mivs_txpmtvrfctn_info.fdbk_flag IS '反馈标识 01-已反馈';
 COMMENT ON COLUMN mivs_txpmtvrfctn_info.remark1 IS '备用字段1';
 COMMENT ON COLUMN mivs_txpmtvrfctn_info.remark2 IS '备用字段2';
 COMMENT ON COLUMN mivs_txpmtvrfctn_info.remark3 IS '备用字段3';

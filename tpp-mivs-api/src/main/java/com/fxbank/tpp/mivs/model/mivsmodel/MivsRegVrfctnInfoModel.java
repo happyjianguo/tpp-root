@@ -56,6 +56,7 @@ public class MivsRegVrfctnInfoModel implements Serializable {
     private String proc_sts; //申请报文拒绝状态
     private String proc_cd; //申请报文拒绝码
     private String rjct_inf; //申请报文拒绝信息
+    private String fdbk_flag; //反馈标识
     private String remark1; //备用字段1
     private String remark2; //备用字段2
     private String remark3; //备用字段3
@@ -1756,6 +1757,14 @@ public class MivsRegVrfctnInfoModel implements Serializable {
 
     public void setRjct_inf(String rjct_inf) {
         this.rjct_inf = rjct_inf;
+    }
+
+    public String getFdbk_flag() {
+        return fdbk_flag;
+    }
+
+    public void setFdbk_flag(String fdbk_flag) {
+        this.fdbk_flag = fdbk_flag;
     }
 
     public String getRemark1() {

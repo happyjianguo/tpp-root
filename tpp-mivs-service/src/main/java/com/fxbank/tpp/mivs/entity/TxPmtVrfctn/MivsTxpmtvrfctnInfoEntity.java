@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MIVS_TXPMTVRFCTN_INFO")
+@Table(name = "mivs_txpmtvrfctn_info")
 public class MivsTxpmtvrfctnInfoEntity {
     /**
      * null
@@ -187,6 +187,12 @@ public class MivsTxpmtvrfctnInfoEntity {
      */
     @Column(name = "RJCT_INF")
     private String rjctInf;
+
+    /**
+     * null
+     */
+    @Column(name = "FDBK_FLAG")
+    private String fdbkFlag;
 
     /**
      * null
@@ -494,18 +500,34 @@ public class MivsTxpmtvrfctnInfoEntity {
         this.instdPty = instdPty;
     }
 
+    /**
+     * null
+     * @return RCV_MSG_ID null
+     */
     public String getRcvMsgId() {
         return rcvMsgId;
     }
 
+    /**
+     * null
+     * @param rcvMsgId null
+     */
     public void setRcvMsgId(String rcvMsgId) {
         this.rcvMsgId = rcvMsgId;
     }
 
+    /**
+     * null
+     * @return RCV_CRE_DT_TM null
+     */
     public String getRcvCreDtTm() {
         return rcvCreDtTm;
     }
 
+    /**
+     * null
+     * @param rcvCreDtTm null
+     */
     public void setRcvCreDtTm(String rcvCreDtTm) {
         this.rcvCreDtTm = rcvCreDtTm;
     }
@@ -668,6 +690,22 @@ public class MivsTxpmtvrfctnInfoEntity {
      */
     public void setRjctInf(String rjctInf) {
         this.rjctInf = rjctInf;
+    }
+
+    /**
+     * null
+     * @return FDBK_FLAG null
+     */
+    public String getFdbkFlag() {
+        return fdbkFlag;
+    }
+
+    /**
+     * null
+     * @param fdbkFlag null
+     */
+    public void setFdbkFlag(String fdbkFlag) {
+        this.fdbkFlag = fdbkFlag;
     }
 
     /**

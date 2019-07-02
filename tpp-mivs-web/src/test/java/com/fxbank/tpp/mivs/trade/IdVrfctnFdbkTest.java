@@ -89,8 +89,8 @@ public class IdVrfctnFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrgnlDlvrgMsgId("2019062500003664");
-        reqBody.setOrgnlRcvgMsgId("2019062500003664");
+        reqBody.setOrgnlDlvrgMsgId("2019070100003740");
+        reqBody.setOrgnlRcvgMsgId("2019070100003740");
         reqBody.setMobNb("18312345678");
         reqBody.setNm("李明");
         reqBody.setIdTp("IC00");

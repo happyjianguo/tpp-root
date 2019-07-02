@@ -96,36 +96,56 @@ public class MivsIdVrfctnInfoService implements IMivsIdVrfctnInfoService {
         info.setBizRegNb(mivsIdVrfctnInfoModel.getBiz_reg_nb());
 
         infoEntityList = infoEntityMapper.select(info);
-        List<MivsIdVrfctnInfoModel> idVrfctnInfoModel = new ArrayList<MivsIdVrfctnInfoModel>();
-        for (MivsIdvrfctnInfoEntity Info : infoEntityList) {
-            MivsIdVrfctnInfoModel infoResult = new MivsIdVrfctnInfoModel();
-            infoResult.setTran_date(Info.getTranDate());
-            infoResult.setSeq_no(Info.getSeqNo());
-            infoResult.setTran_time(Info.getTranTime());
-            infoResult.setOrig_dlv_msgid(Info.getMsgId());
-            infoResult.setOrig_rcv_msgid(Info.getRcvMsgId());
-            infoResult.setMob_nb(Info.getMobNb());
-            infoResult.setNm(Info.getNm());
-            infoResult.setId_tp(Info.getIdTp());
-            infoResult.setId(Info.getId());
-            infoResult.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
-            infoResult.setBiz_reg_nb(Info.getBizRegNb());
-            infoResult.setRslt(Info.getRslt());
-            infoResult.setMob_crr(Info.getMobCrr());
-            infoResult.setLoc_mob_nb(Info.getLocMobNb());
-            infoResult.setLoc_nm_mob_nb(Info.getLocNmMobNb());
-            infoResult.setCd_tp(Info.getCdTp());
-            infoResult.setSts(Info.getSts());
-            infoResult.setProc_sts(Info.getProcSts());
-            infoResult.setProc_cd(Info.getProcCd());
-            infoResult.setRjct_inf(Info.getRjctInf());
-            infoResult.setRemark1(Info.getRemark1());
-            infoResult.setRemark2(Info.getRemark2());
-            infoResult.setRemark3(Info.getRemark3());
-            idVrfctnInfoModel.add(infoResult);
-        }
+        if(!infoEntityList.isEmpty() && infoEntityList != null) {
+            List<MivsIdVrfctnInfoModel> idVrfctnInfoModel = new ArrayList<MivsIdVrfctnInfoModel>();
+            for (MivsIdvrfctnInfoEntity Info : infoEntityList) {
+                MivsIdVrfctnInfoModel infoResult = new MivsIdVrfctnInfoModel();
+                infoResult.setTran_date(Info.getTranDate());
+                infoResult.setSeq_no(Info.getSeqNo());
+                infoResult.setTran_time(Info.getTranTime());
+                infoResult.setOrig_dlv_msgid(Info.getMsgId());
+                infoResult.setOrig_rcv_msgid(Info.getRcvMsgId());
+                infoResult.setMob_nb(Info.getMobNb());
+                infoResult.setNm(Info.getNm());
+                infoResult.setId_tp(Info.getIdTp());
+                infoResult.setId(Info.getId());
+                infoResult.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
+                infoResult.setBiz_reg_nb(Info.getBizRegNb());
+                infoResult.setRslt(Info.getRslt());
+                infoResult.setMob_crr(Info.getMobCrr());
+                infoResult.setLoc_mob_nb(Info.getLocMobNb());
+                infoResult.setLoc_nm_mob_nb(Info.getLocNmMobNb());
+                infoResult.setCd_tp(Info.getCdTp());
+                infoResult.setSts(Info.getSts());
+                infoResult.setProc_sts(Info.getProcSts());
+                infoResult.setProc_cd(Info.getProcCd());
+                infoResult.setRjct_inf(Info.getRjctInf());
+                infoResult.setRemark1(Info.getRemark1());
+                infoResult.setRemark2(Info.getRemark2());
+                infoResult.setRemark3(Info.getRemark3());
+                idVrfctnInfoModel.add(infoResult);
+            }
 
-        return idVrfctnInfoModel;
+            return idVrfctnInfoModel;
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public MivsIdVrfctnInfoModel selectFdbk(MivsIdVrfctnInfoModel mivsIdVrfctnInfoModel){
+        MivsIdvrfctnInfoEntity info = new MivsIdvrfctnInfoEntity();
+        info.setMsgId(mivsIdVrfctnInfoModel.getOrig_dlv_msgid());
+        info.setRcvMsgId(mivsIdVrfctnInfoModel.getOrig_rcv_msgid());
+
+        info = infoEntityMapper.selectOne(info);
+        if(info == null){
+            return null;
+        }else{
+            MivsIdVrfctnInfoModel idVrfctnInfoModel = new MivsIdVrfctnInfoModel();
+            idVrfctnInfoModel.setPlat_date(info.getPlatDate());
+            return idVrfctnInfoModel;
+        }
     }
 
     @Override

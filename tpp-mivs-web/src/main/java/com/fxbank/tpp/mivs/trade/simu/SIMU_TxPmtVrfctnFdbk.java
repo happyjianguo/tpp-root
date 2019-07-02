@@ -77,7 +77,7 @@ public class SIMU_TxPmtVrfctnFdbk implements TradeExecutionStrategy {
         ccms900.getCmonConf().getGrpHdr().setRmk("我是个备注");
         ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlMsgId(mivs348.getTxPmtVrfctnFdbk().getMsgHdr().getMsgId());
         ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlInstgPty(mivs348.getTxPmtVrfctnFdbk().getMsgHdr().getInstgPty().getInstgDrctPty());
-        ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlMT("mivs.347.001.013");
+        ccms900.getCmonConf().getOrgnlGrpHdr().setOrgnlMT("mivs.348.001.01");
         ccms900.getCmonConf().getCmonConfInf().setPrcSts("PR07");
         ccms900.getCmonConf().getCmonConfInf().setPrcCd("00000000");
         ccms900.getCmonConf().getCmonConfInf().setPtyId("313131000008");

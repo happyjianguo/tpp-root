@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fxbank.tpp.mivs.mapper.RegVrfctn.MivsRegvrfctnInfoEntityMapper" >
-  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.RegVrfctn.MivsRegvrfctnInfoEntity" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.TxPmtVrfctn.MivsTxpmtvrfctnFdbkEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.TxPmtVrfctn.MivsTxpmtvrfctnFdbkEntity" >
     <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
     <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
     <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
@@ -20,44 +20,38 @@
     <result column="PTY_NM" property="ptyNm" jdbcType="NVARCHAR" />
     <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
     <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
-    <result column="AGT_NM" property="agtNm" jdbcType="NVARCHAR" />
-    <result column="AGT_ID" property="agtId" jdbcType="NVARCHAR" />
-    <result column="OP_NM" property="opNm" jdbcType="NVARCHAR" />
-    <result column="MARKET_TYPE" property="marketType" jdbcType="NVARCHAR" />
+    <result column="RCV_MSG_ID" property="rcvMsgId" jdbcType="NVARCHAR" />
+    <result column="RCV_CRE_DT_TM" property="rcvCreDtTm" jdbcType="NVARCHAR" />
+    <result column="SYS_IND" property="sysInd" jdbcType="NVARCHAR" />
+    <result column="ORIG_DLV_MSGID" property="origDlvMsgid" jdbcType="NVARCHAR" />
+    <result column="ORIG_RCV_MSGID" property="origRcvMsgid" jdbcType="NVARCHAR" />
+    <result column="CO_NM" property="coNm" jdbcType="NVARCHAR" />
     <result column="UNI_SOC_CDT_CD" property="uniSocCdtCd" jdbcType="NVARCHAR" />
-    <result column="ENT_NM" property="entNm" jdbcType="NVARCHAR" />
-    <result column="NM_OF_LGL_PRSN" property="nmOfLglPrsn" jdbcType="NVARCHAR" />
-    <result column="ID_OF_LGL_PRSN" property="idOfLglPrsn" jdbcType="NVARCHAR" />
-    <result column="TRA_NM" property="traNm" jdbcType="NVARCHAR" />
-    <result column="NM" property="nm" jdbcType="NVARCHAR" />
-    <result column="ID" property="id" jdbcType="NVARCHAR" />
-    <result column="PG_NB" property="pgNb" jdbcType="DECIMAL" />
-    <result column="LAST_PG_IND" property="lastPgInd" jdbcType="NVARCHAR" />
+    <result column="TXPYR_ID_NB" property="txpyrIdNb" jdbcType="NVARCHAR" />
     <result column="RSLT" property="rslt" jdbcType="NVARCHAR" />
     <result column="DATA_RESRC_DT" property="dataResrcDt" jdbcType="NVARCHAR" />
-    <result column="BAS_INFO_CNT" property="basInfoCnt" jdbcType="DECIMAL" />
-    <result column="CO_SHRHDRFND_INFO_CNT" property="coShrhdrfndInfoCnt" jdbcType="DECIMAL" />
-    <result column="DIR_SUPSRSGR_INFO_CNT" property="dirSupsrsgrInfoCnt" jdbcType="DECIMAL" />
-    <result column="CHNG_INFO_CNT" property="chngInfoCnt" jdbcType="DECIMAL" />
-    <result column="ABNML_BIZ_INFO_CNT" property="abnmlBizInfoCnt" jdbcType="DECIMAL" />
-    <result column="ILL_DSCRT_INFO_CNT" property="illDscrtInfoCnt" jdbcType="DECIMAL" />
-    <result column="LIC_NULL_CNT" property="licNullCnt" jdbcType="DECIMAL" />
+    <result column="CNTT" property="cntt" jdbcType="NVARCHAR" />
+    <result column="CONTACT_NM" property="contactNm" jdbcType="NVARCHAR" />
+    <result column="CONTACT_NB" property="contactNb" jdbcType="NVARCHAR" />
     <result column="PROC_STS" property="procSts" jdbcType="NVARCHAR" />
     <result column="PROC_CD" property="procCd" jdbcType="NVARCHAR" />
+    <result column="PTY_ID" property="ptyId" jdbcType="NVARCHAR" />
+    <result column="PTY_PRC_CD" property="ptyPrcCd" jdbcType="NVARCHAR" />
     <result column="RJCT_INF" property="rjctInf" jdbcType="NVARCHAR" />
-    <result column="FDBK_FLAG" property="fdbkFlag" jdbcType="NVARCHAR" />
+    <result column="PRC_DT" property="prcDt" jdbcType="NVARCHAR" />
+    <result column="NETG_RND" property="netgRnd" jdbcType="NVARCHAR" />
     <result column="REMARK1" property="remark1" jdbcType="NVARCHAR" />
     <result column="REMARK2" property="remark2" jdbcType="NVARCHAR" />
     <result column="REMARK3" property="remark3" jdbcType="NVARCHAR" />
+    <result column="TXPMT_INF" property="txpmtInf" jdbcType="CLOB" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
     select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SYSTEM_ID, TRAN_DATE, SEQ_NO, TRAN_TIME, 
     USER_ID, BRANCH_ID, MIVS_STS, MSG_ID, CRE_DT_TM, INSTG_DRCT_PTY, DRCT_PTY_NM, INSTG_PTY, 
-    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, AGT_NM, AGT_ID, OP_NM, MARKET_TYPE, UNI_SOC_CDT_CD,
-    ENT_NM, NM_OF_LGL_PRSN, ID_OF_LGL_PRSN, TRA_NM, NM, ID, PG_NB, LAST_PG_IND, RSLT, 
-    DATA_RESRC_DT, BAS_INFO_CNT, CO_SHRHDRFND_INFO_CNT, DIR_SUPSRSGR_INFO_CNT, CHNG_INFO_CNT, 
-    ABNML_BIZ_INFO_CNT, ILL_DSCRT_INFO_CNT, LIC_NULL_CNT, PROC_STS, PROC_CD, RJCT_INF, 
-    FDBK_FLAG, REMARK1, REMARK2, REMARK3
-    from MIVS_REGVRFCTN_INFO
+    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, RCV_MSG_ID, RCV_CRE_DT_TM, SYS_IND, ORIG_DLV_MSGID, 
+    ORIG_RCV_MSGID, CO_NM, UNI_SOC_CDT_CD, TXPYR_ID_NB, RSLT, DATA_RESRC_DT, CNTT, CONTACT_NM, 
+    CONTACT_NB, PROC_STS, PROC_CD, PTY_ID, PTY_PRC_CD, RJCT_INF, PRC_DT, NETG_RND, REMARK1, 
+    REMARK2, REMARK3, TXPMT_INF
+    from MIVS_TXPMTVRFCTN_FDBK
   </select>
 </mapper>

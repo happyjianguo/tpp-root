@@ -77,8 +77,6 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         info.setPlatDate(mivsRegVrfctnInfoModel.getPlat_date());
         info.setPlatTrace(mivsRegVrfctnInfoModel.getPlat_trace());
         info.setMivsSts(mivsRegVrfctnInfoModel.getMivs_sts());
-        info.setRcvMsgId(mivsRegVrfctnInfoModel.getRcv_msg_id());
-        info.setRcvCreDtTm(mivsRegVrfctnInfoModel.getCre_dt_tm());
         info.setProcCd(mivsRegVrfctnInfoModel.getProc_cd());
         info.setProcSts(mivsRegVrfctnInfoModel.getProc_sts());
         info.setRjctInf(mivsRegVrfctnInfoModel.getRjct_inf());
@@ -294,204 +292,206 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
 
     @Override
     public MivsRegVrfctnInfoModel selectMasterAndAttached(String Msgid, String Instgpty, String flag){
-        MivsRegVrfctnInfoModel infoModel = new MivsRegVrfctnInfoModel();
-
         MivsRegvrfctnInfoEntity infoEntity = new MivsRegvrfctnInfoEntity();
         infoEntity.setMsgId(Msgid);
         infoEntity.setInstgPty(Instgpty);
         MivsRegvrfctnInfoEntity mivsRegvrfctnInfoEntity = infoMapper.selectOne(infoEntity);
-        infoModel.setPlat_date(mivsRegvrfctnInfoEntity.getPlatDate());
-        infoModel.setPlat_trace(mivsRegvrfctnInfoEntity.getPlatTrace());
-        infoModel.setPlat_time(mivsRegvrfctnInfoEntity.getPlatTime());
-        infoModel.setTran_date(mivsRegvrfctnInfoEntity.getTranDate());
-        infoModel.setSeq_no(mivsRegvrfctnInfoEntity.getSeqNo());
-        infoModel.setMivs_sts(mivsRegvrfctnInfoEntity.getMivsSts());
-        infoModel.setMsg_id(mivsRegvrfctnInfoEntity.getMsgId());
-        infoModel.setCre_dt_tm(mivsRegvrfctnInfoEntity.getCreDtTm());
-        infoModel.setInstg_drct_pty(mivsRegvrfctnInfoEntity.getInstgDrctPty());
-        infoModel.setDrct_pty_nm(mivsRegvrfctnInfoEntity.getDrctPtyNm());
-        infoModel.setInstg_pty(mivsRegvrfctnInfoEntity.getInstgPty());
-        infoModel.setPty_nm(mivsRegvrfctnInfoEntity.getPtyNm());
-        infoModel.setInstg_drct_pty(mivsRegvrfctnInfoEntity.getInstgDrctPty());
-        infoModel.setInstd_pty(mivsRegvrfctnInfoEntity.getInstdPty());
-        infoModel.setRcv_msg_id(mivsRegvrfctnInfoEntity.getRcvMsgId());
-        infoModel.setRcv_cre_dt_tm(mivsRegvrfctnInfoEntity.getRcvCreDtTm());
-        infoModel.setPg_nb(mivsRegvrfctnInfoEntity.getPgNb());
-        infoModel.setLast_pg_ind(mivsRegvrfctnInfoEntity.getLastPgInd());
-        infoModel.setRslt(mivsRegvrfctnInfoEntity.getRslt());
-        infoModel.setData_resrc_dt(mivsRegvrfctnInfoEntity.getDataResrcDt());
-        infoModel.setBas_info_cnt(mivsRegvrfctnInfoEntity.getBasInfoCnt());
-        infoModel.setCo_shrhdrfnd_info_cnt(mivsRegvrfctnInfoEntity.getCoShrhdrfndInfoCnt());
-        infoModel.setDir_supsrsgr_info_cnt(mivsRegvrfctnInfoEntity.getDirSupsrsgrInfoCnt());
-        infoModel.setChng_info_cnt(mivsRegvrfctnInfoEntity.getChngInfoCnt());
-        infoModel.setAbnml_biz_info_cnt(mivsRegvrfctnInfoEntity.getAbnmlBizInfoCnt());
-        infoModel.setIll_dscrt_info_cnt(mivsRegvrfctnInfoEntity.getIllDscrtInfoCnt());
-        infoModel.setIll_dscrt_info_cnt(mivsRegvrfctnInfoEntity.getIllDscrtInfoCnt());
+        if(mivsRegvrfctnInfoEntity != null) {
+            MivsRegVrfctnInfoModel infoModel = new MivsRegVrfctnInfoModel();
+            infoModel.setPlat_date(mivsRegvrfctnInfoEntity.getPlatDate());
+            infoModel.setPlat_trace(mivsRegvrfctnInfoEntity.getPlatTrace());
+            infoModel.setPlat_time(mivsRegvrfctnInfoEntity.getPlatTime());
+            infoModel.setTran_date(mivsRegvrfctnInfoEntity.getTranDate());
+            infoModel.setSeq_no(mivsRegvrfctnInfoEntity.getSeqNo());
+            infoModel.setMivs_sts(mivsRegvrfctnInfoEntity.getMivsSts());
+            infoModel.setMsg_id(mivsRegvrfctnInfoEntity.getMsgId());
+            infoModel.setCre_dt_tm(mivsRegvrfctnInfoEntity.getCreDtTm());
+            infoModel.setInstg_drct_pty(mivsRegvrfctnInfoEntity.getInstgDrctPty());
+            infoModel.setDrct_pty_nm(mivsRegvrfctnInfoEntity.getDrctPtyNm());
+            infoModel.setInstg_pty(mivsRegvrfctnInfoEntity.getInstgPty());
+            infoModel.setPty_nm(mivsRegvrfctnInfoEntity.getPtyNm());
+            infoModel.setInstg_drct_pty(mivsRegvrfctnInfoEntity.getInstgDrctPty());
+            infoModel.setInstd_pty(mivsRegvrfctnInfoEntity.getInstdPty());
+            infoModel.setPg_nb(mivsRegvrfctnInfoEntity.getPgNb());
+            infoModel.setLast_pg_ind(mivsRegvrfctnInfoEntity.getLastPgInd());
+            infoModel.setRslt(mivsRegvrfctnInfoEntity.getRslt());
+            infoModel.setData_resrc_dt(mivsRegvrfctnInfoEntity.getDataResrcDt());
+            infoModel.setBas_info_cnt(mivsRegvrfctnInfoEntity.getBasInfoCnt());
+            infoModel.setCo_shrhdrfnd_info_cnt(mivsRegvrfctnInfoEntity.getCoShrhdrfndInfoCnt());
+            infoModel.setDir_supsrsgr_info_cnt(mivsRegvrfctnInfoEntity.getDirSupsrsgrInfoCnt());
+            infoModel.setChng_info_cnt(mivsRegvrfctnInfoEntity.getChngInfoCnt());
+            infoModel.setAbnml_biz_info_cnt(mivsRegvrfctnInfoEntity.getAbnmlBizInfoCnt());
+            infoModel.setIll_dscrt_info_cnt(mivsRegvrfctnInfoEntity.getIllDscrtInfoCnt());
+            infoModel.setIll_dscrt_info_cnt(mivsRegvrfctnInfoEntity.getIllDscrtInfoCnt());
 
-        if(flag.equals("all")) {
-            //查询BasInfo附表
-            MivsRegvrfctnBasInfoEntity basInfo = new MivsRegvrfctnBasInfoEntity();
-            basInfo.setOrigMsgId(Msgid);
-            basInfo.setOrigInstgPty(Instgpty);
-            List<MivsRegvrfctnBasInfoEntity> mivsRegvrfctnBasInfoEntities = basInfoEntityMapper.select(basInfo);
-            if (mivsRegvrfctnBasInfoEntities != null && !mivsRegvrfctnBasInfoEntities.isEmpty()) {
-                List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
-                for (MivsRegvrfctnBasInfoEntity Info : mivsRegvrfctnBasInfoEntities) {
-                    MivsRegVrfctnInfoModel.BasInfo basInfoMsg = new MivsRegVrfctnInfoModel.BasInfo();
-                    basInfoMsg.setPg_nb(Info.getPgNb());
-                    basInfoMsg.setBas_info_nb(Info.getBasInfoNb());
-                    basInfoMsg.setEnt_nm(Info.getEntNm());
-                    basInfoMsg.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
-                    basInfoMsg.setCo_tp(Info.getCoTp());
-                    basInfoMsg.setDom(Info.getDom());
-                    basInfoMsg.setReg_cptl(Info.getRegCptl());
-                    basInfoMsg.setDt_est(Info.getDtEst());
-                    basInfoMsg.setOp_prd_from(Info.getOpPrdFrom());
-                    basInfoMsg.setOp_prd_to(Info.getOpPrdTo());
-                    basInfoMsg.setReg_sts(Info.getRegSts());
-                    basInfoMsg.setNm_of_lgl_prsn(Info.getNmOfLglPrsn());
-                    basInfoMsg.setReg_auth(Info.getRegAuth());
-                    basInfoMsg.setBiz_scp(Info.getBizScp());
-                    basInfoMsg.setDt_appr(Info.getDtAppr());
-                    basInfoMsg.setTra_nm(Info.getTraNm());
-                    basInfoMsg.setMarket_type(Info.getMarketType());
-                    basInfoMsg.setOp_loc(Info.getOpLoc());
-                    basInfoMsg.setFd_amt(Info.getFdAmt());
-                    basInfoMsg.setDt_reg(Info.getDtReg());
-                    basInfoMsg.setNm(Info.getNm());
-                    basInfoArrayMsg.add(basInfoMsg);
+            if (flag.equals("all")) {
+                //查询BasInfo附表
+                MivsRegvrfctnBasInfoEntity basInfo = new MivsRegvrfctnBasInfoEntity();
+                basInfo.setOrigMsgId(Msgid);
+                basInfo.setOrigInstgPty(Instgpty);
+                List<MivsRegvrfctnBasInfoEntity> mivsRegvrfctnBasInfoEntities = basInfoEntityMapper.select(basInfo);
+                if (mivsRegvrfctnBasInfoEntities != null && !mivsRegvrfctnBasInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
+                    for (MivsRegvrfctnBasInfoEntity Info : mivsRegvrfctnBasInfoEntities) {
+                        MivsRegVrfctnInfoModel.BasInfo basInfoMsg = new MivsRegVrfctnInfoModel.BasInfo();
+                        basInfoMsg.setPg_nb(Info.getPgNb());
+                        basInfoMsg.setBas_info_nb(Info.getBasInfoNb());
+                        basInfoMsg.setEnt_nm(Info.getEntNm());
+                        basInfoMsg.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
+                        basInfoMsg.setCo_tp(Info.getCoTp());
+                        basInfoMsg.setDom(Info.getDom());
+                        basInfoMsg.setReg_cptl(Info.getRegCptl());
+                        basInfoMsg.setDt_est(Info.getDtEst());
+                        basInfoMsg.setOp_prd_from(Info.getOpPrdFrom());
+                        basInfoMsg.setOp_prd_to(Info.getOpPrdTo());
+                        basInfoMsg.setReg_sts(Info.getRegSts());
+                        basInfoMsg.setNm_of_lgl_prsn(Info.getNmOfLglPrsn());
+                        basInfoMsg.setReg_auth(Info.getRegAuth());
+                        basInfoMsg.setBiz_scp(Info.getBizScp());
+                        basInfoMsg.setDt_appr(Info.getDtAppr());
+                        basInfoMsg.setTra_nm(Info.getTraNm());
+                        basInfoMsg.setMarket_type(Info.getMarketType());
+                        basInfoMsg.setOp_loc(Info.getOpLoc());
+                        basInfoMsg.setFd_amt(Info.getFdAmt());
+                        basInfoMsg.setDt_reg(Info.getDtReg());
+                        basInfoMsg.setNm(Info.getNm());
+                        basInfoArrayMsg.add(basInfoMsg);
+                    }
+                    infoModel.setBasInfo(basInfoArrayMsg);
                 }
-                infoModel.setBasInfo(basInfoArrayMsg);
-            }
 
-            //查询CosInfo附表
-            MivsRegvrfctnCosInfoEntity cosInfo = new MivsRegvrfctnCosInfoEntity();
-            cosInfo.setOrigMsgId(Msgid);
-            cosInfo.setOrigInstgPty(Instgpty);
-            List<MivsRegvrfctnCosInfoEntity> mivsRegvrfctnCosInfoEntities = cosInfoEntityMapper.select(cosInfo);
-            if (mivsRegvrfctnCosInfoEntities != null && !mivsRegvrfctnCosInfoEntities.isEmpty()) {
-                List<MivsRegVrfctnInfoModel.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.CoShrhdrFndInfo>();
-                for (MivsRegvrfctnCosInfoEntity Info : mivsRegvrfctnCosInfoEntities) {
-                    MivsRegVrfctnInfoModel.CoShrhdrFndInfo coShrhdrFndInfoMsg = new MivsRegVrfctnInfoModel.CoShrhdrFndInfo();
-                    coShrhdrFndInfoMsg.setPg_nb(Info.getPgNb());
-                    coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(Info.getCoShrhdrfndInfoNb());
-                    coShrhdrFndInfoMsg.setNatl_prsn_flag(Info.getNatlPrsnFlag());
-                    coShrhdrFndInfoMsg.setInvtr_nm(Info.getInvtrNm());
-                    coShrhdrFndInfoMsg.setInvtr_id(Info.getInvtrId());
-                    coShrhdrFndInfoMsg.setSubscr_cptl_con_amt(Info.getSubscrCptlConAmt());
-                    coShrhdrFndInfoMsg.setActl_cptl_con_amt(Info.getActlCptlConAmt());
-                    coShrhdrFndInfoMsg.setSubscr_cptl_con_fm(Info.getSubscrCptlConFm());
-                    coShrhdrFndInfoMsg.setSubscr_cptl_con_dt(Info.getSubscrCptlConDt());
-                    coShrhdrFndInfoArrayMsg.add(coShrhdrFndInfoMsg);
+                //查询CosInfo附表
+                MivsRegvrfctnCosInfoEntity cosInfo = new MivsRegvrfctnCosInfoEntity();
+                cosInfo.setOrigMsgId(Msgid);
+                cosInfo.setOrigInstgPty(Instgpty);
+                List<MivsRegvrfctnCosInfoEntity> mivsRegvrfctnCosInfoEntities = cosInfoEntityMapper.select(cosInfo);
+                if (mivsRegvrfctnCosInfoEntities != null && !mivsRegvrfctnCosInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.CoShrhdrFndInfo>();
+                    for (MivsRegvrfctnCosInfoEntity Info : mivsRegvrfctnCosInfoEntities) {
+                        MivsRegVrfctnInfoModel.CoShrhdrFndInfo coShrhdrFndInfoMsg = new MivsRegVrfctnInfoModel.CoShrhdrFndInfo();
+                        coShrhdrFndInfoMsg.setPg_nb(Info.getPgNb());
+                        coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(Info.getCoShrhdrfndInfoNb());
+                        coShrhdrFndInfoMsg.setNatl_prsn_flag(Info.getNatlPrsnFlag());
+                        coShrhdrFndInfoMsg.setInvtr_nm(Info.getInvtrNm());
+                        coShrhdrFndInfoMsg.setInvtr_id(Info.getInvtrId());
+                        coShrhdrFndInfoMsg.setSubscr_cptl_con_amt(Info.getSubscrCptlConAmt());
+                        coShrhdrFndInfoMsg.setActl_cptl_con_amt(Info.getActlCptlConAmt());
+                        coShrhdrFndInfoMsg.setSubscr_cptl_con_fm(Info.getSubscrCptlConFm());
+                        coShrhdrFndInfoMsg.setSubscr_cptl_con_dt(Info.getSubscrCptlConDt());
+                        coShrhdrFndInfoArrayMsg.add(coShrhdrFndInfoMsg);
+                    }
+                    infoModel.setCoShrhdrFndInfo(coShrhdrFndInfoArrayMsg);
                 }
-                infoModel.setCoShrhdrFndInfo(coShrhdrFndInfoArrayMsg);
-            }
 
-            //查询DirInfo附表
-            MivsRegvrfctnDirInfoEntity dirInfo = new MivsRegvrfctnDirInfoEntity();
-            dirInfo.setOrigMsgId(Msgid);
-            dirInfo.setOrigInstgPty(Instgpty);
-            List<MivsRegvrfctnDirInfoEntity> mivsRegvrfctnDirInfoEntities = dirInfoEntityMapper.select(dirInfo);
-            if (mivsRegvrfctnDirInfoEntities != null && !mivsRegvrfctnDirInfoEntities.isEmpty()) {
-                List<MivsRegVrfctnInfoModel.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.DirSupSrMgrInfo>();
-                for (MivsRegvrfctnDirInfoEntity Info : mivsRegvrfctnDirInfoEntities) {
-                    MivsRegVrfctnInfoModel.DirSupSrMgrInfo dirSupSrMgrInfoMsg = new MivsRegVrfctnInfoModel.DirSupSrMgrInfo();
-                    dirSupSrMgrInfoMsg.setPg_nb(Info.getPgNb());
-                    dirSupSrMgrInfoMsg.setDir_supsrsgr_info_nb(Info.getDirSupsrsgrInfoNb());
-                    dirSupSrMgrInfoMsg.setNm(Info.getNm());
-                    dirSupSrMgrInfoMsg.setPosn(Info.getPosn());
-                    dirSupSrMgrInfoArrayMsg.add(dirSupSrMgrInfoMsg);
+                //查询DirInfo附表
+                MivsRegvrfctnDirInfoEntity dirInfo = new MivsRegvrfctnDirInfoEntity();
+                dirInfo.setOrigMsgId(Msgid);
+                dirInfo.setOrigInstgPty(Instgpty);
+                List<MivsRegvrfctnDirInfoEntity> mivsRegvrfctnDirInfoEntities = dirInfoEntityMapper.select(dirInfo);
+                if (mivsRegvrfctnDirInfoEntities != null && !mivsRegvrfctnDirInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.DirSupSrMgrInfo>();
+                    for (MivsRegvrfctnDirInfoEntity Info : mivsRegvrfctnDirInfoEntities) {
+                        MivsRegVrfctnInfoModel.DirSupSrMgrInfo dirSupSrMgrInfoMsg = new MivsRegVrfctnInfoModel.DirSupSrMgrInfo();
+                        dirSupSrMgrInfoMsg.setPg_nb(Info.getPgNb());
+                        dirSupSrMgrInfoMsg.setDir_supsrsgr_info_nb(Info.getDirSupsrsgrInfoNb());
+                        dirSupSrMgrInfoMsg.setNm(Info.getNm());
+                        dirSupSrMgrInfoMsg.setPosn(Info.getPosn());
+                        dirSupSrMgrInfoArrayMsg.add(dirSupSrMgrInfoMsg);
+                    }
+                    infoModel.setDirSupSrMgrInfo(dirSupSrMgrInfoArrayMsg);
                 }
-                infoModel.setDirSupSrMgrInfo(dirSupSrMgrInfoArrayMsg);
-            }
 
-            //查询ChngInfo附表
-            MivsRegvrfctnChngInfoEntity chngInfo = new MivsRegvrfctnChngInfoEntity();
-            chngInfo.setOrigMsgId(Msgid);
-            chngInfo.setOrigInstgPty(Instgpty);
-            List<MivsRegvrfctnChngInfoEntity> mivsRegvrfctnChngInfoEntities = chngInfoEntityMapper.select(chngInfo);
-            if (mivsRegvrfctnChngInfoEntities != null && !mivsRegvrfctnChngInfoEntities.isEmpty()) {
-                List<MivsRegVrfctnInfoModel.ChngInfo> chngInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.ChngInfo>();
-                for (MivsRegvrfctnChngInfoEntity Info : mivsRegvrfctnChngInfoEntities) {
-                    MivsRegVrfctnInfoModel.ChngInfo chngInfoMsg = new MivsRegVrfctnInfoModel.ChngInfo();
-                    chngInfoMsg.setPg_nb(Info.getPgNb());
-                    chngInfoMsg.setChng_info_nb(Info.getChngInfoNb());
-                    chngInfoMsg.setChng_itm(Info.getChngItm());
-                    chngInfoMsg.setAft_chng(Info.getAftChng());
-                    chngInfoMsg.setBf_chng(Info.getBfChng());
-                    chngInfoMsg.setDt_of_chng(Info.getDtOfChng());
-                    chngInfoArrayMsg.add(chngInfoMsg);
+                //查询ChngInfo附表
+                MivsRegvrfctnChngInfoEntity chngInfo = new MivsRegvrfctnChngInfoEntity();
+                chngInfo.setOrigMsgId(Msgid);
+                chngInfo.setOrigInstgPty(Instgpty);
+                List<MivsRegvrfctnChngInfoEntity> mivsRegvrfctnChngInfoEntities = chngInfoEntityMapper.select(chngInfo);
+                if (mivsRegvrfctnChngInfoEntities != null && !mivsRegvrfctnChngInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.ChngInfo> chngInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.ChngInfo>();
+                    for (MivsRegvrfctnChngInfoEntity Info : mivsRegvrfctnChngInfoEntities) {
+                        MivsRegVrfctnInfoModel.ChngInfo chngInfoMsg = new MivsRegVrfctnInfoModel.ChngInfo();
+                        chngInfoMsg.setPg_nb(Info.getPgNb());
+                        chngInfoMsg.setChng_info_nb(Info.getChngInfoNb());
+                        chngInfoMsg.setChng_itm(Info.getChngItm());
+                        chngInfoMsg.setAft_chng(Info.getAftChng());
+                        chngInfoMsg.setBf_chng(Info.getBfChng());
+                        chngInfoMsg.setDt_of_chng(Info.getDtOfChng());
+                        chngInfoArrayMsg.add(chngInfoMsg);
+                    }
+                    infoModel.setChngInfo(chngInfoArrayMsg);
                 }
-                infoModel.setChngInfo(chngInfoArrayMsg);
-            }
 
-            //查询AbnInfo附表
-            MivsRegvrfctnAbnInfoEntity abnInfo = new MivsRegvrfctnAbnInfoEntity();
-            abnInfo.setOrigMsgId(Msgid);
-            abnInfo.setOrigInstgPty(Instgpty);
-            List<MivsRegvrfctnAbnInfoEntity> mivsRegvrfctnAbnInfoEntities = abnInfoEntityMapper.select(abnInfo);
-            if (mivsRegvrfctnAbnInfoEntities != null && !mivsRegvrfctnAbnInfoEntities.isEmpty()) {
-                List<MivsRegVrfctnInfoModel.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.AbnmlBizInfo>();
-                for (MivsRegvrfctnAbnInfoEntity Info : mivsRegvrfctnAbnInfoEntities) {
-                    MivsRegVrfctnInfoModel.AbnmlBizInfo abnInfoMsg = new MivsRegVrfctnInfoModel.AbnmlBizInfo();
-                    abnInfoMsg.setPg_nb(Info.getPgNb());
-                    abnInfoMsg.setAbn_info_nb(Info.getAbnInfoNb());
-                    abnInfoMsg.setAbnml_cause(Info.getAbnmlCause());
-                    abnInfoMsg.setAbnml_cause_dcsn_auth(Info.getAbnmlCauseDcsnAuth());
-                    abnInfoMsg.setAbnml_date(Info.getAbnmlDate());
-                    abnInfoMsg.setRmv_cause(Info.getRmvCause());
-                    abnInfoMsg.setRmv_cause_dcsn_auth(Info.getRmvCauseDcsnAuth());
-                    abnInfoMsg.setRmv_date(Info.getRmvDate());
-                    abnInfoArrayMsg.add(abnInfoMsg);
+                //查询AbnInfo附表
+                MivsRegvrfctnAbnInfoEntity abnInfo = new MivsRegvrfctnAbnInfoEntity();
+                abnInfo.setOrigMsgId(Msgid);
+                abnInfo.setOrigInstgPty(Instgpty);
+                List<MivsRegvrfctnAbnInfoEntity> mivsRegvrfctnAbnInfoEntities = abnInfoEntityMapper.select(abnInfo);
+                if (mivsRegvrfctnAbnInfoEntities != null && !mivsRegvrfctnAbnInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.AbnmlBizInfo>();
+                    for (MivsRegvrfctnAbnInfoEntity Info : mivsRegvrfctnAbnInfoEntities) {
+                        MivsRegVrfctnInfoModel.AbnmlBizInfo abnInfoMsg = new MivsRegVrfctnInfoModel.AbnmlBizInfo();
+                        abnInfoMsg.setPg_nb(Info.getPgNb());
+                        abnInfoMsg.setAbn_info_nb(Info.getAbnInfoNb());
+                        abnInfoMsg.setAbnml_cause(Info.getAbnmlCause());
+                        abnInfoMsg.setAbnml_cause_dcsn_auth(Info.getAbnmlCauseDcsnAuth());
+                        abnInfoMsg.setAbnml_date(Info.getAbnmlDate());
+                        abnInfoMsg.setRmv_cause(Info.getRmvCause());
+                        abnInfoMsg.setRmv_cause_dcsn_auth(Info.getRmvCauseDcsnAuth());
+                        abnInfoMsg.setRmv_date(Info.getRmvDate());
+                        abnInfoArrayMsg.add(abnInfoMsg);
+                    }
+                    infoModel.setAbnmlBizInfo(abnInfoArrayMsg);
                 }
-                infoModel.setAbnmlBizInfo(abnInfoArrayMsg);
-            }
 
-            //查询IllInfo附表
-            MivsRegvrfctnIllInfoEntity illInfo = new MivsRegvrfctnIllInfoEntity();
-            illInfo.setOrigMsgId(Msgid);
-            illInfo.setOrigInstgPty(Instgpty);
-            List<MivsRegvrfctnIllInfoEntity> mivsRegvrfctnIllInfoEntities = illInfoEntityMapper.select(illInfo);
-            if (mivsRegvrfctnIllInfoEntities != null && !mivsRegvrfctnIllInfoEntities.isEmpty()) {
-                List<MivsRegVrfctnInfoModel.IllDscrtInfo> illInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.IllDscrtInfo>();
-                for (MivsRegvrfctnIllInfoEntity Info : mivsRegvrfctnIllInfoEntities) {
-                    MivsRegVrfctnInfoModel.IllDscrtInfo illInfoMsg = new MivsRegVrfctnInfoModel.IllDscrtInfo();
-                    illInfoMsg.setPg_nb(Info.getPgNb());
-                    illInfoMsg.setIll_info_nb(Info.getIllInfoNb());
-                    illInfoMsg.setIll_dscrt_cause(Info.getIllDscrtCause());
-                    illInfoMsg.setAbnml_cause_dcsn_auth(Info.getAbnmlCauseDcsnAuth());
-                    illInfoMsg.setAbnml_date(Info.getAbnmlDate());
-                    illInfoMsg.setRmv_cause(Info.getRmvCause());
-                    illInfoMsg.setRmv_cause_dcsn_auth(Info.getRmvCauseDcsnAuth());
-                    illInfoMsg.setRmv_date(Info.getRmvDate());
-                    illInfoArrayMsg.add(illInfoMsg);
+                //查询IllInfo附表
+                MivsRegvrfctnIllInfoEntity illInfo = new MivsRegvrfctnIllInfoEntity();
+                illInfo.setOrigMsgId(Msgid);
+                illInfo.setOrigInstgPty(Instgpty);
+                List<MivsRegvrfctnIllInfoEntity> mivsRegvrfctnIllInfoEntities = illInfoEntityMapper.select(illInfo);
+                if (mivsRegvrfctnIllInfoEntities != null && !mivsRegvrfctnIllInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.IllDscrtInfo> illInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.IllDscrtInfo>();
+                    for (MivsRegvrfctnIllInfoEntity Info : mivsRegvrfctnIllInfoEntities) {
+                        MivsRegVrfctnInfoModel.IllDscrtInfo illInfoMsg = new MivsRegVrfctnInfoModel.IllDscrtInfo();
+                        illInfoMsg.setPg_nb(Info.getPgNb());
+                        illInfoMsg.setIll_info_nb(Info.getIllInfoNb());
+                        illInfoMsg.setIll_dscrt_cause(Info.getIllDscrtCause());
+                        illInfoMsg.setAbnml_cause_dcsn_auth(Info.getAbnmlCauseDcsnAuth());
+                        illInfoMsg.setAbnml_date(Info.getAbnmlDate());
+                        illInfoMsg.setRmv_cause(Info.getRmvCause());
+                        illInfoMsg.setRmv_cause_dcsn_auth(Info.getRmvCauseDcsnAuth());
+                        illInfoMsg.setRmv_date(Info.getRmvDate());
+                        illInfoArrayMsg.add(illInfoMsg);
+                    }
+                    infoModel.setIllDscrtInfo(illInfoArrayMsg);
                 }
-                infoModel.setIllDscrtInfo(illInfoArrayMsg);
-            }
 
-            //查询LicInfo附表
-            MivsRegvrfctnLicInfoEntity licInfo = new MivsRegvrfctnLicInfoEntity();
-            licInfo.setOrigMsgId(Msgid);
-            licInfo.setOrigInstgPty(Instgpty);
-            List<MivsRegvrfctnLicInfoEntity> mivsRegvrfctnLicInfoEntities = licInfoEntityMapper.select(licInfo);
-            if (mivsRegvrfctnLicInfoEntities != null && !mivsRegvrfctnLicInfoEntities.isEmpty()) {
-                List<MivsRegVrfctnInfoModel.LicInfo> licInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.LicInfo>();
-                for (MivsRegvrfctnLicInfoEntity Info : mivsRegvrfctnLicInfoEntities) {
-                    MivsRegVrfctnInfoModel.LicInfo licInfoMsg = new MivsRegVrfctnInfoModel.LicInfo();
-                    licInfoMsg.setPg_nb(Info.getPgNb());
-                    licInfoMsg.setLic_info_nb(Info.getLicInfoNb());
-                    licInfoMsg.setOrgnl_or_cp(Info.getOrgnlOrCp());
-                    licInfoMsg.setLic_null_stm_cntt(Info.getLicNullStmCntt());
-                    licInfoMsg.setLic_null_stm_dt(Info.getLicNullStmDt());
-                    licInfoMsg.setRpl_sts(Info.getRplSts());
-                    licInfoMsg.setRpl_dt(Info.getRplDt());
-                    licInfoMsg.setLic_cp_nb(Info.getLicCpNb());
-                    licInfoArrayMsg.add(licInfoMsg);
+                //查询LicInfo附表
+                MivsRegvrfctnLicInfoEntity licInfo = new MivsRegvrfctnLicInfoEntity();
+                licInfo.setOrigMsgId(Msgid);
+                licInfo.setOrigInstgPty(Instgpty);
+                List<MivsRegvrfctnLicInfoEntity> mivsRegvrfctnLicInfoEntities = licInfoEntityMapper.select(licInfo);
+                if (mivsRegvrfctnLicInfoEntities != null && !mivsRegvrfctnLicInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.LicInfo> licInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.LicInfo>();
+                    for (MivsRegvrfctnLicInfoEntity Info : mivsRegvrfctnLicInfoEntities) {
+                        MivsRegVrfctnInfoModel.LicInfo licInfoMsg = new MivsRegVrfctnInfoModel.LicInfo();
+                        licInfoMsg.setPg_nb(Info.getPgNb());
+                        licInfoMsg.setLic_info_nb(Info.getLicInfoNb());
+                        licInfoMsg.setOrgnl_or_cp(Info.getOrgnlOrCp());
+                        licInfoMsg.setLic_null_stm_cntt(Info.getLicNullStmCntt());
+                        licInfoMsg.setLic_null_stm_dt(Info.getLicNullStmDt());
+                        licInfoMsg.setRpl_sts(Info.getRplSts());
+                        licInfoMsg.setRpl_dt(Info.getRplDt());
+                        licInfoMsg.setLic_cp_nb(Info.getLicCpNb());
+                        licInfoArrayMsg.add(licInfoMsg);
+                    }
+                    infoModel.setLicInfo(licInfoArrayMsg);
                 }
-                infoModel.setLicInfo(licInfoArrayMsg);
             }
+            return infoModel;
         }
-        return infoModel;
+        else{
+            return null;
+        }
     }
 
 

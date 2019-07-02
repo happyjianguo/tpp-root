@@ -62,7 +62,16 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         REQ_50023000203 req = (REQ_50023000203) dto;//接收ESB请求报文
         REQ_50023000203.REQ_BODY reqBody = req.getReqBody();
 
-        // 通过机构号查询渠道接口获取（机构号查行号）
+        MivsIdVrfctnInfoModel idVrfctnInfoModel = new MivsIdVrfctnInfoModel();
+        idVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
+        idVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
+        MivsIdVrfctnInfoModel infoModel = mivsIdVrfctnInfoService.selectFdbk(idVrfctnInfoModel);
+        if(infoModel == null) {
+            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无反馈记录");
+            throw e;
+        }
+
+            // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
         String bankNumber = null, bnkNmT = null, settlementBankNo = null, lqtnBnkNmT1 = null;
         try {
@@ -107,7 +116,7 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         fdbk.setContactNm(reqBody.getContactNm());
 
         //信息落地入库
-        MivsIdVrfctnInfoModel idVrfctnInfoModel = new MivsIdVrfctnInfoModel();
+//        MivsIdVrfctnInfoModel idVrfctnInfoModel = new MivsIdVrfctnInfoModel();
         myLog.info(logger, "Date = " + req.getSysDate());
         myLog.info(logger, "trace = " + req.getSysTraceno());
         myLog.info(logger, "SystemId = " + req.getReqSysHead().getSystemId());

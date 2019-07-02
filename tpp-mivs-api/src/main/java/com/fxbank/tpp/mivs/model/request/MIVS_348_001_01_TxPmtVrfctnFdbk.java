@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Description:
@@ -359,12 +361,14 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
                     this.DataResrcDt = dataResrcDt;
                 }
 
-                private TxpmtInf TxpmtInf = new TxpmtInf();
-                public TxpmtInf getTxpmtInf() {
+                private List<TxpmtInf> TxpmtInf = new ArrayList<TxpmtInf>();
+
+                public List<TxpmtInf> getTxpmtInf() {
                     return TxpmtInf;
                 }
-                public void setTxpmtInf(TxpmtInf txpmtInf) {
-                    this.TxpmtInf = txpmtInf;
+
+                public void setTxpmtInf(List<TxpmtInf> txpmtInf) {
+                    TxpmtInf = txpmtInf;
                 }
 
                 @XmlAccessorType(XmlAccessType.FIELD)
@@ -372,27 +376,42 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
                     private static final long serialVersionUID = 4678125740927063368L;
 
                     private String TxAuthCd = null;
+
+                    private String TxAuthNm = null;
+
+                    private String TxpyrSts = null;
+
                     public String getTxAuthCd() {
                         return TxAuthCd;
                     }
+
                     public void setTxAuthCd(String txAuthCd) {
-                        this.TxAuthCd = txAuthCd;
+                        TxAuthCd = txAuthCd;
                     }
 
-                    private String TxAuthNm = null;
                     public String getTxAuthNm() {
                         return TxAuthNm;
                     }
+
                     public void setTxAuthNm(String txAuthNm) {
-                        this.TxAuthNm = txAuthNm;
+                        TxAuthNm = txAuthNm;
                     }
 
-                    private String TxpyrSts = null;
                     public String getTxpyrSts() {
                         return TxpyrSts;
                     }
+
                     public void setTxpyrSts(String txpyrSts) {
-                        this.TxpyrSts = txpyrSts;
+                        TxpyrSts = txpyrSts;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "TxpmtInf{" +
+                                "TxAuthCd='" + TxAuthCd + '\'' +
+                                ", TxAuthNm='" + TxAuthNm + '\'' +
+                                ", TxpyrSts='" + TxpyrSts + '\'' +
+                                '}';
                     }
                 }
             }

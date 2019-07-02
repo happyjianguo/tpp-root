@@ -27,8 +27,8 @@ public class MivsIdVrfctnInfoModel implements Serializable {
     private String pty_nm; //发起参与机构行名
     private String instd_drct_pty; //接收直接参与机构
     private String instd_pty; //接收参与机构
-    private String rcv_msg_id; //报文标识号
-    private String rcv_cre_dt_tm; //报文发送时间
+    private String rcv_msg_id; //应答报文标识号
+    private String rcv_cre_dt_tm; //应答报文发送时间
     private String mob_nb; //手机号
     private String nm; //姓名
     private String id_tp; //证件类型

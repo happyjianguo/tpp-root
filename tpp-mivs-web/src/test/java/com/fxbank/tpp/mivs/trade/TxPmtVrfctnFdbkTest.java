@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000204;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000203;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000206;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -51,19 +53,19 @@ public class TxPmtVrfctnFdbkTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_50023000203 req ;
+    private REQ_50023000206 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_50023000203.REQ_BODY reqBody ;
+    private REQ_50023000206.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_50023000203();
+        req = new REQ_50023000206();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("07");
+        reqSysHead.setSceneId("06");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -89,16 +91,23 @@ public class TxPmtVrfctnFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrgnlDlvrgMsgId("123456789012345678");
-        reqBody.setOrgnlRcvgMsgId("123456789012345678");
-        reqBody.setNm("拉哈哈娱乐股份有限公司");
+        reqBody.setOrgnlDlvrgMsgId("2019070100003762");
+        reqBody.setOrgnlRcvgMsgId("2019070100000013");
+        reqBody.setCompanyName("拉哈哈娱乐股份有限公司");
         reqBody.setUniSocCdtCd("52188802499222");
 //        reqBody.setTxpyrIdNb("123456789123456789");
         reqBody.setRslt("WIDT");
         reqBody.setDataResrcDt("2019-04-29");
 
-
-
+        List<REQ_50023000206.txpyrInfoArray> txpmtInfArrayList = new ArrayList<REQ_50023000206.txpyrInfoArray>();
+        for(int i=0; i<4; i++){
+            REQ_50023000206.txpyrInfoArray arraymsg = new REQ_50023000206.txpyrInfoArray();
+            arraymsg.setTxAuthCd("TxAuthCd00"+i);
+            arraymsg.setTxAuthNm("国税局");
+            arraymsg.setTxpyrSts("00"+i);
+            txpmtInfArrayList.add(arraymsg);
+        }
+        reqBody.setTxpyrInfoArrayMsg(txpmtInfArrayList);
         reqBody.setCntt("对核查结果有疑义");
         reqBody.setContactNm("哈哈精");
         reqBody.setContactNb("17702499222");

@@ -2,6 +2,8 @@ package com.fxbank.tpp.mivs.service;
 
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsTxpmtVrfctnInfoModel;
 
+import java.util.List;
+
 /**
  * @Description: 纳税信息核查数据库操作接口
  * @Author: 王鹏
@@ -32,4 +34,32 @@ public interface IMivsTxPmtVrfctnInfoService {
      * @param origMsgid
      */
     MivsTxpmtVrfctnInfoModel selectMasterAndAttached(String origMsgid, String origInstgPty, String flag);
+
+    /**
+     * 查询数据库表信息
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    List<MivsTxpmtVrfctnInfoModel> selectResult(MivsTxpmtVrfctnInfoModel mivsIdVrfctnInfoModel);
+
+    /**
+     * 查询数据库主表信息
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    MivsTxpmtVrfctnInfoModel selectFdbk(MivsTxpmtVrfctnInfoModel mivsIdVrfctnInfoModel);
+
+    /**
+     * 新增手机号核查反馈表数据
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    void insertFdbk(MivsTxpmtVrfctnInfoModel mivsIdVrfctnInfoModel);
+
+    /**
+     * 更新数据库表状态信息
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    void updateFdbk(MivsTxpmtVrfctnInfoModel mivsIdVrfctnInfoModel);
 }

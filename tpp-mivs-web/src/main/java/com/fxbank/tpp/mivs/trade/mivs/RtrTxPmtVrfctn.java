@@ -68,6 +68,8 @@ public class RtrTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             txpmtVrfctnInfoUmasAndIatt.setPlat_trace(txpmtVrfctnInfoModelSelectMaster.getPlat_trace());
             //主表应答信息赋值
             txpmtVrfctnInfoUmasAndIatt.setMivs_sts("05");
+            txpmtVrfctnInfoUmasAndIatt.setRcv_msg_id(msgHdr.getMsgId());
+            txpmtVrfctnInfoUmasAndIatt.setRcv_cre_dt_tm(msgHdr.getCreDtTm());
             txpmtVrfctnInfoUmasAndIatt.setRslt(vrfctnInf.getRslt());
             txpmtVrfctnInfoUmasAndIatt.setData_resrc_dt(vrfctnInf.getDataResrcDt());
             //取循环数据

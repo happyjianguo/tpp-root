@@ -32,6 +32,13 @@ public interface IMivsIdVrfctnInfoService {
     List<MivsIdVrfctnInfoModel> selectResult(MivsIdVrfctnInfoModel mivsIdVrfctnInfoModel);
 
     /**
+     * 查询数据库主表信息
+     *
+     * @param mivsIdVrfctnInfoModel
+     */
+    MivsIdVrfctnInfoModel selectFdbk(MivsIdVrfctnInfoModel mivsIdVrfctnInfoModel);
+
+    /**
      * 新增手机号核查反馈表数据
      *
      * @param mivsIdVrfctnInfoModel

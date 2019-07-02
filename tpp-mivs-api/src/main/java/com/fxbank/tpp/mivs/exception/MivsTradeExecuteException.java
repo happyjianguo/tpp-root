@@ -16,6 +16,7 @@ public class MivsTradeExecuteException extends SysTradeExecuteException {
 
 	public final static String MIVS_E_10001 = "MIVS_0001";
 	public final static String MIVS_E_10002 = "MIVS_0002";
+	public final static String MIVS_E_10003 = "MIVS_0003";
 	
 	public final static Map<String, String> TCEXERRCODECONV = new HashMap<String, String>() {
 
@@ -24,6 +25,7 @@ public class MivsTradeExecuteException extends SysTradeExecuteException {
 		{
 			put(MIVS_E_10001, "同步等待人行响应超时");
 			put(MIVS_E_10002, "人行拒绝受理");
+			put(MIVS_E_10003, "行内拒绝受理");
 			
 		}
 	};

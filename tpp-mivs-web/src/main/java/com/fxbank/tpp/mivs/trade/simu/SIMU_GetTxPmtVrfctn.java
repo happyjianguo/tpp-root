@@ -64,16 +64,16 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 		}
 
 		// 3、根据322内容模拟返回323
-		MIVS_323_001_01 mivs323 = new MIVS_323_001_01(new MyLog(), dto.getSysDate(), dto.getSysTime(), 13);
+		MIVS_323_001_01 mivs323 = new MIVS_323_001_01(new MyLog(), dto.getSysDate(), dto.getSysTime(), 24);
 //		//编值
 //		ArrayList al = new ArrayList();
 //		al.add("TxAuthCd001");
 		//赋循环数据
 		List<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf> txpmtInf = new ArrayList<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf>();
-		for (int i=0 ; i<4; i++) {
+		for (int i=0 ; i<2; i++) {
 			MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf arraymsg = new MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf();
 			arraymsg.setTxAuthCd("TxAuthCd00"+i);
-			arraymsg.setTxAuthNm("国税局");
+			arraymsg.setTxAuthNm("地税局");
 			arraymsg.setTxpySts("00"+i);
 //			myLog.info(logger, "i=" + i);
 			txpmtInf.add(arraymsg);
