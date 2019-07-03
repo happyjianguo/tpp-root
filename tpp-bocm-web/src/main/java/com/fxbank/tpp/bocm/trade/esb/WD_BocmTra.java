@@ -681,7 +681,11 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10009); // 设置报文头中的行号信息
 		req10009.setOlogNo(oLogNo);
 		req10009.setOtxnCd(oTxnCd);
-		req10009.setTxnAmt(Double.parseDouble(reqBody.getTrsrAmtT3()));
+
+		//交易金额
+		String amt = reqBody.getTrsrAmtT3();
+		//交易金额补零
+		req10009.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(amt)));
 		//业务模式，0 现金1 转账（即实时转账）2 普通转账（2小时后）3 隔日转账9 其他
 		req10009.setTxnMod("1");
 		req10009.setPayBnk(reqBody.getPyrOpnBnkNoT2());

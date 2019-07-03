@@ -80,8 +80,8 @@ public class DB_BocmCashTest {
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("MT");	//网联
-		reqSysHead.setBranchId("01016");
-		reqSysHead.setUserId("000917");
+		reqSysHead.setBranchId("02002");
+		reqSysHead.setUserId("002241");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
 		reqSysHead.setUserLang("CHINESE");

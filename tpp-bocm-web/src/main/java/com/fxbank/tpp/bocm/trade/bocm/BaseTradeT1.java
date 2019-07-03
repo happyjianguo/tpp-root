@@ -270,8 +270,8 @@ public abstract class BaseTradeT1 {
 				} catch (SysTradeExecuteException e) {
 					myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 					String errMsg = e.getRspMsg();
-					if(errMsg.length()>30){
-						errMsg = errMsg.substring(0, 30);
+					if(errMsg.length()>28){
+						errMsg = errMsg.substring(0, 28);
 						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
 						throw e2;
 					}else{
@@ -296,10 +296,11 @@ public abstract class BaseTradeT1 {
 				myLog.error(logger,TRADE_DESC+"核心记账超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 				throw hostTimeoutException;
 			} else {
+				myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 				String errMsg = e.getRspMsg();
-				if(errMsg.length()>30){
-					errMsg = errMsg.substring(0, 30);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+				if(errMsg.length()>28){
+					errMsg = errMsg.substring(0, 28);
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,errMsg);
 					throw e2;
 				}else{
 					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());

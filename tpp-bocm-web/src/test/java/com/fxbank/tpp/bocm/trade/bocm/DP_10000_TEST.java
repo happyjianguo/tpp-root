@@ -45,31 +45,25 @@ public class DP_10000_TEST extends BASE_TEST {
 		req.setTxnAmt(1000d);
 		req.setFeeFlg("0");
 		req.setFee(100d);
-		req.setOprFlg("0");
-		
-		req.setTxnMod("0");
-		
+		req.setOprFlg("0");		
+		req.setTxnMod("0");	
 		//收款人开户行号
 		req.setRecBnk("313229000442");
 		//收款人账户类型
 		req.setRactTp("2");
 		//收款人账号 6288880210000209903 622126010001048643
-		req.setRactNo("623166001016830991");
+		//UAT
+//		req.setRactNo("623166001016830991");
+		//DEV
+		req.setRactNo("623166000001058980");
 		req.setCuIdTp("15");
 		req.setCuIdNo("1234");
 		//收款人名称
-		req.setRecNam("测试");
-		
+		req.setRecNam("测试");		
 		req.setSecMag("623166099020908241=4912567019123456");
-		
-		
-		
-		
-		
-		req.setTtxnDat(20190701);
-		req.setTtxnTim(145033);
-		req.setSlogNo("19070159840880");
-		
+//		req.setTtxnDat(20190701);
+//		req.setTtxnTim(145033);
+//		req.setSlogNo("19070159840880");		
 		REP_10000 rep = new REP_10000();
 		String repData = super.comm(FixedUtil.toFixed(req,ServerInitializer.CODING));
 		logger.info("他代本存现金测试返回："+repData);

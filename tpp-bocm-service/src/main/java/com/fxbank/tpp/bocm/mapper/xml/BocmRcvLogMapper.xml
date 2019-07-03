@@ -83,7 +83,7 @@
     bocm_branch, bocm_date, bocm_traceno, check_flag, host_state, bocm_state, tx_tel, 
     chk_tel, auth_tel, print, info,ret_code,ret_msg,host_branch,
     fee_flag,fee,snd_bankno,rcv_bankno,payer_bank,payer_acttp,payee_bank,payee_acttp
-    from bocm_rcv_log where plat_date=#{date} and host_state=1 and check_flag in ('1','2','3')
+    from bocm_rcv_log where plat_date=#{date} and host_state=1 and check_flag in ('2','3')
   </select>
   <select id="selectTraceNum" resultType="java.lang.String" >
     select count(*) as num from bocm_rcv_log where plat_date=#{date}  

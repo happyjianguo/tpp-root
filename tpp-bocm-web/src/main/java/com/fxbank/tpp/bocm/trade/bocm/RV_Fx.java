@@ -84,39 +84,41 @@ public class RV_Fx implements TradeExecutionStrategy {
 		
 		String hostReversalCode = null;
 		String hostReversalMsg = null;
-		String hostDate = null;
-		String hostTraceno = null;
+		
+		BocmRcvTraceQueryModel model = queryRcvTrace(req);
+		
 		try {
-			BocmRcvTraceQueryModel model = queryRcvTrace(req);
+			myLog.info(logger, "通过交行流水查询渠道流水");
+			
 			if(model==null){
 				myLog.error(logger, "交行向本行发起抹账交易，本行渠道无交易记录，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_11007);
 				throw e2;
 			}else{
+				myLog.info(logger, "交行向本行发起抹账交易，渠道已经抹账成功");
 				if("4".equals(model.getHostState())){
 					return rep;
 				}
 			}
 			//2.核心冲正
 			ESB_REP_30014000101 esbRep_30014000101 = null;
+			myLog.info(logger, "交行向本行发起抹账交易，向核心发送抹账请求");
 			esbRep_30014000101 = hostReversal(req,model);	
 			hostReversalCode = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
 			hostReversalMsg = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetMsg();
-			hostDate = esbRep_30014000101.getRepSysHead().getTranDate();
-			hostTraceno = esbRep_30014000101.getRepSysHead().getReference();
 			//更新流水表
-			updateHostRecord(req, hostDate, hostTraceno, "4",hostReversalCode, hostReversalMsg);
-			myLog.info(logger, "交行向本行发起抹账交易，更新流水表成功：核心流水号【"+hostTraceno+"】渠道流水号【"+req.getSysTraceno()+"】");
+			updateHostRecord(req, model, "4",hostReversalCode, hostReversalMsg);
+			myLog.info(logger, "交行向本行发起抹账交易，更新流水表成功：核心流水号【"+model.getHostTraceno()+"】渠道流水号【"+model.getPlatTrace()+"】");
 		} catch (SysTradeExecuteException e) {
 			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
 				//FX6203
-				updateHostRecord(req, "", "", "6", e.getRspCode(), e.getRspMsg());
+				updateHostRecord(req, model, "6", e.getRspCode(), e.getRspMsg());
 				myLog.error(logger, "交行向本行发起抹账交易，本行核心抹账超时，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203,e.getRspMsg()+"(抹账超时)");
 				throw e2;
 			}else{
 				//冲正失败
-				updateHostRecord(req, "", "", "5", e.getRspCode(), e.getRspMsg());
+				updateHostRecord(req, model, "5", e.getRspCode(), e.getRspMsg());
 				myLog.error(logger, "交行向本行发起抹账交易，本行核心抹账失败，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg()+"(抹账失败)");
 				throw e2;
@@ -125,16 +127,12 @@ public class RV_Fx implements TradeExecutionStrategy {
 		return rep;
 	}
 	
-	private BocmRcvTraceUpdModel updateHostRecord(REQ_10009 reqDto, String hostDate, String hostTraceno,
+	private BocmRcvTraceUpdModel updateHostRecord(REQ_10009 reqDto, BocmRcvTraceQueryModel model,
 			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
-				reqDto.getSysTraceno());
-		if(!"".equals(hostDate)) {
-			record.setHostDate(Integer.parseInt(hostDate));
-		}
+		BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(),
+				model.getPlatTrace());
 		record.setHostState(hostState);
-		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
 		record.setRetMsg(retMsg);
 		bocmRcvTraceService.rcvTraceUpd(record);
@@ -186,8 +184,10 @@ public class RV_Fx implements TradeExecutionStrategy {
 	private BocmRcvTraceQueryModel queryRcvTrace(REQ_10009 req) throws SysTradeExecuteException{
 		MyLog myLog = logPool.get();
 		BocmRcvTraceQueryModel model = null;
+		//交易日期
 		int townDate = req.getTtxnDat();
-		String townTraceno = req.getSlogNo();
+		//原交易流水
+		String townTraceno = req.getOlogNo();
 		model = bocmRcvTraceService.getConfirmTrace(myLog, townDate, townTraceno);
 		return model;
 	}

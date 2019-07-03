@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.tpp.bocm.entity.BocmChkStatus;
+import com.fxbank.tpp.bocm.entity.BocmRcvLog;
 import com.fxbank.tpp.bocm.mapper.BocmChkStatusMapper;
 import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
 import com.fxbank.tpp.bocm.service.IBocmChkStatusService;
@@ -32,21 +33,39 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		entity.setBocmStatus(0);
 		entity.setPlatStatus(0);
 		mapper.insertSelective(entity);
+	}	
+
+	@Override
+	public void chkHostStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
+		BocmChkStatus entity = new BocmChkStatus();
+		entity.setChkDate(record.getChkDate());
+		entity.setHostStatus(record.getHostStatus());
+		mapper.updateByPrimaryKeySelective(entity);
+	}
+
+	@Override
+	public void chkBocmStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
+		BocmChkStatus entity = new BocmChkStatus();
+		entity.setBocmStatus(record.getBocmStatus());
+		mapper.updateByPrimaryKeySelective(entity);
 	}
 
 	@Override
 	public BocmChkStatusModel selectByDate(String date) throws SysTradeExecuteException {
-		List<BocmChkStatus> list = mapper.selectByDate(date);
-		if(list!=null&&list.size()>0){
-			BocmChkStatus entity =  list.get(0);
-			BocmChkStatusModel model = new BocmChkStatusModel();
+		BocmChkStatus chk = new BocmChkStatus();
+		chk.setChkDate(Integer.parseInt(date));
+		BocmChkStatus entity = mapper.selectOne(chk);
+		BocmChkStatusModel model = new BocmChkStatusModel();
+		if(entity!=null){
 			model.setChkDate(entity.getChkDate());
 			model.setHostStatus(entity.getHostStatus());
 			model.setBocmStatus(entity.getBocmStatus());
 			model.setPlatStatus(entity.getPlatStatus());
 			return model;
+		}else{
+			return null;
 		}
-		return null;
+
 	}
 
 }

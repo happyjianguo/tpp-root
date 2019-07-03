@@ -31,12 +31,14 @@ import com.fxbank.tpp.bocm.dto.bocm.REP_10103;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10103;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
+import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
 import com.fxbank.tpp.bocm.model.BocmDayCheckLogInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmAcctCheckErrService;
+import com.fxbank.tpp.bocm.service.IBocmChkStatusService;
 import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
@@ -83,12 +85,19 @@ public class CHK_Fx implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm.";
+	private final static String COMMON_PREFIX = "bocm.";	
+	
+	@Reference(version = "1.0.0")
+	private IBocmChkStatusService chkStatusService;
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
+		
+
+		
 		MyLog myLog = logPool.get();
 		REQ_10103 req = (REQ_10103) dto;
+	
 		//发起行行号
 		String sbnkNo = req.getSbnkNo();
 		if(sbnkNo.substring(0, 3).equals("313")){
@@ -100,11 +109,18 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		}
 		
 		REP_10103 rep = new REP_10103();
-		myLog.info(logger, "外围与核心对账开始");
+		myLog.info(logger, "交行请求我行对账文件");
 		
 		String fileName = req.getFilNam();
 		String txBrno = fileName.substring(4,16);
 		String date = fileName.substring(16,24);
+		
+		BocmChkStatusModel chkModel = chkStatusService.selectByDate(date);
+		if(chkModel==null||chkModel.getHostStatus()==0){
+			myLog.error(logger, "渠道未与本行核心对账");
+			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"渠道未与核心对账");
+			throw e;
+		}
 		
 		// 柜员号
 		String txTel = null;
@@ -112,140 +128,74 @@ public class CHK_Fx implements TradeExecutionStrategy {
 			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
 			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
         }
-		myLog.info(logger, "渠道与核心对账开始");
-		acctCheckErrService.delete(date);
 
-		//获取核心对账文件，处理核心对账文件信息入库（bocm_chk_log）
-		myLog.info(logger, "获取核心对账文件");
-		List<BocmDayCheckLogInitModel> dayCheckLogList = getCheckLogList(myLog, date, txBrno, txTel, dto);
-		myLog.info(logger, "成功获取对账文件信息");
-		
-		//通过核心记账信息找柜面中来账的流水记录
-		myLog.info(logger, "核对来账数据开始");
-		checkRcvLog(myLog, dto, dayCheckLogList, date);
-		myLog.info(logger, "核对来账数据结束");
-		
-		//通过核心记账信息找柜面中往账的流水记录
-		myLog.info(logger, "核对往账数据开始");
-		checkSndLog(myLog, dto, dayCheckLogList, date);
-		myLog.info(logger, "核对往账数据结束");
-		
-		myLog.info(logger, "渠道与核心对账结束");
+		int sysTime = req.getSysTime();
+		int sysTraceno = req.getSysTraceno();
+		int sysDate = req.getSysDate();
 		
 		
+		String rcvCheckFlag2 = rcvTraceService.getTraceNum(date, "2");
+		String rcvCheckFlag3 = rcvTraceService.getTraceNum(date, "3");
+		int rcvTotal = Integer.parseInt(rcvCheckFlag2)+Integer.parseInt(rcvCheckFlag3);
+		myLog.info(logger, "来账对账记录数【已对账】【"+rcvCheckFlag2+"】");
+		myLog.info(logger, "来账对账记录数【核心多】【"+rcvCheckFlag3+"】");
 		
-		myLog.info(logger, "外围与核心对账开始");
-		//获取未对账的来账信息
-		List<BocmRcvTraceQueryModel> rcvTraceList = rcvTraceService.getCheckRcvTrace(myLog,dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
+		String sndCheckFlag2 = sndTraceService.getTraceNum(date, "2");
+		String sndCheckFlag3 = sndTraceService.getTraceNum(date, "3");
+		int sndTotal = Integer.parseInt(sndCheckFlag2)+Integer.parseInt(sndCheckFlag3);
 		
-				//失败、超时、存款确认、冲功？
-				//获取到的数据为渠道多出来的流水记录
-				for(BocmRcvTraceQueryModel model : rcvTraceList) {
-					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(), model.getPlatTrace());
-					record.setCheckFlag("4");
-					rcvTraceService.rcvTraceUpd(record);
-					
-					if(model.getHostState().equals("1")) {
-						myLog.error(logger,"柜面通【"+date+"】对账失败: 多出来账记录，渠道流水号【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
-						BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
-						throw e;
-					}else {
-						myLog.info(logger, "渠道多出来账数据，渠道日期【"+model.getPlatDate()+"】，渠道流水【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
-						myLog.info(logger, "渠道清理数据 SQL: delete * from bocm_rcv_log where plat_date ='"+model.getPlatDate()+"' and plat_trace='"+model.getPlatTrace()+"' ");
-					}
-				}
+		myLog.info(logger, "往账对账记录数【已对账】【"+sndCheckFlag2+"】");
+		myLog.info(logger, "往账对账记录数【核心多】【"+sndCheckFlag3+"】");
+		
+		int tolCnt = rcvTotal + sndTotal;
+		myLog.info(logger, "返回对账交易数量【"+tolCnt+"】");
+		
+		String rcvTotalAmt = rcvTraceService.getRcvTotalChkSum(myLog, date);
+		if(rcvTotalAmt==null){
+			rcvTotalAmt = "0.00";
+		}
+		
+		String sndTotalAmt = sndTraceService.getSndTotalChkSum(myLog, date);
+		if(sndTotalAmt==null){
+			sndTotalAmt = "0.00";
+		}
+		myLog.info(logger, "来账总金额【"+rcvTotalAmt+"】");
+		myLog.info(logger, "往账总金额【"+sndTotalAmt+"】");
+		BigDecimal rcv = new BigDecimal(rcvTotalAmt);
+		BigDecimal snd = new BigDecimal(sndTotalAmt);		
+		BigDecimal totalAmt = rcv.add(snd);
+
+		//组装来账文件报文
+		List<BocmRcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, sysDate,sysTime,sysTraceno, date);
+		List<REP_10103.Detail> tradList = new ArrayList<REP_10103.Detail>();		
+		for(BocmRcvTraceQueryModel model :upRcvTraceList){
+			//本方交易流水号
+			REP_10103.Detail trad = modelToRcvTradDetail(model);
+			tradList.add(trad);
+		}							
+		//组装往账文件报文
+		List<BocmSndTraceQueryModel> upSndTraceList = sndTraceService.getUploadCheckSndTrace(myLog, sysDate,sysTime,sysTraceno, date);
+		for(BocmSndTraceQueryModel model :upSndTraceList){
+			//本方交易流水号
+			REP_10103.Detail trad = modelToSndTradDetail(model);
+			tradList.add(trad);
+		}			
+		rep.setFilLen(254*tradList.size());	
+		rep.setTolCnt(tradList.size());
+		rep.setTolAmt(Double.parseDouble(totalAmt.toString()));
+		myLog.info(logger, "返回报文文件长度："+rep.getFilLen());
+//		if(tradList.size()==0){
+//			rep.setFilTxt(null);
+//			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"无交易记录");
+//			throw e;
+//		}else{
+//			rep.setFilTxt(tradList);
+//		}
 				
-				//获取未对账的往帐信息
-				List<BocmSndTraceQueryModel> sndTraceList = sndTraceService.getCheckSndTrace(myLog,dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno(), date);
-				for(BocmSndTraceQueryModel model:sndTraceList) {
-					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(), model.getPlatTrace());
-					record.setCheckFlag("4");
-					sndTraceService.sndTraceUpd(record);
-					
-					if(model.getHostState().equals("1")) {
-						myLog.error(logger,"柜面通【"+date+"】对账失败: 多出往账记录，渠道流水号【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
-						BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
-						throw e;
-					}else {
-						myLog.info(logger, "渠道多出往账数据，渠道日期【"+model.getPlatDate()+"】，渠道流水【"+model.getPlatTrace()+"】，核心状态【"+model.getHostState()+"】，通存通兑标志【"+model.getDcFlag()+"】");
-					}
-				}
-				
-				myLog.info(logger, "外围与核心对账结束");
-				
-				
+		rep.setFilTxt(tradList);
 			
 				
-				int sysTime = req.getSysTime();
-				int sysTraceno = req.getSysTraceno();
-				int sysDate = req.getSysDate();
-				
-				
-				String rcvCheckFlag2 = rcvTraceService.getTraceNum(date, "2");
-				String rcvCheckFlag3 = rcvTraceService.getTraceNum(date, "3");
-				int rcvTotal = Integer.parseInt(rcvCheckFlag2)+Integer.parseInt(rcvCheckFlag3);
-				myLog.info(logger, "来账对账记录数【已对账】【"+rcvCheckFlag2+"】");
-				myLog.info(logger, "来账对账记录数【核心多】【"+rcvCheckFlag3+"】");
-				
-				String sndCheckFlag2 = sndTraceService.getTraceNum(date, "2");
-				String sndCheckFlag3 = sndTraceService.getTraceNum(date, "3");
-				int sndTotal = Integer.parseInt(sndCheckFlag2)+Integer.parseInt(sndCheckFlag3);
-				
-				myLog.info(logger, "往账对账记录数【已对账】【"+sndCheckFlag2+"】");
-				myLog.info(logger, "往账对账记录数【核心多】【"+sndCheckFlag3+"】");
-				
-				int tolCnt = rcvTotal + sndTotal;
-				myLog.info(logger, "返回对账交易数量【"+tolCnt+"】");
-				
-				String rcvTotalAmt = rcvTraceService.getRcvTotalChkSum(myLog, date);
-				if(rcvTotalAmt==null){
-					rcvTotalAmt = "0.00";
-				}
-				
-				String sndTotalAmt = sndTraceService.getSndTotalChkSum(myLog, date);
-				if(sndTotalAmt==null){
-					sndTotalAmt = "0.00";
-				}
-				myLog.info(logger, "来账总金额【"+rcvTotalAmt+"】");
-				myLog.info(logger, "往账总金额【"+sndTotalAmt+"】");
-				BigDecimal rcv = new BigDecimal(rcvTotalAmt);
-				BigDecimal snd = new BigDecimal(sndTotalAmt);
-				
-				BigDecimal totalAmt = rcv.add(snd);
-				
-				StringBuffer fileTxt = new StringBuffer();
-				//组装对账文件报文
-				
-				//组装来账文件报文
-				List<BocmRcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, sysDate,sysTime,sysTraceno, date);
-				List<REP_10103.Detail> tradList = new ArrayList<REP_10103.Detail>();
-				
-				for(BocmRcvTraceQueryModel model :upRcvTraceList){
-					//本方交易流水号
-					REP_10103.Detail trad = modelToRcvTradDetail(model);
-					tradList.add(trad);
-				}					
-				
-				//组装往账文件报文
-				List<BocmSndTraceQueryModel> upSndTraceList = sndTraceService.getUploadCheckSndTrace(myLog, sysDate,sysTime,sysTraceno, date);
-				for(BocmSndTraceQueryModel model :upSndTraceList){
-					//本方交易流水号
-					REP_10103.Detail trad = modelToSndTradDetail(model);
-					tradList.add(trad);
-				}	
-				
-				
-				rep.setFilLen(254*tradList.size());	
-				rep.setTolCnt(tradList.size());
-				rep.setTolAmt(Double.parseDouble(totalAmt.toString()));
-				myLog.info(logger, "返回报文文件长度："+rep.getFilLen());
-				if(tradList.size()==0){
-					rep.setFilTxt(null);
-					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"无交易记录");
-					throw e;
-				}else{
-					rep.setFilTxt(tradList);
-				}
+
 
 		return rep;
 	}
@@ -254,7 +204,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 	private REP_10103.Detail modelToRcvTradDetail(BocmRcvTraceQueryModel model){
 		REP_10103.Detail chk = new REP_10103.Detail();
 		//给交行返回交易流水
-		chk.setTlogNo(String.format("%06d%08d", model.getSysDate()%1000000,model.getSysTraceno()));
+		chk.setTlogNo(String.format("%06d%08d", model.getPlatDate()%1000000,model.getPlatTrace()));
 		chk.setLogNo(model.getBocmTraceno());
 		
 		//本行模拟交行接口测试

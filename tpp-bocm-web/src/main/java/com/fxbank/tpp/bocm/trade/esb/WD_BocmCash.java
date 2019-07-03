@@ -599,9 +599,13 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		//原交易代码 原交易代码       通兑-10001 IC通兑-20001
 		req_10009.setOtxnCd(oTxnCd);
 		//业务模式
-		req_10009.setTxnMod("");
+		req_10009.setTxnMod("0");
+		
 		//交易金额
-		req_10009.setTxnAmt(Double.parseDouble(reqBody.getWthrAmtT()));
+		String amt = reqBody.getWthrAmtT();
+		//交易金额补零
+		req_10009.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(amt)));
+				
 		req_10009.setTxnMod("0");//业务模式 0 现金 1 转账（实时转账）
 		req_10009.setPayBnk(reqBody.getOpnAcctBnkNoT7());//付款人开户行行号
 		req_10009.setPactTp(reqBody.getAcctNoTpT());//付款人账户类型

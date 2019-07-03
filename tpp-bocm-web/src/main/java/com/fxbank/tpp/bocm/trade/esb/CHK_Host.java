@@ -36,8 +36,6 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
-import com.fxbank.tpp.bocm.model.REP_10103;
-import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.service.IBocmAcctCheckErrService;
 import com.fxbank.tpp.bocm.service.IBocmChkStatusService;
 import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
@@ -114,7 +112,14 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		Integer sysTraceno = dto.getSysTraceno();
 		
 		BocmChkStatusModel chkModel = chkStatusService.selectByDate(date.toString());
+		if(chkModel==null){
+			myLog.info(logger, "日期对应的对账状态记录不存在 ");
+			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"日期对应的对账状态记录不存在");
+			throw e;
+		}
 		myLog.info(logger, "核心对账状态： "+chkModel.getHostStatus()+" 交行对账状态：  "+chkModel.getBocmStatus());
+
+
 		
 		myLog.info(logger, "核心与外围对账开始");
 		//删除对账错误日志
@@ -169,7 +174,12 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		}
 		
 		myLog.info(logger, "外围与核心对账结束");
-				
+		//更新核心对账状态
+		BocmChkStatusModel record = new BocmChkStatusModel();
+		record.setChkDate(date);
+		record.setHostStatus(1);
+		chkStatusService.chkHostStatusUpd(record);
+		myLog.info(logger, "更新与核心对账状态为已对账：  对账日期："+date);	
 		String check_date = String.valueOf(date);
 		
 		String rcvCheckFlag2 = rcvTraceService.getTraceNum(check_date, "2");
@@ -232,7 +242,6 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				throw e;
 			}else {
 				//dc_flag IS '通存通兑标志；0通存、1通兑';
-				String dcFlag = sndTraceQueryModel.getDcFlag();//通存通兑标志
 				String hostState = sndTraceQueryModel.getHostState(); //渠道记录的核心状态
 				
 				//通存

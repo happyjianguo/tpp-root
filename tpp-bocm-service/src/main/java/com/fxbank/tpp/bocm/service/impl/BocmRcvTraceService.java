@@ -186,7 +186,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		model.setBocmBranch(data.getBocmBranch());
 		model.setBocmDate(data.getBocmDate());
 		model.setBocmState(data.getBocmState());
-		model.setBocmTraceno(model.getBocmTraceno());
+		model.setBocmTraceno(data.getBocmTraceno());
 		model.setTxAmt(data.getTxAmt());
 		model.setActBal(data.getActBal());
 		model.setFeeFlag(data.getFeeFlag());
@@ -262,7 +262,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmBranch(data.getBocmBranch());
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
-			model.setBocmTraceno(model.getBocmTraceno());
+			model.setBocmTraceno(data.getBocmTraceno());
 			
 			model.setSndBankno(data.getSndBankno());
 			model.setRcvBankno(data.getRcvBankno());
@@ -339,7 +339,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmBranch(data.getBocmBranch());
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
-			model.setBocmTraceno(model.getBocmTraceno());
+			model.setBocmTraceno(data.getBocmTraceno());
 			
 			model.setSndBankno(data.getSndBankno());
 			model.setRcvBankno(data.getRcvBankno());
@@ -379,7 +379,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmBranch(data.getBocmBranch());
 			model.setBocmDate(data.getBocmDate());
 			model.setBocmState(data.getBocmState());
-			model.setBocmTraceno(model.getBocmTraceno());
+			model.setBocmTraceno(data.getBocmTraceno());
 			
 			model.setSndBankno(data.getSndBankno());
 			model.setRcvBankno(data.getRcvBankno());

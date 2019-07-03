@@ -1,6 +1,8 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -420,7 +422,9 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setTranCcy("CNY");
 		reqBody_30011000104.setTranAmt(reqBody.getDpsAmtT());
 		reqBody_30011000104.setChannelType("BU");
-		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
+		//记账日期直接取系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(settlementDate);
 		reqBody_30011000104.setCollateFlag("Y");		
 		reqBody_30011000104.setDirection("O");
 		//SEND_BANK_CODE	 发起行行号
