@@ -116,7 +116,7 @@ public class REQ_20001 extends REQ_BASE {
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = AmtBase.toPack(txnAmt);
+		this.txnAmt = txnAmt;
 	}
 
 	public String getPin() {

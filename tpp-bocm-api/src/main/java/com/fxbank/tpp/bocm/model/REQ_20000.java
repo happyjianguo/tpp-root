@@ -120,7 +120,7 @@ public class REQ_20000 extends REQ_BASE {
 	}
 
 	public void setTxnAmt(Double txnAmt) {
-		this.txnAmt = AmtBase.toPack(txnAmt);
+		this.txnAmt = txnAmt;
 	}
 
 	public String getFeeFlg() {
@@ -136,7 +136,7 @@ public class REQ_20000 extends REQ_BASE {
 	}
 
 	public void setFee(Double fee) {
-		this.fee = AmtBase.toPack(fee);
+		this.fee = fee;
 	}
 
 	public String getOprFlg() {

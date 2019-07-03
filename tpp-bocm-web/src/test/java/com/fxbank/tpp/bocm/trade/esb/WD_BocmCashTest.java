@@ -105,7 +105,7 @@ public class WD_BocmCashTest {
 		reqBody.setCcyT("CNY");
 		reqBody.setNmT("地区代码");
 		reqBody.setCardNoT3("6222620110037989184");//卡号
-		reqBody.setWthrAmtT("100.00");//转账金额
+		reqBody.setWthrAmtT("10.00");//转账金额
 		reqBody.setFeeAmtT3("1.00");//手续费
 		reqBody.setBalT("");//余额
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费

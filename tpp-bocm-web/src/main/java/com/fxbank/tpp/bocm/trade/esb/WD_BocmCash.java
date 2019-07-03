@@ -38,8 +38,6 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
-import redis.clients.jedis.Jedis;
-
 /** 
 * @ClassName: WD_BocmCash 
 * @Description: 交行卡取现金
@@ -66,8 +64,6 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 
 	@Resource
 	private MyJedis myJedis;
-	
-	private final static String COMMON_PREFIX = "bocm.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
