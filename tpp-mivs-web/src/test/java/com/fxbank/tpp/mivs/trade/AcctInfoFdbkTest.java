@@ -87,7 +87,7 @@ public class AcctInfoFdbkTest {
     public void payOk() throws Exception {
 
         reqBody.setEntNm("企业名称哈哈哈");
-        reqBody.setTraNm("个体户名称");
+//        reqBody.setTraNm("个体户名称");
         reqBody.setUniSocCdtCd("291238750123857");
         reqBody.setAcctSts("OPEN");
         reqBody.setChngDt("20190604");

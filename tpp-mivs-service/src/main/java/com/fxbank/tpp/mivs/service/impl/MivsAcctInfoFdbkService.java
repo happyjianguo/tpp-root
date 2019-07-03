@@ -43,7 +43,7 @@ public class MivsAcctInfoFdbkService implements IMivsAcctInfoFdbkService {
         info.setEntNm(mivsAcctInfoFdbkModel.getEnt_nm());
         info.setTraNm(mivsAcctInfoFdbkModel.getTra_nm());
         info.setUniSocCdtCd(mivsAcctInfoFdbkModel.getUni_soc_cdt_cd());
-        info.setAcctSts(mivsAcctInfoFdbkModel.getMivs_sts());
+        info.setAcctSts(mivsAcctInfoFdbkModel.getAcct_sts());
         info.setChngDt(mivsAcctInfoFdbkModel.getChng_dt());
         info.setRemark1(mivsAcctInfoFdbkModel.getRemark1());
         info.setRemark2(mivsAcctInfoFdbkModel.getRemark2());
