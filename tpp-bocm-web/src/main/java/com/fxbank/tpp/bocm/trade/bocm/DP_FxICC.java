@@ -30,6 +30,7 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
@@ -284,10 +285,14 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
 		record.setTranType("JH02");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
+		
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		String fee = NumberUtil.removePointToString(reqDto.getFee());
+		record.setTxAmt(new BigDecimal(txnAmt));
+		record.setFee(new BigDecimal(fee));
+		
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		record.setFeeFlag(reqDto.getFeeFlg());
-		record.setFee(new BigDecimal(reqDto.getFee().toString()));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		record.setHostState("1");
@@ -444,9 +449,13 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		// 通存通兑标志；0通存、1通兑
 		record.setDcFlag("0");
 		record.setTranType("JH02");
-		record.setTxAmt(new BigDecimal(reqDto.getTxnAmt().toString()));
+
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		String fee = NumberUtil.removePointToString(reqDto.getFee());
+		record.setTxAmt(new BigDecimal(txnAmt));
+		record.setFee(new BigDecimal(fee));
+		
 		record.setFeeFlag(reqDto.getFeeFlg());
-		record.setFee(new BigDecimal(reqDto.getFee().toString()));
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		

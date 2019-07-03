@@ -37,6 +37,7 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061001001;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061000801.REQ_BODY;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
@@ -73,14 +74,13 @@ public class WD_BocmCashTest {
 	public void init(){
 		req = new REQ_30061001001();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300618004");
+		reqSysHead.setServiceId("300610010");
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
-		reqSysHead.setSourceType("BOCM");	//网联
-//		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("01001");
-		reqSysHead.setUserId("002241");
+		reqSysHead.setSourceType("MT");	//网联
+		reqSysHead.setBranchId("01016");
+		reqSysHead.setUserId("000917");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
 		reqSysHead.setUserLang("CHINESE");
@@ -92,6 +92,7 @@ public class WD_BocmCashTest {
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());
 		reqSysHead.setAuthUserId("999");
+		reqSysHead.setProgramId("7J12");
 		reqBody = req.new REQ_BODY(); 
 		req.setReqSysHead(reqSysHead);
 		req.setReqBody(reqBody);
@@ -102,27 +103,34 @@ public class WD_BocmCashTest {
 		logger.info("交行卡取现金测试");
 		
 		reqBody.setCcyT("CNY");
-		reqBody.setNmT("姓名");//姓名
-		reqBody.setCardNoT3("卡号");//卡号
-		reqBody.setWthrAmtT("100.00");//存款金额
-		reqBody.setFeeAmtT3("0.00");//手续费
-		reqBody.setBalT("1000.00");//账户余额
+		reqBody.setNmT("地区代码");
+		reqBody.setCardNoT3("6222620110037989184");//卡号
+		reqBody.setWthrAmtT("100.00");//转账金额
+		reqBody.setFeeAmtT3("1.00");//手续费
+		reqBody.setBalT("");//余额
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费
-		reqBody.setHldrGlblIdT("201101");//身份证号
-		reqBody.setCmsnHldrGlblIdT("201101");//代理人身份证
-		reqBody.setAcctNoTpT("0");//账户类型  0 银行账号 1 贷记卡 2 借记卡 3其他 通存业务模式为1时必需
-
-		reqBody.setFeeRcveWyT1("0");//收取方式  0 账户内扣  1 现金外收
-		reqBody.setBusTpT13("0");//业务类型
+		reqBody.setHldrGlblIdT("370126195312267931");//证件号码
+		reqBody.setAcctNoTpT("2");//付款人账户类型
+		reqBody.setFeeRcveWyT1("0");
+		reqBody.setBusTpT13("1");
 		reqBody.setCardInWyT("0");
-		reqBody.setPwdT("1111111");
-		reqBody.setOpnAcctBnkNoT7("123321");
+		reqBody.setPwdT("3F1DC6FD968A3C0A4046F7FDDCB7E11B");
+		reqBody.setOpnAcctBnkNoT7("301290050029");
 		reqBody.setIdTpT2("15");
 		
-		//15	居民身份证        
-		reqBody.setIdTpT2("15");
-		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
-		reqBody.setIcCardFlgT4("0");//IC卡磁条卡标志   0磁条卡  1IC卡
+		//ic卡顺序号
+		reqBody.setIcCardSeqNoT1("001");
+		//ARQC   IC卡发卡行认证
+		reqBody.setIcCard91T("1553C75727C9DA42");
+		//ic卡
+		reqBody.setIcCardF55T("2469F26081553C75727C9DA429F2701809F101307020103A0A010010A0100000000004E783E039F3704E841ABFC9F36020085950500000008009A031907039C01969F02060000000000005F2A0201565A0A6222620110037989184F5F3401019F1302000782027C009F1A0201569F03060000000000009F330320A100");
+		//IC卡应用编号
+		reqBody.setIcCard9f09T("1553C75727C9DA42");
+		
+		reqBody.setIcCardAvaiDtT("241231");
+		
+
+		reqBody.setIcCardFlgT4("5");//IC卡磁条卡标志   0磁条卡  1IC卡
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));

@@ -21,10 +21,10 @@ import com.fxbank.tpp.bocm.service.IBocmSafeService;
 public class BASE_TEST {
     private static Logger logger = LoggerFactory.getLogger(BASE_TEST.class);
 
-    private static final String IP = "127.0.0.1";
-//    private static final String IP = "57.25.3.166";
-    private static final Integer PORT = 6006;
-    private static final String CODING = "UTF-8";
+//    private static final String IP = "127.0.0.1";
+    private static final String IP = "57.25.3.166";
+    private static final Integer PORT = 8501;
+    private static final String CODING = "GB18030";
     
     @Reference(version = "1.0.0")
     private IBocmSafeService safeService;
@@ -35,6 +35,7 @@ public class BASE_TEST {
     public String comm(String reqData) throws Exception {
     	MyLog myLog = this.logPool.get();
         Socket socket = new Socket(BASE_TEST.IP, BASE_TEST.PORT);
+        socket.setSoTimeout(1000);
         InputStream is = null;
         OutputStream os = null;
         String repData = null;
