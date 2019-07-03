@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 纳税信息核查反馈
  * @Author: 王鹏
  * @Date: 2019/5/13 17:46
  */
@@ -123,29 +123,13 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
         public static class InstgPty implements Serializable{
             private static final long serialVersionUID = -2970202727987414731L;
             private String InstgDrctPty = null;
-            private String DrctPtyNm = null;
             private String InstgPty = null;
-            private String PtyNm = null;
 
             /**
              * @return the instgDrctPty
              */
             public String getInstgDrctPty() {
                 return InstgDrctPty;
-            }
-
-            /**
-             * @return the ptyNm
-             */
-            public String getPtyNm() {
-                return PtyNm;
-            }
-
-            /**
-             * @param ptyNm the ptyNm to set
-             */
-            public void setPtyNm(String ptyNm) {
-                this.PtyNm = ptyNm;
             }
 
             /**
@@ -160,20 +144,6 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
              */
             public void setInstgPty(String instgPty) {
                 this.InstgPty = instgPty;
-            }
-
-            /**
-             * @return the drctPtyNm
-             */
-            public String getDrctPtyNm() {
-                return DrctPtyNm;
-            }
-
-            /**
-             * @param drctPtyNm the drctPtyNm to set
-             */
-            public void setDrctPtyNm(String drctPtyNm) {
-                this.DrctPtyNm = drctPtyNm;
             }
 
             /**

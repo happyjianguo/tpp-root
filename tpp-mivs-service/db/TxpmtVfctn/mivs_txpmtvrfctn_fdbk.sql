@@ -48,7 +48,7 @@ remark3 NVARCHAR2(100) NULL
 );
 
 
-COMMENT ON TABLE mivs_txpmtvrfctn_fdbk IS '企业信息联网核查_手机号核查业务信息表';
+COMMENT ON TABLE mivs_txpmtvrfctn_fdbk IS '企业信息联网核查_纳税信息核查反馈业务信息表';
 COMMENT ON COLUMN mivs_txpmtvrfctn_fdbk.plat_date IS '平台日期';
 COMMENT ON COLUMN mivs_txpmtvrfctn_fdbk.plat_trace IS '平台流水';
 COMMENT ON COLUMN mivs_txpmtvrfctn_fdbk.plat_time IS '平台时间';

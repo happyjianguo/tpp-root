@@ -9,6 +9,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000205;
 import com.fxbank.tpp.mivs.dto.esb.REQ_50023000205;
+import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsTxpmtVrfctnInfoModel;
 import com.fxbank.tpp.mivs.service.IMivsTxPmtVrfctnInfoService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
@@ -64,6 +65,10 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
 
         List<MivsTxpmtVrfctnInfoModel> txpmtVrfctnInfoModels = mivsTxPmtVrfctnInfoService.selectResult(txpmtVrfctnInfoModel); //查询数据库业务数据
         myLog.info(logger,"查询结果为：" + txpmtVrfctnInfoModels.toString());
+        if(txpmtVrfctnInfoModels == null || txpmtVrfctnInfoModels.isEmpty()) {
+            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
+            throw e;
+        }
 
         REP_50023000205 rep = new REP_50023000205();
         if(txpmtVrfctnInfoModels != null && !txpmtVrfctnInfoModels.isEmpty()) {

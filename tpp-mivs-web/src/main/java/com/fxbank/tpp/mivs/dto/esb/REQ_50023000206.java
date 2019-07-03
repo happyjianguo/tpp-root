@@ -8,7 +8,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import java.util.List;
 
 /**
- * @Description: 企业联网核查结果查询请求报文
+ * @Description: 纳税信息核查反馈
  * @Author: 王鹏
  * @Date: 2019/5/15 14:39
  */
@@ -23,7 +23,7 @@ public class REQ_50023000206 extends REQ_BASE {
     private REQ_50023000206.REQ_BODY reqBody;
 
     public REQ_50023000206(){
-        super.txDesc = "企业信息联网核查查业务受理时间查询";
+        super.txDesc = "纳税信息核查反馈";
     }
 
     public REQ_APP_HEAD getReqAppHead() {

@@ -4,8 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "mivs_regvrfctn_info")
-public class MivsRegvrfctnInfoEntity {
+@Table(name = "mivs_regvrfctn_fdbk")
+public class MivsRegvrfctnFdbkEntity {
     /**
      * null
      */
@@ -131,26 +131,20 @@ public class MivsRegvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "AGT_NM")
-    private String agtNm;
+    @Column(name = "SYS_IND")
+    private String sysInd;
 
     /**
      * null
      */
-    @Column(name = "AGT_ID")
-    private String agtId;
+    @Column(name = "ORIG_DLV_MSGID")
+    private String origDlvMsgid;
 
     /**
      * null
      */
-    @Column(name = "OP_NM")
-    private String opNm;
-
-    /**
-     * null
-     */
-    @Column(name = "MARKET_TYPE")
-    private String marketType;
+    @Column(name = "ORIG_RCV_MSGID")
+    private String origRcvMsgid;
 
     /**
      * null
@@ -197,18 +191,6 @@ public class MivsRegvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "PG_NB")
-    private Integer pgNb;
-
-    /**
-     * null
-     */
-    @Column(name = "LAST_PG_IND")
-    private String lastPgInd;
-
-    /**
-     * null
-     */
     @Column(name = "RSLT")
     private String rslt;
 
@@ -221,44 +203,20 @@ public class MivsRegvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "BAS_INFO_CNT")
-    private Integer basInfoCnt;
+    @Column(name = "CNTT")
+    private String cntt;
 
     /**
      * null
      */
-    @Column(name = "CO_SHRHDRFND_INFO_CNT")
-    private Integer coShrhdrfndInfoCnt;
+    @Column(name = "CONTACT_NM")
+    private String contactNm;
 
     /**
      * null
      */
-    @Column(name = "DIR_SUPSRSGR_INFO_CNT")
-    private Integer dirSupsrsgrInfoCnt;
-
-    /**
-     * null
-     */
-    @Column(name = "CHNG_INFO_CNT")
-    private Integer chngInfoCnt;
-
-    /**
-     * null
-     */
-    @Column(name = "ABNML_BIZ_INFO_CNT")
-    private Integer abnmlBizInfoCnt;
-
-    /**
-     * null
-     */
-    @Column(name = "ILL_DSCRT_INFO_CNT")
-    private Integer illDscrtInfoCnt;
-
-    /**
-     * null
-     */
-    @Column(name = "LIC_NULL_CNT")
-    private Integer licNullCnt;
+    @Column(name = "CONTACT_NB")
+    private String contactNb;
 
     /**
      * null
@@ -275,14 +233,32 @@ public class MivsRegvrfctnInfoEntity {
     /**
      * null
      */
+    @Column(name = "PTY_ID")
+    private String ptyId;
+
+    /**
+     * null
+     */
+    @Column(name = "PTY_PRC_CD")
+    private String ptyPrcCd;
+
+    /**
+     * null
+     */
     @Column(name = "RJCT_INF")
     private String rjctInf;
 
     /**
      * null
      */
-    @Column(name = "FDBK_FLAG")
-    private String fdbkFlag;
+    @Column(name = "PRC_DT")
+    private String prcDt;
+
+    /**
+     * null
+     */
+    @Column(name = "NETG_RND")
+    private String netgRnd;
 
     /**
      * null
@@ -301,6 +277,48 @@ public class MivsRegvrfctnInfoEntity {
      */
     @Column(name = "REMARK3")
     private String remark3;
+
+    /**
+     * null
+     */
+    @Column(name = "BAS_INFO")
+    private String basInfo;
+
+    /**
+     * null
+     */
+    @Column(name = "COS_INFO")
+    private String cosInfo;
+
+    /**
+     * null
+     */
+    @Column(name = "DIR_INFO")
+    private String dirInfo;
+
+    /**
+     * null
+     */
+    @Column(name = "CHNG_INFO")
+    private String chngInfo;
+
+    /**
+     * null
+     */
+    @Column(name = "ABN_INFO")
+    private String abnInfo;
+
+    /**
+     * null
+     */
+    @Column(name = "ILL_INFO")
+    private String illInfo;
+
+    /**
+     * null
+     */
+    @Column(name = "LIC_INFO")
+    private String licInfo;
 
     /**
      * null
@@ -590,84 +608,84 @@ public class MivsRegvrfctnInfoEntity {
         this.instdPty = instdPty;
     }
 
+    /**
+     * null
+     * @return RCV_MSG_ID null
+     */
     public String getRcvMsgId() {
         return rcvMsgId;
     }
 
+    /**
+     * null
+     * @param rcvMsgId null
+     */
     public void setRcvMsgId(String rcvMsgId) {
         this.rcvMsgId = rcvMsgId;
     }
 
+    /**
+     * null
+     * @return RCV_CRE_DT_TM null
+     */
     public String getRcvCreDtTm() {
         return rcvCreDtTm;
     }
 
+    /**
+     * null
+     * @param rcvCreDtTm null
+     */
     public void setRcvCreDtTm(String rcvCreDtTm) {
         this.rcvCreDtTm = rcvCreDtTm;
     }
 
     /**
      * null
-     * @return AGT_NM null
+     * @return SYS_IND null
      */
-    public String getAgtNm() {
-        return agtNm;
+    public String getSysInd() {
+        return sysInd;
     }
 
     /**
      * null
-     * @param agtNm null
+     * @param sysInd null
      */
-    public void setAgtNm(String agtNm) {
-        this.agtNm = agtNm;
+    public void setSysInd(String sysInd) {
+        this.sysInd = sysInd;
     }
 
     /**
      * null
-     * @return AGT_ID null
+     * @return ORIG_DLV_MSGID null
      */
-    public String getAgtId() {
-        return agtId;
+    public String getOrigDlvMsgid() {
+        return origDlvMsgid;
     }
 
     /**
      * null
-     * @param agtId null
+     * @param origDlvMsgid null
      */
-    public void setAgtId(String agtId) {
-        this.agtId = agtId;
+    public void setOrigDlvMsgid(String origDlvMsgid) {
+        this.origDlvMsgid = origDlvMsgid;
     }
 
     /**
      * null
-     * @return OP_NM null
+     * @return ORIG_RCV_MSGID null
      */
-    public String getOpNm() {
-        return opNm;
+    public String getOrigRcvMsgid() {
+        return origRcvMsgid;
     }
 
     /**
      * null
-     * @param opNm null
+     * @param origRcvMsgid null
      */
-    public void setOpNm(String opNm) {
-        this.opNm = opNm;
-    }
-
-    /**
-     * null
-     * @return MARKET_TYPE null
-     */
-    public String getMarketType() {
-        return marketType;
-    }
-
-    /**
-     * null
-     * @param marketType null
-     */
-    public void setMarketType(String marketType) {
-        this.marketType = marketType;
+    public void setOrigRcvMsgid(String origRcvMsgid) {
+        this.origRcvMsgid = origRcvMsgid;
     }
 
     /**
@@ -784,38 +802,6 @@ public class MivsRegvrfctnInfoEntity {
 
     /**
      * null
-     * @return PG_NB null
-     */
-    public Integer getPgNb() {
-        return pgNb;
-    }
-
-    /**
-     * null
-     * @param pgNb null
-     */
-    public void setPgNb(Integer pgNb) {
-        this.pgNb = pgNb;
-    }
-
-    /**
-     * null
-     * @return LAST_PG_IND null
-     */
-    public String getLastPgInd() {
-        return lastPgInd;
-    }
-
-    /**
-     * null
-     * @param lastPgInd null
-     */
-    public void setLastPgInd(String lastPgInd) {
-        this.lastPgInd = lastPgInd;
-    }
-
-    /**
-     * null
      * @return RSLT null
      */
     public String getRslt() {
@@ -848,114 +834,50 @@ public class MivsRegvrfctnInfoEntity {
 
     /**
      * null
-     * @return BAS_INFO_CNT null
+     * @return CNTT null
      */
-    public Integer getBasInfoCnt() {
-        return basInfoCnt;
+    public String getCntt() {
+        return cntt;
     }
 
     /**
      * null
-     * @param basInfoCnt null
+     * @param cntt null
      */
-    public void setBasInfoCnt(Integer basInfoCnt) {
-        this.basInfoCnt = basInfoCnt;
+    public void setCntt(String cntt) {
+        this.cntt = cntt;
     }
 
     /**
      * null
-     * @return CO_SHRHDRFND_INFO_CNT null
+     * @return CONTACT_NM null
      */
-    public Integer getCoShrhdrfndInfoCnt() {
-        return coShrhdrfndInfoCnt;
+    public String getContactNm() {
+        return contactNm;
     }
 
     /**
      * null
-     * @param coShrhdrfndInfoCnt null
+     * @param contactNm null
      */
-    public void setCoShrhdrfndInfoCnt(Integer coShrhdrfndInfoCnt) {
-        this.coShrhdrfndInfoCnt = coShrhdrfndInfoCnt;
+    public void setContactNm(String contactNm) {
+        this.contactNm = contactNm;
     }
 
     /**
      * null
-     * @return DIR_SUPSRSGR_INFO_CNT null
+     * @return CONTACT_NB null
      */
-    public Integer getDirSupsrsgrInfoCnt() {
-        return dirSupsrsgrInfoCnt;
+    public String getContactNb() {
+        return contactNb;
     }
 
     /**
      * null
-     * @param dirSupsrsgrInfoCnt null
+     * @param contactNb null
      */
-    public void setDirSupsrsgrInfoCnt(Integer dirSupsrsgrInfoCnt) {
-        this.dirSupsrsgrInfoCnt = dirSupsrsgrInfoCnt;
-    }
-
-    /**
-     * null
-     * @return CHNG_INFO_CNT null
-     */
-    public Integer getChngInfoCnt() {
-        return chngInfoCnt;
-    }
-
-    /**
-     * null
-     * @param chngInfoCnt null
-     */
-    public void setChngInfoCnt(Integer chngInfoCnt) {
-        this.chngInfoCnt = chngInfoCnt;
-    }
-
-    /**
-     * null
-     * @return ABNML_BIZ_INFO_CNT null
-     */
-    public Integer getAbnmlBizInfoCnt() {
-        return abnmlBizInfoCnt;
-    }
-
-    /**
-     * null
-     * @param abnmlBizInfoCnt null
-     */
-    public void setAbnmlBizInfoCnt(Integer abnmlBizInfoCnt) {
-        this.abnmlBizInfoCnt = abnmlBizInfoCnt;
-    }
-
-    /**
-     * null
-     * @return ILL_DSCRT_INFO_CNT null
-     */
-    public Integer getIllDscrtInfoCnt() {
-        return illDscrtInfoCnt;
-    }
-
-    /**
-     * null
-     * @param illDscrtInfoCnt null
-     */
-    public void setIllDscrtInfoCnt(Integer illDscrtInfoCnt) {
-        this.illDscrtInfoCnt = illDscrtInfoCnt;
-    }
-
-    /**
-     * null
-     * @return LIC_NULL_CNT null
-     */
-    public Integer getLicNullCnt() {
-        return licNullCnt;
-    }
-
-    /**
-     * null
-     * @param licNullCnt null
-     */
-    public void setLicNullCnt(Integer licNullCnt) {
-        this.licNullCnt = licNullCnt;
+    public void setContactNb(String contactNb) {
+        this.contactNb = contactNb;
     }
 
     /**
@@ -992,6 +914,38 @@ public class MivsRegvrfctnInfoEntity {
 
     /**
      * null
+     * @return PTY_ID null
+     */
+    public String getPtyId() {
+        return ptyId;
+    }
+
+    /**
+     * null
+     * @param ptyId null
+     */
+    public void setPtyId(String ptyId) {
+        this.ptyId = ptyId;
+    }
+
+    /**
+     * null
+     * @return PTY_PRC_CD null
+     */
+    public String getPtyPrcCd() {
+        return ptyPrcCd;
+    }
+
+    /**
+     * null
+     * @param ptyPrcCd null
+     */
+    public void setPtyPrcCd(String ptyPrcCd) {
+        this.ptyPrcCd = ptyPrcCd;
+    }
+
+    /**
+     * null
      * @return RJCT_INF null
      */
     public String getRjctInf() {
@@ -1006,12 +960,36 @@ public class MivsRegvrfctnInfoEntity {
         this.rjctInf = rjctInf;
     }
 
-    public String getFdbkFlag() {
-        return fdbkFlag;
+    /**
+     * null
+     * @return PRC_DT null
+     */
+    public String getPrcDt() {
+        return prcDt;
     }
 
-    public void setFdbkFlag(String fdbkFlag) {
-        this.fdbkFlag = fdbkFlag;
+    /**
+     * null
+     * @param prcDt null
+     */
+    public void setPrcDt(String prcDt) {
+        this.prcDt = prcDt;
+    }
+
+    /**
+     * null
+     * @return NETG_RND null
+     */
+    public String getNetgRnd() {
+        return netgRnd;
+    }
+
+    /**
+     * null
+     * @param netgRnd null
+     */
+    public void setNetgRnd(String netgRnd) {
+        this.netgRnd = netgRnd;
     }
 
     /**
@@ -1060,5 +1038,117 @@ public class MivsRegvrfctnInfoEntity {
      */
     public void setRemark3(String remark3) {
         this.remark3 = remark3;
+    }
+
+    /**
+     * null
+     * @return BAS_INFO null
+     */
+    public String getBasInfo() {
+        return basInfo;
+    }
+
+    /**
+     * null
+     * @param basInfo null
+     */
+    public void setBasInfo(String basInfo) {
+        this.basInfo = basInfo;
+    }
+
+    /**
+     * null
+     * @return COS_INFO null
+     */
+    public String getCosInfo() {
+        return cosInfo;
+    }
+
+    /**
+     * null
+     * @param cosInfo null
+     */
+    public void setCosInfo(String cosInfo) {
+        this.cosInfo = cosInfo;
+    }
+
+    /**
+     * null
+     * @return DIR_INFO null
+     */
+    public String getDirInfo() {
+        return dirInfo;
+    }
+
+    /**
+     * null
+     * @param dirInfo null
+     */
+    public void setDirInfo(String dirInfo) {
+        this.dirInfo = dirInfo;
+    }
+
+    /**
+     * null
+     * @return CHNG_INFO null
+     */
+    public String getChngInfo() {
+        return chngInfo;
+    }
+
+    /**
+     * null
+     * @param chngInfo null
+     */
+    public void setChngInfo(String chngInfo) {
+        this.chngInfo = chngInfo;
+    }
+
+    /**
+     * null
+     * @return ABN_INFO null
+     */
+    public String getAbnInfo() {
+        return abnInfo;
+    }
+
+    /**
+     * null
+     * @param abnInfo null
+     */
+    public void setAbnInfo(String abnInfo) {
+        this.abnInfo = abnInfo;
+    }
+
+    /**
+     * null
+     * @return ILL_INFO null
+     */
+    public String getIllInfo() {
+        return illInfo;
+    }
+
+    /**
+     * null
+     * @param illInfo null
+     */
+    public void setIllInfo(String illInfo) {
+        this.illInfo = illInfo;
+    }
+
+    /**
+     * null
+     * @return LIC_INFO null
+     */
+    public String getLicInfo() {
+        return licInfo;
+    }
+
+    /**
+     * null
+     * @param licInfo null
+     */
+    public void setLicInfo(String licInfo) {
+        this.licInfo = licInfo;
     }
 }

@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /**
- * @Description: 企业联网核查结果查询应答报文
+ * @Description: ESB“纳税信息核查结果疑义反馈”应答报文 mivs.348.001.01
  * @Author: 王鹏
  * @Date: 2019/5/15 14:40
  */
@@ -56,69 +56,26 @@ public class REP_50023000206 extends REP_BASE {
 
     public class REP_BODY {
 
-        @JSONField(name = "ORIG_APPLY_MSG_ID")
-        private String orgnlDlvrgMsgId;//原申请报文标识号
-        public String getOrgnlDlvrgMsgId() {
-            return orgnlDlvrgMsgId;
-        }
-        public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
-            this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
-        }
+        @JSONField(name = "ProcSts")
+        private String procSts;//申请报文处理状态
 
-        @JSONField(name = "ORIG_ANSWER_MSG_ID")
-        private String orgnlRcvgMsgId;//数据源日期
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
+        @JSONField(name = "ProcCd")
+        private String procCd;//申请报文处理码
 
-        //循环开始TXPYR_INFO_ARRAY
-        //以下信息 当“纳税信息核查结果”为“MCHD” 时填
-        @JSONField(name = "TAX_JDCY_CODE")
-        private String txAuthCd;//税务机关代码
+        @JSONField(name="PtyId")
+        private String ptyId;//拒绝业务的参与机构行号
 
-        public String getTxAuthCd() {
-            return txAuthCd;
-        }
+        @JSONField(name = "PtyPrcCd")
+        private String ptyPrcCd;//参与机构业务拒绝码
 
-        public void setTxAuthCd(String txAuthCd) {
-            this.txAuthCd = txAuthCd;
-        }
+        @JSONField(name = "RjctInf")
+        private String rjctInf;//申请报文拒绝信息
 
-        @JSONField(name = "TAX_JDCY_NAME")
-        private String txAuthNm;//税务机关名称
+        @JSONField(name = "PrcDt")
+        private String prcDt;//处理日期（终态日期）
 
-        @JSONField(name = "TXPYR_STATUS")
-        private String txpyrSts;//纳税人状态
-        //循环结束
-
-        //以下信息 当“纳税信息核查结果”为非“MCHD” 时填
-        @JSONField(name = "MSG_RFS_STATUS")
-        private String procSts;//申请报文拒绝状态
-
-        @JSONField(name = "MSG_RFS_CODE")
-        private String procCd;//申请报文拒绝码
-
-        @JSONField(name = "MSG_RFS_INFO")
-        private String rjctinf;//申请报文拒绝信息
-
-        public String getTxAuthNm() {
-            return txAuthNm;
-        }
-
-        public void setTxAuthNm(String txAuthNm) {
-            this.txAuthNm = txAuthNm;
-        }
-
-        public String getTxpyrSts() {
-            return txpyrSts;
-        }
-
-        public void setTxpyrSts(String txpyrSts) {
-            this.txpyrSts = txpyrSts;
-        }
+        @JSONField(name = "NetgRnd")
+        private String netgRnd;//轧差场次
 
         public String getProcSts() {
             return procSts;
@@ -127,6 +84,7 @@ public class REP_50023000206 extends REP_BASE {
         public void setProcSts(String procSts) {
             this.procSts = procSts;
         }
+
         public String getProcCd() {
             return procCd;
         }
@@ -134,13 +92,45 @@ public class REP_50023000206 extends REP_BASE {
         public void setProcCd(String procCd) {
             this.procCd = procCd;
         }
-        public String getRjctinf() {
-            return rjctinf;
+
+        public String getPtyId() {
+            return ptyId;
         }
 
-        public void setRjctinf(String rjctinf) {
-            this.rjctinf = rjctinf;
+        public void setPtyId(String ptyId) {
+            this.ptyId = ptyId;
         }
 
+        public String getPtyPrcCd() {
+            return ptyPrcCd;
+        }
+
+        public void setPtyPrcCd(String ptyPrcCd) {
+            this.ptyPrcCd = ptyPrcCd;
+        }
+
+        public String getRjctInf() {
+            return rjctInf;
+        }
+
+        public void setRjctInf(String rjctInf) {
+            this.rjctInf = rjctInf;
+        }
+
+        public String getPrcDt() {
+            return prcDt;
+        }
+
+        public void setPrcDt(String prcDt) {
+            this.prcDt = prcDt;
+        }
+
+        public String getNetgRnd() {
+            return netgRnd;
+        }
+
+        public void setNetgRnd(String netgRnd) {
+            this.netgRnd = netgRnd;
+        }
     }
 }

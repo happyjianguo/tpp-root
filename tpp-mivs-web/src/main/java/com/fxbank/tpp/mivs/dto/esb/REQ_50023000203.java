@@ -23,7 +23,7 @@ public class REQ_50023000203 extends REQ_BASE {
     private REQ_50023000203.REQ_BODY reqBody;
 
     public REQ_50023000203(){
-        super.txDesc = "手机号码/纳税信息核查结果疑义反馈";
+        super.txDesc = "手机号码核查结果疑义反馈";
     }
 
     public REQ_APP_HEAD getReqAppHead() {

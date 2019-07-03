@@ -21,7 +21,7 @@ public class REP_50023000205 extends REP_BASE {
     private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
     @JSONField(name = "BODY")
-    private REP_50023000205.REP_BODY repBody = new REP_50023000205.REP_BODY();
+    private REP_BODY repBody = new REP_BODY();
 
     public REP_APP_HEAD getRepAppHead() {
         return repAppHead;
@@ -44,13 +44,13 @@ public class REP_50023000205 extends REP_BASE {
 
 
 
-    public REP_50023000205.REP_BODY getRepBody() {
+    public REP_BODY getRepBody() {
         return repBody;
     }
 
 
 
-    public void setRepBody(REP_50023000205.REP_BODY repBody) {
+    public void setRepBody(REP_BODY repBody) {
         this.repBody = repBody;
     }
 

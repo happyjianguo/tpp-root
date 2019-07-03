@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @Description:
+ * @Description: 纳税信息核查反馈报文
  * @Author: 王鹏
  * @Date: 2019/5/13 17:45
  */

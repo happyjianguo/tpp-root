@@ -20,7 +20,7 @@ public class REQ_50023000205 extends REQ_BASE {
     private REQ_SYS_HEAD reqSysHead;
 
     @JSONField(name = "BODY")
-    private REQ_50023000205.REQ_BODY reqBody;
+    private REQ_BODY reqBody;
 
     public REQ_50023000205(){
         super.txDesc = "纳税信息核查结果查询";
@@ -42,11 +42,11 @@ public class REQ_50023000205 extends REQ_BASE {
         this.reqSysHead = reqSysHead;
     }
 
-    public REQ_50023000205.REQ_BODY getReqBody() {
+    public REQ_BODY getReqBody() {
         return reqBody;
     }
 
-    public void setReqBody(REQ_50023000205.REQ_BODY reqBody) {
+    public void setReqBody(REQ_BODY reqBody) {
         this.reqBody = reqBody;
     }
 

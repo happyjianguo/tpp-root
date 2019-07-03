@@ -69,6 +69,8 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             regvrfctnInfoUmasAndIatt.setPlat_trace(regvrfctnInfoTablSelectMaster.getPlat_trace());
             //主表应答信息赋值
             regvrfctnInfoUmasAndIatt.setMivs_sts("05");
+            regvrfctnInfoUmasAndIatt.setRcv_msg_id(mivs325.getRtrRegVrfctn().getMsgHdr().getMsgId());
+            regvrfctnInfoUmasAndIatt.setRcv_cre_dt_tm(mivs325.getRtrRegVrfctn().getMsgHdr().getCreDtTm());
             regvrfctnInfoUmasAndIatt.setPg_nb(mivs325.getRtrRegVrfctn().getMsgPgntn().getPgNb());
             regvrfctnInfoUmasAndIatt.setLast_pg_ind(msgPgntn.getLastPgInd());
             regvrfctnInfoUmasAndIatt.setRslt(vrfctnInf.getRslt());

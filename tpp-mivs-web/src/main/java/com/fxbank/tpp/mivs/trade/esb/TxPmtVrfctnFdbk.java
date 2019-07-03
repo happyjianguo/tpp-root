@@ -94,7 +94,7 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         MIVS_348_001_01 mivs348 = new MIVS_348_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         MIVS_348_001_01_TxPmtVrfctnFdbk.MsgHdr msgHdr = mivs348.getTxPmtVrfctnFdbk().getMsgHdr();
         MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk fdbk = mivs348.getTxPmtVrfctnFdbk().getFdbk();
-        myLog.info(logger, "手机号码核查结果疑义反馈");
+        myLog.info(logger, "纳税信息核查结果疑义反馈");
         //拼人行报文
         mivs348.getHeader().setOrigSender(bankNumber);
         mivs348.getHeader().setOrigReceiver("0000");
@@ -105,7 +105,7 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         fdbk.setSysInd("CSAT");
         fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(reqBody.getOrgnlDlvrgMsgId());
         fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(reqBody.getOrgnlRcvgMsgId());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setCoNm(reqBody.getContactNm());
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setCoNm(reqBody.getCompanyName());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(reqBody.getUniSocCdtCd());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(reqBody.getTxpyrIdNb());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(reqBody.getRslt());
@@ -154,7 +154,7 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
         txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
         txpmtVrfctnInfoModel.setSys_ind(fdbk.getSysInd());
-        txpmtVrfctnInfoModel.setCo_nm(reqBody.getContactNm());
+        txpmtVrfctnInfoModel.setCo_nm(reqBody.getCompanyName());
         txpmtVrfctnInfoModel.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
         txpmtVrfctnInfoModel.setTxpyr_id_nb(reqBody.getTxpyrIdNb());
         txpmtVrfctnInfoModel.setRslt(reqBody.getRslt());

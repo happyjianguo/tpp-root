@@ -6,11 +6,11 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description: 手机号联网核查结果查询请求报文
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/6/24 11:20
+ * @Date: 2019/7/2 16:38
  */
-public class REQ_50023000202 extends REQ_BASE {
+public class REQ_50023000208 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
     private REQ_APP_HEAD reqAppHead;
 
@@ -20,8 +20,8 @@ public class REQ_50023000202 extends REQ_BASE {
     @JSONField(name = "BODY")
     private REQ_BODY reqBody;
 
-    public REQ_50023000202(){
-        super.txDesc = "手机号码核心信息结果查询";
+    public REQ_50023000208(){
+        super.txDesc = "登记信息核查结果查询";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -49,6 +49,7 @@ public class REQ_50023000202 extends REQ_BASE {
     }
 
     public class REQ_BODY {
+
         @JSONField(name = "StartDt")
         private Integer startDt;    // 核查开始时间
 
@@ -67,23 +68,26 @@ public class REQ_50023000202 extends REQ_BASE {
         @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.321.001.01或mivs.323.001.01 的报文标识号
 
-        @JSONField(name = "MobNb")
-        private String mobNb; // 手机号
-
-        @JSONField(name = "NAME")
-        private String nm;		//姓名
-
-        @JSONField(name = "DOCUMENT_TYPE")
-        private String idTp;		//证件类型
-
-        @JSONField(name = "DOCUMENT_ID")
-        private String id;		//证件号码
+        @JSONField(name = "ENT_NAME")
+        private String entNm;    //单位名称
 
         @JSONField(name = "SOCIAL_CODE")
-        private String uniSocCdtCd;		//统一社会信用代码
+        private String uniSocCdtCd;        //统一社会信用代码
 
-        @JSONField(name = "BIZ_REG_NO")
-        private String bizRegNb;		//工商注册号
+        @JSONField(name = "NmOfLglPrsn")
+        private String nmOfLglPrsn;        //法定代表人或单位负责人姓名
+
+        @JSONField(name = "IdOfLglPrsn")
+        private String IdOfLglPrsn; //法定代表人或单位负责人身份证件号
+
+        @JSONField(name = "TraNm")
+        private String traNm;    //字号名称
+
+        @JSONField(name = "Nm")
+        private String nm;        //经营者姓名
+
+        @JSONField(name = "Id")
+        private String id;        //经营者证件号
 
         public Integer getStartDt() {
             return startDt;
@@ -133,36 +137,12 @@ public class REQ_50023000202 extends REQ_BASE {
             this.orgnlRcvgMsgId = orgnlRcvgMsgId;
         }
 
-        public String getMobNb() {
-            return mobNb;
+        public String getEntNm() {
+            return entNm;
         }
 
-        public void setMobNb(String mobNb) {
-            this.mobNb = mobNb;
-        }
-
-        public String getNm() {
-            return nm;
-        }
-
-        public void setNm(String nm) {
-            this.nm = nm;
-        }
-
-        public String getIdTp() {
-            return idTp;
-        }
-
-        public void setIdTp(String idTp) {
-            this.idTp = idTp;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
+        public void setEntNm(String entNm) {
+            this.entNm = entNm;
         }
 
         public String getUniSocCdtCd() {
@@ -173,29 +153,44 @@ public class REQ_50023000202 extends REQ_BASE {
             this.uniSocCdtCd = uniSocCdtCd;
         }
 
-        public String getBizRegNb() {
-            return bizRegNb;
+        public String getNmOfLglPrsn() {
+            return nmOfLglPrsn;
         }
 
-        public void setBizRegNb(String bizRegNb) {
-            this.bizRegNb = bizRegNb;
+        public void setNmOfLglPrsn(String nmOfLglPrsn) {
+            this.nmOfLglPrsn = nmOfLglPrsn;
         }
 
-        @Override
-        public String toString() {
-            return "REQ_BODY{" +
-                    "startDt='" + startDt + '\'' +
-                    ", endDt='" + endDt + '\'' +
-                    ", origBranchId='" + origBranchId + '\'' +
-                    ", origUserId='" + origUserId + '\'' +
-                    ", mobNb='" + mobNb + '\'' +
-                    ", nm='" + nm + '\'' +
-                    ", idTp='" + idTp + '\'' +
-                    ", id='" + id + '\'' +
-                    ", uniSocCdtCd='" + uniSocCdtCd + '\'' +
-                    ", bizRegNb='" + bizRegNb + '\'' +
-                    '}';
+        public String getIdOfLglPrsn() {
+            return IdOfLglPrsn;
+        }
+
+        public void setIdOfLglPrsn(String idOfLglPrsn) {
+            IdOfLglPrsn = idOfLglPrsn;
+        }
+
+        public String getTraNm() {
+            return traNm;
+        }
+
+        public void setTraNm(String traNm) {
+            this.traNm = traNm;
+        }
+
+        public String getNm() {
+            return nm;
+        }
+
+        public void setNm(String nm) {
+            this.nm = nm;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
-
 }

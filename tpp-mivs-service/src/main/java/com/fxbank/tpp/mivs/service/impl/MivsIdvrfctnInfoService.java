@@ -88,6 +88,8 @@ public class MivsIdVrfctnInfoService implements IMivsIdVrfctnInfoService {
         info.setPlatDate(mivsIdVrfctnInfoModel.getStart_dt());
         info.setBranchId(mivsIdVrfctnInfoModel.getBranch_id());
         info.setUserId(mivsIdVrfctnInfoModel.getUser_id());
+        info.setMsgId(mivsIdVrfctnInfoModel.getOrig_dlv_msgid());
+        info.setRcvMsgId(mivsIdVrfctnInfoModel.getOrig_rcv_msgid());
         info.setMobNb(mivsIdVrfctnInfoModel.getMob_nb());
         info.setNm(mivsIdVrfctnInfoModel.getNm());
         info.setIdTp(mivsIdVrfctnInfoModel.getId_tp());

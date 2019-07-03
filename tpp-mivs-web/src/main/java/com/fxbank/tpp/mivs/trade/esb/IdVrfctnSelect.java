@@ -56,6 +56,8 @@ public class IdVrfctnSelect extends TradeBase implements TradeExecutionStrategy 
         idVrfctnTableSelect.setEnd_dt(reqBody.getEndDt());
         idVrfctnTableSelect.setBranch_id(reqBody.getOrigBranchId());
         idVrfctnTableSelect.setUser_id(reqBody.getOrigUserId());
+        idVrfctnTableSelect.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
+        idVrfctnTableSelect.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
         idVrfctnTableSelect.setMob_nb(reqBody.getMobNb());
         idVrfctnTableSelect.setNm(reqBody.getNm());
         idVrfctnTableSelect.setId_tp(reqBody.getIdTp());

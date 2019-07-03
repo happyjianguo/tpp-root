@@ -176,7 +176,7 @@ public class MivsTxpmtVrfctnInfoService implements IMivsTxPmtVrfctnInfoService {
 
         infoEntityList = mapper.select(infoEntity);
         if(!infoEntityList.isEmpty() && infoEntityList != null) {
-            List<MivsTxpmtVrfctnInfoModel> idVrfctnInfoModel = new ArrayList<MivsTxpmtVrfctnInfoModel>();
+            List<MivsTxpmtVrfctnInfoModel> txpmtVrfctnInfoModels = new ArrayList<MivsTxpmtVrfctnInfoModel>();
             for (MivsTxpmtvrfctnInfoEntity Info : infoEntityList) {
                 MivsTxpmtVrfctnInfoModel infoResult = new MivsTxpmtVrfctnInfoModel();
                 infoResult.setTran_date(Info.getTranDate());
@@ -212,9 +212,9 @@ public class MivsTxpmtVrfctnInfoService implements IMivsTxPmtVrfctnInfoService {
                     }
                     infoResult.setTxpmtInfList(txpmtInfListArrayMsg);
                 }
-                idVrfctnInfoModel.add(infoResult);
+                txpmtVrfctnInfoModels.add(infoResult);
             }
-            return idVrfctnInfoModel;
+            return txpmtVrfctnInfoModels;
         }else{
             return null;
         }

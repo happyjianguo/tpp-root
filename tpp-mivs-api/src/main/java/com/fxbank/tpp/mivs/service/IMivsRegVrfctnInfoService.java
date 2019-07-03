@@ -2,6 +2,8 @@ package com.fxbank.tpp.mivs.service;
 
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsRegVrfctnInfoModel;
 
+import java.util.List;
+
 /**
  * @Description: 登记信息核查业务表操作接口
  * @Author: 王鹏
@@ -33,4 +35,31 @@ public interface IMivsRegVrfctnInfoService {
      */
     MivsRegVrfctnInfoModel selectMasterAndAttached(String Msgid, String Instgpty, String flag);
 
+    /**
+     * 查询数据库表信息
+     *
+     * @param mivsRegVrfctnInfoModel
+     */
+    List<MivsRegVrfctnInfoModel> selectResult(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel);
+
+    /**
+     * 查询数据库主表信息
+     *
+     * @param mivsRegVrfctnInfoModel
+     */
+    MivsRegVrfctnInfoModel selectFdbk(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel);
+
+    /**
+     * 新增登记信息核查反馈表数据
+     *
+     * @param mivsRegVrfctnInfoModel
+     */
+    void insertFdbk(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel);
+
+    /**
+     * 更新数据库表状态信息
+     *
+     * @param mivsRegVrfctnInfoModel
+     */
+    void updateFdbk(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel);
 }

@@ -34,6 +34,8 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
     private MivsRegvrfctnIllInfoEntityMapper illInfoEntityMapper;
     @Resource
     private MivsRegvrfctnLicInfoEntityMapper licInfoEntityMapper;
+    @Resource
+    private MivsRegvrfctnFdbkEntityMapper fdbkEntityMapper;
 
     @Override
     public void insertMaster(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel) {
@@ -77,6 +79,8 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         info.setPlatDate(mivsRegVrfctnInfoModel.getPlat_date());
         info.setPlatTrace(mivsRegVrfctnInfoModel.getPlat_trace());
         info.setMivsSts(mivsRegVrfctnInfoModel.getMivs_sts());
+        info.setRcvMsgId(mivsRegVrfctnInfoModel.getRcv_msg_id());
+        info.setRcvCreDtTm(mivsRegVrfctnInfoModel.getCre_dt_tm());
         info.setProcCd(mivsRegVrfctnInfoModel.getProc_cd());
         info.setProcSts(mivsRegVrfctnInfoModel.getProc_sts());
         info.setRjctInf(mivsRegVrfctnInfoModel.getRjct_inf());
@@ -364,10 +368,10 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                 MivsRegvrfctnCosInfoEntity cosInfo = new MivsRegvrfctnCosInfoEntity();
                 cosInfo.setOrigMsgId(Msgid);
                 cosInfo.setOrigInstgPty(Instgpty);
-                List<MivsRegvrfctnCosInfoEntity> mivsRegvrfctnCosInfoEntities = cosInfoEntityMapper.select(cosInfo);
-                if (mivsRegvrfctnCosInfoEntities != null && !mivsRegvrfctnCosInfoEntities.isEmpty()) {
+                List<MivsRegvrfctnCosInfoEntity> cosInfoEntities = cosInfoEntityMapper.select(cosInfo);
+                if (cosInfoEntities != null && !cosInfoEntities.isEmpty()) {
                     List<MivsRegVrfctnInfoModel.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.CoShrhdrFndInfo>();
-                    for (MivsRegvrfctnCosInfoEntity Info : mivsRegvrfctnCosInfoEntities) {
+                    for (MivsRegvrfctnCosInfoEntity Info : cosInfoEntities) {
                         MivsRegVrfctnInfoModel.CoShrhdrFndInfo coShrhdrFndInfoMsg = new MivsRegVrfctnInfoModel.CoShrhdrFndInfo();
                         coShrhdrFndInfoMsg.setPg_nb(Info.getPgNb());
                         coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(Info.getCoShrhdrfndInfoNb());
@@ -387,10 +391,10 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                 MivsRegvrfctnDirInfoEntity dirInfo = new MivsRegvrfctnDirInfoEntity();
                 dirInfo.setOrigMsgId(Msgid);
                 dirInfo.setOrigInstgPty(Instgpty);
-                List<MivsRegvrfctnDirInfoEntity> mivsRegvrfctnDirInfoEntities = dirInfoEntityMapper.select(dirInfo);
-                if (mivsRegvrfctnDirInfoEntities != null && !mivsRegvrfctnDirInfoEntities.isEmpty()) {
+                List<MivsRegvrfctnDirInfoEntity> dirInfoEntities = dirInfoEntityMapper.select(dirInfo);
+                if (dirInfoEntities != null && !dirInfoEntities.isEmpty()) {
                     List<MivsRegVrfctnInfoModel.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.DirSupSrMgrInfo>();
-                    for (MivsRegvrfctnDirInfoEntity Info : mivsRegvrfctnDirInfoEntities) {
+                    for (MivsRegvrfctnDirInfoEntity Info : dirInfoEntities) {
                         MivsRegVrfctnInfoModel.DirSupSrMgrInfo dirSupSrMgrInfoMsg = new MivsRegVrfctnInfoModel.DirSupSrMgrInfo();
                         dirSupSrMgrInfoMsg.setPg_nb(Info.getPgNb());
                         dirSupSrMgrInfoMsg.setDir_supsrsgr_info_nb(Info.getDirSupsrsgrInfoNb());
@@ -405,10 +409,10 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                 MivsRegvrfctnChngInfoEntity chngInfo = new MivsRegvrfctnChngInfoEntity();
                 chngInfo.setOrigMsgId(Msgid);
                 chngInfo.setOrigInstgPty(Instgpty);
-                List<MivsRegvrfctnChngInfoEntity> mivsRegvrfctnChngInfoEntities = chngInfoEntityMapper.select(chngInfo);
-                if (mivsRegvrfctnChngInfoEntities != null && !mivsRegvrfctnChngInfoEntities.isEmpty()) {
+                List<MivsRegvrfctnChngInfoEntity> chngInfoEntities = chngInfoEntityMapper.select(chngInfo);
+                if (chngInfoEntities != null && !chngInfoEntities.isEmpty()) {
                     List<MivsRegVrfctnInfoModel.ChngInfo> chngInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.ChngInfo>();
-                    for (MivsRegvrfctnChngInfoEntity Info : mivsRegvrfctnChngInfoEntities) {
+                    for (MivsRegvrfctnChngInfoEntity Info : chngInfoEntities) {
                         MivsRegVrfctnInfoModel.ChngInfo chngInfoMsg = new MivsRegVrfctnInfoModel.ChngInfo();
                         chngInfoMsg.setPg_nb(Info.getPgNb());
                         chngInfoMsg.setChng_info_nb(Info.getChngInfoNb());
@@ -425,10 +429,10 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                 MivsRegvrfctnAbnInfoEntity abnInfo = new MivsRegvrfctnAbnInfoEntity();
                 abnInfo.setOrigMsgId(Msgid);
                 abnInfo.setOrigInstgPty(Instgpty);
-                List<MivsRegvrfctnAbnInfoEntity> mivsRegvrfctnAbnInfoEntities = abnInfoEntityMapper.select(abnInfo);
-                if (mivsRegvrfctnAbnInfoEntities != null && !mivsRegvrfctnAbnInfoEntities.isEmpty()) {
+                List<MivsRegvrfctnAbnInfoEntity> abnInfoEntities = abnInfoEntityMapper.select(abnInfo);
+                if (abnInfoEntities != null && !abnInfoEntities.isEmpty()) {
                     List<MivsRegVrfctnInfoModel.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.AbnmlBizInfo>();
-                    for (MivsRegvrfctnAbnInfoEntity Info : mivsRegvrfctnAbnInfoEntities) {
+                    for (MivsRegvrfctnAbnInfoEntity Info : abnInfoEntities) {
                         MivsRegVrfctnInfoModel.AbnmlBizInfo abnInfoMsg = new MivsRegVrfctnInfoModel.AbnmlBizInfo();
                         abnInfoMsg.setPg_nb(Info.getPgNb());
                         abnInfoMsg.setAbn_info_nb(Info.getAbnInfoNb());
@@ -447,10 +451,10 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                 MivsRegvrfctnIllInfoEntity illInfo = new MivsRegvrfctnIllInfoEntity();
                 illInfo.setOrigMsgId(Msgid);
                 illInfo.setOrigInstgPty(Instgpty);
-                List<MivsRegvrfctnIllInfoEntity> mivsRegvrfctnIllInfoEntities = illInfoEntityMapper.select(illInfo);
-                if (mivsRegvrfctnIllInfoEntities != null && !mivsRegvrfctnIllInfoEntities.isEmpty()) {
+                List<MivsRegvrfctnIllInfoEntity> illInfoEntities = illInfoEntityMapper.select(illInfo);
+                if (illInfoEntities != null && !illInfoEntities.isEmpty()) {
                     List<MivsRegVrfctnInfoModel.IllDscrtInfo> illInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.IllDscrtInfo>();
-                    for (MivsRegvrfctnIllInfoEntity Info : mivsRegvrfctnIllInfoEntities) {
+                    for (MivsRegvrfctnIllInfoEntity Info : illInfoEntities) {
                         MivsRegVrfctnInfoModel.IllDscrtInfo illInfoMsg = new MivsRegVrfctnInfoModel.IllDscrtInfo();
                         illInfoMsg.setPg_nb(Info.getPgNb());
                         illInfoMsg.setIll_info_nb(Info.getIllInfoNb());
@@ -469,10 +473,10 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                 MivsRegvrfctnLicInfoEntity licInfo = new MivsRegvrfctnLicInfoEntity();
                 licInfo.setOrigMsgId(Msgid);
                 licInfo.setOrigInstgPty(Instgpty);
-                List<MivsRegvrfctnLicInfoEntity> mivsRegvrfctnLicInfoEntities = licInfoEntityMapper.select(licInfo);
-                if (mivsRegvrfctnLicInfoEntities != null && !mivsRegvrfctnLicInfoEntities.isEmpty()) {
+                List<MivsRegvrfctnLicInfoEntity> licInfoEntities = licInfoEntityMapper.select(licInfo);
+                if (licInfoEntities != null && !licInfoEntities.isEmpty()) {
                     List<MivsRegVrfctnInfoModel.LicInfo> licInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.LicInfo>();
-                    for (MivsRegvrfctnLicInfoEntity Info : mivsRegvrfctnLicInfoEntities) {
+                    for (MivsRegvrfctnLicInfoEntity Info : licInfoEntities) {
                         MivsRegVrfctnInfoModel.LicInfo licInfoMsg = new MivsRegVrfctnInfoModel.LicInfo();
                         licInfoMsg.setPg_nb(Info.getPgNb());
                         licInfoMsg.setLic_info_nb(Info.getLicInfoNb());
@@ -494,5 +498,319 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         }
     }
 
+    @Override
+    public List<MivsRegVrfctnInfoModel> selectResult(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel){
+        List<MivsRegvrfctnInfoEntity> infoEntityList = new ArrayList<MivsRegvrfctnInfoEntity>();
+        MivsRegvrfctnInfoEntity infoEntity = new MivsRegvrfctnInfoEntity();
+        infoEntity.setPlatDate(mivsRegVrfctnInfoModel.getStart_dt());
+        infoEntity.setBranchId(mivsRegVrfctnInfoModel.getBranch_id());
+        infoEntity.setUserId(mivsRegVrfctnInfoModel.getUser_id());
+        infoEntity.setMsgId(mivsRegVrfctnInfoModel.getOrig_dlv_msgid());
+        infoEntity.setRcvMsgId(mivsRegVrfctnInfoModel.getOrig_rcv_msgid());
+        infoEntity.setEntNm(mivsRegVrfctnInfoModel.getEnt_nm());
+        infoEntity.setUniSocCdtCd(mivsRegVrfctnInfoModel.getUni_soc_cdt_cd());
+        infoEntity.setNmOfLglPrsn(mivsRegVrfctnInfoModel.getNm_of_lgl_prsn());
+        infoEntity.setIdOfLglPrsn(mivsRegVrfctnInfoModel.getId_of_lgl_prsn());
+        infoEntity.setTraNm(mivsRegVrfctnInfoModel.getTra_nm());
+        infoEntity.setNm(mivsRegVrfctnInfoModel.getNm());
+        infoEntity.setId(mivsRegVrfctnInfoModel.getId());
 
+        infoEntityList = infoMapper.select(infoEntity);
+        if(!infoEntityList.isEmpty() && infoEntityList != null) {
+            List<MivsRegVrfctnInfoModel> regVrfctnInfoModels = new ArrayList<MivsRegVrfctnInfoModel>();
+            for (MivsRegvrfctnInfoEntity regInfo : infoEntityList) {
+                MivsRegVrfctnInfoModel infoResult = new MivsRegVrfctnInfoModel();
+                infoResult.setTran_date(regInfo.getTranDate());
+                infoResult.setSeq_no(regInfo.getSeqNo());
+                infoResult.setTran_time(regInfo.getTranTime());
+                infoResult.setOrig_dlv_msgid(regInfo.getMsgId());
+//                infoResult.setOrig_rcv_msgid(regInfo.getRcvMsgId());
+                infoResult.setEnt_nm(regInfo.getEntNm());
+                infoResult.setUni_soc_cdt_cd(regInfo.getUniSocCdtCd());
+                infoResult.setNm_of_lgl_prsn(regInfo.getNmOfLglPrsn());
+                infoResult.setId_of_lgl_prsn(regInfo.getIdOfLglPrsn());
+                infoResult.setTra_nm(regInfo.getTraNm());
+                infoResult.setNm(regInfo.getNm());
+                infoResult.setId(regInfo.getId());
+                infoResult.setRslt(regInfo.getRslt());
+                infoResult.setData_resrc_dt(regInfo.getDataResrcDt());
+                infoResult.setBas_info_cnt(regInfo.getBasInfoCnt());
+                infoResult.setCo_shrhdrfnd_info_cnt(regInfo.getCoShrhdrfndInfoCnt());
+                infoResult.setDir_supsrsgr_info_cnt(regInfo.getDirSupsrsgrInfoCnt());
+                infoResult.setChng_info_cnt(regInfo.getChngInfoCnt());
+                infoResult.setAbnml_biz_info_cnt(regInfo.getAbnmlBizInfoCnt());
+                infoResult.setIll_dscrt_info_cnt(regInfo.getIllDscrtInfoCnt());
+                infoResult.setLic_null_cnt(regInfo.getLicNullCnt());
+                infoResult.setProc_sts(regInfo.getProcSts());
+                infoResult.setProc_cd(regInfo.getProcCd());
+                infoResult.setRjct_inf(regInfo.getRjctInf());
+                infoResult.setRemark1(regInfo.getRemark1());
+                infoResult.setRemark2(regInfo.getRemark2());
+                infoResult.setRemark3(regInfo.getRemark3());
+                //查询BasInfo附表
+                MivsRegvrfctnBasInfoEntity basInfoEntity = new MivsRegvrfctnBasInfoEntity();
+                basInfoEntity.setOrigMsgId(infoResult.getOrig_dlv_msgid());
+                List<MivsRegvrfctnBasInfoEntity> basInfoEntities = basInfoEntityMapper.select(basInfoEntity);
+                if (basInfoEntities != null && !basInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
+                    for (MivsRegvrfctnBasInfoEntity Info : basInfoEntities) {
+                        MivsRegVrfctnInfoModel.BasInfo basInfoMsg = new MivsRegVrfctnInfoModel.BasInfo();
+                        basInfoMsg.setMsg_id(Info.getMsgId());
+                        basInfoMsg.setPg_nb(Info.getPgNb());
+                        basInfoMsg.setBas_info_nb(Info.getBasInfoNb());
+                        basInfoMsg.setEnt_nm(Info.getEntNm());
+                        basInfoMsg.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
+                        basInfoMsg.setCo_tp(Info.getCoTp());
+                        basInfoMsg.setDom(Info.getDom());
+                        basInfoMsg.setReg_cptl(Info.getRegCptl());
+                        basInfoMsg.setDt_est(Info.getDtEst());
+                        basInfoMsg.setOp_prd_from(Info.getOpPrdFrom());
+                        basInfoMsg.setOp_prd_to(Info.getOpPrdTo());
+                        basInfoMsg.setReg_sts(Info.getRegSts());
+                        basInfoMsg.setNm_of_lgl_prsn(Info.getNmOfLglPrsn());
+                        basInfoMsg.setReg_auth(Info.getRegAuth());
+                        basInfoMsg.setBiz_scp(Info.getBizScp());
+                        basInfoMsg.setDt_appr(Info.getDtAppr());
+                        basInfoMsg.setTra_nm(Info.getTraNm());
+                        basInfoMsg.setMarket_type(Info.getMarketType());
+                        basInfoMsg.setOp_loc(Info.getOpLoc());
+                        basInfoMsg.setFd_amt(Info.getFdAmt());
+                        basInfoMsg.setDt_reg(Info.getDtReg());
+                        basInfoMsg.setNm(Info.getNm());
+                        basInfoArrayMsg.add(basInfoMsg);
+                    }
+                    infoResult.setBasInfo(basInfoArrayMsg);
+                }//查询CosInfo附表
+                MivsRegvrfctnCosInfoEntity cosInfoEntity = new MivsRegvrfctnCosInfoEntity();
+                cosInfoEntity.setOrigMsgId(infoResult.getOrig_dlv_msgid());
+                List<MivsRegvrfctnCosInfoEntity> cosInfoEntities = cosInfoEntityMapper.select(cosInfoEntity);
+                if (cosInfoEntities != null && !cosInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.CoShrhdrFndInfo>();
+                    for (MivsRegvrfctnCosInfoEntity Info : cosInfoEntities) {
+                        MivsRegVrfctnInfoModel.CoShrhdrFndInfo coShrhdrFndInfoMsg = new MivsRegVrfctnInfoModel.CoShrhdrFndInfo();
+                        coShrhdrFndInfoMsg.setMsg_id(Info.getMsgId());
+                        coShrhdrFndInfoMsg.setPg_nb(Info.getPgNb());
+                        coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(Info.getCoShrhdrfndInfoNb());
+                        coShrhdrFndInfoMsg.setNatl_prsn_flag(Info.getNatlPrsnFlag());
+                        coShrhdrFndInfoMsg.setInvtr_nm(Info.getInvtrNm());
+                        coShrhdrFndInfoMsg.setInvtr_id(Info.getInvtrId());
+                        coShrhdrFndInfoMsg.setSubscr_cptl_con_amt(Info.getSubscrCptlConAmt());
+                        coShrhdrFndInfoMsg.setActl_cptl_con_amt(Info.getActlCptlConAmt());
+                        coShrhdrFndInfoMsg.setSubscr_cptl_con_fm(Info.getSubscrCptlConFm());
+                        coShrhdrFndInfoMsg.setSubscr_cptl_con_dt(Info.getSubscrCptlConDt());
+                        coShrhdrFndInfoArrayMsg.add(coShrhdrFndInfoMsg);
+                    }
+                    infoResult.setCoShrhdrFndInfo(coShrhdrFndInfoArrayMsg);
+                }
+
+                //查询DirInfo附表
+                MivsRegvrfctnDirInfoEntity dirInfoEntity = new MivsRegvrfctnDirInfoEntity();
+                dirInfoEntity.setOrigMsgId(infoResult.getOrig_dlv_msgid());
+                List<MivsRegvrfctnDirInfoEntity> dirInfoEntities = dirInfoEntityMapper.select(dirInfoEntity);
+                if (dirInfoEntities != null && !dirInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.DirSupSrMgrInfo>();
+                    for (MivsRegvrfctnDirInfoEntity Info : dirInfoEntities) {
+                        MivsRegVrfctnInfoModel.DirSupSrMgrInfo dirSupSrMgrInfoMsg = new MivsRegVrfctnInfoModel.DirSupSrMgrInfo();
+                        dirSupSrMgrInfoMsg.setMsg_id(Info.getMsgId());
+                        dirSupSrMgrInfoMsg.setPg_nb(Info.getPgNb());
+                        dirSupSrMgrInfoMsg.setDir_supsrsgr_info_nb(Info.getDirSupsrsgrInfoNb());
+                        dirSupSrMgrInfoMsg.setNm(Info.getNm());
+                        dirSupSrMgrInfoMsg.setPosn(Info.getPosn());
+                        dirSupSrMgrInfoArrayMsg.add(dirSupSrMgrInfoMsg);
+                    }
+                    infoResult.setDirSupSrMgrInfo(dirSupSrMgrInfoArrayMsg);
+                }
+
+                //查询ChngInfo附表
+                MivsRegvrfctnChngInfoEntity chngInfoEntity = new MivsRegvrfctnChngInfoEntity();
+                chngInfoEntity.setOrigMsgId(infoResult.getOrig_dlv_msgid());
+                List<MivsRegvrfctnChngInfoEntity> chngInfoEntities = chngInfoEntityMapper.select(chngInfoEntity);
+                if (chngInfoEntities != null && !chngInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.ChngInfo> chngInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.ChngInfo>();
+                    for (MivsRegvrfctnChngInfoEntity Info : chngInfoEntities) {
+                        MivsRegVrfctnInfoModel.ChngInfo chngInfoMsg = new MivsRegVrfctnInfoModel.ChngInfo();
+                        chngInfoMsg.setMsg_id(Info.getMsgId());
+                        chngInfoMsg.setPg_nb(Info.getPgNb());
+                        chngInfoMsg.setChng_info_nb(Info.getChngInfoNb());
+                        chngInfoMsg.setChng_itm(Info.getChngItm());
+                        chngInfoMsg.setAft_chng(Info.getAftChng());
+                        chngInfoMsg.setBf_chng(Info.getBfChng());
+                        chngInfoMsg.setDt_of_chng(Info.getDtOfChng());
+                        chngInfoArrayMsg.add(chngInfoMsg);
+                    }
+                    infoResult.setChngInfo(chngInfoArrayMsg);
+                }
+
+                //查询AbnInfo附表
+                MivsRegvrfctnAbnInfoEntity abnInfoEntity = new MivsRegvrfctnAbnInfoEntity();
+                abnInfoEntity.setOrigMsgId(infoResult.getOrig_dlv_msgid());
+                List<MivsRegvrfctnAbnInfoEntity> abnInfoEntities = abnInfoEntityMapper.select(abnInfoEntity);
+                if (abnInfoEntities != null && !abnInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.AbnmlBizInfo>();
+                    for (MivsRegvrfctnAbnInfoEntity Info : abnInfoEntities) {
+                        MivsRegVrfctnInfoModel.AbnmlBizInfo abnInfoMsg = new MivsRegVrfctnInfoModel.AbnmlBizInfo();
+                        abnInfoMsg.setMsg_id(Info.getMsgId());
+                        abnInfoMsg.setPg_nb(Info.getPgNb());
+                        abnInfoMsg.setAbn_info_nb(Info.getAbnInfoNb());
+                        abnInfoMsg.setAbnml_cause(Info.getAbnmlCause());
+                        abnInfoMsg.setAbnml_cause_dcsn_auth(Info.getAbnmlCauseDcsnAuth());
+                        abnInfoMsg.setAbnml_date(Info.getAbnmlDate());
+                        abnInfoMsg.setRmv_cause(Info.getRmvCause());
+                        abnInfoMsg.setRmv_cause_dcsn_auth(Info.getRmvCauseDcsnAuth());
+                        abnInfoMsg.setRmv_date(Info.getRmvDate());
+                        abnInfoArrayMsg.add(abnInfoMsg);
+                    }
+                    infoResult.setAbnmlBizInfo(abnInfoArrayMsg);
+                }
+
+                //查询IllInfo附表
+                MivsRegvrfctnIllInfoEntity illInfoEntity = new MivsRegvrfctnIllInfoEntity();
+                illInfoEntity.setOrigMsgId(infoResult.getOrig_dlv_msgid());
+                List<MivsRegvrfctnIllInfoEntity> illInfoEntities = illInfoEntityMapper.select(illInfoEntity);
+                if (illInfoEntities != null && !illInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.IllDscrtInfo> illInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.IllDscrtInfo>();
+                    for (MivsRegvrfctnIllInfoEntity Info : illInfoEntities) {
+                        MivsRegVrfctnInfoModel.IllDscrtInfo illInfoMsg = new MivsRegVrfctnInfoModel.IllDscrtInfo();
+                        illInfoMsg.setMsg_id(Info.getMsgId());
+                        illInfoMsg.setPg_nb(Info.getPgNb());
+                        illInfoMsg.setIll_info_nb(Info.getIllInfoNb());
+                        illInfoMsg.setIll_dscrt_cause(Info.getIllDscrtCause());
+                        illInfoMsg.setAbnml_cause_dcsn_auth(Info.getAbnmlCauseDcsnAuth());
+                        illInfoMsg.setAbnml_date(Info.getAbnmlDate());
+                        illInfoMsg.setRmv_cause(Info.getRmvCause());
+                        illInfoMsg.setRmv_cause_dcsn_auth(Info.getRmvCauseDcsnAuth());
+                        illInfoMsg.setRmv_date(Info.getRmvDate());
+                        illInfoArrayMsg.add(illInfoMsg);
+                    }
+                    infoResult.setIllDscrtInfo(illInfoArrayMsg);
+                }
+
+                //查询LicInfo附表
+                MivsRegvrfctnLicInfoEntity licInfoEntity = new MivsRegvrfctnLicInfoEntity();
+                licInfoEntity.setOrigMsgId(infoResult.getOrig_dlv_msgid());
+                List<MivsRegvrfctnLicInfoEntity> licInfoEntities = licInfoEntityMapper.select(licInfoEntity);
+                if (licInfoEntities != null && !licInfoEntities.isEmpty()) {
+                    List<MivsRegVrfctnInfoModel.LicInfo> licInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.LicInfo>();
+                    for (MivsRegvrfctnLicInfoEntity Info : licInfoEntities) {
+                        MivsRegVrfctnInfoModel.LicInfo licInfoMsg = new MivsRegVrfctnInfoModel.LicInfo();
+                        licInfoMsg.setMsg_id(Info.getMsgId());
+                        licInfoMsg.setPg_nb(Info.getPgNb());
+                        licInfoMsg.setLic_info_nb(Info.getLicInfoNb());
+                        licInfoMsg.setOrgnl_or_cp(Info.getOrgnlOrCp());
+                        licInfoMsg.setLic_null_stm_cntt(Info.getLicNullStmCntt());
+                        licInfoMsg.setLic_null_stm_dt(Info.getLicNullStmDt());
+                        licInfoMsg.setRpl_sts(Info.getRplSts());
+                        licInfoMsg.setRpl_dt(Info.getRplDt());
+                        licInfoMsg.setLic_cp_nb(Info.getLicCpNb());
+                        licInfoArrayMsg.add(licInfoMsg);
+                    }
+                    infoResult.setLicInfo(licInfoArrayMsg);
+                }
+                regVrfctnInfoModels.add(infoResult);
+            }
+            return regVrfctnInfoModels;
+        }else{
+            return null;
+        }
+    }
+
+    @Override
+    public MivsRegVrfctnInfoModel selectFdbk(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel){
+        MivsRegvrfctnInfoEntity info = new MivsRegvrfctnInfoEntity();
+        info.setMsgId(mivsRegVrfctnInfoModel.getOrig_dlv_msgid());
+        MivsRegvrfctnBasInfoEntity basInfoEntity = new MivsRegvrfctnBasInfoEntity();
+        basInfoEntity.setMsgId(mivsRegVrfctnInfoModel.getOrig_rcv_msgid());
+
+        info = infoMapper.selectOne(info);
+        basInfoEntity = basInfoEntityMapper.selectOne(basInfoEntity);
+        MivsRegVrfctnInfoModel regVrfctnInfoModel = new MivsRegVrfctnInfoModel();
+        if(info == null || basInfoEntity == null) {
+            if(info == null){
+                regVrfctnInfoModel.setRemark1("无企业核查信息");
+            }
+            if(basInfoEntity == null){
+                regVrfctnInfoModel.setRemark1("无企业信息或个体户信息");
+            }
+        }else{
+            regVrfctnInfoModel.setPlat_date(info.getPlatDate());
+            regVrfctnInfoModel.setOrig_dlv_msgid(info.getMsgId());
+            regVrfctnInfoModel.setOrig_rcv_msgid(basInfoEntity.getMsgId());
+        }
+        return regVrfctnInfoModel;
+    }
+
+    @Override
+    public void insertFdbk(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel){
+        MivsRegvrfctnFdbkEntity info = new MivsRegvrfctnFdbkEntity();
+        info.setPlatDate(mivsRegVrfctnInfoModel.getPlat_date());
+        info.setPlatTrace(mivsRegVrfctnInfoModel.getPlat_trace());
+        info.setPlatTime(mivsRegVrfctnInfoModel.getPlat_time());
+        info.setSystemId(mivsRegVrfctnInfoModel.getSystem_id());
+        info.setTranDate(mivsRegVrfctnInfoModel.getTran_date());
+        info.setSeqNo(mivsRegVrfctnInfoModel.getSeq_no());
+        info.setTranTime(mivsRegVrfctnInfoModel.getTran_time());
+        info.setUserId(mivsRegVrfctnInfoModel.getUser_id());
+        info.setBranchId(mivsRegVrfctnInfoModel.getBranch_id());
+        info.setMivsSts(mivsRegVrfctnInfoModel.getMivs_sts());
+        info.setMsgId(mivsRegVrfctnInfoModel.getMsg_id());
+        info.setCreDtTm(mivsRegVrfctnInfoModel.getCre_dt_tm());
+        info.setInstgDrctPty(mivsRegVrfctnInfoModel.getInstg_drct_pty());
+        info.setDrctPtyNm(mivsRegVrfctnInfoModel.getDrct_pty_nm());
+        info.setInstgPty(mivsRegVrfctnInfoModel.getInstg_pty());
+        info.setPtyNm(mivsRegVrfctnInfoModel.getPty_nm());
+        info.setInstdDrctPty(mivsRegVrfctnInfoModel.getInstd_drct_pty());
+        info.setInstdPty(mivsRegVrfctnInfoModel.getInstd_pty());
+
+        info.setSysInd(mivsRegVrfctnInfoModel.getSys_ind());
+        info.setOrigDlvMsgid(mivsRegVrfctnInfoModel.getOrig_dlv_msgid());
+        info.setOrigRcvMsgid(mivsRegVrfctnInfoModel.getOrig_rcv_msgid());
+        info.setUniSocCdtCd(mivsRegVrfctnInfoModel.getUni_soc_cdt_cd());
+        info.setEntNm(mivsRegVrfctnInfoModel.getEnt_nm());
+        info.setNmOfLglPrsn(mivsRegVrfctnInfoModel.getNm_of_lgl_prsn());
+        info.setIdOfLglPrsn(mivsRegVrfctnInfoModel.getId_of_lgl_prsn());
+        info.setTraNm(mivsRegVrfctnInfoModel.getTra_nm());
+        info.setNm(mivsRegVrfctnInfoModel.getNm());
+        info.setId(mivsRegVrfctnInfoModel.getId());
+
+        info.setRslt(mivsRegVrfctnInfoModel.getRslt());
+        info.setDataResrcDt(mivsRegVrfctnInfoModel.getData_resrc_dt());
+        info.setCntt(mivsRegVrfctnInfoModel.getCntt());
+        info.setContactNm(mivsRegVrfctnInfoModel.getContact_nm());
+        info.setContactNb(mivsRegVrfctnInfoModel.getContact_nb());
+        info.setBasInfo(mivsRegVrfctnInfoModel.getBas_info());
+        info.setCosInfo(mivsRegVrfctnInfoModel.getCos_info());
+        info.setDirInfo(mivsRegVrfctnInfoModel.getDir_info());
+        info.setChngInfo(mivsRegVrfctnInfoModel.getChng_info());
+        info.setAbnInfo(mivsRegVrfctnInfoModel.getAbn_info());
+        info.setIllInfo(mivsRegVrfctnInfoModel.getIll_info());
+        info.setLicInfo(mivsRegVrfctnInfoModel.getLic_info());
+        info.setRemark1(mivsRegVrfctnInfoModel.getRemark1());
+        info.setRemark2(mivsRegVrfctnInfoModel.getRemark2());
+        info.setRemark3(mivsRegVrfctnInfoModel.getRemark3());
+
+        fdbkEntityMapper.insertSelective(info);
+    }
+
+    @Override
+    public void updateFdbk(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel){
+        MivsRegvrfctnFdbkEntity info = new MivsRegvrfctnFdbkEntity();
+        info.setPlatDate(mivsRegVrfctnInfoModel.getPlat_date());
+        info.setPlatTrace(mivsRegVrfctnInfoModel.getPlat_trace());
+
+        info.setMivsSts(mivsRegVrfctnInfoModel.getMivs_sts());
+        info.setRcvMsgId(mivsRegVrfctnInfoModel.getRcv_msg_id());
+        info.setRcvCreDtTm(mivsRegVrfctnInfoModel.getCre_dt_tm());
+        info.setProcSts(mivsRegVrfctnInfoModel.getProc_sts());
+        info.setProcCd(mivsRegVrfctnInfoModel.getProc_cd());
+        info.setPtyId(mivsRegVrfctnInfoModel.getPty_id());
+        info.setPtyPrcCd(mivsRegVrfctnInfoModel.getPty_prc_cd());
+        info.setRjctInf(mivsRegVrfctnInfoModel.getRjct_inf());
+        info.setPrcDt(mivsRegVrfctnInfoModel.getPrc_dt());
+        info.setNetgRnd(mivsRegVrfctnInfoModel.getNetg_rnd());
+        info.setRemark1(mivsRegVrfctnInfoModel.getRemark1());
+        info.setRemark2(mivsRegVrfctnInfoModel.getRemark2());
+        info.setRemark3(mivsRegVrfctnInfoModel.getRemark3());
+
+        fdbkEntityMapper.updateByPrimaryKeySelective(info);
+    }
 }
