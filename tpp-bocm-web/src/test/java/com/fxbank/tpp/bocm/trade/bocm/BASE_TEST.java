@@ -24,7 +24,7 @@ public class BASE_TEST {
 //    private static final String IP = "127.0.0.1";
     private static final String IP = "57.25.3.166";
     private static final Integer PORT = 8501;
-    private static final String CODING = "GB18030";
+    public static final String CODING = "GB18030";
     
     @Reference(version = "1.0.0")
     private IBocmSafeService safeService;

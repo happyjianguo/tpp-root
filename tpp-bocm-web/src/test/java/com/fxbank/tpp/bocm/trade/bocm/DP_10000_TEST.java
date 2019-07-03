@@ -42,9 +42,9 @@ public class DP_10000_TEST extends BASE_TEST {
 	@Test
 	public void ok() throws Exception {
 		
-		req.setTxnAmt(NumberUtil.addPoint(100d));
+		req.setTxnAmt(1000d);
 		req.setFeeFlg("0");
-		req.setFee(NumberUtil.addPoint(1d));
+		req.setFee(100d);
 		req.setOprFlg("0");
 		
 		req.setTxnMod("0");
@@ -54,7 +54,7 @@ public class DP_10000_TEST extends BASE_TEST {
 		//收款人账户类型
 		req.setRactTp("2");
 		//收款人账号 6288880210000209903 622126010001048643
-		req.setRactNo("623166099020908241");
+		req.setRactNo("623166001016830991");
 		req.setCuIdTp("15");
 		req.setCuIdNo("1234");
 		//收款人名称

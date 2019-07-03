@@ -268,8 +268,16 @@ public abstract class BaseTradeT1 {
 					//交易流水核心未记录重新发起核心记账
 					model = hostCharge(dto);
 				} catch (SysTradeExecuteException e) {
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
-					throw e2;
+					myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
+					String errMsg = e.getRspMsg();
+					if(errMsg.length()>30){
+						errMsg = errMsg.substring(0, 30);
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+						throw e2;
+					}else{
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+						throw e2;
+					}
 				}
 				updateOthSuccess(dto, model);
 				return backMsg(dto,model);
@@ -288,8 +296,16 @@ public abstract class BaseTradeT1 {
 				myLog.error(logger,TRADE_DESC+"核心记账超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 				throw hostTimeoutException;
 			} else {
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
-				throw e2;
+				String errMsg = e.getRspMsg();
+				if(errMsg.length()>30){
+					errMsg = errMsg.substring(0, 30);
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+					throw e2;
+				}else{
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+					throw e2;
+				}
+				
 			}
 		}
 		// 主机成功登记

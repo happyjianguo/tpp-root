@@ -38,9 +38,9 @@ public class QR_10101_TEST extends BASE_TEST {
 		req.setPin("147258");
 		
 		
-		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));
+		String repData = super.comm(FixedUtil.toFixed(req,BASE_TEST.CODING));
 		REP_10101 rep = new REP_10101();
-		rep = (REP_10101)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
+		rep = (REP_10101)new FixedUtil(repData,BASE_TEST.CODING).toBean(rep.getClass());		
 		assertEquals(rep.getTmsgTyp(), "N");
 		assertEquals(rep.getTrspCd(), "FX0000");
 		
