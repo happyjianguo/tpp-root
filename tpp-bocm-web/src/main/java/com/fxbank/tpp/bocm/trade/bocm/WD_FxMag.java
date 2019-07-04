@@ -239,12 +239,10 @@ public class WD_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		reqBody_30011000104.setBaseAcctNo(reqDto.getPactNo());
 		reqBody_30011000104.setAcctName(reqDto.getPayNam());		
-		//TODO 交易密码处理
-		reqBody_30011000104.setPassword("6FA8753E6D318C213BB7339751E9268E");
 		
-		//TODO 交行转阜新pin
-//		String pin = safeService.transPinToFX(myLog, srcAccount, dstAccount, srcPinBlock);
-//		reqBody_30011000104.setPassword(pin);
+		//交行转阜新pin
+		String pin = safeService.transPinToFX(myLog, reqDto.getPactNo(), reqDto.getPactNo(), reqDto.getPin());
+		reqBody_30011000104.setPassword(pin);
 		
 		//JH01-交行代理我行账户付款
 		//JH02-交行代理我行账户存款

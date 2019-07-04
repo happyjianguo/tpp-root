@@ -36,8 +36,8 @@ public class BocmSafeService implements IBocmSafeService{
 			throws SysTradeExecuteException {
 		//加密平台转PIN
 		try {
-			HisuTSSCAPIResult rzpkPwd = hisuTSSCAPI.transPinBlockFromZPKToZPK("JINP", "COUTER001", "XZAK", 
-					"JINP1", "COUTER0012", "XZAK2", srcAccount, dstAccount, srcPinBlock);			
+			HisuTSSCAPIResult rzpkPwd = hisuTSSCAPI.transPinBlockFromZPKToZPK("JINP", "COUTER001", "XZPK", 
+					"PINP", "pinpToesb", "RZPK", srcAccount, dstAccount, srcPinBlock);			
 			if (rzpkPwd.getErrCode() < 0) {
 				myLog.error(logger, "调用加密平台PIN转加密失败");
 				throw new BocmTradeExecuteException(BocmTradeExecuteException.TPP_E_000001);
