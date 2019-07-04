@@ -205,6 +205,9 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setAuthTel(data.getAuthTel());
 			model.setCheckFlag(data.getCheckFlag());
 			model.setChkTel(data.getChkTel());
+			model.setTxCode(data.getTxCode());
+			model.setTranType(data.getTranType());
+			model.setTxInd(data.getTxInd());
 			model.setDcFlag(data.getDcFlag());
 			model.setHostDate(data.getHostDate());
 			model.setHostState(data.getHostState());

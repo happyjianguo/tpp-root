@@ -367,6 +367,9 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setCheckFlag(data.getCheckFlag());
 			model.setChkTel(data.getChkTel());
 			model.setDcFlag(data.getDcFlag());
+			model.setTxCode(data.getTxCode());
+			model.setTranType(data.getTranType());
+			model.setTxInd(data.getTxInd());
 			model.setHostDate(data.getHostDate());
 			model.setHostState(data.getHostState());
 			model.setHostTraceno(data.getHostTraceno());

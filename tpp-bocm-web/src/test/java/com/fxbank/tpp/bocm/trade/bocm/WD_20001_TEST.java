@@ -17,6 +17,7 @@ import com.fxbank.tpp.bocm.model.REP_BASE;
 import com.fxbank.tpp.bocm.model.REP_ERROR;
 import com.fxbank.tpp.bocm.model.REQ_20001;
 import com.fxbank.tpp.bocm.nettty.ServerInitializer;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 
 /**
 *
@@ -42,7 +43,8 @@ public class WD_20001_TEST extends BASE_TEST {
 	
 	@Test
 	public void ok() throws Exception {
-		req.setTxnAmt(100.09d);
+		double txAmt = 10d;
+		req.setTxnAmt(NumberUtil.addPoint(txAmt));
 		req.setPin("C0C53D00C8980A8E");
 		req.setOprFlg("0");
 		req.setTxnMod("0");

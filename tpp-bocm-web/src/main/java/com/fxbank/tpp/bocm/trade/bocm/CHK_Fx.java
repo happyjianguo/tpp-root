@@ -42,6 +42,7 @@ import com.fxbank.tpp.bocm.service.IBocmChkStatusService;
 import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_50015000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_50015000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -150,20 +151,20 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		int tolCnt = rcvTotal + sndTotal;
 		myLog.info(logger, "返回对账交易数量【"+tolCnt+"】");
 		
-		String rcvTotalAmt = rcvTraceService.getRcvTotalChkSum(myLog, date);
-		if(rcvTotalAmt==null){
-			rcvTotalAmt = "0.00";
-		}
+//		String rcvTotalAmt = rcvTraceService.getRcvTotalChkSum(myLog, date);
+//		if(rcvTotalAmt==null){
+//			rcvTotalAmt = "0.00";
+//		}
 		
-		String sndTotalAmt = sndTraceService.getSndTotalChkSum(myLog, date);
-		if(sndTotalAmt==null){
-			sndTotalAmt = "0.00";
-		}
-		myLog.info(logger, "来账总金额【"+rcvTotalAmt+"】");
-		myLog.info(logger, "往账总金额【"+sndTotalAmt+"】");
-		BigDecimal rcv = new BigDecimal(rcvTotalAmt);
-		BigDecimal snd = new BigDecimal(sndTotalAmt);		
-		BigDecimal totalAmt = rcv.add(snd);
+//		String sndTotalAmt = sndTraceService.getSndTotalChkSum(myLog, date);
+//		if(sndTotalAmt==null){
+//			sndTotalAmt = "0.00";
+//		}
+//		myLog.info(logger, "来账总金额【"+rcvTotalAmt+"】");
+//		myLog.info(logger, "往账总金额【"+sndTotalAmt+"】");
+//		BigDecimal rcv = new BigDecimal(rcvTotalAmt);
+//		BigDecimal snd = new BigDecimal(sndTotalAmt);		
+		BigDecimal totalAmt = new BigDecimal("0.00");
 
 		//组装来账文件报文
 		List<BocmRcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, sysDate,sysTime,sysTraceno, date);
@@ -171,26 +172,23 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		for(BocmRcvTraceQueryModel model :upRcvTraceList){
 			//本方交易流水号
 			REP_10103.Detail trad = modelToRcvTradDetail(model);
+			totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
 			tradList.add(trad);
-		}							
+		}
+		myLog.info(logger, "来账总金额【"+totalAmt+"】");
 		//组装往账文件报文
 		List<BocmSndTraceQueryModel> upSndTraceList = sndTraceService.getUploadCheckSndTrace(myLog, sysDate,sysTime,sysTraceno, date);
 		for(BocmSndTraceQueryModel model :upSndTraceList){
 			//本方交易流水号
 			REP_10103.Detail trad = modelToSndTradDetail(model);
+			totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
 			tradList.add(trad);
-		}			
+		}	
+		myLog.info(logger, "往账总金额【"+totalAmt+"】");
 		rep.setFilLen(254*tradList.size());	
 		rep.setTolCnt(tradList.size());
-		rep.setTolAmt(Double.parseDouble(totalAmt.toString()));
+		rep.setTolAmt(NumberUtil.addPoint(Double.parseDouble(totalAmt.toString())));
 		myLog.info(logger, "返回报文文件长度："+rep.getFilLen());
-//		if(tradList.size()==0){
-//			rep.setFilTxt(null);
-//			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"无交易记录");
-//			throw e;
-//		}else{
-//			rep.setFilTxt(tradList);
-//		}
 				
 		rep.setFilTxt(tradList);
 			

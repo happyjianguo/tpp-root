@@ -245,16 +245,13 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 			REP_10103.Detail bocmTrace,String date) throws SysTradeExecuteException{
 		//检查交行记账文件来账记录
 		int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
-		String bocmState = rcvTraceQueryModel.getBocmState(); //渠道记录的交行记账状态
-		String hostState = rcvTraceQueryModel.getBocmState(); //渠道记录的核心记账状态
-		String txnStatus = bocmTrace.getTxnSts();
-		
+		String hostState = rcvTraceQueryModel.getHostState(); //渠道记录的核心记账状态
+		String txnStatus = bocmTrace.getTxnSts();		
 		if("S".equals(txnStatus)) {
 			//交行存款，现金通兑，交行是转出行，记账以交行为主
-			if(("10000".equals(rcvTraceQueryModel.getTxCode()))||("20000".equals(rcvTraceQueryModel.getTxCode()))||
-			   ("20001".equals(rcvTraceQueryModel.getTxCode())&&"0".equals(rcvTraceQueryModel.getTxInd()))||
-			   ("10001".equals(rcvTraceQueryModel.getTxCode())&&"0".equals(rcvTraceQueryModel.getTxInd()))){					
-				//交易结果以交行为准，更新核心记账状态为失败
+			if(rcvTraceQueryModel.getTranType().equals("JH02")||
+					(rcvTraceQueryModel.getTranType().equals("JH01")&&rcvTraceQueryModel.getTxInd().equals("0"))){					
+				//交易结果以交行为准
 				if(hostState.equals("1")){
 					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
@@ -272,14 +269,16 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 					aceModel.setDirection("O");
 					aceModel.setMsg("交行记账成功，渠道核心记账为失败，核心补充记账数据，渠道日期【"+sysDate+"】，渠道流水【"+platTraceno+"】");
 					acctCheckErrService.insert(aceModel);
-				}
-				
+					myLog.error(logger, "柜面通来帐对账失败,本行记账失败，交行记账成功，流水号【"+rcvTraceQueryModel.getBocmTraceno()+"】核心日期为【"+sysDate+"】渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】");
+					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+					throw e;
+				}				
 			}
 		}else if("F".equals(txnStatus)) {				
 			//交行卡付款转账（磁条卡和IC卡）  通兑（交行转出行）交易结果以交行为准
-			if(("10001".equals(rcvTraceQueryModel.getTxCode())&&"1".equals(rcvTraceQueryModel.getTxInd()))
-					||("20001".equals(rcvTraceQueryModel.getTxCode())&&"1".equals(rcvTraceQueryModel.getTxInd()))){					
-				//交易结果以交行为准，更新核心记账状态为失败
+			if(rcvTraceQueryModel.getTranType().equals("JH02")||
+					(rcvTraceQueryModel.getTranType().equals("JH01")&&rcvTraceQueryModel.getTxInd().equals("0"))){					
+				//交易结果以交行为准,核心记账成功，对账失败
 				if(hostState.equals("1")){
 					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
@@ -306,8 +305,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 					record.setHostState("2");
 					record.setBocmState("2");
 					sndTraceService.sndTraceUpd(record);
-					myLog.info(logger,"渠道更新来账数据已交行为主记账状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，"
-							+ "交行记账调整前状态【"+bocmState+"】，调整后状态【1】，核心记账调整前状态【"+hostState+"】，调整后状态【2】");
+					myLog.info(logger,"渠道更新来账数据已交行为主记账状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】");
 				}
 				
 			}	
@@ -324,27 +322,25 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		String txnStatus = bocmTrace.getTxnSts();
 		
 		if("S".equals(txnStatus)) {
-			//交行卡付款转账（磁条卡和IC卡）  通兑（交行转出行）交易结果以交行为准
-			if(("10001".equals(sndTraceQueryModel.getTxCode())&&"1".equals(sndTraceQueryModel.getTxInd()))
-					||("20001".equals(sndTraceQueryModel.getTxCode())&&"1".equals(sndTraceQueryModel.getTxInd()))){									
-				//交易结果以交行为准，更新核心记账状态为失败
+			//交行卡付款转账(JH11)（磁条卡和IC卡）  通兑（交行转出行）交易结果以交行为准
+			if(sndTraceQueryModel.getTranType().equals("JH11")){									
+				//交易结果以交行为准
 				if(hostState.equals("1")){
 					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					sndTraceService.sndTraceUpd(record);
 					myLog.info(logger,"更新渠道对账状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】");
 				}else{
+					//我行往账与核心对账对账结果核心状态只为1，其他状态对账失败
 					myLog.error(logger, "柜面通【"+date+"】往帐对账失败: 交行记账成功,记账以交行为主,渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】");
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
 					throw e;
-				}
-				
+				}				
 			}
 		}else if("F".equals(txnStatus)) {				
 			//交行卡付款转账（磁条卡和IC卡）  通兑（交行转出行）交易结果以交行为准
-			if(("10001".equals(sndTraceQueryModel.getTxCode())&&"1".equals(sndTraceQueryModel.getTxInd()))
-					||("20001".equals(sndTraceQueryModel.getTxCode())&&"1".equals(sndTraceQueryModel.getTxInd()))){					
-				//交易结果以交行为准，更新核心记账状态为失败
+			if(sndTraceQueryModel.getTranType().equals("JH11")){					
+				//交易结果以交行为准，如果交行记账失败，核心记账成功对账失败
 				if(hostState.equals("1")){
 					myLog.info(logger,"更新渠道对账状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】");			
 					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sysDate, sysTime, platTraceno);

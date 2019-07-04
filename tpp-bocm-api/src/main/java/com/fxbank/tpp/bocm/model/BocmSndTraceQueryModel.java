@@ -35,6 +35,8 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
     private String txInd;
     //交易代码
     private String txCode;
+    //交易类型
+    private String tranType;
     //通存通兑标志
     private String dcFlag;
     //交易金额
@@ -370,6 +372,14 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
 
 	public void setActBal(BigDecimal actBal) {
 		this.actBal = actBal;
+	}
+
+	public String getTranType() {
+		return tranType;
+	}
+
+	public void setTranType(String tranType) {
+		this.tranType = tranType;
 	}
 
 	
