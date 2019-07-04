@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 
 
 /** 
@@ -108,6 +109,10 @@ public class REP_10103 extends REP_BASE {
     	//交易状态
     	@FixedField(order = 821, len = 1, desc = "交易状态")
     	private String txnSts;
+    	//换行占位符
+    	@FixedField(order = 822, len = 1, desc = "换行占位符")
+    	private String rn;
+    	
 		public String getTlogNo() {
 			return TlogNo;
 		}
@@ -234,7 +239,12 @@ public class REP_10103 extends REP_BASE {
 		public void setTxnSts(String txnSts) {
 			this.txnSts = txnSts;
 		}
-    	
+		public String getRn() {
+			return rn;
+		}
+		public void setRn(String rn) {
+			this.rn = rn;
+		} 	
     }
 
 	public Integer getFilLen() {
@@ -269,7 +279,10 @@ public class REP_10103 extends REP_BASE {
 		this.filTxt = filTxt;
 	}
 
-
+	public static void main(String[] args) {
+		String data = "NJH0000交易成功                      1907032236029200000510000000200000000101000019070322360746000000000051542000100031322900000830129000000700000000CNY0000000010000000000000000000000130129005002926222620110037989184             地区代码                      3132280770142623166001016830991              测试                          S19070322360856000000000051582000100031322900000830129000000700000000CNY0000000000100000000000000000000130129005002926222620110037989184             地区代码                      3132280770142623166001016830991              测试                          S";
+		REP_10103 rep = (REP_10103)new FixedUtil(data,"GB18030").toBean(REP_10103.class);
+	}
 
     
 }

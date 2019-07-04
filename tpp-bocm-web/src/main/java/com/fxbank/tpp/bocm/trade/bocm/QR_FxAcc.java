@@ -19,6 +19,7 @@ import com.fxbank.tpp.bocm.dto.bocm.REP_10102;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10102;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
+import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -42,6 +43,9 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService bocmRcvTraceService;
+	
+	@Reference(version = "1.0.0")
+    private IBocmSafeService safeService;
 	
 
 	@Resource
@@ -84,10 +88,15 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		String acctStatus = esbRep_30013000201.getRepBody().getAcctStatus();
 		myLog.error(logger, "账户状态：" + acctStatus);
 		//2.设置返回报文	
-		if("A".equals(acctStatus)){				
+		if("A".equals(acctStatus)){		
+			//账户号
 			rep.setActNo(req.getActNo());
+			//账户类型
 			rep.setActTyp("2");
+			//户名
 			rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
+			//开户行
+			rep.setActBnk("313229000442");
 		}else{
 			myLog.error(logger, "交行查询本行卡余额，卡状态异常，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10015);
@@ -128,7 +137,7 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		reqBody_30013000201.setProdType("");//产品类型
 		reqBody_30013000201.setCcy(reqDto.getCcyCod());//币种
 		reqBody_30013000201.setAcctSeqNo("");//账户 序号
-//		reqBody_30013000201.setPassword(reqDto.getPin());
+
 		ESB_REP_30013000201 esbRep_30013000201 = forwardToESBService.sendToESB(esbReq_30013000201, reqBody_30013000201,
 				ESB_REP_30013000201.class);
 		return esbRep_30013000201;
