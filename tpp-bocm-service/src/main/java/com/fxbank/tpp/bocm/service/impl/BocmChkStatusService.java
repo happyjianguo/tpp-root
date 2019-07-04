@@ -34,19 +34,34 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		entity.setPlatStatus(0);
 		mapper.insertSelective(entity);
 	}	
+	
+	@Override
+	public void chkStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
+		BocmChkStatus entity = new BocmChkStatus();
+		entity.setChkDate(record.getChkDate());
+		entity.setHostStatus(record.getHostStatus());
+		entity.setBocmStatus(record.getBocmStatus());
+		entity.setPlatStatus(record.getPlatStatus());
+		mapper.updateByPrimaryKeySelective(entity);
+	}
 
 	@Override
 	public void chkHostStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
 		BocmChkStatus entity = new BocmChkStatus();
 		entity.setChkDate(record.getChkDate());
 		entity.setHostStatus(record.getHostStatus());
+		entity.setBocmStatus(record.getBocmStatus());
+		entity.setPlatStatus(record.getPlatStatus());
 		mapper.updateByPrimaryKeySelective(entity);
 	}
 
 	@Override
 	public void chkBocmStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
 		BocmChkStatus entity = new BocmChkStatus();
+		entity.setChkDate(record.getChkDate());
+		entity.setHostStatus(record.getHostStatus());
 		entity.setBocmStatus(record.getBocmStatus());
+		entity.setPlatStatus(record.getPlatStatus());
 		mapper.updateByPrimaryKeySelective(entity);
 	}
 

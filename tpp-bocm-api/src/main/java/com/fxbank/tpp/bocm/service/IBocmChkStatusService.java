@@ -20,6 +20,15 @@ public interface IBocmChkStatusService {
 	* @throws 
 	*/
 	void chkStatusInit(BocmChkStatusModel record) throws SysTradeExecuteException; 
+	/** 
+	* @Title: chkStatusUpd 
+	* @Description: 更新对账状态
+	* @param @param record
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return void    返回类型 
+	* @throws 
+	*/
+	public void chkStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException;
 	
 	/** 
 	* @Title: chkHostStatusUpd 

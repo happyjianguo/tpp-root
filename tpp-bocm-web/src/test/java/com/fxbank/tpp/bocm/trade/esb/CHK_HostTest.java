@@ -53,7 +53,7 @@ import com.fxbank.tpp.esb.service.ISafeService;
 public class CHK_HostTest {
 	private static Logger logger = LoggerFactory.getLogger(CHK_HostTest.class);
 	
-//	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
+//	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
      private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
 
 	@Autowired
@@ -101,7 +101,7 @@ public class CHK_HostTest {
 	public void payOk() throws Exception {
 		logger.info("本行与三方对账");
 		//对账日期
-		reqBody.setStmtDtT2("20190703");
+		reqBody.setStmtDtT2("20190704");
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));

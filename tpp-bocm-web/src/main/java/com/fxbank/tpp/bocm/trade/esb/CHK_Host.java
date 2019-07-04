@@ -280,7 +280,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				aceModel.setCheckFlag("3");
 				aceModel.setDirection("I");
 				aceModel.setTxAmt(model.getTxAmt());
-				aceModel.setMsg("渠道补充来账数据，渠道日期【"+model.getSettleDate()+"】交易类型【"+model.getTranType()+"】渠道流水【"+model.getPlatTrace()+"】");
+				aceModel.setMsg("渠道补充往账数据，渠道日期【"+model.getSettleDate()+"】交易类型【"+model.getTranType()+"】渠道流水【"+model.getPlatTrace()+"】");
 				acctCheckErrService.insert(aceModel);
 				myLog.error(logger, "补数据SQL： insert into bocm_rcv_log (plat_date,plat_trace,tx_amt,host_date,host_traceno,host_state,check_flag) VALUES ("+model.getSettleDate()+","+model.getPlatTrace()+",'"+model.getTxAmt()
 				+"',"+model.getHostDate()+",'"+model.getHostTraceno()+"','1','1');");

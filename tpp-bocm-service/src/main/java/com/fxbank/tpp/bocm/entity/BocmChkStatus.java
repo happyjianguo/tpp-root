@@ -14,21 +14,18 @@ public class BocmChkStatus {
     /**
      * null
      */
-    @Id
     @Column(name = "HOST_STATUS")
     private Integer hostStatus;
 
        /**
      * null
      */
-    @Id
     @Column(name = "BOCM_STATUS")
     private Integer bocmStatus;
 	
 	/**
      * null
      */
-    @Id
     @Column(name = "PLAT_STATUS")
     private Integer platStatus;
 
