@@ -55,8 +55,8 @@ public class DB_BocmCashTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(DB_BocmCashTest.class);
 	
-//	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
-     private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
+	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
+//     private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
 
 	@Autowired
 	private MockMvc mockMvc;

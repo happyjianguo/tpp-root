@@ -5,12 +5,18 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.dto.bocm.REP_20001;
+import com.fxbank.tpp.bocm.model.REP_10000;
+import com.fxbank.tpp.bocm.model.REP_BASE;
+import com.fxbank.tpp.bocm.model.REP_ERROR;
 import com.fxbank.tpp.bocm.model.REQ_20001;
+import com.fxbank.tpp.bocm.nettty.ServerInitializer;
 
 /**
 *
@@ -26,6 +32,8 @@ public class WD_20001_TEST extends BASE_TEST {
 	
 	private REQ_20001 req;
 	
+	private static Logger logger = LoggerFactory.getLogger(WD_20001_TEST.class);
+	
 	@Before
 	public void init(){
 		req = new REQ_20001();
@@ -35,14 +43,14 @@ public class WD_20001_TEST extends BASE_TEST {
 	@Test
 	public void ok() throws Exception {
 		req.setTxnAmt(100.09d);
-		req.setPin("0123456789ABCDEF");
+		req.setPin("C0C53D00C8980A8E");
 		req.setOprFlg("0");
 		req.setTxnMod("0");
-		req.setRecBnk("301651000015");
+		req.setRecBnk("313229000442");
 		req.setRactTp("2");
 //		req.setrActNo("6222600530011742438");
 		
-		req.setPactNo("623166001016830991");
+		req.setPactNo("623166000000575356");
 		req.setPayNam("测试");
 //		req.setSecMag("622126010001048643=4912567019123456");
 
@@ -62,9 +70,27 @@ public class WD_20001_TEST extends BASE_TEST {
 //		assertEquals(rep.getHeader().gettMsgTyp(), "N");
 //		assertEquals(rep.getHeader().gettRspCd(), "FX0000");
 		
-		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));
+		String repData = super.comm(FixedUtil.toFixed(req,BASE_TEST.CODING));
+		
 		REP_20001 rep = new REP_20001();
-		rep = (REP_20001)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
+		REP_BASE repBase = new REP_ERROR();
+		if(repData.substring(0, 1).equals("N")){		
+			rep = (REP_20001)new FixedUtil(repData,ServerInitializer.CODING).toBean(rep.getClass());	
+			rep = (REP_20001)new FixedUtil(repData,ServerInitializer.CODING).toBean(rep.getClass());		
+			assertEquals(rep.getTmsgTyp(), "N");
+			assertEquals(rep.getTrspCd(), "FX0000");
+		}else{
+			repBase = (REP_ERROR)new FixedUtil(repData,ServerInitializer.CODING).toBean(REP_ERROR.class);
+			logger.info("相应错误码【" + repBase.getTrspCd() + "】");
+			logger.info("错误描述【" + repBase.getTrspMsg() + "】");
+			assertEquals(rep.getTmsgTyp(), "N");
+		}
+		
+		
+//		rep = (REP_20001)new FixedUtil(repData,BASE_TEST.CODING).toBean(rep.getClass());	
+		
+		
+		
 		assertEquals(rep.getTmsgTyp(), "N");
 		assertEquals(rep.getTrspCd(), "FX0000");
 	}

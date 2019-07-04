@@ -59,9 +59,9 @@ public class WD_20001_Tra extends BASE_TEST {
 		req.setRecBnk("301100000015");
 		
 		
-		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));
+		String repData = super.comm(FixedUtil.toFixed(req,BASE_TEST.CODING));
 		REP_20001 rep = new REP_20001();
-		rep = (REP_20001)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
+		rep = (REP_20001)new FixedUtil(repData,BASE_TEST.CODING).toBean(rep.getClass());		
 		assertEquals(rep.getTmsgTyp(), "N");
 		assertEquals(rep.getTrspCd(), "FX0000");
 	}

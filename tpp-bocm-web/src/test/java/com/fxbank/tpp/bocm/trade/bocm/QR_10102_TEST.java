@@ -57,17 +57,15 @@ private static Logger logger = LoggerFactory.getLogger(WD_10001_TEST.class);
 	@Test
 	public void ok() throws Exception {
 		//查询账户信息
-		req.setActNo("623166099020908241");
+		req.setActNo("623166001016830991");
 		//00 存款01 取款02 转出03 转入	
 		req.setActTyp("2");
 		req.setTxnTyp("00");
 		//0 账户内扣  1现金外收
-		req.setFeeFlg("0");
-
-		
-		String repData = super.comm(FixedUtil.toFixed(req,"UTF-8"));
+		req.setFeeFlg("0");		
+		String repData = super.comm(FixedUtil.toFixed(req,BASE_TEST.CODING));
 		REP_10102 rep = new REP_10102();
-		rep = (REP_10102)new FixedUtil(repData,"UTF-8").toBean(rep.getClass());		
+		rep = (REP_10102)new FixedUtil(repData,BASE_TEST.CODING).toBean(rep.getClass());		
 		assertEquals(rep.getTmsgTyp(), "N");
 		assertEquals(rep.getTrspCd(), "FX0000");
 		

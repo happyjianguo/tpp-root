@@ -251,7 +251,10 @@ public class WD_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		//JH12-交行卡存现金
 		reqBody_30011000104.setTranType("JH01");
 		reqBody_30011000104.setTranCcy("CNY");
-		reqBody_30011000104.setTranAmt(reqDto.getTxnAmt().toString());
+
+		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
+		reqBody_30011000104.setTranAmt(txnAmt.toString());
+		
 		reqBody_30011000104.setWithdrawalType("P");
 		reqBody_30011000104.setOthBaseAcctNo(reqDto.getRactNo());
 		reqBody_30011000104.setOthBaseAcctName(reqDto.getRecNam());

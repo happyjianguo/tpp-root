@@ -233,17 +233,17 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		reqBody_30011000104.setBaseAcctNo(reqDto.getPactNo());
 		reqBody_30011000104.setAcctName(reqDto.getPayNam());
 		
-		//TODO 后期直接取pin
-//		reqBody_30011000104.setPassword(reqDto.getPin());
-//		reqBody_30011000104.setPassword("6FA8753E6D318C213BB7339751E9268E");
-		
-		//TODO 交行转阜新pin
+		//交行转阜新pin
 		String pin = safeService.transPinToFX(myLog, reqDto.getPactNo(), reqDto.getPactNo(), reqDto.getPin());
 		reqBody_30011000104.setPassword(pin);
 		
 		reqBody_30011000104.setTranType("JH01");
 		reqBody_30011000104.setTranCcy("CNY");
-		reqBody_30011000104.setTranAmt(reqDto.getTxnAmt().toString());
+		
+		
+		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
+		reqBody_30011000104.setTranAmt(txnAmt.toString());
+		
 		reqBody_30011000104.setWithdrawalType("P");
 		reqBody_30011000104.setOthBaseAcctNo(reqDto.getRactNo());
 		reqBody_30011000104.setOthBaseAcctName(reqDto.getRecNam());

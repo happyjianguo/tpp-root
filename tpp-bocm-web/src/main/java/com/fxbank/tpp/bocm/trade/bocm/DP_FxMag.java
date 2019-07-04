@@ -242,9 +242,11 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		reqBody_30011000104.setTranType("JH02");
 		reqBody_30011000104.setTranCcy("CNY");
+		
 		//精度转换，请求报文后两位为小数位需要除100
 		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
 		reqBody_30011000104.setTranAmt(txnAmt.toString());
+		
 		reqBody_30011000104.setWithdrawalType("P");
 	
 		reqBody_30011000104.setChannelType("BU");
