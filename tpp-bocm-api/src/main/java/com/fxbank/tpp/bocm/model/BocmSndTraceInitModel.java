@@ -49,6 +49,9 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 	@NotNull(message = "tx_amt交易金额不能为空")
 	@Digits(integer = 14, fraction = 2,message = "tx_amt交易金额格式不正确")
 	private String txAmt;
+	
+    private Integer txDate;
+	
     //账户余额
     private BigDecimal actBal;
     //手续费收取方式
@@ -431,6 +434,14 @@ public class BocmSndTraceInitModel extends ModelBase implements Serializable{
 
 	public void setBocmRepmsg(String bocmRepmsg) {
 		this.bocmRepmsg = bocmRepmsg;
+	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
 	}
 
 	

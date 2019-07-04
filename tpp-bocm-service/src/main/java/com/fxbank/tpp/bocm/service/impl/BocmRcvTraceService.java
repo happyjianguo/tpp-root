@@ -51,13 +51,16 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		entity.setTxInd(record.getTxInd());
 		entity.setTxCode(record.getTxCode());
 		entity.setDcFlag(record.getDcFlag());
+		
+		
 		if(record.getTxAmt()!=null){
 			entity.setTxAmt(record.getTxAmt());
 		}
 		if(record.getActBal()!=null){
 			entity.setActBal(record.getActBal());
 		}
-
+		entity.setTxDate(record.getTxDate());
+		
 		entity.setPayerAcno(record.getPayerAcno());
 		entity.setPayerName(record.getPayerName());
 		entity.setPayeeAcno(record.getPayeeAcno());

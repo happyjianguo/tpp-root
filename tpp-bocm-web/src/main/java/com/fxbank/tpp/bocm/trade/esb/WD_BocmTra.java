@@ -1,6 +1,8 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -452,7 +454,9 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		record.setTxTel(reqSysHead.getUserId());
 		record.setChkTel(reqSysHead.getApprUserId());
 		record.setAuthTel(reqSysHead.getAuthUserId());
-		
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(settlementDate));	
 		bocmSndTraceService.sndTraceInit(record);
 	}
 
@@ -499,8 +503,9 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setOthBaseAcctNo(reqBody.getRcptPrAcctNoT2());
 		reqBody_30011000104.setOthBaseAcctName(reqBody.getRcptPrNmT7());
 		reqBody_30011000104.setChannelType("BU");
-
-		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(settlementDate);
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("O");
 		

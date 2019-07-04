@@ -185,13 +185,18 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		BocmRcvTraceQueryModel model = (BocmRcvTraceQueryModel)rcvModel;
 		//通过model组装返回报文	
 		//响应报文金额字段需要补小数位乘100
-		rep.setOtxnAmt(NumberUtil.addPoint(Double.parseDouble(model.getTxAmt().toString())));
+		//通过model组装返回报文
+		double txAmt = Double.parseDouble(model.getTxAmt().toString());
+		rep.setOtxnAmt(NumberUtil.addPoint(txAmt));
+		
 		if(model.getActBal()!=null){
-			rep.setActBal(NumberUtil.addPoint(Double.parseDouble(model.getActBal().toString())));
+			double actBal = Double.parseDouble(model.getActBal().toString());
+			rep.setActBal(NumberUtil.addPoint(actBal));
 		}
 		if(model.getFee()!=null){
-			rep.setFee(NumberUtil.addPoint(Double.parseDouble(model.getFee().toString())));
-		}	
+			double fee = Double.parseDouble(model.getFee().toString());
+			rep.setFee(NumberUtil.addPoint(fee));
+		}
 		return rep;
 	}
 	
@@ -261,7 +266,9 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		reqBody_30011000104.setBankCode(reqDto.getRecBnk());
 		reqBody_30011000104.setOthBankCode(reqDto.getPayBnk());
 		
-		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");		
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(settlementDate);		
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("I");
 
@@ -350,6 +357,9 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setBocmBranch(reqDto.getSbnkNo());
 		//交易码
 		record.setTxCode(reqDto.getTtxnCd());
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(settlementDate));	
 		bocmRcvTraceService.rcvTraceInit(record);
 		myLog.info(logger,TRADE_DESC+"插入来账流水表，核心日期"+rep.getRepSysHead().getTranDate()+"核心流水号"+rep.getRepSysHead().getReference());
 		
@@ -510,6 +520,9 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setBocmBranch(reqDto.getSbnkNo());
 		//交易码
 		record.setTxCode(reqDto.getTtxnCd());
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(settlementDate));	
 		bocmRcvTraceService.rcvTraceInit(record);	
 		myLog.info(logger,TRADE_DESC+"，核心记账超时，插入来账流水表");
 	}

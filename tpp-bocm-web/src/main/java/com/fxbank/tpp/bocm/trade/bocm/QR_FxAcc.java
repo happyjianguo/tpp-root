@@ -103,8 +103,6 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 				String bankno = getBankno(myLog, dto, branchId);
 				rep.setActBnk(bankno);
 			}
-			//开户行
-			rep.setActBnk("313229000442");
 		}else{
 			myLog.error(logger, "交行查询本行卡余额，卡状态异常，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
 			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10015);

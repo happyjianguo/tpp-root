@@ -11,6 +11,7 @@ tx_ind NVARCHAR2(10) NULL ,
 tx_code NVARCHAR2(10) NULL ,
 dc_flag NVARCHAR2(10) NULL ,
 tx_amt NUMBER NULL ,
+tx_date NUMBER(8) NULL ,
 act_bal NUMBER NULL ,
 fee_flag NVARCHAR2(2) NULL ,
 fee NUMBER NULL ,
@@ -58,7 +59,7 @@ COMMENT ON COLUMN bocm_snd_log.tx_ind IS '现转标志；0现金、1转账、2 �
 COMMENT ON COLUMN bocm_snd_log.tx_code IS '交易代码';
 COMMENT ON COLUMN bocm_snd_log.dc_flag IS '通存通兑标志；0通存、1通兑';
 COMMENT ON COLUMN bocm_snd_log.tx_amt IS '交易金额';
-COMMENT ON COLUMN bocm_snd_log.tx_amt IS '交易金额';
+COMMENT ON COLUMN bocm_snd_log.tx_date IS '交易日期';
 COMMENT ON COLUMN bocm_snd_log.act_bal IS '账户余额';
 COMMENT ON COLUMN bocm_snd_log.fee_flag IS '手续费收取方式'; 
 COMMENT ON COLUMN bocm_snd_log.host_date IS '核心日期';

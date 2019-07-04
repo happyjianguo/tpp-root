@@ -80,6 +80,12 @@ public class BocmRcvLog {
     /**
      * null
      */
+    @Column(name = "TX_DATE")
+    private Integer txDate;
+    
+    /**
+     * null
+     */
     @Column(name = "FEE_FLAG")
     private String feeFlag;
     
@@ -755,6 +761,14 @@ public class BocmRcvLog {
 
 	public void setTranType(String tranType) {
 		this.tranType = tranType;
+	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
 	}
 	
 	

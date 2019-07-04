@@ -1,6 +1,8 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -365,6 +367,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		record.setTxBranch(reqSysHead.getBranchId());
 		record.setChkTel(reqSysHead.getApprUserId());
 		record.setAuthTel(reqSysHead.getAuthUserId());
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(settlementDate));	
 	
 		bocmSndTraceService.sndTraceInit(record);
 	}
@@ -486,7 +491,10 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setTranType("JH13");
 		reqBody_30011000104.setTranCcy("CNY");
 		reqBody_30011000104.setTranAmt(reqBody.getWthrAmtT());
-		reqBody_30011000104.setSettlementDate("");
+		
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(settlementDate);
 		reqBody_30011000104.setCollateFlag("Y");
 		//TT-账户内扣 CA-现金
 		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());

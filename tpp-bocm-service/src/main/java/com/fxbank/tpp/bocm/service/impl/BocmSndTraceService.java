@@ -48,6 +48,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		
 		BigDecimal txAmt = new BigDecimal(record.getTxAmt());
 		entity.setTxAmt(txAmt);
+		entity.setTxDate(record.getTxDate());
 		
 		entity.setActBal(record.getActBal());
 		

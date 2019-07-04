@@ -1,6 +1,8 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -390,6 +392,9 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
 		record.setRetMsg(retMsg);
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(settlementDate));	
 		bocmSndTraceService.sndTraceInit(record);
 	}
 
@@ -439,7 +444,10 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setSendBankCode(reqBody.getPyrOpnBnkNoT2());
 		reqBody_30011000104.setBankCode(reqBody.getPyrOpnBnkNoT2());
 		reqBody_30011000104.setOthBankCode(reqBody.getPyeeOpnBnkNoT1());
-		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
+		
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(settlementDate);
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("O");
 		

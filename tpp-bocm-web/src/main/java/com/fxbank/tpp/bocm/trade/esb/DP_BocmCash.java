@@ -382,6 +382,9 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
 		record.setRetMsg(retMsg);
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(settlementDate));	
 		bocmSndTraceService.sndTraceInit(record);
 	}
 

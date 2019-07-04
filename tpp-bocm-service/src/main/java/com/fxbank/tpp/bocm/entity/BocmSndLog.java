@@ -74,6 +74,12 @@ public class BocmSndLog {
     /**
      * null
      */
+    @Column(name = "TX_DATE")
+    private Integer txDate;
+    
+    /**
+     * null
+     */
     @Column(name = "ACT_BAL")
     private BigDecimal actBal;
     
@@ -784,6 +790,14 @@ public class BocmSndLog {
 
 	public void setBocmRepmsg(String bocmRepmsg) {
 		this.bocmRepmsg = bocmRepmsg;
+	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
 	}
     
     

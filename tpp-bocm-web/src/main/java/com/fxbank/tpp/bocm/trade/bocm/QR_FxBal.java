@@ -19,6 +19,7 @@ import com.fxbank.tpp.bocm.dto.bocm.REP_10101;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10101;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000201;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -82,7 +83,8 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		if("A".equals(acctStatus)){
 			//4.设置返回报文		
 			rep.setActNo(req.getActNo());
-			rep.setActBal(Double.parseDouble(esbRep_30013000201.getRepBody().getBalance()));
+			double actBal = Double.parseDouble(esbRep_30013000201.getRepBody().getBalance());
+			rep.setActBal(NumberUtil.addPoint(actBal));
 			rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
 		}else{
 			myLog.error(logger, "交行查询本行卡余额，卡状态异常，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
