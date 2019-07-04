@@ -21,7 +21,9 @@ import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30013000201;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30013000201;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 import redis.clients.jedis.Jedis;
@@ -95,6 +97,12 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 			rep.setActTyp("2");
 			//户名
 			rep.setActNam(esbRep_30013000201.getRepBody().getAcctName());
+			//开户机构
+			String branchId = esbRep_30013000201.getRepBody().getBranch();
+			if(branchId!=null&&!branchId.equals("")){
+				String bankno = getBankno(myLog, dto, branchId);
+				rep.setActBnk(bankno);
+			}
 			//开户行
 			rep.setActBnk("313229000442");
 		}else{
@@ -141,6 +149,29 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		ESB_REP_30013000201 esbRep_30013000201 = forwardToESBService.sendToESB(esbReq_30013000201, reqBody_30013000201,
 				ESB_REP_30013000201.class);
 		return esbRep_30013000201;
+	}
+	
+	public String getBankno(MyLog myLog, DataTransObject dto, String branchId) throws SysTradeExecuteException{
+		if(branchId == null){
+			myLog.error(logger, "发起机构号不能为空");
+			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
+			myLog.error(logger,e.getRspCode() + " | " + e.getRspMsg());
+			throw e;
+		}		
+		//行号查询
+		ESB_REQ_30043003001 esbReq_30043003001 = new ESB_REQ_30043003001(myLog, dto.getSysDate(), dto.getSysTime(),
+				dto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043003001.getReqSysHead(), dto).build();
+		reqSysHead.setBranchId(branchId);
+		esbReq_30043003001.setReqSysHead(reqSysHead);
+		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
+		reqBody_30043003001.setBrchNoT4(branchId);
+
+		myLog.info(logger, "通过本行机构号查询人行行号");
+		ESB_REP_30043003001 esbRep_30043003001 = forwardToESBService.sendToESB(esbReq_30043003001, reqBody_30043003001,				
+				ESB_REP_30043003001.class);	
+		
+		return esbRep_30043003001.getRepBody().getBankNumber();
 	}
 
 }
