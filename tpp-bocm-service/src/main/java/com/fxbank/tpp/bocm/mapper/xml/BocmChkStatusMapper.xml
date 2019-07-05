@@ -10,16 +10,12 @@
 	<result column="BOCM_TX_AMT" property="bocmTxAmt" jdbcType="DECIMAL" />
 	<result column="HOST_TX_CNT" property="hostTxCnt" jdbcType="DECIMAL" />
 	<result column="HOST_TX_AMT" property="hostTxAmt" jdbcType="DECIMAL" />
+	<result column="PLAT_TX_CNT" property="platTxCnt" jdbcType="DECIMAL" />
+	<result column="PLAT_TX_AMT" property="platTxAmt" jdbcType="DECIMAL" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
     select CHK_DATE, HOST_STATUS, BOCM_STATUS, PLAT_STATUS
     from BOCM_CHK_STATUS
-  </select>
-  
-  <select id="selectByDate" resultMap="BaseResultMap">
-    select chk_date, host_status, bocm_status, plat_status,bocm_tx_cnt,bocm_tx_amt,host_tx_cnt,host_tx_amt
-    from bocm_chk_status
-    where chk_date = #{date}
   </select>
 
 </mapper>

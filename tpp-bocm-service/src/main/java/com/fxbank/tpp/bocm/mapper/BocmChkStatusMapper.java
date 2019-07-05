@@ -7,7 +7,5 @@ import com.fxbank.tpp.bocm.entity.BocmChkStatus;
 
 public interface BocmChkStatusMapper extends MyMapper<BocmChkStatus> {
     List<BocmChkStatus> selectAll();    
-    //通过日期获取对账状态
-    List<BocmChkStatus> selectByDate(String date);
 
 }
