@@ -12,6 +12,7 @@ public class MivsAbnmlVrfctnModel implements Serializable {
     private Integer plat_date; //平台日期
     private Integer plat_trace; //平台流水
     private Integer plat_time; //平台时间
+    private String check_type; //异常核查通知类型: COS：企业异常核查， AGT：机构异常核查
     private String mivs_sts; //业务处理状态；00-已发送，01-已收到回执，02-已收到911回执 处理失败，03-已收到业务回执 处理失败，04-已收到业务回执 处理成功，06-已收到人行请求，07-已回执
     private String msg_id; //报文标识号
     private String cre_dt_tm; //报文发送时间
@@ -50,6 +51,14 @@ public class MivsAbnmlVrfctnModel implements Serializable {
 
     public void setPlat_time(Integer plat_time) {
         this.plat_time = plat_time;
+    }
+
+    public String getCheck_type() {
+        return check_type;
+    }
+
+    public void setCheck_type(String check_type) {
+        this.check_type = check_type;
     }
 
     public String getMivs_sts() {
@@ -178,6 +187,7 @@ public class MivsAbnmlVrfctnModel implements Serializable {
                 "plat_date=" + plat_date +
                 ", plat_trace=" + plat_trace +
                 ", plat_time=" + plat_time +
+                ", check_type='" + check_type + '\'' +
                 ", mivs_sts='" + mivs_sts + '\'' +
                 ", msg_id='" + msg_id + '\'' +
                 ", cre_dt_tm='" + cre_dt_tm + '\'' +

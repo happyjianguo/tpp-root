@@ -1,11 +1,11 @@
-package com.fxbank.tpp.mivs.entity.AbnmlVrfctn;
+package com.fxbank.tpp.mivs.entity.FreeFrmt;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "mivs_abnmlvrfctn_info")
-public class MivsAbnmlvrfctnInfoEntity {
+@Table(name = "mivs_freefrmt_info")
+public class MivsFreefrmtInfoEntity {
     /**
      * null
      */
@@ -78,50 +78,20 @@ public class MivsAbnmlvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "BRANCH_ID")
-    private String branchId;
+    @Column(name = "RPLY_FLAG")
+    private String rplyFlag;
 
     /**
      * null
      */
-    @Column(name = "ORGNL_INSTG_PTY")
-    private String orgnlInstgPty;
+    @Column(name = "MSG_CNTT")
+    private String msgCntt;
 
     /**
      * null
      */
-    @Column(name = "CO_NM")
-    private String coNm;
-
-    /**
-     * null
-     */
-    @Column(name = "UNI_SOC_CDT_CD")
-    private String uniSocCdtCd;
-
-    /**
-     * null
-     */
-    @Column(name = "MOB_NB")
-    private String mobNb;
-
-    /**
-     * null
-     */
-    @Column(name = "NM")
-    private String nm;
-
-    /**
-     * null
-     */
-    @Column(name = "ABNML_TYPE")
-    private String abnmlType;
-
-    /**
-     * null
-     */
-    @Column(name = "DESCRIP")
-    private String descrip;
+    @Column(name = "ISORNOT_RSP")
+    private String isornotRsp;
 
     /**
      * null
@@ -301,129 +271,49 @@ public class MivsAbnmlvrfctnInfoEntity {
 
     /**
      * null
-     * @return BRANCH_ID null
+     * @return RPLY_FLAG null
      */
-    public String getBranchId() {
-        return branchId;
+    public String getRplyFlag() {
+        return rplyFlag;
     }
 
     /**
      * null
-     * @param branchId null
+     * @param rplyFlag null
      */
-    public void setBranchId(String branchId) {
-        this.branchId = branchId;
+    public void setRplyFlag(String rplyFlag) {
+        this.rplyFlag = rplyFlag;
     }
 
     /**
      * null
-     * @return ORGNL_INSTG_PTY null
+     * @return MSG_CNTT null
      */
-    public String getOrgnlInstgPty() {
-        return orgnlInstgPty;
+    public String getMsgCntt() {
+        return msgCntt;
     }
 
     /**
      * null
-     * @param orgnlInstgPty null
+     * @param msgCntt null
      */
-    public void setOrgnlInstgPty(String orgnlInstgPty) {
-        this.orgnlInstgPty = orgnlInstgPty;
+    public void setMsgCntt(String msgCntt) {
+        this.msgCntt = msgCntt;
     }
 
     /**
      * null
-     * @return CO_NM null
+     * @return ISORNOT_RSP null
      */
-    public String getCoNm() {
-        return coNm;
+    public String getIsornotRsp() {
+        return isornotRsp;
     }
 
     /**
      * null
-     * @param coNm null
+     * @param isornotRsp null
      */
-    public void setCoNm(String coNm) {
-        this.coNm = coNm;
-    }
-
-    /**
-     * null
-     * @return UNI_SOC_CDT_CD null
-     */
-    public String getUniSocCdtCd() {
-        return uniSocCdtCd;
-    }
-
-    /**
-     * null
-     * @param uniSocCdtCd null
-     */
-    public void setUniSocCdtCd(String uniSocCdtCd) {
-        this.uniSocCdtCd = uniSocCdtCd;
-    }
-
-    /**
-     * null
-     * @return MOB_NB null
-     */
-    public String getMobNb() {
-        return mobNb;
-    }
-
-    /**
-     * null
-     * @param mobNb null
-     */
-    public void setMobNb(String mobNb) {
-        this.mobNb = mobNb;
-    }
-
-    /**
-     * null
-     * @return NM null
-     */
-    public String getNm() {
-        return nm;
-    }
-
-    /**
-     * null
-     * @param nm null
-     */
-    public void setNm(String nm) {
-        this.nm = nm;
-    }
-
-    /**
-     * null
-     * @return ABNML_TYPE null
-     */
-    public String getAbnmlType() {
-        return abnmlType;
-    }
-
-    /**
-     * null
-     * @param abnmlType null
-     */
-    public void setAbnmlType(String abnmlType) {
-        this.abnmlType = abnmlType;
-    }
-
-    /**
-     * null
-     * @return DESCRIP null
-     */
-    public String getDescrip() {
-        return descrip;
-    }
-
-    /**
-     * null
-     * @param descrip null
-     */
-    public void setDescrip(String descrip) {
-        this.descrip = descrip;
+    public void setIsornotRsp(String isornotRsp) {
+        this.isornotRsp = isornotRsp;
     }
 }

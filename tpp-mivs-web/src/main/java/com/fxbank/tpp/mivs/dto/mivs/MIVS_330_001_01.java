@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @Description: 机构异常核查通知报文
+ * @Description: 机构异常核查通知报文 测试用
  * @Author: 王鹏
  * @Date: 2019/6/6 15:53
  */
@@ -19,7 +19,7 @@ public class MIVS_330_001_01 extends DTO_BASE {
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
     public MIVS_330_001_01() {
-        super.txDesc = "机构异常核查通知报文325";
+        super.txDesc = "机构异常核查通知报文330";
     }
 
     private MIVS_330_001_01_AbnmlAgtInfoVrfctnInfNtfctn AbnmlAgtInfoVrfctnInfNtfctn = new MIVS_330_001_01_AbnmlAgtInfoVrfctnInfNtfctn();

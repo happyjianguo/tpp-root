@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @Description:
+ * @Description: 登记信息核查应答
  * @Author: 王鹏
  * @Date: 2019/5/20 16:51
  */

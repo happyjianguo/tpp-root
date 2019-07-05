@@ -1,28 +1,29 @@
 package com.fxbank.tpp.mivs.dto.mivs;
 
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
-import com.fxbank.tpp.mivs.model.response.MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn;
+import com.fxbank.tpp.mivs.model.request.MIVS_333_001_01_FreeFrmtConf;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @Description: 企业异常核查通知报文
+ * @Description: 测试用
  * @Author: 王鹏
- * @Date: 2019/6/6 16:24
+ * @Date: 2019/7/5 11:07
  */
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MIVS_331_001_01 extends DTO_BASE {
-    private static final long serialVersionUID = -852433851834186525L;
+public class MIVS_333_001_01 extends DTO_BASE {
+
+    private static final long serialVersionUID = 2403591115611898513L;
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
-    public MIVS_331_001_01() {
-        super.txDesc = "机构异常核查通知报文331";
+    public MIVS_333_001_01() {
+        super.txDesc = "公告信息确认请求333";
     }
 
-    private MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn AbnmlCoInfoVrfctnInfNtfctn = new MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn();
+    private MIVS_333_001_01_FreeFrmtConf FreeFrmtConf = new MIVS_333_001_01_FreeFrmtConf();
 
     /**
      * @return the comConf
@@ -43,12 +44,18 @@ public class MIVS_331_001_01 extends DTO_BASE {
         return this.comConf.signData();
     }
 
-    public MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn getAbnmlCoInfoVrfctnInfNtfctn() {
-        return AbnmlCoInfoVrfctnInfNtfctn;
+    /**
+     * @return the freefrmtconf
+     */
+    public MIVS_333_001_01_FreeFrmtConf getFreeFrmtConf() {
+        return FreeFrmtConf;
     }
 
-    public void setAbnmlCoInfoVrfctnInfNtfctn(MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn abnmlAgtInfoVrfctnInfNtfctn) {
-        AbnmlCoInfoVrfctnInfNtfctn = abnmlAgtInfoVrfctnInfNtfctn;
+    /**
+     * @param freefrmtconf the freefrmtconf to set
+     */
+    public void setFreeFrmtConf(MIVS_333_001_01_FreeFrmtConf freefrmtconf) {
+        FreeFrmtConf = freefrmtconf;
     }
 
 

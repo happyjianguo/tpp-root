@@ -131,11 +131,13 @@ public class MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn implements Serializable,
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "AbnmlCo", "AbnmlPhNb" })
+    @XmlType(propOrder = { "AbnmlCo", "AbnmlPhNb", "AbnmlType", "DESC" })
     public static class AbnmlVrfctnInf implements Serializable{
         private static final long serialVersionUID = 7112339269854798464L;
         private AbnmlCo AbnmlCo = new AbnmlCo();
         private AbnmlPhNb AbnmlPhNb = new AbnmlPhNb();
+        private String AbnmlType = null;
+        private String DESC = null;
 
         public AbnmlCo getAbnmlCo() {
             return AbnmlCo;
@@ -151,6 +153,22 @@ public class MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn implements Serializable,
 
         public void setAbnmlPhNb(AbnmlPhNb abnmlPhNb) {
             AbnmlPhNb = abnmlPhNb;
+        }
+
+        public String getAbnmlType() {
+            return AbnmlType;
+        }
+
+        public void setAbnmlType(String abnmlType) {
+            AbnmlType = abnmlType;
+        }
+
+        public String getDESC() {
+            return DESC;
+        }
+
+        public void setDESC(String DESC) {
+            this.DESC = DESC;
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)

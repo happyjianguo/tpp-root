@@ -8,7 +8,7 @@ import com.fxbank.tpp.mivs.service.IMivsAbnmlVrfctnService;
 import javax.annotation.Resource;
 
 /**
- * @Description: 机构异常核查通知表
+ * @Description: 企业异常核查信息通知服务
  * @Author: 王鹏
  * @Date: 2019/6/20 8:25
  */
@@ -23,6 +23,7 @@ public class MivsAbnmlVrfctnService implements IMivsAbnmlVrfctnService {
         infoEntity.setPlatDate(mivsAbnmlVrfctnModel.getPlat_date());
         infoEntity.setPlatTrace(mivsAbnmlVrfctnModel.getPlat_trace());
         infoEntity.setPlatTime(mivsAbnmlVrfctnModel.getPlat_time());
+        infoEntity.setCheckType(mivsAbnmlVrfctnModel.getCheck_type());
         infoEntity.setMivsSts(mivsAbnmlVrfctnModel.getMivs_sts());
         infoEntity.setMsgId(mivsAbnmlVrfctnModel.getMsg_id());
         infoEntity.setInstgDrctPty(mivsAbnmlVrfctnModel.getInstg_drct_pty());

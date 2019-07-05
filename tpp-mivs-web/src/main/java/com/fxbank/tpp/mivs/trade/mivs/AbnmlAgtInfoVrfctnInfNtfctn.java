@@ -62,7 +62,7 @@ public class AbnmlAgtInfoVrfctnInfNtfctn extends TradeBase implements TradeExecu
         mivsAbnmlVrfctnModel.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         mivsAbnmlVrfctnModel.setOrgnl_instg_pty(abnmlVrfctnInf.getOrgnlInstgPty());
         mivsAbnmlVrfctnModel.setAbnml_type(abnmlVrfctnInf.getAbnmlType());
-        mivsAbnmlVrfctnModel.setDescrip(abnmlVrfctnInf.getOrgnlInstgPty());
+        mivsAbnmlVrfctnModel.setDescrip(abnmlVrfctnInf.getDESC());
 
         //信息落地
         abnmlVrfctnService.insertStart(mivsAbnmlVrfctnModel);

@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000213;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000213;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000212;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,14 +30,14 @@ import java.util.Random;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @Description: 企业信息联网核查查业务受理时间查询 测试
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/5/10 9:29
+ * @Date: 2019/7/4 17:06
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GetSysStsTest {
+public class FreeFrmtConfTest {
 
     private static Logger logger = LoggerFactory.getLogger(GetIdVrfctnTest.class);
 
@@ -49,19 +49,19 @@ public class GetSysStsTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_50023000213 req ;
+    private REQ_50023000212 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_50023000213.REQ_BODY reqBody ;
+    private REQ_50023000212.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_50023000213();
+        req = new REQ_50023000212();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("13");
+        reqSysHead.setSceneId("12");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -87,8 +87,10 @@ public class GetSysStsTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setSysInd("PHNB");
-        reqBody.setQueDt("2019-03-01");
+        reqBody.setOrigMsgId("301133201132");
+        reqBody.setOrigInstgDrctPty("123123213");
+        reqBody.setOrigInstgPty("3231254243");
+        reqBody.setMsgCntt("我就是个测试回复确认");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();
@@ -104,6 +106,5 @@ public class GetSysStsTest {
         String repContent = mvcResult.getResponse().getContentAsString();
         REP_50023000213 rep = JsonUtil.toBean(repContent, REP_50023000213.class);
     }
-
 
 }

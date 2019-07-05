@@ -6,9 +6,9 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description: 企业信息联网核查查业务受理时间查询ESB请求报文
+ * @Description:
  * @Author: 王鹏
- * @Date: 2019/4/30 10:15
+ * @Date: 2019/7/4 7:12
  */
 public class REQ_50023000212 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
@@ -18,10 +18,10 @@ public class REQ_50023000212 extends REQ_BASE {
     private REQ_SYS_HEAD reqSysHead;
 
     @JSONField(name = "BODY")
-    private REQ_50023000212.REQ_BODY reqBody;
+    private REQ_BODY reqBody;
 
     public REQ_50023000212(){
-        super.txDesc = "企业信息联网核查查业务受理时间查询";
+        super.txDesc = "企业通知确认";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -32,48 +32,65 @@ public class REQ_50023000212 extends REQ_BASE {
         this.reqAppHead = reqAppHead;
     }
 
-
     public REQ_SYS_HEAD getReqSysHead() {
         return reqSysHead;
     }
-
 
     public void setReqSysHead(REQ_SYS_HEAD reqSysHead) {
         this.reqSysHead = reqSysHead;
     }
 
-
-    public REQ_50023000212.REQ_BODY getReqBody() {
+    public REQ_BODY getReqBody() {
         return reqBody;
     }
 
-
-    public void setReqBody(REQ_50023000212.REQ_BODY reqBody) {
+    public void setReqBody(REQ_BODY reqBody) {
         this.reqBody = reqBody;
     }
 
     public class REQ_BODY {
+        @JSONField(name = "OrigMsgId")
+        private String origMsgId;    // 原报文标识号
 
-        @JSONField(name = "CHK_SYSTEM_ID")
-        private String sysInd;    //核查系统标识
+        @JSONField(name = "OrigInstgDrctPty")
+        private String origInstgDrctPty; //原发起直接参与机构
 
-        @JSONField(name = "QUERY_DATE")
-        private String queDt;		//查询日期
+        @JSONField(name = "OrigInstgPty")
+        private String origInstgPty;        //原发起参与机构
 
-        public String getSysInd() {
-            return sysInd;
+        @JSONField(name = "MsgCntt")
+        private String msgCntt; //附加信息
+
+        public String getOrigMsgId() {
+            return origMsgId;
         }
 
-        public void setSysInd(String sysInd) {
-            this.sysInd = sysInd;
+        public void setOrigMsgId(String origMsgId) {
+            this.origMsgId = origMsgId;
         }
 
-        public String getQueDt() {
-            return queDt;
+        public String getOrigInstgDrctPty() {
+            return origInstgDrctPty;
         }
 
-        public void setQueDt(String queDt) {
-            this.queDt = queDt;
+        public void setOrigInstgDrctPty(String origInstgDrctPty) {
+            this.origInstgDrctPty = origInstgDrctPty;
+        }
+
+        public String getOrigInstgPty() {
+            return origInstgPty;
+        }
+
+        public void setOrigInstgPty(String origInstgPty) {
+            this.origInstgPty = origInstgPty;
+        }
+
+        public String getMsgCntt() {
+            return msgCntt;
+        }
+
+        public void setMsgCntt(String msgCntt) {
+            this.msgCntt = msgCntt;
         }
     }
 }

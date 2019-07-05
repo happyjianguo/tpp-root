@@ -1,28 +1,28 @@
 package com.fxbank.tpp.mivs.dto.mivs;
 
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
-import com.fxbank.tpp.mivs.model.response.MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn;
+import com.fxbank.tpp.mivs.model.response.MIVS_332_001_01_FreeFrmt;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @Description: 企业异常核查通知报文
+ * @Description: 公告信息报文
  * @Author: 王鹏
- * @Date: 2019/6/6 16:24
+ * @Date: 2019/7/3 16:36
  */
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MIVS_331_001_01 extends DTO_BASE {
+public class MIVS_332_001_01 extends DTO_BASE {
     private static final long serialVersionUID = -852433851834186525L;
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
-    public MIVS_331_001_01() {
-        super.txDesc = "机构异常核查通知报文331";
+    public MIVS_332_001_01() {
+        super.txDesc = "公告信息报文332";
     }
 
-    private MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn AbnmlCoInfoVrfctnInfNtfctn = new MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn();
+    private MIVS_332_001_01_FreeFrmt freeFrmt = new MIVS_332_001_01_FreeFrmt();
 
     /**
      * @return the comConf
@@ -43,13 +43,11 @@ public class MIVS_331_001_01 extends DTO_BASE {
         return this.comConf.signData();
     }
 
-    public MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn getAbnmlCoInfoVrfctnInfNtfctn() {
-        return AbnmlCoInfoVrfctnInfNtfctn;
+    public MIVS_332_001_01_FreeFrmt getFreeFrmt() {
+        return freeFrmt;
     }
 
-    public void setAbnmlCoInfoVrfctnInfNtfctn(MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn abnmlAgtInfoVrfctnInfNtfctn) {
-        AbnmlCoInfoVrfctnInfNtfctn = abnmlAgtInfoVrfctnInfNtfctn;
+    public void setFreeFrmt(MIVS_332_001_01_FreeFrmt freeFrmt) {
+        this.freeFrmt = freeFrmt;
     }
-
-
 }

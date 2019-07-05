@@ -1,11 +1,11 @@
-package com.fxbank.tpp.mivs.entity.AbnmlVrfctn;
+package com.fxbank.tpp.mivs.entity.SysStsNtfctn;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "mivs_abnmlvrfctn_info")
-public class MivsAbnmlvrfctnInfoEntity {
+@Table(name = "mivs_sysstsntfctn_info")
+public class MivsSysstsntfctnInfoEntity {
     /**
      * null
      */
@@ -78,50 +78,56 @@ public class MivsAbnmlvrfctnInfoEntity {
     /**
      * null
      */
-    @Column(name = "BRANCH_ID")
-    private String branchId;
+    @Column(name = "CUR_SYS_DT")
+    private String curSysDt;
 
     /**
      * null
      */
-    @Column(name = "ORGNL_INSTG_PTY")
-    private String orgnlInstgPty;
+    @Column(name = "NXT_SYS_DT")
+    private String nxtSysDt;
 
     /**
      * null
      */
-    @Column(name = "CO_NM")
-    private String coNm;
+    @Column(name = "SYS_IND")
+    private String sysInd;
 
     /**
      * null
      */
-    @Column(name = "UNI_SOC_CDT_CD")
-    private String uniSocCdtCd;
+    @Column(name = "SVC_IND")
+    private String svcInd;
 
     /**
      * null
      */
-    @Column(name = "MOB_NB")
-    private String mobNb;
+    @Column(name = "NXT_SYS_OP_TM")
+    private String nxtSysOpTm;
 
     /**
      * null
      */
-    @Column(name = "NM")
-    private String nm;
+    @Column(name = "NXT_SYS_CL_TM")
+    private String nxtSysClTm;
 
     /**
      * null
      */
-    @Column(name = "ABNML_TYPE")
-    private String abnmlType;
+    @Column(name = "REMARK1")
+    private String remark1;
 
     /**
      * null
      */
-    @Column(name = "DESCRIP")
-    private String descrip;
+    @Column(name = "REMARK2")
+    private String remark2;
+
+    /**
+     * null
+     */
+    @Column(name = "REMARK3")
+    private String remark3;
 
     /**
      * null
@@ -301,129 +307,145 @@ public class MivsAbnmlvrfctnInfoEntity {
 
     /**
      * null
-     * @return BRANCH_ID null
+     * @return CUR_SYS_DT null
      */
-    public String getBranchId() {
-        return branchId;
+    public String getCurSysDt() {
+        return curSysDt;
     }
 
     /**
      * null
-     * @param branchId null
+     * @param curSysDt null
      */
-    public void setBranchId(String branchId) {
-        this.branchId = branchId;
+    public void setCurSysDt(String curSysDt) {
+        this.curSysDt = curSysDt;
     }
 
     /**
      * null
-     * @return ORGNL_INSTG_PTY null
+     * @return NXT_SYS_DT null
      */
-    public String getOrgnlInstgPty() {
-        return orgnlInstgPty;
+    public String getNxtSysDt() {
+        return nxtSysDt;
     }
 
     /**
      * null
-     * @param orgnlInstgPty null
+     * @param nxtSysDt null
      */
-    public void setOrgnlInstgPty(String orgnlInstgPty) {
-        this.orgnlInstgPty = orgnlInstgPty;
+    public void setNxtSysDt(String nxtSysDt) {
+        this.nxtSysDt = nxtSysDt;
     }
 
     /**
      * null
-     * @return CO_NM null
+     * @return SYS_IND null
      */
-    public String getCoNm() {
-        return coNm;
+    public String getSysInd() {
+        return sysInd;
     }
 
     /**
      * null
-     * @param coNm null
+     * @param sysInd null
      */
-    public void setCoNm(String coNm) {
-        this.coNm = coNm;
+    public void setSysInd(String sysInd) {
+        this.sysInd = sysInd;
     }
 
     /**
      * null
-     * @return UNI_SOC_CDT_CD null
+     * @return SVC_IND null
      */
-    public String getUniSocCdtCd() {
-        return uniSocCdtCd;
+    public String getSvcInd() {
+        return svcInd;
     }
 
     /**
      * null
-     * @param uniSocCdtCd null
+     * @param svcInd null
      */
-    public void setUniSocCdtCd(String uniSocCdtCd) {
-        this.uniSocCdtCd = uniSocCdtCd;
+    public void setSvcInd(String svcInd) {
+        this.svcInd = svcInd;
     }
 
     /**
      * null
-     * @return MOB_NB null
+     * @return NXT_SYS_OP_TM null
      */
-    public String getMobNb() {
-        return mobNb;
+    public String getNxtSysOpTm() {
+        return nxtSysOpTm;
     }
 
     /**
      * null
-     * @param mobNb null
+     * @param nxtSysOpTm null
      */
-    public void setMobNb(String mobNb) {
-        this.mobNb = mobNb;
+    public void setNxtSysOpTm(String nxtSysOpTm) {
+        this.nxtSysOpTm = nxtSysOpTm;
     }
 
     /**
      * null
-     * @return NM null
+     * @return NXT_SYS_CL_TM null
      */
-    public String getNm() {
-        return nm;
+    public String getNxtSysClTm() {
+        return nxtSysClTm;
     }
 
     /**
      * null
-     * @param nm null
+     * @param nxtSysClTm null
      */
-    public void setNm(String nm) {
-        this.nm = nm;
+    public void setNxtSysClTm(String nxtSysClTm) {
+        this.nxtSysClTm = nxtSysClTm;
     }
 
     /**
      * null
-     * @return ABNML_TYPE null
+     * @return REMARK1 null
      */
-    public String getAbnmlType() {
-        return abnmlType;
+    public String getRemark1() {
+        return remark1;
     }
 
     /**
      * null
-     * @param abnmlType null
+     * @param remark1 null
      */
-    public void setAbnmlType(String abnmlType) {
-        this.abnmlType = abnmlType;
+    public void setRemark1(String remark1) {
+        this.remark1 = remark1;
     }
 
     /**
      * null
-     * @return DESCRIP null
+     * @return REMARK2 null
      */
-    public String getDescrip() {
-        return descrip;
+    public String getRemark2() {
+        return remark2;
     }
 
     /**
      * null
-     * @param descrip null
+     * @param remark2 null
      */
-    public void setDescrip(String descrip) {
-        this.descrip = descrip;
+    public void setRemark2(String remark2) {
+        this.remark2 = remark2;
+    }
+
+    /**
+     * null
+     * @return REMARK3 null
+     */
+    public String getRemark3() {
+        return remark3;
+    }
+
+    /**
+     * null
+     * @param remark3 null
+     */
+    public void setRemark3(String remark3) {
+        this.remark3 = remark3;
     }
 }
