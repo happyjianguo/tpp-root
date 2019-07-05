@@ -157,11 +157,17 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		List<BocmRcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, sysDate,sysTime,sysTraceno, date);
 		List<REP_10103.Detail> tradList = new ArrayList<REP_10103.Detail>();		
 		for(BocmRcvTraceQueryModel model :upRcvTraceList){
+			myLog.info(logger, "确认流水【"+model.getPlatTrace()+"】记账是否以本行为主");
+			if(model.getTranType()==null){
+				myLog.info(logger, "流水【"+model.getPlatTrace()+"】交易类型为空");
+				continue;
+			}				
 			if(model.getTranType().equals("JH01")&&model.getTxInd().equals("1")){
 				//本方交易流水号
 				REP_10103.Detail trad = modelToRcvTradDetail(model);
 				totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
 				tradList.add(trad);
+				myLog.info(logger, "流水【"+model.getPlatTrace()+"】添加对账流水");
 			}
 		}
 		//组装往账文件报文
@@ -187,9 +193,9 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//更新对账状态表交行对账状态
 		BocmChkStatusModel record = new BocmChkStatusModel();
 		record.setChkDate(Integer.parseInt(date));
-		record.setBocmStatus(1);
-		record.setBocmTxCnt(tradList.size());
-		record.setBocmTxAmt(new BigDecimal(totalAmt.toString()));
+		record.setPlatStatus(1);
+		record.setHostTxCnt(tradList.size());
+		record.setHostTxAmt(new BigDecimal(totalAmt.toString()));
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新对账状态表信息");		
 

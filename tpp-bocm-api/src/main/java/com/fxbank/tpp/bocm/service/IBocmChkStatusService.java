@@ -31,26 +31,6 @@ public interface IBocmChkStatusService {
 	public void chkStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException;
 	
 	/** 
-	* @Title: chkHostStatusUpd 
-	* @Description: 更新与核心对账结果状态
-	* @param @param record
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return void    返回类型 
-	* @throws 
-	*/
-	void chkHostStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException; 
-	
-	/** 
-	* @Title: chkBocmStatusUpd 
-	* @Description: 更新与交行对账结果状态
-	* @param @param record
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return void    返回类型 
-	* @throws 
-	*/
-	void chkBocmStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException;
-	
-	/** 
 	* @Title: selectByDate 
 	* @Description: 通过日期获取对账状态
 	* @param @param date

@@ -37,6 +37,8 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		entity.setBocmTxAmt(new BigDecimal("0"));
 		entity.setHostTxCnt(0);
 		entity.setHostTxAmt(new BigDecimal("0"));
+		entity.setPlatTxCnt(0);
+		entity.setPlatTxAmt(new BigDecimal("0"));
 		mapper.insertSelective(entity);
 	}	
 	
@@ -65,26 +67,12 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		if(null != record.getHostTxAmt()) {
 			entity.setHostTxAmt(record.getHostTxAmt());
 		}
-		mapper.updateByPrimaryKeySelective(entity);
-	}
-
-	@Override
-	public void chkHostStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
-		BocmChkStatus entity = new BocmChkStatus();
-		entity.setChkDate(record.getChkDate());
-		entity.setHostStatus(record.getHostStatus());
-		entity.setBocmStatus(record.getBocmStatus());
-		entity.setPlatStatus(record.getPlatStatus());
-		mapper.updateByPrimaryKeySelective(entity);
-	}
-
-	@Override
-	public void chkBocmStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
-		BocmChkStatus entity = new BocmChkStatus();
-		entity.setChkDate(record.getChkDate());
-		entity.setHostStatus(record.getHostStatus());
-		entity.setBocmStatus(record.getBocmStatus());
-		entity.setPlatStatus(record.getPlatStatus());
+		if(null != record.getPlatTxAmt()) {
+			entity.setPlatTxAmt(record.getPlatTxAmt());
+		}
+		if(null != record.getPlatTxCnt()) {
+			entity.setPlatTxCnt(record.getPlatTxCnt());
+		}
 		mapper.updateByPrimaryKeySelective(entity);
 	}
 

@@ -22,6 +22,10 @@ public class BocmChkStatusModel implements Serializable{
     private Integer bocmStatus;
     //我行对账状态
     private Integer platStatus;
+    //我行对账状态
+    private Integer platTxCnt;
+    //我行对账状态
+    private BigDecimal platTxAmt;
     //交行为主交易笔数
     private Integer bocmTxCnt;
     //交行为主交易金额
@@ -78,6 +82,18 @@ public class BocmChkStatusModel implements Serializable{
 	}
 	public void setHostTxAmt(BigDecimal hostTxAmt) {
 		this.hostTxAmt = hostTxAmt;
+	}
+	public Integer getPlatTxCnt() {
+		return platTxCnt;
+	}
+	public void setPlatTxCnt(Integer platTxCnt) {
+		this.platTxCnt = platTxCnt;
+	}
+	public BigDecimal getPlatTxAmt() {
+		return platTxAmt;
+	}
+	public void setPlatTxAmt(BigDecimal platTxAmt) {
+		this.platTxAmt = platTxAmt;
 	}
 
     

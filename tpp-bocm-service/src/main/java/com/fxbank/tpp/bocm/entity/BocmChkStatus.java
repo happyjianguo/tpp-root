@@ -34,6 +34,18 @@ public class BocmChkStatus {
 	/**
      * null
      */
+    @Column(name = "PLAT_TX_CNT")
+    private Integer platTxCnt;
+    
+	/**
+     * null
+     */
+    @Column(name = "PLAT_TX_AMT")
+    private BigDecimal platTxAmt;
+    
+	/**
+     * null
+     */
     @Column(name = "BOCM_TX_CNT")
     private Integer bocmTxCnt;
     
@@ -117,6 +129,22 @@ public class BocmChkStatus {
 
 	public void setHostTxAmt(BigDecimal hostTxAmt) {
 		this.hostTxAmt = hostTxAmt;
+	}
+
+	public Integer getPlatTxCnt() {
+		return platTxCnt;
+	}
+
+	public void setPlatTxCnt(Integer platTxCnt) {
+		this.platTxCnt = platTxCnt;
+	}
+
+	public BigDecimal getPlatTxAmt() {
+		return platTxAmt;
+	}
+
+	public void setPlatTxAmt(BigDecimal platTxAmt) {
+		this.platTxAmt = platTxAmt;
 	}
 
 
