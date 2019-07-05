@@ -192,6 +192,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		model.setBocmTraceno(data.getBocmTraceno());
 		model.setTxAmt(data.getTxAmt());
 		model.setTxDate(data.getTxDate());
+		model.setTranType(data.getTranType());
 		model.setActBal(data.getActBal());
 		model.setFeeFlag(data.getFeeFlag());
 		model.setFee(data.getFee());
@@ -220,6 +221,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmBranch(tpp.getBocmBranch());
 			model.setTxAmt(tpp.getTxAmt());
 			model.setTxDate(tpp.getTxDate());
+			model.setTranType(tpp.getTranType());
 			model.setTxBranch(tpp.getTxBranch());
 			model.setTxInd(tpp.getTxInd());
 			model.setTxTel(tpp.getTxTel());
@@ -277,7 +279,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
-			
+			model.setTranType(data.getTranType());
 			
 			modelList.add(model);
 		}
@@ -358,6 +360,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
+			model.setTranType(data.getTranType());
 		}
 		
 		return model;
@@ -377,7 +380,6 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setChkTel(data.getChkTel());
 			model.setDcFlag(data.getDcFlag());
 			model.setTxCode(data.getTxCode());
-			model.setTranType(data.getTranType());
 			model.setTxInd(data.getTxInd());
 			model.setHostDate(data.getHostDate());
 			model.setHostState(data.getHostState());
@@ -404,6 +406,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
+			model.setTranType(data.getTranType());
 		}
 		
 		return model;
@@ -438,6 +441,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmTraceno(data.getBocmTraceno());
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
+			model.setTranType(data.getTranType());
 			model.setTxInd(data.getTxInd());
 			model.setTxCode(data.getTxCode());
 			

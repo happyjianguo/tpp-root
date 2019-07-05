@@ -37,6 +37,7 @@ import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
+import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 import redis.clients.jedis.Jedis;
@@ -139,6 +140,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		tolCnt = rep10103.getTolCnt();
 		//以交行为主交易金额
 		Double tolAmt = rep10103.getTolAmt();
+		tolAmt = NumberUtil.removePoint(tolAmt);
 		List<REP_10103.Detail> tradList = rep10103.getFilTxt();
 		
 		int snd = 0;

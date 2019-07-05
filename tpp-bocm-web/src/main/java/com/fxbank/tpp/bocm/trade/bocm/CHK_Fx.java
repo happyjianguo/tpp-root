@@ -150,41 +150,33 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		
 		int tolCnt = rcvTotal + sndTotal;
 		myLog.info(logger, "返回对账交易数量【"+tolCnt+"】");
-		
-//		String rcvTotalAmt = rcvTraceService.getRcvTotalChkSum(myLog, date);
-//		if(rcvTotalAmt==null){
-//			rcvTotalAmt = "0.00";
-//		}
-		
-//		String sndTotalAmt = sndTraceService.getSndTotalChkSum(myLog, date);
-//		if(sndTotalAmt==null){
-//			sndTotalAmt = "0.00";
-//		}
-//		myLog.info(logger, "来账总金额【"+rcvTotalAmt+"】");
-//		myLog.info(logger, "往账总金额【"+sndTotalAmt+"】");
-//		BigDecimal rcv = new BigDecimal(rcvTotalAmt);
-//		BigDecimal snd = new BigDecimal(sndTotalAmt);		
+			
 		BigDecimal totalAmt = new BigDecimal("0.00");
 
 		//组装来账文件报文
 		List<BocmRcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, sysDate,sysTime,sysTraceno, date);
 		List<REP_10103.Detail> tradList = new ArrayList<REP_10103.Detail>();		
 		for(BocmRcvTraceQueryModel model :upRcvTraceList){
-			//本方交易流水号
-			REP_10103.Detail trad = modelToRcvTradDetail(model);
-			totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
-			tradList.add(trad);
+			if(model.getTranType().equals("JH01")&&model.getTxInd().equals("1")){
+				//本方交易流水号
+				REP_10103.Detail trad = modelToRcvTradDetail(model);
+				totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
+				tradList.add(trad);
+			}
 		}
-		myLog.info(logger, "来账总金额【"+totalAmt+"】");
 		//组装往账文件报文
 		List<BocmSndTraceQueryModel> upSndTraceList = sndTraceService.getUploadCheckSndTrace(myLog, sysDate,sysTime,sysTraceno, date);
 		for(BocmSndTraceQueryModel model :upSndTraceList){
+			if(model.getTranType().equals("JH11")&&model.getTxInd().equals("1")){
+				//往账如果是交行卡付款转账，不返回记账，记账结果以交行为主
+				continue;
+			}
 			//本方交易流水号
 			REP_10103.Detail trad = modelToSndTradDetail(model);
 			totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
 			tradList.add(trad);
 		}	
-		myLog.info(logger, "往账总金额【"+totalAmt+"】");
+		myLog.info(logger, "以我行为主交易总金额【"+totalAmt+"】");
 		rep.setFilLen(254*tradList.size());	
 		rep.setTolCnt(tradList.size());
 		rep.setTolAmt(NumberUtil.addPoint(Double.parseDouble(totalAmt.toString())));
@@ -192,7 +184,14 @@ public class CHK_Fx implements TradeExecutionStrategy {
 				
 		rep.setFilTxt(tradList);
 			
-				
+		//更新对账状态表交行对账状态
+		BocmChkStatusModel record = new BocmChkStatusModel();
+		record.setChkDate(Integer.parseInt(date));
+		record.setBocmStatus(1);
+		record.setBocmTxCnt(tradList.size());
+		record.setBocmTxAmt(new BigDecimal(totalAmt.toString()));
+		chkStatusService.chkStatusUpd(record);
+		myLog.info(logger, "更新对账状态表信息");		
 
 
 		return rep;
@@ -204,10 +203,6 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//给交行返回交易流水
 		chk.setTlogNo(String.format("%06d%08d", model.getPlatDate()%1000000,model.getPlatTrace()));
 		chk.setLogNo(model.getBocmTraceno());
-		
-		//本行模拟交行接口测试
-//		chk.setTlogNo(model.getBocmTraceno());
-//		chk.setLogNo(model.getPlatTrace()+"");
 		
 		chk.setThdCod(model.getTxCode());
 		chk.setBbusTyp("000");
