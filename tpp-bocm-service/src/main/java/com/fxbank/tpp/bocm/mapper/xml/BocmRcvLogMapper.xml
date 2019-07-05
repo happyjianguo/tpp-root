@@ -80,7 +80,7 @@
     from bocm_rcv_log where tx_date=#{date} and host_state=1 and check_flag in ('2','3')
   </select>
   <select id="selectTraceNum" resultType="java.lang.String" >
-    select count(*) as num from bocm_rcv_log where plat_date=#{date}  
+    select count(*) as num from bocm_rcv_log where tx_date=#{date}  
      <if test='checkFlag != null and checkFlag != ""'>
         and check_flag = #{checkFlag}
      </if>

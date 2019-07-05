@@ -194,8 +194,8 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		BocmChkStatusModel record = new BocmChkStatusModel();
 		record.setChkDate(Integer.parseInt(date));
 		record.setPlatStatus(1);
-		record.setHostTxCnt(tradList.size());
-		record.setHostTxAmt(new BigDecimal(totalAmt.toString()));
+		record.setPlatTxCnt(tradList.size());
+		record.setPlatTxAmt(new BigDecimal(totalAmt.toString()));
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新对账状态表信息");		
 
