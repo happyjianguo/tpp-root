@@ -189,6 +189,9 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			
 			model.setPayerActtp(data.getPayerActtp());
 			model.setPayeeActtp(data.getPayeeActtp());
+			
+			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
 		}
 		return model;
 	}
@@ -231,6 +234,8 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			
 			model.setPayerActtp(data.getPayerActtp());
 			model.setPayeeActtp(data.getPayeeActtp());
+			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
 		}
 		return model;
 	}
@@ -255,6 +260,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setSourceType(tpp.getSourceType());
 			model.setBocmBranch(tpp.getBocmBranch());
 			model.setTxAmt(tpp.getTxAmt());
+			model.setTxDate(tpp.getTxDate());
 			model.setTxBranch(tpp.getTxBranch());
 			model.setTxInd(tpp.getTxInd());
 			model.setTxTel(tpp.getTxTel());
@@ -351,6 +357,9 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setPayerActtp(data.getPayerActtp());
 			model.setPayeeActtp(data.getPayeeActtp());
 			
+			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
+			
 			modelList.add(model);
 		}
 		
@@ -385,6 +394,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(data.getBocmTraceno());
 			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
             model.setTxInd(data.getTxInd());
 			model.setTxCode(data.getTxCode());
 

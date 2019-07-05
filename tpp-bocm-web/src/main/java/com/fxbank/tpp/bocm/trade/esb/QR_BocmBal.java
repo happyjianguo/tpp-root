@@ -62,7 +62,7 @@ public class QR_BocmBal extends TradeBase implements TradeExecutionStrategy {
 
 		REP_30063001201 rep = new REP_30063001201();
 		rep.getReqBody().setAcctName(rep10101.getActNam());
-		
+		//从交行接口获取账户余额，金额处理，去除 交行接口补零
 		double amt = NumberUtil.removePoint(rep10101.getActBal());
 		rep.getReqBody().setBal(amt);
 		return rep;

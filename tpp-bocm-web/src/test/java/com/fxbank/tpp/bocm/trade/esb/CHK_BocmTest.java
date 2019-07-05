@@ -43,7 +43,7 @@ import com.fxbank.tpp.esb.service.ISafeService;
 @SpringBootTest
 @AutoConfigureMockMvc	
 public class CHK_BocmTest {
-	private static Logger logger = LoggerFactory.getLogger(DB_BocmCashTest.class);
+	private static Logger logger = LoggerFactory.getLogger(CHK_BocmTest.class);
 	
 //	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
      private static final String URL="http://127.0.0.1:7006/esb/bocm.do";

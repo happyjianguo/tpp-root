@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.entity;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 
@@ -28,6 +30,30 @@ public class BocmChkStatus {
      */
     @Column(name = "PLAT_STATUS")
     private Integer platStatus;
+    
+	/**
+     * null
+     */
+    @Column(name = "BOCM_TX_CNT")
+    private Integer bocmTxCnt;
+    
+	/**
+     * null
+     */
+    @Column(name = "BOCM_TX_AMT")
+    private BigDecimal bocmTxAmt;
+    
+	/**
+     * null
+     */
+    @Column(name = "HOST_TX_CNT")
+    private Integer hostTxCnt;
+    
+	/**
+     * null
+     */
+    @Column(name = "HOST_TX_AMT")
+    private BigDecimal hostTxAmt;
 
 	public Integer getChkDate() {
 		return chkDate;
@@ -59,6 +85,38 @@ public class BocmChkStatus {
 
 	public void setPlatStatus(Integer platStatus) {
 		this.platStatus = platStatus;
+	}
+
+	public Integer getBocmTxCnt() {
+		return bocmTxCnt;
+	}
+
+	public void setBocmTxCnt(Integer bocmTxCnt) {
+		this.bocmTxCnt = bocmTxCnt;
+	}
+
+	public BigDecimal getBocmTxAmt() {
+		return bocmTxAmt;
+	}
+
+	public void setBocmTxAmt(BigDecimal bocmTxAmt) {
+		this.bocmTxAmt = bocmTxAmt;
+	}
+
+	public Integer getHostTxCnt() {
+		return hostTxCnt;
+	}
+
+	public void setHostTxCnt(Integer hostTxCnt) {
+		this.hostTxCnt = hostTxCnt;
+	}
+
+	public BigDecimal getHostTxAmt() {
+		return hostTxAmt;
+	}
+
+	public void setHostTxAmt(BigDecimal hostTxAmt) {
+		this.hostTxAmt = hostTxAmt;
 	}
 
 

@@ -70,6 +70,11 @@ public class BocmRcvTraceQueryModel extends ModelBase implements Serializable{
     private BigDecimal txAmt;
     
     /**
+     * 交易时间
+     */
+    private Integer txDate;
+    
+    /**
      * 账户余额
      */
     private BigDecimal actBal;
@@ -501,6 +506,14 @@ public class BocmRcvTraceQueryModel extends ModelBase implements Serializable{
 
 	public void setTranType(String tranType) {
 		this.tranType = tranType;
+	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
 	}
 
 	

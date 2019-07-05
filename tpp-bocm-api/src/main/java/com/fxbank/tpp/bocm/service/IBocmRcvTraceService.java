@@ -143,30 +143,7 @@ public interface IBocmRcvTraceService {
 	*/
 	List<BocmRcvTraceQueryModel> getUploadCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
 			String date)throws SysTradeExecuteException;
-	/** 
-	* @Title: getRcvTotalNum 
-	* @Description: 查询来账对账总数 
-	* @param @param myLog
-	* @param @param date
-	* @param @param dcFlag
-	* @param @return
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return String    返回类型 
-	* @throws 
-	*/
-	String getRcvTotalNum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
-	/** 
-	* @Title: getRcvTotalSum 
-	* @Description: 查询来账对账总金额 
-	* @param @param myLog
-	* @param @param date
-	* @param @param dcFlag
-	* @param @return
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return String    返回类型 
-	* @throws 
-	*/
-	String getRcvTotalSum(MyLog myLog, String date,String dcFlag) throws SysTradeExecuteException;
+
 	/**
 	 * 获取来账统计信息
 	 * @param date

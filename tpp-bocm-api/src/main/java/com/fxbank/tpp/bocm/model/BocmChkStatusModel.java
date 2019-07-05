@@ -1,9 +1,7 @@
 package com.fxbank.tpp.bocm.model;
 
 import java.io.Serializable;
-
-import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.model.ModelBase;
+import java.math.BigDecimal;
 
 /** 
 * @ClassName: BocmChkStatusModel 
@@ -24,6 +22,15 @@ public class BocmChkStatusModel implements Serializable{
     private Integer bocmStatus;
     //我行对账状态
     private Integer platStatus;
+    //交行为主交易笔数
+    private Integer bocmTxCnt;
+    //交行为主交易金额
+    private BigDecimal bocmTxAmt;
+    //我行为主交易笔数
+    private Integer hostTxCnt;
+    //我行为主交易金额
+    private BigDecimal hostTxAmt;
+    
 	public Integer getChkDate() {
 		return chkDate;
 	}
@@ -47,6 +54,30 @@ public class BocmChkStatusModel implements Serializable{
 	}
 	public void setPlatStatus(Integer platStatus) {
 		this.platStatus = platStatus;
+	}
+	public Integer getBocmTxCnt() {
+		return bocmTxCnt;
+	}
+	public void setBocmTxCnt(Integer bocmTxCnt) {
+		this.bocmTxCnt = bocmTxCnt;
+	}
+	public BigDecimal getBocmTxAmt() {
+		return bocmTxAmt;
+	}
+	public void setBocmTxAmt(BigDecimal bocmTxAmt) {
+		this.bocmTxAmt = bocmTxAmt;
+	}
+	public Integer getHostTxCnt() {
+		return hostTxCnt;
+	}
+	public void setHostTxCnt(Integer hostTxCnt) {
+		this.hostTxCnt = hostTxCnt;
+	}
+	public BigDecimal getHostTxAmt() {
+		return hostTxAmt;
+	}
+	public void setHostTxAmt(BigDecimal hostTxAmt) {
+		this.hostTxAmt = hostTxAmt;
 	}
 
     

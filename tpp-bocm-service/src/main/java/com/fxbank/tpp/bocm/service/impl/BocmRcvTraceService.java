@@ -191,6 +191,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		model.setBocmState(data.getBocmState());
 		model.setBocmTraceno(data.getBocmTraceno());
 		model.setTxAmt(data.getTxAmt());
+		model.setTxDate(data.getTxDate());
 		model.setActBal(data.getActBal());
 		model.setFeeFlag(data.getFeeFlag());
 		model.setFee(data.getFee());
@@ -218,6 +219,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setSourceType(tpp.getSourceType());
 			model.setBocmBranch(tpp.getBocmBranch());
 			model.setTxAmt(tpp.getTxAmt());
+			model.setTxDate(tpp.getTxDate());
 			model.setTxBranch(tpp.getTxBranch());
 			model.setTxInd(tpp.getTxInd());
 			model.setTxTel(tpp.getTxTel());
@@ -272,6 +274,10 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			
 			model.setPayerActtp(data.getPayerActtp());
 			model.setPayeeActtp(data.getPayeeActtp());
+			
+			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
+			
 			
 			modelList.add(model);
 		}
@@ -349,6 +355,9 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			
 			model.setPayerActtp(data.getPayerActtp());
 			model.setPayeeActtp(data.getPayeeActtp());
+			
+			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
 		}
 		
 		return model;
@@ -392,6 +401,9 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			
 			model.setPayerActtp(data.getPayerActtp());
 			model.setPayeeActtp(data.getPayeeActtp());
+			
+			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
 		}
 		
 		return model;
@@ -425,6 +437,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setBocmState(data.getBocmState());
 			model.setBocmTraceno(data.getBocmTraceno());
 			model.setTxAmt(data.getTxAmt());
+			model.setTxDate(data.getTxDate());
 			model.setTxInd(data.getTxInd());
 			model.setTxCode(data.getTxCode());
 			
@@ -438,38 +451,6 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		}
 		
 		return modelList;
-	}
-
-	/** 
-	* @Title: getRcvTotalNum 
-	* @Description: TODO(这里用一句话描述这个方法的作用) 
-	* @param @param myLog
-	* @param @param date
-	* @param @param dcFlag
-	* @param @return
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @throws 
-	*/
-	@Override
-	public String getRcvTotalNum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
-		String num = bocmRcvLogMapper.selectDtRcvTotalNum(date, dcFlag);
-		return num;
-	}
-
-	/** 
-	* @Title: getRcvTotalSum 
-	* @Description: TODO(这里用一句话描述这个方法的作用) 
-	* @param @param myLog
-	* @param @param date
-	* @param @param dcFlag
-	* @param @return
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @throws 
-	*/
-	@Override
-	public String getRcvTotalSum(MyLog myLog, String date, String dcFlag) throws SysTradeExecuteException {
-		String sum = bocmRcvLogMapper.selectDtRcvTotalSum(date, dcFlag);
-		return sum;
 	}
 
 	

@@ -70,14 +70,7 @@
     </trim>
      order by plat_trace desc
   </select>
-    <select id="selectDtRcvTotalNum" resultType="java.lang.String" >
-    select count(tx_amt) as num from bocm_rcv_log where 
-     tx_date=#{date} and dc_flag=#{flag} and host_state=1 and check_flag in ('2','3')
-  </select>
-   <select id="selectDtRcvTotalSum" resultType="java.lang.String" >
-    select sum(tx_amt) as sum from bocm_rcv_log where 
-     tx_date=#{date} and dc_flag=#{flag} and host_state=1 and check_flag in ('2','3')
-  </select>
+
   <select id="selectCheckedTrace" resultMap="BaseResultMap">
     select plat_date, plat_trace, plat_time, source_type, tx_branch,tran_type, tx_ind,tx_code, dc_flag, 
     tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 

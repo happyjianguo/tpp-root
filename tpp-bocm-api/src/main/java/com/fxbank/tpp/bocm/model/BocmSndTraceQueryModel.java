@@ -41,6 +41,8 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
     private String dcFlag;
     //交易金额
     private BigDecimal txAmt;
+    //交易时间
+    private Integer txDate;
     //账户余额
     private BigDecimal actBal;
     //手续费收取方式
@@ -380,6 +382,14 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
 
 	public void setTranType(String tranType) {
 		this.tranType = tranType;
+	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
 	}
 
 	

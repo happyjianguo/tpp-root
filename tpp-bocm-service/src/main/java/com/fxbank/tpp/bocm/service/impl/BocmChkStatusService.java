@@ -1,5 +1,6 @@
 package com.fxbank.tpp.bocm.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -32,6 +33,10 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		entity.setHostStatus(0);
 		entity.setBocmStatus(0);
 		entity.setPlatStatus(0);
+		entity.setBocmTxCnt(0);
+		entity.setBocmTxAmt(new BigDecimal("0"));
+		entity.setHostTxCnt(0);
+		entity.setHostTxAmt(new BigDecimal("0"));
 		mapper.insertSelective(entity);
 	}	
 	
@@ -39,9 +44,27 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 	public void chkStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
 		BocmChkStatus entity = new BocmChkStatus();
 		entity.setChkDate(record.getChkDate());
-		entity.setHostStatus(record.getHostStatus());
-		entity.setBocmStatus(record.getBocmStatus());
-		entity.setPlatStatus(record.getPlatStatus());
+		if(null != record.getHostStatus()) {
+			entity.setHostStatus(record.getHostStatus());
+		}
+		if(null != record.getBocmStatus()) {
+			entity.setBocmStatus(record.getBocmStatus());
+		}
+		if(null != record.getPlatStatus()) {
+			entity.setPlatStatus(record.getPlatStatus());
+		}
+		if(null != record.getBocmTxCnt()) {
+			entity.setBocmTxCnt(record.getBocmTxCnt());
+		}
+		if(null != record.getBocmTxAmt()) {
+			entity.setBocmTxAmt(record.getBocmTxAmt());
+		}
+		if(null != record.getHostTxCnt()) {
+			entity.setHostTxCnt(record.getHostTxCnt());
+		}
+		if(null != record.getHostTxAmt()) {
+			entity.setHostTxAmt(record.getHostTxAmt());
+		}
 		mapper.updateByPrimaryKeySelective(entity);
 	}
 
@@ -76,6 +99,10 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 			model.setHostStatus(entity.getHostStatus());
 			model.setBocmStatus(entity.getBocmStatus());
 			model.setPlatStatus(entity.getPlatStatus());
+			model.setBocmTxCnt(entity.getBocmTxCnt());
+			model.setBocmTxAmt(entity.getBocmTxAmt());
+			model.setHostTxCnt(entity.getHostTxCnt());
+			model.setHostTxAmt(entity.getHostTxAmt());
 			return model;
 		}else{
 			return null;

@@ -1,5 +1,8 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -72,15 +75,8 @@ public class RV_Fx implements TradeExecutionStrategy {
 		}
 
 	
-		int platDate = req.getSysDate();
-		int platTraceno = req.getSysTraceno();
-		Integer sysDate = publicService.getSysDate("CIP");
-		if(sysDate.compareTo(platDate)!=0) {
-			myLog.error(logger, "不能隔日冲正，渠道日期" + platDate + 
-					"渠道流水号" + platTraceno);
-			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10011);
-			throw e;
-		}
+
+
 		
 		String hostReversalCode = null;
 		String hostReversalMsg = null;
@@ -95,9 +91,16 @@ public class RV_Fx implements TradeExecutionStrategy {
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_11007);
 				throw e2;
 			}else{
-				myLog.info(logger, "交行向本行发起抹账交易，渠道已经抹账成功");
 				if("4".equals(model.getHostState())){
+					myLog.info(logger, "交行向本行发起抹账交易，渠道已经抹账成功");
 					return rep;
+				}
+				String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+				if(model.getTxDate()!=Integer.parseInt(settlementDate)) {
+					myLog.error(logger, "不能隔日冲正，交易日期" + model.getTxDate() + 
+							"渠道流水号" + model.getPlatTrace()+",当前日期"+settlementDate);
+					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10011);
+					throw e;
 				}
 			}
 			//2.核心冲正

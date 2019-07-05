@@ -93,8 +93,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		REQ_TS_CHK_BOCM.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061800501 rep = new REP_30061800501();
 				
-		myLog.info(logger, "外围与交行对账定时任务开始");
-		   
+		myLog.info(logger, "外围与交行对账定时任务开始");		   
 		
 		Integer date = reqDto.getSysDate();
 		Integer sysTime = reqDto.getSysTime();
@@ -135,16 +134,10 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		rep10103 = forwardToBocmService.sendToBocm(req10103, 
 				REP_10103.class);		
 		
-		//对账文件长度
-		int filLen = 0;
-		//交易笔数
+		//以交行为主交易笔数
 		int tolCnt = 0;
-		//对账文件明细
-		String filTxt = "";
-
-		//获取对账文件
-		filLen = rep10103.getFilLen();
 		tolCnt = rep10103.getTolCnt();
+		//以交行为主交易金额
 		Double tolAmt = rep10103.getTolAmt();
 		List<REP_10103.Detail> tradList = rep10103.getFilTxt();
 		
@@ -174,6 +167,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 				//根据交行核心对账数据取渠道往账数据
 				BocmSndTraceQueryModel sndTraceQueryModel = sndTraceService.getBocmSndTraceByKey(myLog, sysTime, 
 						sysTraceno, sysDate,Integer.parseInt(bocmDate),bocmTraceno);		
+				
 				//若渠道缺少数据则报错
 				if(sndTraceQueryModel == null) {
 					int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
@@ -234,8 +228,10 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		BocmChkStatusModel record = new BocmChkStatusModel();
 		record.setChkDate(date);
 		record.setBocmStatus(1);
-		chkStatusService.chkBocmStatusUpd(record);
-		
+		record.setBocmTxCnt(tolCnt);
+		record.setBocmTxAmt(new BigDecimal(tolAmt.toString()));
+		chkStatusService.chkStatusUpd(record);
+		myLog.info(logger, "更新对账状态表信息");
 		return rep;
 	}
 	
