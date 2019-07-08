@@ -114,7 +114,7 @@ public class REP_10103_FEE extends REP_BASE {
     	@FixedField(order = 823, len = 1, desc = "交易状态")
     	private String txnSts;
     	//换行占位符
-    	@FixedField(order = 822, len = 1, desc = "换行占位符")
+    	@FixedField(order = 824, len = 1, desc = "换行占位符")
     	private String rn;
     	
     	
