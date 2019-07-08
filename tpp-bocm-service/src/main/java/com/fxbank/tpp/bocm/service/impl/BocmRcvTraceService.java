@@ -468,53 +468,6 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		return sum;
 	}
 
-	@Override
-	public List<BocmRcvTraceQueryModel> getBocmCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime,
-			Integer sysTraceno, String date) throws SysTradeExecuteException {
-		BocmRcvLog bocmRcvLog = new BocmRcvLog();
-		bocmRcvLog.setTxDate(Integer.parseInt(date));
-		bocmRcvLog.setBocmState("0");
-		List<BocmRcvLog> dataList = bocmRcvLogMapper.select(bocmRcvLog);
-		List<BocmRcvTraceQueryModel> modelList = new ArrayList<>();
-		for(BocmRcvLog data : dataList) {
-			BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);
-			model.setAuthTel(data.getAuthTel());
-			model.setCheckFlag(data.getCheckFlag());
-			model.setChkTel(data.getChkTel());
-			model.setDcFlag(data.getDcFlag());
-			model.setHostDate(data.getHostDate());
-			model.setHostState(data.getHostState());
-			model.setHostTraceno(data.getHostTraceno());
-			model.setInfo(data.getInfo());
-			model.setPayeeAcno(data.getPayeeAcno());
-			model.setPayeeName(data.getPayeeName());
-			model.setPayerAcno(data.getPayerAcno());
-			model.setPayerName(data.getPayerName());
-			model.setPlatDate(data.getPlatDate());
-			model.setPlatTime(data.getPlatTime());
-			model.setPlatTrace(data.getPlatTrace());
-			model.setSourceType(data.getSourceType());
-			model.setBocmBranch(data.getBocmBranch());
-			model.setBocmDate(data.getBocmDate());
-			model.setBocmState(data.getBocmState());
-			model.setBocmTraceno(data.getBocmTraceno());
-			
-			model.setSndBankno(data.getSndBankno());
-			model.setRcvBankno(data.getRcvBankno());
-			
-			model.setPayerActtp(data.getPayerActtp());
-			model.setPayeeActtp(data.getPayeeActtp());
-			
-			model.setTxAmt(data.getTxAmt());
-			model.setTxDate(data.getTxDate());
-			model.setTranType(data.getTranType());
-			
-			modelList.add(model);
-		}
-		
-		return modelList;
-
-	}
 	
 
 

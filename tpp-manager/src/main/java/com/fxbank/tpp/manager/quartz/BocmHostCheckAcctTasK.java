@@ -67,7 +67,7 @@ import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 import redis.clients.jedis.Jedis;
 
 /** 
-* @ClassName: CityHostCheckAcctTasK 
+* @ClassName: BocmHostCheckAcctTasK 
 * @Description: 渠道与核心对账定时任务
 * @author YePuLiang
 * @date 2019年5月24日 上午9:52:41 
@@ -77,9 +77,9 @@ import redis.clients.jedis.Jedis;
 @Configuration
 @Component
 @EnableScheduling
-public class CityHostCheckAcctTasK {
+public class BocmHostCheckAcctTasK {
 	
-	private static Logger logger = LoggerFactory.getLogger(CityHostCheckAcctTasK.class);
+	private static Logger logger = LoggerFactory.getLogger(BocmHostCheckAcctTasK.class);
 
 	private static final String JOBNAME = "CityHostCheckAcct";
 
@@ -644,7 +644,7 @@ public class CityHostCheckAcctTasK {
 	}
 	
 	@Bean(name = "cityHostCheckAcctJobDetail")
-	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(CityHostCheckAcctTasK task) {// ScheduleTask为需要执行的任务
+	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(BocmHostCheckAcctTasK task) {// ScheduleTask为需要执行的任务
 		MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
 		jobDetail.setConcurrent(false);
 		jobDetail.setName(JOBNAME);

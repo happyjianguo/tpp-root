@@ -32,7 +32,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import redis.clients.jedis.Jedis;
 
 /** 
-* @ClassName: ApplyWorkKeyTask 
+* @ClassName: BocmApplyWorkKeyTask 
 * @Description: 交行工作秘钥申请定时任务
 * @author YePuLiang
 * @date 2019年5月26日 下午8:30:04 
@@ -41,9 +41,9 @@ import redis.clients.jedis.Jedis;
 @Configuration
 @Component
 @EnableScheduling
-public class ApplyWorkKeyTask {
+public class BocmApplyWorkKeyTask {
 	
-	private static Logger logger = LoggerFactory.getLogger(ApplyWorkKeyTask.class);
+	private static Logger logger = LoggerFactory.getLogger(BocmApplyWorkKeyTask.class);
 
 	private static final String JOBNAME = "ApplyWorkKey";
 	
@@ -127,7 +127,7 @@ public class ApplyWorkKeyTask {
 	
 	
 	@Bean(name = "applyWorkKeyJobDetail")
-	public MethodInvokingJobDetailFactoryBean applyWorkKeyJobDetail(ApplyWorkKeyTask task) {// ScheduleTask为需要执行的任务
+	public MethodInvokingJobDetailFactoryBean applyWorkKeyJobDetail(BocmApplyWorkKeyTask task) {// ScheduleTask为需要执行的任务
 		MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
 		jobDetail.setConcurrent(false);
 		jobDetail.setName(JOBNAME);

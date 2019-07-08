@@ -42,7 +42,7 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import redis.clients.jedis.Jedis;
 
 /** 
-* @ClassName: CityBocmCheckAcctTask 
+* @ClassName: BocmCheckAcctTask 
 * @Description: 渠道与交行对账定时任务
 * @author YePuLiang
 * @date 2019年5月24日 上午9:57:05 
@@ -51,8 +51,8 @@ import redis.clients.jedis.Jedis;
 @Configuration
 @Component
 @EnableScheduling
-public class CityBocmCheckAcctTask {
-	private static Logger logger = LoggerFactory.getLogger(CityBocmCheckAcctTask.class);
+public class BocmCheckAcctTask {
+	private static Logger logger = LoggerFactory.getLogger(BocmCheckAcctTask.class);
 
 	private static final String JOBNAME = "CityBocmCheckAcct";
 
@@ -440,7 +440,7 @@ public class CityBocmCheckAcctTask {
 
 	
 	@Bean(name = "cityBocmCheckAcctJobDetail")
-	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(CityBocmCheckAcctTask task) {// ScheduleTask为需要执行的任务
+	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(BocmCheckAcctTask task) {// ScheduleTask为需要执行的任务
 		MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
 		jobDetail.setConcurrent(false);
 		jobDetail.setName(JOBNAME);

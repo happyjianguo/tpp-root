@@ -81,7 +81,7 @@ public class REP_10103_FEE extends REP_BASE {
     	@FixedField(order = 812, len = 15, desc = "代理手续费")
     	private Double ProxyFee;    	
     	//代理手续费收取标志
-    	@FixedField(order = 813, len = 15, desc = "代理手续费收取标志")
+    	@FixedField(order = 813, len = 1, desc = "代理手续费收取标志")
     	private String ProxyFlg;   	
     	//通存通兑业务模式、
     	@FixedField(order = 814, len = 1, desc = "通存通兑业务模式")
@@ -113,6 +113,11 @@ public class REP_10103_FEE extends REP_BASE {
     	//交易状态
     	@FixedField(order = 823, len = 1, desc = "交易状态")
     	private String txnSts;
+    	//换行占位符
+    	@FixedField(order = 822, len = 1, desc = "换行占位符")
+    	private String rn;
+    	
+    	
 		public String getTlogNo() {
 			return TlogNo;
 		}
@@ -250,6 +255,12 @@ public class REP_10103_FEE extends REP_BASE {
 		}
 		public void setTxnSts(String txnSts) {
 			this.txnSts = txnSts;
+		}
+		public String getRn() {
+			return rn;
+		}
+		public void setRn(String rn) {
+			this.rn = rn;
 		}
     	
     }

@@ -1,11 +1,3 @@
-/**   
-* @Title: CHK_HostTest.java 
-* @Package com.fxbank.tpp.bocm.trade.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年6月24日 上午8:44:54 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.esb;
 
 import static org.junit.Assert.assertEquals;
@@ -41,17 +33,17 @@ import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
 import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
-* @ClassName: CHK_HostTest 
-* @Description: 外围与核心对账测试
+* @ClassName: CHK_Bocm 
+* @Description: 本行对账测试 
 * @author YePuLiang
-* @date 2019年6月24日 上午8:44:54 
+* @date 2019年5月7日 下午1:51:44 
 *  
 */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc	
-public class CHK_HostTest {
-	private static Logger logger = LoggerFactory.getLogger(CHK_HostTest.class);
+public class CHK_FeeTest {
+	private static Logger logger = LoggerFactory.getLogger(CHK_FeeTest.class);
 	
 //	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
      private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
@@ -73,8 +65,8 @@ public class CHK_HostTest {
 	public void init(){
 		req = new REQ_30061800501();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300618005");
-		reqSysHead.setSceneId("01");
+		reqSysHead.setServiceId("TS_CHK_FEE");
+		reqSysHead.setSceneId("");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("BOCM");	//网联
@@ -101,7 +93,7 @@ public class CHK_HostTest {
 	public void payOk() throws Exception {
 		logger.info("本行与三方对账");
 		//对账日期
-		reqBody.setStmtDtT2("20190708");
+		reqBody.setStmtDtT2("20190705");
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));

@@ -23,11 +23,14 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
+import com.fxbank.tpp.bocm.dto.esb.REQ_TS_CHK_FEE;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
+import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
+import com.fxbank.tpp.bocm.model.REP_10103;
 import com.fxbank.tpp.bocm.model.REP_10103_FEE;
 import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.service.IBocmAcctCheckErrService;
@@ -84,38 +87,18 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		
 		MyLog myLog = logPool.get();
-		REQ_30061800501 reqDto = (REQ_30061800501) dto;
-		REQ_30061800501.REQ_BODY reqBody = reqDto.getReqBody();
+		REQ_TS_CHK_FEE reqDto = (REQ_TS_CHK_FEE) dto;
+		REQ_TS_CHK_FEE.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061800501 rep = new REP_30061800501();
-
-		// 交易机构
-		String txBrno = null;
-		// 柜员号
-		String txTel = null;
-		try(Jedis jedis = myJedis.connect()){
-			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
-			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
-        }
-				
-		myLog.info(logger, "外围与交行对账定时任务开始");
 		
-		Integer sysDate = publicService.getSysDate("CIP");
-		SimpleDateFormat df=new SimpleDateFormat("yyyyMMdd");
-		Date d = null;
-		try {
-			d = df.parse(sysDate.toString());
-		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}     
-		Calendar cal=Calendar.getInstance();
-		cal.setTime(d);
-		//TODO  调试期间用当天后期修改
-//		cal.add(Calendar.DATE, -1);  //减1天
+		myLog.info(logger, "外围与交行对账定时任务开始");		   
 		
-		Integer date = Integer.parseInt(df.format(cal.getTime()));
-		Integer sysTime = publicService.getSysTime();
-		Integer sysTraceno = publicService.getSysTraceno();
+		Integer date = reqDto.getSysDate();
+		Integer sysTime = reqDto.getSysTime();
+		Integer sysTraceno =reqDto.getSysTraceno();
+		
+		date = Integer.parseInt(reqBody.getStmtDtT2());
+		Integer sysDate = date;
 		
 		//交行总行行号
 		String JHNO = "";
@@ -128,8 +111,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
         }
 		
 		acctCheckErrService.delete(date.toString());
-		
-		
+				
 		REQ_10103 req10103 = null;
 		REP_10103_FEE rep10103 = null;
 		
@@ -143,112 +125,6 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 		//获取交行交易流水信息
 		rep10103 = forwardToBocmService.sendToBocm(req10103, 
 				REP_10103_FEE.class);		
-		
-		//对账文件长度
-		int filLen = 0;
-		//交易笔数
-		int tolCnt = 0;
-		//对账文件明细
-		String filTxt = "";
-
-		//获取对账文件
-		filLen = rep10103.getFilLen();
-		tolCnt = rep10103.getTolCnt();
-		Double tolAmt = rep10103.getTolAmt();
-		List<REP_10103_FEE.Detail> tradList = rep10103.getFilTxt();
-		
-		int snd = 0;
-		int rcv = 0;
-		//拆分对账文件与渠道对账		
-		for(REP_10103_FEE.Detail bocmTrace : tradList){
-			
-			//获取交行交易流水号
-			String bocmTraceno = bocmTrace.getTlogNo();
-			//交易日期
-			String bocmDate = bocmTrace.getTactDt();
-			if(bocmDate==null){
-				myLog.error(logger, "外围与交行对账,柜面通对账失败,交行流水号【"+bocmTraceno+"】记账日期为空");
-				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
-				throw e;
-			}
-
-			
-			//交易业务码
-			String thdCod = bocmTrace.getThdCod();
-			//通存通兑业务模式 0现金 1转账
-			String txnMod = bocmTrace.getTxnMod();
-
-			//交易发起行行号
-			String SbnkNo = bocmTrace.getSbnkNo();
-			
-			myLog.info(logger, "外围与交行对账,交行流水号【"+bocmTraceno+"】发起行行号【"+SbnkNo+"】交易代码【"+thdCod+"】业务模式【"+txnMod+"】");
-			
-			//判断交易发起方人行行号，如果为本行行号说明本条对账文件对应的我方往账记录
-			if(FXNO.equals(SbnkNo)){
-				//根据交行核心对账数据取渠道往账数据
-				BocmSndTraceQueryModel sndTraceQueryModel = sndTraceService.getBocmSndTraceByKey(myLog, sysTime, 
-						sysTraceno, sysDate,bocmTraceno);		
-				//若渠道缺少数据则报错
-				if(sndTraceQueryModel == null) {
-					int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
-					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sysDate, sysTime, platTraceno);
-					aceModel.setPlatDate(sysDate);
-					aceModel.setPlatTrace(platTraceno);
-					aceModel.setPreHostState("");
-					aceModel.setReHostState("1");
-					aceModel.setDcFlag("");
-					aceModel.setCheckFlag("3");
-					aceModel.setDirection("O");
-					aceModel.setTxAmt(new BigDecimal(bocmTrace.getTxnAmt()));
-					aceModel.setMsg("渠道补充往账数据，渠道日期【"+sysDate+"】，渠道流水【"+platTraceno+"】");
-					acctCheckErrService.insert(aceModel);						
-					myLog.error(logger, "柜面通【"+date+"】往帐对账失败,渠道数据丢失: 交行流水号【"+bocmTraceno+"】交行记账日期为【"+sysDate+"】");
-					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
-					throw e;
-				}else{
-					checkBocmSndLog(myLog, sysDate, sysTime , sndTraceQueryModel, bocmTrace, bocmDate);
-					snd++;
-				}	
-			}else if(JHNO.equals(SbnkNo)){
-				//判断交易发起方人行行号，如果不是本行行号说明本条对账文件对应的我方来账记录
-				//根据交行对账数据取渠道来账数据
-				BocmRcvTraceQueryModel rcvTraceQueryModel = rcvTraceService.getBocmRcvTraceByKey(myLog, sysTime, 
-						sysTraceno, sysDate,bocmTraceno);				
-				//若渠道缺少数据则报错
-				if(rcvTraceQueryModel == null) {
-					int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
-					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sysDate, sysTime, platTraceno);
-					aceModel.setPlatDate(sysDate);
-					aceModel.setPlatTrace(platTraceno);
-					aceModel.setPreHostState("");
-					aceModel.setReHostState("1");
-					aceModel.setDcFlag("");
-					aceModel.setCheckFlag("3");
-					aceModel.setDirection("I");
-					aceModel.setTxAmt(new BigDecimal(bocmTrace.getTxnAmt()));
-					aceModel.setMsg("渠道补充来账数据，渠道日期【"+sysDate+"】，渠道流水【"+platTraceno+"】");
-					acctCheckErrService.insert(aceModel);		
-					myLog.error(logger, "柜面通来帐对账失败,渠道数据丢失: 交行流水号【"+bocmTraceno+"】核心日期为【"+sysDate+"】渠道流水【"+bocmTrace.getLogNo()+"】");
-					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
-					throw e;
-				}else{
-					checkBocmRcvLog(myLog, sysDate, sysTime , rcvTraceQueryModel, bocmTrace, bocmDate);
-					rcv++;
-				}			
-			}
-		}
-		myLog.info(logger, "外围与交行对账往账记录：【"+snd+"】");
-		myLog.info(logger, "外围与交行对账来账记录：【"+rcv+"】");
-		
-		myLog.info(logger, "外围与交行对账结束");
-		
-		
-//		int sndTotal = Integer.parseInt(sndCheckFlag2)+Integer.parseInt(sndCheckFlag3)+Integer.parseInt(sndCheckFlag4);
-//		String s = "柜面通【"+date+"】对账统计：来账共【"+rcvTotal+"】笔，其中已对账【"+rcvCheckFlag2+"】笔，核心多出【"+rcvCheckFlag3+"】笔，渠道多出【"+rcvCheckFlag4+"】笔;"
-//				+ "往账共【"+sndTotal+"】笔，其中已对账【"+sndCheckFlag2+"】笔，核心多出【"+sndCheckFlag3+"】笔，渠道多出【"+sndCheckFlag4+"】笔";
-
-		myLog.info(logger, "外围与交行对账成功");
-		
 		return rep;
 	}
 	

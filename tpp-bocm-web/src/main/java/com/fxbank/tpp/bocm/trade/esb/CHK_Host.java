@@ -124,13 +124,18 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		checkRcvLog(myLog, dayCheckLogList, date,sysTime,sysTraceno);		
 		//核对往帐
 		myLog.info(logger, "核对往账流水");
-		checkSndLog(myLog, dayCheckLogList, date,sysTime,sysTraceno);			
+		checkSndLog(myLog, dayCheckLogList, date,sysTime,sysTraceno);
+		//核对来账、核对往账原则是以本行为主的更新记账状态和对账状态，以交行为主的对账只更新核心记账状态，不更新对账标识
 		myLog.info(logger, "核心与外围对账结束");				
 		myLog.info(logger, "外围与核心对账开始");
 		//获取未对账的来账信息,核心无记录的数据
 		List<BocmRcvTraceQueryModel> rcvTraceList = rcvTraceService.getCheckRcvTrace(myLog,date,sysTime,sysTraceno, date.toString());
 		for(BocmRcvTraceQueryModel model : rcvTraceList) {
 			BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(), model.getPlatTrace());
+			//如果来账交易类型是他代本通存和他代本现金通兑,不更新对账状态
+			if(model.equals("JH02")||(model.equals("JH01")&&model.getTxInd().equals("0"))){
+				continue;
+			}		
 			record.setCheckFlag("4");
 			rcvTraceService.rcvTraceUpd(record);			
 			if(model.getHostState().equals("1")) {
@@ -168,6 +173,10 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		List<BocmSndTraceQueryModel> sndTraceList = sndTraceService.getCheckSndTrace(myLog,date,sysTime,sysTraceno, date.toString());
 		for(BocmSndTraceQueryModel model:sndTraceList) {
 			BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(), model.getPlatTrace());
+			//如果往账交易类型是交行卡转本行不更新对账状态
+			if(model.equals("JH11")){
+				continue;
+			}
 			record.setCheckFlag("4");
 			sndTraceService.sndTraceUpd(record);
 			
@@ -274,14 +283,18 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 			}else {
 				//dc_flag IS '通存通兑标志；0通存、1通兑';
 				String hostState = sndTraceQueryModel.getHostState(); //渠道记录的核心状态
-				
 				//通存
 				if(hostState.equals("1")) {
+					//如果往账交易类型是交行卡转本行不更新对账状态
+					if(sndTraceQueryModel.equals("JH11")){
+						continue;
+					}
 					//核心与渠道状态一致
 					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					sndTraceService.sndTraceUpd(record);
 				}else {
+					//其他状态说明交易有问题,核心记账异常说明柜面交易失败,如果核心记录了说明多记账了,正常的流水核心记账状态只能为1
 					myLog.error(logger, "柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
 					throw e;
@@ -320,8 +333,12 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
 				throw e;				
 			}else {
-				String hostState = rcvTraceQueryModel.getHostState(); //渠道记录的核心状态
+				String hostState = rcvTraceQueryModel.getHostState(); //渠道记录的核心状态				
 				if(hostState.equals("1")) {
+					//如果来账交易类型是他代本通存和他代本现金通兑,不更新对账状态
+					if(rcvTraceQueryModel.equals("JH02")||(rcvTraceQueryModel.equals("JH01")&&rcvTraceQueryModel.getTxInd().equals("0"))){
+						continue;
+					}
 					//核心与渠道状态一致
 					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
@@ -330,7 +347,12 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 					//'核心记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时';
 					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setHostState("1");
-					record.setCheckFlag("2");
+					//如果来账交易类型是他代本通存和他代本现金通兑,不更新对账状态,已交行为主的记录只更新核心记账状态，不修改对账状态
+					if(rcvTraceQueryModel.equals("JH02")||(rcvTraceQueryModel.equals("JH01")&&rcvTraceQueryModel.getTxInd().equals("0"))){
+						continue;
+					}else{
+						record.setCheckFlag("2");
+					}					
 					rcvTraceService.rcvTraceUpd(record);
 					myLog.info(logger,"渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
 
