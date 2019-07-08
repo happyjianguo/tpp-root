@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description:
+ * @Description: 公告信息确认
  * @Author: 王鹏
  * @Date: 2019/7/4 7:12
  */
@@ -21,7 +21,7 @@ public class REQ_50023000212 extends REQ_BASE {
     private REQ_BODY reqBody;
 
     public REQ_50023000212(){
-        super.txDesc = "企业通知确认";
+        super.txDesc = "公告信息确认";
     }
 
     public REQ_APP_HEAD getReqAppHead() {

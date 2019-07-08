@@ -107,6 +107,8 @@ public class MivsIdVrfctnInfoService implements IMivsIdVrfctnInfoService {
                 infoResult.setTran_time(Info.getTranTime());
                 infoResult.setOrig_dlv_msgid(Info.getMsgId());
                 infoResult.setOrig_rcv_msgid(Info.getRcvMsgId());
+                infoResult.setBranch_id(Info.getBranchId());
+                infoResult.setUser_id(Info.getUserId());
                 infoResult.setMob_nb(Info.getMobNb());
                 infoResult.setNm(Info.getNm());
                 infoResult.setId_tp(Info.getIdTp());

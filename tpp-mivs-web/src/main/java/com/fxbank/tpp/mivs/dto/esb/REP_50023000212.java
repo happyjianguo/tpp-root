@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /**
- * @Description: 企业通知确认
+ * @Description: 公告信息确认
  * @Author: 王鹏
  * @Date: 2019/7/4 7:17
  */

@@ -65,9 +65,6 @@ public class FreeFrmtSelect extends TradeBase implements TradeExecutionStrategy{
                 int i = 0;
                 for (MivsFreeFrmtModel Info : freeFrmtModels) {
                     REP_50023000211.resultList resultList = new REP_50023000211.resultList();
-                    resultList.setPlatDate(Info.getPlat_date());
-                    resultList.setPlatTrace(Info.getPlat_trace());
-                    resultList.setPlatTime(Info.getPlat_time());
                     resultList.setMsgId(Info.getMsg_id());
                     resultList.setInstdDrctPty(Info.getInstd_drct_pty());
                     resultList.setInstdPty(Info.getInstd_pty());

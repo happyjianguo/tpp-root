@@ -82,16 +82,6 @@ public class REQ_50023000206 extends REQ_BASE {
         @JSONField(name = "TXPYR_INFO_ARRAY")
         private List<txpyrInfoArray> txpyrInfoArrayMsg;//纳税信息数组
 
-        //以下信息 当“纳税信息核查结果”为非“MCHD” 时填
-        @JSONField(name = "MSG_RFS_STATUS")
-        private String procSts;//申请报文拒绝状态
-
-        @JSONField(name = "MSG_RFS_CODE")
-        private String procCd;//申请报文拒绝码
-
-        @JSONField(name = "MSG_RFS_INFO")
-        private String rjctinf;//申请报文拒绝信息
-
         @JSONField(name = "RESPONSE_INFO")
         private String cntt; // 疑似反馈内容
 
@@ -163,30 +153,6 @@ public class REQ_50023000206 extends REQ_BASE {
 
         public void setTxpyrInfoArrayMsg(List<txpyrInfoArray> txpyrInfoArrayMsg) {
             this.txpyrInfoArrayMsg = txpyrInfoArrayMsg;
-        }
-
-        public String getProcSts() {
-            return procSts;
-        }
-
-        public void setProcSts(String procSts) {
-            this.procSts = procSts;
-        }
-
-        public String getProcCd() {
-            return procCd;
-        }
-
-        public void setProcCd(String procCd) {
-            this.procCd = procCd;
-        }
-
-        public String getRjctinf() {
-            return rjctinf;
-        }
-
-        public void setRjctinf(String rjctinf) {
-            this.rjctinf = rjctinf;
         }
 
         public String getCntt() {

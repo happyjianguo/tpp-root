@@ -58,7 +58,6 @@ public class RegVrfctnSelect extends TradeBase implements TradeExecutionStrategy
         regVrfctnInfoModel.setBranch_id(reqBody.getOrigBranchId());
         regVrfctnInfoModel.setUser_id(reqBody.getOrigUserId());
         regVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
-        regVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
         regVrfctnInfoModel.setEnt_nm(reqBody.getEntNm());
         regVrfctnInfoModel.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
         regVrfctnInfoModel.setNm_of_lgl_prsn(reqBody.getNmOfLglPrsn());

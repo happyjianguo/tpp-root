@@ -21,7 +21,7 @@ public class REQ_50023000202 extends REQ_BASE {
     private REQ_BODY reqBody;
 
     public REQ_50023000202(){
-        super.txDesc = "手机号码核心信息结果查询";
+        super.txDesc = "手机号码核查信息结果查询";
     }
 
     public REQ_APP_HEAD getReqAppHead() {

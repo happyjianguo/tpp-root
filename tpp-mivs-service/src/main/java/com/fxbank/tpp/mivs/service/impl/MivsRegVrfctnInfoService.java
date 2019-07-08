@@ -506,7 +506,6 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         infoEntity.setBranchId(mivsRegVrfctnInfoModel.getBranch_id());
         infoEntity.setUserId(mivsRegVrfctnInfoModel.getUser_id());
         infoEntity.setMsgId(mivsRegVrfctnInfoModel.getOrig_dlv_msgid());
-        infoEntity.setRcvMsgId(mivsRegVrfctnInfoModel.getOrig_rcv_msgid());
         infoEntity.setEntNm(mivsRegVrfctnInfoModel.getEnt_nm());
         infoEntity.setUniSocCdtCd(mivsRegVrfctnInfoModel.getUni_soc_cdt_cd());
         infoEntity.setNmOfLglPrsn(mivsRegVrfctnInfoModel.getNm_of_lgl_prsn());

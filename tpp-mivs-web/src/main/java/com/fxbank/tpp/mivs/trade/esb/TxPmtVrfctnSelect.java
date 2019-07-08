@@ -81,6 +81,8 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
                 resultList.setOrigTranTime(Info.getTran_time());
                 resultList.setOrgnlDlvrgMsgId(Info.getOrig_dlv_msgid());
                 resultList.setOrgnlRcvgMsgId(Info.getOrig_rcv_msgid());
+                resultList.setOrigBranchId(Info.getBranch_id());
+                resultList.setOrigUserId(Info.getUser_id());
                 resultList.setCoNm(Info.getCo_nm());
                 resultList.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
                 resultList.setTxpyrIdNb(Info.getTxpyr_id_nb());

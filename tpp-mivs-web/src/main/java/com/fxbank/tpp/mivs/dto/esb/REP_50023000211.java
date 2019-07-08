@@ -70,15 +70,6 @@ public class REP_50023000211  extends REP_BASE {
 
     public static class resultList{
 
-        @JSONField(name = "platDate")
-        private Integer platDate;
-
-        @JSONField(name = "platTrace")
-        private Integer platTrace;
-
-        @JSONField(name = "platTime")
-        private Integer platTime;
-
         @JSONField(name = "msgid")
         private String msgId;
 
@@ -105,30 +96,6 @@ public class REP_50023000211  extends REP_BASE {
 
         @JSONField(name = "isornot_rsp")
         private String isornotRsp;
-
-        public Integer getPlatDate() {
-            return platDate;
-        }
-
-        public void setPlatDate(Integer platDate) {
-            this.platDate = platDate;
-        }
-
-        public Integer getPlatTrace() {
-            return platTrace;
-        }
-
-        public void setPlatTrace(Integer platTrace) {
-            this.platTrace = platTrace;
-        }
-
-        public Integer getPlatTime() {
-            return platTime;
-        }
-
-        public void setPlatTime(Integer platTime) {
-            this.platTime = platTime;
-        }
 
         public String getMsgId() {
             return msgId;
@@ -205,9 +172,6 @@ public class REP_50023000211  extends REP_BASE {
         @Override
         public String toString() {
             return "resultList{" +
-                    "platDate='" + platDate + '\'' +
-                    ", platTrace='" + platTrace + '\'' +
-                    ", platTime='" + platTime + '\'' +
                     ", msgId='" + msgId + '\'' +
                     ", creDtTm='" + creDtTm + '\'' +
                     ", instgDrctPty='" + instgDrctPty + '\'' +

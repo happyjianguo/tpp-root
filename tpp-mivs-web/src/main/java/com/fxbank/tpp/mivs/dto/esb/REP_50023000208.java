@@ -92,6 +92,12 @@ public class REP_50023000208 extends REP_BASE {
         @JSONField(name = "OrgnlDlvrgMsgId")
         private String orgnlDlvrgMsgId;
 
+        @JSONField(name = "OrigBranchId")
+        private String origBranchId;
+
+        @JSONField(name = "OrigUserId")
+        private String origUserId;
+
         @JSONField(name = "ProcSts")
         private String procSts;
 
@@ -180,6 +186,22 @@ public class REP_50023000208 extends REP_BASE {
 
         public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
             this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
+        }
+
+        public String getOrigBranchId() {
+            return origBranchId;
+        }
+
+        public void setOrigBranchId(String origBranchId) {
+            this.origBranchId = origBranchId;
+        }
+
+        public String getOrigUserId() {
+            return origUserId;
+        }
+
+        public void setOrigUserId(String origUserId) {
+            this.origUserId = origUserId;
         }
 
         public String getRemarks1() {

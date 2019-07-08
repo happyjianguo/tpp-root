@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description: 企业通知查询请求
+ * @Description: 公告信息查询请求
  * @Author: 王鹏
  * @Date: 2019/7/3 17:21
  */
@@ -21,7 +21,7 @@ public class REQ_50023000211 extends REQ_BASE {
     private REQ_BODY reqBody;
 
     public REQ_50023000211(){
-        super.txDesc = "企业通知查询请求";
+        super.txDesc = "公告信息查询请求";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -56,7 +56,7 @@ public class REQ_50023000211 extends REQ_BASE {
         private Integer endDt; //核查结束时间
 
         @JSONField(name = "RplyFlag")
-        private String rplyFlag;        //经营者姓名
+        private String rplyFlag;        //回复标志
 
         public Integer getStartDt() {
             return startDt;

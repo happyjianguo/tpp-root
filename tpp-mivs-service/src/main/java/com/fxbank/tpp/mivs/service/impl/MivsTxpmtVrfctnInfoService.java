@@ -184,6 +184,8 @@ public class MivsTxpmtVrfctnInfoService implements IMivsTxPmtVrfctnInfoService {
                 infoResult.setTran_time(Info.getTranTime());
                 infoResult.setOrig_dlv_msgid(Info.getMsgId());
                 infoResult.setOrig_rcv_msgid(Info.getRcvMsgId());
+                infoResult.setBranch_id(Info.getBranchId());
+                infoResult.setUser_id(Info.getUserId());
                 infoResult.setCo_nm(Info.getCoNm());
                 infoResult.setUni_soc_cdt_cd(Info.getUniSocCdtCd());
                 infoResult.setTxpyr_id_nb(Info.getTxpyrIdNb());

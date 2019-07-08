@@ -63,10 +63,7 @@ public class REQ_50023000208 extends REQ_BASE {
         private String origUserId; // 原核查柜员号
 
         @JSONField(name = "ORIG_APPLY_MSG_ID")
-        private String orgnlDlvrgMsgId; //原申请报文标识号  原 mivs.320.001.01或mivs.322.001.01 的报文标识号
-
-        @JSONField(name = "ORIG_ANSWER_MSG_ID")
-        private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.321.001.01或mivs.323.001.01 的报文标识号
+        private String orgnlDlvrgMsgId; //原申请报文标识号
 
         @JSONField(name = "ENT_NAME")
         private String entNm;    //单位名称
@@ -127,14 +124,6 @@ public class REQ_50023000208 extends REQ_BASE {
 
         public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
             this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
-        }
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
         }
 
         public String getEntNm() {

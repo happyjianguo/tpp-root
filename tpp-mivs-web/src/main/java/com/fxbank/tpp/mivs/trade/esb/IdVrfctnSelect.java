@@ -79,6 +79,8 @@ public class IdVrfctnSelect extends TradeBase implements TradeExecutionStrategy 
                 resultList.setOrigTranTime(Info.getTran_time());
                 resultList.setOrgnlDlvrgMsgId(Info.getOrig_dlv_msgid());
                 resultList.setOrgnlRcvgMsgId(Info.getOrig_rcv_msgid());
+                resultList.setOrigBranchId(Info.getBranch_id());
+                resultList.setOrigUserId(Info.getUser_id());
                 resultList.setMobNb(Info.getMob_nb());
                 resultList.setNm(Info.getNm());
                 resultList.setIdTp(Info.getId_tp());
