@@ -69,7 +69,7 @@ public interface IBocmSndTraceService {
 	* @throws 
 	*/
 	BocmSndTraceQueryModel getBocmSndTraceByKey(MyLog myLog, Integer sysTime, Integer sysTraceno, Integer sysDate,
-			Integer bocmDate, String bocmTraceno) throws SysTradeExecuteException;
+			String bocmTraceno) throws SysTradeExecuteException;
 	/** 
 	* @Title: getSndTrace 
 	* @Description: 查询往账流水 

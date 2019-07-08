@@ -198,9 +198,8 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 	}
 	
 	public BocmSndTraceQueryModel getBocmSndTraceByKey(MyLog myLog, Integer sysTime, Integer sysTraceno, Integer sysDate,
-			Integer bocmDate, String bocmTraceno) throws SysTradeExecuteException{
+			 String bocmTraceno) throws SysTradeExecuteException{
 		BocmSndLog bocmSndLog = new BocmSndLog();
-		bocmSndLog.setBocmDate(bocmDate);
 		bocmSndLog.setBocmTraceno(bocmTraceno);
 		BocmSndLog data = bocmSndLogMapper.selectOne(bocmSndLog);
 		BocmSndTraceQueryModel model = new BocmSndTraceQueryModel(myLog, sysDate, sysTime, sysTraceno);

@@ -126,7 +126,7 @@ public interface IBocmRcvTraceService {
 	* @throws 
 	*/
 	BocmRcvTraceQueryModel getBocmRcvTraceByKey(MyLog myLog, Integer sysTime, Integer sysTraceno, Integer sysDate,
-			Integer bocmDate, String bocmTrace)throws SysTradeExecuteException;
+		 String bocmTrace)throws SysTradeExecuteException;
 
 	/** 
 	* @Title: getUploadCheckRcvTrace 
@@ -164,6 +164,22 @@ public interface IBocmRcvTraceService {
 	* @throws 
 	*/
 	String getRcvTotalChkSum(MyLog myLog, String date) throws SysTradeExecuteException;
+	
+	/** 
+	* @Title: getBocmCheckRcvTrace 
+	* @Description: 查询是否还有未对账的来账数据
+	* @param @param myLog
+	* @param @param sysDate
+	* @param @param sysTime
+	* @param @param sysTraceno
+	* @param @param date
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return List<RcvTraceQueryModel>    返回类型 
+	* @throws 
+	*/
+	List<BocmRcvTraceQueryModel> getBocmCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
+			String date)throws SysTradeExecuteException;
 	
 
 }

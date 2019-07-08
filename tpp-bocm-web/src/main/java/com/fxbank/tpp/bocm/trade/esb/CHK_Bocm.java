@@ -1,10 +1,6 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -27,6 +23,7 @@ import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
 import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
+import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
 import com.fxbank.tpp.bocm.model.REP_10103;
@@ -149,14 +146,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 		for(REP_10103.Detail bocmTrace : tradList){
 			
 			//获取交行交易流水号
-			String bocmTraceno = bocmTrace.getTlogNo();
-			//交易日期
-			String bocmDate = bocmTrace.getTactDt();
-			if(bocmDate==null){
-				myLog.error(logger, "外围与交行对账,柜面通对账失败,交行流水号【"+bocmTraceno+"】记账日期为空");
-				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
-				throw e;
-			}			
+			String bocmTraceno = bocmTrace.getTlogNo();		
 			//交易业务码
 			String thdCod = bocmTrace.getThdCod();
 			//通存通兑业务模式 0现金 1转账
@@ -168,7 +158,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 			if(FXNO.equals(SbnkNo)){
 				//根据交行核心对账数据取渠道往账数据
 				BocmSndTraceQueryModel sndTraceQueryModel = sndTraceService.getBocmSndTraceByKey(myLog, sysTime, 
-						sysTraceno, sysDate,Integer.parseInt(bocmDate),bocmTraceno);		
+						sysTraceno, sysDate,bocmTraceno);		
 				
 				//若渠道缺少数据则报错
 				if(sndTraceQueryModel == null) {
@@ -188,14 +178,14 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
 					throw e;
 				}else{
-					checkBocmSndLog(myLog, sysDate, sysTime , sndTraceQueryModel, bocmTrace, bocmDate);
+					checkBocmSndLog(myLog, sysDate, sysTime , sndTraceQueryModel, bocmTrace, date+"");
 					snd++;
 				}	
 			}else if(JHNO.equals(SbnkNo)){
 				//判断交易发起方人行行号，如果不是本行行号说明本条对账文件对应的我方来账记录
 				//根据交行对账数据取渠道来账数据
 				BocmRcvTraceQueryModel rcvTraceQueryModel = rcvTraceService.getBocmRcvTraceByKey(myLog, sysTime, 
-						sysTraceno, sysDate,Integer.parseInt(bocmDate),bocmTraceno);				
+						sysTraceno, sysDate,bocmTraceno);				
 				//若渠道缺少数据则报错
 				if(rcvTraceQueryModel == null) {
 					int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
@@ -214,17 +204,19 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
 					throw e;
 				}else{
-					checkBocmRcvLog(myLog, sysDate, sysTime , rcvTraceQueryModel, bocmTrace, bocmDate);
+					checkBocmRcvLog(myLog, sysDate, sysTime , rcvTraceQueryModel, bocmTrace, date+"");
 					rcv++;
 				}			
 			}
 		}
 		myLog.info(logger, "外围与交行对账往账记录：【"+snd+"】");
 		myLog.info(logger, "外围与交行对账来账记录：【"+rcv+"】");
-		
-		myLog.info(logger, "外围与交行对账结束");
-		
+		myLog.info(logger, "外围与交行对账结束");		
 		myLog.info(logger, "外围与交行对账成功");
+		
+		
+		//获取来账表是否还有以交行为主的记录
+		
 		
 		//更新对账状态表交行对账状态
 		BocmChkStatusModel record = new BocmChkStatusModel();
@@ -251,10 +243,10 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 					(rcvTraceQueryModel.getTranType().equals("JH01")&&rcvTraceQueryModel.getTxInd().equals("0"))){					
 				//交易结果以交行为准
 				if(hostState.equals("1")){
-					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
+					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					record.setBocmState("1");
-					sndTraceService.sndTraceUpd(record);
+					rcvTraceService.rcvTraceUpd(record);
 					myLog.info(logger,"更新渠道对账状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】");
 				}else{					
 					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sysDate, sysTime, platTraceno);
@@ -278,10 +270,10 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 					(rcvTraceQueryModel.getTranType().equals("JH01")&&rcvTraceQueryModel.getTxInd().equals("0"))){					
 				//交易结果以交行为准,核心记账成功，对账失败
 				if(hostState.equals("1")){
-					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
+					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					record.setHostState("2");
-					sndTraceService.sndTraceUpd(record);
+					rcvTraceService.rcvTraceUpd(record);
 					myLog.info(logger,"更新渠道对账状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】");
 				
 					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sysDate, sysTime, platTraceno);
@@ -298,11 +290,11 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
 					throw e;
 				}else{
-					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
+					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					record.setHostState("2");
 					record.setBocmState("2");
-					sndTraceService.sndTraceUpd(record);
+					rcvTraceService.rcvTraceUpd(record);
 					myLog.info(logger,"渠道更新来账数据已交行为主记账状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】");
 				}
 				
@@ -326,6 +318,7 @@ public class CHK_Bocm extends TradeBase implements TradeExecutionStrategy {
 				if(hostState.equals("1")){
 					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
+					record.setBocmState("1");
 					sndTraceService.sndTraceUpd(record);
 					myLog.info(logger,"更新渠道对账状态，渠道日期【"+sndTraceQueryModel.getPlatDate()+"】，渠道流水【"+sndTraceQueryModel.getPlatTrace()+"】");
 				}else{

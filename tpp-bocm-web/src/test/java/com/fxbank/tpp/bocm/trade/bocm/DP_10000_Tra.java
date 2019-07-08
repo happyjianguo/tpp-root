@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_10000;
 import com.fxbank.tpp.bocm.model.REQ_10000;
+import com.fxbank.tpp.bocm.nettty.ServerInitializer;
 
 /** 
 * @ClassName: DP_10000_Tra 
@@ -81,9 +82,9 @@ public class DP_10000_Tra extends BASE_TEST {
 //		req.setSlogNo("19053199440952");
 		
 		
-		String repData = super.comm(FixedUtil.toFixed(req,"utf-8"));
+		String repData = super.comm(FixedUtil.toFixed(req,ServerInitializer.CODING));
 		REP_10000 rep = new REP_10000();
-		rep = (REP_10000)new FixedUtil(repData,"utf-8").toBean(rep.getClass());		
+		rep = (REP_10000)new FixedUtil(repData,ServerInitializer.CODING).toBean(rep.getClass());		
 		assertEquals(rep.getTmsgTyp(), "N");
 		assertEquals(rep.getTrspCd(), "FX0000");
 	}

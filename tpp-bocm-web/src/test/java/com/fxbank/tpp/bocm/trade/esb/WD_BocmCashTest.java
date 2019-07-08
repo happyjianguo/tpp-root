@@ -55,7 +55,8 @@ public class WD_BocmCashTest {
 	private static Logger logger = LoggerFactory.getLogger(DB_BocmCashTest.class);
 	
 //	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
-     private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
+//     private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
+	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -79,8 +80,10 @@ public class WD_BocmCashTest {
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("MT");	//网联
-		reqSysHead.setBranchId("01016");
-		reqSysHead.setUserId("000917");
+//		reqSysHead.setBranchId("01016");
+//		reqSysHead.setUserId("000917");
+		reqSysHead.setBranchId("01045");
+		reqSysHead.setUserId("000778");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
 		reqSysHead.setUserLang("CHINESE");
@@ -105,8 +108,8 @@ public class WD_BocmCashTest {
 		reqBody.setCcyT("CNY");
 		reqBody.setNmT("地区代码");
 		reqBody.setCardNoT3("6222620110037989184");//卡号
-		reqBody.setWthrAmtT("10.00");//转账金额
-		reqBody.setFeeAmtT3("1.00");//手续费
+		reqBody.setWthrAmtT("100.00");//转账金额
+		reqBody.setFeeAmtT3("0.00");//手续费
 		reqBody.setBalT("");//余额
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费
 		reqBody.setHldrGlblIdT("370126195312267931");//证件号码
