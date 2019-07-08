@@ -176,7 +176,7 @@ public class CityBocmCheckAcctTask {
 			if(FXNO.equals(SbnkNo)){
 				//根据交行核心对账数据取渠道往账数据
 				BocmSndTraceQueryModel sndTraceQueryModel = sndTraceService.getBocmSndTraceByKey(myLog, sysTime, 
-						sysTraceno, sysDate,Integer.parseInt(bocmDate),bocmTraceno);		
+						sysTraceno, sysDate,bocmTraceno);		
 				//若渠道缺少数据则报错
 				if(sndTraceQueryModel == null) {
 					int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
@@ -202,7 +202,7 @@ public class CityBocmCheckAcctTask {
 				//判断交易发起方人行行号，如果不是本行行号说明本条对账文件对应的我方来账记录
 				//根据交行对账数据取渠道来账数据
 				BocmRcvTraceQueryModel rcvTraceQueryModel = rcvTraceService.getBocmRcvTraceByKey(myLog, sysTime, 
-						sysTraceno, sysDate,Integer.parseInt(bocmDate),bocmTraceno);				
+						sysTraceno, sysDate,bocmTraceno);				
 				//若渠道缺少数据则报错
 				if(rcvTraceQueryModel == null) {
 					int platTraceno = Integer.parseInt(bocmTrace.getLogNo().substring(6));
