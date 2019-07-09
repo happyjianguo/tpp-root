@@ -130,7 +130,16 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 			String txnMod = bocmTrace.getTxnMod();
 			//交易发起行行号
 			String SbnkNo = bocmTrace.getSbnkNo();			
-			myLog.info(logger, "外围与交行对账,交行流水号【"+bocmTraceno+"】发起行行号【"+SbnkNo+"】交易代码【"+thdCod+"】业务模式【"+txnMod+"】");			
+			myLog.info(logger, "手续费流水获取,交行流水号【"+bocmTraceno+"】发起行行号【"+SbnkNo+"】交易代码【"+thdCod+"】业务模式【"+txnMod+"】");
+			//规则：交易受理方收取代理手续费  0 （交行支付代理手续费）1 （交行收取代理手续费）
+			String proxy_flag = bocmTrace.getProxyFlg();
+			double proxyFee = NumberUtil.removePoint(bocmTrace.getProxyFee());
+			if(proxy_flag.equals("0")){
+				myLog.info(logger, "交行支付代理手续费："+bocmTrace.getProxyFee()+"转换后： "+proxyFee);
+			}
+			if(proxy_flag.equals("1")){
+				myLog.info(logger, "交行收取代理手续费："+bocmTrace.getProxyFee()+"转换后： "+proxyFee);
+			}
 			//判断交易发起方人行行号，如果为本行行号说明本条对账文件对应的我方往账记录
 			if(FXNO.equals(SbnkNo)){
 				//根据交行核心对账数据取渠道往账数据
@@ -139,8 +148,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 				if(sndTraceQueryModel!=null){
 					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), 
 							sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
-					record.setProxyFlag(bocmTrace.getProxyFlg());
-					double proxyFee = NumberUtil.removePoint(bocmTrace.getProxyFee());
+					record.setProxyFlag(proxy_flag);
 					record.setProxyFee(new BigDecimal(proxyFee));
 					sndTraceService.sndTraceUpd(record);
 				}
@@ -152,8 +160,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 				if(rcvTraceQueryModel!=null){
 					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), 
 							rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
-					record.setProxyFlag(bocmTrace.getProxyFlg());
-					double proxyFee = NumberUtil.removePoint(bocmTrace.getProxyFee());
+					record.setProxyFlag(proxy_flag);
 					record.setProxyFee(new BigDecimal(proxyFee));
 					rcvTraceService.rcvTraceUpd(record);
 				}
