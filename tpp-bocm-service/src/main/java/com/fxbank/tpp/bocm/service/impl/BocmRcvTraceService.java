@@ -156,7 +156,12 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		if(null != record.getRcvBankno()) {
 			bocmRcvLog.setRcvBankno(record.getRcvBankno());
 		}	
-		
+		if(null != record.getProxyFlag()) {
+			bocmRcvLog.setProxyFlag(record.getProxyFlag());
+		}
+		if(null != record.getProxyFee()) {
+			bocmRcvLog.setProxyFee(record.getProxyFee());
+		}
 		bocmRcvLogMapper.updateByPrimaryKeySelective(bocmRcvLog);
 	}
 	
