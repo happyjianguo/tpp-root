@@ -51,6 +51,10 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
     private String retMsg;
     //核心记账机构
     private String hostBranch;
+    //代理手续费手续方式
+    private String proxyFlag;
+    //代理手续费
+    private BigDecimal proxyFee;
 
 
 	public String getHostBranch() {
@@ -171,6 +175,22 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setRcvBankno(String rcvBankno) {
 		this.rcvBankno = rcvBankno;
+	}
+
+	public String getProxyFlag() {
+		return proxyFlag;
+	}
+
+	public void setProxyFlag(String proxyFlag) {
+		this.proxyFlag = proxyFlag;
+	}
+
+	public BigDecimal getProxyFee() {
+		return proxyFee;
+	}
+
+	public void setProxyFee(BigDecimal proxyFee) {
+		this.proxyFee = proxyFee;
 	}
 
 

@@ -5,15 +5,22 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.model.ModelBase;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061000901;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
+
+import redis.clients.jedis.Jedis;
 
 /**
  * @Description: 来账交易模版。适用场景：判断交易状态->核心记账,日终对账以银行为准。
@@ -175,7 +182,17 @@ public abstract class BaseTradeT1 {
 	* @throws
 	 */
 	public abstract BocmRcvTraceQueryModel queryRcvTrace(DataTransObject req) throws SysTradeExecuteException;
-		
+	/**
+	* @Title: hostReversal 
+	* @Description: 核心冲正
+	* @param @param req
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return ESB_REP_30014000101    返回类型 
+	* @throws
+	 */	
+	public abstract ESB_REP_30014000101 hostReversal(DataTransObject dto)
+			throws SysTradeExecuteException;
 	
 	private BocmRcvTraceQueryModel checkBocmRcvTrace(DataTransObject dto,int i) throws SysTradeExecuteException{
 		MyLog myLog = logPool.get();
@@ -199,8 +216,7 @@ public abstract class BaseTradeT1 {
 		}else{
 			return model;
 		}		
-	}
-	
+	}	
 	
 
 
@@ -293,6 +309,8 @@ public abstract class BaseTradeT1 {
 			if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000004) || e.getRspCode().equals(ESB_TIMEOUT_CODE1)) {
 				// 超时登记
 				hostTimeoutInitLog(dto); 
+				// 核心冲正
+				hostReversal(dto);
 				myLog.error(logger,TRADE_DESC+"核心记账超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 				throw hostTimeoutException;
 			} else {

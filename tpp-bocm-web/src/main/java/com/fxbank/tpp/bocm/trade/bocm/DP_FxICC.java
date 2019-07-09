@@ -25,6 +25,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.bocm.REP_20000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_20000;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061000901;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
@@ -32,11 +33,13 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.util.NumberUtil;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30033000203;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
+import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30033000202;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -543,5 +546,52 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setRetMsg(rep.getRepSysHead().getRet().get(0).getRetMsg());
 		bocmRcvTraceService.rcvTraceUpd(record);
 
+	}
+	
+	/** 
+	* @Title: hostReversal 
+	* @Description: 本行核心冲正
+	* @param @param reqDto
+	* @param @param hostSeqno
+	* @param @return
+	* @param @throws SysTradeExecuteException    设定文件 
+	* @return ESB_REP_30014000101    返回类型 
+	* @throws 
+	*/
+	public ESB_REP_30014000101 hostReversal(DataTransObject dto)
+			throws SysTradeExecuteException {
+		
+		MyLog myLog = logPool.get();
+		REQ_20000 reqDto = (REQ_20000)dto;
+		// 交易机构
+		String txBrno = null;
+		// 柜员号
+		String txTel = null;
+		// 加密节点编码
+		String sourceNo = null;
+		try (Jedis jedis = myJedis.connect()) {
+			txBrno = jedis.get(COMMON_PREFIX + "TXBRNO");
+			txTel = jedis.get(COMMON_PREFIX + "TXTEL");
+			sourceNo = jedis.get(COMMON_PREFIX + "SOURCE");
+		}
+		ESB_REQ_30014000101 esbReq_30014000101 = new ESB_REQ_30014000101(myLog, reqDto.getSysDate(),
+				reqDto.getSysTime(), reqDto.getSysTraceno());
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto)
+				.setBranchId(txBrno).setUserId(txTel).build();
+		
+		reqSysHead.setSourceBranchNo(sourceNo);
+		reqSysHead.setSourceType("BU");
+		
+		esbReq_30014000101.setReqSysHead(reqSysHead);
+
+		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
+		esbReq_30014000101.setReqSysHead(reqSysHead);	
+		reqBody_30014000101.setChannelSeqNo(esbReq_30014000101.getReqSysHead().getSeqNo());
+		reqBody_30014000101.setReversalReason("本行核心记账超时,本行核心冲正");
+		reqBody_30014000101.setEventType("");
+
+		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,
+				ESB_REP_30014000101.class);
+		return esbRep_30014000101;
 	}
 }

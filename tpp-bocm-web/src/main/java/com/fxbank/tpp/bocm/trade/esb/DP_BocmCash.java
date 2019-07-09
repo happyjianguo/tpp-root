@@ -90,11 +90,16 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();			
 		} catch (SysTradeExecuteException e) {
 			//接收ESB报文应答超时
-			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {		
+			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
+				try {
+					hostReversal(reqDto,hostTraceno);
+				}catch(SysTradeExecuteException e1) {
+					myLog.error(logger, "交行卡存现金,核心记账超时，本行核心冲正异常");
+				}
 				//超时不记录流水直接抛异常，如果记账成功，对账会失败
 				myLog.error(logger, "交行卡存现金,本行核心记账接收ESB报文应答超时,渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);
-				SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",请核对记账状态,如果记账成功请进行抹账处理");
+				SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg());
 				throw e2;
 			//其他错误
 			}else {

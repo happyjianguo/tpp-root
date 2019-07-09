@@ -98,6 +98,18 @@ public class BocmSndLog {
     /**
      * null
      */
+    @Column(name = "PROXY_FLAG")
+    private String proxyFlag;
+    
+    /**
+     * null
+     */
+    @Column(name = "PROXY_FEE")
+    private BigDecimal proxyFee;
+    
+    /**
+     * null
+     */
     @Column(name = "SND_BANKNO")
     private String sndBankno;
     
@@ -798,6 +810,22 @@ public class BocmSndLog {
 
 	public void setTxDate(Integer txDate) {
 		this.txDate = txDate;
+	}
+
+	public String getProxyFlag() {
+		return proxyFlag;
+	}
+
+	public void setProxyFlag(String proxyFlag) {
+		this.proxyFlag = proxyFlag;
+	}
+
+	public BigDecimal getProxyFee() {
+		return proxyFee;
+	}
+
+	public void setProxyFee(BigDecimal proxyFee) {
+		this.proxyFee = proxyFee;
 	}
     
     

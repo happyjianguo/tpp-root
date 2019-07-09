@@ -36,6 +36,10 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
     private String rcvBankno;
     //手续费
     private BigDecimal fee;
+    //代理手续费手续方式
+    private String proxyFlag;
+    //代理手续费
+    private BigDecimal proxyFee;
     //账户余额
     private BigDecimal actBal;
 	//付款人账户
@@ -369,6 +373,22 @@ public class BocmSndTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setBocmRepmsg(String bocmRepmsg) {
 		this.bocmRepmsg = bocmRepmsg;
+	}
+
+	public String getProxyFlag() {
+		return proxyFlag;
+	}
+
+	public void setProxyFlag(String proxyFlag) {
+		this.proxyFlag = proxyFlag;
+	}
+
+	public BigDecimal getProxyFee() {
+		return proxyFee;
+	}
+
+	public void setProxyFee(BigDecimal proxyFee) {
+		this.proxyFee = proxyFee;
 	}
 
 

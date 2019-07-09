@@ -16,6 +16,8 @@
     <result column="ACT_BAL" jdbcType="DECIMAL" property="actBal" />   
     <result column="FEE_FLAG" jdbcType="NVARCHAR" property="feeFlag" />
     <result column="FEE" jdbcType="DECIMAL" property="fee" />
+    <result column="PROXY_FLAG" jdbcType="NVARCHAR" property="proxyFlag" />
+    <result column="PROXY_FEE" jdbcType="DECIMAL" property="proxyFee" />
     <result column="HOST_DATE" jdbcType="DECIMAL" property="hostDate" />
     <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />  
     <result column="SND_BANKNO" jdbcType="NVARCHAR" property="sndBankno" />
@@ -73,7 +75,8 @@
 
   <select id="selectCheckedTrace" resultMap="BaseResultMap">
     select plat_date, plat_trace, plat_time, source_type, tx_branch,tran_type, tx_ind,tx_code, dc_flag, 
-    tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
+    tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name,
+    fee,fee_flag,proxy_fee,proxy_flag, 
     bocm_branch, bocm_date, bocm_traceno, check_flag, host_state, bocm_state, tx_tel, 
     chk_tel, auth_tel, print, info,ret_code,ret_msg,host_branch,
     fee_flag,fee,snd_bankno,rcv_bankno,payer_bank,payer_acttp,payee_bank,payee_acttp

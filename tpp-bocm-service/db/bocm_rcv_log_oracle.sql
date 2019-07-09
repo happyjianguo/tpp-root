@@ -15,6 +15,8 @@ tx_date NUMBER(8) NULL,
 act_bal NUMBER NULL ,
 fee_flag NVARCHAR2(2) NULL ,
 fee NUMBER NULL ,
+proxy_flag NVARCHAR2(2) NULL ,
+proxy_fee NUMBER NULL ,
 host_date NUMBER(8) NULL ,
 host_traceno NVARCHAR2(20) NULL ,
 snd_bankno NVARCHAR2(12) NULL ,
@@ -62,6 +64,8 @@ COMMENT ON COLUMN bocm_rcv_log.tx_date IS '交易日期';
 COMMENT ON COLUMN bocm_rcv_log.act_bal IS '账户余额';
 COMMENT ON COLUMN bocm_rcv_log.fee_flag IS '手续费收取方式';
 COMMENT ON COLUMN bocm_rcv_log.fee IS '开户行手续费';
+COMMENT ON COLUMN bocm_rcv_log.proxy_flag IS '代理手续费收取标志 规则：交易受理方收取代理手续费0 （交行支付代理手续费）1 （交行收取代理手续费）';
+COMMENT ON COLUMN bocm_rcv_log.proxy_fee IS '代理手续费';
 COMMENT ON COLUMN bocm_rcv_log.host_date IS '核心日期';
 COMMENT ON COLUMN bocm_rcv_log.host_traceno IS '核心流水';
 COMMENT ON COLUMN bocm_rcv_log.snd_bankno IS '发起行行号';

@@ -150,6 +150,12 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		if(null != record.getActBal()) {
 			bocmSndLog.setActBal(record.getActBal());
 		}
+		if(null != record.getProxyFlag()) {
+			bocmSndLog.setProxyFlag(record.getProxyFlag());
+		}
+		if(null != record.getProxyFee()) {
+			bocmSndLog.setProxyFee(record.getProxyFee());
+		}
 		bocmSndLogMapper.updateByPrimaryKeySelective(bocmSndLog);
 	}
 	
@@ -278,9 +284,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setRcvBankno(tpp.getRcvBankno());
 			
 			model.setTranType(tpp.getTranType());
-			
-			
-			
+								
 			sndTraceQueryModelList.add(model);
 		}
 		return sndTraceQueryModelList;
@@ -316,9 +320,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		tcexSndLog.setAuthTel(record.getAuthTel());
 		tcexSndLog.setInfo(record.getInfo());
 		tcexSndLog.setCheckFlag(record.getCheckFlag());
-		
-		
-		
+
 		bocmSndLogMapper.insertSelective(tcexSndLog);
 	}
 
