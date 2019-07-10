@@ -65,10 +65,14 @@ public class SyncCom {
 			t = (T) SerializeUtil.unserialize(repData);
 			myLog.info(logger, "收到实时应答["+channel+"]["+t+"]...");
 		} catch (InterruptedException e) {
+			myLog.error(logger, "等待服务端应答被中断", e);
+			MivsTradeExecuteException e1 = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10001);
+			throw e1;
+		} catch (Exception e) {
 			myLog.error(logger, "等待服务端应答超时", e);
 			MivsTradeExecuteException e1 = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10001);
 			throw e1;
-		} finally {
+		}finally {
 			try (Jedis jedis = myJedis.connect()) {
 				myLog.info(logger, "确保订阅线程退出["+channel+"]");
 				jedis.publish(channel.getBytes(), "QUIT".getBytes());
