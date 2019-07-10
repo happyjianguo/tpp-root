@@ -123,7 +123,7 @@ public class REP_50023000204 extends REP_BASE {
     //以下信息 当“纳税信息核查结果”为“MCHD” 时填
     public static class TXPYR_INFO_ARRAY {
         @JSONField(name = "TXPMT_INF_NB")
-        private Integer txpmtInfNb;//税务机关代码
+        private Integer txpmtInfNb;//条数
 
         @JSONField(name = "TAX_JDCY_CODE")
         private String txAuthCd;//税务机关代码

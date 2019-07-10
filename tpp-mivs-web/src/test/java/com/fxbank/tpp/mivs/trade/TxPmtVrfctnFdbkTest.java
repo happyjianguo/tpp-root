@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000204;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000206;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000207;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,16 +53,16 @@ public class TxPmtVrfctnFdbkTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_50023000206 req ;
+    private REQ_50023000207 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_50023000206.REQ_BODY reqBody ;
+    private REQ_50023000207.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_50023000206();
+        req = new REQ_50023000207();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
         reqSysHead.setSceneId("06");
@@ -99,9 +99,9 @@ public class TxPmtVrfctnFdbkTest {
         reqBody.setRslt("WIDT");
         reqBody.setDataResrcDt("2019-04-29");
 
-        List<REQ_50023000206.txpyrInfoArray> txpmtInfArrayList = new ArrayList<REQ_50023000206.txpyrInfoArray>();
+        List<REQ_50023000207.txpyrInfoArray> txpmtInfArrayList = new ArrayList<REQ_50023000207.txpyrInfoArray>();
         for(int i=0; i<4; i++){
-            REQ_50023000206.txpyrInfoArray arraymsg = new REQ_50023000206.txpyrInfoArray();
+            REQ_50023000207.txpyrInfoArray arraymsg = new REQ_50023000207.txpyrInfoArray();
             arraymsg.setTxAuthCd("TxAuthCd00"+i);
             arraymsg.setTxAuthNm("国税局");
             arraymsg.setTxpyrSts("00"+i);

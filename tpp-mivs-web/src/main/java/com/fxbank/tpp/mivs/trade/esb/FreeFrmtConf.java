@@ -8,8 +8,8 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000212;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000212;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000214;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000214;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
@@ -58,8 +58,8 @@ public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_50023000212 req = (REQ_50023000212) dto;
-        REQ_50023000212.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000214 req = (REQ_50023000214) dto;
+        REQ_50023000214.REQ_BODY reqBody = req.getReqBody();
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -146,8 +146,8 @@ public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
         freeFrmtModeltUpdate.setInstg_pty(reqBody.getOrigInstgPty());
         freeFrmtModeltUpdate.setInstg_drct_pty(reqBody.getOrigInstgDrctPty());
 
-        REP_50023000212 rep = new REP_50023000212();
-        REP_50023000212.REP_BODY repBody = rep.getRepBody();
+        REP_50023000214 rep = new REP_50023000214();
+        REP_50023000214.REP_BODY repBody = rep.getRepBody();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
             CCMS_911_001_02 ccms911 = (CCMS_911_001_02)dtoBase;
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());

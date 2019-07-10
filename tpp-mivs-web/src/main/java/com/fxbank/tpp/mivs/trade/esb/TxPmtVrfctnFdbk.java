@@ -9,7 +9,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000203;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000206;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000207;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_900_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
@@ -60,8 +60,8 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_50023000206 req = (REQ_50023000206) dto;//接收ESB请求报文
-        REQ_50023000206.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000207 req = (REQ_50023000207) dto;//接收ESB请求报文
+        REQ_50023000207.REQ_BODY reqBody = req.getReqBody();
 
         MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModel = new MivsTxpmtVrfctnInfoModel();
         txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
@@ -115,7 +115,7 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         fdbk.setContactNm(reqBody.getContactNm());
         if(reqBody.getTxpyrInfoArrayMsg() != null && !reqBody.getTxpyrInfoArrayMsg().isEmpty()){
             List<MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf> txpmtInfList = new ArrayList<MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf>();
-            for(REQ_50023000206.txpyrInfoArray info:reqBody.getTxpyrInfoArrayMsg()){
+            for(REQ_50023000207.txpyrInfoArray info:reqBody.getTxpyrInfoArrayMsg()){
                 MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf txpmtInf = new MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf();
                 txpmtInf.setTxAuthCd(info.getTxAuthCd());
                 txpmtInf.setTxAuthNm(info.getTxAuthNm());

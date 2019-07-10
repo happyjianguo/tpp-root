@@ -8,15 +8,14 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000209;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000209;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000211;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000211;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_900_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.CCMS_900_001_02_CmonConf;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsRegVrfctnInfoModel;
-import com.fxbank.tpp.mivs.model.request.MIVS_347_001_01;
 import com.fxbank.tpp.mivs.model.request.MIVS_349_001_01;
 import com.fxbank.tpp.mivs.model.request.MIVS_349_001_01_RegVrfctnFdbk;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
@@ -59,8 +58,8 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
     public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
         MyLog myLog = logPool.get();
 
-        REQ_50023000209 req = (REQ_50023000209) dto;//接收ESB请求报文
-        REQ_50023000209.REQ_BODY reqBody = req.getReqBody();
+        REQ_50023000211 req = (REQ_50023000211) dto;//接收ESB请求报文
+        REQ_50023000211.REQ_BODY reqBody = req.getReqBody();
 
         MivsRegVrfctnInfoModel regVrfctnInfoModel = new MivsRegVrfctnInfoModel();
         regVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
@@ -182,7 +181,7 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         regVrfctnInfoModelUpdate.setPlat_date(req.getSysDate());
         regVrfctnInfoModelUpdate.setPlat_trace(req.getSysTraceno());
 
-        REP_50023000209 rep = new REP_50023000209();
+        REP_50023000211 rep = new REP_50023000211();
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
             CCMS_911_001_02 ccms911 = (CCMS_911_001_02)dtoBase;
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
@@ -197,7 +196,7 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
             CCMS_900_001_02 ccms900 = (CCMS_900_001_02)dtoBase;
             CCMS_900_001_02_CmonConf.CmonConfInf cmonConfInf = ccms900.getCmonConf().getCmonConfInf();
 
-            REP_50023000209.REP_BODY repBody = rep.getRepBody();
+            REP_50023000211.REP_BODY repBody = rep.getRepBody();
 
             //返回ESB报文
             repBody.setProcSts(cmonConfInf.getPrcSts());

@@ -56,26 +56,23 @@ public class REP_50023000203 extends REP_BASE {
 
     public class REP_BODY {
 
-        @JSONField(name = "ProcSts")
+        @JSONField(name = "TRADE_STATUS")
         private String procSts;//申请报文处理状态
 
-        @JSONField(name = "ProcCd")
+        @JSONField(name = "BUSI_PROCESS_CODE")
         private String procCd;//申请报文处理码
 
-        @JSONField(name="PtyId")
+        @JSONField(name="RFS_BUSI_BANK_NO")
         private String ptyId;//拒绝业务的参与机构行号
 
-        @JSONField(name = "PtyPrcCd")
+        @JSONField(name = "BUSI_RFS_CODE")
         private String ptyPrcCd;//参与机构业务拒绝码
 
-        @JSONField(name = "RjctInf")
+        @JSONField(name = "BUSI_RFS_INFO")
         private String rjctInf;//申请报文拒绝信息
 
-        @JSONField(name = "PrcDt")
+        @JSONField(name = "DEAL_DATE")
         private String prcDt;//处理日期（终态日期）
-
-        @JSONField(name = "NetgRnd")
-        private String netgRnd;//轧差场次
 
         public String getProcSts() {
             return procSts;
@@ -123,14 +120,6 @@ public class REP_50023000203 extends REP_BASE {
 
         public void setPrcDt(String prcDt) {
             this.prcDt = prcDt;
-        }
-
-        public String getNetgRnd() {
-            return netgRnd;
-        }
-
-        public void setNetgRnd(String netgRnd) {
-            this.netgRnd = netgRnd;
         }
     }
 }

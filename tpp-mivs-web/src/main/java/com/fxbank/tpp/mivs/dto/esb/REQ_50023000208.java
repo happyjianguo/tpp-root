@@ -6,9 +6,9 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description: 登记信息核查结果查询请求
+ * @Description: 登记信息联网核查申请ESB请求报文
  * @Author: 王鹏
- * @Date: 2019/7/2 16:38
+ * @Date: 2019/5/20 16:40
  */
 public class REQ_50023000208 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
@@ -18,10 +18,10 @@ public class REQ_50023000208 extends REQ_BASE {
     private REQ_SYS_HEAD reqSysHead;
 
     @JSONField(name = "BODY")
-    private REQ_BODY reqBody;
+    private REQ_50023000208.REQ_BODY reqBody;
 
     public REQ_50023000208(){
-        super.txDesc = "登记信息核查结果查询";
+        super.txDesc = "登记信息联网核查";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -32,98 +32,86 @@ public class REQ_50023000208 extends REQ_BASE {
         this.reqAppHead = reqAppHead;
     }
 
+
     public REQ_SYS_HEAD getReqSysHead() {
         return reqSysHead;
     }
+
 
     public void setReqSysHead(REQ_SYS_HEAD reqSysHead) {
         this.reqSysHead = reqSysHead;
     }
 
-    public REQ_BODY getReqBody() {
+
+    public REQ_50023000208.REQ_BODY getReqBody() {
         return reqBody;
     }
 
-    public void setReqBody(REQ_BODY reqBody) {
+
+    public void setReqBody(REQ_50023000208.REQ_BODY reqBody) {
         this.reqBody = reqBody;
     }
 
     public class REQ_BODY {
-
-        @JSONField(name = "StartDt")
-        private Integer startDt;    // 核查开始时间
-
-        @JSONField(name = "EndDt")
-        private Integer endDt; //核查结束时间
-
-        @JSONField(name = "OrigBranchId")
-        private String origBranchId; //原核查机构号
-
-        @JSONField(name = "OrigUserId")
-        private String origUserId; // 原核查柜员号
-
-        @JSONField(name = "ORIG_APPLY_MSG_ID")
-        private String orgnlDlvrgMsgId; //原申请报文标识号
-
-        @JSONField(name = "ENT_NAME")
-        private String entNm;    //单位名称
-
+        @JSONField(name = "MAKET_TYPE")
+        private String marketType;    //主体类型
         @JSONField(name = "SOCIAL_CODE")
-        private String uniSocCdtCd;        //统一社会信用代码
+        private String uniSocCdtCd;		//统一社会信用代码
+        @JSONField(name = "ENT_NAME")
+        private String entNm;    //企业名称
+        @JSONField(name = "NAME_OF_LGL_PRSN")
+        private String nmOfLglPrsn;		//法定代表人或单位负责人姓名
+        @JSONField(name = "ID_OF_LGL_PRSN")
+        private String idOfLglPrsn;    //法定代表人或单位负责人身份证件号
+        @JSONField(name = "TRA_NM")
+        private String tranm;		//字号名称
+        @JSONField(name = "NAME")
+        private String nm;		//经营者姓名
+        @JSONField(name = "ID")
+        private String id;    //经营者证件号
+        @JSONField(name = "AgtNm")
+        private String agtNm;    //代理人姓名
+        @JSONField(name = "AgtId")
+        private String agtId;    //代理人身份证件号码
+        @JSONField(name = "OPRTR_NAME")
+        private String opNm;		//操作员姓名
+        @JSONField(name = "RESERVE_FIELD1")
+        private String remarks1;		//备用字段1
+        @JSONField(name = "RESERVE_FIELD2")
+        private String remarks2;		//备用字段2
+        @JSONField(name = "RESERVE_FIELD3")
+        private String remarks3;		//备用字段3
 
-        @JSONField(name = "NmOfLglPrsn")
-        private String nmOfLglPrsn;        //法定代表人或单位负责人姓名
-
-        @JSONField(name = "IdOfLglPrsn")
-        private String IdOfLglPrsn; //法定代表人或单位负责人身份证件号
-
-        @JSONField(name = "TraNm")
-        private String traNm;    //字号名称
-
-        @JSONField(name = "Nm")
-        private String nm;        //经营者姓名
-
-        @JSONField(name = "Id")
-        private String id;        //经营者证件号
-
-        public Integer getStartDt() {
-            return startDt;
+        public String getMarketType() {
+            return marketType;
         }
 
-        public void setStartDt(Integer startDt) {
-            this.startDt = startDt;
+        public void setMarketType(String marketType) {
+            this.marketType = marketType;
         }
 
-        public Integer getEndDt() {
-            return endDt;
+        public String getTranm() {
+            return tranm;
         }
 
-        public void setEndDt(Integer endDt) {
-            this.endDt = endDt;
+        public void setTranm(String tranm) {
+            this.tranm = tranm;
         }
 
-        public String getOrigBranchId() {
-            return origBranchId;
+        public String getNm() {
+            return nm;
         }
 
-        public void setOrigBranchId(String origBranchId) {
-            this.origBranchId = origBranchId;
+        public void setNm(String nm) {
+            this.nm = nm;
         }
 
-        public String getOrigUserId() {
-            return origUserId;
+        public String getId() {
+            return id;
         }
 
-        public void setOrigUserId(String origUserId) {
-            this.origUserId = origUserId;
-        }
-
-        public String getOrgnlDlvrgMsgId() {
-            return orgnlDlvrgMsgId;
-        }
-
-        public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
-            this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getEntNm() {
@@ -151,35 +139,59 @@ public class REQ_50023000208 extends REQ_BASE {
         }
 
         public String getIdOfLglPrsn() {
-            return IdOfLglPrsn;
+            return idOfLglPrsn;
         }
 
         public void setIdOfLglPrsn(String idOfLglPrsn) {
-            IdOfLglPrsn = idOfLglPrsn;
+            this.idOfLglPrsn = idOfLglPrsn;
         }
 
-        public String getTraNm() {
-            return traNm;
+        public String getAgtNm() {
+            return agtNm;
         }
 
-        public void setTraNm(String traNm) {
-            this.traNm = traNm;
+        public void setAgtNm(String agtNm) {
+            this.agtNm = agtNm;
         }
 
-        public String getNm() {
-            return nm;
+        public String getAgtId() {
+            return agtId;
         }
 
-        public void setNm(String nm) {
-            this.nm = nm;
+        public void setAgtId(String agtId) {
+            this.agtId = agtId;
         }
 
-        public String getId() {
-            return id;
+        public String getOpNm() {
+            return opNm;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setOpNm(String opNm) {
+            this.opNm = opNm;
+        }
+
+        public String getRemarks1() {
+            return remarks1;
+        }
+
+        public void setRemarks1(String remarks1) {
+            this.remarks1 = remarks1;
+        }
+
+        public String getRemarks2() {
+            return remarks2;
+        }
+
+        public void setRemarks2(String remarks2) {
+            this.remarks2 = remarks2;
+        }
+
+        public String getRemarks3() {
+            return remarks3;
+        }
+
+        public void setRemarks3(String remarks3) {
+            this.remarks3 = remarks3;
         }
     }
 }

@@ -6,9 +6,9 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description: 公告信息确认
+ * @Description: 企业开销户状态反馈ESB请求报文
  * @Author: 王鹏
- * @Date: 2019/7/4 7:12
+ * @Date: 2019/6/6 14:38
  */
 public class REQ_50023000212 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
@@ -18,10 +18,10 @@ public class REQ_50023000212 extends REQ_BASE {
     private REQ_SYS_HEAD reqSysHead;
 
     @JSONField(name = "BODY")
-    private REQ_BODY reqBody;
+    private REQ_50023000212.REQ_BODY reqBody;
 
     public REQ_50023000212(){
-        super.txDesc = "公告信息确认";
+        super.txDesc = "企业开销户状态反馈";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -40,57 +40,95 @@ public class REQ_50023000212 extends REQ_BASE {
         this.reqSysHead = reqSysHead;
     }
 
-    public REQ_BODY getReqBody() {
+    public REQ_50023000212.REQ_BODY getReqBody() {
         return reqBody;
     }
 
-    public void setReqBody(REQ_BODY reqBody) {
+    public void setReqBody(REQ_50023000212.REQ_BODY reqBody) {
         this.reqBody = reqBody;
     }
 
     public class REQ_BODY {
-        @JSONField(name = "OrigMsgId")
-        private String origMsgId;    // 原报文标识号
+        @JSONField(name = "ENT_NAME")
+        private String entNm;    //企业名称
+        @JSONField(name = "TRA_NAME")
+        private String traNm;    //个体户名称
+        @JSONField(name = "SOCIAL_CODE")
+        private String uniSocCdtCd;        //统一社会信用代码
+        @JSONField(name = "ACCT_STS")
+        private String acctSts;        //账户状态标识
+        @JSONField(name = "CHNG_DT")
+        private String chngDt;    //变更日期
+        @JSONField(name = "RESERVE_FIELD1")
+        private String remarks1;        //备用字段1
+        @JSONField(name = "RESERVE_FIELD2")
+        private String remarks2;        //备用字段2
+        @JSONField(name = "RESERVE_FIELD3")
+        private String remarks3;        //备用字段3
 
-        @JSONField(name = "OrigInstgDrctPty")
-        private String origInstgDrctPty; //原发起直接参与机构
-
-        @JSONField(name = "OrigInstgPty")
-        private String origInstgPty;        //原发起参与机构
-
-        @JSONField(name = "MsgCntt")
-        private String msgCntt; //附加信息
-
-        public String getOrigMsgId() {
-            return origMsgId;
+        public String getEntNm() {
+            return entNm;
         }
 
-        public void setOrigMsgId(String origMsgId) {
-            this.origMsgId = origMsgId;
+        public void setEntNm(String entNm) {
+            this.entNm = entNm;
         }
 
-        public String getOrigInstgDrctPty() {
-            return origInstgDrctPty;
+        public String getTraNm() {
+            return traNm;
         }
 
-        public void setOrigInstgDrctPty(String origInstgDrctPty) {
-            this.origInstgDrctPty = origInstgDrctPty;
+        public void setTraNm(String traNm) {
+            this.traNm = traNm;
         }
 
-        public String getOrigInstgPty() {
-            return origInstgPty;
+        public String getUniSocCdtCd() {
+            return uniSocCdtCd;
         }
 
-        public void setOrigInstgPty(String origInstgPty) {
-            this.origInstgPty = origInstgPty;
+        public void setUniSocCdtCd(String uniSocCdtCd) {
+            this.uniSocCdtCd = uniSocCdtCd;
         }
 
-        public String getMsgCntt() {
-            return msgCntt;
+        public String getAcctSts() {
+            return acctSts;
         }
 
-        public void setMsgCntt(String msgCntt) {
-            this.msgCntt = msgCntt;
+        public void setAcctSts(String acctSts) {
+            this.acctSts = acctSts;
+        }
+
+        public String getChngDt() {
+            return chngDt;
+        }
+
+        public void setChngDt(String chngDt) {
+            this.chngDt = chngDt;
+        }
+
+        public String getRemarks1() {
+            return remarks1;
+        }
+
+        public void setRemarks1(String remarks1) {
+            this.remarks1 = remarks1;
+        }
+
+        public String getRemarks2() {
+            return remarks2;
+        }
+
+        public void setRemarks2(String remarks2) {
+            this.remarks2 = remarks2;
+        }
+
+        public String getRemarks3() {
+            return remarks3;
+        }
+
+        public void setRemarks3(String remarks3) {
+            this.remarks3 = remarks3;
         }
     }
+
 }

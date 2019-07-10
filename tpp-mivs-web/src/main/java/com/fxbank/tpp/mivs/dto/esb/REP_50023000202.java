@@ -49,7 +49,7 @@ public class REP_50023000202 extends REP_BASE {
 
     public class REP_BODY {
         //循环开始
-        @JSONField(name = "ResultList")
+        @JSONField(name = "MOBILE_VER_RESULT_ARRAY")
         private List<resultList> resultList;//查询结果信息
 
         public List<REP_50023000202.resultList> getResultList() {
@@ -70,79 +70,79 @@ public class REP_50023000202 extends REP_BASE {
 
     public static class resultList{
 
-        @JSONField(name = "OrigTranDate")
+        @JSONField(name = "ORIG_CHK_DATE")
         private String origTranDate;
 
-        @JSONField(name = "OrigSeqNo")
+        @JSONField(name = "ORIG_CHK_SEQ_NO")
         private String origSeqNo;
 
-        @JSONField(name = "OrigTranTime")
+        @JSONField(name = "ORIG_CHK_TIME")
         private String origTranTime;
 
-        @JSONField(name = "OrgnlDlvrgMsgId")
+        @JSONField(name = "ORIG_APPLY_MSG_ID")
         private String orgnlDlvrgMsgId;
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name = "OrigBranchId")
+        @JSONField(name = "ORIG_CHK_ORG_ID")
         private String origBranchId;
 
-        @JSONField(name = "OrigUserId")
+        @JSONField(name = "ORIG_CHK_TELLER_ID")
         private String origUserId;
 
-        @JSONField(name = "MobNb")
+        @JSONField(name = "MOBILE_PHONE")
         private String mobNb;
 
-        @JSONField(name = "Nm")
+        @JSONField(name = "NAME")
         private String nm;
 
-        @JSONField(name = "IdTp")
+        @JSONField(name = "DOCUMENT_TYPE")
         private String idTp;
 
-        @JSONField(name = "Id")
+        @JSONField(name = "DOCUMENT_ID")
         private String id;
 
-        @JSONField(name = "UniSocCdtCd")
+        @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;
 
-        @JSONField(name = "BizRegNb")
+        @JSONField(name = "BIZ_REG_NO")
         private String bizRegNb;
 
-        @JSONField(name = "Rslt")
+        @JSONField(name = "MOBILE_VER_RESULT")
         private String rslt;
 
-        @JSONField(name = "MobCrr")
+        @JSONField(name = "MOBILE_OPRS")
         private String mobCrr;
 
-        @JSONField(name = "LocMobNb")
+        @JSONField(name = "MOBILE_BLNG_LOC_CODE")
         private String locMobNb;
 
-        @JSONField(name = "LocNmMobNb")
+        @JSONField(name = "MOBILE_BLNG_LOC_NAME")
         private String locNmMobNb;
 
-        @JSONField(name = "CdTp")
+        @JSONField(name = "CLIENT_TYPE")
         private String cdTp;
 
-        @JSONField(name = "Sts")
+        @JSONField(name = "MOBILE_PHONE_STATUS")
         private String sts;
 
-        @JSONField(name = "ProcSts")
+        @JSONField(name = "MSG_RFS_STATUS")
         private String procSts;
 
-        @JSONField(name = "ProcCd")
+        @JSONField(name = "MSG_RFS_CODE")
         private String procCd;
 
-        @JSONField(name = "Rjctinf")
+        @JSONField(name = "MSG_RFS_INFO")
         private String rjctinf;
 
-        @JSONField(name = "Remarks1")
+        @JSONField(name = "RESERVE_FIELD1")
         private String remarks1;
 
-        @JSONField(name = "Remarks2")
+        @JSONField(name = "RESERVE_FIELD2")
         private String remarks2;
 
-        @JSONField(name = "Remarks3")
+        @JSONField(name = "RESERVE_FIELD3")
         private String remarks3;
 
         public String getOrigTranDate() {

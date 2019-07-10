@@ -79,9 +79,6 @@ public class REQ_50023000203 extends REQ_BASE {
         @JSONField(name = "MOBILE_VER_RESULT")
         private String rslt; // 手机号码核查结果
 
-        @JSONField(name = "DATA_SOURCE_DATE")
-        private String dataResrcDt; // 数据源日期
-
         @JSONField(name = "RESPONSE_INFO")
         private String cntt; // 疑似反馈内容
 
@@ -91,13 +88,13 @@ public class REQ_50023000203 extends REQ_BASE {
         @JSONField(name = "CONTACT_TEL")
         private String contactNb; // 联系人电话
 
-        @JSONField(name = "REMARK1")
+        @JSONField(name = "RESERVE_FIELD1")
         private String remark1; // 备用字段1
 
-        @JSONField(name = "REMARK2")
+        @JSONField(name = "RESERVE_FIELD2")
         private String remark2; // 备用字段2
 
-        @JSONField(name = "REMARK3")
+        @JSONField(name = "RESERVE_FIELD3")
         private String remark3; // 备用字段3
 
         public String getOrgnlDlvrgMsgId() {
@@ -170,14 +167,6 @@ public class REQ_50023000203 extends REQ_BASE {
 
         public void setRslt(String rslt) {
             this.rslt = rslt;
-        }
-
-        public String getDataResrcDt() {
-            return dataResrcDt;
-        }
-
-        public void setDataResrcDt(String dataResrcDt) {
-            this.dataResrcDt = dataResrcDt;
         }
 
         public String getCntt() {

@@ -5,10 +5,12 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
+import java.util.List;
+
 /**
- * @Description: 企业信息联网核查查业务受理时间查询ESB应答报文
+ * @Description: 企业通知查询应答
  * @Author: 王鹏
- * @Date: 2019/4/30 11:16
+ * @Date: 2019/7/3 17:53
  */
 public class REP_50023000213 extends REP_BASE {
 
@@ -25,7 +27,6 @@ public class REP_50023000213 extends REP_BASE {
         return repAppHead;
     }
 
-
     public void setRepAppHead(REP_APP_HEAD repAppHead) {
         this.repAppHead = repAppHead;
     }
@@ -34,112 +35,153 @@ public class REP_50023000213 extends REP_BASE {
         return repSysHead;
     }
 
-
-
     public void setRepSysHead(REP_SYS_HEAD repSysHead) {
         this.repSysHead = repSysHead;
     }
-
-
 
     public REP_BODY getRepBody() {
         return repBody;
     }
 
-
-
     public void setRepBody(REP_BODY repBody) {
         this.repBody = repBody;
     }
 
-
-
     public class REP_BODY {
+        //循环开始
+        @JSONField(name = "ResultList")
+        private List<resultList> resultList;//查询结果信息
 
-        @JSONField(name = "OLD_QUERY_DATE")
-        private String orgnlQueDt;//纳税核查结果
-
-        @JSONField(name = "MSG_RFS_STATUS")
-        private String procSts;//申请报文处理状态
-
-        @JSONField(name = "MSG_RFS_CODE")
-        private String procCd;//申请报文处理码
-
-        @JSONField(name = "MSG_RFS_INFO")
-        private String rjctInf;//申请报文拒绝信息
-
-        @JSONField(name = "CHK_SYSTEM_ID")
-        private String sysInd;//核查系统标识
-
-        @JSONField(name = "QUERY_DATE_BUSI_STS")
-        private String svcInd;//
-
-        @JSONField(name = "QUERY_DATE_ACPT_START_TM")
-        private String sysOpTm;//
-
-        @JSONField(name = "QUERY_DATE_ACPT_END_TM")
-        private String sysClTm;//
-
-        public String getOrgnlQueDt() {
-            return orgnlQueDt;
+        public List<REP_50023000213.resultList> getResultList() {
+            return resultList;
         }
 
-        public void setOrgnlQueDt(String orgnlQueDt) {
-            this.orgnlQueDt = orgnlQueDt;
+        public void setResultList(List<REP_50023000213.resultList> resultList) {
+            this.resultList = resultList;
         }
 
-        public String getProcSts() {
-            return procSts;
+        @Override
+        public String toString() {
+            return "REP_BODY{" +
+                    "resultList=" + resultList +
+                    '}';
+        }
+    }
+
+    public static class resultList{
+
+        @JSONField(name = "msgid")
+        private String msgId;
+
+        @JSONField(name = "cre_dt_tm")
+        private String creDtTm;
+
+        @JSONField(name = "instg_drct_pty")
+        private String instgDrctPty;
+
+        @JSONField(name = "instg_pty")
+        private String instgPty;
+
+        @JSONField(name = "instd_drct_pty")
+        private String instdDrctPty;
+
+        @JSONField(name = "instd_pty")
+        private String instdPty;
+
+        @JSONField(name = "rply_flag")
+        private String rplyFlag;
+
+        @JSONField(name = "msg_cntt")
+        private String msgCntt;
+
+        @JSONField(name = "isornot_rsp")
+        private String isornotRsp;
+
+        public String getMsgId() {
+            return msgId;
         }
 
-        public void setProcSts(String procSts) {
-            this.procSts = procSts;
+        public void setMsgId(String msgId) {
+            this.msgId = msgId;
         }
 
-        public String getProcCd() {
-            return procCd;
+        public String getCreDtTm() {
+            return creDtTm;
         }
 
-        public void setProcCd(String procCd) {
-            this.procCd = procCd;
+        public void setCreDtTm(String creDtTm) {
+            this.creDtTm = creDtTm;
         }
 
-        public String getRjctInf() {
-            return rjctInf;
+        public String getInstgDrctPty() {
+            return instgDrctPty;
         }
 
-        public void setRjctInf(String rjctInf) {
-            this.rjctInf = rjctInf;
+        public void setInstgDrctPty(String instgDrctPty) {
+            this.instgDrctPty = instgDrctPty;
         }
 
-        public String getSysInd() {
-            return sysInd;
+        public String getInstgPty() {
+            return instgPty;
         }
 
-        public void setSysInd(String sysInd) {
-            this.sysInd = sysInd;
+        public void setInstgPty(String instgPty) {
+            this.instgPty = instgPty;
         }
 
-        public String getSvcInd() {
-            return svcInd;
+        public String getInstdDrctPty() {
+            return instdDrctPty;
         }
 
-        public void setSvcInd(String svcInd) {
-            this.svcInd = svcInd;
-        }
-        public String getSysOpTm() {
-            return sysOpTm;
+        public void setInstdDrctPty(String instdDrctPty) {
+            this.instdDrctPty = instdDrctPty;
         }
 
-        public void setSysOpTm(String sysOpTm) {
-            this.sysOpTm = sysOpTm;
-        }
-        public String getSysClTm() {
-            return sysClTm;
+        public String getInstdPty() {
+            return instdPty;
         }
 
-        public void setSysClTm(String sysClTm) {
-            this.sysClTm = sysClTm;
+        public void setInstdPty(String instdPty) {
+            this.instdPty = instdPty;
+        }
+
+        public String getRplyFlag() {
+            return rplyFlag;
+        }
+
+        public void setRplyFlag(String rplyFlag) {
+            this.rplyFlag = rplyFlag;
+        }
+
+        public String getMsgCntt() {
+            return msgCntt;
+        }
+
+        public void setMsgCntt(String msgCntt) {
+            this.msgCntt = msgCntt;
+        }
+
+        public String getIsornotRsp() {
+            return isornotRsp;
+        }
+
+        public void setIsornotRsp(String isornotRsp) {
+            this.isornotRsp = isornotRsp;
+        }
+
+        @Override
+        public String toString() {
+            return "resultList{" +
+                    ", msgId='" + msgId + '\'' +
+                    ", creDtTm='" + creDtTm + '\'' +
+                    ", instgDrctPty='" + instgDrctPty + '\'' +
+                    ", instgPty='" + instgPty + '\'' +
+                    ", instdDrctPty='" + instdDrctPty + '\'' +
+                    ", instdPty='" + instdPty + '\'' +
+                    ", rplyFlag='" + rplyFlag + '\'' +
+                    ", msgCntt='" + msgCntt + '\'' +
+                    ", isornotRsp='" + isornotRsp + '\'' +
+                    '}';
         }
     }
 }

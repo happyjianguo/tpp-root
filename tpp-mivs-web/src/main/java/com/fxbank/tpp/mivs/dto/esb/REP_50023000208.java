@@ -8,9 +8,9 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 登记信息核查应答报文
  * @Author: 王鹏
- * @Date: 2019/7/2 16:38
+ * @Date: 2019/5/20 16:40
  */
 public class REP_50023000208 extends REP_BASE {
 
@@ -36,86 +36,19 @@ public class REP_50023000208 extends REP_BASE {
         return repSysHead;
     }
 
-
-
     public void setRepSysHead(REP_SYS_HEAD repSysHead) {
         this.repSysHead = repSysHead;
     }
-
-
 
     public REP_BODY getRepBody() {
         return repBody;
     }
 
-
-
     public void setRepBody(REP_BODY repBody) {
         this.repBody = repBody;
     }
 
-
-
     public class REP_BODY {
-        //循环开始
-        @JSONField(name = "ResultList")
-        private List<resultList> resultList;//查询结果信息
-
-        public List<resultList> getResultList() {
-            return resultList;
-        }
-
-        public void setResultList(List<resultList> resultList) {
-            this.resultList = resultList;
-        }
-
-        @Override
-        public String toString() {
-            return "REP_BODY{" +
-                    "resultList=" + resultList +
-                    '}';
-        }
-
-    }
-
-    public static class resultList {
-
-        @JSONField(name = "OrigTranDate")
-        private String origTranDate;
-
-        @JSONField(name = "OrigSeqNo")
-        private String origSeqNo;
-
-        @JSONField(name = "OrigTranTime")
-        private String origTranTime;
-
-        @JSONField(name = "OrgnlDlvrgMsgId")
-        private String orgnlDlvrgMsgId;
-
-        @JSONField(name = "OrigBranchId")
-        private String origBranchId;
-
-        @JSONField(name = "OrigUserId")
-        private String origUserId;
-
-        @JSONField(name = "ProcSts")
-        private String procSts;
-
-        @JSONField(name = "ProcCd")
-        private String procCd;
-
-        @JSONField(name = "Rjctinf")
-        private String rjctinf;
-
-        @JSONField(name = "Remarks1")
-        private String remarks1;
-
-        @JSONField(name = "Remarks2")
-        private String remarks2;
-
-        @JSONField(name = "Remarks3")
-        private String remarks3;
-
         //登记核查结果
         @JSONField(name = "TXPYR_INFO_VER_RESULT")
         private String rslt;
@@ -156,77 +89,15 @@ public class REP_50023000208 extends REP_BASE {
         @JSONField(name = "LicNull")
         private List<LicNull> licNullList;//营业执照作废声明
 
-        public String getOrigTranDate() {
-            return origTranDate;
-        }
+        //以下信息 当“纳税信息核查结果”为非“MCHD” 时填
+        @JSONField(name = "MSG_RFS_STATUS")
+        private String procSts;//申请报文拒绝状态
 
-        public void setOrigTranDate(String origTranDate) {
-            this.origTranDate = origTranDate;
-        }
+        @JSONField(name = "MSG_RFS_CODE")
+        private String procCd;//申请报文拒绝码
 
-        public String getOrigSeqNo() {
-            return origSeqNo;
-        }
-
-        public void setOrigSeqNo(String origSeqNo) {
-            this.origSeqNo = origSeqNo;
-        }
-
-        public String getOrigTranTime() {
-            return origTranTime;
-        }
-
-        public void setOrigTranTime(String origTranTime) {
-            this.origTranTime = origTranTime;
-        }
-
-        public String getOrgnlDlvrgMsgId() {
-            return orgnlDlvrgMsgId;
-        }
-
-        public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
-            this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
-        }
-
-        public String getOrigBranchId() {
-            return origBranchId;
-        }
-
-        public void setOrigBranchId(String origBranchId) {
-            this.origBranchId = origBranchId;
-        }
-
-        public String getOrigUserId() {
-            return origUserId;
-        }
-
-        public void setOrigUserId(String origUserId) {
-            this.origUserId = origUserId;
-        }
-
-        public String getRemarks1() {
-            return remarks1;
-        }
-
-        public void setRemarks1(String remarks1) {
-            this.remarks1 = remarks1;
-        }
-
-        public String getRemarks2() {
-            return remarks2;
-        }
-
-        public void setRemarks2(String remarks2) {
-            this.remarks2 = remarks2;
-        }
-
-        public String getRemarks3() {
-            return remarks3;
-        }
-
-        public void setRemarks3(String remarks3) {
-            this.remarks3 = remarks3;
-        }
+        @JSONField(name = "MSG_RFS_INFO")
+        private String rjctinf;//申请报文拒绝信息
 
         public String getRslt() {
             return rslt;
@@ -355,9 +226,6 @@ public class REP_50023000208 extends REP_BASE {
     //以下信息 当“纳税信息核查结果”为“MCHD” 时填
     public static class BasInfoEnt{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
-
         @JSONField(name ="PGNB")
         private Integer pgNb;
 
@@ -402,14 +270,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "dtAppr")
         private String dtAppr;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getPgNb() {
             return pgNb;
@@ -533,10 +393,9 @@ public class REP_50023000208 extends REP_BASE {
 
         @Override
         public String toString() {
-            return "BasInfoEnt{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
-                    ", marketType=" + marketType +
+            return "BasInfo{" +
+                    "pgNb=" + pgNb +
+                    ", marketType=" + marketType + '\'' +
                     ", entNm='" + entNm + '\'' +
                     ", uniSocCdtCd='" + uniSocCdtCd + '\'' +
                     ", coTp='" + coTp + '\'' +
@@ -555,9 +414,6 @@ public class REP_50023000208 extends REP_BASE {
     }
 
     public static class BasInfOfSlfEplydPpl {
-
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
 
         @JSONField(name = "PGNB")
         private Integer pgNb;
@@ -597,14 +453,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "dtAppr")
         private String dtAppr;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getPgNb() {
             return pgNb;
@@ -713,8 +561,7 @@ public class REP_50023000208 extends REP_BASE {
         @Override
         public String toString() {
             return "BasInfOfSlfEplydPpl{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
+                    "pgNb=" + pgNb +
                     ", marketType=" + marketType +
                     ", traNm='" + traNm + '\'' +
                     ", uniSocCdtCd='" + uniSocCdtCd + '\'' +
@@ -732,9 +579,6 @@ public class REP_50023000208 extends REP_BASE {
     }
 
     public static class CoShrhdrFndInfo {
-
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
 
         @JSONField(name ="PGNB")
         private Integer pgNb;
@@ -762,14 +606,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "SubscrCptlConDt")
         private String subscrCptlConDt;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getPgNb() {
             return pgNb;
@@ -846,8 +682,7 @@ public class REP_50023000208 extends REP_BASE {
         @Override
         public String toString() {
             return "CoShrhdrFndInfo{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
+                    "pgNb=" + pgNb +
                     ", coShrhdrfndInfoNb=" + coShrhdrfndInfoNb +
                     ", natlPrsnFlag=" + natlPrsnFlag +
                     ", invtrNm='" + invtrNm + '\'' +
@@ -862,9 +697,6 @@ public class REP_50023000208 extends REP_BASE {
 
     public static class DirSupSrMgrInfo{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
-
         @JSONField(name ="PGNB")
         private Integer pgNb;
 
@@ -876,14 +708,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "Posn")
         private String posn;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getPgNb() {
             return pgNb;
@@ -920,9 +744,8 @@ public class REP_50023000208 extends REP_BASE {
         @Override
         public String toString() {
             return "DirSupSrMgrInfo{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
-                    ", dirSupSrMgrInfoNb=" + dirSupSrMgrInfoNb +
+                    "pgNb=" + pgNb +
+                    ", dirSupSrMgrInfoNb=" + dirSupSrMgrInfoNb + '\'' +
                     ", nm='" + nm + '\'' +
                     ", posn='" + posn + '\'' +
                     '}';
@@ -930,9 +753,6 @@ public class REP_50023000208 extends REP_BASE {
     }
 
     public static class ChngInfo{
-
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
 
         @JSONField(name ="PGNB")
         private Integer pgNb;
@@ -951,14 +771,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "DT_OF_CHNG")
         private String dtOfChng;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getPgNb() {
             return pgNb;
@@ -1011,9 +823,8 @@ public class REP_50023000208 extends REP_BASE {
         @Override
         public String toString() {
             return "ChngInfo{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
-                    ", chngInfoNb=" + chngInfoNb +
+                    "pgNb=" + pgNb +
+                    ", chngInfoNb=" + chngInfoNb + '\'' +
                     ", chngItm='" + chngItm + '\'' +
                     ", bfChng='" + bfChng + '\'' +
                     ", aftChng='" + aftChng + '\'' +
@@ -1023,9 +834,6 @@ public class REP_50023000208 extends REP_BASE {
     }
 
     public static class AbnmlBizInfo{
-
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
 
         @JSONField(name ="PGNB")
         private Integer pgNb;
@@ -1050,14 +858,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "RMV_CAUSE_DCSN_AUTH")
         private String rmvCauseDcsnAuth;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getPgNb() {
             return pgNb;
@@ -1126,9 +926,8 @@ public class REP_50023000208 extends REP_BASE {
         @Override
         public String toString() {
             return "AbnmlBizInfo{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
-                    ", abnInfoNb=" + abnInfoNb +
+                    "pgNb=" + pgNb +
+                    ", abnInfoNb=" + abnInfoNb + '\'' +
                     ", abnmlCause='" + abnmlCause + '\'' +
                     ", abnmlDate='" + abnmlDate + '\'' +
                     ", abnmlCauseDcsnAuth='" + abnmlCauseDcsnAuth + '\'' +
@@ -1140,9 +939,6 @@ public class REP_50023000208 extends REP_BASE {
     }
 
     public static class IllDscrtInfo{
-
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
 
         @JSONField(name ="PGNB")
         private Integer pgNb;
@@ -1167,14 +963,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "RMV_CAUSE_DCSN_AUTH")
         private String rmvCauseDcsnAuth;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getPgNb() {
             return pgNb;
@@ -1243,9 +1031,8 @@ public class REP_50023000208 extends REP_BASE {
         @Override
         public String toString() {
             return "IllDscrtInfo{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
-                    ", illInfoNb=" + illInfoNb +
+                    "pgNb=" + pgNb +
+                    ", illInfoNb=" + illInfoNb + '\'' +
                     ", illDscrtCause='" + illDscrtCause + '\'' +
                     ", abnmlDate='" + abnmlDate + '\'' +
                     ", abnmlCauseDcsnAuth='" + abnmlCauseDcsnAuth + '\'' +
@@ -1257,9 +1044,6 @@ public class REP_50023000208 extends REP_BASE {
     }
 
     public static class LicNull{
-
-        @JSONField(name = "OrgnlRcvgMsgId")
-        private String orgnlRcvgMsgId;
 
         @JSONField(name ="PGNB")
         private Integer pgNb;
@@ -1284,14 +1068,6 @@ public class REP_50023000208 extends REP_BASE {
 
         @JSONField(name = "LIC_NULL_STM_CNTT")
         private String licNullStmCntt;
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
-        }
 
         public Integer getLicInfoNb() {
             return licInfoNb;
@@ -1360,9 +1136,8 @@ public class REP_50023000208 extends REP_BASE {
         @Override
         public String toString() {
             return "LicNull{" +
-                    "orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", pgNb=" + pgNb +
-                    ", licInfoNb=" + licInfoNb +
+                    "pgNb=" + pgNb +
+                    ", licInfoNb=" + licInfoNb + '\'' +
                     ", orgnlOrCp='" + orgnlOrCp + '\'' +
                     ", licNullStmDt='" + licNullStmDt + '\'' +
                     ", rplSts='" + rplSts + '\'' +
@@ -1372,4 +1147,5 @@ public class REP_50023000208 extends REP_BASE {
                     '}';
         }
     }
+    //循环结束
 }

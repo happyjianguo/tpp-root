@@ -5,14 +5,12 @@ import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
-import java.util.List;
-
 /**
- * @Description: 企业通知查询应答
+ * @Description: ESB“登记信息核查结果疑义反馈”应答报文 mivs.349.001.01
  * @Author: 王鹏
- * @Date: 2019/7/3 17:53
+ * @Date: 2019/7/2 20:10
  */
-public class REP_50023000211  extends REP_BASE {
+public class REP_50023000211 extends REP_BASE {
 
     @JSONField(name = "APP_HEAD")
     private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -21,11 +19,12 @@ public class REP_50023000211  extends REP_BASE {
     private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
     @JSONField(name = "BODY")
-    private REP_BODY repBody = new REP_BODY();
+    private REP_50023000211.REP_BODY repBody = new REP_50023000211.REP_BODY();
 
     public REP_APP_HEAD getRepAppHead() {
         return repAppHead;
     }
+
 
     public void setRepAppHead(REP_APP_HEAD repAppHead) {
         this.repAppHead = repAppHead;
@@ -35,153 +34,103 @@ public class REP_50023000211  extends REP_BASE {
         return repSysHead;
     }
 
+
+
     public void setRepSysHead(REP_SYS_HEAD repSysHead) {
         this.repSysHead = repSysHead;
     }
 
-    public REP_BODY getRepBody() {
+
+
+    public REP_50023000211.REP_BODY getRepBody() {
         return repBody;
     }
 
-    public void setRepBody(REP_BODY repBody) {
+
+
+    public void setRepBody(REP_50023000211.REP_BODY repBody) {
         this.repBody = repBody;
     }
 
+
+
     public class REP_BODY {
-        //循环开始
-        @JSONField(name = "ResultList")
-        private List<resultList> resultList;//查询结果信息
 
-        public List<REP_50023000211.resultList> getResultList() {
-            return resultList;
+        @JSONField(name = "ProcSts")
+        private String procSts;//申请报文处理状态
+
+        @JSONField(name = "ProcCd")
+        private String procCd;//申请报文处理码
+
+        @JSONField(name="PtyId")
+        private String ptyId;//拒绝业务的参与机构行号
+
+        @JSONField(name = "PtyPrcCd")
+        private String ptyPrcCd;//参与机构业务拒绝码
+
+        @JSONField(name = "RjctInf")
+        private String rjctInf;//申请报文拒绝信息
+
+        @JSONField(name = "PrcDt")
+        private String prcDt;//处理日期（终态日期）
+
+        @JSONField(name = "NetgRnd")
+        private String netgRnd;//轧差场次
+
+        public String getProcSts() {
+            return procSts;
         }
 
-        public void setResultList(List<REP_50023000211.resultList> resultList) {
-            this.resultList = resultList;
+        public void setProcSts(String procSts) {
+            this.procSts = procSts;
         }
 
-        @Override
-        public String toString() {
-            return "REP_BODY{" +
-                    "resultList=" + resultList +
-                    '}';
-        }
-    }
-
-    public static class resultList{
-
-        @JSONField(name = "msgid")
-        private String msgId;
-
-        @JSONField(name = "cre_dt_tm")
-        private String creDtTm;
-
-        @JSONField(name = "instg_drct_pty")
-        private String instgDrctPty;
-
-        @JSONField(name = "instg_pty")
-        private String instgPty;
-
-        @JSONField(name = "instd_drct_pty")
-        private String instdDrctPty;
-
-        @JSONField(name = "instd_pty")
-        private String instdPty;
-
-        @JSONField(name = "rply_flag")
-        private String rplyFlag;
-
-        @JSONField(name = "msg_cntt")
-        private String msgCntt;
-
-        @JSONField(name = "isornot_rsp")
-        private String isornotRsp;
-
-        public String getMsgId() {
-            return msgId;
+        public String getProcCd() {
+            return procCd;
         }
 
-        public void setMsgId(String msgId) {
-            this.msgId = msgId;
+        public void setProcCd(String procCd) {
+            this.procCd = procCd;
         }
 
-        public String getCreDtTm() {
-            return creDtTm;
+        public String getPtyId() {
+            return ptyId;
         }
 
-        public void setCreDtTm(String creDtTm) {
-            this.creDtTm = creDtTm;
+        public void setPtyId(String ptyId) {
+            this.ptyId = ptyId;
         }
 
-        public String getInstgDrctPty() {
-            return instgDrctPty;
+        public String getPtyPrcCd() {
+            return ptyPrcCd;
         }
 
-        public void setInstgDrctPty(String instgDrctPty) {
-            this.instgDrctPty = instgDrctPty;
+        public void setPtyPrcCd(String ptyPrcCd) {
+            this.ptyPrcCd = ptyPrcCd;
         }
 
-        public String getInstgPty() {
-            return instgPty;
+        public String getRjctInf() {
+            return rjctInf;
         }
 
-        public void setInstgPty(String instgPty) {
-            this.instgPty = instgPty;
+        public void setRjctInf(String rjctInf) {
+            this.rjctInf = rjctInf;
         }
 
-        public String getInstdDrctPty() {
-            return instdDrctPty;
+        public String getPrcDt() {
+            return prcDt;
         }
 
-        public void setInstdDrctPty(String instdDrctPty) {
-            this.instdDrctPty = instdDrctPty;
+        public void setPrcDt(String prcDt) {
+            this.prcDt = prcDt;
         }
 
-        public String getInstdPty() {
-            return instdPty;
+        public String getNetgRnd() {
+            return netgRnd;
         }
 
-        public void setInstdPty(String instdPty) {
-            this.instdPty = instdPty;
-        }
-
-        public String getRplyFlag() {
-            return rplyFlag;
-        }
-
-        public void setRplyFlag(String rplyFlag) {
-            this.rplyFlag = rplyFlag;
-        }
-
-        public String getMsgCntt() {
-            return msgCntt;
-        }
-
-        public void setMsgCntt(String msgCntt) {
-            this.msgCntt = msgCntt;
-        }
-
-        public String getIsornotRsp() {
-            return isornotRsp;
-        }
-
-        public void setIsornotRsp(String isornotRsp) {
-            this.isornotRsp = isornotRsp;
-        }
-
-        @Override
-        public String toString() {
-            return "resultList{" +
-                    ", msgId='" + msgId + '\'' +
-                    ", creDtTm='" + creDtTm + '\'' +
-                    ", instgDrctPty='" + instgDrctPty + '\'' +
-                    ", instgPty='" + instgPty + '\'' +
-                    ", instdDrctPty='" + instdDrctPty + '\'' +
-                    ", instdPty='" + instdPty + '\'' +
-                    ", rplyFlag='" + rplyFlag + '\'' +
-                    ", msgCntt='" + msgCntt + '\'' +
-                    ", isornotRsp='" + isornotRsp + '\'' +
-                    '}';
+        public void setNetgRnd(String netgRnd) {
+            this.netgRnd = netgRnd;
         }
     }
 }

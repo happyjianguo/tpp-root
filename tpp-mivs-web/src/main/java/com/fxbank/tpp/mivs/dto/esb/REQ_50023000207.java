@@ -5,10 +5,12 @@ import com.fxbank.cip.base.dto.REQ_APP_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
+import java.util.List;
+
 /**
- * @Description: 登记信息联网核查申请ESB请求报文
+ * @Description: 纳税信息核查反馈
  * @Author: 王鹏
- * @Date: 2019/5/20 16:40
+ * @Date: 2019/5/15 14:39
  */
 public class REQ_50023000207 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
@@ -21,7 +23,7 @@ public class REQ_50023000207 extends REQ_BASE {
     private REQ_50023000207.REQ_BODY reqBody;
 
     public REQ_50023000207(){
-        super.txDesc = "登记信息联网核查";
+        super.txDesc = "纳税信息核查反馈";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -53,73 +55,64 @@ public class REQ_50023000207 extends REQ_BASE {
     }
 
     public class REQ_BODY {
-        @JSONField(name = "MAKET_TYPE")
-        private String marketType;    //主体类型
+
+        @JSONField(name = "ORIG_APPLY_MSG_ID")
+        private String orgnlDlvrgMsgId; //原申请报文标识号  原 mivs.320.001.01或mivs.322.001.01 的报文标识号
+
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
+        private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.321.001.01或mivs.323.001.01 的报文标识号
+
+        @JSONField(name = "COMPANY_NAME")
+        private String companyName;    //单位名称
+
         @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;		//统一社会信用代码
-        @JSONField(name = "ENT_NAME")
-        private String entNm;    //企业名称
-        @JSONField(name = "NAME_OF_LGL_PRSN")
-        private String nmOfLglPrsn;		//法定代表人或单位负责人姓名
-        @JSONField(name = "ID_OF_LGL_PRSN")
-        private String idOfLglPrsn;    //法定代表人或单位负责人身份证件号
-        @JSONField(name = "TRA_NM")
-        private String tranm;		//字号名称
-        @JSONField(name = "NAME")
-        private String nm;		//经营者姓名
-        @JSONField(name = "ID")
-        private String id;    //经营者证件号
-        @JSONField(name = "AgtNm")
-        private String agtNm;    //代理人姓名
-        @JSONField(name = "AgtId")
-        private String agtId;    //代理人身份证件号码
-        @JSONField(name = "OPRTR_NAME")
-        private String opNm;		//操作员姓名
-        @JSONField(name = "RESERVE_FIELD1")
-        private String remarks1;		//备用字段1
-        @JSONField(name = "RESERVE_FIELD2")
-        private String remarks2;		//备用字段2
-        @JSONField(name = "RESERVE_FIELD3")
-        private String remarks3;		//备用字段3
 
-        public String getMarketType() {
-            return marketType;
+        @JSONField(name = "TXPYR_DIST_NO")
+        private String txpyrIdNb;		//纳税人识别号
+
+        @JSONField(name = "TXPYR_INFO_VER_RESULT")
+        private String rslt;//纳税核查结果
+
+        //“数据源日期”为税务总局所返回数据的实际收集日期，目前为一般为 T-3
+        @JSONField(name = "DATA_SOURCE_DATE")
+        private String dataResrcDt;//数据源日期
+
+        //循环开始TXPYR_INFO_ARRAY
+        @JSONField(name = "TXPYR_INFO_ARRAY")
+        private List<txpyrInfoArray> txpyrInfoArrayMsg;//纳税信息数组
+
+        @JSONField(name = "RESPONSE_INFO")
+        private String cntt; // 疑似反馈内容
+
+        @JSONField(name = "CONTACT_NAME")
+        private String contactNm; // 联系人姓名
+
+        @JSONField(name = "CONTACT_TEL")
+        private String contactNb; // 联系人电话
+
+        public String getOrgnlDlvrgMsgId() {
+            return orgnlDlvrgMsgId;
         }
 
-        public void setMarketType(String marketType) {
-            this.marketType = marketType;
+        public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
+            this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
         }
 
-        public String getTranm() {
-            return tranm;
+        public String getOrgnlRcvgMsgId() {
+            return orgnlRcvgMsgId;
         }
 
-        public void setTranm(String tranm) {
-            this.tranm = tranm;
+        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
+            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
         }
 
-        public String getNm() {
-            return nm;
+        public String getCompanyName() {
+            return companyName;
         }
 
-        public void setNm(String nm) {
-            this.nm = nm;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getEntNm() {
-            return entNm;
-        }
-
-        public void setEntNm(String entNm) {
-            this.entNm = entNm;
+        public void setCompanyName(String companyName) {
+            this.companyName = companyName;
         }
 
         public String getUniSocCdtCd() {
@@ -130,68 +123,95 @@ public class REQ_50023000207 extends REQ_BASE {
             this.uniSocCdtCd = uniSocCdtCd;
         }
 
-        public String getNmOfLglPrsn() {
-            return nmOfLglPrsn;
+        public String getTxpyrIdNb() {
+            return txpyrIdNb;
         }
 
-        public void setNmOfLglPrsn(String nmOfLglPrsn) {
-            this.nmOfLglPrsn = nmOfLglPrsn;
+        public void setTxpyrIdNb(String txpyrIdNb) {
+            this.txpyrIdNb = txpyrIdNb;
         }
 
-        public String getIdOfLglPrsn() {
-            return idOfLglPrsn;
+        public String getRslt() {
+            return rslt;
         }
 
-        public void setIdOfLglPrsn(String idOfLglPrsn) {
-            this.idOfLglPrsn = idOfLglPrsn;
+        public void setRslt(String rslt) {
+            this.rslt = rslt;
         }
 
-        public String getAgtNm() {
-            return agtNm;
+        public String getDataResrcDt() {
+            return dataResrcDt;
         }
 
-        public void setAgtNm(String agtNm) {
-            this.agtNm = agtNm;
+        public void setDataResrcDt(String dataResrcDt) {
+            this.dataResrcDt = dataResrcDt;
         }
 
-        public String getAgtId() {
-            return agtId;
+        public List<txpyrInfoArray> getTxpyrInfoArrayMsg() {
+            return txpyrInfoArrayMsg;
         }
 
-        public void setAgtId(String agtId) {
-            this.agtId = agtId;
+        public void setTxpyrInfoArrayMsg(List<txpyrInfoArray> txpyrInfoArrayMsg) {
+            this.txpyrInfoArrayMsg = txpyrInfoArrayMsg;
         }
 
-        public String getOpNm() {
-            return opNm;
+        public String getCntt() {
+            return cntt;
         }
 
-        public void setOpNm(String opNm) {
-            this.opNm = opNm;
+        public void setCntt(String cntt) {
+            this.cntt = cntt;
         }
 
-        public String getRemarks1() {
-            return remarks1;
+        public String getContactNm() {
+            return contactNm;
         }
 
-        public void setRemarks1(String remarks1) {
-            this.remarks1 = remarks1;
+        public void setContactNm(String contactNm) {
+            this.contactNm = contactNm;
         }
 
-        public String getRemarks2() {
-            return remarks2;
+        public String getContactNb() {
+            return contactNb;
         }
 
-        public void setRemarks2(String remarks2) {
-            this.remarks2 = remarks2;
+        public void setContactNb(String contactNb) {
+            this.contactNb = contactNb;
+        }
+    }
+
+    public static class txpyrInfoArray{
+        @JSONField(name = "TAX_JDCY_CODE")
+        private String txAuthCd;//税务机关代码
+
+        @JSONField(name = "TAX_JDCY_NAME")
+        private String txAuthNm;//税务机关名称
+
+        @JSONField(name = "TXPYR_STATUS")
+        private String txpyrSts;//纳税人状态
+
+        public String getTxAuthCd() {
+            return txAuthCd;
         }
 
-        public String getRemarks3() {
-            return remarks3;
+        public void setTxAuthCd(String txAuthCd) {
+            this.txAuthCd = txAuthCd;
         }
 
-        public void setRemarks3(String remarks3) {
-            this.remarks3 = remarks3;
+        public String getTxAuthNm() {
+            return txAuthNm;
+        }
+
+        public void setTxAuthNm(String txAuthNm) {
+            this.txAuthNm = txAuthNm;
+        }
+
+        public String getTxpyrSts() {
+            return txpyrSts;
+        }
+
+        public void setTxpyrSts(String txpyrSts) {
+            this.txpyrSts = txpyrSts;
         }
     }
 }

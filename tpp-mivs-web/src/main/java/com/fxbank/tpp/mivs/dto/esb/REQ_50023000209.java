@@ -5,12 +5,10 @@ import com.fxbank.cip.base.dto.REQ_APP_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
-import java.util.List;
-
 /**
- * @Description: 登记信息核查反馈
+ * @Description: 登记信息核查结果查询请求
  * @Author: 王鹏
- * @Date: 2019/7/2 20:10
+ * @Date: 2019/7/2 16:38
  */
 public class REQ_50023000209 extends REQ_BASE {
     @JSONField(name = "APP_HEAD")
@@ -20,10 +18,10 @@ public class REQ_50023000209 extends REQ_BASE {
     private REQ_SYS_HEAD reqSysHead;
 
     @JSONField(name = "BODY")
-    private REQ_50023000209.REQ_BODY reqBody;
+    private REQ_BODY reqBody;
 
     public REQ_50023000209(){
-        super.txDesc = "登记信息核查结果反馈";
+        super.txDesc = "登记信息核查结果查询";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -34,36 +32,41 @@ public class REQ_50023000209 extends REQ_BASE {
         this.reqAppHead = reqAppHead;
     }
 
-
     public REQ_SYS_HEAD getReqSysHead() {
         return reqSysHead;
     }
-
 
     public void setReqSysHead(REQ_SYS_HEAD reqSysHead) {
         this.reqSysHead = reqSysHead;
     }
 
-
-    public REQ_50023000209.REQ_BODY getReqBody() {
+    public REQ_BODY getReqBody() {
         return reqBody;
     }
 
-
-    public void setReqBody(REQ_50023000209.REQ_BODY reqBody) {
+    public void setReqBody(REQ_BODY reqBody) {
         this.reqBody = reqBody;
     }
 
     public class REQ_BODY {
 
+        @JSONField(name = "StartDt")
+        private Integer startDt;    // 核查开始时间
+
+        @JSONField(name = "EndDt")
+        private Integer endDt; //核查结束时间
+
+        @JSONField(name = "OrigBranchId")
+        private String origBranchId; //原核查机构号
+
+        @JSONField(name = "OrigUserId")
+        private String origUserId; // 原核查柜员号
+
         @JSONField(name = "ORIG_APPLY_MSG_ID")
-        private String orgnlDlvrgMsgId; //原申请报文标识号  原 mivs.320.001.01或mivs.322.001.01 的报文标识号
+        private String orgnlDlvrgMsgId; //原申请报文标识号
 
-        @JSONField(name = "ORIG_ANSWER_MSG_ID")
-        private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.321.001.01或mivs.323.001.01 的报文标识号
-
-        @JSONField(name = "EntityName")
-        private String entNm;    //企业名称
+        @JSONField(name = "ENT_NAME")
+        private String entNm;    //单位名称
 
         @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;        //统一社会信用代码
@@ -72,10 +75,10 @@ public class REQ_50023000209 extends REQ_BASE {
         private String nmOfLglPrsn;        //法定代表人或单位负责人姓名
 
         @JSONField(name = "IdOfLglPrsn")
-        private String idOfLglPrsn;        //法定代表人或单位负责人身份证件号
+        private String IdOfLglPrsn; //法定代表人或单位负责人身份证件号
 
         @JSONField(name = "TraNm")
-        private String traNm;        //字号名称
+        private String traNm;    //字号名称
 
         @JSONField(name = "Nm")
         private String nm;        //经营者姓名
@@ -83,20 +86,37 @@ public class REQ_50023000209 extends REQ_BASE {
         @JSONField(name = "Id")
         private String id;        //经营者证件号
 
-        @JSONField(name = "Rslt")
-        private String rslt;        //登记信息核查结果
+        public Integer getStartDt() {
+            return startDt;
+        }
 
-        @JSONField(name = "DATA_SOURCE_DATE")
-        private String dataResrcDt;//数据源日期
+        public void setStartDt(Integer startDt) {
+            this.startDt = startDt;
+        }
 
-        @JSONField(name = "RESPONSE_INFO")
-        private String cntt; // 疑似反馈内容
+        public Integer getEndDt() {
+            return endDt;
+        }
 
-        @JSONField(name = "CONTACT_NAME")
-        private String contactNm; // 联系人姓名
+        public void setEndDt(Integer endDt) {
+            this.endDt = endDt;
+        }
 
-        @JSONField(name = "CONTACT_TEL")
-        private String contactNb; // 联系人电话
+        public String getOrigBranchId() {
+            return origBranchId;
+        }
+
+        public void setOrigBranchId(String origBranchId) {
+            this.origBranchId = origBranchId;
+        }
+
+        public String getOrigUserId() {
+            return origUserId;
+        }
+
+        public void setOrigUserId(String origUserId) {
+            this.origUserId = origUserId;
+        }
 
         public String getOrgnlDlvrgMsgId() {
             return orgnlDlvrgMsgId;
@@ -104,14 +124,6 @@ public class REQ_50023000209 extends REQ_BASE {
 
         public void setOrgnlDlvrgMsgId(String orgnlDlvrgMsgId) {
             this.orgnlDlvrgMsgId = orgnlDlvrgMsgId;
-        }
-
-        public String getOrgnlRcvgMsgId() {
-            return orgnlRcvgMsgId;
-        }
-
-        public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
-            this.orgnlRcvgMsgId = orgnlRcvgMsgId;
         }
 
         public String getEntNm() {
@@ -139,11 +151,11 @@ public class REQ_50023000209 extends REQ_BASE {
         }
 
         public String getIdOfLglPrsn() {
-            return idOfLglPrsn;
+            return IdOfLglPrsn;
         }
 
         public void setIdOfLglPrsn(String idOfLglPrsn) {
-            this.idOfLglPrsn = idOfLglPrsn;
+            IdOfLglPrsn = idOfLglPrsn;
         }
 
         public String getTraNm() {
@@ -168,46 +180,6 @@ public class REQ_50023000209 extends REQ_BASE {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public String getRslt() {
-            return rslt;
-        }
-
-        public void setRslt(String rslt) {
-            this.rslt = rslt;
-        }
-
-        public String getDataResrcDt() {
-            return dataResrcDt;
-        }
-
-        public void setDataResrcDt(String dataResrcDt) {
-            this.dataResrcDt = dataResrcDt;
-        }
-
-        public String getCntt() {
-            return cntt;
-        }
-
-        public void setCntt(String cntt) {
-            this.cntt = cntt;
-        }
-
-        public String getContactNm() {
-            return contactNm;
-        }
-
-        public void setContactNm(String contactNm) {
-            this.contactNm = contactNm;
-        }
-
-        public String getContactNb() {
-            return contactNb;
-        }
-
-        public void setContactNb(String contactNb) {
-            this.contactNb = contactNb;
         }
     }
 }

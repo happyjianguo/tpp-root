@@ -6,9 +6,9 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /**
- * @Description: 公告信息确认
+ * @Description: 企业开销户状态反馈ESB应答报文
  * @Author: 王鹏
- * @Date: 2019/7/4 7:17
+ * @Date: 2019/6/6 15:06
  */
 public class REP_50023000212 extends REP_BASE {
 
@@ -19,7 +19,7 @@ public class REP_50023000212 extends REP_BASE {
     private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
     @JSONField(name = "BODY")
-    private REP_BODY repBody = new REP_BODY();
+    private REP_50023000212.REP_BODY repBody = new REP_50023000212.REP_BODY();
 
     public REP_APP_HEAD getRepAppHead() {
         return repAppHead;
@@ -37,17 +37,44 @@ public class REP_50023000212 extends REP_BASE {
         this.repSysHead = repSysHead;
     }
 
-    public REP_BODY getRepBody() {
+    public REP_50023000212.REP_BODY getRepBody() {
         return repBody;
     }
 
-    public void setRepBody(REP_BODY repBody) {
+    public void setRepBody(REP_50023000212.REP_BODY repBody) {
         this.repBody = repBody;
     }
 
     public class REP_BODY {
+
+        @JSONField(name = "ProcSts")
+        private String procSts;//申请报文处理状态
+
         @JSONField(name = "ProcCd")
-        private String procCd = null;
+        private String procCd;//申请报文处理码
+
+        @JSONField(name="PtyId")
+        private String ptyId;//拒绝业务的参与机构行号
+
+        @JSONField(name = "PtyPrcCd")
+        private String ptyPrcCd;//参与机构业务拒绝码
+
+        @JSONField(name = "RjctInf")
+        private String rjctInf;//申请报文拒绝信息
+
+        @JSONField(name = "PrcDt")
+        private String prcDt;//处理日期（终态日期）
+
+        @JSONField(name = "NetgRnd")
+        private String netgRnd;//轧差场次
+
+        public String getProcSts() {
+            return procSts;
+        }
+
+        public void setProcSts(String procSts) {
+            this.procSts = procSts;
+        }
 
         public String getProcCd() {
             return procCd;
@@ -55,6 +82,46 @@ public class REP_50023000212 extends REP_BASE {
 
         public void setProcCd(String procCd) {
             this.procCd = procCd;
+        }
+
+        public String getPtyId() {
+            return ptyId;
+        }
+
+        public void setPtyId(String ptyId) {
+            this.ptyId = ptyId;
+        }
+
+        public String getPtyPrcCd() {
+            return ptyPrcCd;
+        }
+
+        public void setPtyPrcCd(String ptyPrcCd) {
+            this.ptyPrcCd = ptyPrcCd;
+        }
+
+        public String getRjctInf() {
+            return rjctInf;
+        }
+
+        public void setRjctInf(String rjctInf) {
+            this.rjctInf = rjctInf;
+        }
+
+        public String getPrcDt() {
+            return prcDt;
+        }
+
+        public void setPrcDt(String prcDt) {
+            this.prcDt = prcDt;
+        }
+
+        public String getNetgRnd() {
+            return netgRnd;
+        }
+
+        public void setNetgRnd(String netgRnd) {
+            this.netgRnd = netgRnd;
         }
     }
 }

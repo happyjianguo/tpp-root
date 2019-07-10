@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000204;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000209;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000211;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,16 +50,16 @@ public class RegVrfctnFdbkTest{
         @Autowired
         private MockMvc mockMvc;
 
-        private REQ_50023000209 req ;
+        private REQ_50023000211 req ;
         private REQ_SYS_HEAD reqSysHead;
-        private REQ_50023000209.REQ_BODY reqBody ;
+        private REQ_50023000211.REQ_BODY reqBody ;
 
         @Reference(version = "1.0.0")
         private ISafeService passwordService;
 
         @Before
         public void init(){
-            req = new REQ_50023000209();
+            req = new REQ_50023000211();
             reqSysHead = new REQ_SYS_HEAD();
             reqSysHead.setServiceId("500230002");
             reqSysHead.setSceneId("09");

@@ -7,8 +7,8 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000211;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000211;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000213;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000213;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsFreeFrmtModel;
 import com.fxbank.tpp.mivs.service.IMivsFreeFrmtService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
@@ -47,8 +47,8 @@ public class FreeFrmtSelect extends TradeBase implements TradeExecutionStrategy{
         public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
             MyLog myLog = logPool.get();
 
-            REQ_50023000211 req = (REQ_50023000211) dto;//接收ESB请求报文
-            REQ_50023000211.REQ_BODY reqBody = req.getReqBody();
+            REQ_50023000213 req = (REQ_50023000213) dto;//接收ESB请求报文
+            REQ_50023000213.REQ_BODY reqBody = req.getReqBody();
 
             //查询数据落库
             MivsFreeFrmtModel freeFrmtModel =  new MivsFreeFrmtModel();
@@ -59,12 +59,12 @@ public class FreeFrmtSelect extends TradeBase implements TradeExecutionStrategy{
             List<MivsFreeFrmtModel> freeFrmtModels = freeFrmtService.selectResult(freeFrmtModel); //查询数据库业务数据
             myLog.info(logger,"查询结果为：" + freeFrmtModel.toString());
 
-            REP_50023000211 rep = new REP_50023000211();
+            REP_50023000213 rep = new REP_50023000213();
             if(freeFrmtModels != null && !freeFrmtModels.isEmpty()) {
-                List<REP_50023000211.resultList> resultArrayList = new ArrayList<REP_50023000211.resultList>();
+                List<REP_50023000213.resultList> resultArrayList = new ArrayList<REP_50023000213.resultList>();
                 int i = 0;
                 for (MivsFreeFrmtModel Info : freeFrmtModels) {
-                    REP_50023000211.resultList resultList = new REP_50023000211.resultList();
+                    REP_50023000213.resultList resultList = new REP_50023000213.resultList();
                     resultList.setMsgId(Info.getMsg_id());
                     resultList.setInstdDrctPty(Info.getInstd_drct_pty());
                     resultList.setInstdPty(Info.getInstd_pty());
