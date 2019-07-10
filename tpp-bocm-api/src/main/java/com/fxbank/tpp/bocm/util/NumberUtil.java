@@ -39,4 +39,10 @@ public class NumberUtil {
 	public static String removePointToString(double d){	
 	    return String.valueOf(d/100);
 	}
+	
+	public static void main(String[] args) {
+		double d = 120.0d;
+		String point = NumberUtil.removePointToString(d);
+		System.out.println(new BigDecimal(point));
+	}
 }

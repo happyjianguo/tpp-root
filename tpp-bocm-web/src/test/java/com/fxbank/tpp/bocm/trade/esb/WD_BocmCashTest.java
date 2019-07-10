@@ -55,8 +55,8 @@ public class WD_BocmCashTest {
 	private static Logger logger = LoggerFactory.getLogger(DB_BocmCashTest.class);
 	
 //	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
-//     private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
-	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
+     private static final String URL="http://127.0.0.1:7006/esb/bocm.do";
+//	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -82,6 +82,7 @@ public class WD_BocmCashTest {
 		reqSysHead.setSourceType("MT");	//网联
 //		reqSysHead.setBranchId("01016");
 //		reqSysHead.setUserId("000917");
+//		reqSysHead.setBranchId("01037");
 		reqSysHead.setBranchId("01045");
 		reqSysHead.setUserId("000778");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));

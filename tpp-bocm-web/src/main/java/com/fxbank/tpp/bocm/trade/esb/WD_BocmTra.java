@@ -766,8 +766,8 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, dto.getSysDate(), dto.getSysTime(),
 				dto.getSysTraceno());
-		if(!"".equals(hostDate)) {
-		record.setHostDate(Integer.parseInt(hostDate));
+		if(hostDate!=null&&!"".equals(hostDate)) {
+			record.setHostDate(Integer.parseInt(hostDate));
 		}
 		record.setHostState(hostState);
 		record.setHostTraceno(hostTraceno);

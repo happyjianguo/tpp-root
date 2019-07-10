@@ -133,7 +133,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 			myLog.info(logger, "手续费流水获取,交行流水号【"+bocmTraceno+"】发起行行号【"+SbnkNo+"】交易代码【"+thdCod+"】业务模式【"+txnMod+"】");
 			//规则：交易受理方收取代理手续费  0 （交行支付代理手续费）1 （交行收取代理手续费）
 			String proxy_flag = bocmTrace.getProxyFlg();
-			double proxyFee = NumberUtil.removePoint(bocmTrace.getProxyFee());
+			String proxyFee = NumberUtil.removePointToString(bocmTrace.getProxyFee());
 			if(proxy_flag.equals("0")){
 				myLog.info(logger, "交行支付代理手续费："+bocmTrace.getProxyFee()+"转换后： "+proxyFee);
 			}

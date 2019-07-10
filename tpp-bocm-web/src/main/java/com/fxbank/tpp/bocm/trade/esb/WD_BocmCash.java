@@ -20,6 +20,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061001001;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061001001;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
@@ -63,6 +64,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IBocmSndTraceService bocmSndTraceService;
+	
+	@Reference(version = "1.0.0")
+	private IPublicService publicService;
 
 	@Resource
 	private MyJedis myJedis;
@@ -231,6 +235,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();			
 		}catch(SysTradeExecuteException e) {			
 			if (SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) { // ESB超时							
+				myLog.info(logger, "交行卡取现金核心记账请求超时",e);
 				//本行记账超时，核心冲正，交行冲正,如果记账成功,对账时交行补账
 				try {
 					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
@@ -276,7 +281,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				throw e2;
 				//本行冲正
 			}else { //ESB调用其他错误
-				//核心记账失败，交行冲正，提示核心错误，				
+				//核心记账失败，交行冲正，提示核心错误，		
+				myLog.error(logger, "交行卡取现金核心记账失败",e);
 				try {
 					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
 					updateBocmRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "4");
@@ -523,8 +529,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
-		if(!"".equals(hostDate)) {
-		record.setHostDate(Integer.parseInt(hostDate));
+		if(hostDate!=null&&!"".equals(hostDate)) {
+			record.setHostDate(Integer.parseInt(hostDate));
 		}
 		record.setHostState(hostState);
 		record.setHostTraceno(hostTraceno);
@@ -597,13 +603,16 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	*/
 	private REP_10009 bocmReversal(REQ_30061001001 reqDto, String bocmTraceNo, String oTxnCd)
 			throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		REQ_10009 req_10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
+		MyLog myLog = logPool.get();		
+		Integer sysTraceno = publicService.getSysTraceno();		
+		REQ_10009 req_10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), sysTraceno);
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req_10009); // 设置报文头中的行号信息		
 		//组装抹账报文体
 		//原发起方交易流水
-		req_10009.setOlogNo(bocmTraceNo);
+		//reqBase.setSlogNo(String.format("%06d%08d", reqDto.getSysDate() % 1000000, reqDto.getSysTraceno()));
+		
+		req_10009.setOlogNo(String.format("%06d%08d", reqDto.getSysDate() % 1000000, reqDto.getSysTraceno()));
 		//原交易代码 原交易代码       通兑-10001 IC通兑-20001
 		req_10009.setOtxnCd(oTxnCd);
 		//业务模式

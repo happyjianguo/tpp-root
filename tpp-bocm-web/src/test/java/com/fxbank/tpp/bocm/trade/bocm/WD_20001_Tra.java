@@ -36,23 +36,23 @@ public class WD_20001_Tra extends BASE_TEST {
 	public void ok() throws Exception {
 		double txAmt = 10d;
 		req.setTxnAmt(NumberUtil.addPoint(txAmt));
-		req.setPin("C0C53D00C8980A8E");
+		req.setPin("6A5F39B5D36528A8");
 		req.setOprFlg("0");
 		req.setTxnMod("0");
 		req.setRecBnk("313229000442");
 		req.setRactTp("2");
 //		req.setrActNo("6222600530011742438");
 		
-		req.setPactNo("623166000000575356");
-		req.setPayNam("测试");
+		req.setPactNo("6222620110037989184");
+		req.setPayNam("地区代码");
 //		req.setSecMag("622126010001048643=4912567019123456");
 
 		req.setSeqNo("001");
-		req.setARQC("1111");
-		req.setICAID("A0000003330101");
-		req.setICOutDate("20251231");
-		req.setICData("11111");
-		
+		req.setARQC("1553C75727C9DA42");
+		req.setICAID("1553C75727C9DA42");
+		req.setICOutDate("241231");
+		req.setICData("2469F26081553C75727C9DA429F2701809F101307020103A0A010010A0100000000004E783E039F3704E841ABFC9F36020085950500000008009A031907039C01969F02060000000000005F2A0201565A0A6222620110037989184F5F3401019F1302000782027C009F1A0201569F03060000000000009F330320A100");
+		//
 		
 //		req.setPactNo("623166001016830991");
 //		req.setPayBnk("301651000015");
@@ -67,10 +67,10 @@ public class WD_20001_Tra extends BASE_TEST {
 //		req.setICData("11111");
 		
 
-		req.setRactNo("623166001016830991");
+		req.setRactNo("623166000000575356");
 		req.setRecNam("测试");
 		req.setRactTp("2");
-		req.setRecBnk("313229000442");
+		req.setRecBnk("313228077014");
 		
 //		//收款人开户行号
 //		req.setRecBnk("313229000442");
