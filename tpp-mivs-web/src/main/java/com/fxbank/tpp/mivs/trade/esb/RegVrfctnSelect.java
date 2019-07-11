@@ -23,11 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 登记信息核查结果汇总查询
  * @Author: 王鹏
  * @Date: 2019/7/2 15:38
  */
-@Service("REQ_50023000208")
+@Service("REQ_50023000209")
 public class RegVrfctnSelect extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

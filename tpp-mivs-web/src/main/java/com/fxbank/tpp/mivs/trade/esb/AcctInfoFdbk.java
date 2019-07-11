@@ -37,7 +37,7 @@ import org.springframework.stereotype.Service;
  * @Date: 2019/6/6 14:35
  */
 
-@Service("REQ_50023000210")
+@Service("REQ_50023000212")
 public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

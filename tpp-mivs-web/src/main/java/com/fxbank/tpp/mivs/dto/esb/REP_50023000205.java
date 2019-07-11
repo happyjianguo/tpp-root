@@ -8,7 +8,7 @@ import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 纳税信息汇总查询应答
  * @Author: 王鹏
  * @Date: 2019/6/24 10:31
  */
@@ -95,6 +95,9 @@ public class REP_50023000205 extends REP_BASE {
         @JSONField(name = "OrgnlRcvgMsgId")
         private String orgnlRcvgMsgId;
 
+        @JSONField(name = "OrigInstgPty")
+        private String origInstgPty;
+
         @JSONField(name = "OrigBranchId")
         private String origBranchId;
 
@@ -116,9 +119,8 @@ public class REP_50023000205 extends REP_BASE {
         @JSONField(name = "DataResrcDt")
         private String dataResrcDt;
 
-        //循环开始TXPYR_INFO_ARRAY
-        @JSONField(name = "TXPYR_INFO_ARRAY")
-        private List<TXPYR_INFO_ARRAY> txpmtInf;//纳税信息数组
+        @JSONField(name = "TxpmtInfCnt")
+        private Integer txpmtInfCnt;
 
         @JSONField(name = "ProcSts")
         private String procSts;
@@ -137,52 +139,6 @@ public class REP_50023000205 extends REP_BASE {
 
         @JSONField(name = "Remarks3")
         private String remarks3;
-
-        public static class TXPYR_INFO_ARRAY {
-            @JSONField(name = "TXPMT_INF_NB")
-            private Integer txpmtInfNb;//税务机关代码
-
-            @JSONField(name = "TAX_JDCY_CODE")
-            private String txAuthCd;//税务机关代码
-
-            @JSONField(name = "TAX_JDCY_NAME")
-            private String txAuthNm;//税务机关名称
-
-            @JSONField(name = "TXPYR_STATUS")
-            private String txpyrSts;//纳税人状态
-
-            public Integer getTxpmtInfNb() {
-                return txpmtInfNb;
-            }
-
-            public void setTxpmtInfNb(Integer txpmtInfNb) {
-                this.txpmtInfNb = txpmtInfNb;
-            }
-
-            public String getTxAuthCd() {
-                return txAuthCd;
-            }
-
-            public void setTxAuthCd(String txAuthCd) {
-                this.txAuthCd = txAuthCd;
-            }
-
-            public String getTxAuthNm() {
-                return txAuthNm;
-            }
-
-            public void setTxAuthNm(String txAuthNm) {
-                this.txAuthNm = txAuthNm;
-            }
-
-            public String getTxpyrSts() {
-                return txpyrSts;
-            }
-
-            public void setTxpyrSts(String txpyrSts) {
-                this.txpyrSts = txpyrSts;
-            }
-        }
 
         public String getOrigTranDate() {
             return origTranDate;
@@ -222,6 +178,14 @@ public class REP_50023000205 extends REP_BASE {
 
         public void setOrgnlRcvgMsgId(String orgnlRcvgMsgId) {
             this.orgnlRcvgMsgId = orgnlRcvgMsgId;
+        }
+
+        public String getOrigInstgPty() {
+            return origInstgPty;
+        }
+
+        public void setOrigInstgPty(String origInstgPty) {
+            this.origInstgPty = origInstgPty;
         }
 
         public String getOrigBranchId() {
@@ -280,12 +244,12 @@ public class REP_50023000205 extends REP_BASE {
             this.dataResrcDt = dataResrcDt;
         }
 
-        public List<TXPYR_INFO_ARRAY> getTxpmtInf() {
-            return txpmtInf;
+        public Integer getTxpmtInfCnt() {
+            return txpmtInfCnt;
         }
 
-        public void setTxpmtInf(List<TXPYR_INFO_ARRAY> txpmtInf) {
-            this.txpmtInf = txpmtInf;
+        public void setTxpmtInfCnt(Integer txpmtInfCnt) {
+            this.txpmtInfCnt = txpmtInfCnt;
         }
 
         public String getProcSts() {
@@ -336,27 +300,5 @@ public class REP_50023000205 extends REP_BASE {
             this.remarks3 = remarks3;
         }
 
-        @Override
-        public String toString() {
-            return "resultList{" +
-                    "origTranDate='" + origTranDate + '\'' +
-                    ", origSeqNo='" + origSeqNo + '\'' +
-                    ", origTranTime='" + origTranTime + '\'' +
-                    ", orgnlDlvrgMsgId='" + orgnlDlvrgMsgId + '\'' +
-                    ", orgnlRcvgMsgId='" + orgnlRcvgMsgId + '\'' +
-                    ", coNm='" + coNm + '\'' +
-                    ", uniSocCdtCd='" + uniSocCdtCd + '\'' +
-                    ", txpyrIdNb='" + txpyrIdNb + '\'' +
-                    ", rslt='" + rslt + '\'' +
-                    ", dataResrcDt='" + dataResrcDt + '\'' +
-                    ", txpmtInf=" + txpmtInf +
-                    ", procSts='" + procSts + '\'' +
-                    ", procCd='" + procCd + '\'' +
-                    ", rjctinf='" + rjctinf + '\'' +
-                    ", remarks1='" + remarks1 + '\'' +
-                    ", remarks2='" + remarks2 + '\'' +
-                    ", remarks3='" + remarks3 + '\'' +
-                    '}';
-        }
     }
 }

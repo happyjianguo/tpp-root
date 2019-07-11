@@ -58,7 +58,11 @@ public class RtrTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             myLog.info(logger, "发布至redis成功");
         }else{
             //查询主表数据
-            MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModelSelectMaster = mivsTxPmtVrfctnInfoService.selectMasterAndAttached(mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getMsgId(), mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().getInstgPty(), "master");
+            MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModelSelectMaster = new MivsTxpmtVrfctnInfoModel();
+            txpmtVrfctnInfoModelSelectMaster.setOrig_dlv_msgid(mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getMsgId());
+            txpmtVrfctnInfoModelSelectMaster.setOrig_instg_pty(mivs323.getRtrTxPmtVrfctn().getOrgnlBizQry().getInstgPty().getInstgPty());
+            txpmtVrfctnInfoModelSelectMaster.setDetail_flag("NO");
+            txpmtVrfctnInfoModelSelectMaster = mivsTxPmtVrfctnInfoService.selectMasterAndAttached(txpmtVrfctnInfoModelSelectMaster);
             myLog.info(logger, "查询主表数据查询结果为：" + txpmtVrfctnInfoModelSelectMaster.toString());
             //收到人行通讯回执，准备更新数据库状态，插入附表数据，在同一个事务进行
             myLog.info(logger, "收到人行通讯回执，准备更新数据库状态，插入附表数据，在同一个事务进行");

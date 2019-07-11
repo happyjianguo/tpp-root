@@ -51,6 +51,8 @@ public class MivsTxpmtVrfctnInfoModel implements Serializable {
     private String sys_ind;
     private String orig_dlv_msgid;
     private String orig_rcv_msgid;
+    private String orig_instg_drct_pty; //原发起直接参与机构
+    private String orig_instg_pty; //原发起参与机构
     private String txpmt_inf;
     private String cntt;
     private String contact_nm;
@@ -59,6 +61,8 @@ public class MivsTxpmtVrfctnInfoModel implements Serializable {
     private String pty_prc_cd; //参与机构业务拒绝码
     private String prc_dt; //处理日期（终态日期）
     private String netg_rnd; //轧差场次
+
+    private String detail_flag; //查询明细标志 YES:查询明细  NO:不查询明细
 
     //附表
     private List<TxpmtInf> txpmtInfList;
@@ -506,6 +510,22 @@ public class MivsTxpmtVrfctnInfoModel implements Serializable {
         this.orig_rcv_msgid = orig_rcv_msgid;
     }
 
+    public String getOrig_instg_drct_pty() {
+        return orig_instg_drct_pty;
+    }
+
+    public void setOrig_instg_drct_pty(String orig_instg_drct_pty) {
+        this.orig_instg_drct_pty = orig_instg_drct_pty;
+    }
+
+    public String getOrig_instg_pty() {
+        return orig_instg_pty;
+    }
+
+    public void setOrig_instg_pty(String orig_instg_pty) {
+        this.orig_instg_pty = orig_instg_pty;
+    }
+
     public String getTxpmt_inf() {
         return txpmt_inf;
     }
@@ -568,6 +588,14 @@ public class MivsTxpmtVrfctnInfoModel implements Serializable {
 
     public void setNetg_rnd(String netg_rnd) {
         this.netg_rnd = netg_rnd;
+    }
+
+    public String getDetail_flag() {
+        return detail_flag;
+    }
+
+    public void setDetail_flag(String detail_flag) {
+        this.detail_flag = detail_flag;
     }
 
     public List<TxpmtInf> getTxpmtInfList() {

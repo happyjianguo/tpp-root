@@ -62,6 +62,7 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
         txpmtVrfctnInfoModel.setCo_nm(reqBody.getCompanyName());
         txpmtVrfctnInfoModel.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
         txpmtVrfctnInfoModel.setTxpyr_id_nb(reqBody.getTaxPayerId());
+        txpmtVrfctnInfoModel.setDetail_flag("NO");//不查询明细数据
 
         List<MivsTxpmtVrfctnInfoModel> txpmtVrfctnInfoModels = mivsTxPmtVrfctnInfoService.selectResult(txpmtVrfctnInfoModel); //查询数据库业务数据
         myLog.info(logger,"查询结果为：" + txpmtVrfctnInfoModels.toString());
@@ -81,6 +82,7 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
                 resultList.setOrigTranTime(Info.getTran_time());
                 resultList.setOrgnlDlvrgMsgId(Info.getOrig_dlv_msgid());
                 resultList.setOrgnlRcvgMsgId(Info.getOrig_rcv_msgid());
+                resultList.setOrigInstgPty(Info.getOrig_instg_pty());
                 resultList.setOrigBranchId(Info.getBranch_id());
                 resultList.setOrigUserId(Info.getUser_id());
                 resultList.setCoNm(Info.getCo_nm());
@@ -88,23 +90,13 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
                 resultList.setTxpyrIdNb(Info.getTxpyr_id_nb());
                 resultList.setRslt(Info.getRslt());
                 resultList.setDataResrcDt(Info.getData_resrc_dt());
+                resultList.setTxpmtInfCnt(Info.getTxpmt_inf_cnt());
                 resultList.setProcSts(Info.getProc_sts());
                 resultList.setProcCd(Info.getProc_cd());
                 resultList.setRjctinf(Info.getRjct_inf());
                 resultList.setRemarks1(Info.getRemark1());
                 resultList.setRemarks2(Info.getRemark2());
                 resultList.setRemarks3(Info.getRemark3());
-                if(Info.getTxpmtInfList() != null && !Info.getTxpmtInfList().isEmpty()) {
-                    List<REP_50023000205.resultList.TXPYR_INFO_ARRAY> txpyrInfoArrayList = new ArrayList<REP_50023000205.resultList.TXPYR_INFO_ARRAY>();
-                    for (MivsTxpmtVrfctnInfoModel.TxpmtInf txpInfo : Info.getTxpmtInfList()) {
-                        REP_50023000205.resultList.TXPYR_INFO_ARRAY txpyrInfoArray = new REP_50023000205.resultList.TXPYR_INFO_ARRAY();
-                        txpyrInfoArray.setTxAuthCd(txpInfo.getTx_auth_cd());
-                        txpyrInfoArray.setTxAuthNm(txpInfo.getTx_auth_nm());
-                        txpyrInfoArray.setTxpyrSts(txpInfo.getTxpyr_sts());
-                        txpyrInfoArrayList.add(txpyrInfoArray);
-                    }
-                    resultList.setTxpmtInf(txpyrInfoArrayList);
-                }
                 resultArrayList.add(resultList);
                 myLog.info(logger, "ResultList的" + ++i + "值为：" + resultList.toString());
             }

@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/4/30 10:09
  */
-@Service("REQ_50023000213")
+@Service("REQ_50023000215")
 public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

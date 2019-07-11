@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/6/24 10:15
  */
-@Service("REQ_50023000206")
+@Service("REQ_50023000207")
 public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);
@@ -203,7 +203,6 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
             repBody.setPtyPrcCd(cmonConfInf.getPtyPrcCd());
             repBody.setRjctInf(cmonConfInf.getRjctInf());
             repBody.setPrcDt(cmonConfInf.getPrcDt());
-            repBody.setNetgRnd(cmonConfInf.getNetgRnd());
 
             //待更新数据库数据
             txpmtVrfctnInfoModelUpdate.setMivs_sts("04");

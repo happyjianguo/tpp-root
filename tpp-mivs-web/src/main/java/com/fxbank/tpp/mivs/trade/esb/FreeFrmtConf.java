@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/7/3 15:56
  */
-@Service("REQ_50023000212")
+@Service("REQ_50023000214")
 public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

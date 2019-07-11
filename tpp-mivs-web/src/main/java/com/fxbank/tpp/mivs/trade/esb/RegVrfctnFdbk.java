@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  * @Author: 王鹏
  * @Date: 2019/6/24 10:15
  */
-@Service("REQ_50023000209")
+@Service("REQ_50023000211")
 public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

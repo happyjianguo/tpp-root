@@ -26,7 +26,7 @@ import java.util.List;
  * @Author: 王鹏
  * @Date: 2019/7/3 15:56
  */
-@Service("REQ_50023000211")
+@Service("REQ_50023000213")
 public class FreeFrmtSelect extends TradeBase implements TradeExecutionStrategy{
 
         private static Logger logger = LoggerFactory.getLogger(ComConf.class);

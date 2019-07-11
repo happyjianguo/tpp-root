@@ -28,15 +28,17 @@ public interface IMivsTxPmtVrfctnInfoService {
 
     /**
      * 查询数据库主附表信息
-     * flag = "all" ，查询主表+附表数据
-     * flag = "master" ，仅查询主表数据
+     * detail_flag = "YES" ，查询主表+附表数据
+     * detail_flag = "NO" ，仅查询主表数据
      *
-     * @param origMsgid
+     * @param mivsTxpmtVrfctnInfoModel
      */
-    MivsTxpmtVrfctnInfoModel selectMasterAndAttached(String origMsgid, String origInstgPty, String flag);
+    MivsTxpmtVrfctnInfoModel selectMasterAndAttached(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel);
 
     /**
-     * 查询数据库表信息
+     * 查询数据库表信息查询数据库主附表信息
+     * detail_flag = "YES" ，查询主表+附表数据
+     * detail_flag = "NO" ，仅查询主表数据
      *
      * @param mivsIdVrfctnInfoModel
      */

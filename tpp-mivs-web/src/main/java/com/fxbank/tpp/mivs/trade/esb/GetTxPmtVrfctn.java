@@ -170,7 +170,11 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
                 throw e;
             }
             //查询数据库主表条数数据+附表内容数据，以323应答报文的“原报文标识号，原发起机构”为查询条件
-            MivsTxpmtVrfctnInfoModel infoModel = mivsTxpmtvfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "all");
+            MivsTxpmtVrfctnInfoModel infoModel = new MivsTxpmtVrfctnInfoModel();
+            infoModel.setOrig_dlv_msgid(orgnlBizQry.getMsgId());
+            infoModel.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+            infoModel.setDetail_flag("YES");//查询明细数据
+            infoModel = mivsTxpmtvfctnInfoService.selectMasterAndAttached(infoModel);
             myLog.debug(logger, "###infoModel :" + infoModel.toString());
             //赋循环数据
             List<REP_50023000204.TXPYR_INFO_ARRAY> arrayMsg = new ArrayList<REP_50023000204.TXPYR_INFO_ARRAY>();
