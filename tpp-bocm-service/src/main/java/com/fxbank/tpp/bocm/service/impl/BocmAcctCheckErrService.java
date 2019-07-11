@@ -28,8 +28,8 @@ public class BocmAcctCheckErrService implements IBocmAcctCheckErrService{
 	private BocmChkErrMapper mapper;
 
 	@Override
-	public List<BocmAcctCheckErrModel> getListByDate(MyLog myLog,Integer sysTime, Integer sysDate,Integer sysTraceno,String date) throws SysTradeExecuteException {
-		List<BocmChkErr> list = mapper.selectByDate(date);
+	public List<BocmAcctCheckErrModel> getListByDate(MyLog myLog,Integer sysTime, Integer sysDate,Integer sysTraceno,String begDate,String endDate) throws SysTradeExecuteException {
+		List<BocmChkErr> list = mapper.selectByDate(begDate,endDate);
 		List<BocmAcctCheckErrModel> modelList = new ArrayList<>();
 		for(BocmChkErr ace : list) {
 			BocmAcctCheckErrModel model = new BocmAcctCheckErrModel(myLog, sysDate, sysTime, sysTraceno);

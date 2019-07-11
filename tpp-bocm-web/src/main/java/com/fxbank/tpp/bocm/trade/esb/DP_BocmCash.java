@@ -580,28 +580,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	}
 	
 	/** 
-	* @Title: updateHostRecord 
-	* @Description: 更新核心记账状态 
-	*/
-	public BocmSndTraceUpdModel updateHostRecord(DataTransObject dto, String hostDate, String hostTraceno,
-			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, dto.getSysDate(), dto.getSysTime(),
-				dto.getSysTraceno());
-		if(hostDate!=null&&!"".equals(hostDate)) {
-			record.setHostDate(Integer.parseInt(hostDate));
-		}
-		record.setHostState(hostState);
-		if(!"".equals(hostTraceno)){
-			record.setHostTraceno(hostTraceno);
-		}		
-		record.setRetCode(retCode);
-		record.setRetMsg(retMsg);
-		bocmSndTraceService.sndTraceUpd(record);
-		return record;
-	}
-	
-	/** 
 	* @Title: updateBocmRecord 
 	* @Description: 更新交行记账状态 
 	*/
@@ -620,6 +598,29 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		if(actBal!=null&&!actBal.equals("")){
 			record.setActBal(new BigDecimal(actBal));
 		}		
+		bocmSndTraceService.sndTraceUpd(record);
+		return record;
+	}
+
+
+	/** 
+	* @Title: updateHostRecord 
+	* @Description: 更新核心记账状态 
+	*/
+	public BocmSndTraceUpdModel updateHostRecord(DataTransObject dto, String hostDate, String hostTraceno,
+			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
+		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, dto.getSysDate(), dto.getSysTime(),
+				dto.getSysTraceno());
+		if(hostDate!=null&&!"".equals(hostDate)) {
+			record.setHostDate(Integer.parseInt(hostDate));
+		}
+		record.setHostState(hostState);
+		if(!"".equals(hostTraceno)){
+			record.setHostTraceno(hostTraceno);
+		}		
+		record.setRetCode(retCode);
+		record.setRetMsg(retMsg);
 		bocmSndTraceService.sndTraceUpd(record);
 		return record;
 	}

@@ -10,7 +10,8 @@ import com.fxbank.tpp.bocm.entity.BocmRcvLog;
 public interface BocmRcvLogMapper extends MyMapper<BocmRcvLog> {
     List<BocmRcvLog> selectAll();
     //获取来账流水
-    List<BocmRcvLog> selectRcvTrace(String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag);
+    List<BocmRcvLog> selectRcvTrace(@Param("begDate") String begDate,@Param("endDate") String endDate,
+    		@Param("payeeAcno") String payeeAcno,@Param("hostTraceno") String hostTraceno,@Param("platTraceno") String platTraceno);
     //获取已对账流水列表
     List<BocmRcvLog> selectCheckedTrace(@Param("date") String date);
     //获取来账流水笔数

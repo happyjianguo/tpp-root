@@ -21,13 +21,12 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.bocm.REQ_20000;
+import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061000801;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061000801;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmSndTraceInitModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
-import com.fxbank.tpp.bocm.model.REP_10000;
 import com.fxbank.tpp.bocm.model.REP_10001;
 import com.fxbank.tpp.bocm.model.REP_10009;
 import com.fxbank.tpp.bocm.model.REP_20001;
@@ -44,8 +43,6 @@ import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-
-import redis.clients.jedis.Jedis;
 
 
 /** 
@@ -71,10 +68,11 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private IBocmSndTraceService bocmSndTraceService;
 
+	@Reference(version = "1.0.0")
+	private IPublicService publicService;
+	
 	@Resource
 	private MyJedis myJedis;
-	
-	private final static String COMMON_PREFIX = "bocm.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -682,10 +680,10 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
-		REQ_10009 req10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
+		Integer sysTraceno = publicService.getSysTraceno();		
+		REQ_10009 req10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), sysTraceno);
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10009); // 设置报文头中的行号信息
-		req10009.setOlogNo(oLogNo);
-		req10009.setOtxnCd(oTxnCd);
+		req10009.setOlogNo(String.format("%06d%08d", reqDto.getSysDate() % 1000000, reqDto.getSysTraceno()));
 
 		//交易金额
 		String amt = reqBody.getTrsrAmtT3();

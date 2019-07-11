@@ -10,7 +10,7 @@ import com.fxbank.tpp.bocm.entity.BocmChkErr;
 public interface BocmChkErrMapper extends MyMapper<BocmChkErr> {
     List<BocmChkErr> selectAll();    
     //通过日期获取对账错误列表
-    List<BocmChkErr> selectByDate(String date);
+    List<BocmChkErr> selectByDate(@Param("begDate") String begDate,@Param("endDate") String endDate);
     //通过日期删除对账错误列表
     void deleteByDate(@Param("date") String date);
 }

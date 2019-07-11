@@ -67,7 +67,7 @@ public interface IBocmRcvTraceService {
 	* @return List<RcvTraceQueryModel>    返回类型 
 	* @throws 
 	*/
-	public List<BocmRcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag) throws SysTradeExecuteException;
+	public List<BocmRcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String payeeAcno,String hostTraceno,String platTrace) throws SysTradeExecuteException;
 
 	/** 
 	* @Title: getCheckRcvTrace 

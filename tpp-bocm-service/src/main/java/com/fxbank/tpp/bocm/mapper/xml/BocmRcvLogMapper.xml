@@ -57,11 +57,14 @@
   <select id="selectRcvTrace" resultMap="BaseResultMap">
     select * from bocm_rcv_log
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
-      <if test='minAmt != null and minAmt != ""'>
-        and tx_amt <![CDATA[ >= ]]> #{minAmt}
+	  <if test="payeeAcno != null and payeeAcno != ''">
+        and payee_acno <![CDATA[ = ]]> #{payeeAcno}
       </if>
-      <if test="maxAmt != null and maxAmt != ''">
-        and tx_amt <![CDATA[ <= ]]> #{maxAmt}
+      <if test="hostTraceno != null and hostTraceno != ''">
+        and host_traceno <![CDATA[ = ]]> #{hostTraceno}
+      </if>
+      <if test="platTraceno != null and platTraceno != ''">
+        and plat_trace <![CDATA[ = ]]> #{platTraceno}
       </if>
       <if test="begDate != null and begDate != ''">
         and tx_date <![CDATA[ >= ]]> #{begDate}

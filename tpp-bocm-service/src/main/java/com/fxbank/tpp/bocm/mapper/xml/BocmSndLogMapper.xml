@@ -60,17 +60,23 @@
   <select id="selectSndTrace" resultMap="BaseResultMap">
     select * from bocm_snd_log
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
-      <if test="minAmt != null and minAmt != ''">
-        and tx_amt <![CDATA[ >= ]]> #{minAmt}
+      <if test="hostStatus != null and hostStatus != ''">
+        and host_state <![CDATA[ = ]]> #{hostStatus}
       </if>
-      <if test="maxAmt != null and maxAmt != ''">
-        and tx_amt <![CDATA[ <= ]]> #{maxAmt}
+      <if test="txAmt != null and txAmt != ''">
+        and tx_amt <![CDATA[ = ]]> #{txAmt}
       </if>
       <if test="begDate != null and begDate != ''">
         and tx_date <![CDATA[ >= ]]> #{begDate}
       </if>
       <if test="endDate != null and endDate != ''">
         and tx_date <![CDATA[ <= ]]> #{endDate}
+      </if>
+      <if test="begTrace != null and begTrace != ''">
+        and plat_trace <![CDATA[ >= ]]> #{begTrace}
+      </if>
+      <if test="endTrace != null and endTrace != ''">
+        and plat_trace <![CDATA[ <= ]]> #{endTrace}
       </if>
     </trim>
      order by plat_trace desc

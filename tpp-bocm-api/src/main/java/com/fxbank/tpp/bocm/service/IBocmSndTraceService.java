@@ -84,7 +84,7 @@ public interface IBocmSndTraceService {
 	* @return List<SndTraceQueryModel>    返回类型 
 	* @throws 
 	*/
-	public List<BocmSndTraceQueryModel> getSndTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag) throws SysTradeExecuteException;
+	public List<BocmSndTraceQueryModel> getSndTrace(MyLog myLog,String begDate,String endDate,String begTrace,String endTrace,String txAmt,String hostStatus) throws SysTradeExecuteException;
 
 	/** 
 	* @Title: replenishSndTrace 

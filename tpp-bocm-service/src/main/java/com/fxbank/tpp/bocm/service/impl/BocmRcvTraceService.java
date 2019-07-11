@@ -206,8 +206,8 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 	}
 	
 	@Override
-	public List<BocmRcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String minAmt,String maxAmt,String brnoFlag) throws SysTradeExecuteException{
-		List<BocmRcvLog> tppRcvTraceList = bocmRcvLogMapper.selectRcvTrace(begDate, endDate, minAmt, maxAmt, brnoFlag);
+	public List<BocmRcvTraceQueryModel> getRcvTrace(MyLog myLog,String begDate,String endDate,String payeeAcno,String hostTraceno,String platTrace)  throws SysTradeExecuteException {
+		List<BocmRcvLog> tppRcvTraceList = bocmRcvLogMapper.selectRcvTrace(begDate, endDate, payeeAcno, hostTraceno, platTrace);
 		List<BocmRcvTraceQueryModel> rcvTraceInitModelList = new ArrayList<>();
 		for(BocmRcvLog tpp : tppRcvTraceList) {
 			BocmRcvTraceQueryModel model = new BocmRcvTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());

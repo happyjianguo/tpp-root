@@ -609,9 +609,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req_10009); // 设置报文头中的行号信息		
 		//组装抹账报文体
-		//原发起方交易流水
-		//reqBase.setSlogNo(String.format("%06d%08d", reqDto.getSysDate() % 1000000, reqDto.getSysTraceno()));
-		
+		//原发起方交易流水	
 		req_10009.setOlogNo(String.format("%06d%08d", reqDto.getSysDate() % 1000000, reqDto.getSysTraceno()));
 		//原交易代码 原交易代码       通兑-10001 IC通兑-20001
 		req_10009.setOtxnCd(oTxnCd);

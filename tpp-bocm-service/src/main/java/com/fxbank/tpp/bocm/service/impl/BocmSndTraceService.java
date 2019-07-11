@@ -247,9 +247,8 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 	}
 	
 	@Override
-	public List<BocmSndTraceQueryModel> getSndTrace(MyLog myLog, String begDate, String endDate, String minAmt,
-			String maxAmt, String brnoFlag) throws SysTradeExecuteException {
-		List<BocmSndLog> tppSndTraceList = bocmSndLogMapper.selectSndTrace(begDate, endDate, minAmt, maxAmt, brnoFlag);
+	public List<BocmSndTraceQueryModel> getSndTrace(MyLog myLog,String begDate,String endDate,String begTrace,String endTrace,String txAmt,String hostStatus)  throws SysTradeExecuteException {
+		List<BocmSndLog> tppSndTraceList = bocmSndLogMapper.selectSndTrace(begDate, endDate, begTrace, endTrace, txAmt,hostStatus);
 		List<BocmSndTraceQueryModel> sndTraceQueryModelList = new ArrayList<>();
 		for(BocmSndLog tpp : tppSndTraceList) {
 			BocmSndTraceQueryModel model = new BocmSndTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());

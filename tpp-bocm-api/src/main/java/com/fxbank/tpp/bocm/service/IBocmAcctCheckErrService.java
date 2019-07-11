@@ -27,7 +27,7 @@ public interface IBocmAcctCheckErrService {
 	* @return List<BocmAcctCheckErrModel>    返回类型 
 	* @throws
 	 */
-	List<BocmAcctCheckErrModel> getListByDate(MyLog myLog,Integer sysTime, Integer sysDate,Integer sysTraceno, String date)throws SysTradeExecuteException;
+	List<BocmAcctCheckErrModel> getListByDate(MyLog myLog,Integer sysTime, Integer sysDate,Integer sysTraceno,String begDate,String endDate)throws SysTradeExecuteException;
 	/**
 	* @Title: insert 
 	* @Description: 插入日志数据

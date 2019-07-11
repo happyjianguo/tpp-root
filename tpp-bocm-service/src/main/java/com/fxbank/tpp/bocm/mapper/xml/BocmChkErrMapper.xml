@@ -27,8 +27,11 @@
     direction, tx_amt, payer_acno, payer_name, payee_acno, payee_name, msg
     from bocm_chk_err
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
-      <if test='date != null and date != ""'>
-        and plat_date = #{date}
+      <if test="begDate != null and begDate != ''">
+        and plat_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and plat_date <![CDATA[ <= ]]> #{endDate}
       </if>
     </trim>
   </select>

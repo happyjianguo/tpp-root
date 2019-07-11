@@ -10,4 +10,5 @@ public interface BocmChkLogMapper extends MyMapper<BocmChkLog> {
     List<BocmChkLog> selectAll();
     //删除对账信息
 	void deleteAll();
+	
 }

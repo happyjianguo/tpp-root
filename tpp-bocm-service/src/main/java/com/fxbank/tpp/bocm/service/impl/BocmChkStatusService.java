@@ -1,14 +1,15 @@
 package com.fxbank.tpp.bocm.service.impl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
+import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.bocm.entity.BocmChkStatus;
-import com.fxbank.tpp.bocm.entity.BocmRcvLog;
 import com.fxbank.tpp.bocm.mapper.BocmChkStatusMapper;
 import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
 import com.fxbank.tpp.bocm.service.IBocmChkStatusService;
@@ -85,17 +86,40 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		if(entity!=null){
 			model.setChkDate(entity.getChkDate());
 			model.setHostStatus(entity.getHostStatus());
-			model.setBocmStatus(entity.getBocmStatus());
-			model.setPlatStatus(entity.getPlatStatus());
-			model.setBocmTxCnt(entity.getBocmTxCnt());
-			model.setBocmTxAmt(entity.getBocmTxAmt());
 			model.setHostTxCnt(entity.getHostTxCnt());
 			model.setHostTxAmt(entity.getHostTxAmt());
+			model.setBocmStatus(entity.getBocmStatus());
+			model.setBocmTxCnt(entity.getBocmTxCnt());
+			model.setBocmTxAmt(entity.getBocmTxAmt());
+			model.setPlatStatus(entity.getPlatStatus());
+			model.setPlatTxCnt(entity.getPlatTxCnt());
+			model.setPlatTxAmt(entity.getPlatTxAmt());
 			return model;
 		}else{
 			return null;
 		}
 
+	}
+	
+	@Override
+	public List<BocmChkStatusModel> selectByDate(MyLog myLog,String begDate,String endDate) throws SysTradeExecuteException{
+		List<BocmChkStatus> list = mapper.selectByDate(begDate, endDate);
+		List<BocmChkStatusModel> modelList = new ArrayList<BocmChkStatusModel>();
+		for(BocmChkStatus entity:list){
+			BocmChkStatusModel model = new BocmChkStatusModel();
+			model.setChkDate(entity.getChkDate());
+			model.setHostStatus(entity.getHostStatus());
+			model.setHostTxCnt(entity.getHostTxCnt());
+			model.setHostTxAmt(entity.getHostTxAmt());
+			model.setBocmStatus(entity.getBocmStatus());
+			model.setBocmTxCnt(entity.getBocmTxCnt());
+			model.setBocmTxAmt(entity.getBocmTxAmt());
+			model.setPlatStatus(entity.getPlatStatus());
+			model.setPlatTxCnt(entity.getPlatTxCnt());
+			model.setPlatTxAmt(entity.getPlatTxAmt());
+			modelList.add(model);
+		}
+		return modelList;
 	}
 
 }
