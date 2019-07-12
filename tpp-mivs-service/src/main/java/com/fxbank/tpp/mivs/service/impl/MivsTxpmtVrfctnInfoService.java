@@ -124,7 +124,7 @@ public class MivsTxpmtVrfctnInfoService implements IMivsTxPmtVrfctnInfoService {
     }
 
     @Override
-    public void uMasterAndiAttached(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel, String flag){
+    public void uMasterAndiAttached(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel){
         MivsTxpmtvrfctnInfoEntity info = new MivsTxpmtvrfctnInfoEntity();
         info.setPlatDate(mivsTxpmtVrfctnInfoModel.getPlat_date());
         info.setPlatTrace(mivsTxpmtVrfctnInfoModel.getPlat_trace());
@@ -139,7 +139,7 @@ public class MivsTxpmtVrfctnInfoService implements IMivsTxPmtVrfctnInfoService {
         info.setTxpmtInfCnt(mivsTxpmtVrfctnInfoModel.getTxpmt_inf_cnt());
         mapper.updateByPrimaryKeySelective(info);
 
-        if(flag.equals("all")) {
+        if(mivsTxpmtVrfctnInfoModel.getDetail_flag().equals("YES")) {
             //插入TxpmtInf附表
             if (mivsTxpmtVrfctnInfoModel.getTxpmtInfList() != null && !mivsTxpmtVrfctnInfoModel.getTxpmtInfList().isEmpty()) {
                 MivsTxpmtvrfctnInfoAttEntity txpmtvrfctnInfoAttEntity = new MivsTxpmtvrfctnInfoAttEntity();

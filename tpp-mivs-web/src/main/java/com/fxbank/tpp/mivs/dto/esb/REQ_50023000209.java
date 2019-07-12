@@ -6,7 +6,7 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /**
- * @Description: 登记信息核查结果查询请求
+ * @Description: 登记信息核查结果汇总查询请求
  * @Author: 王鹏
  * @Date: 2019/7/2 16:38
  */

@@ -59,7 +59,11 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             myLog.info(logger, "发布至redis成功");
         }else{
             //查询主表数据
-            MivsRegVrfctnInfoModel regvrfctnInfoTablSelectMaster = mivsRegvrfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "master");
+            MivsRegVrfctnInfoModel regvrfctnInfoTablSelectMaster = new MivsRegVrfctnInfoModel();
+            regvrfctnInfoTablSelectMaster.setOrig_dlv_msgid(orgnlBizQry.getMsgId());
+            regvrfctnInfoTablSelectMaster.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+            regvrfctnInfoTablSelectMaster.setDetail_flag("NO");
+            regvrfctnInfoTablSelectMaster = mivsRegvrfctnInfoService.selectMasterAndAttached(regvrfctnInfoTablSelectMaster);
             myLog.info(logger, "查询主表数据查询结果为：" + regvrfctnInfoTablSelectMaster.toString());
             //收到人行通讯回执，准备更新数据库状态，插入附表数据，在同一个事务进行
             myLog.info(logger, "收到人行通讯回执，准备更新数据库状态，插入附表数据，在同一个事务进行");
@@ -75,6 +79,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             regvrfctnInfoUmasAndIatt.setLast_pg_ind(msgPgntn.getLastPgInd());
             regvrfctnInfoUmasAndIatt.setRslt(vrfctnInf.getRslt());
             regvrfctnInfoUmasAndIatt.setData_resrc_dt(vrfctnInf.getDataResrcDt());
+            regvrfctnInfoUmasAndIatt.setDetail_flag("YES");
             /*数据库中附表数据赋值开始*/
             //取循环数据BasInfo附表数据
             List<MIVS_325_001_01_RtrRegVrfctn.Rspsn.VrfctnInf.RegInf.BasInfOfEnt> basInfoOfEntList = mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRegInf().getBasInfOfEnt();
@@ -407,7 +412,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             myLog.info(logger, "regvrfctnInfoUmasAndIatt的值为:" + regvrfctnInfoUmasAndIatt.toString());
             /*数据库中附表数据赋值结束*/
             //
-            mivsRegvrfctnInfoService.uMasterAndiAttached(regvrfctnInfoUmasAndIatt, "all");
+            mivsRegvrfctnInfoService.uMasterAndiAttached(regvrfctnInfoUmasAndIatt);
             if(mivs325.getRtrRegVrfctn().getMsgPgntn().getLastPgInd().equals("true")){
                 super.jedisPublish(myLog,channel.getBytes(), b325);
                 myLog.info(logger, "此报文为最后一页，发布至redis成功");

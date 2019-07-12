@@ -198,7 +198,6 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
             repBody.setPtyPrcCd(cmonConfInf.getPtyPrcCd());
             repBody.setRjctInf(cmonConfInf.getRjctInf());
             repBody.setPrcDt(cmonConfInf.getPrcDt());
-            repBody.setNetgRnd(cmonConfInf.getNetgRnd());
 
             //待更新数据库数据
             idVrfctnInfoModelUpdate.setMivs_sts("04");

@@ -194,10 +194,11 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             repBody.setDataResrcD(vrfctnInf.getDataResrcDt());
             //待更新数据库数据
             txpmtvfctnInfoTableUpdate.setMivs_sts("04");
+            txpmtvfctnInfoTableUpdate.setDetail_flag("NO");
         }
 
         //更新业务数据表
-        mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate, "master");
+        mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate);
 
         myLog.info(logger,"Json  " + JsonUtil.toJson(rep));
         return rep;

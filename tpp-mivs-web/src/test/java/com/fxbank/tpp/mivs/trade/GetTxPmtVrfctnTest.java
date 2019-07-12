@@ -31,7 +31,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
 /**
- * @Description:
+ * @Description: 纳税信息联网核查模拟
  * @Author: 王鹏
  * @Date: 2019/4/29 9:27.
  */

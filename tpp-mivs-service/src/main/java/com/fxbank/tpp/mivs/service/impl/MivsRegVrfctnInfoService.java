@@ -74,7 +74,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
     }
 
     @Override
-    public void uMasterAndiAttached(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel, String flag){
+    public void uMasterAndiAttached(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel){
         MivsRegvrfctnInfoEntity info = new MivsRegvrfctnInfoEntity();
         info.setPlatDate(mivsRegVrfctnInfoModel.getPlat_date());
         info.setPlatTrace(mivsRegVrfctnInfoModel.getPlat_trace());
@@ -100,7 +100,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
         info.setRjctInf(mivsRegVrfctnInfoModel.getRjct_inf());
         infoMapper.updateByPrimaryKeySelective(info);
 
-        if(flag.equals("all")) {
+        if(mivsRegVrfctnInfoModel.getDetail_flag().equals("YES")) {
             //插入BasInfo附表
             if (mivsRegVrfctnInfoModel.getBasInfo() != null && !mivsRegVrfctnInfoModel.getBasInfo().isEmpty()) {
                 MivsRegvrfctnBasInfoEntity basInfoEntity = new MivsRegvrfctnBasInfoEntity();
@@ -295,10 +295,15 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
     }
 
     @Override
-    public MivsRegVrfctnInfoModel selectMasterAndAttached(String Msgid, String Instgpty, String flag){
+    public MivsRegVrfctnInfoModel selectMasterAndAttached(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel){
         MivsRegvrfctnInfoEntity infoEntity = new MivsRegvrfctnInfoEntity();
-        infoEntity.setMsgId(Msgid);
-        infoEntity.setInstgPty(Instgpty);
+        infoEntity.setTranDate(mivsRegVrfctnInfoModel.getTran_date());
+        infoEntity.setSeqNo(mivsRegVrfctnInfoModel.getSeq_no());
+        infoEntity.setMsgId(mivsRegVrfctnInfoModel.getOrig_dlv_msgid());
+        infoEntity.setRcvMsgId(mivsRegVrfctnInfoModel.getOrig_rcv_msgid());
+        infoEntity.setInstgPty(mivsRegVrfctnInfoModel.getOrig_instg_pty());
+        String Msgid = mivsRegVrfctnInfoModel.getOrig_dlv_msgid();
+        String Instgpty = mivsRegVrfctnInfoModel.getOrig_instg_pty();
         MivsRegvrfctnInfoEntity mivsRegvrfctnInfoEntity = infoMapper.selectOne(infoEntity);
         if(mivsRegvrfctnInfoEntity != null) {
             MivsRegVrfctnInfoModel infoModel = new MivsRegVrfctnInfoModel();
@@ -328,7 +333,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
             infoModel.setIll_dscrt_info_cnt(mivsRegvrfctnInfoEntity.getIllDscrtInfoCnt());
             infoModel.setIll_dscrt_info_cnt(mivsRegvrfctnInfoEntity.getIllDscrtInfoCnt());
 
-            if (flag.equals("all")) {
+            if (mivsRegVrfctnInfoModel.getDetail_flag().equals("YES")) {
                 //查询BasInfo附表
                 MivsRegvrfctnBasInfoEntity basInfo = new MivsRegvrfctnBasInfoEntity();
                 basInfo.setOrigMsgId(Msgid);

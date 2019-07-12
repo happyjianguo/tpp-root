@@ -193,7 +193,11 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             repBody.setRslt(mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getRslt());
             repBody.setDataResrcD(mivs325.getRtrRegVrfctn().getRspsn().getVrfctnInf().getDataResrcDt());
             //查询数据库主表条数数据+附表内容数据，以325应答报文的“原报文标识号，原发起机构”为查询条件
-            MivsRegVrfctnInfoModel infoModel = mivsRegVrfctnInfoService.selectMasterAndAttached(orgnlBizQry.getMsgId(), orgnlBizQry.getInstgPty().getInstgPty(), "all");
+            MivsRegVrfctnInfoModel infoModel = new MivsRegVrfctnInfoModel();
+            infoModel.setOrig_dlv_msgid(orgnlBizQry.getMsgId());
+            infoModel.setOrig_instg_pty(orgnlBizQry.getInstgPty().getInstgPty());
+            infoModel.setDetail_flag("YES");
+            infoModel = mivsRegVrfctnInfoService.selectMasterAndAttached(infoModel);
             myLog.debug(logger, "###infoModel :" + infoModel.toString());
             //赋BasInfo数据
             List<REP_50023000208.BasInfoEnt> basInfoEntArrayMsg = new ArrayList<REP_50023000208.BasInfoEnt>();
@@ -350,12 +354,13 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             }
             //更新数据库状态赋值
             regVrfctnInfoTableUpdate.setMivs_sts("04");
+            regVrfctnInfoTableUpdate.setDetail_flag("NO");
         }
 
         myLog.debug(logger, "REP_BODY = " + repBody.toString());
 
         //更新业务数据表
-        mivsRegVrfctnInfoService.uMasterAndiAttached(regVrfctnInfoTableUpdate, "master");
+        mivsRegVrfctnInfoService.uMasterAndiAttached(regVrfctnInfoTableUpdate);
 
         myLog.info(logger,"Json  " + JsonUtil.toJson(rep));
         return rep;

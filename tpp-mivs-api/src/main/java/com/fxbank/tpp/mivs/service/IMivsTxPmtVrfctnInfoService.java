@@ -19,12 +19,12 @@ public interface IMivsTxPmtVrfctnInfoService {
 
     /**
      * 新增纳税信息核查表数据
-     * flag = "all" ，更新主表、增加附表数据
-     * flag = "master" ，仅更新主表数据
+     * detail_flag = "YES" ，更新主表、增加附表数据
+     * detail_flag = "NO" ，仅更新主表数据
      *
      * @param mivsTxpmtVrfctnInfoModel
      */
-    void uMasterAndiAttached(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel, String flag);
+    void uMasterAndiAttached(MivsTxpmtVrfctnInfoModel mivsTxpmtVrfctnInfoModel);
 
     /**
      * 查询数据库主附表信息

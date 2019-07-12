@@ -19,21 +19,21 @@ public interface IMivsRegVrfctnInfoService {
 
     /**
      * 更新主表信息及插入附表信息
-     * flag = "all" ，更新主表、增加附表数据
-     * flag = "master" ，仅更新主表数据
+     * detail_flag = "YES" ，更新主表、增加附表数据
+     * flag = "NO" ，仅更新主表数据
      *
      * @param mivsRegvrfctnInfoModel
      */
-    void uMasterAndiAttached(MivsRegVrfctnInfoModel mivsRegvrfctnInfoModel, String flag);
+    void uMasterAndiAttached(MivsRegVrfctnInfoModel mivsRegvrfctnInfoModel);
 
     /**
      * 查询数据库表信息
-     * flag = "all" ，查询主表+附表数据
-     * flag = "master" ，仅查询主表数据
+     * detail_flag = "YES" ，查询主表+附表数据
+     * detail_flag = "NO" ，仅查询主表数据
      *
-     * @param Msgid
+     * @param mivsRegVrfctnInfoModel
      */
-    MivsRegVrfctnInfoModel selectMasterAndAttached(String Msgid, String Instgpty, String flag);
+    MivsRegVrfctnInfoModel selectMasterAndAttached(MivsRegVrfctnInfoModel mivsRegVrfctnInfoModel);
 
     /**
      * 查询数据库表信息

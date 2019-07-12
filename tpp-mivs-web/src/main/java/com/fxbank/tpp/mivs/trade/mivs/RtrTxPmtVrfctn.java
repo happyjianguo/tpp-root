@@ -76,6 +76,7 @@ public class RtrTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             txpmtVrfctnInfoUmasAndIatt.setRcv_cre_dt_tm(msgHdr.getCreDtTm());
             txpmtVrfctnInfoUmasAndIatt.setRslt(vrfctnInf.getRslt());
             txpmtVrfctnInfoUmasAndIatt.setData_resrc_dt(vrfctnInf.getDataResrcDt());
+            txpmtVrfctnInfoUmasAndIatt.setDetail_flag("YES");
             //取循环数据
             List<MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf> TxpmtInf = vrfctnInf.getTxpmtInf();
             //定义附表数据
@@ -106,7 +107,7 @@ public class RtrTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             }
             txpmtVrfctnInfoUmasAndIatt.setTxpmtInfList(txpmtInfList);
             txpmtVrfctnInfoUmasAndIatt.setTxpmt_inf_cnt(txpmt_inf_nb);
-            mivsTxPmtVrfctnInfoService.uMasterAndiAttached(txpmtVrfctnInfoUmasAndIatt, "all");
+            mivsTxPmtVrfctnInfoService.uMasterAndiAttached(txpmtVrfctnInfoUmasAndIatt);
             super.jedisPublish(myLog,channel.getBytes(), b323);
             myLog.info(logger, "发布至redis成功");
         }
