@@ -1,7 +1,6 @@
 package com.fxbank.tpp.bocm.dto.esb;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fxbank.cip.base.dto.REP_APP_HEAD;

@@ -12,7 +12,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fxbank.cip.base.dto.REQ_APP_HEAD;
 import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501.REQ_BODY;
 
 /** 
 * @ClassName: REQ_TS_CHK_BOCM 

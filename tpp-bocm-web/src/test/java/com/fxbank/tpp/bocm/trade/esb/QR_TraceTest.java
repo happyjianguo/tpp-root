@@ -1,11 +1,3 @@
-/**   
-* @Title: QR_TraceTest.java 
-* @Package com.fxbank.tpp.bocm.trade.esb 
-* @Description: TODO(用一句话描述该文件做什么) 
-* @author YePuLiang
-* @date 2019年7月10日 下午3:05:30 
-* @version V1.0   
-*/
 package com.fxbank.tpp.bocm.trade.esb;
 
 import static org.junit.Assert.assertEquals;
@@ -43,7 +35,7 @@ import com.fxbank.tpp.esb.service.ISafeService;
 
 /** 
 * @ClassName: QR_TraceTest 
-* @Description: TODO(这里用一句话描述这个类的作用) 
+* @Description: 柜面交易查询
 * @author YePuLiang
 * @date 2019年7月10日 下午3:05:30 
 *  
@@ -55,8 +47,8 @@ public class QR_TraceTest {
 
 	private static Logger logger = LoggerFactory.getLogger(QR_BocmBalTest.class);
 
-	// private static final String URL="http://57.25.3.165:8001/tcex/city.do";
-	private static final String URL = "http://127.0.0.1:7006/esb/bocm.do";
+	private static final String URL="http://57.25.3.166:7006/esb/bocm.do";
+//	private static final String URL = "http://127.0.0.1:7006/esb/bocm.do";
 
 	@Autowired
 	private MockMvc mockMvc;

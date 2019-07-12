@@ -102,8 +102,8 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 	}
 	
 	@Override
-	public List<BocmChkStatusModel> selectByDate(MyLog myLog,String begDate,String endDate) throws SysTradeExecuteException{
-		List<BocmChkStatus> list = mapper.selectByDate(begDate, endDate);
+	public List<BocmChkStatusModel> selectByDate(MyLog myLog,String begDate,String endDate,String platState) throws SysTradeExecuteException{
+		List<BocmChkStatus> list = mapper.selectByDate(begDate, endDate, platState);
 		List<BocmChkStatusModel> modelList = new ArrayList<BocmChkStatusModel>();
 		for(BocmChkStatus entity:list){
 			BocmChkStatusModel model = new BocmChkStatusModel();

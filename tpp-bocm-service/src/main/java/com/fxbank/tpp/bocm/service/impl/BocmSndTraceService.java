@@ -199,6 +199,11 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
 			model.setTranType(data.getTranType());
+			model.setTxCode(data.getTxCode());
+			model.setTxBranch(data.getTxBranch());
+			model.setTxTel(data.getTxTel());
+			model.setTxInd(data.getTxInd());
+			
 		}
 		return model;
 	}
@@ -283,6 +288,9 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setRcvBankno(tpp.getRcvBankno());
 			
 			model.setTranType(tpp.getTranType());
+			
+			model.setProxy_flag(tpp.getProxyFlag());
+			model.setProxy_fee(tpp.getProxyFee());
 								
 			sndTraceQueryModelList.add(model);
 		}

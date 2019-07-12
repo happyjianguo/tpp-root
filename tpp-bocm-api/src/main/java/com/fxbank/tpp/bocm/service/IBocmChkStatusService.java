@@ -51,5 +51,5 @@ public interface IBocmChkStatusService {
 	* @return void    返回类型 
 	* @throws 
 	*/
-	public List<BocmChkStatusModel> selectByDate(MyLog myLog,String begDate,String endDate) throws SysTradeExecuteException; 
+	public List<BocmChkStatusModel> selectByDate(MyLog myLog,String begDate,String endDate,String platState) throws SysTradeExecuteException; 
 }

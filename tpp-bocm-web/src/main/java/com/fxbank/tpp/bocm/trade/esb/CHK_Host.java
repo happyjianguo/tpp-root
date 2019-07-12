@@ -26,8 +26,8 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
+import com.fxbank.tpp.bocm.dto.esb.REP_30061001101;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30061001101;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
 import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
@@ -55,7 +55,7 @@ import redis.clients.jedis.Jedis;
 * @date 2019年6月22日 下午2:35:07 
 *  
 */
-@Service("REQ_30061800501")
+@Service("REQ_30061001101")
 public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 	
 	private static Logger logger = LoggerFactory.getLogger(CHK_Bocm.class);
@@ -92,9 +92,9 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_30061800501 reqDto = (REQ_30061800501) dto;
-		REQ_30061800501.REQ_BODY reqBody = reqDto.getReqBody();
-		REP_30061800501 rep = new REP_30061800501();				
+		REQ_30061001101 reqDto = (REQ_30061001101) dto;
+		REQ_30061001101.REQ_BODY reqBody = reqDto.getReqBody();
+		REP_30061001101 rep = new REP_30061001101();				
 		// 交易机构
 		String txBrno = null;
 		// 柜员号
@@ -296,7 +296,34 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				}else {
 					//其他状态说明交易有问题,核心记账异常说明柜面交易失败,如果核心记录了说明多记账了,正常的流水核心记账状态只能为1
 					myLog.error(logger, "柜面通【"+date+"】往帐对账失败: 渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】记录核心状态为【"+sndTraceQueryModel.getHostState()+"】,与核心记账状态不符");
-					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sndTraceQueryModel.getPlatDate(), model.getSysTime(), model.getPlatTrace());
+					aceModel.setPlatDate(sndTraceQueryModel.getPlatDate());
+					aceModel.setPlatTrace(sndTraceQueryModel.getPlatTrace());
+					aceModel.setTxCode(sndTraceQueryModel.getTxCode());
+					aceModel.setTxSource(sndTraceQueryModel.getSourceType());
+					aceModel.setTxDate(sndTraceQueryModel.getTxDate());
+					aceModel.setHostDate(model.getHostDate());
+					aceModel.setHostTraceno(model.getHostTraceno());
+					aceModel.setTxDate(sndTraceQueryModel.getTxDate());
+					aceModel.setSndBankno(sndTraceQueryModel.getSndBankno());
+					aceModel.setTxBranch(sndTraceQueryModel.getTxBranch());
+					aceModel.setTxTel(sndTraceQueryModel.getTxTel());
+					aceModel.setTxInd(sndTraceQueryModel.getTxInd());
+					aceModel.setTxAmt(sndTraceQueryModel.getTxAmt());
+					aceModel.setProxyFee(sndTraceQueryModel.getProxy_fee());
+					aceModel.setProxyFlag(sndTraceQueryModel.getProxy_flag());
+					aceModel.setPayerBank(sndTraceQueryModel.getPayerBank());
+					aceModel.setPayerAcno(sndTraceQueryModel.getPayerAcno());
+					aceModel.setPayerName(sndTraceQueryModel.getPayerName());
+					aceModel.setPayeeBank(sndTraceQueryModel.getPayeeBank());
+					aceModel.setPayeeAcno(sndTraceQueryModel.getPayeeAcno());
+					aceModel.setPayeeName(sndTraceQueryModel.getPayeeName());
+					aceModel.setHostState(sndTraceQueryModel.getHostState());
+					aceModel.setBocmState(sndTraceQueryModel.getBocmState());
+					aceModel.setCheckFlag("以本行对账为准");
+					aceModel.setMsg("核心多账,需冲正");
+					acctCheckErrService.insert(aceModel);
+					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"对账失败,核心多账,需冲正");
 					throw e;
 				}
 			}

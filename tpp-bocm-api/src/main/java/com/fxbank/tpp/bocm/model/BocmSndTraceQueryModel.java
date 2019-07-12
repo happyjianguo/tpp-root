@@ -49,6 +49,10 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
     private String feeFlag;
     //手续费
     private BigDecimal fee;
+    //商行手续费收取方式
+    private String proxy_flag;
+    //商行手续费
+    private BigDecimal proxy_fee;
     //发起行人行行号
     private String sndBankno;
     //接收行人行行号
@@ -390,6 +394,22 @@ public class BocmSndTraceQueryModel extends ModelBase implements Serializable{
 
 	public void setTxDate(Integer txDate) {
 		this.txDate = txDate;
+	}
+
+	public String getProxy_flag() {
+		return proxy_flag;
+	}
+
+	public void setProxy_flag(String proxy_flag) {
+		this.proxy_flag = proxy_flag;
+	}
+
+	public BigDecimal getProxy_fee() {
+		return proxy_fee;
+	}
+
+	public void setProxy_fee(BigDecimal proxy_fee) {
+		this.proxy_fee = proxy_fee;
 	}
 
 	

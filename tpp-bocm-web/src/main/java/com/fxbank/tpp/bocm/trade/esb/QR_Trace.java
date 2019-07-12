@@ -1,11 +1,7 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.dcfs.esb.ftp.client.FtpClientConfigSet;
-import com.dcfs.esb.ftp.client.FtpPut;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -25,13 +19,11 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.esb.QR_TraceDto;
-import com.fxbank.tpp.bocm.dto.esb.REP_QR_Trace;
-import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
+import com.fxbank.tpp.bocm.dto.esb.REP_30063001302;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30063001302;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.nettty.ServerInitializer;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
-
-import redis.clients.jedis.Jedis;
 
 
 /** 
@@ -41,7 +33,7 @@ import redis.clients.jedis.Jedis;
 * @date 2019年7月10日 下午3:00:41 
 *  
 */
-@Service("REQ_QR_Trace")
+@Service("REQ_30063001302")
 public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 	
 	private static Logger logger = LoggerFactory.getLogger(QR_Trace.class);
@@ -54,127 +46,119 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 	
 	@Resource
 	private MyJedis myJedis;
-
-	private final static String COMMON_PREFIX = "bocm.";
 	
 	@Override
-	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
-		
+	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {		
 		MyLog myLog = logPool.get();
-		String begDate = "20190710";
-		String endDate = "20190710";
-		String begTrace="";
-		String endTrace="";
-		String txAmt="";
-		String hostStatus="";
+		
+		REQ_30063001302 reqDto = (REQ_30063001302) dto;
+		REQ_30063001302.REQ_BODY reqBody = reqDto.getReqBody();
+		REP_30063001302 rep = new REP_30063001302();
+		
+		String begDate = reqBody.getPltfrmBgnDtT1();
+		String endDate = reqBody.getPltfrmEndDtT();
+		String begTrace= reqBody.getPltfrmFrmSeqT();
+		String endTrace= reqBody.getPltfrmEndSeqT1();
+		String txAmt= reqBody.getTrnsAmtT3();
+		String hostStatus= reqBody.getIntbnkCnstStsT6();
+		
+		logger.info("业务流水查询:行内处理状态："+hostStatus+" 起始日期："+begDate+" 结束日期："+endDate);
+		logger.info("业务流水查询:交易金额："+txAmt+" 平台起始流水："+begTrace+" 平台结束流水："+endTrace);
 		List<BocmSndTraceQueryModel> sndlist = sndTraceService.getSndTrace(myLog, begDate, endDate, begTrace, 
 				endTrace, txAmt, hostStatus);
 		logger.info("往账记录:  "+sndlist.size());
 		
-		//返回柜面文件报文
-		StringBuffer sb = new StringBuffer();
+		REP_30063001302.REP_BODY body = rep.getRepBody();
+		List<REP_30063001302.Trade> list = new ArrayList<REP_30063001302.Trade>();
 		//总金额
 		BigDecimal total = new BigDecimal("0.00");
 		for(BocmSndTraceQueryModel model : sndlist){
 			logger.info("渠道流水 号："+model.getPlatTrace());
 			total = total.add(model.getTxAmt());
-			String trace = transRepTrace(model);
-			sb.append(trace).append("\n"); 
-		}
-		sb.append(sndlist.size()).append("|"); 	
-		sb.append(total.toString()).append("|"); 	
-		
-		logger.info("返回查询文件：\n"+sb.toString());
-		
-		String fileName = "QR_Trace_"+dto.getSysDate()+dto.getSysTime()+".txt";
-		writeFile(myLog,fileName,sb.toString());
-		String localPath="";
-		try (Jedis jedis = myJedis.connect()) {
-			localPath = jedis.get(COMMON_PREFIX+"txt_path");
-		}
-		uploadTraceFile(myLog, fileName, localPath);
-		REP_QR_Trace rep = new REP_QR_Trace();
+			REP_30063001302.Trade trace = transRepTrace(model);
+			list.add(trace);
+		}		
+		body.setTolCnt(sndlist.size()+"");
+		body.setTolAmt(total.toString());
+		body.setTradeList(list);
 		return rep;
 	}
 	
-	private void writeFile(MyLog myLog,String fileName,String str) throws BocmTradeExecuteException{
-		String localPath="";
-		File file = null;
-		BufferedWriter bw = null;
-		try {
-			try (Jedis jedis = myJedis.connect()) {
-				localPath = jedis.get(COMMON_PREFIX+"txt_path");
-			}
-			file = new File(localPath+File.separator+fileName);
-			if(!file.exists()) {
-				file.createNewFile();
-			}
-			FileOutputStream writerStream = new FileOutputStream(file);
-			bw = new BufferedWriter(new OutputStreamWriter(writerStream, "UTF-8"));
-			bw.write(str);
-			
-		}catch (Exception e) {
-			myLog.error(logger,"生成柜面流水查询文件失败: "+e);
-			BocmTradeExecuteException e1 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10018);
-			throw e1;
-		}finally {
-			try {
-				bw.close();
-			} catch (IOException e) {
-				logger.error("关闭临时文件异常", e);
-			}
-		}
-	}
+
 	
-	private void uploadTraceFile(MyLog myLog, String remoteFile, String localFile) throws BocmTradeExecuteException{
-		FtpClientConfigSet configSet = new FtpClientConfigSet();
-		FtpPut ftpPut = null;
-		try {
-			localFile = localFile +"/"+remoteFile;
-			logger.info(localFile);
-			ftpPut = new FtpPut(localFile,remoteFile, configSet);
-			String result = ftpPut.doPutFile();
-//			if (!result) {
-//				myLog.error(logger, "文件[" + remoteFile + "]TO[" + localFile + "下载失败！");
-//				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10012);
-//				throw e;
-//			}
-			myLog.info(logger, "文件[" + remoteFile + "]TO[" + localFile + "上传成功！");
-		} catch (Exception e) {
-			myLog.error(logger, "文件[" + remoteFile + "]TO[" + localFile + "上传失败！", e);
-			BocmTradeExecuteException e1 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10012,
-					e.getMessage());
-			throw e1;
-		} finally {
-			if (ftpPut != null) {
-				ftpPut.close();
-			}
-		}
-	}
-	
-	private String transRepTrace(BocmSndTraceQueryModel model){
-		QR_TraceDto trace = new QR_TraceDto();
+	private REP_30063001302.Trade transRepTrace(BocmSndTraceQueryModel model){
+		REP_30063001302.Trade trace = new REP_30063001302.Trade();
 		trace.setSource(model.getSourceType());
 		trace.setPlatDate(model.getPlatDate()+"");
 		trace.setPlatTrace(model.getPlatTrace()+"");
-		trace.setHostDate(model.getHostDate()+"");
-		trace.setHostTrace(model.getHostTraceno()+"");
+		if(model.getHostDate()!=null){
+			trace.setHostDate(model.getHostDate()+"");
+		}
+		if(model.getHostTraceno()!=null){
+			trace.setHostTrace(model.getHostTraceno()+"");
+		}
 		trace.setTxDate(model.getTxDate()+"");
 		trace.setSndBank(model.getSndBankno());
 		trace.setTxBranch(model.getTxBranch());
 		trace.setTxTel(model.getTxTel());
-//		trace.setTxMod(model.gett);
+		if(model.getTxInd().equals("0")){
+			trace.setTxMod("现金");
+		}
+		if(model.getTxInd().equals("1")){
+			trace.setTxMod("转账");
+		}
 		trace.setTxAmt(model.getTxAmt()+"");
-//		trace.setProxyFee(model.getpro);
-//		trace.setProxyFlag(model.getPrint());
-		trace.setFee(model.getFee()+"");
+		if(model.getProxy_fee()!=null){
+			trace.setProxyFee(model.getProxy_fee().toString());
+		}
+		trace.setProxyFlag(model.getProxy_flag());
+		if(model.getFee()!=null){
+			trace.setFee(model.getFee().toString());
+		}
 		trace.setPayerBank(model.getPayerBank());
 		trace.setPayerAcno(model.getPayerAcno());
 		trace.setPayerName(model.getPayerName());
 		trace.setPayeeBank(model.getPayeeBank());
 		trace.setPayeeAcno(model.getPayeeAcno());
 		trace.setPayeeName(model.getPayeeName());
-		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(trace,"|",ServerInitializer.CODING));
-		return fixPack.toString();
+		String hostState = model.getHostState();
+		if("0".equals(hostState)){
+			trace.setHostState("登记");
+		}
+		if("1".equals(hostState)){
+			trace.setHostState("成功");
+		}
+		if("2".equals(hostState)){
+			trace.setHostState("失败");
+		}
+		if("3".equals(hostState)){
+			trace.setHostState("超时");
+		}
+		if("4".equals(hostState)){
+			trace.setHostState("冲正成功");
+		}
+		if("5".equals(hostState)){
+			trace.setHostState("冲正失败");
+		}
+		if("6".equals(hostState)){
+			trace.setHostState("冲正超时");
+		}
+		String checkFlag = model.getCheckFlag();
+		if("1".equals(checkFlag)){
+			trace.setCheckFlag("未对账");
+		}
+		if("2".equals(checkFlag)){
+			trace.setCheckFlag("对账成功");
+		}
+		if("3".equals(checkFlag)){
+			trace.setCheckFlag("核心多账");
+		}
+		if("4".equals(checkFlag)){
+			trace.setCheckFlag("渠道多账");
+		}
+		if("5".equals(checkFlag)){
+			trace.setCheckFlag("交行记账失败本行记账成功");
+		}
+		return trace;
 	}
 }

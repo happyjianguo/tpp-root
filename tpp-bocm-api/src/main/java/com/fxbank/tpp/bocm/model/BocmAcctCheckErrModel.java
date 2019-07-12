@@ -34,6 +34,46 @@ public class BocmAcctCheckErrModel extends ModelBase implements Serializable {
      */
 	@NotNull(message = "platTrace渠道流水不能为空")
     private Integer platTrace;
+	
+	//交易来源
+	private String txSource;
+	
+	//交易代码
+	private String txCode;
+	
+	//主机日期
+	private Integer hostDate;
+	
+	//主机流水
+	private String hostTraceno;
+	
+	//交易时间
+	private Integer txDate;
+	
+	//受理行人行行号
+    private String sndBankno;
+	
+    //交易机构
+    private String txBranch; 
+    
+    //交易柜员
+    private String txTel;
+    
+    //交易模式
+    private String txInd;
+    
+    //代理手续费手续方式
+    private String proxyFlag;
+    //代理手续费
+    private BigDecimal proxyFee;
+    
+    private String payerBank;
+    
+    private String payeeBank;
+    
+    private String hostState;
+    
+    private String bocmState;
 
     /**
      * 调整前核心记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时
@@ -192,6 +232,126 @@ public class BocmAcctCheckErrModel extends ModelBase implements Serializable {
 
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+
+	public String getTxSource() {
+		return txSource;
+	}
+
+	public void setTxSource(String txSource) {
+		this.txSource = txSource;
+	}
+
+	public String getTxCode() {
+		return txCode;
+	}
+
+	public void setTxCode(String txCode) {
+		this.txCode = txCode;
+	}
+
+	public Integer getHostDate() {
+		return hostDate;
+	}
+
+	public void setHostDate(Integer hostDate) {
+		this.hostDate = hostDate;
+	}
+
+	public String getHostTraceno() {
+		return hostTraceno;
+	}
+
+	public void setHostTraceno(String hostTraceno) {
+		this.hostTraceno = hostTraceno;
+	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
+	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getTxBranch() {
+		return txBranch;
+	}
+
+	public void setTxBranch(String txBranch) {
+		this.txBranch = txBranch;
+	}
+
+	public String getTxTel() {
+		return txTel;
+	}
+
+	public void setTxTel(String txTel) {
+		this.txTel = txTel;
+	}
+
+	public String getTxInd() {
+		return txInd;
+	}
+
+	public void setTxInd(String txInd) {
+		this.txInd = txInd;
+	}
+
+	public String getProxyFlag() {
+		return proxyFlag;
+	}
+
+	public void setProxyFlag(String proxyFlag) {
+		this.proxyFlag = proxyFlag;
+	}
+
+	public BigDecimal getProxyFee() {
+		return proxyFee;
+	}
+
+	public void setProxyFee(BigDecimal proxyFee) {
+		this.proxyFee = proxyFee;
+	}
+
+	public String getPayerBank() {
+		return payerBank;
+	}
+
+	public void setPayerBank(String payerBank) {
+		this.payerBank = payerBank;
+	}
+
+	public String getPayeeBank() {
+		return payeeBank;
+	}
+
+	public void setPayeeBank(String payeeBank) {
+		this.payeeBank = payeeBank;
+	}
+
+	public String getHostState() {
+		return hostState;
+	}
+
+	public void setHostState(String hostState) {
+		this.hostState = hostState;
+	}
+
+	public String getBocmState() {
+		return bocmState;
+	}
+
+	public void setBocmState(String bocmState) {
+		this.bocmState = bocmState;
 	}
 
 }

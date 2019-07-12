@@ -1,20 +1,18 @@
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
-import com.fxbank.cip.base.pkg.fixed.FixedUtil;
-import com.fxbank.tpp.bocm.nettty.ServerInitializer;
 
 /** 
-* @ClassName: QR_Trace 
-* @Description:柜面流水查询响应
+* @ClassName: QR_ChkErr 
+* @Description: 调账信息查询 
 * @author YePuLiang
-* @date 2019年7月11日 下午1:39:55 
+* @date 2019年7月11日 下午5:48:49 
 *  
 */
-public class QR_TraceDto {
+public class QR_ChkErr {
 	
 	@FixedField(order = 1, len = 4, scale = 0, desc = "交易代码")
-	private String txCode="281A";
+	private String txCode="281B";
 	@FixedField(order = 2, len = 4, scale = 0, desc = "交易来源")
     private String source;
 	@FixedField(order = 3, len = 8, scale = 0, desc = "平台日期")
@@ -57,8 +55,16 @@ public class QR_TraceDto {
     private String payeeName;
 	@FixedField(order = 22, len = 4, scale = 0, desc = "主机处理状态")
     private String hostState;
-	@FixedField(order = 23, len = 4, scale = 0, desc = "主机对账状态")
-    private String checkFlag;
+	@FixedField(order = 23, len = 4, scale = 0, desc = "交行处理状态")
+    private String bocmState;
+	@FixedField(order = 24, len = 4, scale = 0, desc = "主机对账状态")
+    private String hostFlag;
+	@FixedField(order = 25, len = 4, scale = 0, desc = "交行对账状态")
+    private String bocmFlag;
+	@FixedField(order = 26, len = 20, scale = 0, desc = "对账以谁为主")
+    private String checkMain;
+	@FixedField(order = 27, len = 34, scale = 0, desc = "调账信息")
+    private String msg;
 	public String getTxCode() {
 		return txCode;
 	}
@@ -137,6 +143,12 @@ public class QR_TraceDto {
 	public void setProxyFee(String proxyFee) {
 		this.proxyFee = proxyFee;
 	}
+	public String getFee() {
+		return fee;
+	}
+	public void setFee(String fee) {
+		this.fee = fee;
+	}
 	public String getProxyFlag() {
 		return proxyFlag;
 	}
@@ -185,22 +197,37 @@ public class QR_TraceDto {
 	public void setHostState(String hostState) {
 		this.hostState = hostState;
 	}
-	public String getCheckFlag() {
-		return checkFlag;
+	public String getBocmState() {
+		return bocmState;
 	}
-	public void setCheckFlag(String checkFlag) {
-		this.checkFlag = checkFlag;
+	public void setBocmState(String bocmState) {
+		this.bocmState = bocmState;
 	}
-	public String getFee() {
-		return fee;
+	public String getHostFlag() {
+		return hostFlag;
 	}
-	public void setFee(String fee) {
-		this.fee = fee;
+	public void setHostFlag(String hostFlag) {
+		this.hostFlag = hostFlag;
 	}
-	public static void main(String[] args) {
-		QR_TraceDto trace = new QR_TraceDto();
-		trace.setCheckFlag("1");
-		StringBuffer fixPack = new StringBuffer(FixedUtil.toFixed(trace,"|",ServerInitializer.CODING));
-		System.out.println(fixPack);
+	public String getBocmFlag() {
+		return bocmFlag;
 	}
+	public void setBocmFlag(String bocmFlag) {
+		this.bocmFlag = bocmFlag;
+	}
+	public String getCheckMain() {
+		return checkMain;
+	}
+	public void setCheckMain(String checkMain) {
+		this.checkMain = checkMain;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	
+	
+
 }

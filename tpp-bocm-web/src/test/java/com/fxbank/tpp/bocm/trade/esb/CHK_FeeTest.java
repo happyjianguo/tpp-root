@@ -28,7 +28,7 @@ import com.alibaba.fastjson.JSON;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
+import com.fxbank.tpp.bocm.dto.esb.REP_30063001304;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061800501;
 import com.fxbank.tpp.esb.service.ISafeService;
 
@@ -107,7 +107,7 @@ public class CHK_FeeTest {
 		int status = mvcResult.getResponse().getStatus();
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
-		REP_30061800501 rep = JsonUtil.toBean(repContent, REP_30061800501.class);
+		REP_30063001304 rep = JsonUtil.toBean(repContent, REP_30063001304.class);
 		System.out.println(rep);
 	}
 }

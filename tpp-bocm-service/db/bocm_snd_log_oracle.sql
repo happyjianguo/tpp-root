@@ -69,7 +69,7 @@ COMMENT ON COLUMN bocm_snd_log.proxy_flag IS '代理手续费收取标志 规则
 COMMENT ON COLUMN bocm_snd_log.proxy_fee IS '代理手续费';
 COMMENT ON COLUMN bocm_snd_log.host_date IS '核心日期';
 COMMENT ON COLUMN bocm_snd_log.host_traceno IS '核心流水';
-COMMENT ON COLUMN bocm_snd_log.snd_bankno IS '付款行行号';
+COMMENT ON COLUMN bocm_snd_log.snd_bankno IS '受理行行号';
 COMMENT ON COLUMN bocm_snd_log.rcv_bankno IS '接收行行号';
 COMMENT ON COLUMN bocm_snd_log.payer_bank IS '付款人开户行';
 COMMENT ON COLUMN bocm_snd_log.payer_acttp IS '付款人账户类型';

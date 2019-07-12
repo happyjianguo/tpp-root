@@ -31,31 +31,85 @@ public class BocmChkErr {
      */
     @Column(name = "RE_HOST_STATE")
     private String reHostState;
+    
+    /**
+     * null
+     */
+    @Column(name = "TX_SOURCE")
+    private String txSource;
+    
+    /**
+     * null
+     */
+    @Column(name = "TX_CODE")
+    private String txCode;
+    
+    /**
+     * null
+     */
+    @Column(name = "HOST_DATE")
+    private Integer hostDate;
 
     /**
      * null
      */
-    @Column(name = "DC_FLAG")
-    private String dcFlag;
+    @Column(name = "HOST_TRACENO")
+    private String hostTraceno;
+    
+    /**
+     * null
+     */
+    @Column(name = "TX_DATE")
+    private Integer txDate;
+    
+    /**
+     * null
+     */
+    @Column(name = "SND_BANKNO")
+    private String sndBankno;
+    
+    /**
+     * null
+     */
+    @Column(name = "TX_BRANCH")
+    private String txBranch;
+    
+    /**
+     * null
+     */
+    @Column(name = "TX_TEL")
+    private String txTel;
 
     /**
      * null
      */
-    @Column(name = "CHECK_FLAG")
-    private String checkFlag;
-
+    @Column(name = "TX_IND")
+    private String txInd;
+      
     /**
      * null
      */
-    @Column(name = "DIRECTION")
-    private String direction;
-
+    @Column(name = "PROXY_FLAG")
+    private String proxyFlag;
+    
     /**
      * null
      */
-    @Column(name = "TX_AMT")
-    private BigDecimal txAmt;
-
+    @Column(name = "PROXY_FEE")
+    private BigDecimal proxyFee;
+    
+    /**
+     * null
+     */
+    @Column(name = "PAYER_BANK")
+    private String payerBank;
+    
+    /**
+     * null
+     */
+    @Column(name = "PAYEE_BANK")
+    private String payeeBank;
+    
     /**
      * null
      */
@@ -79,6 +133,43 @@ public class BocmChkErr {
      */
     @Column(name = "PAYEE_NAME")
     private String payeeName;
+
+    
+    /**
+     * null
+     */
+    @Column(name = "DC_FLAG")
+    private String dcFlag;
+
+    /**
+     * null
+     */
+    @Column(name = "CHECK_FLAG")
+    private String checkFlag;
+
+    /**
+     * null
+     */
+    @Column(name = "DIRECTION")
+    private String direction;
+
+    /**
+     * null
+     */
+    @Column(name = "TX_AMT")
+    private BigDecimal txAmt;
+    
+    /**
+     * null
+     */
+    @Column(name = "HOST_STATE")
+    private String hostState;
+
+    /**
+     * null
+     */
+    @Column(name = "BOCM_STATE")
+    private String bocmState;
 
     /**
      * null
@@ -270,4 +361,126 @@ public class BocmChkErr {
     public void setMsg(String msg) {
         this.msg = msg;
     }
+
+	public String getTxSource() {
+		return txSource;
+	}
+
+	public void setTxSource(String txSource) {
+		this.txSource = txSource;
+	}
+
+	public String getTxCode() {
+		return txCode;
+	}
+
+	public void setTxCode(String txCode) {
+		this.txCode = txCode;
+	}
+
+	public Integer getHostDate() {
+		return hostDate;
+	}
+
+	public void setHostDate(Integer hostDate) {
+		this.hostDate = hostDate;
+	}
+
+	public String getHostTraceno() {
+		return hostTraceno;
+	}
+
+	public void setHostTraceno(String hostTraceno) {
+		this.hostTraceno = hostTraceno;
+	}
+
+	public String getSndBankno() {
+		return sndBankno;
+	}
+
+	public void setSndBankno(String sndBankno) {
+		this.sndBankno = sndBankno;
+	}
+
+	public String getTxBranch() {
+		return txBranch;
+	}
+
+	public void setTxBranch(String txBranch) {
+		this.txBranch = txBranch;
+	}
+
+	public String getTxTel() {
+		return txTel;
+	}
+
+	public void setTxTel(String txTel) {
+		this.txTel = txTel;
+	}
+
+	public String getTxInd() {
+		return txInd;
+	}
+
+	public void setTxInd(String txInd) {
+		this.txInd = txInd;
+	}
+
+	public String getProxyFlag() {
+		return proxyFlag;
+	}
+
+	public void setProxyFlag(String proxyFlag) {
+		this.proxyFlag = proxyFlag;
+	}
+
+	public BigDecimal getProxyFee() {
+		return proxyFee;
+	}
+
+	public void setProxyFee(BigDecimal proxyFee) {
+		this.proxyFee = proxyFee;
+	}
+
+	public String getPayerBank() {
+		return payerBank;
+	}
+
+	public void setPayerBank(String payerBank) {
+		this.payerBank = payerBank;
+	}
+
+	public String getPayeeBank() {
+		return payeeBank;
+	}
+
+	public void setPayeeBank(String payeeBank) {
+		this.payeeBank = payeeBank;
+	}
+
+	public String getHostState() {
+		return hostState;
+	}
+
+	public void setHostState(String hostState) {
+		this.hostState = hostState;
+	}
+
+	public String getBocmState() {
+		return bocmState;
+	}
+
+	public void setBocmState(String bocmState) {
+		this.bocmState = bocmState;
+	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
+	}
+    
+    
 }

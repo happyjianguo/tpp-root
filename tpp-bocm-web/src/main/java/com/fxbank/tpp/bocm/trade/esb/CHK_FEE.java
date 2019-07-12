@@ -17,7 +17,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
-import com.fxbank.tpp.bocm.dto.esb.REP_30061800501;
+import com.fxbank.tpp.bocm.dto.esb.REP_30063001304;
 import com.fxbank.tpp.bocm.dto.esb.REQ_TS_CHK_FEE;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
@@ -82,7 +82,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_TS_CHK_FEE reqDto = (REQ_TS_CHK_FEE) dto;
 		REQ_TS_CHK_FEE.REQ_BODY reqBody = reqDto.getReqBody();
-		REP_30061800501 rep = new REP_30061800501();
+		REP_30063001304 rep = new REP_30063001304();
 		
 		myLog.info(logger, "外围与交行对账定时任务开始");		   
 		

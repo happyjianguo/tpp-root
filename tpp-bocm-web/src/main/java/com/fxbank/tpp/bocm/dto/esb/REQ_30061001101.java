@@ -6,14 +6,14 @@ import com.fxbank.cip.base.dto.REQ_BASE;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 
 /** 
-* @ClassName: REQ_QR_CHK 
-* @Description: 对账查询请求
+* @ClassName: REQ_30061001101 
+* @Description: 商行与交行对账
 * @author YePuLiang
-* @date 2019年7月10日 下午5:08:29 
+* @date 2019年7月12日 下午2:44:35 
 *  
 */
-public class REQ_QR_CHK extends REQ_BASE {
-	
+public class REQ_30061001101 extends REQ_BASE {
+
 	@JSONField(name = "APP_HEAD")
 	private REQ_APP_HEAD reqAppHead;
 	
@@ -23,10 +23,10 @@ public class REQ_QR_CHK extends REQ_BASE {
 	@JSONField(name = "BODY")
 	private REQ_BODY reqBody;
 	
-	public REQ_QR_CHK(){
-		super.txDesc = "对账查询请求";
+	public REQ_30061001101(){
+		super.txDesc = "商行与交行对账";
 	}
-	
+
 	public REQ_APP_HEAD getReqAppHead() {
 		return reqAppHead;
 	}
@@ -56,6 +56,18 @@ public class REQ_QR_CHK extends REQ_BASE {
 	}
 
 	public class REQ_BODY {
-	
+		//对账日期
+		@JSONField(name = "STMT_DT_T2")
+		private String stmtDtT2;
+
+		public String getStmtDtT2() {
+			return stmtDtT2;
+		}
+
+		public void setStmtDtT2(String stmtDtT2) {
+			this.stmtDtT2 = stmtDtT2;
+		}
+
+		
 	}
 }

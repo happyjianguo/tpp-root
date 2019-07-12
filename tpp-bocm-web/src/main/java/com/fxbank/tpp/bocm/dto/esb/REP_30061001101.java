@@ -1,3 +1,11 @@
+/**   
+* @Title: REP_30061001101.java 
+* @Package com.fxbank.tpp.bocm.dto.esb 
+* @Description: TODO(用一句话描述该文件做什么) 
+* @author YePuLiang
+* @date 2019年7月12日 下午2:46:25 
+* @version V1.0   
+*/
 package com.fxbank.tpp.bocm.dto.esb;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -6,13 +14,13 @@ import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 
 /** 
-* @ClassName: REP_30061800501 
-* @Description: 本行柜面第三方对账
+* @ClassName: REP_30061001101 
+* @Description: TODO(这里用一句话描述这个类的作用) 
 * @author YePuLiang
-* @date 2019年5月6日 下午5:37:44 
+* @date 2019年7月12日 下午2:46:25 
 *  
 */
-public class REP_30061800501  extends REP_BASE {
+public class REP_30061001101 extends REP_BASE {
 
 	@JSONField(name = "APP_HEAD")
 	private REP_APP_HEAD repAppHead = new REP_APP_HEAD();
@@ -21,7 +29,7 @@ public class REP_30061800501  extends REP_BASE {
 	private REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
 
 	@JSONField(name = "BODY")
-	private REP_BODY repBody = new REP_BODY();
+	private REQ_BODY reqBody = new REQ_BODY();
 	
 	public REP_APP_HEAD getRepAppHead() {
 		return repAppHead;
@@ -39,16 +47,16 @@ public class REP_30061800501  extends REP_BASE {
 		this.repSysHead = repSysHead;
 	}
 
-	public REP_BODY getRepBody() {
-		return repBody;
+	public REQ_BODY getReqBody() {
+		return reqBody;
 	}
 
 
-	public void setRepBody(REP_BODY repBody) {
-		this.repBody = repBody;
+	public void setReqBody(REQ_BODY reqBody) {
+		this.reqBody = reqBody;
 	}
 
-	public class REP_BODY {
-		
+	public class REQ_BODY {
+
 	}
 }

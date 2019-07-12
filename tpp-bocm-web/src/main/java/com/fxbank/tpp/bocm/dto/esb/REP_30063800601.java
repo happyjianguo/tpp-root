@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
-import com.fxbank.cip.base.pkg.tag.TagAnno.TagField;
-import com.fxbank.tpp.bocm.model.REP_10103.Detail;
+import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.nettty.ServerInitializer;
 
 /** 

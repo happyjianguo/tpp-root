@@ -27,6 +27,9 @@
       <if test="endDate != null and endDate != ''">
         and chk_date <![CDATA[ <= ]]> #{endDate}
       </if>
+      <if test="platState != null and platState != ''">
+        and plat_status <![CDATA[ <= ]]> #{platState}
+      </if>
     </trim>
      order by chk_date desc
   </select>
