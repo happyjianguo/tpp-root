@@ -49,16 +49,16 @@ public class REQ_50023000214 extends REQ_BASE {
     }
 
     public class REQ_BODY {
-        @JSONField(name = "OrigMsgId")
+        @JSONField(name = "ORIG_MSG_ID")
         private String origMsgId;    // 原报文标识号
 
-        @JSONField(name = "OrigInstgDrctPty")
+        @JSONField(name = "ORIG_INSTG_DRCT_PTY")
         private String origInstgDrctPty; //原发起直接参与机构
 
-        @JSONField(name = "OrigInstgPty")
+        @JSONField(name = "ORIG_INSTG_PTY")
         private String origInstgPty;        //原发起参与机构
 
-        @JSONField(name = "MsgCntt")
+        @JSONField(name = "MSG_CNTT")
         private String msgCntt; //附加信息
 
         public String getOrigMsgId() {

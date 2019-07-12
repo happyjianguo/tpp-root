@@ -53,25 +53,25 @@ public class REQ_50023000208 extends REQ_BASE {
     }
 
     public class REQ_BODY {
-        @JSONField(name = "MAKET_TYPE")
+        @JSONField(name = "MAIN_BODY_TYPE")
         private String marketType;    //主体类型
         @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;		//统一社会信用代码
-        @JSONField(name = "ENT_NAME")
+        @JSONField(name = "CORP_NAME")
         private String entNm;    //企业名称
-        @JSONField(name = "NAME_OF_LGL_PRSN")
+        @JSONField(name = "COMPANY_NM")
         private String nmOfLglPrsn;		//法定代表人或单位负责人姓名
-        @JSONField(name = "ID_OF_LGL_PRSN")
+        @JSONField(name = "REP_DOCUMENT_ID")
         private String idOfLglPrsn;    //法定代表人或单位负责人身份证件号
-        @JSONField(name = "TRA_NM")
+        @JSONField(name = "FONT_NAME")
         private String tranm;		//字号名称
-        @JSONField(name = "NAME")
+        @JSONField(name = "OPRTNG_NAME")
         private String nm;		//经营者姓名
-        @JSONField(name = "ID")
+        @JSONField(name = "OPRTNG_DOCUMENT_ID")
         private String id;    //经营者证件号
-        @JSONField(name = "AgtNm")
+        @JSONField(name = "PROXY_NAME")
         private String agtNm;    //代理人姓名
-        @JSONField(name = "AgtId")
+        @JSONField(name = "PROXY_NAME")
         private String agtId;    //代理人身份证件号码
         @JSONField(name = "OPRTR_NAME")
         private String opNm;		//操作员姓名

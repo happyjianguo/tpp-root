@@ -50,40 +50,40 @@ public class REQ_50023000209 extends REQ_BASE {
 
     public class REQ_BODY {
 
-        @JSONField(name = "StartDt")
+        @JSONField(name = "CHK_START_DATE")
         private Integer startDt;    // 核查开始时间
 
-        @JSONField(name = "EndDt")
+        @JSONField(name = "CHK_END_DATE")
         private Integer endDt; //核查结束时间
 
-        @JSONField(name = "OrigBranchId")
+        @JSONField(name = "ORIG_CHK_ORG_ID")
         private String origBranchId; //原核查机构号
 
-        @JSONField(name = "OrigUserId")
+        @JSONField(name = "ORIG_CHK_TELLER_ID")
         private String origUserId; // 原核查柜员号
 
         @JSONField(name = "ORIG_APPLY_MSG_ID")
         private String orgnlDlvrgMsgId; //原申请报文标识号
 
-        @JSONField(name = "ENT_NAME")
-        private String entNm;    //单位名称
-
         @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;        //统一社会信用代码
 
-        @JSONField(name = "NmOfLglPrsn")
+        @JSONField(name = "CORP_NAME")
+        private String entNm;    //单位名称
+
+        @JSONField(name = "COMPANY_NM")
         private String nmOfLglPrsn;        //法定代表人或单位负责人姓名
 
-        @JSONField(name = "IdOfLglPrsn")
+        @JSONField(name = "REP_DOCUMENT_ID")
         private String IdOfLglPrsn; //法定代表人或单位负责人身份证件号
 
-        @JSONField(name = "TraNm")
+        @JSONField(name = "FONT_NAME")
         private String traNm;    //字号名称
 
-        @JSONField(name = "Nm")
+        @JSONField(name = "OPRTNG_NAME")
         private String nm;        //经营者姓名
 
-        @JSONField(name = "Id")
+        @JSONField(name = "OPRTNG_DOCUMENT_ID")
         private String id;        //经营者证件号
 
         public Integer getStartDt() {

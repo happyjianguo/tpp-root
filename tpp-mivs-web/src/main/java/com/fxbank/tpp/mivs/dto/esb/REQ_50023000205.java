@@ -8,7 +8,7 @@ import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import java.util.List;
 
 /**
- * @Description:
+ * @Description: 纳税信息核查结果汇总查询
  * @Author: 王鹏
  * @Date: 2019/6/24 10:31
  */
@@ -23,7 +23,7 @@ public class REQ_50023000205 extends REQ_BASE {
     private REQ_BODY reqBody;
 
     public REQ_50023000205(){
-        super.txDesc = "纳税信息核查结果查询";
+        super.txDesc = "纳税信息核查结果汇总查询";
     }
 
     public REQ_APP_HEAD getReqAppHead() {
@@ -52,16 +52,16 @@ public class REQ_50023000205 extends REQ_BASE {
 
     public class REQ_BODY {
 
-        @JSONField(name = "StartDt")
+        @JSONField(name = "CHK_START_DATE")
         private Integer startDt;    // 核查开始时间
 
-        @JSONField(name = "EndDt")
+        @JSONField(name = "CHK_END_DATE")
         private Integer endDt; //核查结束时间
 
-        @JSONField(name = "OrigBranchId")
+        @JSONField(name = "ORIG_CHK_ORG_ID")
         private String origBranchId; //原核查机构号
 
-        @JSONField(name = "OrigUserId")
+        @JSONField(name = "ORIG_CHK_TELLER_ID")
         private String origUserId; // 原核查柜员号
 
         @JSONField(name = "ORIG_APPLY_MSG_ID")

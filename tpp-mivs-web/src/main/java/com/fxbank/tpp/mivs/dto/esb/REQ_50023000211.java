@@ -55,33 +55,33 @@ public class REQ_50023000211 extends REQ_BASE {
     public class REQ_BODY {
 
         @JSONField(name = "ORIG_APPLY_MSG_ID")
-        private String orgnlDlvrgMsgId; //原申请报文标识号  原 mivs.320.001.01或mivs.322.001.01 的报文标识号
+        private String orgnlDlvrgMsgId; //原申请报文标识号  原 mivs.324.001.01
 
         @JSONField(name = "ORIG_ANSWER_MSG_ID")
-        private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.321.001.01或mivs.323.001.01 的报文标识号
-
-        @JSONField(name = "EntityName")
-        private String entNm;    //企业名称
+        private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.325.001.01
 
         @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;        //统一社会信用代码
 
-        @JSONField(name = "NmOfLglPrsn")
+        @JSONField(name = "CORP_NAME")
+        private String entNm;    //企业名称
+
+        @JSONField(name = "COMPANY_NM")
         private String nmOfLglPrsn;        //法定代表人或单位负责人姓名
 
-        @JSONField(name = "IdOfLglPrsn")
+        @JSONField(name = "REP_DOCUMENT_ID")
         private String idOfLglPrsn;        //法定代表人或单位负责人身份证件号
 
-        @JSONField(name = "TraNm")
+        @JSONField(name = "FONT_NAME")
         private String traNm;        //字号名称
 
-        @JSONField(name = "Nm")
+        @JSONField(name = "OPRTNG_NAME")
         private String nm;        //经营者姓名
 
-        @JSONField(name = "Id")
+        @JSONField(name = "OPRTNG_DOCUMENT_ID")
         private String id;        //经营者证件号
 
-        @JSONField(name = "Rslt")
+        @JSONField(name = "ITEM_INFO_RESULT")
         private String rslt;        //登记信息核查结果
 
         @JSONField(name = "DATA_SOURCE_DATE")

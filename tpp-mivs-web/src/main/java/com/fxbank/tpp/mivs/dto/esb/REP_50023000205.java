@@ -58,7 +58,7 @@ public class REP_50023000205 extends REP_BASE {
 
     public class REP_BODY {
         //循环开始
-        @JSONField(name = "ResultList")
+        @JSONField(name = "TXPYR_INFO_ARRAY")
         private List<resultList> resultList;//查询结果信息
 
         public List<resultList> getResultList() {
@@ -80,64 +80,64 @@ public class REP_50023000205 extends REP_BASE {
 
     public static class resultList {
 
-        @JSONField(name = "OrigTranDate")
+        @JSONField(name = "ORIG_CHK_DATE")
         private String origTranDate;
 
-        @JSONField(name = "OrigSeqNo")
+        @JSONField(name = "ORIG_CHK_SEQ_NO")
         private String origSeqNo;
 
-        @JSONField(name = "OrigTranTime")
+        @JSONField(name = "ORIG_CHK_TIME")
         private String origTranTime;
 
-        @JSONField(name = "OrgnlDlvrgMsgId")
+        @JSONField(name = "ORIG_APPLY_MSG_ID")
         private String orgnlDlvrgMsgId;
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name = "OrigInstgPty")
+        @JSONField(name = "ORIG_INSTG_PTY")
         private String origInstgPty;
 
-        @JSONField(name = "OrigBranchId")
+        @JSONField(name = "ORIG_CHK_ORG_ID")
         private String origBranchId;
 
-        @JSONField(name = "OrigUserId")
+        @JSONField(name = "ORIG_CHK_TELLER_ID")
         private String origUserId;
 
-        @JSONField(name = "CoNm")
+        @JSONField(name = "COMPANY_NAME")
         private String coNm;
 
-        @JSONField(name = "UniSocCdtCd")
+        @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;
 
-        @JSONField(name = "TxpyrIdNb")
+        @JSONField(name = "TXPYR_DIST_NO")
         private String txpyrIdNb;
 
-        @JSONField(name = "Rslt")
+        @JSONField(name = "MOBILE_VER_RESULT")
         private String rslt;
 
-        @JSONField(name = "DataResrcDt")
+        @JSONField(name = "DATA_SOURCE_DATE")
         private String dataResrcDt;
 
-        @JSONField(name = "TxpmtInfCnt")
+        @JSONField(name = "TXPMT_INF_CNT")
         private Integer txpmtInfCnt;
 
-        @JSONField(name = "ProcSts")
+        @JSONField(name = "MSG_RFS_STATUS")
         private String procSts;
 
-        @JSONField(name = "ProcCd")
+        @JSONField(name = "MSG_RFS_CODE")
         private String procCd;
 
-        @JSONField(name = "Rjctinf")
+        @JSONField(name = "MSG_RFS_INFO")
         private String rjctinf;
 
-        @JSONField(name = "Remarks1")
+        @JSONField(name = "RESERVE_FIELD1")
         private String remarks1;
 
-        @JSONField(name = "Remarks2")
+        @JSONField(name = "RESERVE_FIELD2")
         private String remarks2;
 
-        @JSONField(name = "Remarks3")
+        @JSONField(name = "RESERVE_FIELD3")
         private String remarks3;
 
         public String getOrigTranDate() {

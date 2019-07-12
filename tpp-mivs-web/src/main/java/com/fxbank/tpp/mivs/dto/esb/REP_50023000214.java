@@ -46,7 +46,7 @@ public class REP_50023000214 extends REP_BASE {
     }
 
     public class REP_BODY {
-        @JSONField(name = "ProcCd")
+        @JSONField(name = "BUSI_PROCESS_CODE")
         private String procCd = null;
 
         public String getProcCd() {

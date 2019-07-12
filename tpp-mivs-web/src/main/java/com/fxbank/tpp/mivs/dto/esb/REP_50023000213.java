@@ -49,7 +49,7 @@ public class REP_50023000213 extends REP_BASE {
 
     public class REP_BODY {
         //循环开始
-        @JSONField(name = "ResultList")
+        @JSONField(name = "NOTICE_INFO_ARRAY")
         private List<resultList> resultList;//查询结果信息
 
         public List<REP_50023000213.resultList> getResultList() {
@@ -70,31 +70,31 @@ public class REP_50023000213 extends REP_BASE {
 
     public static class resultList{
 
-        @JSONField(name = "msgid")
+        @JSONField(name = "MSG_ID")
         private String msgId;
 
-        @JSONField(name = "cre_dt_tm")
+        @JSONField(name = "SEND_TIME")
         private String creDtTm;
 
-        @JSONField(name = "instg_drct_pty")
+        @JSONField(name = "INSTG_DRCT_PTY")
         private String instgDrctPty;
 
-        @JSONField(name = "instg_pty")
+        @JSONField(name = "INSTG_PTY")
         private String instgPty;
 
-        @JSONField(name = "instd_drct_pty")
+        @JSONField(name = "INSTD_DRCT_PTY")
         private String instdDrctPty;
 
-        @JSONField(name = "instd_pty")
+        @JSONField(name = "INSTD_PTY")
         private String instdPty;
 
-        @JSONField(name = "rply_flag")
+        @JSONField(name = "RPLY_FLAG")
         private String rplyFlag;
 
-        @JSONField(name = "msg_cntt")
+        @JSONField(name = "MSG_INFO")
         private String msgCntt;
 
-        @JSONField(name = "isornot_rsp")
+        @JSONField(name = "RPLY_IND")
         private String isornotRsp;
 
         public String getMsgId() {

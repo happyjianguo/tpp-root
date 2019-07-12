@@ -49,13 +49,13 @@ public class REQ_50023000213 extends REQ_BASE {
     }
 
     public class REQ_BODY {
-        @JSONField(name = "StartDt")
+        @JSONField(name = "CHK_START_DATE")
         private Integer startDt;    // 核查开始时间
 
-        @JSONField(name = "EndDt")
+        @JSONField(name = "CHK_END_DATE")
         private Integer endDt; //核查结束时间
 
-        @JSONField(name = "RplyFlag")
+        @JSONField(name = "RPLY_FLAG")
         private String rplyFlag;        //回复标志
 
         public Integer getStartDt() {

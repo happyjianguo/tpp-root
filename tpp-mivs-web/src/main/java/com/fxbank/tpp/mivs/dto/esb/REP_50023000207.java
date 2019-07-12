@@ -56,26 +56,32 @@ public class REP_50023000207 extends REP_BASE {
 
     public class REP_BODY {
 
-        @JSONField(name = "ProcSts")
+        @JSONField(name = "TRADE_STATUS")
         private String procSts;//申请报文处理状态
 
-        @JSONField(name = "ProcCd")
+        @JSONField(name = "BUSI_PROCESS_CODE")
         private String procCd;//申请报文处理码
 
-        @JSONField(name="PtyId")
+        @JSONField(name="RFS_BUSI_BANK_NO")
         private String ptyId;//拒绝业务的参与机构行号
 
-        @JSONField(name = "PtyPrcCd")
+        @JSONField(name = "BUSI_RFS_CODE")
         private String ptyPrcCd;//参与机构业务拒绝码
 
-        @JSONField(name = "RjctInf")
+        @JSONField(name = "BUSI_RFS_INFO")
         private String rjctInf;//申请报文拒绝信息
 
-        @JSONField(name = "PrcDt")
+        @JSONField(name = "DEAL_DATE")
         private String prcDt;//处理日期（终态日期）
 
-        @JSONField(name = "NetgRnd")
-        private String netgRnd;//轧差场次
+        @JSONField(name = "RESERVE_FIELD1")
+        private String remarks1;
+
+        @JSONField(name = "RESERVE_FIELD2")
+        private String remarks2;
+
+        @JSONField(name = "RESERVE_FIELD3")
+        private String remarks3;
 
         public String getProcSts() {
             return procSts;
@@ -125,12 +131,28 @@ public class REP_50023000207 extends REP_BASE {
             this.prcDt = prcDt;
         }
 
-        public String getNetgRnd() {
-            return netgRnd;
+        public String getRemarks1() {
+            return remarks1;
         }
 
-        public void setNetgRnd(String netgRnd) {
-            this.netgRnd = netgRnd;
+        public void setRemarks1(String remarks1) {
+            this.remarks1 = remarks1;
+        }
+
+        public String getRemarks2() {
+            return remarks2;
+        }
+
+        public void setRemarks2(String remarks2) {
+            this.remarks2 = remarks2;
+        }
+
+        public String getRemarks3() {
+            return remarks3;
+        }
+
+        public void setRemarks3(String remarks3) {
+            this.remarks3 = remarks3;
         }
     }
 }

@@ -57,61 +57,37 @@ public class REP_50023000210 extends REP_BASE {
 
 
     public static class REP_BODY {
-        //登记核查结果
-        @JSONField(name = "TXPYR_INFO_VER_RESULT")
-        private String rslt;
-
-        //“数据源日期”
-        @JSONField(name = "DATA_SOURCE_DATE")
-        private String dataResrcD;
-
         //循环开始
-        @JSONField(name = "BasInfoEnt")
+        @JSONField(name = "BASENT_INFO_ARRAY")
         private List<BasInfoEnt> basInfoEntList;//企业照面信息部分
 
         //循环开始
-        @JSONField(name = "BasInfOfSlfEplydPpl")
+        @JSONField(name = "BASSLF_INFO_ARRAY")
         private List<BasInfOfSlfEplydPpl> basInfOfSlfEplydPplList;//个体户照面信息部分
 
         //循环开始
-        @JSONField(name = "CoShrhdrFndInfo")
+        @JSONField(name = "CSF_INFO_ARRAY")
         private List<CoShrhdrFndInfo> coShrhdrFndInfoList;//企业股东及出资信息部分
 
         //循环开始
-        @JSONField(name = "DirSupSrMgrInfo")
+        @JSONField(name = "DSM_INFO_ARRAY")
         private List<DirSupSrMgrInfo> dirSupSrMgrInfoList;//董事监事及高管信息
 
         //循环开始
-        @JSONField(name = "ChngInfo")
+        @JSONField(name = "CHNG_INFO_ARRAY")
         private List<ChngInfo> chngInfoList;//变更信息
 
         //循环开始
-        @JSONField(name = "AbnmlBizInfo")
+        @JSONField(name = "ABNORMAL_INFO_ARRAY")
         private List<AbnmlBizInfo> abnmlBizInfoList;//异常经营信息
 
         //循环开始
-        @JSONField(name = "IllDscrtInfo")
+        @JSONField(name = "DSCRT_INFO_ARRAY")
         private List<IllDscrtInfo> illDscrtInfoList;//严重违法失信信息
 
         //循环开始
-        @JSONField(name = "LicNull")
+        @JSONField(name = "LIC_NULL_INFO_ARRAY")
         private List<LicNull> licNullList;//营业执照作废声明
-
-        public String getRslt() {
-            return rslt;
-        }
-
-        public void setRslt(String rslt) {
-            this.rslt = rslt;
-        }
-
-        public String getDataResrcD() {
-            return dataResrcD;
-        }
-
-        public void setDataResrcD(String dataResrcD) {
-            this.dataResrcD = dataResrcD;
-        }
 
         public List<BasInfoEnt> getBasInfoEntList() {
             return basInfoEntList;
@@ -180,8 +156,6 @@ public class REP_50023000210 extends REP_BASE {
         @Override
         public String toString() {
             return "REP_BODY{" +
-                    "rslt='" + rslt + '\'' +
-                    ", dataResrcD='" + dataResrcD + '\'' +
                     ", basInfoEntList=" + basInfoEntList +
                     ", basInfOfSlfEplydPplList=" + basInfOfSlfEplydPplList +
                     ", coShrhdrFndInfoList=" + coShrhdrFndInfoList +
@@ -197,52 +171,52 @@ public class REP_50023000210 extends REP_BASE {
     //以下信息 当“纳税信息核查结果”为“MCHD” 时填
     public static class BasInfoEnt{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name ="PGNB")
+        @JSONField(name ="PAGES")
         private Integer pgNb;
 
-        @JSONField(name ="MARKETTYPE")
+        @JSONField(name ="MAIN_BODY_TYPE")
         private Integer marketType;
 
-        @JSONField(name = "EntNm")
+        @JSONField(name = "CORP_NAME")
         private String entNm;
 
-        @JSONField(name = "UniSocCdtCd")
+        @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;
 
-        @JSONField(name = "CoTp")
+        @JSONField(name = "MARKET_BODY_TYPE")
         private String coTp;
 
-        @JSONField(name = "Dom")
+        @JSONField(name = "HOME_ADDRESS")
         private String dom;
 
-        @JSONField(name = "RegCptl")
+        @JSONField(name = "AUTH_CAPITAL")
         private String regCptl;
 
-        @JSONField(name = "DtEst")
+        @JSONField(name = "BUILD_DATE")
         private String dtEst;
 
-        @JSONField(name = "OpPrdFrom")
+        @JSONField(name = "OPRTNG_STR_DATE")
         private String opPrdFrom;
 
-        @JSONField(name = "OpPrdTo")
+        @JSONField(name = "OPRTNG_END_DATE")
         private String opPrdTo;
 
-        @JSONField(name = "RegSts")
+        @JSONField(name = "REGIST_STATUS")
         private String regSts;
 
-        @JSONField(name = "NmOfLglPrsn")
+        @JSONField(name = "COMPANY_NM")
         private String nmOfLglPrsn;
 
-        @JSONField(name = "RegAuth")
+        @JSONField(name = "REG_ORG")
         private String regAuth;
 
-        @JSONField(name = "BizScp")
+        @JSONField(name = "BUSINESS_SCOPE")
         private String bizScp;
 
-        @JSONField(name = "dtAppr")
+        @JSONField(name = "APRV_DATE")
         private String dtAppr;
 
         public String getOrgnlRcvgMsgId() {
@@ -398,46 +372,46 @@ public class REP_50023000210 extends REP_BASE {
 
     public static class BasInfOfSlfEplydPpl {
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name = "PGNB")
+        @JSONField(name = "PAGES")
         private Integer pgNb;
 
-        @JSONField(name = "MARKETTYPE")
+        @JSONField(name = "MAIN_BODY_TYPE")
         private Integer marketType;
 
-        @JSONField(name = "TraNm")
+        @JSONField(name = "FONT_NAME")
         private String traNm;
 
-        @JSONField(name = "UniSocCdtCd")
+        @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;
 
-        @JSONField(name = "CoTp")
+        @JSONField(name = "MARKET_BODY_TYPE")
         private String coTp;
 
-        @JSONField(name = "OpLoc")
+        @JSONField(name = "OPRTNG_SITE")
         private String opLoc;
 
-        @JSONField(name = "FdAmt")
+        @JSONField(name = "FUND_AMT")
         private String fdAmt;
 
-        @JSONField(name = "DtReg")
+        @JSONField(name = "BUILD_DATE")
         private String dtReg;
 
-        @JSONField(name = "RegSts")
+        @JSONField(name = "REGIST_STATUS")
         private String regSts;
 
-        @JSONField(name = "Nm")
+        @JSONField(name = "OPRTNG_NAME")
         private String nm;
 
-        @JSONField(name = "RegAuth")
+        @JSONField(name = "REG_ORG")
         private String regAuth;
 
-        @JSONField(name = "BizScp")
+        @JSONField(name = "BUSINESS_SCOPE")
         private String bizScp;
 
-        @JSONField(name = "dtAppr")
+        @JSONField(name = "APRV_DATE")
         private String dtAppr;
 
         public String getOrgnlRcvgMsgId() {
@@ -575,34 +549,34 @@ public class REP_50023000210 extends REP_BASE {
 
     public static class CoShrhdrFndInfo {
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name ="PGNB")
+        @JSONField(name ="PAGES")
         private Integer pgNb;
 
-        @JSONField(name ="CoShrhdrfndInfoNb")
+        @JSONField(name ="QUERY_NUM")
         private Integer coShrhdrfndInfoNb;
 
-        @JSONField(name ="NatlPrsnFlag")
+        @JSONField(name ="NATL_PRSN_FLAG")
         private Integer natlPrsnFlag;
 
-        @JSONField(name = "InvtrNm")
+        @JSONField(name = "INVESTOR_NAME")
         private String invtrNm;
 
-        @JSONField(name = "InvtrId")
+        @JSONField(name = "INVESTOR_DOCUMENT_ID")
         private String invtrId;
 
-        @JSONField(name = "SubscrCptlConAmt")
+        @JSONField(name = "PAID_IN_AMT")
         private String subscrCptlConAmt;
 
-        @JSONField(name = "ActlCptlConAmt")
+        @JSONField(name = "ACTUAL_IN_AMT")
         private String actlCptlConAmt;
 
-        @JSONField(name = "SubscrCptlConFm")
+        @JSONField(name = "PAID_IN_TYPE")
         private String subscrCptlConFm;
 
-        @JSONField(name = "SubscrCptlConDt")
+        @JSONField(name = "PAID_IN_DATE")
         private String subscrCptlConDt;
 
         public String getOrgnlRcvgMsgId() {
@@ -704,19 +678,19 @@ public class REP_50023000210 extends REP_BASE {
 
     public static class DirSupSrMgrInfo{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name ="PGNB")
+        @JSONField(name ="PAGES")
         private Integer pgNb;
 
-        @JSONField(name ="DirSupSrMgrInfoNb")
+        @JSONField(name ="QUERY_NUM")
         private Integer dirSupSrMgrInfoNb;
 
-        @JSONField(name = "Nm")
+        @JSONField(name = "NAME")
         private String nm;
 
-        @JSONField(name = "Posn")
+        @JSONField(name = "POST")
         private String posn;
 
         public String getOrgnlRcvgMsgId() {
@@ -773,25 +747,25 @@ public class REP_50023000210 extends REP_BASE {
 
     public static class ChngInfo{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name ="PGNB")
+        @JSONField(name ="PAGES")
         private Integer pgNb;
 
-        @JSONField(name ="ChngInfoNb")
+        @JSONField(name ="QUERY_NUM")
         private Integer chngInfoNb;
 
-        @JSONField(name = "CHNG_ITM")
+        @JSONField(name = "CHANGE_ITM")
         private String chngItm;
 
-        @JSONField(name = "BF_CHNG")
+        @JSONField(name = "BEFORE_CONTENT")
         private String bfChng;
 
-        @JSONField(name = "AFT_CHNG")
+        @JSONField(name = "AFTER_CONTENT")
         private String aftChng;
 
-        @JSONField(name = "DT_OF_CHNG")
+        @JSONField(name = "CHANGE_DATE")
         private String dtOfChng;
 
         public String getOrgnlRcvgMsgId() {
@@ -866,13 +840,13 @@ public class REP_50023000210 extends REP_BASE {
 
     public static class AbnmlBizInfo{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name ="PGNB")
+        @JSONField(name ="PAGES")
         private Integer pgNb;
 
-        @JSONField(name ="AbnInfoNb")
+        @JSONField(name ="QUERY_NUM")
         private Integer abnInfoNb;
 
         @JSONField(name = "ABNML_CAUSE")
@@ -881,7 +855,7 @@ public class REP_50023000210 extends REP_BASE {
         @JSONField(name = "ABNML_DATE")
         private String abnmlDate;
 
-        @JSONField(name = "ABNML_CAUSE_DCSN_AUTH")
+        @JSONField(name = "ABNML_DEPARTMENT")
         private String abnmlCauseDcsnAuth;
 
         @JSONField(name = "RMV_CAUSE")
@@ -890,7 +864,7 @@ public class REP_50023000210 extends REP_BASE {
         @JSONField(name = "RMV_DATE")
         private String rmvDate;
 
-        @JSONField(name = "RMV_CAUSE_DCSN_AUTH")
+        @JSONField(name = "RMV_DEPARTMENT")
         private String rmvCauseDcsnAuth;
 
         public String getOrgnlRcvgMsgId() {
@@ -983,32 +957,32 @@ public class REP_50023000210 extends REP_BASE {
 
     public static class IllDscrtInfo{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name ="PGNB")
+        @JSONField(name ="PAGES")
         private Integer pgNb;
 
-        @JSONField(name ="ILL_INFO_NB")
+        @JSONField(name ="QUERY_NUM")
         private Integer illInfoNb;
 
-        @JSONField(name = "ILL_DSCRT_CAUSE")
+        @JSONField(name = "ABNML_CAUSE")
         private String illDscrtCause;
 
         @JSONField(name = "ABNML_DATE")
         private String abnmlDate;
 
-        @JSONField(name = "ABNML_CAUSE_DCSN_AUTH")
+        @JSONField(name = "ABNML_DEPARTMENT")
         private String abnmlCauseDcsnAuth;
 
         @JSONField(name = "RMV_CAUSE")
         private String rmvCause;
 
-        @JSONField(name = "RMV_DATE")
-        private String rmvDate;
-
         @JSONField(name = "RMV_CAUSE_DCSN_AUTH")
         private String rmvCauseDcsnAuth;
+
+        @JSONField(name = "RMV_DATE")
+        private String rmvDate;
 
         public String getOrgnlRcvgMsgId() {
             return orgnlRcvgMsgId;
@@ -1100,32 +1074,32 @@ public class REP_50023000210 extends REP_BASE {
 
     public static class LicNull{
 
-        @JSONField(name = "OrgnlRcvgMsgId")
+        @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId;
 
-        @JSONField(name ="PGNB")
+        @JSONField(name ="PAGES")
         private Integer pgNb;
 
-        @JSONField(name ="LIC_INFO_NB")
+        @JSONField(name ="QUERY_NUM")
         private Integer licInfoNb;
 
-        @JSONField(name = "ORGNL_OR_CP")
+        @JSONField(name = "ORGN_FLAG")
         private String orgnlOrCp;
 
-        @JSONField(name = "LIC_NULL_STM_DT")
+        @JSONField(name = "DCLR_INFO")
+        private String licNullStmCntt;
+
+        @JSONField(name = "DCLR_DATE")
         private String licNullStmDt;
 
-        @JSONField(name = "RPL_STS")
+        @JSONField(name = "RPL_FLAG")
         private String rplSts;
 
-        @JSONField(name = "RPL_DT")
+        @JSONField(name = "RPL_DATE")
         private String rplDt;
 
-        @JSONField(name = "LIC_CP_NB")
+        @JSONField(name = "BUSINESS_LICENCE_NO")
         private String licCpNb;
-
-        @JSONField(name = "LIC_NULL_STM_CNTT")
-        private String licNullStmCntt;
 
         public String getOrgnlRcvgMsgId() {
             return orgnlRcvgMsgId;

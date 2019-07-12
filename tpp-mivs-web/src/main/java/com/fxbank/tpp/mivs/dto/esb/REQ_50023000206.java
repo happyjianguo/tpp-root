@@ -50,10 +50,10 @@ public class REQ_50023000206 extends REQ_BASE {
 
     public class REQ_BODY {
 
-        @JSONField(name = "OrigTranDate")
+        @JSONField(name = "ORIG_CHK_DATE")
         private String origTranDate;    // 核查开始时间
 
-        @JSONField(name = "OrigSeqNo")
+        @JSONField(name = "ORIG_CHK_SEQ_NO")
         private String origSeqNo; //核查结束时间
 
         @JSONField(name = "ORIG_APPLY_MSG_ID")
@@ -62,7 +62,7 @@ public class REQ_50023000206 extends REQ_BASE {
         @JSONField(name = "ORIG_ANSWER_MSG_ID")
         private String orgnlRcvgMsgId; //原申请报文标识号  原 mivs.321.001.01或mivs.323.001.01 的报文标识号
 
-        @JSONField(name = "OrigInstgPty")
+        @JSONField(name = "ORIG_INSTG_PTY")
         private String origInstgPty;
 
         public String  getOrigTranDate() {

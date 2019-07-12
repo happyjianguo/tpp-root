@@ -205,7 +205,7 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
             repBody.setPtyPrcCd(cmonConfInf.getPtyPrcCd());
             repBody.setRjctInf(cmonConfInf.getRjctInf());
             repBody.setPrcDt(cmonConfInf.getPrcDt());
-            repBody.setNetgRnd(cmonConfInf.getNetgRnd());
+            repBody.setRemark1(cmonConfInf.getNetgRnd());
 
             //待更新数据库数据
             regVrfctnInfoModelUpdate.setMivs_sts("04");

@@ -49,15 +49,15 @@ public class REQ_50023000212 extends REQ_BASE {
     }
 
     public class REQ_BODY {
-        @JSONField(name = "ENT_NAME")
+        @JSONField(name = "CORP_NAME")
         private String entNm;    //企业名称
-        @JSONField(name = "TRA_NAME")
+        @JSONField(name = "FONT_NAME")
         private String traNm;    //个体户名称
         @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;        //统一社会信用代码
-        @JSONField(name = "ACCT_STS")
+        @JSONField(name = "ACCT_STATUS")
         private String acctSts;        //账户状态标识
-        @JSONField(name = "CHNG_DT")
+        @JSONField(name = "CHANGE_DATE")
         private String chngDt;    //变更日期
         @JSONField(name = "RESERVE_FIELD1")
         private String remarks1;        //备用字段1

@@ -48,19 +48,19 @@ public class REP_50023000206 extends REP_BASE {
     }
 
     public static class REP_BODY {
-        @JSONField(name = "CoNm")
+        @JSONField(name = "COMPANY_NAME")
         private String coNm;
 
-        @JSONField(name = "UniSocCdtCd")
+        @JSONField(name = "SOCIAL_CODE")
         private String uniSocCdtCd;
 
-        @JSONField(name = "TxpyrIdNb")
+        @JSONField(name = "TXPYR_DIST_NO")
         private String txpyrIdNb;
 
-        @JSONField(name = "Rslt")
+        @JSONField(name = "TXPYR_INFO_VER_RESULT")
         private String rslt;
 
-        @JSONField(name = "DataResrcDt")
+        @JSONField(name = "DATA_SOURCE_DATE")
         private String dataResrcDt;
 
         //循环开始TXPYR_INFO_ARRAY
