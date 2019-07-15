@@ -28,7 +28,6 @@ import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import com.fxbank.tpp.bocm.util.NumberUtil;
-import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 import redis.clients.jedis.Jedis;
 

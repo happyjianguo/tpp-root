@@ -25,7 +25,6 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
-import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.bocm.dto.esb.REP_30061001101;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30061001101;
