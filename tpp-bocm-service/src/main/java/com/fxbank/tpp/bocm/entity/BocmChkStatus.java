@@ -67,6 +67,18 @@ public class BocmChkStatus {
     @Column(name = "HOST_TX_AMT")
     private BigDecimal hostTxAmt;
 
+	/**
+     * null
+     */
+    @Column(name = "TX_BRANCH")
+    private String txBranch;
+    
+	/**
+     * null
+     */
+    @Column(name = "TX_TEL")
+    private String txTel;
+    
 	public Integer getChkDate() {
 		return chkDate;
 	}
@@ -145,6 +157,22 @@ public class BocmChkStatus {
 
 	public void setPlatTxAmt(BigDecimal platTxAmt) {
 		this.platTxAmt = platTxAmt;
+	}
+
+	public String getTxBranch() {
+		return txBranch;
+	}
+
+	public void setTxBranch(String txBranch) {
+		this.txBranch = txBranch;
+	}
+
+	public String getTxTel() {
+		return txTel;
+	}
+
+	public void setTxTel(String txTel) {
+		this.txTel = txTel;
 	}
 
 

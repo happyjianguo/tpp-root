@@ -163,13 +163,13 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
 				    myLog.info(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno());
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易超时,请确认交行卡记账状态");
 					throw e2;
 				}catch(Exception e1) {
 					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5",rbnkNo,sbnkNo,actBal,bocmRepcd,bocmRepmsg);	
 					myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账超时");
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易超时,请确认交行卡记账状态");
 					throw e2;
 				}
 			} else { // 目标系统应答失败
@@ -190,13 +190,13 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				bocmReversal(reqDto,bocmTraceNo,oTxnCd);
 			    myLog.info(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno());
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账未知错误");
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易异常，请求交行记账未知错误");
 				throw e2;
 			}catch(Exception e1) {
 				initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5",rbnkNo,sbnkNo,actBal,bocmRepcd,bocmRepmsg);	
 				myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e1);
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账未知错误");
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易异常，请求交行记账未知错误");
 				throw e2;
 			}
 		}

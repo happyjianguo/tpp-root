@@ -252,8 +252,9 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 	}
 	
 	@Override
-	public List<BocmSndTraceQueryModel> getSndTrace(MyLog myLog,String begDate,String endDate,String begTrace,String endTrace,String txAmt,String hostStatus)  throws SysTradeExecuteException {
-		List<BocmSndLog> tppSndTraceList = bocmSndLogMapper.selectSndTrace(begDate, endDate, begTrace, endTrace, txAmt,hostStatus);
+	public List<BocmSndTraceQueryModel> getSndTrace(MyLog myLog,String begDate,String endDate,String begTrace,String endTrace,
+			String txAmt,String hostStatus,String txBranch)  throws SysTradeExecuteException {
+		List<BocmSndLog> tppSndTraceList = bocmSndLogMapper.selectSndTrace(begDate, endDate, begTrace, endTrace, txAmt,hostStatus,txBranch);
 		List<BocmSndTraceQueryModel> sndTraceQueryModelList = new ArrayList<>();
 		for(BocmSndLog tpp : tppSndTraceList) {
 			BocmSndTraceQueryModel model = new BocmSndTraceQueryModel(myLog,tpp.getPlatDate(),tpp.getPlatTime(),tpp.getPlatTrace());
@@ -335,7 +336,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 	public List<BocmSndTraceQueryModel> getCheckSndTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
 			String date) throws SysTradeExecuteException {
 		BocmSndLog tcexSndLog = new BocmSndLog();
-		tcexSndLog.setTxDate(sysDate);
+		tcexSndLog.setTxDate(Integer.parseInt(date));
 		tcexSndLog.setCheckFlag("1");
 		List<BocmSndLog> dataList = bocmSndLogMapper.select(tcexSndLog);
 		List<BocmSndTraceQueryModel> modelList = new ArrayList<>();

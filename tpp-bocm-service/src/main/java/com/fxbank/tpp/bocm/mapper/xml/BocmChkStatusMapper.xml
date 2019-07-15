@@ -12,6 +12,8 @@
 	<result column="HOST_TX_AMT" property="hostTxAmt" jdbcType="DECIMAL" />
 	<result column="PLAT_TX_CNT" property="platTxCnt" jdbcType="DECIMAL" />
 	<result column="PLAT_TX_AMT" property="platTxAmt" jdbcType="DECIMAL" />
+	<result column="TX_BRANCH" jdbcType="NVARCHAR" property="txBranch" />
+	<result column="TX_TEL" jdbcType="NVARCHAR" property="txTel" />
   </resultMap>
   <select id="selectAll" resultMap="BaseResultMap" >
     select CHK_DATE, HOST_STATUS, BOCM_STATUS, PLAT_STATUS

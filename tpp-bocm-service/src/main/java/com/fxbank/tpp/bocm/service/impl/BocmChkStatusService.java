@@ -40,6 +40,8 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		entity.setHostTxAmt(new BigDecimal("0"));
 		entity.setPlatTxCnt(0);
 		entity.setPlatTxAmt(new BigDecimal("0"));
+		entity.setTxBranch(record.getTxBranch());
+		entity.setTxTel(record.getTxTel());
 		mapper.insertSelective(entity);
 	}	
 	
@@ -94,6 +96,8 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 			model.setPlatStatus(entity.getPlatStatus());
 			model.setPlatTxCnt(entity.getPlatTxCnt());
 			model.setPlatTxAmt(entity.getPlatTxAmt());
+			model.setTxBranch(entity.getTxBranch());
+			model.setTxTel(entity.getTxTel());
 			return model;
 		}else{
 			return null;
@@ -117,6 +121,8 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 			model.setPlatStatus(entity.getPlatStatus());
 			model.setPlatTxCnt(entity.getPlatTxCnt());
 			model.setPlatTxAmt(entity.getPlatTxAmt());
+			model.setTxBranch(entity.getTxBranch());
+			model.setTxTel(entity.getTxTel());
 			modelList.add(model);
 		}
 		return modelList;

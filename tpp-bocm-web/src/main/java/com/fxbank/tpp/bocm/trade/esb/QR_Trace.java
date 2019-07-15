@@ -61,11 +61,12 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 		String endTrace= reqBody.getPltfrmEndSeqT1();
 		String txAmt= reqBody.getTrnsAmtT3();
 		String hostStatus= reqBody.getIntbnkCnstStsT6();
+		String branchId = reqDto.getReqSysHead().getBranchId();
 		
 		logger.info("业务流水查询:行内处理状态："+hostStatus+" 起始日期："+begDate+" 结束日期："+endDate);
 		logger.info("业务流水查询:交易金额："+txAmt+" 平台起始流水："+begTrace+" 平台结束流水："+endTrace);
 		List<BocmSndTraceQueryModel> sndlist = sndTraceService.getSndTrace(myLog, begDate, endDate, begTrace, 
-				endTrace, txAmt, hostStatus);
+				endTrace, txAmt, hostStatus, branchId);
 		logger.info("往账记录:  "+sndlist.size());
 		
 		REP_30063001302.REP_BODY body = rep.getRepBody();

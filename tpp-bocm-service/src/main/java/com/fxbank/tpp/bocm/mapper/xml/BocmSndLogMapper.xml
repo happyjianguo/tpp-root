@@ -60,6 +60,9 @@
   <select id="selectSndTrace" resultMap="BaseResultMap">
     select * from bocm_snd_log
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="txBranch != null and txBranch != ''">
+        and tx_branch <![CDATA[ = ]]> #{txBranch}
+      </if>
       <if test="hostStatus != null and hostStatus != ''">
         and host_state <![CDATA[ = ]]> #{hostStatus}
       </if>
@@ -90,13 +93,7 @@
      tx_date=#{date} and dc_flag=#{flag} and host_state=1 and check_flag in ('2','3')
   </select>
   <select id="selectCheckedTrace" resultMap="BaseResultMap">
-    select plat_date, plat_trace, plat_time, source_type, tx_branch,tran_type, tx_ind,tx_code, dc_flag, 
-    tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name, 
-    fee,fee_flag,proxy_fee,proxy_flag, 
-    bocm_branch, bocm_date, bocm_traceno, check_flag, host_state, bocm_state, tx_tel, 
-    chk_tel, auth_tel, print, info,ret_code,ret_msg,host_branch,
-    fee_flag,fee,snd_bankno,rcv_bankno,payer_bank,payer_acttp,payee_bank,payee_acttp
-    from bocm_snd_log where tx_date=#{date} and host_state=1 and check_flag in ('2','3')
+    select * from bocm_snd_log where tx_date=#{date} and host_state=1 and check_flag in ('2','3')
   </select>
   <select id="selectTraceNum" resultType="java.lang.String" >
     select count(*) as num from bocm_snd_log where tx_date=#{date}  

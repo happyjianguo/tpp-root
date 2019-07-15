@@ -248,7 +248,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 	public List<BocmRcvTraceQueryModel> getCheckRcvTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
 			String date) throws SysTradeExecuteException {
 		BocmRcvLog tcexRcvLog = new BocmRcvLog();
-		tcexRcvLog.setPlatDate(Integer.parseInt(date));
+		tcexRcvLog.setTxDate(Integer.parseInt(date));
 		tcexRcvLog.setCheckFlag("1");
 		List<BocmRcvLog> dataList = bocmRcvLogMapper.select(tcexRcvLog);
 		List<BocmRcvTraceQueryModel> modelList = new ArrayList<>();

@@ -34,6 +34,10 @@ public class BocmChkStatusModel implements Serializable{
     private Integer hostTxCnt;
     //我行为主交易金额
     private BigDecimal hostTxAmt;
+    //交易机构
+    private String txBranch;
+    //交易柜员
+    private String txTel;
     
 	public Integer getChkDate() {
 		return chkDate;
@@ -94,6 +98,18 @@ public class BocmChkStatusModel implements Serializable{
 	}
 	public void setPlatTxAmt(BigDecimal platTxAmt) {
 		this.platTxAmt = platTxAmt;
+	}
+	public String getTxBranch() {
+		return txBranch;
+	}
+	public void setTxBranch(String txBranch) {
+		this.txBranch = txBranch;
+	}
+	public String getTxTel() {
+		return txTel;
+	}
+	public void setTxTel(String txTel) {
+		this.txTel = txTel;
 	}
 
     
