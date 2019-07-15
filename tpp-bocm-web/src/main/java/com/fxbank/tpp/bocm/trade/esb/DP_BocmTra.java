@@ -94,8 +94,11 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {		
 				try {
 					hostReversal(reqDto,hostTraceno);
+					initRecord(reqDto, hostDate, hostTraceno, "4", retCode, retMsg);
+					myLog.info(logger, "本行卡付款转账,本行核心记账超时,核心冲正成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}catch(SysTradeExecuteException e1) {
-					myLog.error(logger, "交行卡存现金,核心记账超时，本行核心冲正异常");
+					initRecord(reqDto, hostDate, hostTraceno, "5", retCode, retMsg);
+					myLog.info(logger, "本行卡付款转账,本行核心记账超时,核心冲正异常,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}
 				//超时不记录流水直接抛异常，如果记账成功，对账会失败
 				myLog.error(logger, "本行卡付款转账，本行核心记账接收ESB报文应答超时，渠道日期" + reqDto.getSysDate() + 

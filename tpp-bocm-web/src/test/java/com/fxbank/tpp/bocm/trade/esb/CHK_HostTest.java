@@ -73,7 +73,7 @@ public class CHK_HostTest {
 	public void init(){
 		req = new REQ_30061800501();
 		reqSysHead = new REQ_SYS_HEAD();
-		reqSysHead.setServiceId("300618005");
+		reqSysHead.setServiceId("300610011");
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");

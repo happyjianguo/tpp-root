@@ -335,7 +335,7 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 	public List<BocmSndTraceQueryModel> getCheckSndTrace(MyLog myLog, Integer sysDate, Integer sysTime, Integer sysTraceno,
 			String date) throws SysTradeExecuteException {
 		BocmSndLog tcexSndLog = new BocmSndLog();
-		tcexSndLog.setPlatDate(Integer.parseInt(date));
+		tcexSndLog.setTxDate(sysDate);
 		tcexSndLog.setCheckFlag("1");
 		List<BocmSndLog> dataList = bocmSndLogMapper.select(tcexSndLog);
 		List<BocmSndTraceQueryModel> modelList = new ArrayList<>();
@@ -371,6 +371,9 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
 			model.setTranType(data.getTranType());
+			
+			model.setProxy_flag(data.getProxyFlag());
+			model.setProxy_fee(data.getProxyFee());
 			
 			modelList.add(model);
 		}

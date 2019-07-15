@@ -93,7 +93,9 @@ public class QR_CB extends TradeBase implements TradeExecutionStrategy {
 		}
 		trace.setPlatDate(model.getPlatDate()+"");
 		trace.setPlatTrace(model.getPlatTrace()+"");
-		trace.setHostDate(model.getHostDate()+"");
+		if(model.getHostDate()!=null){
+			trace.setHostDate(model.getHostDate()+"");
+		}
 		trace.setHostTrace(model.getHostTraceno());
 		if(model.getTxDate()!=null){
 			trace.setTxDate(model.getTxDate()+"");
@@ -101,14 +103,18 @@ public class QR_CB extends TradeBase implements TradeExecutionStrategy {
 		trace.setSndBank(model.getSndBankno());
 		trace.setTxBranch(model.getTxBranch());
 		trace.setTxTel(model.getTxTel());
-		String txInd = model.getTxInd();
-		if(txInd.equals("0")){
-			trace.setTxMod("现金");
+		if(model.getTxInd()!=null){
+			String txInd = model.getTxInd();
+			if(txInd.equals("0")){
+				trace.setTxMod("现金");
+			}
+			if(txInd.equals("1")){
+				trace.setTxMod("转账");
+			}
 		}
-		if(txInd.equals("1")){
-			trace.setTxMod("转账");
-		}
-		trace.setTxAmt(model.getTxAmt().toString());
+		if(model.getTxAmt()!=null){
+			trace.setTxAmt(model.getTxAmt().toString());
+		}		
 		if(model.getProxyFee()!=null){
 			trace.setProxyFee(model.getProxyFee().toString());
 		}
