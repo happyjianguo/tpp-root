@@ -1,31 +1,41 @@
-package com.fxbank.tpp.bocm.trade.esb;
+package com.fxbank.tpp.manager.quartz;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
+import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
-import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
-import com.fxbank.tpp.bocm.dto.esb.REP_30063001304;
-import com.fxbank.tpp.bocm.dto.esb.REQ_TS_CHK_FEE;
+import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
+import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
+import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
+import com.fxbank.tpp.bocm.model.REP_10103;
 import com.fxbank.tpp.bocm.model.REP_10103_FEE;
 import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.service.IBocmAcctCheckErrService;
+import com.fxbank.tpp.bocm.service.IBocmChkStatusService;
 import com.fxbank.tpp.bocm.service.IBocmDayCheckLogService;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
@@ -36,19 +46,22 @@ import com.fxbank.tpp.esb.service.IForwardToESBService;
 import redis.clients.jedis.Jedis;
 
 /** 
-* @ClassName: CHK_FEE 
-* @Description: 交行手续费对账
+* @ClassName: BocmFeeCheckTask 
+* @Description: 交行手续费获取定时
 * @author YePuLiang
-* @date 2019年6月22日 下午3:08:40 
+* @date 2019年7月16日 上午10:32:48 
 *  
 */
-@Service("REQ_TS_CHK_FEE")
-public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
-	
-	private static Logger logger = LoggerFactory.getLogger(CHK_FEE.class);
-	
-	@Resource
-	private LogPool logPool;
+@Configuration
+@Component
+@EnableScheduling
+public class BocmFeeCheckTask {
+	private static Logger logger = LoggerFactory.getLogger(BocmFeeCheckTask.class);
+
+	private static final String JOBNAME = "BocmFeeCheck";
+
+	@Reference(version = "1.0.0")
+	private IPublicService publicService;
 	
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
@@ -64,33 +77,27 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService rcvTraceService;
-	
+
 	@Reference(version = "1.0.0")
 	private IBocmAcctCheckErrService acctCheckErrService;
 	
 	@Reference(version = "1.0.0")
-	private IPublicService publicService;
+	private IBocmChkStatusService chkStatusService;
 	
 	@Resource
 	private MyJedis myJedis;
-	
-	private final static String COMMON_PREFIX = "bocm.";
 
-	@Override
-	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
+	private final static String COMMON_PREFIX = "bocm.";
+	
+	public void exec() throws Exception {
+		MyLog myLog = new MyLog();				
+		myLog.info(logger, "获取交行记录手续费对账文件信息");
 		
-		MyLog myLog = logPool.get();
-		REQ_TS_CHK_FEE reqDto = (REQ_TS_CHK_FEE) dto;
-		REQ_TS_CHK_FEE.REQ_BODY reqBody = reqDto.getReqBody();
-		REP_30063001304 rep = new REP_30063001304();
-		
-		myLog.info(logger, "外围与交行对账定时任务开始");		   
-		
-		Integer date = reqDto.getSysDate();
-		Integer sysTime = reqDto.getSysTime();
-		Integer sysTraceno =reqDto.getSysTraceno();
-		
-		date = Integer.parseInt(reqBody.getStmtDtT2());
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		myLog.info(logger, "对账日期："+settlementDate);
+		Integer date = Integer.parseInt(settlementDate);
+		Integer sysTime = publicService.getSysTime();
+		Integer sysTraceno = publicService.getSysTraceno();
 		Integer sysDate = date;
 		
 		//交行总行行号
@@ -102,7 +109,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
 			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
         }
-				
+
 		REQ_10103 req10103 = null;
 		REP_10103_FEE rep10103 = null;
 		
@@ -164,8 +171,43 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 				}
 			}
 		}
-		
-		return rep;
+	}
+	
+	@Bean(name = "bocmFeeCheckJobDetail")
+	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(BocmCheckAcctTask task) {// ScheduleTask为需要执行的任务
+		MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
+		jobDetail.setConcurrent(false);
+		jobDetail.setName(JOBNAME);
+		jobDetail.setGroup(QuartzJobConfigration.JOBGROUP);
+		jobDetail.setTargetObject(task);
+		jobDetail.setTargetMethod(QuartzJobConfigration.METHODNAME);
+		return jobDetail;
 	}
 
+	@Bean(name = "bocmFeeCheckJobTrigger")
+	public CronTriggerFactoryBean cityCheckAcctJobTrigger(
+			@Qualifier("bocmFeeCheckJobDetail") MethodInvokingJobDetailFactoryBean jobDetail) {
+		CronTriggerFactoryBean tigger = new CronTriggerFactoryBean();
+		tigger.setJobDetail(jobDetail.getObject());
+		String exp = null;
+		try (Jedis jedis = myJedis.connect()) {
+			exp = jedis.get(QuartzJobConfigration.TPP_CRON + JOBNAME);
+		}
+		if (exp == null) {
+			exp = "0 30 7 ? * *";
+		}
+		logger.info("任务[" + JOBNAME + "]启动[" + exp + "]");
+		tigger.setCronExpression(exp);
+		tigger.setName(JOBNAME);
+		return tigger;
+	}
+
+	@Bean(name = "bocmFeeCheckScheduler")
+	public SchedulerFactoryBean schedulerFactory(@Qualifier("bocmFeeCheckJobTrigger") Trigger cronJobTrigger) {
+		SchedulerFactoryBean bean = new SchedulerFactoryBean();
+		bean.setOverwriteExistingJobs(true);
+		bean.setStartupDelay(5);
+		bean.setTriggers(cronJobTrigger);
+		return bean;
+	}
 }

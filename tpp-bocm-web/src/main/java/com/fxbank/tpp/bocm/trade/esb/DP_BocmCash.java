@@ -97,7 +97,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 					myLog.info(logger, "交行卡存现金,本行核心记账超时,核心冲正成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}catch(SysTradeExecuteException e1) {
 					initRecord(reqDto, hostDate, hostTraceno, "5", retCode, retMsg);
-					myLog.info(logger, "交行卡存现金,本行核心记账超时,核心冲正异常,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+					myLog.info(logger, "交行卡存现金,本行核心记账超时,核心冲正异常,请核对记账状态,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}
 				//超时不记录流水直接抛异常，如果记账成功，对账会失败
 				myLog.error(logger, "交行卡存现金,本行核心记账接收ESB报文应答超时,渠道日期" + reqDto.getSysDate() + 
@@ -406,7 +406,10 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	* @return ESB_REP_30011000103    返回类型 
 	* @throws 
 	*/
-	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {		
+	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {	
+		
+
+		
 		MyLog myLog = logPool.get();
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
@@ -451,6 +454,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
+		
+		
 		return esbRep_30011000104;
 	}
 	
@@ -464,6 +469,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ModelBase magCardCharge(DataTransObject dto, REQ_10000 req10000) throws SysTradeExecuteException {
+		
+
 		
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
@@ -493,6 +500,13 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req10000.setThdMag(reqBody.getThrTrkInfoT1());	
 		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
 				REP_10000.class);		
+		
+		if(1==1){
+//			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);
+			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000009);			
+			throw e;
+		}
+		
 		return rep_10000;
 	}
 	/** 

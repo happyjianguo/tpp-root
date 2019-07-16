@@ -268,9 +268,7 @@ public class CHK_Bocm {
 		record.setBocmTxAmt(new BigDecimal(tolAmt.toString()));
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新与核心对账状态为已对账：  对账日期：" + date);
-		
-		chkStatusService.chkStatusUpd(record);
-		myLog.info(logger, "更新对账状态表信息");
+
 		return rep;
 	}
 

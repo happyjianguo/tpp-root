@@ -89,6 +89,7 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 	
 	private REP_30063001302.Trade transRepTrace(BocmSndTraceQueryModel model){
 		REP_30063001302.Trade trace = new REP_30063001302.Trade();
+		trace.setTxCode(model.getTxCode());
 		trace.setSource(model.getSourceType());
 		trace.setPlatDate(model.getPlatDate()+"");
 		trace.setPlatTrace(model.getPlatTrace()+"");

@@ -294,11 +294,17 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 
 			model.setSndBankno(tpp.getSndBankno());
 			model.setRcvBankno(tpp.getRcvBankno());
+			model.setPayerBank(tpp.getPayerBank());
+			model.setPayeeBank(tpp.getPayeeBank());
 			
 			model.setTranType(tpp.getTranType());
 			
 			model.setProxy_flag(tpp.getProxyFlag());
 			model.setProxy_fee(tpp.getProxyFee());
+			model.setFeeFlag(tpp.getFeeFlag());
+			model.setFee(tpp.getFee());
+			
+			model.setTxCode(tpp.getTxCode());
 								
 			sndTraceQueryModelList.add(model);
 		}
