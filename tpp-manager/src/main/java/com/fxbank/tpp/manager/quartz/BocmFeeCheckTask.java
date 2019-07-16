@@ -174,7 +174,7 @@ public class BocmFeeCheckTask {
 	}
 	
 	@Bean(name = "bocmFeeCheckJobDetail")
-	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(BocmCheckAcctTask task) {// ScheduleTask为需要执行的任务
+	public MethodInvokingJobDetailFactoryBean cityCheckAcctJobDetail(BocmFeeCheckTask task) {// ScheduleTask为需要执行的任务
 		MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
 		jobDetail.setConcurrent(false);
 		jobDetail.setName(JOBNAME);

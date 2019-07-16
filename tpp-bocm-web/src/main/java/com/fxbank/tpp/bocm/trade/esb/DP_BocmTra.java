@@ -15,6 +15,7 @@ import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
+import com.fxbank.cip.base.dto.REP_SYS_HEAD;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -95,15 +96,20 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				try {
 					hostReversal(reqDto,hostTraceno);
 					initRecord(reqDto, hostDate, hostTraceno, "4", retCode, retMsg);
-					myLog.info(logger, "本行卡付款转账,本行核心记账超时,核心冲正成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+					myLog.error(logger, "本行卡付款转账,本行核心记账超时,核心冲正成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+					//超时不记录流水直接抛异常，如果记账成功，对账会失败
 				}catch(SysTradeExecuteException e1) {
 					initRecord(reqDto, hostDate, hostTraceno, "5", retCode, retMsg);
-					myLog.info(logger, "本行卡付款转账,本行核心记账超时,核心冲正异常,请核对记账状态,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+					myLog.error(logger, "本行卡付款转账,本行核心记账超时,核心冲正异常,请核对记账状态,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+					//超时不记录流水直接抛异常，如果记账成功，对账会失败
+					myLog.error(logger, "本行卡付款转账，本行核心记账接收ESB报文应答超时，渠道日期" + reqDto.getSysDate() + 
+							"渠道流水号" + reqDto.getSysTraceno(), e);	
+					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",请核对记账状态,如果记账成功请进行抹账处理");
+					throw e2;
 				}
-				//超时不记录流水直接抛异常，如果记账成功，对账会失败
 				myLog.error(logger, "本行卡付款转账，本行核心记账接收ESB报文应答超时，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);	
-				SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",请核对记账状态,如果记账成功请进行抹账处理");
+				SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",请核对记账状态");
 				throw e2;
 			//其他错误
 			}else {
@@ -333,6 +339,13 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//5.交行记账成功，更新流水表交行记账状态
 		updateBocmRecord(reqDto,bocmDate,bocmTime,bocmTraceNo,"1",actBal,bocmRepcd,bocmRepmsg);
 		myLog.info(logger, "本行卡付款转账，交行"+cardTypeName+"通存记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());		
+		
+		REP_SYS_HEAD repSysHead = new REP_SYS_HEAD();
+		repSysHead.setSeqNo(reqDto.getSysTraceno()+"");
+		repSysHead.setReference(esbRep_30011000104.getRepBody().getReference());
+		rep.setRepSysHead(repSysHead);
+		myLog.info(logger,"交易成功，返回柜面核心流水号："+rep.getRepSysHead().getReference());
+		myLog.info(logger,"交易成功，返回柜面SEQNO："+rep.getRepSysHead().getSeqNo());
 		return rep;
 	}
 
@@ -417,6 +430,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {
+		
 		MyLog myLog = logPool.get();
 		REQ_30061000701 reqDto = (REQ_30061000701)dto;
 		REQ_30061000701.REQ_BODY reqBody = reqDto.getReqBody();
@@ -464,6 +478,9 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
+		
+
+		
 		return esbRep_30011000104;
 	}
 	
@@ -477,6 +494,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public REP_10000 magCardCharge(DataTransObject dto,REQ_10000 req10000) throws SysTradeExecuteException {
+		
 		REQ_30061000701 reqDto = (REQ_30061000701)dto;
 		REQ_30061000701.REQ_BODY reqBody = reqDto.getReqBody();
 		

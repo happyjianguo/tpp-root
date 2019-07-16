@@ -454,60 +454,12 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req20001.setARQC(reqBody.getIcCard91T());//IC卡发卡行认证
 		req20001.setICAID(reqBody.getIcCard9f09T());//IC卡应用编号
 		req20001.setICOutDate(reqBody.getIcCardAvaiDtT());//IC卡有效期
+		req20001.setICOutDate("241231");//IC卡有效期
 		req20001.setICData(reqBody.getIcCardF55T());//IC卡数据域（55域）
 		//向交行系统发送交行IC卡通兑记账
 		REP_20001 rep_20001 = forwardToBocmService.sendToBocm(req20001, 
 				REP_20001.class);
 		return rep_20001;
-	}
-	
-	/** 
-	* @Title: hostCharge 
-	* @Description: 本行核心记账 
-	* @param @param reqDto
-	* @param @return
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return ESB_REP_30011000103    返回类型 
-	* @throws 
-	*/
-	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		REQ_30061001001 reqDto = (REQ_30061001001)dto;
-		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
-		// 交易机构
-		String txBrno = null;
-		// 柜员号
-		String txTel = null;
-		txTel = reqDto.getReqSysHead().getUserId();
-		txBrno = reqDto.getReqSysHead().getBranchId();
-		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
-				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000104.getReqSysHead(), reqDto)
-				.setBranchId(txBrno).setUserId(txTel).build();
-		
-		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
-		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
-		reqSysHead.setSourceType(reqDto.getReqSysHead().getSourceType());
-		
-		esbReq_30011000104.setReqSysHead(reqSysHead);
-
-		ESB_REQ_30011000104.REQ_BODY reqBody_30011000104 = esbReq_30011000104.getReqBody();
-		reqBody_30011000104.setBaseAcctNo(reqBody.getCardNoT3());
-		reqBody_30011000104.setAcctName(reqBody.getNmT());
-		reqBody_30011000104.setTranType("JH13");
-		reqBody_30011000104.setTranCcy("CNY");
-		reqBody_30011000104.setTranAmt(reqBody.getWthrAmtT());
-		
-		//记账系统日期
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(settlementDate);
-		reqBody_30011000104.setCollateFlag("Y");
-		//TT-账户内扣 CA-现金
-		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());
-
-		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
-				ESB_REP_30011000104.class);
-		return esbRep_30011000104;
 	}
 	
 	/** 
@@ -578,7 +530,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setChannelType("BU");
 		reqBody_30011000104.setTranCcy("CNY");
 		reqBody_30011000104.setTranAmt(reqBody.getWthrAmtT());
-		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
+		//记账系统日期
+		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(settlementDate);
 		reqBody_30011000104.setCollateFlag("Y");
 		//TT-账户内扣 CA-现金
 		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());

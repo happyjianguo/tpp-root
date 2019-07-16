@@ -107,13 +107,13 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		// IC_CARD_FLG_T4判断IC卡磁条卡标志   IC卡和磁条卡走不同的交行接口
 		if("2".equals(reqBody.getIcCardFlgT4())){
 			oTxnCd = "10001";			
-			req10001 = new REQ_10001(myLog, bocmDate, reqDto.getSysTime(), reqDto.getSysTraceno());
+			req10001 = new REQ_10001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10001); // 设置报文头中的行号信息
 			rbnkNo = req10001.getRbnkNo();
 			sbnkNo = req10001.getSbnkNo();
 		}else{
 			oTxnCd = "20001";
-			req20001 = new REQ_20001(myLog, bocmDate, reqDto.getSysTime(), reqDto.getSysTraceno());
+			req20001 = new REQ_20001(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 			super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req20001); // 设置报文头中的行号信息
 			rbnkNo = req20001.getRbnkNo();
 			sbnkNo = req20001.getSbnkNo();
@@ -489,7 +489,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 
 		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
 		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
-		reqSysHead.setSourceType(reqDto.getReqSysHead().getSourceType());
+		reqSysHead.setSourceType("BU");
 		
 		ESB_REQ_30011000104.REQ_BODY reqBody_30011000104 = esbReq_30011000104.getReqBody();
 		//账号
@@ -659,6 +659,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req20001.setARQC(reqBody.getIcCard91T());
 		req20001.setICAID(reqBody.getIcCard9f09T());
 		req20001.setICOutDate(reqBody.getIcCardAvaiDtT());
+		req20001.setICOutDate("241231");//IC卡有效期
 		req20001.setICData(reqBody.getIcCardF55T());
 		req20001.setRemark(reqBody.getNoteT2());
         

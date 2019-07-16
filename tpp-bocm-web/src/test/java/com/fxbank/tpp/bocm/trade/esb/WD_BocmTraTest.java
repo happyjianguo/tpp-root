@@ -80,8 +80,8 @@ public class WD_BocmTraTest {
 		reqSysHead.setSourceType("MT");	//网联
 //		reqSysHead.setBranchId("01016");
 //		reqSysHead.setUserId("000917");
-		reqSysHead.setBranchId("01045");
-		reqSysHead.setUserId("000778");
+		reqSysHead.setBranchId("01037");
+		reqSysHead.setUserId("000777");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
 		reqSysHead.setUserLang("CHINESE");

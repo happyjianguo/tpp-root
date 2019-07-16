@@ -93,7 +93,7 @@ public class CHK_FeeTest {
 	public void payOk() throws Exception {
 		logger.info("本行与三方对账");
 		//对账日期
-		reqBody.setStmtDtT2("20190705");
+		reqBody.setStmtDtT2("20190716");
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();
 		reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
