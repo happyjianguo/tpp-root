@@ -2,7 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fxbank.tpp.bocm.mapper.BocmChkStatusMapper" >
   <resultMap id="BaseResultMap" type="com.fxbank.tpp.bocm.entity.BocmChkStatus" >
-    <id column="CHK_DATE" property="chkDate" jdbcType="DECIMAL" />
+    <id column="TX_DATE" property="txDate" jdbcType="DECIMAL" />
+    <result column="CHK_DATE" property="chkDate" jdbcType="DECIMAL" />
+    <result column="CHK_TIME" property="chkTime" jdbcType="DECIMAL" />
     <result column="HOST_STATUS" property="hostStatus" jdbcType="DECIMAL" />
 	<result column="BOCM_STATUS" property="bocmStatus" jdbcType="DECIMAL" />
 	<result column="PLAT_STATUS" property="platStatus" jdbcType="DECIMAL" />

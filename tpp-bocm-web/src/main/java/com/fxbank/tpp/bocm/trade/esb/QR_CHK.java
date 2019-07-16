@@ -73,7 +73,7 @@ public class QR_CHK extends TradeBase implements TradeExecutionStrategy {
 	
 	private REP_30063001304.Chk transRepTrace(BocmChkStatusModel model){
 		REP_30063001304.Chk chk = new REP_30063001304.Chk();
-		chk.setTxDate(model.getChkDate()+"");
+		chk.setTxDate(model.getTxDate()+"");
 		chk.setChkBranch("00001");
 		chk.setChkTel("002264");
 		int hostStatus = model.getHostStatus();
@@ -93,6 +93,8 @@ public class QR_CHK extends TradeBase implements TradeExecutionStrategy {
 			chkMsg.append("未对账");
 		}
 		chk.setChkState(chkMsg.toString());
+		chk.setChkDate(model.getChkDate()+"");
+		chk.setChkTime(model.getChkTime()+"");
 		return chk;
 	}
 }

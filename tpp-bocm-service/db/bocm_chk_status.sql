@@ -1,6 +1,8 @@
 DROP TABLE bocm_chk_status;
 CREATE TABLE bocm_chk_status(
-chk_date NUMBER(11) NOT NULL ,
+tx_date NUMBER(11) NOT NULL ,
+chk_date NUMBER(11) NULL ,
+chk_time NUMBER(6) NULL ,
 host_status NUMBER(6) NULL ,
 host_tx_cnt NUMBER(8) NULL ,
 host_tx_amt NUMBER NULL,
@@ -15,7 +17,9 @@ tx_tel NVARCHAR2(30) NULL
 );
 
 COMMENT ON TABLE bocm_chk_status IS '对账状态表';
+COMMENT ON COLUMN bocm_chk_status.tx_date IS '账务日期';
 COMMENT ON COLUMN bocm_chk_status.chk_date IS '对账日期';
+COMMENT ON COLUMN bocm_chk_status.chk_time IS '对账时间';
 COMMENT ON COLUMN bocm_chk_status.host_status IS '核心对账状态  0未对账，1已对账';
 COMMENT ON COLUMN bocm_chk_status.host_tx_cnt IS '我行为主交易笔数';
 COMMENT ON COLUMN bocm_chk_status.host_tx_amt IS '我行为主交易金额';

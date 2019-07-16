@@ -107,7 +107,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		BocmChkStatusModel chkModel = chkStatusService.selectByDate(date.toString());
 		if (chkModel == null) {
 			BocmChkStatusModel record = new BocmChkStatusModel();
-			record.setChkDate(date);
+			record.setTxDate(date);
 			record.setTxBranch(txBrno);
 			record.setTxTel(txTel);
 			chkStatusService.chkStatusInit(record);
@@ -234,7 +234,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 
 		// 更新核心对账状态
 		BocmChkStatusModel record = new BocmChkStatusModel();
-		record.setChkDate(date);
+		record.setTxDate(date);
 		record.setHostStatus(1);
 		record.setHostTxCnt(tolCnt);
 		record.setHostTxAmt(totalAmt);
@@ -245,7 +245,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		myLog.info(logger, "外围与交行对账：  对账日期：" + date);
 		CHK_Bocm chkBocm = new CHK_Bocm(logPool, forwardToBocmService,
 				sndTraceService, rcvTraceService, acctCheckErrService, chkStatusService,myJedis);
-		chkBocm.execute(dto);
+//		chkBocm.execute(dto);
 
 		return rep;
 	}

@@ -1,7 +1,9 @@
 package com.fxbank.tpp.bocm.service.impl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,7 +32,10 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 	@Override
 	public void chkStatusInit(BocmChkStatusModel record) throws SysTradeExecuteException {
 		BocmChkStatus entity = new BocmChkStatus();
-		entity.setChkDate(record.getChkDate());
+		entity.setTxDate(record.getTxDate());
+		String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		entity.setChkDate(Integer.valueOf(sDate.substring(0, 8)));
+		entity.setChkTime(Integer.valueOf(sDate.substring(8))); 
 		entity.setHostStatus(0);
 		entity.setBocmStatus(0);
 		entity.setPlatStatus(0);
@@ -48,7 +53,7 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 	@Override
 	public void chkStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
 		BocmChkStatus entity = new BocmChkStatus();
-		entity.setChkDate(record.getChkDate());
+		entity.setTxDate(record.getTxDate());
 		if(null != record.getHostStatus()) {
 			entity.setHostStatus(record.getHostStatus());
 		}
@@ -76,17 +81,20 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		if(null != record.getPlatTxCnt()) {
 			entity.setPlatTxCnt(record.getPlatTxCnt());
 		}
+		String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		entity.setChkDate(Integer.valueOf(sDate.substring(0, 8)));
+		entity.setChkTime(Integer.valueOf(sDate.substring(8))); 
 		mapper.updateByPrimaryKeySelective(entity);
 	}
 
 	@Override
 	public BocmChkStatusModel selectByDate(String date) throws SysTradeExecuteException {
 		BocmChkStatus chk = new BocmChkStatus();
-		chk.setChkDate(Integer.parseInt(date));
+		chk.setTxDate(Integer.parseInt(date));
 		BocmChkStatus entity = mapper.selectOne(chk);
 		BocmChkStatusModel model = new BocmChkStatusModel();
 		if(entity!=null){
-			model.setChkDate(entity.getChkDate());
+			model.setTxDate(entity.getTxDate());
 			model.setHostStatus(entity.getHostStatus());
 			model.setHostTxCnt(entity.getHostTxCnt());
 			model.setHostTxAmt(entity.getHostTxAmt());
@@ -98,6 +106,8 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 			model.setPlatTxAmt(entity.getPlatTxAmt());
 			model.setTxBranch(entity.getTxBranch());
 			model.setTxTel(entity.getTxTel());
+			model.setChkDate(entity.getChkDate());
+			model.setChkTime(entity.getChkTime());
 			return model;
 		}else{
 			return null;
@@ -111,7 +121,7 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 		List<BocmChkStatusModel> modelList = new ArrayList<BocmChkStatusModel>();
 		for(BocmChkStatus entity:list){
 			BocmChkStatusModel model = new BocmChkStatusModel();
-			model.setChkDate(entity.getChkDate());
+			model.setTxDate(entity.getTxDate());
 			model.setHostStatus(entity.getHostStatus());
 			model.setHostTxCnt(entity.getHostTxCnt());
 			model.setHostTxAmt(entity.getHostTxAmt());
@@ -123,6 +133,8 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 			model.setPlatTxAmt(entity.getPlatTxAmt());
 			model.setTxBranch(entity.getTxBranch());
 			model.setTxTel(entity.getTxTel());
+			model.setChkDate(entity.getChkDate());
+			model.setChkTime(entity.getChkTime());
 			modelList.add(model);
 		}
 		return modelList;

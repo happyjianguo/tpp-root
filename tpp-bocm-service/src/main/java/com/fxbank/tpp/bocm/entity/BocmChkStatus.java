@@ -10,8 +10,20 @@ public class BocmChkStatus {
      * null
      */
     @Id
+    @Column(name = "TX_DATE")
+    private Integer txDate;
+    
+    /**
+     * null
+     */
     @Column(name = "CHK_DATE")
     private Integer chkDate;
+    
+    /**
+     * null
+     */
+    @Column(name = "CHK_TIME")
+    private Integer chkTime;
 
     /**
      * null
@@ -174,6 +186,24 @@ public class BocmChkStatus {
 	public void setTxTel(String txTel) {
 		this.txTel = txTel;
 	}
+
+	public Integer getTxDate() {
+		return txDate;
+	}
+
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
+	}
+
+	public Integer getChkTime() {
+		return chkTime;
+	}
+
+	public void setChkTime(Integer chkTime) {
+		this.chkTime = chkTime;
+	}
+
+
 
 
 

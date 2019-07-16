@@ -14,8 +14,12 @@ public class BocmChkStatusModel implements Serializable{
 
 	private static final long serialVersionUID = -1804273320664907651L;
 	
-	//对账日期
+	//账务日期
+    private Integer txDate;
+    //对账日期
     private Integer chkDate;
+    //对账时间
+    private Integer chkTime;
     //与核心对账状态
     private Integer hostStatus;
     //与交行对账状态
@@ -111,6 +115,19 @@ public class BocmChkStatusModel implements Serializable{
 	public void setTxTel(String txTel) {
 		this.txTel = txTel;
 	}
+	public Integer getTxDate() {
+		return txDate;
+	}
+	public void setTxDate(Integer txDate) {
+		this.txDate = txDate;
+	}
+	public Integer getChkTime() {
+		return chkTime;
+	}
+	public void setChkTime(Integer chkTime) {
+		this.chkTime = chkTime;
+	}
+
 
     
 }
