@@ -138,6 +138,7 @@ public class QR_CB extends TradeBase implements TradeExecutionStrategy {
 		}
 		if("3".equals(hostState)){
 			trace.setHostState("超时");
+			trace.setHostFlag("记账失败");
 		}
 		if("4".equals(hostState)){
 			trace.setHostState("冲正成功");
@@ -147,6 +148,7 @@ public class QR_CB extends TradeBase implements TradeExecutionStrategy {
 		}
 		if("6".equals(hostState)){
 			trace.setHostState("冲正超时");
+			trace.setHostFlag("记账失败");
 		}
 		String bocmState = model.getBocmState();
 		if("0".equals(bocmState)){
@@ -170,6 +172,8 @@ public class QR_CB extends TradeBase implements TradeExecutionStrategy {
 		if("6".equals(bocmState)){
 			trace.setBocmState("冲正超时");
 		}
+
+		
 		trace.setCheckFlag(model.getCheckFlag());
 		trace.setMsg(model.getMsg());
 		return trace;

@@ -296,6 +296,13 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setPayeeBank(data.getPayeeBank());
 			model.setPayeeName(data.getPayeeName());
 			
+			if(data.getProxyFee()!=null){
+				model.setProxy_fee(data.getProxyFee());
+			}
+			if(data.getProxyFlag()!=null){
+				model.setProxy_flag(data.getProxyFlag());
+			}
+			
 			modelList.add(model);
 		}
 		
@@ -421,6 +428,13 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
 			model.setTranType(data.getTranType());
+			
+			if(data.getProxyFee()!=null){
+				model.setProxy_fee(data.getProxyFee());
+			}
+			if(data.getProxyFlag()!=null){
+				model.setProxy_flag(data.getProxyFlag());
+			}
 		}
 		
 		return model;

@@ -214,14 +214,14 @@ public class CHK_Bocm {
 			if (model.getTranType().equals("JH11")) {
 				
 				if (model.getHostState().equals("1")) {
-					initSndErrRecord(myLog,model,"渠道多出往账数据");
+					initSndErrRecord(myLog,model,"渠道多出往账数据,与核心记账不一致");
 					myLog.error(logger, "柜面通【" + date + "】对账失败: 多出往账记录，渠道流水号【" + model.getPlatTrace() + "】，核心状态【"
 							+ model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
 							"与交行往账账对账失败，渠道多出往账数据,渠道流水号【" + model.getPlatTrace() + "】");
 					throw e;
 				} else {
-					initSndErrRecord(myLog,model,"渠道多出往账数据");
+					initSndErrRecord(myLog,model,"渠道多出往账数据,不处理");
 					myLog.info(logger, "渠道多出往账数据，渠道日期【" + model.getPlatDate() + "】，渠道流水【" + model.getPlatTrace()
 							+ "】，核心状态【" + model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
 					record.setCheckFlag("4");
@@ -239,43 +239,22 @@ public class CHK_Bocm {
 			// 如果来账交易类型是他代本通兑转账,不更新对账状态
 			if (model.getTranType().equals("JH01") && model.getTxInd().equals("1")) {
 				continue;
-			}
-			record.setCheckFlag("4");
-			rcvTraceService.rcvTraceUpd(record);
+			}			
 			if (model.getHostState().equals("1")) {
-				BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, model.getPlatDate(),
-						model.getSysTime(), model.getPlatTrace());
-				aceModel.setPlatDate(model.getPlatDate());
-				aceModel.setPlatTrace(model.getPlatTrace());
-				aceModel.setPreHostState(model.getHostState());
-				aceModel.setReHostState("2");
-				aceModel.setDcFlag("");
-				// 对账标志，1-未对账，2-已对账，3-核心多，4-渠道多
-				aceModel.setCheckFlag("4");
-				aceModel.setDirection("I");
-				aceModel.setMsg("渠道多出来账数据，渠道日期【" + model.getPlatDate() + "】交易类型【" + model.getTranType() + "】渠道流水【"
-						+ model.getPlatTrace() + "】");
-				acctCheckErrService.insert(aceModel);
+				String msg = "渠道多出来账数据,与核心记账不一致";
+				initRcvErrRecord(myLog, model, msg);
 				myLog.error(logger, "柜面通【" + date + "】对账失败: 多出来账记录，渠道流水号【" + model.getPlatTrace() + "】，核心状态【"
 						+ model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
-				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
+						"与交行来账对账失败，渠道多出来账数据,渠道流水号【" + model.getPlatTrace() + "】");
 				throw e;
 			} else {
-				BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, model.getPlatDate(),
-						model.getSysTime(), model.getPlatTrace());
-				aceModel.setPlatDate(model.getPlatDate());
-				aceModel.setPlatTrace(model.getPlatTrace());
-				aceModel.setPreHostState(model.getHostState());
-				aceModel.setReHostState("2");
-				aceModel.setDcFlag("");
-				// 对账标志，1-未对账，2-已对账，3-核心多，4-渠道多
-				aceModel.setCheckFlag("4");
-				aceModel.setDirection("I");
-				aceModel.setMsg("渠道多出来账数据，渠道日期【" + model.getPlatDate() + "】交易类型【" + model.getTranType() + "】渠道流水【"
-						+ model.getPlatTrace() + "】核心状态【" + model.getHostState() + "】");
-				acctCheckErrService.insert(aceModel);
+				String msg = "渠道多出来账数据,不处理";
+				initRcvErrRecord(myLog, model, msg);
 				myLog.info(logger, "渠道多出来账数据，渠道日期【" + model.getPlatDate() + "】，渠道流水【" + model.getPlatTrace() + "】，核心状态【"
 						+ model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
+				record.setCheckFlag("4");
+				rcvTraceService.rcvTraceUpd(record);
 			}
 		}
 
@@ -371,8 +350,8 @@ public class CHK_Bocm {
 					aceModel.setTxTel(rcvTraceQueryModel.getTxTel());
 					aceModel.setTxInd(rcvTraceQueryModel.getTxInd());
 					aceModel.setTxAmt(rcvTraceQueryModel.getTxAmt());
-					// aceModel.setProxyFee(rcvTraceQueryModel.getProxy_fee());
-					// aceModel.setProxyFlag(rcvTraceQueryModel.getProxy_flag());
+					aceModel.setProxyFee(rcvTraceQueryModel.getProxy_fee());
+					aceModel.setProxyFlag(rcvTraceQueryModel.getProxy_flag());
 					aceModel.setPayerBank(rcvTraceQueryModel.getPayerBank());
 					aceModel.setPayerAcno(rcvTraceQueryModel.getPayerAcno());
 					aceModel.setPayerName(rcvTraceQueryModel.getPayerName());
@@ -579,8 +558,8 @@ public class CHK_Bocm {
 		aceModel.setTxTel(rcvTraceQueryModel.getTxTel());
 		aceModel.setTxInd(rcvTraceQueryModel.getTxInd());
 		aceModel.setTxAmt(rcvTraceQueryModel.getTxAmt());
-		// aceModel.setProxyFee(rcvTraceQueryModel.getProxy_fee());
-		// aceModel.setProxyFlag(rcvTraceQueryModel.getProxy_flag());
+		 aceModel.setProxyFee(rcvTraceQueryModel.getProxy_fee());
+		 aceModel.setProxyFlag(rcvTraceQueryModel.getProxy_flag());
 		aceModel.setPayerBank(rcvTraceQueryModel.getPayerBank());
 		aceModel.setPayerAcno(rcvTraceQueryModel.getPayerAcno());
 		aceModel.setPayerName(rcvTraceQueryModel.getPayerName());

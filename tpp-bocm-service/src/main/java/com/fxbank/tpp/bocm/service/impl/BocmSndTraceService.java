@@ -247,6 +247,13 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setPayeeActtp(data.getPayeeActtp());
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
+			
+			if(data.getProxyFee()!=null){
+				model.setProxy_fee(data.getProxyFee());
+			}
+			if(data.getProxyFlag()!=null){
+				model.setProxy_flag(data.getProxyFlag());
+			}
 		}
 		return model;
 	}
@@ -386,6 +393,13 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setPayerName(data.getPayerName());
 			model.setPayeeBank(data.getPayeeBank());
 			model.setPayeeName(data.getPayeeName());
+			
+			if(data.getProxyFee()!=null){
+				model.setProxy_fee(data.getProxyFee());
+			}
+			if(data.getProxyFlag()!=null){
+				model.setProxy_flag(data.getProxyFlag());
+			}
 			
 			
 			modelList.add(model);
