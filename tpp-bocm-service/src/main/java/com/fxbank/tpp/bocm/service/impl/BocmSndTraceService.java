@@ -376,6 +376,18 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 			model.setProxy_flag(data.getProxyFlag());
 			model.setProxy_fee(data.getProxyFee());
 			
+			model.setTxCode(data.getTxCode());
+			model.setSourceType(data.getSourceType());
+			model.setTxBranch(data.getTxBranch());
+			model.setTxTel(data.getTxTel());
+			model.setTxInd(data.getTxInd());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setPayerBank(data.getPayerBank());
+			model.setPayerName(data.getPayerName());
+			model.setPayeeBank(data.getPayeeBank());
+			model.setPayeeName(data.getPayeeName());
+			
+			
 			modelList.add(model);
 		}
 		

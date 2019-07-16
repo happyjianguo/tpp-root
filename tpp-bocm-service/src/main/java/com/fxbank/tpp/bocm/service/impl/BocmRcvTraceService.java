@@ -285,6 +285,17 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setTxDate(data.getTxDate());
 			model.setTranType(data.getTranType());
 			
+			model.setTxCode(data.getTxCode());
+			model.setSourceType(data.getSourceType());
+			model.setTxBranch(data.getTxBranch());
+			model.setTxTel(data.getTxTel());
+			model.setTxInd(data.getTxInd());
+			model.setCheckFlag(data.getCheckFlag());
+			model.setPayerBank(data.getPayerBank());
+			model.setPayerName(data.getPayerName());
+			model.setPayeeBank(data.getPayeeBank());
+			model.setPayeeName(data.getPayeeName());
+			
 			modelList.add(model);
 		}
 		

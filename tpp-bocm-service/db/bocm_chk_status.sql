@@ -33,4 +33,4 @@ COMMENT ON COLUMN bocm_chk_status.tx_branch IS '交易机构';
 COMMENT ON COLUMN bocm_chk_status.tx_tel IS '交易柜员号';
 
 
-ALTER TABLE bocm_chk_status ADD PRIMARY KEY (chk_date);
+ALTER TABLE bocm_chk_status ADD PRIMARY KEY (tx_date);
