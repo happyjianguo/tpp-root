@@ -212,31 +212,20 @@ public class CHK_Bocm {
 					model.getPlatTrace());
 			// 如果往账交易类型是交行卡转本行,已交行对账为主，如果存在成功的记账则为多出来的渠道记账信息，需要冲正
 			if (model.getTranType().equals("JH11")) {
-				record.setCheckFlag("4");
-				sndTraceService.sndTraceUpd(record);
+				
 				if (model.getHostState().equals("1")) {
 					initSndErrRecord(myLog,model,"渠道多出往账数据");
 					myLog.error(logger, "柜面通【" + date + "】对账失败: 多出往账记录，渠道流水号【" + model.getPlatTrace() + "】，核心状态【"
 							+ model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
-							"与交行来账对账失败，渠道多出往账数据");
+							"与交行往账账对账失败，渠道多出往账数据,渠道流水号【" + model.getPlatTrace() + "】");
 					throw e;
 				} else {
-					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, model.getPlatDate(),
-							model.getSysTime(), model.getPlatTrace());
-					aceModel.setPlatDate(model.getPlatDate());
-					aceModel.setPlatTrace(model.getPlatTrace());
-					aceModel.setPreHostState(model.getHostState());
-					aceModel.setReHostState("2");
-					aceModel.setDcFlag("");
-					// 对账标志，1-未对账，2-已对账，3-核心多，4-渠道多
-					aceModel.setCheckFlag("4");
-					aceModel.setDirection("O");
-					aceModel.setMsg("渠道多出往账数据，渠道日期【" + model.getPlatDate() + "】交易类型【" + model.getTranType() + "】渠道流水【"
-							+ model.getPlatTrace() + "】");
-					acctCheckErrService.insert(aceModel);
+					initSndErrRecord(myLog,model,"渠道多出往账数据");
 					myLog.info(logger, "渠道多出往账数据，渠道日期【" + model.getPlatDate() + "】，渠道流水【" + model.getPlatTrace()
 							+ "】，核心状态【" + model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
+					record.setCheckFlag("4");
+					sndTraceService.sndTraceUpd(record);
 				}
 			}
 		}

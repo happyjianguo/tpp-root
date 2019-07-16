@@ -245,7 +245,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		myLog.info(logger, "外围与交行对账：  对账日期：" + date);
 		CHK_Bocm chkBocm = new CHK_Bocm(logPool, forwardToBocmService,
 				sndTraceService, rcvTraceService, acctCheckErrService, chkStatusService,myJedis);
-//		chkBocm.execute(dto);
+		chkBocm.execute(dto);
 
 		return rep;
 	}
