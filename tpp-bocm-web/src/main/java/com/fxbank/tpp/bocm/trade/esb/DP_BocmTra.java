@@ -98,7 +98,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					myLog.info(logger, "本行卡付款转账,本行核心记账超时,核心冲正成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}catch(SysTradeExecuteException e1) {
 					initRecord(reqDto, hostDate, hostTraceno, "5", retCode, retMsg);
-					myLog.info(logger, "本行卡付款转账,本行核心记账超时,核心冲正异常,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+					myLog.info(logger, "本行卡付款转账,本行核心记账超时,核心冲正异常,请核对记账状态,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}
 				//超时不记录流水直接抛异常，如果记账成功，对账会失败
 				myLog.error(logger, "本行卡付款转账，本行核心记账接收ESB报文应答超时，渠道日期" + reqDto.getSysDate() + 
