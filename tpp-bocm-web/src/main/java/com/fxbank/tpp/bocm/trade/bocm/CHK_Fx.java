@@ -165,7 +165,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 			if(model.getTranType().equals("JH01")&&model.getTxInd().equals("1")){
 				//本方交易流水号
 				REP_10103.Detail trad = modelToRcvTradDetail(model);
-				totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
+				totalAmt = totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
 				tradList.add(trad);
 				myLog.info(logger, "流水【"+model.getPlatTrace()+"】添加对账流水");
 			}
@@ -179,7 +179,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 			}
 			//本方交易流水号
 			REP_10103.Detail trad = modelToSndTradDetail(model);
-			totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
+			totalAmt = totalAmt.add(new BigDecimal(trad.getTxnAmt().toString()));
 			tradList.add(trad);
 		}	
 		myLog.info(logger, "以我行为主交易总金额【"+totalAmt+"】");
@@ -192,7 +192,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 			
 		//更新对账状态表交行对账状态
 		BocmChkStatusModel record = new BocmChkStatusModel();
-		record.setChkDate(Integer.parseInt(date));
+		record.setTxDate(Integer.parseInt(date));
 		record.setPlatStatus(1);
 		record.setPlatTxCnt(tradList.size());
 		record.setPlatTxAmt(new BigDecimal(totalAmt.toString()));

@@ -17,11 +17,9 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
-import com.fxbank.tpp.bocm.dto.esb.REP_30063001302;
 import com.fxbank.tpp.bocm.dto.esb.REP_30063001303;
 import com.fxbank.tpp.bocm.dto.esb.REQ_30063001303;
 import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
-import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.service.IBocmAcctCheckErrService;
 
 /** 

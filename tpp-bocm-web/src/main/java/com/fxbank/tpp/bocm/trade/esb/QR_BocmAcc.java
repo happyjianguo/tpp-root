@@ -85,15 +85,15 @@ public class QR_BocmAcc extends TradeBase implements TradeExecutionStrategy{
 		repBody.setFeeT3(jhFee);
 
 		//查询手续费		
-		ESB_REP_30063000103 esbRep_30063000103 = queryFee(reqDto,rep10102);
-		ESB_REP_30063000103.Fee fee = esbRep_30063000103.getRepBody().getFeeDetail().get(0);
-		
-		if(fee.getFeeAmt()==null||fee.getFeeAmt().equals("")){
-			repBody.setHndlPymntFeeT5("0");
-		}else{
-			repBody.setHndlPymntFeeT5(fee.getFeeAmt());
-		}
-		//repBody.setHndlPymntFeeT5("0");
+//		ESB_REP_30063000103 esbRep_30063000103 = queryFee(reqDto,rep10102);
+//		ESB_REP_30063000103.Fee fee = esbRep_30063000103.getRepBody().getFeeDetail().get(0);
+//		
+//		if(fee.getFeeAmt()==null||fee.getFeeAmt().equals("")){
+//			repBody.setHndlPymntFeeT5("0");
+//		}else{
+//			repBody.setHndlPymntFeeT5(fee.getFeeAmt());
+//		}
+		repBody.setHndlPymntFeeT5("0");
 		//开户行号
 		repBody.setPyeeOpnBnkNoT1(rep10102.getActBnk());
 		//账户类型

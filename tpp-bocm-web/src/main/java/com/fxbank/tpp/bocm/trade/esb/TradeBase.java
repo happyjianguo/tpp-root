@@ -13,12 +13,10 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
-import com.fxbank.tpp.bocm.model.BocmSafeModel;
 import com.fxbank.tpp.bocm.model.REQ_BASE;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
-import com.fxbank.tpp.esb.model.tcex.SafeModel;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
 /**

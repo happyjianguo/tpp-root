@@ -1,7 +1,9 @@
 package com.fxbank.tpp.bocm.trade.esb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fxbank.cip.base.common.LogPool;
-import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -11,9 +13,6 @@ import com.fxbank.tpp.bocm.dto.esb.REQ_30063001201;
 import com.fxbank.tpp.bocm.model.REP_10101;
 import com.fxbank.tpp.bocm.model.REQ_10101;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @Description: 通讯返回码判断例子程序，实际运行不用
@@ -26,8 +25,6 @@ public class TemplateTrade implements TradeExecutionStrategy {
 	private LogPool logPool;
 
 	private IForwardToBocmService forwardToBocmService;
-
-	private MyJedis myJedis;
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {

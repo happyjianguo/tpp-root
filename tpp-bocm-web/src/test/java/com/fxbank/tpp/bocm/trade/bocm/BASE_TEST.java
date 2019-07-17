@@ -48,7 +48,12 @@ public class BASE_TEST {
 //            safeService.
            String mac = safeService.calcBocmMac(myLog, reqData);
            this.logger.info("MAC 【" + mac + "】");
-           reqData = reqData + mac;
+           if(reqData.substring(0, 5).equals("10103")){
+        	   
+           }else{
+        	   reqData = reqData + mac;
+           }
+           
             
             os = socket.getOutputStream();
             String reqLen = String.format("%08d", reqData.getBytes(BASE_TEST.CODING).length);
@@ -94,7 +99,7 @@ public class BASE_TEST {
         //"BANK_NUMBER":"313229000442","BNK_NM_T":"阜新银行液压园支行",
         //"SETTLEMENT_BANK_NO":"313229000008","LQTN_BNK_NM_T1":"阜新银行结算中心"  
         //313221099020 阜新银行沈阳分行营业部
-        base.setSbnkNo("301100000015");
+        base.setSbnkNo("301290000007");
         base.setRbnkNo("313229000008");
         base.setTtxnDat(Integer.valueOf(sDate.substring(0, 8)));
         base.setTtxnTim(Integer.valueOf(sDate.substring(8))); 
