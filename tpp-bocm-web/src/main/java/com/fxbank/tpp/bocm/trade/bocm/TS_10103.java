@@ -17,7 +17,6 @@ import com.dcfs.esb.ftp.client.FtpGet;
 import com.dcfs.esb.ftp.server.error.FtpException;
 import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
-import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -38,9 +37,6 @@ import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_50015000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_50015000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
-import com.fxbank.tpp.esb.service.IForwardToTownService;
-
-import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: TS_10103 
@@ -57,8 +53,6 @@ public class TS_10103 {
 	
 	private IForwardToESBService forwardToESBService;
 	
-	private IForwardToTownService forwardToBocmService;
-	
 	private IBocmDayCheckLogService dayCheckLogService;
 	
 	private IBocmSndTraceService sndTraceService;
@@ -66,22 +60,16 @@ public class TS_10103 {
 	private IBocmRcvTraceService rcvTraceService;
 
 	private IBocmAcctCheckErrService acctCheckErrService;
-
-	private MyJedis myJedis;
 	
-	private final static String COMMON_PREFIX = "bocm.";
-	
-    public TS_10103(LogPool logPool, IForwardToESBService forwardToESBService, IForwardToTownService forwardToBocmService,
+    public TS_10103(LogPool logPool, IForwardToESBService forwardToESBService,
     		IBocmDayCheckLogService dayCheckLogService,IBocmSndTraceService sndTraceService,
-    		 IBocmRcvTraceService rcvTraceService,IBocmAcctCheckErrService acctCheckErrService,MyJedis myJedis) {
+    		 IBocmRcvTraceService rcvTraceService,IBocmAcctCheckErrService acctCheckErrService) {
     	this.logPool = logPool;
     	this.forwardToESBService = forwardToESBService;
-    	this.forwardToBocmService = forwardToBocmService;
     	this.dayCheckLogService = dayCheckLogService;
     	this.sndTraceService = sndTraceService;
     	this.rcvTraceService = rcvTraceService;
     	this.acctCheckErrService = acctCheckErrService;
-    	this.myJedis = myJedis;
     }
 
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -97,10 +85,7 @@ public class TS_10103 {
 		
 		// 柜员号
 		String txTel = null;
-		try(Jedis jedis = myJedis.connect()){
-			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
-			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
-        }
+
 		myLog.info(logger, "渠道与核心对账开始");
 		acctCheckErrService.delete(date);
 
@@ -201,8 +186,6 @@ public class TS_10103 {
 				BigDecimal snd = new BigDecimal(sndTotalAmt);
 				
 				BigDecimal totalAmt = rcv.add(snd);
-				
-				StringBuffer fileTxt = new StringBuffer();
 				//组装对账文件报文
 				
 				//组装来账文件报文
@@ -252,15 +235,6 @@ public class TS_10103 {
 		
 		chk.setThdCod(model.getTxCode());
 		chk.setBbusTyp("000");
-		
-		//交行总行行号
-		String JHNO = "";
-		String FXNO = "";
-		try(Jedis jedis = myJedis.connect()){
-			//从redis中获取交行总行行号
-			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
-			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
-        }
 		
 		//发起行行号  来账本行为联机交易接收行（填发起行人行行号）
 		//联机交易发起方出文件时指发起方网点，
@@ -331,16 +305,6 @@ public class TS_10103 {
 		
 		chk.setThdCod(model.getTxCode());
 		chk.setBbusTyp("000");
-		
-		
-		//交行总行行号
-		String JHNO = "";	
-		String FXNO = "";	
-		try(Jedis jedis = myJedis.connect()){
-			//从redis中获取交行总行行号
-			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
-			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
-        }
 		
 		//发起行行号  往账本行为联机交易发起行（填发起行人行行号）
 		//联机交易发起方出文件时指发起方网点，
@@ -578,9 +542,6 @@ public class TS_10103 {
 		String remoteFile = esbRep_50015000101.getRepSysHead().getFilePath();
 		String fileName = esbRep_50015000101.getRepBody().getFileName();
 		String localPath="";
-		try (Jedis jedis = myJedis.connect()) {
-			localPath = jedis.get(COMMON_PREFIX+"txt_path");
-		}
 		loadTraceLogFile(myLog, remoteFile, localPath+File.separator+"_"+fileName);
 		return localPath+File.separator+"_"+fileName;
 	}
