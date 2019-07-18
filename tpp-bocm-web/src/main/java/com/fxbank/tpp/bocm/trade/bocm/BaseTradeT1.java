@@ -1,5 +1,7 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
+import com.fxbank.tpp.bocm.nettty.ServerInitializer;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
@@ -204,7 +207,7 @@ public abstract class BaseTradeT1 {
 				Thread.sleep(2000);
 				return checkBocmRcvTrace(dto,i+1);
 			} catch (InterruptedException e) {
-				SysTradeExecuteException e1 = new SysTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,model.getRetMsg());
+				SysTradeExecuteException e1 = new SysTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 				throw e1;
 			}
 		}else{
@@ -280,12 +283,17 @@ public abstract class BaseTradeT1 {
 				} catch (SysTradeExecuteException e) {
 					myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 					String errMsg = e.getRspMsg();
-					if(errMsg.length()>28){
-						errMsg = errMsg.substring(0, 28);
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
-						throw e2;
-					}else{
-						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+					try {
+						if(errMsg.getBytes(ServerInitializer.CODING).length>30){
+							errMsg = getErrorMsg(errMsg);
+							BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,errMsg);
+							throw e2;
+						}else{
+							BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+							throw e2;
+						}
+					} catch (UnsupportedEncodingException e1) {
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 						throw e2;
 					}
 				}
@@ -310,12 +318,17 @@ public abstract class BaseTradeT1 {
 			} else {
 				myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 				String errMsg = e.getRspMsg();
-				if(errMsg.length()>28){
-					errMsg = errMsg.substring(0, 28);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,errMsg);
-					throw e2;
-				}else{
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+				try {
+					if(errMsg.getBytes(ServerInitializer.CODING).length>30){
+						errMsg = getErrorMsg(errMsg);
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,errMsg);
+						throw e2;
+					}else{
+						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
+						throw e2;
+					}
+				} catch (UnsupportedEncodingException e1) {
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 					throw e2;
 				}
 				
@@ -324,5 +337,28 @@ public abstract class BaseTradeT1 {
 		// 主机成功登记
 		hostSuccessInitLog(dto, model); 				
 		return backMsg(dto,model);
+	}
+	
+	
+	private String getErrorMsg(String msg){
+		StringBuffer errMsg = new StringBuffer();
+		int length = 0;
+		try {
+			for(int i=0;i<msg.length();i++){
+				   String s = msg.substring(i, i+1);
+				   int size = s.getBytes(ServerInitializer.CODING).length;
+				   length = length + size;
+				   errMsg.append(s);
+				   if(length>=29){
+					   return errMsg.toString();
+				   }else{
+					   continue;
+				   }			   
+			   }
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return errMsg.toString();
 	}
 }
