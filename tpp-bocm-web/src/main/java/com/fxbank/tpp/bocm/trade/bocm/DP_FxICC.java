@@ -306,7 +306,9 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		ESB_REP_30011000104.Fee tradFee = rep.getRepBody().getFeeDetail().get(0);	
 		//String fee = NumberUtil.removePointToString(reqDto.getFee());
 		record.setTxAmt(new BigDecimal(txnAmt));
-		record.setFee(new BigDecimal(tradFee.getFeeAmt()));
+		if(!tradFee.getFeeAmt().equals("")){
+			record.setFee(new BigDecimal(tradFee.getFeeAmt()));
+		}	
 		
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		record.setFeeFlag(reqDto.getFeeFlg());
