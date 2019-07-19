@@ -156,6 +156,9 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		if(null != record.getProxyFee()) {
 			bocmSndLog.setProxyFee(record.getProxyFee());
 		}
+		if(null != record.getFee()) {
+			bocmSndLog.setFee(record.getFee());
+		}
 		bocmSndLogMapper.updateByPrimaryKeySelective(bocmSndLog);
 	}
 	

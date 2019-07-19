@@ -111,7 +111,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		myLog.info(logger, "往账对账记录数【核心多】【"+sndCheckFlag3+"】");
 		
 		int tolCnt = rcvTotal + sndTotal;
-		myLog.info(logger, "返回对账交易数量【"+tolCnt+"】");
+		myLog.info(logger, "已对账交易数量【"+tolCnt+"】");
 			
 		BigDecimal totalAmt = new BigDecimal("0.00");
 
@@ -119,7 +119,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		List<BocmRcvTraceQueryModel> upRcvTraceList = rcvTraceService.getUploadCheckRcvTrace(myLog, sysDate,sysTime,sysTraceno, date);
 		List<REP_10103.Detail> tradList = new ArrayList<REP_10103.Detail>();		
 		for(BocmRcvTraceQueryModel model :upRcvTraceList){
-			myLog.info(logger, "确认流水【"+model.getPlatTrace()+"】记账是否以本行为主");
+			myLog.info(logger, "来账确认流水【"+model.getPlatTrace()+"】记账是否以本行为主");
 			if(model.getTranType()==null){
 				myLog.info(logger, "流水【"+model.getPlatTrace()+"】交易类型为空");
 				continue;
@@ -135,6 +135,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//组装往账文件报文
 		List<BocmSndTraceQueryModel> upSndTraceList = sndTraceService.getUploadCheckSndTrace(myLog, sysDate,sysTime,sysTraceno, date);
 		for(BocmSndTraceQueryModel model :upSndTraceList){
+			myLog.info(logger, "往账确认流水【"+model.getPlatTrace()+"】记账是否以本行为主");
 			if(model.getTranType().equals("JH11")&&model.getTxInd().equals("1")){
 				//往账如果是交行卡付款转账，不返回记账，记账结果以交行为主
 				continue;
@@ -145,6 +146,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 			tradList.add(trad);
 		}	
 		myLog.info(logger, "以我行为主交易总金额【"+totalAmt+"】");
+		myLog.info(logger, "以我行为主交易数量【"+tradList.size()+"】");
 		rep.setFilLen(254*tradList.size());	
 		rep.setTolCnt(tradList.size());
 		rep.setTolAmt(NumberUtil.addPoint(Double.parseDouble(totalAmt.toString())));

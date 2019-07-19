@@ -43,11 +43,11 @@ public class CHK_10103 extends BASE_TEST {
 	public void ok() throws Exception {
 
 		
-		req.setFilNam("BUPS31322900000820190717.dat");
+		req.setFilNam("BUPS31322900000820190718.dat");
 		
 		String repData = super.comm(FixedUtil.toFixed(req,BASE_TEST.CODING));
-		REP_10103 rep = new REP_10103();
-		rep = (REP_10103)new FixedUtil(repData,BASE_TEST.CODING).toBean(rep.getClass());		
+		com.fxbank.tpp.bocm.dto.bocm.REP_10103 rep = new com.fxbank.tpp.bocm.dto.bocm.REP_10103();
+		rep = (com.fxbank.tpp.bocm.dto.bocm.REP_10103)new FixedUtil(repData,BASE_TEST.CODING).toBean(rep.getClass());		
 		assertEquals(rep.getTmsgTyp(), "N");
 		assertEquals(rep.getTrspCd(), "FX0000");
 	}

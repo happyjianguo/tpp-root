@@ -81,11 +81,16 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//核心记账返回状态码
 		String retCode = null;
 		//核心记账返回状态信息
-		String retMsg = null;		
+		String retMsg = null;	
+		//手续费
+		String fee = "0";
 		try {
 			//1. 核心记账
 			myLog.info(logger, "本行卡付款转账核心记账请求");
 			esbRep_30011000104 = hostCharge(reqDto);
+			ESB_REP_30011000104.Fee tradFee = esbRep_30011000104.getRepBody().getFeeDetail().get(0);	
+			fee = tradFee.getFeeAmt();
+			reqDto.getReqBody().setFeeT3(fee);
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
@@ -129,8 +134,6 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		int bocmTime = 0;
 		//账户余额
 		String actBal = "0";
-		//手续费
-		String fee = "0";
 		//交行响应码
 		String bocmRepcd = "";
 		//交行响应信息
@@ -168,7 +171,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				bocmTraceNo = rep10000.getRlogNo();
 				bocmDate = rep10000.getSysDate();
 				bocmTime = rep10000.getSysTime();
-				fee = rep10000.getFee().toString();
+				//fee = rep10000.getFee().toString();
 				actBal = rep10000.getActBal().toString();
 				bocmRepcd = rep10000.getTrspCd();
 				bocmRepmsg = rep10000.getTrspMsg();					
@@ -179,7 +182,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				bocmTraceNo = rep20000.getRlogNo();
 				bocmDate = rep20000.getSysDate();
 				bocmTime = rep20000.getSysTime();
-				fee = rep20000.getFee().toString();
+				//fee = rep20000.getFee().toString();
 				actBal = rep20000.getActBal().toString();
 				bocmRepcd = rep20000.getTrspCd();
 				bocmRepmsg = rep20000.getTrspMsg();	
@@ -238,7 +241,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 						bocmTraceNo = rep10000.getRlogNo();
 						bocmDate = rep10000.getSysDate();
 						bocmTime = rep10000.getSysTime();
-						fee = rep10000.getFee().toString();
+						//fee = rep10000.getFee().toString();
 						actBal = rep10000.getActBal().toString();
 						bocmRepcd = rep10000.getTrspCd();
 						bocmRepmsg = rep10000.getTrspMsg();
@@ -247,7 +250,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 						bocmTraceNo = rep20000.getRlogNo();
 						bocmDate = rep20000.getSysDate();
 						bocmTime = rep20000.getSysTime();
-						fee = rep20000.getFee().toString();
+						//fee = rep20000.getFee().toString();
 						actBal = rep20000.getActBal().toString();
 						bocmRepcd = rep20000.getTrspCd();
 						bocmRepmsg = rep20000.getTrspMsg();
@@ -309,7 +312,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					bocmTraceNo = rep10000.getRlogNo();
 					bocmDate = rep10000.getSysDate();
 					bocmTime = rep10000.getSysTime();
-					fee = rep10000.getFee().toString();
+					//fee = rep10000.getFee().toString();
 					actBal = rep10000.getActBal().toString();
 					bocmRepcd = rep10000.getTrspCd();
 					bocmRepmsg = rep10000.getTrspMsg();
@@ -318,7 +321,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					bocmTraceNo = rep20000.getRlogNo();
 					bocmDate = rep20000.getSysDate();
 					bocmTime = rep20000.getSysTime();
-					fee = rep20000.getFee().toString();
+					//fee = rep20000.getFee().toString();
 					actBal = rep20000.getActBal().toString();
 					bocmRepcd = rep20000.getTrspCd();
 					bocmRepmsg = rep20000.getTrspMsg();

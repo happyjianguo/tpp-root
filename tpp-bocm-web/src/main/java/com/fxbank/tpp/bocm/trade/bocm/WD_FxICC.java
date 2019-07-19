@@ -308,6 +308,8 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 
 		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
 		record.setTxAmt(new BigDecimal(txnAmt));
+		ESB_REP_30011000104.Fee tradFee = rep.getRepBody().getFeeDetail().get(0);	
+		record.setFee(new BigDecimal(tradFee.getFeeAmt()));
 		
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		//现转标志；0现金、1转账

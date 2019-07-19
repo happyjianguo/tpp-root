@@ -99,7 +99,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//账户余额
 		String actBal = "0";
 		//手续费
-		String fee = "";
+		String fee = "0";
 		//交行响应码
 		String bocmRepcd = "";
 		//交行响应信息
@@ -258,21 +258,21 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					//核心记账状态，1-成功，4-冲正成功，5-冲正失败，6-冲正超时
 					//接收ESB报文应答超时
 					if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
-						updateHostRecord(reqDto, "", "", "6", e.getRspCode(), e.getRspMsg());
+						updateHostRecord(reqDto, "", "", "6",fee, e.getRspCode(), e.getRspMsg());
 						myLog.error(logger, "交行卡取现金，本行核心冲正超时，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);
 						SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",核心冲正超时，请核对记账状态,如果记账成功请进行抹账处理");
 						throw e2;
 					//其他冲正错误
 					}else {						
-						updateHostRecord(reqDto, "", "", "5", e.getRspCode(), e.getRspMsg());
+						updateHostRecord(reqDto, "", "", "5",fee, e.getRspCode(), e.getRspMsg());
 						myLog.error(logger, "交行卡取现金，本行核心冲正失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
 						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg()+",核心冲正失败,请核对记账状态,如果记账成功请进行抹账处理");
 						throw e2;
 					}
 				}
-				updateHostRecord(reqDto, hostDate, hostTraceno, "4", hostReversalCode, hostReversalMsg);
+				updateHostRecord(reqDto, hostDate, hostTraceno, "4",fee, hostReversalCode, hostReversalMsg);
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());
 				myLog.error(logger, "交行卡存现金，本行核心冲正成功，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(),e2);
@@ -291,7 +291,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
 					updateBocmRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5");
 				}
-				updateHostRecord(reqDto, hostDate, hostTraceno, "2", e.getRspCode(), e.getRspMsg());
+				updateHostRecord(reqDto, hostDate, hostTraceno, "2",fee, e.getRspCode(), e.getRspMsg());
 				myLog.error(logger, "交行卡取现金，核心记账失败，发送"+cardTypeName+"通兑抹账请求至交行，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，核心记账失败，"+e.getRspMsg());
@@ -302,7 +302,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		}
 		
 		//4. 核心记账成功，更新流水表核心记账状态
-		updateHostRecord(reqDto, hostDate, hostTraceno, "1", retCode, retMsg);
+		updateHostRecord(reqDto, hostDate, hostTraceno, "1",fee, retCode, retMsg);
 		myLog.info(logger, "交行卡付款转账，本行核心记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 		return rep;
 	}
@@ -523,36 +523,6 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	}
 	
 	/** 
-	* @Title: updateHostRecord 
-	* @Description: 更新核心记账状态 
-	* @param @param reqDto
-	* @param @param hostDate
-	* @param @param hostTraceno
-	* @param @param hostState
-	* @param @param retCode
-	* @param @param retMsg
-	* @param @return
-	* @param @throws SysTradeExecuteException    设定文件 
-	* @return SndTraceUpdModel    返回类型 
-	* @throws 
-	*/
-	private BocmSndTraceUpdModel updateHostRecord(REQ_30061000801 reqDto, String hostDate, String hostTraceno,
-			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();
-		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
-				reqDto.getSysTraceno());
-		if(hostDate!=null&&!"".equals(hostDate)) {
-			record.setHostDate(Integer.parseInt(hostDate));
-		}
-		record.setHostState(hostState);
-		record.setHostTraceno(hostTraceno);
-		record.setRetCode(retCode);
-		record.setRetMsg(retMsg);
-		bocmSndTraceService.sndTraceUpd(record);
-		return record;
-	}
-	
-	/** 
 	* @Title: updateBocmRecord 
 	* @Description: 更新交行记账状态 
 	* @param @param reqDto
@@ -763,7 +733,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	* @Description: 更新核心记账状态 
 	*/
 	public BocmSndTraceUpdModel updateHostRecord(DataTransObject dto, String hostDate, String hostTraceno,
-			String hostState, String retCode, String retMsg) throws SysTradeExecuteException {
+			String hostState,String fee, String retCode, String retMsg) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, dto.getSysDate(), dto.getSysTime(),
 				dto.getSysTraceno());
@@ -774,6 +744,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		record.setHostTraceno(hostTraceno);
 		record.setRetCode(retCode);
 		record.setRetMsg(retMsg);
+		record.setFee(new BigDecimal(fee));
 		bocmSndTraceService.sndTraceUpd(record);
 		return record;
 	}
