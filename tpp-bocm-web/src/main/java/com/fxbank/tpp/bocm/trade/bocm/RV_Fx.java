@@ -83,26 +83,28 @@ public class RV_Fx implements TradeExecutionStrategy {
 		
 		BocmRcvTraceQueryModel model = queryRcvTrace(req);
 		
+		if(model==null){
+			myLog.error(logger, "交行向本行发起抹账交易，本行渠道无交易记录，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
+			BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_11007);
+			throw e2;
+		}else{
+			if("4".equals(model.getHostState())){
+				myLog.info(logger, "交行向本行发起抹账交易，渠道已经抹账成功");
+				return rep;
+			}
+			String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+			if(model.getTxDate()!=Integer.parseInt(settlementDate)) {
+				myLog.error(logger, "不能隔日冲正，交易日期" + model.getTxDate() + 
+						"渠道流水号" + model.getPlatTrace()+",当前日期"+settlementDate);
+				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10011);
+				throw e;
+			}
+		}
+		
 		try {
 			myLog.info(logger, "通过交行流水查询渠道流水");
 			
-			if(model==null){
-				myLog.error(logger, "交行向本行发起抹账交易，本行渠道无交易记录，渠道日期" + req.getSysDate() + "渠道流水号" + req.getSysTraceno());
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_11007);
-				throw e2;
-			}else{
-				if("4".equals(model.getHostState())){
-					myLog.info(logger, "交行向本行发起抹账交易，渠道已经抹账成功");
-					return rep;
-				}
-				String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-				if(model.getTxDate()!=Integer.parseInt(settlementDate)) {
-					myLog.error(logger, "不能隔日冲正，交易日期" + model.getTxDate() + 
-							"渠道流水号" + model.getPlatTrace()+",当前日期"+settlementDate);
-					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10011);
-					throw e;
-				}
-			}
+
 			//2.核心冲正
 			ESB_REP_30014000101 esbRep_30014000101 = null;
 			myLog.info(logger, "交行向本行发起抹账交易，向核心发送抹账请求");

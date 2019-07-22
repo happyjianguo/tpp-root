@@ -60,12 +60,14 @@ public class RV_10009_TEST extends BASE_TEST {
 	@Test
 	public void ok() throws Exception {
 
-		BocmRcvTraceQueryModel model = bocmRcvTraceService.getConfirmTrace(logPool.get(), 20190703, "19070389450251");
+		BocmRcvTraceQueryModel model = bocmRcvTraceService.getConfirmTrace(logPool.get(), 20190719, "19071938175777");
 		logger.info("交易模型：  "+model);
 		logger.info("交易模型：  "+model.getPlatDate()+"   "+model.getPlatTrace());
 		logger.info("交行流水：  "+model.getBocmTraceno());
 		//原交易流水
-		req.setOlogNo(model.getBocmTraceno());
+		String ologNo = model.getBocmTraceno();
+		
+		req.setOlogNo(ologNo);
 		//原交易码
 		req.setOtxnCd(model.getTxCode());
 		//交易金额

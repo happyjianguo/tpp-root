@@ -50,7 +50,37 @@ public class REP_30061000701 extends REP_BASE {
 	}
 
 	public class REP_BODY {
-
+		//手续费
+		@JSONField(name = "CHARGE_AMT")
+		private String chargeAmt;
+		//余额
+		@JSONField(name = "BALANCE")
+		private String balance;
+		//核心流水号
+		@JSONField(name = "HOST_TRACE_NO")
+		private String hostTraceNo;
+		public String getChargeAmt() {
+			return chargeAmt;
+		}
+		public void setChargeAmt(String chargeAmt) {
+			this.chargeAmt = chargeAmt;
+		}
+		public String getBalance() {
+			return balance;
+		}
+		public void setBalance(String balance) {
+			this.balance = balance;
+		}
+		public String getHostTraceNo() {
+			return hostTraceNo;
+		}
+		public void setHostTraceNo(String hostTraceNo) {
+			this.hostTraceNo = hostTraceNo;
+		}
+	
+		
+	
 	}
+	
 
 }

@@ -230,7 +230,11 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			myLog.info(logger, "发送交行卡取现金核心记账请求");
 			esbRep_30011000104 = hostCharge(reqDto);
 			ESB_REP_30011000104.Fee tradFee = esbRep_30011000104.getRepBody().getFeeDetail().get(0);	
+			//如果返回手续费为空，则手续费赋值为0
 			fee = tradFee.getFeeAmt();
+			if(fee.equals("")){
+				fee = "0";
+			}
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();//核心日期
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();//核心流水
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();//核心返回
@@ -306,6 +310,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		myLog.info(logger, "交行卡取现金核心记账成功，渠道日期" + reqDto.getSysDate() + 
 				"渠道流水号" + reqDto.getSysTraceno());
 		updateHostRecord(reqDto, hostDate, hostTraceno, "1",fee, retCode, retMsg);
+		rep.getRepBody().setHostTraceNo(hostTraceno);
+		rep.getRepBody().setBalance3T(actBal);
+		rep.getRepBody().setFeeT3(fee);
 		return rep;
 	}
 	

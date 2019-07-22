@@ -366,7 +366,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				aceModel.setTxAmt(model.getTxAmt());
 				aceModel.setTxDate(date);
 				aceModel.setMsg("渠道少账");
-				aceModel.setBocmFlag("1");
+				aceModel.setBocmFlag("0");
 				aceModel.setHostFlag("1");
 				aceModel.setHostDate(model.getHostDate());
 				aceModel.setHostTraceno(model.getHostTraceno());
@@ -403,11 +403,13 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 					// 如果来账交易类型是他代本通存和他代本现金通兑,不更新对账状态,已交行为主的记录只更新核心记账状态，不修改对账状态
 					if (rcvTraceQueryModel.getTranType().equals("JH02")
 							|| (rcvTraceQueryModel.getTranType().equals("JH01") && rcvTraceQueryModel.getTxInd().equals("0"))) {
+						record.setHostState("1");
+						rcvTraceService.rcvTraceUpd(record);
 						continue;
 					} else {
 						record.setCheckFlag("2");
-					}
-					rcvTraceService.rcvTraceUpd(record);
+						rcvTraceService.rcvTraceUpd(record);
+					}					
 					myLog.info(logger,
 							"渠道调整来账数据核心状态，渠道日期【" + rcvTraceQueryModel.getPlatDate() + "】，渠道流水【"
 									+ rcvTraceQueryModel.getPlatTrace() + "】，调整前状态【" + hostState + "】，调整后状态【1】，通存通兑标志【"

@@ -50,12 +50,15 @@ public class REP_30061000801 extends REP_BASE {
 	}
 
 	public class REP_BODY {
-
+		//手续费
 		@JSONField(name = "FEE_T3")
-		private String feeT3;//手续费
-		
+		private String feeT3;
+		//余额
 		@JSONField(name = "BALANCE3_T")
-		private String balance3T;//余额
+		private String balance3T;
+		//核心流水号
+		@JSONField(name = "HOST_TRACE_NO")
+		private String hostTraceNo;
 		
 		public String  getFeeT3(){
 			return feeT3;
@@ -68,6 +71,12 @@ public class REP_30061000801 extends REP_BASE {
 		}
 		public void setBalance3T(String balance3t) {
 			balance3T = balance3t;
+		}
+		public String getHostTraceNo() {
+			return hostTraceNo;
+		}
+		public void setHostTraceNo(String hostTraceNo) {
+			this.hostTraceNo = hostTraceNo;
 		}
 		
 	}

@@ -88,7 +88,12 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			esbRep_30011000104 = hostCharge(reqDto);
 			ESB_REP_30011000104.Fee tradFee = esbRep_30011000104.getRepBody().getFeeDetail().get(0);	
 			fee = tradFee.getFeeAmt();
-			reqDto.getReqBody().setFeeT3(fee);
+			if(!fee.equals("")){
+				reqDto.getReqBody().setFeeT3(fee);
+			}else{
+				reqDto.getReqBody().setFeeT3("0");
+			}
+			
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
@@ -323,12 +328,13 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				//如果还是超时返回成功,防止短款					
 			}
 		}	
-		if(!"".equals(fee)){
-			fee = NumberUtil.removePointToString(Double.parseDouble(fee));
+		if("".equals(fee)){
+			fee = "0";
 		}
 		actBal = NumberUtil.removePointToString(Double.parseDouble(actBal));
 		rep.getRepBody().setOpnAcctBnkFeeT(fee);
-		rep.getRepBody().setAcctBalT2(actBal);	
+		rep.getRepBody().setAcctBalT2(actBal);
+		rep.getRepBody().setHostTraceNo(hostTraceno);
 		//4.交行记账成功,更新流水表交行记账状态
 		updateBocmRecord(reqDto,bocmDate,bocmTime,bocmTraceNo,"1",actBal,bocmRepcd,bocmRepmsg);
 		myLog.info(logger, "交行卡存现金,交行"+cardTypeName+"通存记账成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());

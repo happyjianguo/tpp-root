@@ -78,10 +78,10 @@ public class DB_BocmTraTest {
 		reqSysHead.setSceneId("01");
 		reqSysHead.setSystemId("301907");
 		reqSysHead.setTranMode("ONLINE");
-		reqSysHead.setSourceType("BOCM");	//网联
+		reqSysHead.setSourceType("MT");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("02002");
-		reqSysHead.setUserId("002241");
+		reqSysHead.setBranchId("01003");
+		reqSysHead.setUserId("000274");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
 		reqSysHead.setUserLang("CHINESE");
@@ -92,6 +92,7 @@ public class DB_BocmTraTest {
 		reqSysHead.setDestBranchNo("DEST_BRANCH_NO");
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());
+		reqSysHead.setProgramId("7J12");
 		reqSysHead.setAuthUserId("999");
 		reqBody = req.new REQ_BODY(); 
 		req.setReqSysHead(reqSysHead);
@@ -108,31 +109,31 @@ public class DB_BocmTraTest {
 		reqBody.setBnkCardAcctNaT("姓名1");
 		reqBody.setBcmCardAcctNaT("姓名2");
 		reqBody.setAcctBranchT1("123");//开户机构
-		reqBody.setBnkCardAcctNoT("622126010001048643");//本行卡账号
+		reqBody.setBnkCardAcctNoT("623166000003394334");//本行卡账号
 		reqBody.setBcmCardAcctNoT("6222600530011742438");//交行卡账号
-		reqBody.setTrsrAmtT3("100.00");//转账金额
+		reqBody.setTrsrAmtT3("400.00");//转账金额
 		reqBody.setFeeT3("0.00");//手续费
 		reqBody.setHndlPymntFeeT5("0.00");//应收手续费
 		reqBody.setAcctSqNoT2("123");//本行卡账户序号
 		reqBody.setVchrNoT1("210101");//凭证号码
-		reqBody.setBcmCardAcctCrtfNoT("210102");//交行卡账户证件号码
-		reqBody.setCmsnHldrGlblIdT("201101");//代理人证件号码
+//		reqBody.setBcmCardAcctCrtfNoT("210102");//交行卡账户证件号码
+//		reqBody.setCmsnHldrGlblIdT("201101");//代理人证件号码
 		reqBody.setPyrAcctTpT("0");//付款人账号类型 
 		reqBody.setRcveWyT("0");//收取方式
 		reqBody.setAcctTpT("2");//账户类型
 		reqBody.setBusiMdT1("1");//业务模式
 		reqBody.setInWyT("0");//输入方式
 		reqBody.setPwdT("123");//密码
-		reqBody.setPyrOpnBnkNoT2("2321");//付款人开户行号
-		reqBody.setPyeeOpnBnkNoT1("21321");//收款人开户行号
+		reqBody.setPyrOpnBnkNoT2("313229000024");//付款人开户行号
+		reqBody.setPyeeOpnBnkNoT1("301290050029");//收款人开户行号
 		reqBody.setHmFeeT("0.00");//本行手续费
 		reqBody.setBcmCardAcctCrtfTpT("15");//交行卡账户证件类型
 		reqBody.setIsVchrPswdT("Y");//是否凭密
 		reqBody.setHldrGlblIdT("12321");//本行卡证件号码
 		reqBody.setIdTpT2("15");//证件类型
-		reqBody.setBrchNoT8("02002");//机构号1
-		reqBody.setBrchNoT9("02003");//机构号2
-		reqBody.setScdTrkInfoT2("622126010001048643=4912567019123456");//二磁道信息
+//		reqBody.setBrchNoT8("02002");//机构号1
+//		reqBody.setBrchNoT9("02003");//机构号2
+		reqBody.setScdTrkInfoT2("623166000003394334=4912567019123456");//二磁道信息
 		reqBody.setIcCardFlgT4("0");//IC卡磁条卡标志   0磁条卡  1IC卡
 		String macDataStr = JsonUtil.toJson(reqBody);
 		byte[] macBytes = macDataStr.getBytes();

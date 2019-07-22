@@ -240,14 +240,12 @@ public class CHK_Bocm {
 				}
 			}
 		}
-		myLog.info(logger, "外围与交行对账往账记录：【" + snd + "】");
-		myLog.info(logger, "外围与交行对账来账记录：【" + rcv + "】");
-		myLog.info(logger, "外围与交行对账结束");
-		myLog.info(logger, "外围与交行对账成功");
+
 		
 		// 获取未对账的往帐信息
 		List<BocmSndTraceQueryModel> sndTraceList = sndTraceService.getCheckSndTrace(myLog, date, sysTime, sysTraceno,
 				date.toString());
+		myLog.info(logger, "获取未对账的往账账信息记录：【" + sndTraceList.size() + "】");
 		for (BocmSndTraceQueryModel model : sndTraceList) {
 			BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(),
 					model.getPlatTrace());
@@ -274,6 +272,7 @@ public class CHK_Bocm {
 		// 获取未对账的来账信息,交行无记录的数据
 		List<BocmRcvTraceQueryModel> rcvTraceList = rcvTraceService.getCheckRcvTrace(myLog, date, sysTime, sysTraceno,
 				date.toString());
+		myLog.info(logger, "获取未对账的来账信息记录：【" + rcvTraceList.size() + "】");
 		for (BocmRcvTraceQueryModel model : rcvTraceList) {
 			BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, model.getPlatDate(), model.getPlatTime(),
 					model.getPlatTrace());
@@ -282,8 +281,8 @@ public class CHK_Bocm {
 				continue;
 			}			
 			if (model.getHostState().equals("1")) {
-				String msg = "渠道多出来账数据,与核心记账不一致";
-				initRcvErrRecord(myLog, model, msg);
+				String msg = "渠道多出来账数据,与交行记账不一致";
+				initRcvErrRecord(myLog, model, msg, "2", "0");
 				myLog.error(logger, "柜面通【" + date + "】对账失败: 多出来账记录，渠道流水号【" + model.getPlatTrace() + "】，核心状态【"
 						+ model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
@@ -291,7 +290,7 @@ public class CHK_Bocm {
 				throw e;
 			} else {
 				String msg = "渠道多出来账数据,不处理";
-				initRcvErrRecord(myLog, model, msg);
+				initRcvErrRecord(myLog, model, msg, "1", "0");
 				myLog.info(logger, "渠道多出来账数据，渠道日期【" + model.getPlatDate() + "】，渠道流水【" + model.getPlatTrace() + "】，核心状态【"
 						+ model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
 				record.setCheckFlag("4");
@@ -300,7 +299,10 @@ public class CHK_Bocm {
 		}
 
 
-
+		myLog.info(logger, "外围与交行对账往账记录：【" + snd + "】");
+		myLog.info(logger, "外围与交行对账来账记录：【" + rcv + "】");
+		myLog.info(logger, "外围与交行对账结束");
+		myLog.info(logger, "外围与交行对账成功");
 		// 更新对账状态表交行对账状态
 		BocmChkStatusModel record = new BocmChkStatusModel();
 		record.setTxDate(date);
@@ -589,7 +591,8 @@ public class CHK_Bocm {
 		acctCheckErrService.insert(aceModel);
 	}
 
-	private void initRcvErrRecord(MyLog myLog, BocmRcvTraceQueryModel rcvTraceQueryModel, String msg)
+	private void initRcvErrRecord(MyLog myLog, BocmRcvTraceQueryModel rcvTraceQueryModel, String msg
+			,String hostFlag, String bocmFlag)
 			throws SysTradeExecuteException {
 		BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, rcvTraceQueryModel.getPlatDate(),
 				rcvTraceQueryModel.getSysTime(), rcvTraceQueryModel.getPlatTrace());
@@ -614,6 +617,8 @@ public class CHK_Bocm {
 		aceModel.setPayeeName(rcvTraceQueryModel.getPayeeName());
 		aceModel.setHostState(rcvTraceQueryModel.getHostState());
 		aceModel.setBocmState(rcvTraceQueryModel.getBocmState());
+		aceModel.setHostFlag(hostFlag);
+		aceModel.setBocmFlag(bocmFlag);
 		aceModel.setCheckFlag("以交行对账为准");
 		aceModel.setMsg(msg);
 		// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");

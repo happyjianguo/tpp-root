@@ -227,6 +227,12 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			//3. 核心记账
 			myLog.info(logger,"交行卡付款转账，本行核心记账");
 			esbRep_30011000104 = hostCharge(reqDto);
+			ESB_REP_30011000104.Fee tradFee = esbRep_30011000104.getRepBody().getFeeDetail().get(0);	
+			//如果返回手续费为空，则手续费赋值为0
+			fee = tradFee.getFeeAmt();
+			if(fee.equals("")){
+				fee = "0";
+			}
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
@@ -304,6 +310,9 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//4. 核心记账成功，更新流水表核心记账状态
 		updateHostRecord(reqDto, hostDate, hostTraceno, "1",fee, retCode, retMsg);
 		myLog.info(logger, "交行卡付款转账，本行核心记账成功，渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+		rep.getRepBody().setHostTraceNo(hostTraceno);
+		rep.getRepBody().setBalance3T(actBal);
+		rep.getRepBody().setFeeT3(fee);
 		return rep;
 	}
 	
