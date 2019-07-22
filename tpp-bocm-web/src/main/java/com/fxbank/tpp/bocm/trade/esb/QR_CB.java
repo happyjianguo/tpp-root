@@ -170,8 +170,10 @@ public class QR_CB extends TradeBase implements TradeExecutionStrategy {
 		if("6".equals(bocmState)){
 			trace.setBocmState("冲正超时");
 		}
-
-		
+		String bocmFlag = model.getBocmFlag();
+		String hostFlag = model.getHostFlag();
+		trace.setBocmFlag("");
+		trace.setHostFlag("");
 		trace.setCheckFlag(model.getCheckFlag());
 		trace.setMsg(model.getMsg());
 		return trace;

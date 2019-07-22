@@ -61,6 +61,8 @@ public class BocmAcctCheckErrService implements IBocmAcctCheckErrService{
 			model.setBocmState(ace.getBocmState());
 			model.setCheckFlag(ace.getCheckFlag());
 			model.setMsg(ace.getMsg());
+			model.setBocmFlag(ace.getBocmFlag());
+			model.setHostFlag(ace.getHostFlag());
 			modelList.add(model);
 		}
 		return modelList;
@@ -97,6 +99,8 @@ public class BocmAcctCheckErrService implements IBocmAcctCheckErrService{
 		ace.setPayerAcno(model.getPayerAcno());
 		ace.setPayerName(model.getPayerName());
 		ace.setMsg(model.getMsg());
+		ace.setBocmFlag(model.getBocmFlag());
+		ace.setHostFlag(model.getHostFlag());
 		mapper.insertSelective(ace);
 	}
 

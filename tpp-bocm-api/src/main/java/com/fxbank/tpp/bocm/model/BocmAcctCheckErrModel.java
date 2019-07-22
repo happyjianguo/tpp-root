@@ -94,6 +94,10 @@ public class BocmAcctCheckErrModel extends ModelBase implements Serializable {
      * 对账标志，1-未对账，2-已对账，3-核心多，4-渠道多
      */
     private String checkFlag;
+    //核心对账状态
+    private String hostFlag;
+    //交行对账状态
+    private String bocmFlag;
 
     /**
      * 来往帐标志，I：来账，O：往帐
@@ -354,4 +358,21 @@ public class BocmAcctCheckErrModel extends ModelBase implements Serializable {
 		this.bocmState = bocmState;
 	}
 
+	public String getHostFlag() {
+		return hostFlag;
+	}
+
+	public void setHostFlag(String hostFlag) {
+		this.hostFlag = hostFlag;
+	}
+
+	public String getBocmFlag() {
+		return bocmFlag;
+	}
+
+	public void setBocmFlag(String bocmFlag) {
+		this.bocmFlag = bocmFlag;
+	}
+
+	
 }

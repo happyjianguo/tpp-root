@@ -27,6 +27,8 @@ payee_name NVARCHAR2(100) NULL ,
 host_state NVARCHAR2(2) NULL ,
 bocm_state NVARCHAR2(2) NULL ,
 check_flag NVARCHAR2(10) NULL ,
+host_flag NVARCHAR2(10) NULL ,
+bocm_flag NVARCHAR2(10) NULL ,
 msg NVARCHAR2(200) NULL 
 )
 
@@ -57,6 +59,8 @@ COMMENT ON COLUMN bocm_chk_err.payee_name IS '收款人户名';
 COMMENT ON COLUMN bocm_chk_err.bocm_state IS '交行核心记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时';
 COMMENT ON COLUMN bocm_chk_err.dc_flag IS '通存通兑标志；0通存、1通兑';
 COMMENT ON COLUMN bocm_chk_err.check_flag IS '对账标志，1-未对账，2-已对账，3-核心多，4-渠道多';
+COMMENT ON COLUMN bocm_chk_err.host_flag IS '平台对账标志，1-未对账，2-已对账，3-核心多，4-渠道多,5-渠道少，核心少';
+COMMENT ON COLUMN bocm_chk_err.bocm_flag IS '交行对账标志，1-未对账，2-已对账';
 COMMENT ON COLUMN bocm_chk_err.direction IS '来往帐标志，I：来账，O：往帐';
 COMMENT ON COLUMN bocm_chk_err.msg IS '描述';
 

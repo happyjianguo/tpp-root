@@ -19,6 +19,8 @@
     <result column="PROXY_FEE" jdbcType="DECIMAL" property="proxyFee" />
     <result column="DC_FLAG" property="dcFlag" jdbcType="NVARCHAR" />
     <result column="CHECK_FLAG" property="checkFlag" jdbcType="NVARCHAR" />
+    <result column="HOST_FLAG" property="hostFlag" jdbcType="NVARCHAR" />
+    <result column="BOCM_FLAG" property="bocmFlag" jdbcType="NVARCHAR" />
     <result column="DIRECTION" property="direction" jdbcType="NVARCHAR" />
     <result column="TX_AMT" property="txAmt" jdbcType="DECIMAL" />
     <result column="PAYER_BANK" jdbcType="NVARCHAR" property="payerBank" />

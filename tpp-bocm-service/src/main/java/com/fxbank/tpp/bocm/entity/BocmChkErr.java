@@ -146,6 +146,18 @@ public class BocmChkErr {
      */
     @Column(name = "CHECK_FLAG")
     private String checkFlag;
+    
+    /**
+     * null
+     */
+    @Column(name = "HOST_FLAG")
+    private String hostFlag;
+    
+    /**
+     * null
+     */
+    @Column(name = "BOCM_FLAG")
+    private String bocmFlag;
 
     /**
      * null
@@ -480,6 +492,22 @@ public class BocmChkErr {
 
 	public void setTxDate(Integer txDate) {
 		this.txDate = txDate;
+	}
+
+	public String getHostFlag() {
+		return hostFlag;
+	}
+
+	public void setHostFlag(String hostFlag) {
+		this.hostFlag = hostFlag;
+	}
+
+	public String getBocmFlag() {
+		return bocmFlag;
+	}
+
+	public void setBocmFlag(String bocmFlag) {
+		this.bocmFlag = bocmFlag;
 	}
     
     
