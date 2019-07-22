@@ -198,6 +198,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		model.setBocmTraceno(data.getBocmTraceno());
 		model.setTxAmt(data.getTxAmt());
 		model.setTxDate(data.getTxDate());
+		model.setTxCode(data.getTxCode());
 		model.setTranType(data.getTranType());
 		model.setTxInd(data.getTxInd());
 		model.setActBal(data.getActBal());
@@ -232,6 +233,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setTxBranch(tpp.getTxBranch());
 			model.setTxInd(tpp.getTxInd());
 			model.setTxTel(tpp.getTxTel());
+			model.setTxCode(tpp.getTxCode());
 			model.setCheckFlag(tpp.getCheckFlag());
 			model.setHostDate(tpp.getHostDate());
 			model.setHostTraceno(tpp.getHostTraceno());
@@ -387,6 +389,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setTxDate(data.getTxDate());
 			model.setTranType(data.getTranType());
 			model.setTxInd(data.getTxInd());
+			model.setTxCode(data.getTxCode());
 		}
 		
 		return model;

@@ -444,6 +444,8 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 					aceModel.setPayeeName(rcvTraceQueryModel.getPayeeName());
 					aceModel.setHostState(rcvTraceQueryModel.getHostState());
 					aceModel.setBocmState(rcvTraceQueryModel.getBocmState());
+					aceModel.setHostFlag("1");
+					aceModel.setBocmFlag("0");
 					aceModel.setCheckFlag("以我行对账为准");
 					aceModel.setMsg("核心多账,需冲正");
 					// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
