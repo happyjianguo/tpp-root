@@ -308,7 +308,9 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTxAmt(new BigDecimal(txnAmt));
 		if(!tradFee.getFeeAmt().equals("")){
 			record.setFee(new BigDecimal(tradFee.getFeeAmt()));
-		}	
+		}else{
+			record.setFee(new BigDecimal("0"));
+		}		
 		
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		record.setFeeFlag(reqDto.getFeeFlg());

@@ -304,6 +304,7 @@ public abstract class BaseTradeT1 {
 		
 		try {
 			//核心记账
+			myLog.info(logger,TRADE_DESC+"核心记账");
 			model = hostCharge(dto);
 			myLog.info(logger,TRADE_DESC+"核心记账成功，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno());
 		} catch (SysTradeExecuteException e) {

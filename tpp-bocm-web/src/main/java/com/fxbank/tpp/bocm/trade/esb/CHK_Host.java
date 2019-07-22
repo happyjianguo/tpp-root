@@ -58,7 +58,7 @@ import redis.clients.jedis.Jedis;
 @Service("REQ_30061001101")
 public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 
-	private static Logger logger = LoggerFactory.getLogger(CHK_Bocm.class);
+	private static Logger logger = LoggerFactory.getLogger(CHK_Host.class);
 
 	@Resource
 	private LogPool logPool;
@@ -361,11 +361,15 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				aceModel.setPreHostState("");
 				aceModel.setReHostState("1");
 				aceModel.setDcFlag("");
-				aceModel.setCheckFlag("3");
+				aceModel.setCheckFlag("以我行对账为准");
 				aceModel.setDirection("I");
 				aceModel.setTxAmt(model.getTxAmt());
-				aceModel.setMsg("渠道补充往账数据，渠道日期【" + model.getSettleDate() + "】交易类型【" + model.getTranType() + "】渠道流水【"
-						+ model.getPlatTrace() + "】");
+				aceModel.setTxDate(date);
+				aceModel.setMsg("渠道少账");
+				aceModel.setBocmFlag("1");
+				aceModel.setHostFlag("1");
+				aceModel.setHostDate(model.getHostDate());
+				aceModel.setHostTraceno(model.getHostTraceno());
 				acctCheckErrService.insert(aceModel);
 				myLog.error(logger,
 						"补数据SQL： insert into bocm_rcv_log (plat_date,plat_trace,tx_amt,host_date,host_traceno,host_state,check_flag) VALUES ("
@@ -374,7 +378,8 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				myLog.error(logger, "渠道补充往账数据，渠道日期【" + model.getSettleDate() + "】，渠道流水【" + model.getPlatTrace() + "】");
 				myLog.error(logger, "柜面通【" + date + "】来帐对账失败,渠道数据丢失: 核心流水号【" + model.getHostTraceno() + "】交易类型【"
 						+ model.getTranType() + "】核心日期为【" + model.getSysDate() + "】");
-				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013
+						,"与核心来账对账失败,渠道少账");
 				throw e;
 			} else {
 				String hostState = rcvTraceQueryModel.getHostState(); // 渠道记录的核心状态

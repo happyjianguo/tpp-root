@@ -86,7 +86,9 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		entity.setCheckFlag("1");
 		
 		entity.setFeeFlag(record.getFeeFlag());
-		entity.setFee(record.getFee());
+		if(record.getFee()!=null){
+			entity.setFee(record.getFee());
+		}
 		entity.setSndBankno(record.getSndBankno());
 		entity.setRcvBankno(record.getRcvBankno());
 		entity.setPayerBank(record.getPayerBank());

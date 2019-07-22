@@ -320,7 +320,9 @@ public class WD_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		ESB_REP_30011000104.Fee tradFee = rep.getRepBody().getFeeDetail().get(0);	
 		if(!tradFee.getFeeAmt().equals("")){
 			record.setFee(new BigDecimal(tradFee.getFeeAmt()));
-		}	
+		}else{
+			record.setFee(new BigDecimal("0"));
+		}		
 		record.setTxAmt(new BigDecimal(txnAmt));
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		//现转标志；0现金、1转账

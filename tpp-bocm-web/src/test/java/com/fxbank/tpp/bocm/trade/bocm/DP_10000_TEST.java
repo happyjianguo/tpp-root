@@ -55,12 +55,12 @@ public class DP_10000_TEST extends BASE_TEST {
 		//UAT
 //		req.setRactNo("623166001016830991");
 		//DEV
-		req.setRactNo("623166000001058980");
+		req.setRactNo("623166000000085273");
 		req.setCuIdTp("15");
 		req.setCuIdNo("1234");
 		//收款人名称
-		req.setRecNam("测试");		
-		req.setSecMag("623166099020908241=4912567019123456");
+		req.setRecNam("翟淼");		
+		req.setSecMag("623166000000085273=4912567019123456");
 //		req.setTtxnDat(20190701);
 //		req.setTtxnTim(145033);
 //		req.setSlogNo("19070159840880");		

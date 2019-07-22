@@ -320,8 +320,9 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		ESB_REP_30011000104.Fee tradFee = rep.getRepBody().getFeeDetail().get(0);
 		if(!tradFee.getFeeAmt().equals("")){
 			record.setFee(new BigDecimal(tradFee.getFeeAmt()));
+		}else{
+			record.setFee(new BigDecimal("0"));
 		}		
-//		String fee = NumberUtil.removePointToString(reqDto.getFee());
 		record.setTxAmt(new BigDecimal(txnAmt));
 		
 		

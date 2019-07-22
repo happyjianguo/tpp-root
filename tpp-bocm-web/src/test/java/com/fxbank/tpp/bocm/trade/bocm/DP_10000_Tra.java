@@ -54,24 +54,25 @@ public class DP_10000_Tra extends BASE_TEST {
 		
 		//本行卡付款转账
 		//付款人开户行号
-		req.setPayBnk("301100000015");
+		req.setPayBnk("301290050029");
 		//付款人账户类型
 		req.setPactTp("2");
 		//付款人账号
-		req.setPactNo("6288880210000209903");
+		req.setPactNo("6222600110063573484");
 		//付款人名称
-		req.setPayNam("交行账户");
+		req.setPayNam("朱倞杰");
 		
 		//收款人开户行号
-		req.setRecBnk("313229000442");
+		req.setRecBnk("313229000137");
 		//收款人账户类型
 		req.setRactTp("2");
 		//收款人账号 6288880210000209903 622126010001048643
-		req.setRactNo("623166001016830991");
+		req.setRactNo("623166000000085273");
 		//收款人名称
-		req.setRecNam("测试");
+		req.setRecNam("翟淼");	
+
 		
-		req.setSecMag("623166001016830991=4912567019123456");
+		req.setSecMag("623166000000085273=4912567019123456");
 		
 		
 		
