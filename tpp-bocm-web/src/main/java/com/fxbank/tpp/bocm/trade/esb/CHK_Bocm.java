@@ -227,7 +227,7 @@ public class CHK_Bocm {
 					aceModel.setHostState("0");
 					aceModel.setBocmState("1");
 					aceModel.setBocmFlag("1");
-					aceModel.setHostFlag("0");
+					aceModel.setHostFlag("3");
 					aceModel.setCheckFlag("以交行对账为准");
 					aceModel.setMsg("渠道缺少来账数据,核心缺少记账数据,需补账");
 					acctCheckErrService.insert(aceModel);					
@@ -290,7 +290,7 @@ public class CHK_Bocm {
 				throw e;
 			} else {
 				String msg = "渠道多出来账数据,不处理";
-				initRcvErrRecord(myLog, model, msg, "1", "0");
+				initRcvErrRecord(myLog, model, msg, "0", "0");
 				myLog.info(logger, "渠道多出来账数据，渠道日期【" + model.getPlatDate() + "】，渠道流水【" + model.getPlatTrace() + "】，核心状态【"
 						+ model.getHostState() + "】，通存通兑标志【" + model.getDcFlag() + "】");
 				record.setCheckFlag("4");
@@ -359,7 +359,7 @@ public class CHK_Bocm {
 					aceModel.setHostState(rcvTraceQueryModel.getHostState());
 					aceModel.setBocmState(rcvTraceQueryModel.getBocmState());
 					aceModel.setBocmFlag("1");
-					aceModel.setHostFlag("0");
+					aceModel.setHostFlag("3");
 					aceModel.setCheckFlag("以交行对账为准");
 					aceModel.setMsg("核心少,需补账");
 					// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
@@ -375,7 +375,7 @@ public class CHK_Bocm {
 			// 交行卡付款转账（磁条卡和IC卡） 通兑（交行转出行）交易结果以交行为准
 			if (rcvTraceQueryModel.getTranType().equals("JH02")
 					|| (rcvTraceQueryModel.getTranType().equals("JH01") && rcvTraceQueryModel.getTxInd().equals("0"))) {
-				// 交易结果以交行为准,核心记账成功，对账失败
+				// 交易结果以交行为准,核心记账成功，对账失败(交行记账失败返回)
 				if (hostState.equals("1")) {
 					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, rcvTraceQueryModel.getPlatDate(),
 							rcvTraceQueryModel.getSysTime(), rcvTraceQueryModel.getPlatTrace());
@@ -384,8 +384,6 @@ public class CHK_Bocm {
 					aceModel.setTxCode(rcvTraceQueryModel.getTxCode());
 					aceModel.setTxSource(rcvTraceQueryModel.getSourceType());
 					aceModel.setTxDate(rcvTraceQueryModel.getTxDate());
-//					aceModel.setHostDate(model.getHostDate());
-//					aceModel.setHostTraceno(model.getHostTraceno());
 					aceModel.setTxDate(rcvTraceQueryModel.getTxDate());
 					aceModel.setSndBankno(rcvTraceQueryModel.getSndBankno());
 					aceModel.setTxBranch(rcvTraceQueryModel.getTxBranch());

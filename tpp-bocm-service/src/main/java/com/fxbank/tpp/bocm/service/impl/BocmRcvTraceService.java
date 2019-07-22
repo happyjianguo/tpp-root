@@ -199,6 +199,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		model.setTxAmt(data.getTxAmt());
 		model.setTxDate(data.getTxDate());
 		model.setTranType(data.getTranType());
+		model.setTxInd(data.getTxInd());
 		model.setActBal(data.getActBal());
 		model.setFeeFlag(data.getFeeFlag());
 		model.setFee(data.getFee());
@@ -385,6 +386,7 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 			model.setTxAmt(data.getTxAmt());
 			model.setTxDate(data.getTxDate());
 			model.setTranType(data.getTranType());
+			model.setTxInd(data.getTxInd());
 		}
 		
 		return model;
