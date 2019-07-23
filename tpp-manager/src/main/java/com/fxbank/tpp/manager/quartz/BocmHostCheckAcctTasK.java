@@ -1,16 +1,12 @@
 package com.fxbank.tpp.manager.quartz;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,18 +50,8 @@ import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_50015000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_50015000101;
-import com.fxbank.tpp.esb.model.tcex.ESB_REP_TCHK01;
-import com.fxbank.tpp.esb.model.tcex.ESB_REQ_TCHK01;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.esb.service.IForwardToTownService;
-import com.fxbank.tpp.manager.utils.FtpUtil;
-import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
-import com.fxbank.tpp.tcex.model.AcctCheckErrModel;
-import com.fxbank.tpp.tcex.model.DayCheckLogInitModel;
-import com.fxbank.tpp.tcex.model.RcvTraceQueryModel;
-import com.fxbank.tpp.tcex.model.RcvTraceUpdModel;
-import com.fxbank.tpp.tcex.model.SndTraceQueryModel;
-import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 
 import redis.clients.jedis.Jedis;
 
@@ -163,6 +149,7 @@ public class BocmHostCheckAcctTasK {
 		// 获取未对账的往帐信息
 		List<BocmSndTraceQueryModel> sndTraceList = sndTraceService.getCheckSndTrace(myLog, date, sysTime, sysTraceno,
 				date.toString());
+		myLog.info(logger, "往账未对账记录数【" + sndTraceList.size() + "】");
 		for (BocmSndTraceQueryModel sndTraceQueryModel : sndTraceList) {
 			BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(),
 					sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
@@ -173,9 +160,9 @@ public class BocmHostCheckAcctTasK {
 
 			if (sndTraceQueryModel.getHostState().equals("1")) {
 				String msg = "对账失败，渠道多账";
-				initSndErrRecord(myLog, sndTraceQueryModel, msg);
+				initSndErrRecord(myLog, sndTraceQueryModel, msg, "1" ,"0");
 				myLog.error(logger,
-						"柜面通【" + date + "】对账失败: 多出往账记录，渠道流水号【" + sndTraceQueryModel.getPlatTrace() + "】，核心状态【"
+						"渠道多出往账数据，渠道日期【" + date + "】对账失败: 多出往账记录，渠道流水号【" + sndTraceQueryModel.getPlatTrace() + "】，核心状态【"
 								+ sndTraceQueryModel.getHostState() + "】，通存通兑标志【" + sndTraceQueryModel.getDcFlag()
 								+ "】");
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
@@ -183,7 +170,7 @@ public class BocmHostCheckAcctTasK {
 				throw e;
 			} else {
 				String msg = "渠道多账";
-				initSndErrRecord(myLog, sndTraceQueryModel, msg);
+				initSndErrRecord(myLog, sndTraceQueryModel, msg, "1" ,"0");
 				myLog.info(logger,
 						"渠道多出往账数据，渠道日期【" + sndTraceQueryModel.getPlatDate() + "】，渠道流水【"
 								+ sndTraceQueryModel.getPlatTrace() + "】，核心状态【" + sndTraceQueryModel.getHostState()
@@ -197,6 +184,7 @@ public class BocmHostCheckAcctTasK {
 		// 获取未对账的来账信息,核心无记录的数据
 		List<BocmRcvTraceQueryModel> rcvTraceList = rcvTraceService.getCheckRcvTrace(myLog, date, sysTime, sysTraceno,
 				date.toString());
+		myLog.info(logger, "来账未对账记录数【" + rcvTraceList.size() + "】");
 		for (BocmRcvTraceQueryModel rcvTraceQueryModel : rcvTraceList) {
 			BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(),
 					rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
@@ -205,24 +193,25 @@ public class BocmHostCheckAcctTasK {
 					|| (rcvTraceQueryModel.getTranType().equals("JH01") && rcvTraceQueryModel.getTxInd().equals("0"))) {
 				continue;
 			}
-			record.setCheckFlag("4");
-			rcvTraceService.rcvTraceUpd(record);
 			if (rcvTraceQueryModel.getHostState().equals("1")) {
 				String msg = "对账失败，渠道多账";
-				initRcvErrRecord(myLog, rcvTraceQueryModel, msg);
+				initRcvErrRecord(myLog, rcvTraceQueryModel, msg, "1" ,"0");
 				myLog.error(logger,
 						"柜面通【" + date + "】对账失败: 多出来账记录，渠道流水号【" + rcvTraceQueryModel.getPlatTrace() + "】，核心状态【"
 								+ rcvTraceQueryModel.getHostState() + "】，通存通兑标志【" + rcvTraceQueryModel.getDcFlag()
 								+ "】");
-				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013
+						,"与核心来账对账失败,渠道多账,渠道流水【" + rcvTraceQueryModel.getPlatTrace() + "】");
 				throw e;
 			} else {
 				String msg = "渠道多账";
-				initRcvErrRecord(myLog, rcvTraceQueryModel, msg);
+				initRcvErrRecord(myLog, rcvTraceQueryModel, msg, "0" ,"0");
 				myLog.info(logger,
 						"渠道多出来账数据，渠道日期【" + rcvTraceQueryModel.getPlatDate() + "】，渠道流水【"
 								+ rcvTraceQueryModel.getPlatTrace() + "】，核心状态【" + rcvTraceQueryModel.getHostState()
 								+ "】，通存通兑标志【" + rcvTraceQueryModel.getDcFlag() + "】");
+				record.setCheckFlag("4");
+				rcvTraceService.rcvTraceUpd(record);
 			}
 		}
 
@@ -270,6 +259,7 @@ public class BocmHostCheckAcctTasK {
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新与核心对账状态为已对账：  对账日期：" + date);
 
+
 	}
 
 	// 核对往账
@@ -283,7 +273,7 @@ public class BocmHostCheckAcctTasK {
 			// 根据核心对账数据取渠道往账数据
 			BocmSndTraceQueryModel sndTraceQueryModel = sndTraceService.getSndTraceByKey(myLog, sysTime, sysTraceno,
 					date, model.getSettleDate(), model.getPlatTrace());
-			// 若渠道缺少数据则补充
+			// 若渠道缺少数据则补充,尽量渠道不少数据
 			if (sndTraceQueryModel == null) {
 				BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, model.getSettleDate(),
 						model.getSysTime(), model.getPlatTrace());
@@ -294,19 +284,23 @@ public class BocmHostCheckAcctTasK {
 				aceModel.setDcFlag("");
 				aceModel.setCheckFlag("3");
 				aceModel.setDirection("O");
-				aceModel.setTxAmt(model.getTxAmt());
-				aceModel.setMsg("渠道补充往账数据，渠道日期【" + model.getSettleDate() + "】交易类型【" + model.getTranType() + "】渠道流水【"
-						+ model.getPlatTrace() + "】");
-				acctCheckErrService.insert(aceModel);
-				myLog.error(logger,
-						"补数据SQL： insert into bocm_snd_log (plat_date,plat_trace,tx_amt,host_date,host_traceno,host_state,check_flag) VALUES ("
-								+ model.getSettleDate() + "," + model.getPlatTrace() + ",'" + model.getTxAmt() + "',"
-								+ model.getHostDate() + ",'" + model.getHostTraceno() + "','1','1');");
+				aceModel.setTxAmt(model.getTxAmt());			
+				aceModel.setTxCode(model.getTranType());
+				aceModel.setTxSource("MT");
+				aceModel.setTxDate(date);
+				aceModel.setHostDate(model.getHostDate());
+				aceModel.setHostTraceno(model.getHostTraceno());
+				aceModel.setHostFlag("2");
+				aceModel.setBocmFlag("0");
+				aceModel.setCheckFlag("以我行对账为准");
+				aceModel.setMsg("对账失败,渠道少往账数据");
+				acctCheckErrService.insert(aceModel);				
 				myLog.error(logger, "渠道补充往账数据，渠道日期【" + model.getSettleDate() + "】交易类型【" + model.getTranType() + "】渠道流水【"
 						+ model.getPlatTrace() + "】");
 				myLog.error(logger, "柜面通【" + date + "】往帐对账失败,渠道数据丢失或无效记账请核对: 核心流水号【" + model.getHostTraceno() + "】交易类型【"
 						+ model.getTranType() + "】核心日期为【" + model.getSysDate() + "】");
-				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
+						"与核心往账对账失败,查询不到渠道流水,渠道少数据,渠道流水【"+ model.getPlatTrace() + "】");
 				throw e;
 			} else {
 				// dc_flag IS '通存通兑标志；0通存、1通兑';
@@ -351,11 +345,13 @@ public class BocmHostCheckAcctTasK {
 					aceModel.setPayeeName(sndTraceQueryModel.getPayeeName());
 					aceModel.setHostState(sndTraceQueryModel.getHostState());
 					aceModel.setBocmState(sndTraceQueryModel.getBocmState());
-					aceModel.setCheckFlag("以本行对账为准");
+					aceModel.setCheckFlag("以我行对账为准");
+					aceModel.setHostFlag("2");
+					aceModel.setBocmFlag("0");
 					aceModel.setMsg("核心多账,需冲正");
 					acctCheckErrService.insert(aceModel);
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
-							"与核心往账对账失败,核心多账,需冲正");
+							"与核心往账对账失败,渠道记账状态异常,核心记账成功,核心多账,需冲正");
 					throw e;
 				}
 			}
@@ -383,20 +379,25 @@ public class BocmHostCheckAcctTasK {
 				aceModel.setPreHostState("");
 				aceModel.setReHostState("1");
 				aceModel.setDcFlag("");
-				aceModel.setCheckFlag("3");
 				aceModel.setDirection("I");
 				aceModel.setTxAmt(model.getTxAmt());
-				aceModel.setMsg("渠道补充往账数据，渠道日期【" + model.getSettleDate() + "】交易类型【" + model.getTranType() + "】渠道流水【"
-						+ model.getPlatTrace() + "】");
+				aceModel.setTxCode(model.getTranType());
+				aceModel.setTxSource("MT");
+				aceModel.setTxDate(date);
+				aceModel.setHostDate(model.getHostDate());
+				aceModel.setHostTraceno(model.getHostTraceno());
+				aceModel.setHostState("1");
+				aceModel.setBocmState("0");
+				aceModel.setHostFlag("1");
+				aceModel.setBocmFlag("0");
+				aceModel.setCheckFlag("以我行对账为准");
+				aceModel.setMsg("对账失败,渠道少来账数据");
 				acctCheckErrService.insert(aceModel);
-				myLog.error(logger,
-						"补数据SQL： insert into bocm_rcv_log (plat_date,plat_trace,tx_amt,host_date,host_traceno,host_state,check_flag) VALUES ("
-								+ model.getSettleDate() + "," + model.getPlatTrace() + ",'" + model.getTxAmt() + "',"
-								+ model.getHostDate() + ",'" + model.getHostTraceno() + "','1','1');");
 				myLog.error(logger, "渠道补充往账数据，渠道日期【" + model.getSettleDate() + "】，渠道流水【" + model.getPlatTrace() + "】");
 				myLog.error(logger, "柜面通【" + date + "】来帐对账失败,渠道数据丢失: 核心流水号【" + model.getHostTraceno() + "】交易类型【"
 						+ model.getTranType() + "】核心日期为【" + model.getSysDate() + "】");
-				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013);
+				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013
+						,"与核心来账对账失败,查询不到渠道流水,渠道少账,渠道流水【" + model.getPlatTrace() + "】");
 				throw e;
 			} else {
 				String hostState = rcvTraceQueryModel.getHostState(); // 渠道记录的核心状态
@@ -411,91 +412,24 @@ public class BocmHostCheckAcctTasK {
 							rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
 					record.setCheckFlag("2");
 					rcvTraceService.rcvTraceUpd(record);
-				} else if (hostState.equals("3")) {
-					// 来账核心记账状态只有成功超时
+				} else {
+					// 来账核心记账状态只有成功超时,其他状态返回核心记账当成功处理
 					// '核心记账状态，0-登记，1-成功，2-失败，3-超时，4-冲正成功，5-冲正失败，6-冲正超时';
 					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(),
 							rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
-					record.setHostState("1");
 					// 如果来账交易类型是他代本通存和他代本现金通兑,不更新对账状态,已交行为主的记录只更新核心记账状态，不修改对账状态
 					if (rcvTraceQueryModel.getTranType().equals("JH02")
 							|| (rcvTraceQueryModel.getTranType().equals("JH01") && rcvTraceQueryModel.getTxInd().equals("0"))) {
+						record.setHostState("1");
+						rcvTraceService.rcvTraceUpd(record);
 						continue;
-					} else {
+					}else{
+						//以我行为主的记录如果超时修改状态为成功，更新对账状态
+						record.setHostState("1");
 						record.setCheckFlag("2");
-					}
-					rcvTraceService.rcvTraceUpd(record);
-					myLog.info(logger,
-							"渠道调整来账数据核心状态，渠道日期【" + rcvTraceQueryModel.getPlatDate() + "】，渠道流水【"
-									+ rcvTraceQueryModel.getPlatTrace() + "】，调整前状态【" + hostState + "】，调整后状态【1】，通存通兑标志【"
-									+ rcvTraceQueryModel.getDcFlag() + "】");
-
-					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, model.getSettleDate(),
-							model.getSysTime(), model.getPlatTrace());
-					aceModel.setPlatDate(rcvTraceQueryModel.getPlatDate());
-					aceModel.setPlatTrace(rcvTraceQueryModel.getPlatTrace());
-					aceModel.setTxCode(rcvTraceQueryModel.getTxCode());
-					aceModel.setTxSource(rcvTraceQueryModel.getSourceType());
-					aceModel.setTxDate(rcvTraceQueryModel.getTxDate());
-					aceModel.setHostDate(model.getHostDate());
-					aceModel.setHostTraceno(model.getHostTraceno());
-					aceModel.setTxDate(rcvTraceQueryModel.getTxDate());
-					aceModel.setSndBankno(rcvTraceQueryModel.getSndBankno());
-					aceModel.setTxBranch(rcvTraceQueryModel.getTxBranch());
-					aceModel.setTxTel(rcvTraceQueryModel.getTxTel());
-					aceModel.setTxInd(rcvTraceQueryModel.getTxInd());
-					aceModel.setTxAmt(rcvTraceQueryModel.getTxAmt());
-					// aceModel.setProxyFee(rcvTraceQueryModel.getProxy_fee());
-					// aceModel.setProxyFlag(rcvTraceQueryModel.getProxy_flag());
-					aceModel.setPayerBank(rcvTraceQueryModel.getPayerBank());
-					aceModel.setPayerAcno(rcvTraceQueryModel.getPayerAcno());
-					aceModel.setPayerName(rcvTraceQueryModel.getPayerName());
-					aceModel.setPayeeBank(rcvTraceQueryModel.getPayeeBank());
-					aceModel.setPayeeAcno(rcvTraceQueryModel.getPayeeAcno());
-					aceModel.setPayeeName(rcvTraceQueryModel.getPayeeName());
-					aceModel.setHostState(rcvTraceQueryModel.getHostState());
-					aceModel.setBocmState(rcvTraceQueryModel.getBocmState());
-					aceModel.setCheckFlag("以本行对账为准");
-					aceModel.setMsg("核心多账,需冲正");
-					// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
-					acctCheckErrService.insert(aceModel);
-					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"与核心来账对账失败,核心多账,需冲正");
-					throw e;
-				} else {
-					myLog.error(logger, "柜面通【" + date + "】对账失败: 渠道流水号【" + rcvTraceQueryModel.getPlatTrace()
-							+ "】记录核心状态为【" + rcvTraceQueryModel.getHostState() + "】,与核心记账状态不符");
-					BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, model.getSettleDate(),
-							model.getSysTime(), model.getPlatTrace());
-					aceModel.setPlatDate(rcvTraceQueryModel.getPlatDate());
-					aceModel.setPlatTrace(rcvTraceQueryModel.getPlatTrace());
-					aceModel.setTxCode(rcvTraceQueryModel.getTxCode());
-					aceModel.setTxSource(rcvTraceQueryModel.getSourceType());
-					aceModel.setTxDate(rcvTraceQueryModel.getTxDate());
-					aceModel.setHostDate(model.getHostDate());
-					aceModel.setHostTraceno(model.getHostTraceno());
-					aceModel.setTxDate(rcvTraceQueryModel.getTxDate());
-					aceModel.setSndBankno(rcvTraceQueryModel.getSndBankno());
-					aceModel.setTxBranch(rcvTraceQueryModel.getTxBranch());
-					aceModel.setTxTel(rcvTraceQueryModel.getTxTel());
-					aceModel.setTxInd(rcvTraceQueryModel.getTxInd());
-					aceModel.setTxAmt(rcvTraceQueryModel.getTxAmt());
-					// aceModel.setProxyFee(rcvTraceQueryModel.getProxy_fee());
-					// aceModel.setProxyFlag(rcvTraceQueryModel.getProxy_flag());
-					aceModel.setPayerBank(rcvTraceQueryModel.getPayerBank());
-					aceModel.setPayerAcno(rcvTraceQueryModel.getPayerAcno());
-					aceModel.setPayerName(rcvTraceQueryModel.getPayerName());
-					aceModel.setPayeeBank(rcvTraceQueryModel.getPayeeBank());
-					aceModel.setPayeeAcno(rcvTraceQueryModel.getPayeeAcno());
-					aceModel.setPayeeName(rcvTraceQueryModel.getPayeeName());
-					aceModel.setHostState(rcvTraceQueryModel.getHostState());
-					aceModel.setBocmState(rcvTraceQueryModel.getBocmState());
-					aceModel.setCheckFlag("以本行对账为准");
-					aceModel.setMsg("核心多账,需冲正");
-					// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
-					acctCheckErrService.insert(aceModel);
-					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"与核心来账对账失败,和预期记账状态不符");
-					throw e;
-				}
+						rcvTraceService.rcvTraceUpd(record);
+					} 							
+				} 
 			}
 		}
 	}
@@ -567,7 +501,7 @@ public class BocmHostCheckAcctTasK {
 
 				i++;
 				myLog.info(logger, "核心记账流水入库,核心流水号：【" + model.getHostTraceno() + "】交易类型【" + model.getTranType()
-						+ "】，渠道日期【" + date + "】");
+						+ "】,渠道日期【" + date + "】,交易金额【" + model.getTxAmt() + "】");
 			}
 			myLog.info(logger, "记账日期【" + date + "】核心记账笔数【" + i + "】");
 
@@ -650,8 +584,8 @@ public class BocmHostCheckAcctTasK {
 		}
 	}
 
-	private void initSndErrRecord(MyLog myLog, BocmSndTraceQueryModel sndTraceQueryModel, String msg)
-			throws SysTradeExecuteException {
+	private void initSndErrRecord(MyLog myLog, BocmSndTraceQueryModel sndTraceQueryModel, String msg
+			,String hostFlag, String bocmFlag)throws SysTradeExecuteException {
 		BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sndTraceQueryModel.getPlatDate(),
 				sndTraceQueryModel.getSysTime(), sndTraceQueryModel.getPlatTrace());
 		aceModel.setPlatDate(sndTraceQueryModel.getPlatDate());
@@ -689,14 +623,16 @@ public class BocmHostCheckAcctTasK {
 		aceModel.setPayeeName(sndTraceQueryModel.getPayeeName());
 		aceModel.setHostState(sndTraceQueryModel.getHostState());
 		aceModel.setBocmState(sndTraceQueryModel.getBocmState());
+		aceModel.setHostFlag(hostFlag);
+		aceModel.setBocmFlag(bocmFlag);
 		aceModel.setCheckFlag("以本行对账为准");
 		aceModel.setMsg(msg);
 		myLog.error(logger, "插入调账明细表：渠道流水号【" + sndTraceQueryModel.getPlatTrace() + "】");
 		acctCheckErrService.insert(aceModel);
 	}
 
-	private void initRcvErrRecord(MyLog myLog, BocmRcvTraceQueryModel rcvTraceQueryModel, String msg)
-			throws SysTradeExecuteException {
+	private void initRcvErrRecord(MyLog myLog, BocmRcvTraceQueryModel rcvTraceQueryModel, String msg
+			,String hostFlag, String bocmFlag)throws SysTradeExecuteException {
 		BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, rcvTraceQueryModel.getPlatDate(),
 				rcvTraceQueryModel.getSysTime(), rcvTraceQueryModel.getPlatTrace());
 		aceModel.setPlatDate(rcvTraceQueryModel.getPlatDate());
@@ -720,11 +656,14 @@ public class BocmHostCheckAcctTasK {
 		aceModel.setPayeeName(rcvTraceQueryModel.getPayeeName());
 		aceModel.setHostState(rcvTraceQueryModel.getHostState());
 		aceModel.setBocmState(rcvTraceQueryModel.getBocmState());
+		aceModel.setHostFlag(hostFlag);
+		aceModel.setBocmFlag(bocmFlag);
 		aceModel.setCheckFlag("以本行对账为准");
 		aceModel.setMsg(msg);
 		// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
 		acctCheckErrService.insert(aceModel);
 	}
+
 
 	
 	@Bean(name = "cityHostCheckAcctJobDetail")
