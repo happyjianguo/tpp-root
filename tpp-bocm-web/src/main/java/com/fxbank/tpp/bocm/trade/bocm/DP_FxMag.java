@@ -254,7 +254,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
 		reqBody_30011000104.setTranAmt(txnAmt.toString());
 		
-		reqBody_30011000104.setWithdrawalType("P");
+		reqBody_30011000104.setWithdrawalType("");
 	
 		reqBody_30011000104.setChannelType("BU");
 	    //交通银行发起交易时，SBnkNo指交行发起交易网点号（12位）

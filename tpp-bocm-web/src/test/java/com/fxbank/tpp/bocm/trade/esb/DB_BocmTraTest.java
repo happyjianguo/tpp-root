@@ -88,7 +88,9 @@ public class DB_BocmTraTest {
 		reqSysHead.setSeqNo(String.valueOf(Math.abs(new Random().nextInt())));
 		reqSysHead.setSystemId("301907");	//网联
 		reqSysHead.setCompany("COMPANY");
-		reqSysHead.setSourceBranchNo("SOURCE_BRANCH_NO");
+		reqSysHead.setSourceBranchNo("PINP|pinpToesb|RZPK|64510637BCD9|");//10137
+		reqSysHead.setSourceBranchNo("PINP|pinpToesb|RZPK|000B0027E831|");//10103
+		
 		reqSysHead.setDestBranchNo("DEST_BRANCH_NO");
 		reqSysHead.setFilePath("FILE_PATH");
 		reqSysHead.setGloabalSeqNo(reqSysHead.getSeqNo());
@@ -123,7 +125,7 @@ public class DB_BocmTraTest {
 		reqBody.setAcctTpT("2");//账户类型
 		reqBody.setBusiMdT1("1");//业务模式
 		reqBody.setInWyT("0");//输入方式
-		reqBody.setPwdT("123");//密码
+		reqBody.setPwdT("3F1DC6FD968A3C0A4046F7FDDCB7E11B");//密码
 		reqBody.setPyrOpnBnkNoT2("313229000024");//付款人开户行号
 		reqBody.setPyeeOpnBnkNoT1("301290050029");//收款人开户行号
 		reqBody.setHmFeeT("0.00");//本行手续费

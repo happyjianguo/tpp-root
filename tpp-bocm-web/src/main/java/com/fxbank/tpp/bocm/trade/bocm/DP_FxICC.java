@@ -245,8 +245,8 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		//交易金额
 		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
 		reqBody_30011000104.setTranAmt(txnAmt.toString());
-
-		reqBody_30011000104.setWithdrawalType("P");
+		//是否验证密码
+		reqBody_30011000104.setWithdrawalType("");
 		reqBody_30011000104.setOthBaseAcctNo(reqDto.getRactNo());
 		reqBody_30011000104.setOthBaseAcctName(reqDto.getRecNam());
 		reqBody_30011000104.setChannelType("BU");
