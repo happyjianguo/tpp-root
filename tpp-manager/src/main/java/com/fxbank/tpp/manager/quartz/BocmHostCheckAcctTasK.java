@@ -259,7 +259,6 @@ public class BocmHostCheckAcctTasK {
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新与核心对账状态为已对账：  对账日期：" + date);
 
-
 	}
 
 	// 核对往账

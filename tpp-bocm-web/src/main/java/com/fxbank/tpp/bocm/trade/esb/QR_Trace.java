@@ -62,8 +62,12 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 		
 		logger.info("业务流水查询:行内处理状态："+hostStatus+" 起始日期："+begDate+" 结束日期："+endDate);
 		logger.info("业务流水查询:交易金额："+txAmt+" 平台起始流水："+begTrace+" 平台结束流水："+endTrace);
-		List<BocmSndTraceQueryModel> sndlist = sndTraceService.getSndTrace(myLog, begDate, endDate, begTrace, 
-				endTrace, txAmt, hostStatus, branchId);
+		List<BocmSndTraceQueryModel> sndlist = new ArrayList<BocmSndTraceQueryModel>();
+		String sourceType = reqBody.getTrnSrcT1();
+		if(sourceType.equals("10")||sourceType.equals("")){
+			sndlist = sndTraceService.getSndTrace(myLog, begDate, endDate, begTrace, 
+					endTrace, txAmt, hostStatus, branchId);
+		}
 		logger.info("往账记录:  "+sndlist.size());
 		
 		REP_30063001302.REP_BODY body = rep.getRepBody();
@@ -87,7 +91,12 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 	private REP_30063001302.Trade transRepTrace(BocmSndTraceQueryModel model){
 		REP_30063001302.Trade trace = new REP_30063001302.Trade();
 		trace.setTxCode(model.getTxCode());
-		trace.setSource(model.getSourceType());
+		if(model.getSourceType().equals("MT")){
+			trace.setSource("柜面");
+		}else{
+			trace.setSource("其他");
+		}
+		
 		trace.setPlatDate(model.getPlatDate()+"");
 		trace.setPlatTrace(model.getPlatTrace()+"");
 		if(model.getHostDate()!=null){
@@ -109,11 +118,19 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 		trace.setTxAmt(model.getTxAmt()+"");
 		if(model.getProxy_fee()!=null){
 			trace.setProxyFee(model.getProxy_fee().toString());
-		}
-		trace.setProxyFlag(model.getProxy_flag());
+		}		
 		if(model.getFee()!=null){
 			trace.setFee(model.getFee().toString());
 		}
+		String feeFlag = model.getFeeFlag();
+		if(feeFlag!=null){
+			if(feeFlag.equals("0")){
+				trace.setFeeFlag("账户内扣");
+			}else{
+				trace.setFeeFlag("现金外收");
+			}
+		}
+
 		trace.setPayerBank(model.getPayerBank());
 		trace.setPayerAcno(model.getPayerAcno());
 		trace.setPayerName(model.getPayerName());

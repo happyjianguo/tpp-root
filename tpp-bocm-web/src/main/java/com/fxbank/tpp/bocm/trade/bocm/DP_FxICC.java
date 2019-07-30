@@ -256,6 +256,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		reqBody_30011000104.setSendBankCode(reqDto.getSbnkNo());
 		reqBody_30011000104.setBankCode(reqDto.getRecBnk());
 		reqBody_30011000104.setOthBankCode(reqDto.getPayBnk());
+		//手续费扣款方式
 		
 		//记账系统日期
 		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
@@ -386,17 +387,23 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		String txBrno = null;
 		// 柜员号
 		String txTel = null;
+		// 加密节点编码
+		String sourceNo = null;
 		try(Jedis jedis = myJedis.connect()){
 			txBrno = jedis.get(COMMON_PREFIX+"TXBRNO");
 			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
+			sourceNo = jedis.get(COMMON_PREFIX + "SOURCE");
         }
+		
 
+		
+		
 		ESB_REQ_30043000101 esbReq_30043000101 = new ESB_REQ_30043000101(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
 		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043000101.getReqSysHead(), reqDto)
 				.setBranchId(txBrno).setUserId(txTel)
 				.build();
-		reqSysHead.setSourceBranchNo("PINP|pinpToesb|RZPK|64510637BCD9|");
+		reqSysHead.setSourceBranchNo(sourceNo);
 		reqSysHead.setSourceType("BU");
 		
 		esbReq_30043000101.setReqSysHead(reqSysHead);

@@ -70,6 +70,9 @@ public class REQ_30063001302 extends REQ_BASE{
 		//平台结束流水
 		@JSONField(name = "PLTFRM_END_SEQ_T1")
 		private String pltfrmEndSeqT1;
+		//交易来源
+		@JSONField(name = "TRN_SRC_T1")
+		private String trnSrcT1;
 		//行内处理状态
 		@JSONField(name = "INTBNK_CNST_STS_T6")
 		private String intbnkCnstStsT6;
@@ -109,6 +112,11 @@ public class REQ_30063001302 extends REQ_BASE{
 		public void setIntbnkCnstStsT6(String intbnkCnstStsT6) {
 			this.intbnkCnstStsT6 = intbnkCnstStsT6;
 		}
-
+		public String getTrnSrcT1() {
+			return trnSrcT1;
+		}
+		public void setTrnSrcT1(String trnSrcT1) {
+			this.trnSrcT1 = trnSrcT1;
+		}
 	}
 }

@@ -35,6 +35,7 @@ public class TradeDispatcherController {
 	@RequestMapping({ 
 		"/tcex/town.do",
 		"/esb/bocm.do",
+		"/tcex/city.do",
 		})
 	public void txMainFlowController(HttpServletRequest request, HttpServletResponse response) {
 		MyLog myLog = logPool.get();

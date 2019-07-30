@@ -114,7 +114,7 @@ public class REP_30063001302 extends REP_BASE {
 		@JSONField(name = "OPN_BNK_DL_T")
 	    private String fee;
 		@JSONField(name = "FEE_RCVE_WY_T")
-	    private String proxyFlag;
+	    private String feeFlag;
 		@JSONField(name = "PYMT_OPN_BNK_T")
 	    private String payerBank;
 		@JSONField(name = "PYR_ACCT_NO_T1")
@@ -215,11 +215,11 @@ public class REP_30063001302 extends REP_BASE {
 		public void setFee(String fee) {
 			this.fee = fee;
 		}
-		public String getProxyFlag() {
-			return proxyFlag;
+		public String getFeeFlag() {
+			return feeFlag;
 		}
-		public void setProxyFlag(String proxyFlag) {
-			this.proxyFlag = proxyFlag;
+		public void setFeeFlag(String feeFlag) {
+			this.feeFlag = feeFlag;
 		}
 		public String getPayerBank() {
 			return payerBank;
