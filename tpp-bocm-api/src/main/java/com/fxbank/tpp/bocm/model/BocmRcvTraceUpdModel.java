@@ -55,7 +55,10 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
     private String proxyFlag;
     //代理手续费
     private BigDecimal proxyFee;
-
+    //交行对账文件客户手续费手续方式
+    private String bocmFeeFlag;
+    //交行记账文件客户手续费
+    private BigDecimal bocmFee;
 
 	public String getHostBranch() {
 		return hostBranch;
@@ -191,6 +194,22 @@ public class BocmRcvTraceUpdModel extends ModelBase implements Serializable{
 
 	public void setProxyFee(BigDecimal proxyFee) {
 		this.proxyFee = proxyFee;
+	}
+
+	public String getBocmFeeFlag() {
+		return bocmFeeFlag;
+	}
+
+	public void setBocmFeeFlag(String bocmFeeFlag) {
+		this.bocmFeeFlag = bocmFeeFlag;
+	}
+
+	public BigDecimal getBocmFee() {
+		return bocmFee;
+	}
+
+	public void setBocmFee(BigDecimal bocmFee) {
+		this.bocmFee = bocmFee;
 	}
 
 

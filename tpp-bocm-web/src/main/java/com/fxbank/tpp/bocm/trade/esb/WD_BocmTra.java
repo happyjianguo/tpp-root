@@ -430,9 +430,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		record.setTxInd("1");
 
 		//手续费收取方式
-		record.setFeeFlag(reqBody.getFeeRcveWyT1());
-		//应收手续费
-		record.setFee(new BigDecimal(reqBody.getHndlPymntFeeT5()));
+		record.setFeeFlag("0");
 		
 		//交易发起行
 		record.setSndBankno(sndBankno);

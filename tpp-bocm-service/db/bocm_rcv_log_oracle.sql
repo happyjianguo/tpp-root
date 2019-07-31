@@ -17,6 +17,8 @@ fee_flag NVARCHAR2(2) NULL ,
 fee NUMBER NULL ,
 proxy_flag NVARCHAR2(2) NULL ,
 proxy_fee NUMBER NULL ,
+bocm_fee_flag NVARCHAR2(2) NULL ,
+bocm_fee NUMBER NULL ,
 host_date NUMBER(8) NULL ,
 host_traceno NVARCHAR2(20) NULL ,
 snd_bankno NVARCHAR2(12) NULL ,
@@ -66,6 +68,8 @@ COMMENT ON COLUMN bocm_rcv_log.fee_flag IS '手续费收取方式';
 COMMENT ON COLUMN bocm_rcv_log.fee IS '开户行手续费';
 COMMENT ON COLUMN bocm_rcv_log.proxy_flag IS '代理手续费收取标志 规则：交易受理方收取代理手续费0 （交行支付代理手续费）1 （交行收取代理手续费）';
 COMMENT ON COLUMN bocm_rcv_log.proxy_fee IS '代理手续费';
+COMMENT ON COLUMN bocm_rcv_log.bocm_fee_flag IS '手续费对账文件，手续费收取方式 0账户内扣 1现金外收';
+COMMENT ON COLUMN bocm_rcv_log.bocm_fee IS '交行获取的手续费记录';
 COMMENT ON COLUMN bocm_rcv_log.host_date IS '核心日期';
 COMMENT ON COLUMN bocm_rcv_log.host_traceno IS '核心流水';
 COMMENT ON COLUMN bocm_rcv_log.snd_bankno IS '发起行行号';

@@ -18,6 +18,8 @@
     <result column="FEE" jdbcType="DECIMAL" property="fee" />
     <result column="PROXY_FLAG" jdbcType="NVARCHAR" property="proxyFlag" />
     <result column="PROXY_FEE" jdbcType="DECIMAL" property="proxyFee" />
+    <result column="BOCM_FEE_FLAG" jdbcType="NVARCHAR" property="proxyFlag" />
+    <result column="BOCM_FEE" jdbcType="DECIMAL" property="proxyFee" />
     <result column="HOST_DATE" jdbcType="DECIMAL" property="hostDate" />
     <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />    
     <result column="SND_BANKNO" jdbcType="NVARCHAR" property="sndBankno" />

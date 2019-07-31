@@ -159,6 +159,12 @@ public class BocmSndTraceService implements IBocmSndTraceService{
 		if(null != record.getFee()) {
 			bocmSndLog.setFee(record.getFee());
 		}
+		if(null != record.getBocmFeeFlag()) {
+			bocmSndLog.setBocmFeeFlag(record.getBocmFeeFlag());
+		}
+		if(null != record.getBocmFee()) {
+			bocmSndLog.setBocmFee(record.getBocmFee());
+		}
 		bocmSndLogMapper.updateByPrimaryKeySelective(bocmSndLog);
 	}
 	

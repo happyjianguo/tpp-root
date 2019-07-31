@@ -379,7 +379,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		//现转标志；0现金、1转账
 		record.setTxInd("1");
 		//手续费手续方式
-		record.setFeeFlag(reqBody.getRcveWyT());
+		record.setFeeFlag("0");
 		//手续费
 		String fee = reqBody.getFeeT3();
 		if(fee!=null&&!fee.equals("")){

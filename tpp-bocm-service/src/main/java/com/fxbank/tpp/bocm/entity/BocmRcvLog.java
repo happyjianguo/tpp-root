@@ -110,6 +110,18 @@ public class BocmRcvLog {
     /**
      * null
      */
+    @Column(name = "BOCM_FEE_FLAG")
+    private String bocmFeeFlag;
+    
+    /**
+     * null
+     */
+    @Column(name = "BOCM_FEE")
+    private BigDecimal bocmFee;
+    
+    /**
+     * null
+     */
     @Column(name = "SND_BANKNO")
     private String sndBankno;
     
@@ -797,6 +809,22 @@ public class BocmRcvLog {
 
 	public void setProxyFee(BigDecimal proxyFee) {
 		this.proxyFee = proxyFee;
+	}
+
+	public String getBocmFeeFlag() {
+		return bocmFeeFlag;
+	}
+
+	public void setBocmFeeFlag(String bocmFeeFlag) {
+		this.bocmFeeFlag = bocmFeeFlag;
+	}
+
+	public BigDecimal getBocmFee() {
+		return bocmFee;
+	}
+
+	public void setBocmFee(BigDecimal bocmFee) {
+		this.bocmFee = bocmFee;
 	}
 	
 	

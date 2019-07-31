@@ -131,7 +131,12 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 			myLog.info(logger, "手续费流水获取,交行流水号【"+bocmTraceno+"】发起行行号【"+SbnkNo+"】交易代码【"+thdCod+"】业务模式【"+txnMod+"】");
 			//规则：交易受理方收取代理手续费  0 （交行支付代理手续费）1 （交行收取代理手续费）
 			String proxy_flag = bocmTrace.getProxyFlg();
+			//代理手续费
 			String proxyFee = NumberUtil.removePointToString(bocmTrace.getProxyFee());
+			//交行对账文件客户手续费收取方式
+			String bocmFeeFlag = bocmTrace.getFeeFlg();
+			//交行对账文件客户手续费
+			String bocmFee = NumberUtil.removePointToString(bocmTrace.getFee());
 			if(proxy_flag.equals("0")){
 				myLog.info(logger, "交行支付代理手续费："+bocmTrace.getProxyFee()+"转换后： "+proxyFee);
 			}
@@ -146,6 +151,8 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 				if(sndTraceQueryModel!=null){
 					BocmSndTraceUpdModel record = new BocmSndTraceUpdModel(myLog, sndTraceQueryModel.getPlatDate(), 
 							sndTraceQueryModel.getPlatTime(), sndTraceQueryModel.getPlatTrace());
+					record.setBocmFeeFlag(bocmFeeFlag);
+					record.setBocmFee(new BigDecimal(bocmFee));
 					record.setProxyFlag(proxy_flag);
 					record.setProxyFee(new BigDecimal(proxyFee));
 					sndTraceService.sndTraceUpd(record);
@@ -158,6 +165,8 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 				if(rcvTraceQueryModel!=null){
 					BocmRcvTraceUpdModel record = new BocmRcvTraceUpdModel(myLog, rcvTraceQueryModel.getPlatDate(), 
 							rcvTraceQueryModel.getPlatTime(), rcvTraceQueryModel.getPlatTrace());
+					record.setBocmFeeFlag(bocmFeeFlag);
+					record.setBocmFee(new BigDecimal(bocmFee));
 					record.setProxyFlag(proxy_flag);
 					record.setProxyFee(new BigDecimal(proxyFee));
 					rcvTraceService.rcvTraceUpd(record);

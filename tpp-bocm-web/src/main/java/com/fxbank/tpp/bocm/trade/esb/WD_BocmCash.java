@@ -344,6 +344,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		if(actBal!=null&&!actBal.equals("")){
 			record.setActBal(new BigDecimal(actBal));
 		}	
+		record.setFeeFlag("0");
 		//交易发起行
 		record.setSndBankno(sndBankno);
 		//交易接收行
