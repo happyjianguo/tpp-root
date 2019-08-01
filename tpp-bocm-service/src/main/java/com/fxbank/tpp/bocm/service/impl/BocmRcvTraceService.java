@@ -89,6 +89,13 @@ public class BocmRcvTraceService implements IBocmRcvTraceService {
 		if(record.getFee()!=null){
 			entity.setFee(record.getFee());
 		}
+		//保存交行发送过来的客户手续费手续方式和手续费
+		entity.setBocmFeeFlag(record.getBocmFeeFlag());
+		if(record.getBocmFee()!=null){
+			entity.setBocmFee(record.getBocmFee());
+		}
+		
+		
 		entity.setSndBankno(record.getSndBankno());
 		entity.setRcvBankno(record.getRcvBankno());
 		entity.setPayerBank(record.getPayerBank());

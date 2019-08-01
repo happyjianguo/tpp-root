@@ -148,6 +148,11 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 	
 	private String checkFlag;//对账标志
 	
+    //交行对账文件客户手续费手续方式
+    private String bocmFeeFlag;
+    //交行记账文件客户手续费
+    private BigDecimal bocmFee;
+	
 
 	public String getCheckFlag() {
 		return checkFlag;
@@ -453,6 +458,22 @@ public class BocmRcvTraceInitModel extends ModelBase implements Serializable{
 
 	public void setTxDate(Integer txDate) {
 		this.txDate = txDate;
+	}
+
+	public String getBocmFeeFlag() {
+		return bocmFeeFlag;
+	}
+
+	public void setBocmFeeFlag(String bocmFeeFlag) {
+		this.bocmFeeFlag = bocmFeeFlag;
+	}
+
+	public BigDecimal getBocmFee() {
+		return bocmFee;
+	}
+
+	public void setBocmFee(BigDecimal bocmFee) {
+		this.bocmFee = bocmFee;
 	}
 
 

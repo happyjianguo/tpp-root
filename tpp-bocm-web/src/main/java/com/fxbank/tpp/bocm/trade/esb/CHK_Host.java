@@ -152,6 +152,13 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 								+ "】");
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
 						"与核心往账对账失败,渠道多账,渠道流水号【" + sndTraceQueryModel.getPlatTrace() + "】");
+				
+				//更新对账状态
+				BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
+				chkStatusModel.setTxDate(date);
+				chkStatusModel.setHostStatus(1);
+				chkStatusService.chkStatusUpd(chkStatusModel);
+				
 				throw e;
 			} else {
 				String msg = "渠道多账";
@@ -187,6 +194,13 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 								+ "】");
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013
 						,"与核心来账对账失败,渠道多账,渠道流水【" + rcvTraceQueryModel.getPlatTrace() + "】");
+				
+				//更新对账状态
+				BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
+				chkStatusModel.setTxDate(date);
+				chkStatusModel.setHostStatus(1);
+				chkStatusService.chkStatusUpd(chkStatusModel);
+				
 				throw e;
 			} else {
 				String msg = "渠道多账";
@@ -292,6 +306,11 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 						+ model.getTranType() + "】核心日期为【" + model.getSysDate() + "】");
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
 						"与核心往账对账失败,查询不到渠道流水,渠道少数据,渠道流水【"+ model.getPlatTrace() + "】");
+				
+				BocmChkStatusModel record = new BocmChkStatusModel();
+				record.setTxDate(date);
+				record.setHostStatus(2);
+				chkStatusService.chkStatusUpd(record);
 				throw e;
 			} else {
 				// dc_flag IS '通存通兑标志；0通存、1通兑';
@@ -343,6 +362,12 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 					acctCheckErrService.insert(aceModel);
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
 							"与核心往账对账失败,渠道记账状态异常,核心记账成功,核心多账,需冲正");
+					
+					BocmChkStatusModel record = new BocmChkStatusModel();
+					record.setTxDate(date);
+					record.setHostStatus(2);
+					chkStatusService.chkStatusUpd(record);
+					
 					throw e;
 				}
 			}
@@ -387,6 +412,13 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				myLog.error(logger, "渠道补充往账数据，渠道日期【" + model.getSettleDate() + "】，渠道流水【" + model.getPlatTrace() + "】");
 				myLog.error(logger, "柜面通【" + date + "】来帐对账失败,渠道数据丢失: 核心流水号【" + model.getHostTraceno() + "】交易类型【"
 						+ model.getTranType() + "】核心日期为【" + model.getSysDate() + "】");
+				
+				
+				BocmChkStatusModel record = new BocmChkStatusModel();
+				record.setTxDate(date);
+				record.setHostStatus(2);
+				chkStatusService.chkStatusUpd(record);
+				
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013
 						,"与核心来账对账失败,查询不到渠道流水,渠道少账,渠道流水【" + model.getPlatTrace() + "】");
 				throw e;

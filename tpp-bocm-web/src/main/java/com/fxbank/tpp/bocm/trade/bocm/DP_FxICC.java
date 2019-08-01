@@ -242,6 +242,8 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		reqBody_30011000104.setAcctName(reqDto.getPayNam());
 		reqBody_30011000104.setTranType("JH02");
 		reqBody_30011000104.setTranCcy("CNY");
+		//手续费收取方式
+		reqBody_30011000104.setChargeMethod(reqDto.getFeeFlg());
 		//交易金额
 		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
 		reqBody_30011000104.setTranAmt(txnAmt.toString());
@@ -322,7 +324,11 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setHostTraceno(rep.getRepBody().getReference());
 		record.setRetCode(rep.getRepSysHead().getRet().get(0).getRetCode());
 		record.setRetMsg(rep.getRepSysHead().getRet().get(0).getRetMsg());
-	
+		//交行客户手续费收取方式
+		record.setBocmFeeFlag(reqDto.getFeeFlg());
+		String bocmFee = NumberUtil.removePointToString(reqDto.getFee());
+		record.setBocmFee(new BigDecimal(bocmFee));
+		
 		//发起行   
 		//合作银行发起交易时，SBnkNo指合作银行总行行号（12位）         RBnkNo指合作银行发起交易网点行号
 		//交通银行发起交易时，SBnkNo指交行发起交易网点号（12位）     RBnkNo指合作银行总行行号

@@ -250,6 +250,8 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		reqBody_30011000104.setTranType("JH02");
 		reqBody_30011000104.setTranCcy("CNY");
 		
+		reqBody_30011000104.setChargeMethod(reqDto.getFeeFlg());
+		
 		//精度转换，请求报文后两位为小数位需要除100
 		Double txnAmt = NumberUtil.removePoint(reqDto.getTxnAmt());
 		reqBody_30011000104.setTranAmt(txnAmt.toString());
@@ -328,6 +330,12 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		record.setActBal(new BigDecimal(rep.getRepBody().getAvailBal()));
 		record.setFeeFlag(reqDto.getFeeFlg());
+		//交行客户手续费收取方式
+		record.setBocmFeeFlag(reqDto.getFeeFlg());
+		//交行客户手续费
+		String bocmFee = NumberUtil.removePointToString(reqDto.getFee());
+		record.setBocmFee(new BigDecimal(bocmFee));
+		
 		//现转标志；0现金、1转账
 		record.setTxInd(reqDto.getTxnMod());
 		record.setHostState("1");

@@ -26,16 +26,16 @@
     select * from bocm_chk_status
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
       <if test="begDate != null and begDate != ''">
-        and chk_date <![CDATA[ >= ]]> #{begDate}
+        and tx_date <![CDATA[ >= ]]> #{begDate}
       </if>
       <if test="endDate != null and endDate != ''">
-        and chk_date <![CDATA[ <= ]]> #{endDate}
+        and tx_date <![CDATA[ <= ]]> #{endDate}
       </if>
       <if test="platState != null and platState != ''">
         and plat_status <![CDATA[ <= ]]> #{platState}
       </if>
     </trim>
-     order by chk_date desc
+     order by tx_date desc
   </select>
 
 </mapper>
