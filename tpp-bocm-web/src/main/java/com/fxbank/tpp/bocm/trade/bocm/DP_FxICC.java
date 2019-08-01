@@ -326,6 +326,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setRetMsg(rep.getRepSysHead().getRet().get(0).getRetMsg());
 		//交行客户手续费收取方式
 		record.setBocmFeeFlag(reqDto.getFeeFlg());
+		//交行客户手续费
 		String bocmFee = NumberUtil.removePointToString(reqDto.getFee());
 		record.setBocmFee(new BigDecimal(bocmFee));
 		
