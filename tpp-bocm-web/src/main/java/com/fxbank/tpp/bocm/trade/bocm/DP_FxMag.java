@@ -96,7 +96,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 			throw e2;
 		}
 		super.hostErrorException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
-		super.cardValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
+		super.cardMagValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
 		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203,"timeout");
 		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.TRADE_DESC = "交行向本行发起磁条卡通存记账请求";

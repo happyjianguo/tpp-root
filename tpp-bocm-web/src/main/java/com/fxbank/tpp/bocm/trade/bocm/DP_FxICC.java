@@ -101,7 +101,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		}
 		
 		super.hostErrorException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
-		super.cardValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
+		super.cardIcValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10008);
 		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
 		super.TRADE_DESC = "交行向本行发起IC卡通存记账请求 ";

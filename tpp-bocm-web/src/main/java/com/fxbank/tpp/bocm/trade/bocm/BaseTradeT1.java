@@ -39,7 +39,12 @@ public abstract class BaseTradeT1 {
 	/** 
 	* @Fields hostTimeoutException : 磁条卡验证
 	*/ 
-	public SysTradeExecuteException cardValidateException = null;
+	public SysTradeExecuteException cardMagValidateException = null;
+	
+	/** 
+	* @Fields hostTimeoutException : IC卡验证
+	*/ 
+	public SysTradeExecuteException cardIcValidateException = null;
 
 	/** 
 	* @Fields othTimeoutException : 第三方记账超时，提示第三方记账超时
@@ -223,22 +228,22 @@ public abstract class BaseTradeT1 {
 		MyLog myLog = logPool.get();
 		myLog.info(logger, TRADE_DESC);
 		
-//		//磁条卡二磁道校验
+		//磁条卡二磁道校验
 //		try {
 //			myLog.info(logger, "磁条卡二磁道校验");	
 //			validateMag(dto);
 //		} catch (SysTradeExecuteException e) {
-//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败");	
-//			throw cardValidateException;
+//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败",e);	
+//			throw cardMagValidateException;
 //		}
-//		
-//		//IC卡校验
+		
+//		IC卡校验
 //		try {
 //			myLog.info(logger, "IC卡55域校验");	
 //			validateIC(dto);
 //		} catch (SysTradeExecuteException e) {
-//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败");	
-//			throw cardValidateException;
+//			myLog.info(logger, "IC卡状态异常,IC卡55域校验失败");	
+//			throw cardIcValidateException;
 //		}
 		
 		//递归调用来账查询
