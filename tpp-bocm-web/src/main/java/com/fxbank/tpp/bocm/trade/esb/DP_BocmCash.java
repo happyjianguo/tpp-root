@@ -277,7 +277,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						updateHostRecord(reqDto, "", "", "6", e1.getRspCode(), e1.getRspMsg());
 						myLog.error(logger, "交行卡存现金,本行核心冲正超时,渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);							
-						SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:交行记账失败,"+e.getRspMsg()+",核心冲正超时,请核对记账状态,如果记账成功请进行抹账处理");
+						SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:交行记账失败,"+e.getRspMsg()+",核心冲正超时:"+e1.getMessage()+",请核对记账状态,如果记账成功请进行抹账处理");
 						throw e2;
 					//其他冲正错误
 					}else {
@@ -550,7 +550,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req20000.setARQC(reqBody.getIcCard91T());
 		req20000.setICAID(reqBody.getIcCard9f09T());
 		req20000.setICOutDate(reqBody.getIcCardAvaiDtT());
-		req20000.setICOutDate("241231");//IC卡有效期
+		req20000.setICOutDate(reqBody.getIcCardAvaiDtT());//IC卡有效期
 		req20000.setICData(reqBody.getIcCardF55T());
         
 		REP_20000 rep_20000 = forwardToBocmService.sendToBocm(req20000, 

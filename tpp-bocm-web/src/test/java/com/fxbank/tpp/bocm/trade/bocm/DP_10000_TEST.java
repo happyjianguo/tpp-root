@@ -42,7 +42,7 @@ public class DP_10000_TEST extends BASE_TEST {
 	@Test
 	public void ok() throws Exception {
 		
-		req.setTxnAmt(1000d);
+		req.setTxnAmt(200000d);
 		req.setFeeFlg("1");
 		req.setFee(100d);
 		req.setOprFlg("0");		
@@ -56,8 +56,8 @@ public class DP_10000_TEST extends BASE_TEST {
 //		req.setRactNo("623166001016830991");
 		//DEV
 		req.setRactNo("623166000000085273");
-		req.setCuIdTp("15");
-		req.setCuIdNo("1234");
+//		req.setCuIdTp("15");
+//		req.setCuIdNo("1234");
 		//收款人名称
 		req.setRecNam("翟淼");		
 		req.setSecMag("623166000000085273=4912567019123456");
