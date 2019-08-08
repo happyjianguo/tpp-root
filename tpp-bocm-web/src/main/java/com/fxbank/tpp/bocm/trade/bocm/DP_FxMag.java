@@ -158,7 +158,9 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		Double fee = new Double(0);
 		List<Fee> feeList = repPayment.getRepBody().getFeeDetail();
 		for(Fee temp:feeList) {
-			fee = Double.valueOf(temp.getFeeAmt());
+			if(!temp.getFeeAmt().equals("")){
+				fee = Double.valueOf(temp.getFeeAmt());
+			}
 		}
 		rep.setFee(NumberUtil.addPoint(fee));
 		//响应报文金额字段需要补小数位乘100
