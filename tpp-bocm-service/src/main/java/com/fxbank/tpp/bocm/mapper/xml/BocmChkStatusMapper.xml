@@ -31,10 +31,10 @@
       <if test="endDate != null and endDate != ''">
         and tx_date <![CDATA[ <= ]]> #{endDate}
       </if>
-      <if test="platState != null and platState != ''">
+      <if test="state != null and state != ''">
         and host_status <![CDATA[ <= ]]> #{state}
       </if>
-      <if test="platState != null and platState != ''">
+      <if test="state != null and state != ''">
         and bocm_status <![CDATA[ <= ]]> #{state}
       </if>
     </trim>
@@ -50,10 +50,10 @@
       <if test="endDate != null and endDate != ''">
         and tx_date <![CDATA[ <= ]]> #{endDate}
       </if>
-      <if test="platState != null and platState != ''">
+      <if test="state != null and state != ''">
         and host_status <![CDATA[ <> ]]> #{state}
       </if>
-      <if test="platState != null and platState != ''">
+      <if test="state != null and state != ''">
         and bocm_status <![CDATA[ <> ]]> #{state}
       </if>
     </trim>
