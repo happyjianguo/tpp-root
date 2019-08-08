@@ -162,9 +162,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		Double fee = new Double(0);
 		List<Fee> feeList = repPayment.getRepBody().getFeeDetail();
 		for(Fee temp:feeList) {
-			if("JHF2".equals(temp.getFeeType())) {
-				fee = Double.valueOf(temp.getFeeAmt());
-			}
+			fee = Double.valueOf(temp.getFeeAmt());
 		}
 		double actbal = NumberUtil.addPoint(Double.parseDouble(repPayment.getRepBody().getAvailBal()));
 		fee = NumberUtil.addPoint(fee);

@@ -119,6 +119,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			sbnkNo = req20001.getSbnkNo();
 		}	
 		try {
+			
 			//1.交行记账   
 			if (oTxnCd.equals("10001")) {						
 				myLog.info(logger, "交行卡付款转账,发送"+cardTypeName+"付款转账请求至交行");		
@@ -142,7 +143,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				actBal = rep20001.getActBal().toString();	
 				bocmRepcd = rep20001.getTrspCd();
 				bocmRepmsg = rep20001.getTrspMsg();	
-			}							
+			}	
 		} catch (SysTradeExecuteException e) { // 记账交易参考一下方式处理，查询交易不用
 			// 如果不是账务类请求，可以不用分类处理应答码，统一当成失败处理即可
 			// 如果交易不关心返回的异常类型，直接可以不捕获，直接省略catch，抛出异常即可
@@ -163,15 +164,15 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 					bocmReversal(reqDto,bocmTraceNo,oTxnCd);
 				    myLog.info(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno());
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易超时,请确认交行卡记账状态");
-					throw e2;
 				}catch(Exception e1) {
 					initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5",rbnkNo,sbnkNo,actBal,bocmRepcd,bocmRepmsg);	
 					myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
-					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易超时,请确认交行卡记账状态");
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行系统超时,请确认交行卡记账状态");
 					throw e2;
 				}
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行系统超时,请确认交行卡记账状态");
+				throw e2;
 			} else { // 目标系统应答失败
 						// 确认是否有冲正操作
 				//交行核心记账报错，交易失败
@@ -190,13 +191,13 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				bocmReversal(reqDto,bocmTraceNo,oTxnCd);
 			    myLog.info(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账成功，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno());
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易异常，请求交行记账未知错误");
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账未知错误");
 				throw e2;
 			}catch(Exception e1) {
 				initRecord(reqDto, bocmDate, bocmTime, bocmTraceNo, "5",rbnkNo,sbnkNo,actBal,bocmRepcd,bocmRepmsg);	
 				myLog.error(logger, "交行卡付款转账，交行"+cardTypeName+"通兑记账抹账失败，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e1);
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易异常，请求交行记账未知错误");
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败，请求交行记账未知错误");
 				throw e2;
 			}
 		}
@@ -237,6 +238,10 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
 			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
+			if(1==1){
+				SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004);		
+				throw e;
+			}
 		} catch (SysTradeExecuteException e) {			
 			// 核心记账超时或ESB超时
 			if (SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) { 
@@ -256,6 +261,10 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				String hostReversalCode = null;
 				String hostReversalMsg = null;
 				try {
+					if(1==1){
+						SysTradeExecuteException e3 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);		
+						throw e3;
+					}
 					//本行核心抹账	
 					esbRep_30014000101 = hostReversal(reqDto,hostTraceno);
 					hostReversalCode = esbRep_30014000101.getRepSysHead().getRet().get(0).getRetCode();
@@ -263,7 +272,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 				}catch(SysTradeExecuteException e1) {
 					//核心记账状态，1-成功，4-冲正成功，5-冲正失败，6-冲正超时
 					//接收ESB报文应答超时
-					if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
+					if(SysTradeExecuteException.CIP_E_000004.equals(e1.getRspCode())||"ESB_E_000052".equals(e1.getRspCode())) {
 						updateHostRecord(reqDto, "", "", "6",fee, e.getRspCode(), e.getRspMsg());
 						myLog.error(logger, "交行卡取现金，本行核心冲正超时，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);
@@ -727,7 +736,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 
 		reqBody_30014000101.setChannelSeqNo(esbReq_30014000101.getReqSysHead().getSeqNo());
-		reqBody_30014000101.setReversalReason("");
+		reqBody_30014000101.setReversalReason("交行记账失败,本行核心冲正");
 		reqBody_30014000101.setEventType("");
 
 		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,

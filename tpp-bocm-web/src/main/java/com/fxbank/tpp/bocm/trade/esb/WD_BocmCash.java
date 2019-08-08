@@ -139,7 +139,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				actBal = rep20001.getActBal().toString();	
 				bocmRepcd = rep20001.getTrspCd();
 				bocmRepmsg = rep20001.getTrspMsg();				
-			}						
+			}
+	
 		} catch (SysTradeExecuteException e) {
 			// 如果不是账务类请求，可以不用分类处理应答码，统一当成失败处理即可
 			// 如果交易不关心返回的异常类型，直接可以不捕获，直接省略catch，抛出异常即可
@@ -238,7 +239,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();//核心日期
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();//核心流水
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();//核心返回
-			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();			
+			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();	
+			
 		}catch(SysTradeExecuteException e) {			
 			if (SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) { // ESB超时							
 				myLog.info(logger, "交行卡取现金核心记账请求超时",e);
@@ -265,7 +267,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				}catch(SysTradeExecuteException e1) {
 					//核心记账状态，1-成功，4-冲正成功，5-冲正失败，6-冲正超时
 					//接收ESB报文应答超时
-					if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
+					if(SysTradeExecuteException.CIP_E_000004.equals(e1.getRspCode())||"ESB_E_000052".equals(e1.getRspCode())) {
 						updateHostRecord(reqDto, "", "", "6",fee, e.getRspCode(), e.getRspMsg());
 						myLog.error(logger, "交行卡取现金，本行核心冲正超时，渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);
@@ -283,7 +285,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				updateHostRecord(reqDto, hostDate, hostTraceno, "4",fee, hostReversalCode, hostReversalMsg);
 				myLog.error(logger, "交行卡存现金，本行核心冲正成功，渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(),e);
-				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg());			
+				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:"+e.getRspMsg()+",核心冲正成功");			
 				throw e2;
 				//本行冲正
 			}else { //ESB调用其他错误
@@ -582,6 +584,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	*/
 	public ESB_REP_30014000101 hostReversal(DataTransObject dto,String hostSeqno)
 			throws SysTradeExecuteException {
+		
+
 		MyLog myLog = logPool.get();
 		REQ_30061001001 reqDto = (REQ_30061001001)dto;
 		// 交易机构
@@ -612,6 +616,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 
 		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,
 				ESB_REP_30014000101.class);
+		
+
 		return esbRep_30014000101;
 	}
 	

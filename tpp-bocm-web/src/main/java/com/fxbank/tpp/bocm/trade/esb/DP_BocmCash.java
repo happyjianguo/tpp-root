@@ -97,23 +97,36 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			hostDate = esbRep_30011000104.getRepSysHead().getRunDate();
 			hostTraceno = esbRep_30011000104.getRepBody().getReference();
 			retCode = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetCode();
-			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();			
+			retMsg = esbRep_30011000104.getRepSysHead().getRet().get(0).getRetMsg();
+			
+			
+			
+			
 		} catch (SysTradeExecuteException e) {
 			//接收ESB报文应答超时
 			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
+				String reversalMsg = "";
+				String reversalCode = "";
 				try {
 					hostReversal(reqDto,hostTraceno);
 					initRecord(reqDto, hostDate, hostTraceno, "4", retCode, retMsg);
 					myLog.info(logger, "交行卡存现金,本行核心记账超时,核心冲正成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}catch(SysTradeExecuteException e1) {
 					initRecord(reqDto, hostDate, hostTraceno, "5", retCode, retMsg);
+					reversalMsg = e1.getRspMsg();			
 					myLog.info(logger, "交行卡存现金,本行核心记账超时,核心冲正异常,请核对记账状态,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 				}
 				//超时不记录流水直接抛异常，如果记账成功，对账会失败
 				myLog.error(logger, "交行卡存现金,本行核心记账接收ESB报文应答超时,渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(), e);
-				SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg());
-				throw e2;
+				
+				if(reversalMsg.equals("")){
+					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",核心冲正成功");
+					throw e2;
+				}else{
+					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",核心冲正异常："+reversalMsg);
+					throw e2;
+				}		
 			//其他错误
 			}else {
 				myLog.error(logger, "交行卡存现金,本行核心记账失败,渠道日期" + reqDto.getSysDate() + 
@@ -168,7 +181,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				bocmTraceNo = rep10000.getRlogNo();
 				bocmDate = rep10000.getSysDate();
 				bocmTime = rep10000.getSysTime();
-				//fee = rep10000.getFee().toString();
 				actBal = rep10000.getActBal().toString();
 				bocmRepcd = rep10000.getTrspCd();
 				bocmRepmsg = rep10000.getTrspMsg();				
@@ -179,7 +191,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				bocmTraceNo = rep20000.getRlogNo();
 				bocmDate = rep20000.getSysDate();
 				bocmTime = rep20000.getSysTime();
-				//fee = rep20000.getFee().toString();
 				actBal = rep20000.getActBal().toString();
 				bocmRepcd = rep20000.getTrspCd();
 				bocmRepmsg = rep20000.getTrspMsg();
@@ -234,7 +245,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						bocmTraceNo = rep10000.getRlogNo();
 						bocmDate = rep10000.getSysDate();
 						bocmTime = rep10000.getSysTime();
-						//fee = rep10000.getFee().toString();
 						actBal = rep10000.getActBal().toString();
 						bocmRepcd = rep10000.getTrspCd();
 						bocmRepmsg = rep10000.getTrspMsg();
@@ -243,7 +253,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						bocmTraceNo = rep20000.getRlogNo();
 						bocmDate = rep20000.getSysDate();
 						bocmTime = rep20000.getSysTime();
-						//fee = rep20000.getFee().toString();
 						actBal = rep20000.getActBal().toString();
 						bocmRepcd = rep20000.getTrspCd();
 						bocmRepmsg = rep20000.getTrspMsg();
@@ -305,7 +314,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 					bocmTraceNo = rep10000.getRlogNo();
 					bocmDate = rep10000.getSysDate();
 					bocmTime = rep10000.getSysTime();
-					//fee = rep10000.getFee().toString();
 					actBal = rep10000.getActBal().toString();
 					bocmRepcd = rep10000.getTrspCd();
 					bocmRepmsg = rep10000.getTrspMsg();
@@ -314,7 +322,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 					bocmTraceNo = rep20000.getRlogNo();
 					bocmDate = rep20000.getSysDate();
 					bocmTime = rep20000.getSysTime();
-					//fee = rep20000.getFee().toString();
 					actBal = rep20000.getActBal().toString();
 					bocmRepcd = rep20000.getTrspCd();
 					bocmRepmsg = rep20000.getTrspMsg();
@@ -417,8 +424,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	*/
 	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {	
 		
-
-		
 		MyLog myLog = logPool.get();
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
@@ -464,7 +469,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		ESB_REP_30011000104 esbRep_30011000104 = forwardToESBService.sendToESB(esbReq_30011000104, reqBody_30011000104,
 				ESB_REP_30011000104.class);
 		
-		
+
+	
 		return esbRep_30011000104;
 	}
 	
@@ -478,8 +484,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ModelBase magCardCharge(DataTransObject dto, REQ_10000 req10000) throws SysTradeExecuteException {
-		
-
+	
 		
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
@@ -510,7 +515,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REP_10000 rep_10000 = forwardToBocmService.sendToBocm(req10000, 
 				REP_10000.class);		
 		
-		
 		return rep_10000;
 	}
 	/** 
@@ -523,6 +527,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ModelBase iCCardCharge(DataTransObject dto, REQ_20000 req20000) throws SysTradeExecuteException {
+		
+		
 		REQ_30061000901 reqDto = (REQ_30061000901)dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
 		//交易金额
@@ -555,6 +561,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
         
 		REP_20000 rep_20000 = forwardToBocmService.sendToBocm(req20000, 
 				REP_20000.class);
+		
 		
 		return rep_20000;
 	}
@@ -593,11 +600,15 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 		reqBody_30014000101.setChannelSeqNo(esbReq_30014000101.getReqSysHead().getSeqNo());
-		reqBody_30014000101.setReversalReason("交行记账失败,本行核心冲正");
+//		reqBody_30014000101.setReversalReason("交行记账失败,本行核心冲正");
+		reqBody_30014000101.setReversalReason("");
 		reqBody_30014000101.setEventType("");
 
 		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,
 				ESB_REP_30014000101.class);
+		
+
+		
 		return esbRep_30014000101;
 	}
 	

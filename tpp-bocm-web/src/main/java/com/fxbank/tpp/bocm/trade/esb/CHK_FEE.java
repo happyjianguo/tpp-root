@@ -144,7 +144,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 				myLog.info(logger, "交行收取代理手续费："+bocmTrace.getProxyFee()+"转换后： "+proxyFee);
 			}
 			//判断交易发起方人行行号，如果为本行行号说明本条对账文件对应的我方往账记录
-			if(FXNO.equals(SbnkNo)){
+			if(SbnkNo.substring(0, 3).equals("313")){
 				//根据交行核心对账数据取渠道往账数据
 				BocmSndTraceQueryModel sndTraceQueryModel = sndTraceService.getBocmSndTraceByKey(myLog, sysTime, 
 						sysTraceno, sysDate,bocmTraceno);
@@ -157,7 +157,7 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 					record.setProxyFee(new BigDecimal(proxyFee));
 					sndTraceService.sndTraceUpd(record);
 				}
-			}else if(JHNO.equals(SbnkNo)){
+			}else if(SbnkNo.substring(0, 3).equals("301")){
 				//判断交易发起方人行行号，如果不是本行行号说明本条对账文件对应的我方来账记录
 				//根据交行对账数据取渠道来账数据
 				BocmRcvTraceQueryModel rcvTraceQueryModel = rcvTraceService.getBocmRcvTraceByKey(myLog, sysTime, 
