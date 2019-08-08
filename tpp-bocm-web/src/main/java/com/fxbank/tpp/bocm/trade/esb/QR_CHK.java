@@ -53,12 +53,12 @@ public class QR_CHK extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		String begDate = reqBody.getPltfrmBgnDtT1();
 		String endDate = reqBody.getPltfrmEndDtT();
-		String platState = reqBody.getStmtStsT();
+		String state = reqBody.getStmtStsT();
 
 		
 		
 		
-		List<BocmChkStatusModel> errlist = chkStatusService.selectByDate(myLog,begDate, endDate,platState);
+		List<BocmChkStatusModel> errlist = chkStatusService.selectByDate(myLog,begDate, endDate,state);
 		List<REP_30063001304.Chk> list = new ArrayList<REP_30063001304.Chk>();
 		logger.info("对账记录:  "+errlist.size());
 		for(BocmChkStatusModel model : errlist){

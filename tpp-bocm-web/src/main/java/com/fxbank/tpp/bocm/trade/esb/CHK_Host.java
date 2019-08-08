@@ -361,7 +361,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 					aceModel.setMsg("核心多账,需冲正");
 					acctCheckErrService.insert(aceModel);
 					BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
-							"与核心往账对账失败,渠道记账状态异常,核心记账成功,核心多账,需冲正");
+							"与核心往账对账失败,渠道记账状态异常,核心记账成功,核心多账,需冲正,渠道流水号【"+sndTraceQueryModel.getPlatTrace()+"】");
 					
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(date);

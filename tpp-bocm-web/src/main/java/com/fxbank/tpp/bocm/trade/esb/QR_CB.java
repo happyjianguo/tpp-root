@@ -177,16 +177,16 @@ public class QR_CB extends TradeBase implements TradeExecutionStrategy {
 		}else if("1".equals(bocmFlag)){
 			trace.setBocmFlag("已对账");
 		}else if("2".equals(bocmFlag)){
-			trace.setBocmFlag("交行多");
+			trace.setBocmFlag("交行多账");
 		}
 		if("0".equals(hostFlag)){
 			trace.setHostFlag("未对账");
 		}else if("1".equals(hostFlag)){
 			trace.setHostFlag("已对账");
 		}else if("2".equals(hostFlag)){
-			trace.setHostFlag("核心多");
+			trace.setHostFlag("核心多账");
 		}else if("3".equals(hostFlag)){
-			trace.setHostFlag("核心少");
+			trace.setHostFlag("核心少账");
 		}
 //		trace.setBocmFlag("");
 //		trace.setHostFlag("");

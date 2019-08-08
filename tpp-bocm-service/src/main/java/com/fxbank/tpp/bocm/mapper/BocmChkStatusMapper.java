@@ -9,7 +9,10 @@ import com.fxbank.tpp.bocm.entity.BocmChkStatus;
 
 public interface BocmChkStatusMapper extends MyMapper<BocmChkStatus> {
     List<BocmChkStatus> selectAll();    
-    //通过日期获取对账错误列表
-    List<BocmChkStatus> selectByDate(@Param("begDate") String begDate,@Param("endDate") String endDate,
-    		@Param("platState") String platState);
+    //通过日期获取对账结果表
+    List<BocmChkStatus> selectByDateError(@Param("begDate") String begDate,@Param("endDate") String endDate,
+    		@Param("state") String state);
+    
+    List<BocmChkStatus> selectByDateSuccess(@Param("begDate") String begDate,@Param("endDate") String endDate,
+    		@Param("state") String state);
 }

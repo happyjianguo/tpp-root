@@ -22,7 +22,7 @@
     from BOCM_CHK_STATUS
   </select>
   
-    <select id="selectByDate" resultMap="BaseResultMap">
+  <select id="selectByDateSuccess" resultMap="BaseResultMap">
     select * from bocm_chk_status
     <trim prefix="WHERE" prefixOverrides="AND | OR ">
       <if test="begDate != null and begDate != ''">
@@ -32,7 +32,29 @@
         and tx_date <![CDATA[ <= ]]> #{endDate}
       </if>
       <if test="platState != null and platState != ''">
-        and plat_status <![CDATA[ <= ]]> #{platState}
+        and host_status <![CDATA[ <= ]]> #{state}
+      </if>
+      <if test="platState != null and platState != ''">
+        and bocm_status <![CDATA[ <= ]]> #{state}
+      </if>
+    </trim>
+     order by tx_date desc
+  </select>
+  
+  <select id="selectByDateError" resultMap="BaseResultMap">
+    select * from bocm_chk_status
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="begDate != null and begDate != ''">
+        and tx_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and tx_date <![CDATA[ <= ]]> #{endDate}
+      </if>
+      <if test="platState != null and platState != ''">
+        and host_status <![CDATA[ <> ]]> #{state}
+      </if>
+      <if test="platState != null and platState != ''">
+        and bocm_status <![CDATA[ <> ]]> #{state}
       </if>
     </trim>
      order by tx_date desc
