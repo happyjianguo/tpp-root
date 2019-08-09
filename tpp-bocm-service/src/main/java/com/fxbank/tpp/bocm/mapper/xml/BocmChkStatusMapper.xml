@@ -49,14 +49,10 @@
       </if>
       <if test="endDate != null and endDate != ''">
         and tx_date <![CDATA[ <= ]]> #{endDate}
-      </if>
-      <if test="state != null and state != ''">
-        and host_status <![CDATA[ <> ]]> #{state}
-      </if>
-      <if test="state != null and state != ''">
-        and bocm_status <![CDATA[ <> ]]> #{state}
-      </if>
+      </if>    
     </trim>
+        and host_status <![CDATA[ <> ]]> 1    
+        or bocm_status <![CDATA[ <> ]]> 1
      order by tx_date desc
   </select>
 
