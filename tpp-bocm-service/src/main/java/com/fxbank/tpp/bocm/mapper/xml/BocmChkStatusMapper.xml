@@ -32,10 +32,10 @@
         and tx_date <![CDATA[ <= ]]> #{endDate}
       </if>
       <if test="state != null and state != ''">
-        and host_status <![CDATA[ <= ]]> #{state}
+        and host_status <![CDATA[ = ]]> #{state}
       </if>
       <if test="state != null and state != ''">
-        and bocm_status <![CDATA[ <= ]]> #{state}
+        and bocm_status <![CDATA[ = ]]> #{state}
       </if>
     </trim>
      order by tx_date desc
