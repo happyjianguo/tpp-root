@@ -20,16 +20,16 @@ import com.fxbank.tpp.bocm.util.NumberUtil;
 
 /**
 * @ClassName: DP_10000_TEST 
-* @Description: 他代本现金通存
+* @Description: 他代本现金通存磁条卡验证
 * @author YePuLiang
 * @date 2019年5月17日 上午10:41:59 
 *
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DP_10000_TEST extends BASE_TEST {
+public class DP_10000_MagTEST extends BASE_TEST {
 	
-	private static Logger logger = LoggerFactory.getLogger(DP_10000_TEST.class);
+	private static Logger logger = LoggerFactory.getLogger(DP_10000_MagTEST.class);
 	
 	private REQ_10000 req;
 	
@@ -44,23 +44,27 @@ public class DP_10000_TEST extends BASE_TEST {
 		
 		req.setTxnAmt(123400d);
 		req.setFeeFlg("0");
-		req.setFee(0d);
+		req.setFee(100d);
 		req.setOprFlg("0");		
 		req.setTxnMod("0");	
 		//收款人开户行号
-		req.setRecBnk("313229000137");
+		req.setRecBnk("313221099020");
 		//收款人账户类型
 		req.setRactTp("2");
 		//收款人账号 6288880210000209903 622126010001048643
 		//UAT
 //		req.setRactNo("623166001016830991");
-		//DEV
-		req.setRactNo("623166000000085273");
+		//DEV  交行测试磁条卡
+		req.setRactNo("622126010003601704");
 //		req.setCuIdTp("15");
 //		req.setCuIdNo("1234");
 		//收款人名称
-		req.setRecNam("翟淼");		
-		req.setSecMag("623166000000085273=4912567019123456");
+		req.setRecNam("测试");
+		//交行测试磁条卡二磁道
+		req.setSecMag("622126010003601704=491212094000000000");
+		//UAT
+//		req.setSecMag("623166001016830991=4912567019123456");
+		req.setThdMag("99622126010003601704=15615604000000000000038755530400000000000000000000000=000000000000=0000000000000000");
 //		req.setTtxnDat(20190701);
 //		req.setTtxnTim(145033);
 //		req.setSlogNo("19070159840880");		

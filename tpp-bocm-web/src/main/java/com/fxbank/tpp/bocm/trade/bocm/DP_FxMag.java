@@ -97,8 +97,8 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		}
 		super.hostErrorException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 		super.cardMagValidateException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10007);
-		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203,"timeout");
-		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203);
+		super.hostTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203,"核心记账超时");
+		super.othTimeoutException = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_16203,"核心记账超时");
 		super.TRADE_DESC = "交行向本行发起磁条卡通存记账请求";
 		super.othTimeoutQuery = false;
 		super.logger = logger;		
@@ -212,6 +212,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	* @throws 
 	*/
 	public ESB_REP_30011000104 hostCharge(DataTransObject dto) throws SysTradeExecuteException {
+	
 		
 		REQ_10000 reqDto = (REQ_10000) dto;
 		MyLog myLog = logPool.get();
@@ -387,6 +388,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		BocmRcvTraceQueryModel model = null;
 		int townDate = req.getTtxnDat();
 		String townTraceno = req.getSlogNo();
+		myLog.info(logger,TRADE_DESC+",查询来账流水，交行流水号："+townTraceno);
 		model = bocmRcvTraceService.getConfirmTrace(myLog, townDate, townTraceno);
 		return model;
 	}

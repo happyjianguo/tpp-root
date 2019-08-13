@@ -362,6 +362,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		BocmRcvTraceQueryModel model = null;
 		int townDate = reqDto.getTtxnDat();
 		String townTraceno = reqDto.getSlogNo();
+		myLog.info(logger,TRADE_DESC+",查询来账流水，交行流水号："+townTraceno);
 		model = bocmRcvTraceService.getConfirmTrace(myLog, townDate, townTraceno);
 		return model;
 	}

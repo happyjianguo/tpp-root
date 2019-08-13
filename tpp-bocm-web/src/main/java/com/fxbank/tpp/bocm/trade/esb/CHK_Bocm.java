@@ -92,14 +92,10 @@ public class CHK_Bocm {
 					"渠道未与核心对账");
 			throw e;
 		}
-
-		// 交行总行行号
-		String JHNO = "";
 		// 阜新银行总行行号
 		String FXNO = "";
 		try (Jedis jedis = myJedis.connect()) {
 			// 从redis中获取交行总行行号
-			JHNO = jedis.get(COMMON_PREFIX + "JHNO");
 			FXNO = jedis.get(COMMON_PREFIX + "FXNO");
 		}
 
@@ -190,7 +186,7 @@ public class CHK_Bocm {
 					// 更新对账状态表交行对账状态
 					BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 					chkStatusModel.setTxDate(date);
-					chkStatusModel.setBocmStatus(1);
+					chkStatusModel.setBocmStatus(2);
 					chkStatusService.chkStatusUpd(chkStatusModel);
 					
 					throw e;
@@ -245,7 +241,7 @@ public class CHK_Bocm {
 					// 更新对账状态表交行对账状态
 					BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 					chkStatusModel.setTxDate(date);
-					chkStatusModel.setBocmStatus(1);
+					chkStatusModel.setBocmStatus(2);
 					chkStatusService.chkStatusUpd(chkStatusModel);
 					
 					throw e;
@@ -276,7 +272,7 @@ public class CHK_Bocm {
 					// 更新对账状态表交行对账状态
 					BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 					chkStatusModel.setTxDate(date);
-					chkStatusModel.setBocmStatus(1);
+					chkStatusModel.setBocmStatus(2);
 					chkStatusService.chkStatusUpd(chkStatusModel);
 					
 					throw e;
@@ -312,7 +308,7 @@ public class CHK_Bocm {
 				// 更新对账状态表交行对账状态
 				BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 				chkStatusModel.setTxDate(date);
-				chkStatusModel.setBocmStatus(1);
+				chkStatusModel.setBocmStatus(2);
 				chkStatusService.chkStatusUpd(chkStatusModel);
 				
 				throw e;
@@ -399,7 +395,7 @@ public class CHK_Bocm {
 					// 更新对账状态表交行对账状态
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
-					record.setBocmStatus(1);
+					record.setBocmStatus(2);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;
@@ -448,7 +444,7 @@ public class CHK_Bocm {
 					// 更新对账状态表交行对账状态
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
-					record.setBocmStatus(1);
+					record.setBocmStatus(2);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;
@@ -528,7 +524,7 @@ public class CHK_Bocm {
 					// 更新对账状态表交行对账状态
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
-					record.setBocmStatus(1);
+					record.setBocmStatus(2);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;
@@ -580,7 +576,7 @@ public class CHK_Bocm {
 					// 更新对账状态表交行对账状态
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
-					record.setBocmStatus(1);
+					record.setBocmStatus(2);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;

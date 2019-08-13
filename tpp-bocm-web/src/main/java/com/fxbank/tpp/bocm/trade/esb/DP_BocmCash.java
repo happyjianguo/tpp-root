@@ -106,7 +106,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 			//接收ESB报文应答超时
 			if(SysTradeExecuteException.CIP_E_000004.equals(e.getRspCode())||"ESB_E_000052".equals(e.getRspCode())) {
 				String reversalMsg = "";
-				String reversalCode = "";
 				try {
 					hostReversal(reqDto,hostTraceno);
 					initRecord(reqDto, hostDate, hostTraceno, "4", retCode, retMsg);
@@ -600,8 +599,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 		reqBody_30014000101.setChannelSeqNo(esbReq_30014000101.getReqSysHead().getSeqNo());
-//		reqBody_30014000101.setReversalReason("交行记账失败,本行核心冲正");
-		reqBody_30014000101.setReversalReason("");
+		reqBody_30014000101.setReversalReason("交行记账失败,本行核心冲正");
 		reqBody_30014000101.setEventType("");
 
 		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,

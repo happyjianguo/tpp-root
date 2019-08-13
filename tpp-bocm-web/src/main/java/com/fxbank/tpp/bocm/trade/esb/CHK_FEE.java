@@ -93,13 +93,10 @@ public class CHK_FEE extends TradeBase implements TradeExecutionStrategy {
 		date = Integer.parseInt(reqBody.getStmtDtT2());
 		Integer sysDate = date;
 		
-		//交行总行行号
-		String JHNO = "";
 		//阜新银行总行行号
 		String FXNO = "";
 		try(Jedis jedis = myJedis.connect()){
 			//从redis中获取交行总行行号
-			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
 			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
         }
 				

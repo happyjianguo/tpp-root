@@ -89,6 +89,9 @@ public class REP_30011000104 extends REP_BASE {
 	}
 	
 	public static class Fee implements Serializable {
+
+		private static final long serialVersionUID = -5685997508875759795L;
+		
 		@JSONField(name = "FEE_TYPE")
 		private String feeType;//服务费类型
 		@JSONField(name = "FEE_CCY")

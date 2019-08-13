@@ -317,8 +317,13 @@ public abstract class BaseTradeT1 {
 			if (e.getRspCode().equals(SysTradeExecuteException.CIP_E_000004) || e.getRspCode().equals(ESB_TIMEOUT_CODE1)) {
 				// 超时登记
 				hostTimeoutInitLog(dto); 
-				// 核心冲正
-				hostReversal(dto);
+				try {
+					// 核心冲正
+					hostReversal(dto);
+				} catch (SysTradeExecuteException e1) {
+					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
+					throw e2;
+				}
 				myLog.error(logger,TRADE_DESC+"核心记账超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
 				throw hostTimeoutException;
 			} else {

@@ -2,17 +2,16 @@ package com.fxbank.tpp.bocm.simu;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.model.REP_10101;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SimuBocmServer {
 

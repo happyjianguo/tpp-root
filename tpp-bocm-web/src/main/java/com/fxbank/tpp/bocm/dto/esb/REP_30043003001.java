@@ -51,7 +51,8 @@ public class REP_30043003001 extends REP_BASE {
 
 	public class REP_BODY implements Serializable {
 
-				//private static final long serialVersionUID = 4285318811572896212L;
+		private static final long serialVersionUID = 6588833676980853395L;
+		//private static final long serialVersionUID = 4285318811572896212L;
 		@JSONField(name = "BANK_NUMBER")
 		private String bankNumber;//行号
 		@JSONField(name = "BNK_NM_T")

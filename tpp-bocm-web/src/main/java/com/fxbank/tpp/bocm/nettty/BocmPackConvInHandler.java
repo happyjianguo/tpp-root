@@ -13,8 +13,6 @@ import com.fxbank.cip.base.pkg.fixed.FixedUtil;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_BASE;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 
-import cn.highsuccess.connPool.api.tssc.HisuTSSCAPI;
-import cn.highsuccess.connPool.api.tssc.HisuTSSCAPIResult;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

@@ -87,8 +87,25 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		
 		BocmChkStatusModel chkModel = chkStatusService.selectByDate(date);
 		if(chkModel==null||chkModel.getHostStatus()==0){
+			//更新对账状态表交行对账状态
+			BocmChkStatusModel record = new BocmChkStatusModel();
+			record.setTxDate(Integer.parseInt(date));
+			record.setPlatStatus(2);
+			chkStatusService.chkStatusUpd(record);
+			myLog.info(logger, "更新对账状态表信息");	
+			
 			myLog.error(logger, "渠道未与本行核心对账");
 			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"渠道未与核心对账");
+			throw e;
+		}
+		if(chkModel.getHostStatus()==2){
+			//更新对账状态表交行对账状态
+			BocmChkStatusModel record = new BocmChkStatusModel();
+			record.setTxDate(Integer.parseInt(date));
+			record.setPlatStatus(2);
+			chkStatusService.chkStatusUpd(record);
+			myLog.error(logger, "渠道与本行核心对账失败");
+			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,"渠道与本行核心对账失败");
 			throw e;
 		}
 

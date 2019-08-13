@@ -77,17 +77,27 @@ public class QR_CHK extends TradeBase implements TradeExecutionStrategy {
 		int bocmStatus = model.getBocmStatus();
 		int platStatus = model.getPlatStatus();
 		StringBuffer chkMsg = new StringBuffer();
-		if(1==hostStatus){
+		//判断与核心对账状态
+		if(0==hostStatus){
+			chkMsg.append("未与核心对账");
+		}else if(1==hostStatus){
 			chkMsg.append("与核心对账成功");
+		}else if(2==hostStatus){
+			chkMsg.append("与核心对账失败");
 		}
-		if(1==bocmStatus){
+		//判断与交行对账状态
+		if(0==bocmStatus){
+			chkMsg.append(",未与交行对账");
+		}else if(1==bocmStatus){
 			chkMsg.append(",与交行对账成功");
+		}else if(2==bocmStatus){
+			chkMsg.append(",与交行对账失败");
 		}
-		if(1==platStatus){
+		//交行未与平台对账
+		if(0==platStatus){
+			chkMsg.append(",交行未与平台对账");
+		}else if(1==platStatus){
 			chkMsg.append(",交行与平台对账成功");
-		}
-		if(chkMsg.toString().length()==0){
-			chkMsg.append("未对账");
 		}
 		chk.setChkState(chkMsg.toString());
 		chk.setChkDate(model.getChkDate()+"");

@@ -28,7 +28,6 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.esb.REP_TS_10104;
-import com.fxbank.tpp.bocm.dto.esb.REQ_TS_10104;
 import com.fxbank.tpp.bocm.model.REP_10104_MAC;
 import com.fxbank.tpp.bocm.model.REP_10104_PIN;
 import com.fxbank.tpp.bocm.model.REQ_10104;
@@ -74,7 +73,6 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		REQ_TS_10104 reqDto = (REQ_TS_10104) dto;
 		REP_TS_10104 rep = new REP_TS_10104();
 		myLog.info(logger, "更新交行密钥");
 		
@@ -94,16 +92,12 @@ public class TS_QR_Key extends TradeBase implements TradeExecutionStrategy{
 		Integer date = Integer.parseInt(df.format(cal.getTime()));
 		Integer sysTime = publicService.getSysTime();
 		Integer sysTraceno = publicService.getSysTraceno();
-		
-		
-		//交行总行行号
-		String JHNO = "";
+
 		//阜新银行总行行号
 		String FXNO = "";
 		String KeyId = "";
 		try(Jedis jedis = myJedis.connect()){
 			//从redis中获取交行总行行号
-			JHNO = jedis.get(COMMON_PREFIX+"JHNO");
 			FXNO = jedis.get(COMMON_PREFIX+"FXNO");
 			KeyId = jedis.get(COMMON_PREFIX+"KeyId");
         }

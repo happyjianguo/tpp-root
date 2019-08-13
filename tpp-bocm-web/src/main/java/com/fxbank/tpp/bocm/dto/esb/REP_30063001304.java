@@ -7,7 +7,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fxbank.cip.base.dto.REP_APP_HEAD;
 import com.fxbank.cip.base.dto.REP_BASE;
 import com.fxbank.cip.base.dto.REP_SYS_HEAD;
-import com.fxbank.tpp.bocm.dto.esb.REP_30063001303.Trade;
 
 /** 
 * @ClassName: REP_30061800501 
