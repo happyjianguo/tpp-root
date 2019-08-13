@@ -105,9 +105,9 @@ public class BASE_TEST {
         base.setTtxnTim(Integer.valueOf(sDate.substring(8))); 
         base.setSlogNo(String.format("%6s%08d", sDate.substring(2, 8),seq));
         
-        base.setTtxnDat(20190813);
-        base.setTtxnTim(141200);
-        base.setSlogNo("19081344385501");
+//        base.setTtxnDat(20190813);
+//        base.setTtxnTim(141200);
+//        base.setSlogNo("19081344385501");
 //        System.out.println("seq:"+seq);
 //          seq = 81636369;
 //          base.setSlogNo(String.format("%6s%08d", sDate.substring(2, 8),seq));
