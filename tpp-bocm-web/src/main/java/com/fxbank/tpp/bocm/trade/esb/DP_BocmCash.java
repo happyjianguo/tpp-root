@@ -554,7 +554,6 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req20000.setSeqNo(reqBody.getIcCardSeqNoT1());
 		req20000.setARQC(reqBody.getIcCard91T());
 		req20000.setICAID(reqBody.getIcCard9f09T());
-		req20000.setICOutDate(reqBody.getIcCardAvaiDtT());
 		req20000.setICOutDate(reqBody.getIcCardAvaiDtT());//IC卡有效期
 		req20000.setICData(reqBody.getIcCardF55T());
         

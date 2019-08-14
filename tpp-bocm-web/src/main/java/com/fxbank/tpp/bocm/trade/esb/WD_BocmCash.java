@@ -466,7 +466,6 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		req20001.setARQC(reqBody.getIcCard91T());//IC卡发卡行认证
 		req20001.setICAID(reqBody.getIcCard9f09T());//IC卡应用编号
 		req20001.setICOutDate(reqBody.getIcCardAvaiDtT());//IC卡有效期
-		req20001.setICOutDate("241231");//IC卡有效期
 		req20001.setICData(reqBody.getIcCardF55T());//IC卡数据域（55域）
 		//向交行系统发送交行IC卡通兑记账
 		REP_20001 rep_20001 = forwardToBocmService.sendToBocm(req20001, 

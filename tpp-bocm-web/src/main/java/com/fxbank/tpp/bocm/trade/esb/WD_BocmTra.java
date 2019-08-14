@@ -639,8 +639,8 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		req20001.setSeqNo(reqBody.getIcCardSeqNoT1());
 		req20001.setARQC(reqBody.getIcCard91T());
 		req20001.setICAID(reqBody.getIcCard9f09T());
+		//IC卡有效期
 		req20001.setICOutDate(reqBody.getIcCardAvaiDtT());
-		req20001.setICOutDate("241231");//IC卡有效期
 		req20001.setICData(reqBody.getIcCardF55T());
 		req20001.setRemark(reqBody.getNoteT2());
         
