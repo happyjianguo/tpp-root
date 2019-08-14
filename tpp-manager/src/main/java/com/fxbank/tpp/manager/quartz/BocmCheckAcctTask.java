@@ -2,7 +2,6 @@ package com.fxbank.tpp.manager.quartz;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -108,9 +107,11 @@ public class BocmCheckAcctTask {
 		}
 		// 阜新银行总行行号
 		String FXNO = "";
+		String txTel = "";
 		try (Jedis jedis = myJedis.connect()) {
 			// 从redis中获取交行总行行号
 			FXNO = jedis.get(COMMON_PREFIX + "FXNO");
+			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
 		}
 
 		acctCheckErrService.delete(date.toString());
@@ -201,11 +202,13 @@ public class BocmCheckAcctTask {
 					BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 					chkStatusModel.setTxDate(date);
 					chkStatusModel.setBocmStatus(2);
+					chkStatusModel.setChkTime(sysTime);
+					chkStatusModel.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(chkStatusModel);
 					
 					throw e;
 				} else {
-					checkBocmSndLog(myLog, sysDate, sysTime, sndTraceQueryModel, bocmTrace, date + "");
+					checkBocmSndLog(myLog, sysDate, sysTime, sndTraceQueryModel, bocmTrace, date + "", txTel);
 					snd++;
 				}
 			} else if (SbnkNo.substring(0, 3).equals("301")) {
@@ -256,11 +259,13 @@ public class BocmCheckAcctTask {
 					BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 					chkStatusModel.setTxDate(date);
 					chkStatusModel.setBocmStatus(2);
+					chkStatusModel.setChkTime(sysTime);
+					chkStatusModel.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(chkStatusModel);
 					
 					throw e;
 				} else {
-					checkBocmRcvLog(myLog, sysDate, sysTime, rcvTraceQueryModel, bocmTrace, date + "");
+					checkBocmRcvLog(myLog, sysDate, sysTime, rcvTraceQueryModel, bocmTrace, date + "", txTel);
 					rcv++;
 				}
 			}
@@ -287,6 +292,8 @@ public class BocmCheckAcctTask {
 					BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 					chkStatusModel.setTxDate(date);
 					chkStatusModel.setBocmStatus(2);
+					chkStatusModel.setChkTime(sysTime);
+					chkStatusModel.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(chkStatusModel);
 					
 					throw e;
@@ -323,6 +330,8 @@ public class BocmCheckAcctTask {
 				BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 				chkStatusModel.setTxDate(date);
 				chkStatusModel.setBocmStatus(2);
+				chkStatusModel.setChkTime(sysTime);
+				chkStatusModel.setTxTel(txTel);
 				chkStatusService.chkStatusUpd(chkStatusModel);
 				
 				throw e;
@@ -353,7 +362,7 @@ public class BocmCheckAcctTask {
 
 	// 来账对账校验
 	private void checkBocmRcvLog(MyLog myLog, int sysDate, int sysTime, BocmRcvTraceQueryModel rcvTraceQueryModel,
-			REP_10103.Detail bocmTrace, String date) throws SysTradeExecuteException {
+			REP_10103.Detail bocmTrace, String date,String txTel) throws SysTradeExecuteException {
 		// 检查交行记账文件来账记录
 		String hostState = rcvTraceQueryModel.getHostState(); // 渠道记录的核心记账状态
 		String txnStatus = bocmTrace.getTxnSts();
@@ -409,6 +418,8 @@ public class BocmCheckAcctTask {
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
 					record.setBocmStatus(2);
+					record.setChkTime(sysTime);
+					record.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;
@@ -458,6 +469,8 @@ public class BocmCheckAcctTask {
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
 					record.setBocmStatus(2);
+					record.setChkTime(sysTime);
+					record.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;
@@ -478,7 +491,7 @@ public class BocmCheckAcctTask {
 
 	// 往账流水对账
 	private void checkBocmSndLog(MyLog myLog, int sysDate, int sysTime, BocmSndTraceQueryModel sndTraceQueryModel,
-			REP_10103.Detail bocmTrace, String date) throws SysTradeExecuteException {
+			REP_10103.Detail bocmTrace, String date, String txTel) throws SysTradeExecuteException {
 
 		String bocmState = sndTraceQueryModel.getBocmState(); // 渠道记录的交行记账状态
 		String hostState = sndTraceQueryModel.getHostState(); // 渠道记录的核心记账状态
@@ -538,6 +551,8 @@ public class BocmCheckAcctTask {
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
 					record.setBocmStatus(2);
+					record.setChkTime(sysTime);
+					record.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;
@@ -590,6 +605,8 @@ public class BocmCheckAcctTask {
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(Integer.parseInt(date));
 					record.setBocmStatus(2);
+					record.setChkTime(sysTime);
+					record.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(record);
 					
 					throw e;
@@ -683,7 +700,6 @@ public class BocmCheckAcctTask {
 		aceModel.setBocmFlag(bocmFlag);
 		aceModel.setCheckFlag("以交行对账为准");
 		aceModel.setMsg(msg);
-		// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
 		acctCheckErrService.insert(aceModel);
 	}
 

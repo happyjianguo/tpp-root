@@ -71,8 +71,8 @@ public class QR_CHK extends TradeBase implements TradeExecutionStrategy {
 	private REP_30063001304.Chk transRepTrace(BocmChkStatusModel model){
 		REP_30063001304.Chk chk = new REP_30063001304.Chk();
 		chk.setTxDate(model.getTxDate()+"");
-		chk.setChkBranch("00001");
-		chk.setChkTel("002264");
+		chk.setChkBranch(model.getTxBranch());
+		chk.setChkTel(model.getTxTel());
 		int hostStatus = model.getHostStatus();
 		int bocmStatus = model.getBocmStatus();
 		int platStatus = model.getPlatStatus();

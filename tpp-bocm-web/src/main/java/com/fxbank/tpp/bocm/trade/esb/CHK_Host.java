@@ -123,10 +123,10 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				txTel);
 		// 核对来账
 		myLog.info(logger, "核对来账流水");
-		checkRcvLog(myLog, dayCheckLogList, date, sysTime, sysTraceno);
+		checkRcvLog(myLog, dayCheckLogList, date, sysTime, sysTraceno, txTel);
 		// 核对往帐
 		myLog.info(logger, "核对往账流水");
-		checkSndLog(myLog, dayCheckLogList, date, sysTime, sysTraceno);
+		checkSndLog(myLog, dayCheckLogList, date, sysTime, sysTraceno, txTel);
 		// 核对来账、核对往账原则是以本行为主的更新记账状态和对账状态，以交行为主的对账只更新核心记账状态，不更新对账标识
 		myLog.info(logger, "核心与外围对账结束");
 		myLog.info(logger, "外围与核心对账开始");
@@ -145,18 +145,26 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 
 			if (sndTraceQueryModel.getHostState().equals("1")) {
 				String msg = "对账失败，渠道多账";
-				initSndErrRecord(myLog, sndTraceQueryModel, msg, "1" ,"0", date);
+				initSndErrRecord(myLog, sndTraceQueryModel, msg, "1" ,"0", date, sysTime, txTel);
 				myLog.error(logger,
 						"渠道多出往账数据，渠道日期【" + date + "】对账失败: 多出往账记录，渠道流水号【" + sndTraceQueryModel.getPlatTrace() + "】，核心状态【"
 								+ sndTraceQueryModel.getHostState() + "】，通存通兑标志【" + sndTraceQueryModel.getDcFlag()
 								+ "】");
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
 						"与核心往账对账失败,渠道多账,渠道流水号【" + sndTraceQueryModel.getPlatTrace() + "】");
-								
+				
+				//更新对账状态
+				BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
+				chkStatusModel.setTxDate(date);
+				chkStatusModel.setHostStatus(2);
+				chkStatusModel.setChkTime(sysTime);
+				chkStatusModel.setTxTel(txTel);
+				chkStatusService.chkStatusUpd(chkStatusModel);
+				
 				throw e;
 			} else {
 				String msg = "渠道多账";
-				initSndErrRecord(myLog, sndTraceQueryModel, msg, "1" ,"0", date);
+				initSndErrRecord(myLog, sndTraceQueryModel, msg, "1" ,"0", date, sysTime, txTel);
 				myLog.info(logger,
 						"渠道多出往账数据，渠道日期【" + sndTraceQueryModel.getPlatDate() + "】，渠道流水【"
 								+ sndTraceQueryModel.getPlatTrace() + "】，核心状态【" + sndTraceQueryModel.getHostState()
@@ -181,7 +189,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 			}
 			if (rcvTraceQueryModel.getHostState().equals("1")) {
 				String msg = "对账失败，渠道多账";
-				initRcvErrRecord(myLog, rcvTraceQueryModel, msg, "1" ,"0",date);
+				initRcvErrRecord(myLog, rcvTraceQueryModel, msg, "1" ,"0",date, sysTime, txTel);
 				myLog.error(logger,
 						"柜面通【" + date + "】对账失败: 多出来账记录，渠道流水号【" + rcvTraceQueryModel.getPlatTrace() + "】，核心状态【"
 								+ rcvTraceQueryModel.getHostState() + "】，通存通兑标志【" + rcvTraceQueryModel.getDcFlag()
@@ -193,12 +201,14 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				BocmChkStatusModel chkStatusModel = new BocmChkStatusModel();
 				chkStatusModel.setTxDate(date);
 				chkStatusModel.setHostStatus(2);
+				chkStatusModel.setChkTime(sysTime);
+				chkStatusModel.setTxTel(txTel);
 				chkStatusService.chkStatusUpd(chkStatusModel);
 				
 				throw e;
 			} else {
 				String msg = "渠道多账";
-				initRcvErrRecord(myLog, rcvTraceQueryModel, msg, "0" ,"0", date);
+				initRcvErrRecord(myLog, rcvTraceQueryModel, msg, "0" ,"0", date, sysTime, txTel);
 				myLog.info(logger,
 						"渠道多出来账数据，渠道日期【" + rcvTraceQueryModel.getPlatDate() + "】，渠道流水【"
 								+ rcvTraceQueryModel.getPlatTrace() + "】，核心状态【" + rcvTraceQueryModel.getHostState()
@@ -263,7 +273,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 
 	// 核对往账
 	private void checkSndLog(MyLog myLog, List<BocmDayCheckLogInitModel> sndDayCheckLogList, Integer date,
-			Integer sysTime, Integer sysTraceno) throws SysTradeExecuteException {
+			Integer sysTime, Integer sysTraceno, String txTel) throws SysTradeExecuteException {
 		for (BocmDayCheckLogInitModel model : sndDayCheckLogList) {
 			// JH01交行代理本行存款 JH02 交行代理我行取款 如果判断为下面的类型为来账，跳过
 			if (model.getTranType().equals("JH01") || model.getTranType().equals("JH02")) {
@@ -309,6 +319,8 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				BocmChkStatusModel record = new BocmChkStatusModel();
 				record.setTxDate(date);
 				record.setHostStatus(2);
+				record.setChkTime(sysTime);
+				record.setTxTel(txTel);
 				chkStatusService.chkStatusUpd(record);
 				myLog.info(logger, "更新与核心对账状态为失败：  对账日期：" + date);
 				throw e;
@@ -371,6 +383,8 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 					BocmChkStatusModel record = new BocmChkStatusModel();
 					record.setTxDate(date);
 					record.setHostStatus(2);
+					record.setChkTime(sysTime);
+					record.setTxTel(txTel);
 					chkStatusService.chkStatusUpd(record);
 					myLog.info(logger, "更新与核心对账状态为失败：  对账日期：" + date);
 					
@@ -382,7 +396,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 
 	// 核对来账
 	private void checkRcvLog(MyLog myLog, List<BocmDayCheckLogInitModel> rcvDayCheckLogList, Integer date,
-			Integer sysTime, Integer sysTraceno) throws SysTradeExecuteException {
+			Integer sysTime, Integer sysTraceno, String txTel) throws SysTradeExecuteException {
 		for (BocmDayCheckLogInitModel model : rcvDayCheckLogList) {
 			// 根据核心对账数据取渠道来账数据
 			// JH10 本行付款转账 JH11 交行付款转账 JH12交行卡存现金 JH13交行卡取现金 如果判断为下面的类型为往账，跳过
@@ -425,6 +439,8 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 				BocmChkStatusModel record = new BocmChkStatusModel();
 				record.setTxDate(date);
 				record.setHostStatus(2);
+				record.setChkTime(sysTime);
+				record.setTxTel(txTel);
 				chkStatusService.chkStatusUpd(record);
 				myLog.info(logger, "更新与核心对账状态为失败：  对账日期：" + date);
 				
@@ -454,7 +470,6 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 							|| (rcvTraceQueryModel.getTranType().equals("JH01") && rcvTraceQueryModel.getTxInd().equals("0"))) {
 						record.setHostState("1");
 						rcvTraceService.rcvTraceUpd(record);
-						continue;
 					}else{
 						//以我行为主的记录如果超时修改状态为成功，更新对账状态
 						record.setHostState("1");
@@ -617,7 +632,7 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 	}
 
 	private void initSndErrRecord(MyLog myLog, BocmSndTraceQueryModel sndTraceQueryModel, String msg
-			,String hostFlag, String bocmFlag, Integer date)throws SysTradeExecuteException {
+			,String hostFlag, String bocmFlag, Integer date, Integer sysTime, String txTel)throws SysTradeExecuteException {
 		BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, sndTraceQueryModel.getPlatDate(),
 				sndTraceQueryModel.getSysTime(), sndTraceQueryModel.getPlatTrace());
 		aceModel.setPlatDate(sndTraceQueryModel.getPlatDate());
@@ -670,12 +685,14 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		BocmChkStatusModel record = new BocmChkStatusModel();
 		record.setTxDate(date);
 		record.setHostStatus(2);
+		record.setChkTime(sysTime);
+		record.setTxTel(txTel);
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新与核心对账状态为失败：  对账日期：" + date);
 	}
 
 	private void initRcvErrRecord(MyLog myLog, BocmRcvTraceQueryModel rcvTraceQueryModel, String msg
-			,String hostFlag, String bocmFlag, Integer date)throws SysTradeExecuteException {
+			,String hostFlag, String bocmFlag, Integer date, Integer sysTime, String txTel)throws SysTradeExecuteException {
 		BocmAcctCheckErrModel aceModel = new BocmAcctCheckErrModel(myLog, rcvTraceQueryModel.getPlatDate(),
 				rcvTraceQueryModel.getSysTime(), rcvTraceQueryModel.getPlatTrace());
 		aceModel.setPlatDate(rcvTraceQueryModel.getPlatDate());
@@ -714,6 +731,8 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		BocmChkStatusModel record = new BocmChkStatusModel();
 		record.setTxDate(date);
 		record.setHostStatus(2);
+		record.setChkTime(sysTime);
+		record.setTxTel(txTel);
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新与核心对账状态为失败：  对账日期：" + date);
 	}

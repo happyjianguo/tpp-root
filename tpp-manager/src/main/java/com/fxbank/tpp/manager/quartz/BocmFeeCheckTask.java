@@ -21,17 +21,12 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.MyJedis;
-import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.pub.service.IPublicService;
-import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
-import com.fxbank.tpp.bocm.model.BocmAcctCheckErrModel;
-import com.fxbank.tpp.bocm.model.BocmChkStatusModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmSndTraceUpdModel;
-import com.fxbank.tpp.bocm.model.REP_10103;
 import com.fxbank.tpp.bocm.model.REP_10103_FEE;
 import com.fxbank.tpp.bocm.model.REQ_10103;
 import com.fxbank.tpp.bocm.service.IBocmAcctCheckErrService;

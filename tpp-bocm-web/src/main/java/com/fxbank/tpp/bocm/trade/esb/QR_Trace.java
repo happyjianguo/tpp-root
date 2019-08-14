@@ -63,6 +63,7 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 		logger.info("业务流水查询:行内处理状态："+hostStatus+" 起始日期："+begDate+" 结束日期："+endDate);
 		logger.info("业务流水查询:交易金额："+txAmt+" 平台起始流水："+begTrace+" 平台结束流水："+endTrace);
 		List<BocmSndTraceQueryModel> sndlist = new ArrayList<BocmSndTraceQueryModel>();
+		//交易来源 10-柜面  01-自助
 		String sourceType = reqBody.getTrnSrcT1();
 		if(sourceType.equals("10")||sourceType.equals("")){
 			sndlist = sndTraceService.getSndTrace(myLog, begDate, endDate, begTrace, 
@@ -75,7 +76,6 @@ public class QR_Trace extends TradeBase implements TradeExecutionStrategy {
 		//总金额
 		BigDecimal total = new BigDecimal("0.00");
 		for(BocmSndTraceQueryModel model : sndlist){
-			logger.info("渠道流水 号："+model.getPlatTrace());
 			total = total.add(model.getTxAmt());
 			REP_30063001302.Trade trace = transRepTrace(model);
 			list.add(trace);
