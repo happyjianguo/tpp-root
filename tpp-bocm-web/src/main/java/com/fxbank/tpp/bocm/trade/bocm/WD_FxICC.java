@@ -80,20 +80,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();		
 		REQ_20001 req = (REQ_20001) dto;
-		String sbnkNo = req.getSbnkNo();//发起行行号
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			REP_20001 rep = new REP_20001();		
-			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
-			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
-			rep.setOtxnAmt(req.getTxnAmt());		
-			//JHF1-异地手续费JHF2-代理手续费
-			Double fee = new Double(5d);
-			rep.setFee(fee);
-			rep.setActBal(10000d);
-			return rep;
-		}
+
 		
 		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
 		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
@@ -158,7 +145,6 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		REP_20001 rep = new REP_20001();
 		ESB_REP_30011000104 repPayment = (ESB_REP_30011000104)model;
 		rep.setOtxnAmt(reqDto.getTxnAmt());		
-		//JHF1-异地手续费JHF2-代理手续费
 		Double fee = new Double(0);
 		List<Fee> feeList = repPayment.getRepBody().getFeeDetail();
 		for(Fee temp:feeList) {

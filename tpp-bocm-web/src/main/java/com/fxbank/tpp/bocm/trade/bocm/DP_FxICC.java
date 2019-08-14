@@ -78,21 +78,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		
 		REQ_20000 req = (REQ_20000) dto;
-		String sbnkNo = req.getSbnkNo();//发起行行号
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			REP_20000 rep = new REP_20000();
-			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
-			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
-			
-			rep.setOtxnAmt(req.getTxnAmt());		
-			//JHF1-异地手续费JHF2-代理手续费
-			Double fee = new Double(5d);
-			rep.setFee(fee);
-			rep.setActBal(10000d);
-			return rep;
-		}
+
 		
 		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
 		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
@@ -158,7 +144,6 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		REP_20000 rep = new REP_20000();
 		ESB_REP_30011000104 repPayment = (ESB_REP_30011000104)model;
 		rep.setOtxnAmt(reqDto.getTxnAmt());		
-		//JHF1-异地手续费JHF2-代理手续费
 		Double fee = new Double(0);
 		List<Fee> feeList = repPayment.getRepBody().getFeeDetail();
 		for(Fee temp:feeList) {
@@ -307,7 +292,6 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		//核心手续费获取
 		ESB_REP_30011000104.Fee tradFee = rep.getRepBody().getFeeDetail().get(0);	
-		//String fee = NumberUtil.removePointToString(reqDto.getFee());
 		record.setTxAmt(new BigDecimal(txnAmt));
 		if(!tradFee.getFeeAmt().equals("")){
 			record.setFee(new BigDecimal(tradFee.getFeeAmt()));
@@ -417,7 +401,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		esbReq_30043000101.setReqSysHead(reqSysHead);
 
 		ESB_REQ_30043000101.REQ_BODY reqBody_30043000101 = esbReq_30043000101.getReqBody();
-		// 记账渠道类型GJ
+		// 记账渠道类型BU
 		reqBody_30043000101.setChannelType("BU");
 
 		String platTrace = String.format("%08d", reqDto.getSysTraceno());// 左补零

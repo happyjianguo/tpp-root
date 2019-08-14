@@ -583,7 +583,6 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		esbReqBody_50015000101.setChannelType("BU");
 		esbReqBody_50015000101.setStartDate(date.toString());
 		esbReqBody_50015000101.setEndDate(date.toString());
-		// esbReqBody_50015000101.setDirection(direction);
 
 		ESB_REP_50015000101 esbRep_50015000101 = forwardToESBService.sendToESB(esbReq_50015000101,
 				esbReqBody_50015000101, ESB_REP_50015000101.class);
@@ -725,7 +724,6 @@ public class CHK_Host extends TradeBase implements TradeExecutionStrategy {
 		}
 		aceModel.setCheckFlag("以本行对账为准");
 		aceModel.setMsg(msg);
-		// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
 		acctCheckErrService.insert(aceModel);
 		
 		BocmChkStatusModel record = new BocmChkStatusModel();

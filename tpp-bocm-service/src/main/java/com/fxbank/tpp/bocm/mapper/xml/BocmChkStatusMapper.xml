@@ -51,8 +51,11 @@
         and tx_date <![CDATA[ <= ]]> #{endDate}
       </if>    
     </trim>
-        and host_status <![CDATA[ <> ]]> 1    
-        or bocm_status <![CDATA[ <> ]]> 1
+        and 
+        (
+          host_status <![CDATA[ <> ]]> 1    
+          or bocm_status <![CDATA[ <> ]]> 1
+        )
      order by tx_date desc
   </select>
 

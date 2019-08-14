@@ -71,13 +71,6 @@ public class CHK_Fx implements TradeExecutionStrategy {
 	
 		//发起行行号
 		String sbnkNo = req.getSbnkNo();
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			TS_10103 ts10103 = new TS_10103(logPool, forwardToESBService,dayCheckLogService, 
-					sndTraceService, rcvTraceService, acctCheckErrService);
-			DataTransObject dtoRep = ts10103.execute(dto);
-			return dtoRep;
-		}
 		
 		REP_10103 rep = new REP_10103();
 		myLog.info(logger, "交行请求我行对账文件");

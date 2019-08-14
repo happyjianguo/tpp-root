@@ -393,8 +393,7 @@ public class CHK_Bocm {
 					aceModel.setBocmFlag("1");
 					aceModel.setHostFlag("3");
 					aceModel.setCheckFlag("以交行对账为准");
-					aceModel.setMsg("核心少,需补账");
-					// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
+					aceModel.setMsg("核心少,需补账");			
 					acctCheckErrService.insert(aceModel);
 					myLog.error(logger, "柜面通来帐对账失败,本行记账失败，交行记账成功，流水号【" + rcvTraceQueryModel.getBocmTraceno() + "】核心日期为【"
 							+ sysDate + "】渠道流水【" + rcvTraceQueryModel.getPlatTrace() + "】");
@@ -444,8 +443,7 @@ public class CHK_Bocm {
 					aceModel.setBocmFlag("0");
 					aceModel.setHostFlag("2");
 					aceModel.setCheckFlag("以交行对账为准");
-					aceModel.setMsg("核心多账,需冲正");
-					// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
+					aceModel.setMsg("核心多账,需冲正");	
 					acctCheckErrService.insert(aceModel);
 					myLog.error(logger, "柜面通来帐对账失败,本行记账成功，交行记账失败，流水号【" + rcvTraceQueryModel.getBocmTraceno() + "】核心日期为【"
 							+ sysDate + "】渠道流水【" + rcvTraceQueryModel.getPlatTrace() + "】");
@@ -687,7 +685,6 @@ public class CHK_Bocm {
 		aceModel.setBocmFlag(bocmFlag);
 		aceModel.setCheckFlag("以交行对账为准");
 		aceModel.setMsg(msg);
-		// aceModel.setMsg("渠道调整来账数据核心状态，渠道日期【"+rcvTraceQueryModel.getPlatDate()+"】，渠道流水【"+rcvTraceQueryModel.getPlatTrace()+"】，调整前状态【"+hostState+"】，调整后状态【1】，通存通兑标志【"+rcvTraceQueryModel.getDcFlag()+"】");
 		acctCheckErrService.insert(aceModel);
 	}
 

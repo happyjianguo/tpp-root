@@ -367,8 +367,7 @@ public abstract class BaseTradeT1 {
 				   }			   
 			   }
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return "";
 		}
 		return errMsg.toString();
 	}
