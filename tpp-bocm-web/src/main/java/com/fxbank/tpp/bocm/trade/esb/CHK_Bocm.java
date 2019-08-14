@@ -340,6 +340,8 @@ public class CHK_Bocm {
 		record.setTxDate(date);
 		record.setBocmStatus(1);
 		record.setBocmTxCnt(tolCnt);
+		record.setChkTime(sysTime);
+		record.setTxTel(txTel);
 		record.setBocmTxAmt(new BigDecimal(tolAmt.toString()));
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新与核心对账状态为已对账：  对账日期：" + date);

@@ -54,6 +54,12 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 	public void chkStatusUpd(BocmChkStatusModel record) throws SysTradeExecuteException {
 		BocmChkStatus entity = new BocmChkStatus();
 		entity.setTxDate(record.getTxDate());
+		if(null != record.getTxBranch()) {
+			entity.setTxBranch(record.getTxBranch());
+		}
+		if(null != record.getTxTel()) {
+			entity.setTxTel(record.getTxTel());
+		}
 		if(null != record.getHostStatus()) {
 			entity.setHostStatus(record.getHostStatus());
 		}
