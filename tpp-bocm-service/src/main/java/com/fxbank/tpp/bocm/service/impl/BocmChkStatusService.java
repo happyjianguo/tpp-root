@@ -124,9 +124,15 @@ public class BocmChkStatusService implements IBocmChkStatusService{
 	@Override
 	public List<BocmChkStatusModel> selectByDate(MyLog myLog,String begDate,String endDate,String state) throws SysTradeExecuteException{
 		List<BocmChkStatus> list = new ArrayList<BocmChkStatus>();
+		
 		if(state.equals("1")){
+			//state=1 成功
 			list = mapper.selectByDateSuccess(begDate, endDate, state);
+		}else if(state.equals("")){
+			//state=""  全部查询
+			list = mapper.selectByDateSuccess(begDate, endDate, "");
 		}else{
+			//state=2  失败
 			list = mapper.selectByDateError(begDate, endDate, state);
 		}
 		List<BocmChkStatusModel> modelList = new ArrayList<BocmChkStatusModel>();
