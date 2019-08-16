@@ -45,7 +45,7 @@ public class BocmApplyWorkKeyTask {
 	
 	private static Logger logger = LoggerFactory.getLogger(BocmApplyWorkKeyTask.class);
 
-	private static final String JOBNAME = "ApplyWorkKey";
+	private static final String JOBNAME = "BocmApplyWorkKe";
 	
 	@Reference(version = "1.0.0")
 	private IForwardToESBService forwardToESBService;
