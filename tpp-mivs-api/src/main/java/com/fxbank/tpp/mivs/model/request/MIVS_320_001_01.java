@@ -54,4 +54,13 @@ public class MIVS_320_001_01 extends MODEL_BASE {
         return this.GetIdVrfctn.signData();
     }
 
+    @Override
+    public String toString() {
+        return "MIVS_320_001_01{" +
+                "GetIdVrfctn=" + GetIdVrfctn +
+                ", mesgType='" + mesgType + '\'' +
+                ", XMLNS='" + XMLNS + '\'' +
+                ", XMLNS_XSI='" + XMLNS_XSI + '\'' +
+                '}';
+    }
 }

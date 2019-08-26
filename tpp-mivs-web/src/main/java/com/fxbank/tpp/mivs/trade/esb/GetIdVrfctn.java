@@ -139,7 +139,7 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         mivsIdVrfctnInfoService.insertStart(idVrfctnTableInsert); //插入数据库业务数据
 //        myLog.info(logger, idVrfctnTableInsert.toString());
 
-//        myLog.info(logger, "发送320报文为：" + mivs320.toString());
+        myLog.info(logger, "发送320报文为：" + mivs320.toString());
         mivs320 = (MIVS_320_001_01) pmtsService.sendToPmts(mivs320); // 发送请求，实时等待990
 
         String channel = "321_"+ mivs320.getHeader().getMesgID();  //为同步等待321，组合报文{H:的三要素

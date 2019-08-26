@@ -289,23 +289,22 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(this.getMsgHdr().getMsgId() + "|");
-//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
-//        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
-//        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
-//        sb.append(this.getVryDef().getCoNm() + "|");
-//        sb.append(this.getVryDef().getUniSocCdtCd() == null ? ""
-//                : this.getVryDef().getUniSocCdtCd() + "|");
-//        sb.append(this.getVryDef().getTaxPayerId() == null ? ""
-//                : this.getVryDef().getTaxPayerId() + "|");
-//        sb.append(this.getVryDef().getOpNm() + "|");
-//        return sb.toString();
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getMsgHdr().getMsgId() + "|");
+        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
+        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
+        sb.append(this.getVryDef().getCoNm() + "|");
+        sb.append(this.getVryDef().getUniSocCdtCd() == null ? ""
+                : this.getVryDef().getUniSocCdtCd() + "|");
+        sb.append(this.getVryDef().getTaxPayerId() == null ? ""
+                : this.getVryDef().getTaxPayerId() + "|");
+        sb.append(this.getVryDef().getOpNm() + "|");
+        return sb.toString();
     }
 
 }

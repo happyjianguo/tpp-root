@@ -332,35 +332,31 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable, SIGN_DATA {
 
 	        }
         }
- 
-    
-
-
 
     @Override
     public String signData() {
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(this.getMsgHdr().getMsgId() + "|");
-//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-//        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
-//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
-//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
-//        if(this.getRspsn().getVrfctnInf().getMobNb()!=null) {
-//        	sb.append(this.getRspsn().getVrfctnInf().getMobNb() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getMobCrr() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getLocMobNb() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getLocNmMobNb() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getCdTp() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getSts() + "|");
-//        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
-//        	sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
-//            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
-//        }
-//        return sb.toString();
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getMsgHdr().getMsgId() + "|");
+        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
+        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
+        if(this.getRspsn().getVrfctnInf().getMobNb()!=null) {
+        	sb.append(this.getRspsn().getVrfctnInf().getMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getMobCrr() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getLocMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getLocNmMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getCdTp() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getSts() + "|");
+        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
+        	sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
+            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
+        }
+        return sb.toString();
+//        return null;
     }
 
 }

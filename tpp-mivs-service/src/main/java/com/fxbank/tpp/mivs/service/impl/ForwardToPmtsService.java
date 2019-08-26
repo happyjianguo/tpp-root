@@ -59,12 +59,12 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 			String signature = null;
 			try {
 				HisuTSSCAPIResult result = this.hisuTSSCAPIForSecondPayment.hisuUniveralGenDataSign("CNAPS2",
-						modelBase.getHeader().getOrigSender(), "SM2", signData.getBytes());
+						"313229000008", "SM2", signData.getBytes());
 				if (result.getErrCode() < 0) {
 					myLog.error(logger, "计算签名错误[" + result.getErrCode() + "]");
 					throw new RuntimeException("计算签名错误");
 				}
-				signature = result.getSign();
+				signature = result.getProperties("sign");
 			} catch (Exception e) {
 				myLog.error(logger, "计算签名错误",e);
 				throw new RuntimeException("计算签名错误");
