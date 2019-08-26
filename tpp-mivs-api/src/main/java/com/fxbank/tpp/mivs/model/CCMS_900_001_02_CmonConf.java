@@ -235,13 +235,31 @@ public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
 
     /**
      * @Title: signData
-     * @Description: 通讯级确认报文无签名域
-     * @param @return    设定文件
+     * @Description: 通用处理确认报文
+     * @param @return
      * @throws
      */
     @Override
     public String signData() {
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getGrpHdr().getMsgId() + "|");
+        sb.append(this.getGrpHdr().getCreDtTm() + "|");
+        sb.append(this.getGrpHdr().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getGrpHdr().getInstgPty().getInstgPty() + "|");
+        sb.append(this.getGrpHdr().getInstdPty().getInstdDrctPty() + "|");
+        sb.append(this.getGrpHdr().getInstdPty().getInstdPty() + "|");
+        sb.append(this.getGrpHdr().getSysCd() + "|");
+        sb.append(this.getOrgnlGrpHdr().getOrgnlMsgId() + "|");
+        sb.append(this.getOrgnlGrpHdr().getOrgnlInstgPty() + "|");
+        sb.append(this.getOrgnlGrpHdr().getOrgnlMT() + "|");
+        sb.append(this.getCmonConfInf().getPrcSts() + "|");
+        sb.append(this.getCmonConfInf().getPrcCd() == null ? "" : this.getCmonConfInf().getPrcCd()  + "|");
+        sb.append(this.getCmonConfInf().getPtyId() == null ? "" : this.getCmonConfInf().getPtyId() + "|");
+        sb.append(this.getCmonConfInf().getPtyPrcCd() == null ? "" : this.getCmonConfInf().getPtyPrcCd() + "|");
+        sb.append(this.getCmonConfInf().getPrcDt() == null ? "" : this.getCmonConfInf().getPrcDt() + "|");
+        sb.append(this.getCmonConfInf().getNetgRnd() == null ? "" : this.getCmonConfInf().getNetgRnd() + "|");
+
+        return sb.toString();
     }
 
 }

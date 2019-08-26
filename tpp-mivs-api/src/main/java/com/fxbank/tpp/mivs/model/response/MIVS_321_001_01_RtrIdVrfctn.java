@@ -346,11 +346,11 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable, SIGN_DATA {
         if(this.getRspsn().getVrfctnInf().getMobNb()!=null) {
         	sb.append(this.getRspsn().getVrfctnInf().getMobNb() + "|");
             sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getMobCrr() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getLocMobNb() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getLocNmMobNb() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getCdTp() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getSts() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getMobCrr() == null ? "" : this.getRspsn().getVrfctnInf().getMobCrr() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getLocMobNb() == null ? "" : this.getRspsn().getVrfctnInf().getLocMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getLocNmMobNb() == null ? "" : this.getRspsn().getVrfctnInf().getLocNmMobNb() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getCdTp() == null ? "" : this.getRspsn().getVrfctnInf().getCdTp() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getSts() == null ? "" : this.getRspsn().getVrfctnInf().getSts() + "|");
         }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
         	sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
             sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");

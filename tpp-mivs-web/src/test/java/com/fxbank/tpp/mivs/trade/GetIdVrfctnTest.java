@@ -92,10 +92,10 @@ public class GetIdVrfctnTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setMobNb("8618312345678");
-		reqBody.setNm("李明");
+		reqBody.setMobNb("8618666060606");
+		reqBody.setNm("旭格门窗有限公司");
 		reqBody.setIdTp("IC00");
-		reqBody.setId("610123199002140010");
+		reqBody.setId("110108198607224413");
 		reqBody.setUniSocCdtCd("123456789012345678");
 		reqBody.setOpNm("张三");
 		

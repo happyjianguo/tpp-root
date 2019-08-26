@@ -32,8 +32,8 @@ public class PMTS_SIGN implements Serializable{
 		StringBuffer sb = new StringBuffer(sign);
 		int i = 0;
 		this.beginFlag = sb.substring(0, i = i + 3);
-		this.digitalSignature = sb.substring(0, sb.length() - 1);
-		this.endFlag = sb.substring(sb.length() - 1, sb.length());
+		this.digitalSignature = sb.substring(i, sb.length() );
+//		this.endFlag = sb.substring(sb.length() - 1, sb.length());
 	}
 
 	/**
@@ -43,4 +43,14 @@ public class PMTS_SIGN implements Serializable{
 		this.digitalSignature = digitalSignature;
 	}
 
+	public String getDigitalSignature() {
+		return digitalSignature;
+	}
+
+	@Override
+	public String toString() {
+		return "PMTS_SIGN{" +
+				"digitalSignature='" + digitalSignature + '\'' +
+				'}';
+	}
 }
