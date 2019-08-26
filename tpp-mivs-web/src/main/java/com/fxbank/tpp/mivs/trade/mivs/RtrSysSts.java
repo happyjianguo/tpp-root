@@ -36,7 +36,7 @@ public class RtrSysSts extends TradeBase implements TradeExecutionStrategy {
         MIVS_346_001_01 mivs346 = (MIVS_346_001_01) dto;
         myLog.info(logger, "企业信息联网核查查业务受理时间查询应答报文,进行同步处理");
         byte[] b346 = SerializeUtil.serialize(mivs346);
-        String channel = "346_" + mivs346.getHead().getMesgID();   //TODO 拼接原报文三要素
+        String channel = "346_" + mivs346.getRtrSysSts().getOrgnlQryInf().getMsgId();   //TODO 拼接原报文三要素
         myLog.info(logger, "346报文同步通道编号=[" + channel + "]");
         super.jedisPublish(myLog,channel.getBytes(), b346);
         myLog.info(logger, "发布至redis成功");

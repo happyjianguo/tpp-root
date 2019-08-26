@@ -275,7 +275,7 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
                 private static final long serialVersionUID = 9160840032547969960L;
                 private String TxAuthCd = null;
                 private String TxAuthNm = null;
-                private String TxpySts = null;
+                private String TxpyrSts = null;
 
                 /**
                  * @return the TxAuthCd
@@ -304,16 +304,16 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
                 }
 
                 /**
-                 * @return the TxpySts
+                 * @return the TxpyrSts
                  */
-                public String getTxpySts() {
-                    return TxpySts;
+                public String getTxpyrSts() {
+                    return TxpyrSts;
                 }
                 /**
-                 * @param txpySts the txpySts to set
+                 * @param txpyrSts the txpySts to set
                  */
-                public void setTxpySts(String txpySts) {
-                    TxpySts = txpySts;
+                public void setTxpyrSts(String txpyrSts) {
+                    TxpyrSts = txpyrSts;
                 }
             }
         }
@@ -364,8 +364,14 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
         if(this.getRspsn().getVrfctnInf().getRslt().equals("MCHD")) {
             sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
             sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getTxpmtInf() + "|");
-        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
+            if(!this.getRspsn().getVrfctnInf().getTxpmtInf().isEmpty()) {
+                for(MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf info:this.getRspsn().getVrfctnInf().getTxpmtInf()) {
+                    sb.append(info.getTxAuthCd() + "|");
+                    sb.append(info.getTxAuthNm() + "|");
+                    sb.append(info.getTxpyrSts() + "|");
+                }
+            }
+        }else if(!this.getRspsn().getOprlErr().equals(null)){
             sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
             sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
         }

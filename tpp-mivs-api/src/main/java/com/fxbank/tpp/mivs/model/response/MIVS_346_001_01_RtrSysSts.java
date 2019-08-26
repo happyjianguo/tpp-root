@@ -333,28 +333,7 @@ public class MIVS_346_001_01_RtrSysSts implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(this.getMsgHdr().getMsgId() + "|");
-        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-        sb.append(this.getOrgnlQryInf().getMsgId() + "|");
-        sb.append(this.getOrgnlQryInf().getInstgPty().getInstgDrctPty() + "|");
-        sb.append(this.getOrgnlQryInf().getInstgPty().getInstgPty() + "|");
-        sb.append(this.getRplyInf().getOrgnlQueDt() + "|");
-        sb.append(this.getRplyInf().getProcSts() + "|");
-        sb.append(this.getRplyInf().getProcCd() + "|");
-        if(this.getRplyInf().getProcSts().equals("PR09")) {
-            sb.append(this.getRplyInf().getRjctInf() + "|");
-        }
-        if(!this.getRplyInf().getProcSts().equals("PR09")) {
-            sb.append(this.getRplyInf().getSvcInf().getSysInd() + "|");
-            sb.append(this.getRplyInf().getSvcInf().getSvcInd() + "|");
-            sb.append(this.getRplyInf().getSvcInf().getSysOpTm() + "|");
-            sb.append(this.getRplyInf().getSvcInf().getSysClTm() + "|");
-        }
-
-        return sb.toString();
+        return null;
     }
 
 }

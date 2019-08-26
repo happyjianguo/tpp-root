@@ -40,7 +40,7 @@ public class CCMS_900_001_02 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.comConf.signData();
+        return this.CmonConf.signData();
     }
 
     public CCMS_900_001_02_CmonConf getCmonConf() {

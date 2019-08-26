@@ -90,8 +90,8 @@ public class GetTxPmtVrfctnTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setCompanyName("阜新银行开发中心");
-        reqBody.setUniSocCdtCd("123456789012345678");
+        reqBody.setCompanyName("北京市政交通一卡通有限公司");
+        reqBody.setUniSocCdtCd("91110000801145381H");
 //        reqBody.setTaxPayerId("19989898");
         reqBody.setOpNm("李四");
 

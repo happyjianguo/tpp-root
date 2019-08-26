@@ -74,7 +74,7 @@ public class SIMU_GetTxPmtVrfctn implements TradeExecutionStrategy {
 			MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf arraymsg = new MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf();
 			arraymsg.setTxAuthCd("TxAuthCd00"+i);
 			arraymsg.setTxAuthNm("地税局");
-			arraymsg.setTxpySts("00"+i);
+			arraymsg.setTxpyrSts("00"+i);
 //			myLog.info(logger, "i=" + i);
 			txpmtInf.add(arraymsg);
 		}

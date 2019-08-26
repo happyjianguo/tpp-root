@@ -61,7 +61,7 @@ public class GetSysStsTest {
         req = new REQ_50023000215();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("13");
+        reqSysHead.setSceneId("15");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -88,7 +88,7 @@ public class GetSysStsTest {
     public void payOk() throws Exception {
 
         reqBody.setSysInd("PHNB");
-        reqBody.setQueDt("2019-03-01");
+        reqBody.setQueDt("2019-08-26");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();

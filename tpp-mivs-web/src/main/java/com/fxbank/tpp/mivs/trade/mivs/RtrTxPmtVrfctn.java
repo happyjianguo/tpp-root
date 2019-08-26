@@ -98,7 +98,7 @@ public class RtrTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
                     txpmtInf.setTxpmt_inf_nb(txpmt_inf_nb+1);
                     txpmtInf.setTx_auth_cd(Info.getTxAuthCd());
                     txpmtInf.setTx_auth_nm(Info.getTxAuthNm());
-                    txpmtInf.setTxpyr_sts(Info.getTxpySts());
+                    txpmtInf.setTxpyr_sts(Info.getTxpyrSts());
                     //插入纳税核查信息附表
                     txpmtInfList.add(txpmtInf);
                     txpmt_inf_nb++;
