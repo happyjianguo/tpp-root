@@ -18,7 +18,7 @@ import java.util.List;
  * @Date: 2019/5/21 16:23
  */
 @Service(version = "1.0.0")
-public class MivsIdVrfctnInfoService implements IMivsIdVrfctnInfoService {
+public class MivsIdvrfctnInfoService implements IMivsIdVrfctnInfoService {
 
     @Resource
     private MivsIdvrfctnInfoEntityMapper infoEntityMapper;
