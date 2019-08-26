@@ -102,5 +102,7 @@
 		<module>tpp-esb-api</module>
 		<module>tpp-esb-service</module>
 		<module>tpp-manager</module>
+		<module>tpp-frms-api</module>
+		<module>tpp-frms-service</module>
 	</modules>
 </project>

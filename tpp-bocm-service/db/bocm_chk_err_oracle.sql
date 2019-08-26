@@ -65,3 +65,4 @@ COMMENT ON COLUMN bocm_chk_err.direction IS '来往帐标志，I：来账，O：
 COMMENT ON COLUMN bocm_chk_err.msg IS '描述';
 
 ALTER TABLE bocm_chk_err ADD PRIMARY KEY (plat_date, plat_trace);
+Create Index bocm_chk_err_index1 On bocm_chk_err(tx_date);

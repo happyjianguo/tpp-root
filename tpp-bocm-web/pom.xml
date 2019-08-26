@@ -26,6 +26,11 @@
 			<artifactId>tpp-esb-api</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fxbank.tpp</groupId>
+			<artifactId>tpp-frms-api</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 		 <dependency>
 			<groupId>ESBFileAPI</groupId>
 			<artifactId>ESBFileAPI</artifactId>

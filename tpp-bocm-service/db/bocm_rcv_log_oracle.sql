@@ -100,3 +100,4 @@ COMMENT ON COLUMN bocm_rcv_log.host_branch IS '核心记账机构';
 
 ALTER TABLE bocm_rcv_log ADD PRIMARY KEY (plat_date, plat_trace);
 Create Index bocm_rcv_log_index1 On bocm_rcv_log(bocm_traceno);
+Create Index bocm_rcv_log_index2 On bocm_rcv_log(tx_date);
