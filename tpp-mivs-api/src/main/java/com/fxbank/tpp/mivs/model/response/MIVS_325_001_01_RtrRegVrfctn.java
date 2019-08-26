@@ -1007,36 +1007,55 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(this.getMsgHdr().getMsgId() + "|");
-//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-//        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
-//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
-//        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
-//        sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
-//        sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
-//        if(this.getRspsn().getVrfctnInf().getRslt().equals("MCHD")) {
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getEntNm() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getUniSocCdtCd() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getCoTp() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getDom() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getRegCptl() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getDtEst() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getOpPrdFrom() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getOpPrdTo() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getRegSts() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getNmOfLglPrsn() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getRegAuth() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getBizScp() + "|");
-//            sb.append(this.getRspsn().getVrfctnInf().getRegInf().getBasInfo().getDtAppr() + "|");
-//        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
-//            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
-//            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
-//        }
-//        return sb.toString();
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getMsgHdr().getMsgId() + "|");
+        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+        sb.append(this.getOrgnlBizQry().getMsgId() + "|");
+        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
+        if(this.getRspsn().getVrfctnInf() != null) {
+            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
+            sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() == null ? ""
+                    : this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
+            if(!this.getRspsn().getVrfctnInf().getRegInf().getBasInfOfEnt().isEmpty()) {
+                for(Rspsn.VrfctnInf.RegInf.BasInfOfEnt basInfOfEntInfo:this.getRspsn().getVrfctnInf().getRegInf().getBasInfOfEnt()) {
+                    sb.append(basInfOfEntInfo.getEntNm() + "|");
+                    sb.append(basInfOfEntInfo.getUniSocCdtCd() + "|");
+                    sb.append(basInfOfEntInfo.getCoTp() == null ? "" : basInfOfEntInfo.getCoTp() + "|");
+                    sb.append(basInfOfEntInfo.getDom() == null ? "" : basInfOfEntInfo.getDom() + "|");
+                    sb.append(basInfOfEntInfo.getRegCptl() == null ? "" : basInfOfEntInfo.getRegCptl() + "|");
+                    sb.append(basInfOfEntInfo.getDtEst() == null ? "" : basInfOfEntInfo.getDtEst() + "|");
+                    sb.append(basInfOfEntInfo.getOpPrdFrom() == null ? "" : basInfOfEntInfo.getOpPrdFrom() + "|");
+                    sb.append(basInfOfEntInfo.getOpPrdTo() == null ? "" : basInfOfEntInfo.getOpPrdTo() + "|");
+                    sb.append(basInfOfEntInfo.getRegSts() == null ? "" : basInfOfEntInfo.getRegSts() + "|");
+                    sb.append(basInfOfEntInfo.getNmOfLglPrsn() == null ? "" : basInfOfEntInfo.getNmOfLglPrsn() + "|");
+                    sb.append(basInfOfEntInfo.getRegAuth() == null ? "" : basInfOfEntInfo.getRegAuth() + "|");
+                    sb.append(basInfOfEntInfo.getBizScp() == null ? "" : basInfOfEntInfo.getBizScp() + "|");
+                    sb.append(basInfOfEntInfo.getDtAppr() == null ? "" : basInfOfEntInfo.getDtAppr() + "|");
+                }
+            }
+            if(!this.getRspsn().getVrfctnInf().getRegInf().getBasInfOfSlfEplydPpl().isEmpty()){
+                for(Rspsn.VrfctnInf.RegInf.BasInfOfSlfEplydPpl basInfOfSlfEplydPplInfo:this.getRspsn().getVrfctnInf().getRegInf().getBasInfOfSlfEplydPpl()){
+                    sb.append(basInfOfSlfEplydPplInfo.getTraNm() == null ? "" : basInfOfSlfEplydPplInfo.getTraNm() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getUniSocCdtCd() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getCoTp() == null ? "" : basInfOfSlfEplydPplInfo.getCoTp() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getOpLoc() == null ? "" : basInfOfSlfEplydPplInfo.getOpLoc() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getFdAmt() == null ? "" : basInfOfSlfEplydPplInfo.getFdAmt() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getDtReg() == null ? "" : basInfOfSlfEplydPplInfo.getDtReg() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getRegSts() == null ? "" : basInfOfSlfEplydPplInfo.getRegSts() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getNm() == null ? "" : basInfOfSlfEplydPplInfo.getNm() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getRegAuth() == null ? "" : basInfOfSlfEplydPplInfo.getRegAuth() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getBizScp() == null ? "" : basInfOfSlfEplydPplInfo.getBizScp() + "|");
+                    sb.append(basInfOfSlfEplydPplInfo.getDtAppr() == null ? "" : basInfOfSlfEplydPplInfo.getDtAppr() + "|");
+                }
+            }
+        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
+            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
+            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
+        }
+        return sb.toString();
     }
 
 }
