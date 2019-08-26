@@ -7,7 +7,7 @@ import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
 import com.fxbank.tpp.mivs.model.response.MIVS_321_001_01_RtrIdVrfctn;
 
 /**
- * @Description: 人行请求321
+ * @Description: 人行应答321
  * @Author: 周勇沩
  * @Date: 2019-04-28 09:27:32
  */
@@ -40,7 +40,7 @@ public class MIVS_321_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.comConf.signData();
+        return this.RtrIdVrfctn.signData();
     }
 
 	public MIVS_321_001_01_RtrIdVrfctn getRtrIdVrfctn() {

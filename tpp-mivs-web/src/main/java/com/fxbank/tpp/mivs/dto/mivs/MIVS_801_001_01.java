@@ -40,7 +40,7 @@ public class MIVS_801_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.comConf.signData();
+        return this.sysStsNtfctn.signData();
     }
 
     public MIVS_801_001_01_SysStsNtfctn getSysStsNtfctn() {

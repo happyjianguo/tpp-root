@@ -40,7 +40,7 @@ public class MIVS_332_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.comConf.signData();
+        return this.freeFrmt.signData();
     }
 
     public MIVS_332_001_01_FreeFrmt getFreeFrmt() {

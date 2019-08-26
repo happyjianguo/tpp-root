@@ -41,7 +41,7 @@ public class MIVS_349_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.comConf.signData();
+        return this.regVrfctnFdbk.signData();
     }
 
     public MIVS_349_001_01_RegVrfctnFdbk getRegVrfctnFdbk() {

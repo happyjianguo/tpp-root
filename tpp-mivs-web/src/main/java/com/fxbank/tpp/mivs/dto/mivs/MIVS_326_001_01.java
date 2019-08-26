@@ -40,7 +40,7 @@ public class MIVS_326_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.comConf.signData();
+        return this.acctInfoFdbk.signData();
     }
 
     /**

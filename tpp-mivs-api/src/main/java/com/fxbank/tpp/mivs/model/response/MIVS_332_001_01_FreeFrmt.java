@@ -1,5 +1,7 @@
 package com.fxbank.tpp.mivs.model.response;
 
+import com.fxbank.tpp.mivs.model.SIGN_DATA;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -12,7 +14,7 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "FreeFrmtInf"})
-public class MIVS_332_001_01_FreeFrmt implements Serializable {
+public class MIVS_332_001_01_FreeFrmt implements Serializable, SIGN_DATA {
     private static final long serialVersionUID = -9132894158613287468L;
     private MsgHdr MsgHdr = new MsgHdr();
     private FreeFrmtInf FreeFrmtInf = new FreeFrmtInf();
@@ -145,5 +147,15 @@ public class MIVS_332_001_01_FreeFrmt implements Serializable {
         public void setMsgCntt(String msgCntt) {
             MsgCntt = msgCntt;
         }
+    }
+
+    @Override
+    public String signData() {
+//        StringBuffer sb = new StringBuffer();
+//        sb.append(this.getAbnmlVrfctnInf().getOrgnlInstgPty().getAbnmlType() + "|");
+//        sb.append(this.getAbnmlVrfctnInf().getOrgnlInstgPty().getDESC() + "|");
+//
+//        return sb.toString();
+        return null;
     }
 }

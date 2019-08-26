@@ -356,7 +356,6 @@ public class MIVS_321_001_01_RtrIdVrfctn implements Serializable, SIGN_DATA {
             sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
         }
         return sb.toString();
-//        return null;
     }
 
 }

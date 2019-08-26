@@ -42,7 +42,7 @@ public class MIVS_323_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.comConf.signData();
+        return this.RtrTxPmtVrfctn.signData();
     }
 
     public MIVS_323_001_01_RtrTxPmtVrfctn getRtrTxPmtVrfctn() {

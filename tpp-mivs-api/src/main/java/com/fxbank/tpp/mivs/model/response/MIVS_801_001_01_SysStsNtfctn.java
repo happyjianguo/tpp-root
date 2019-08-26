@@ -1,5 +1,7 @@
 package com.fxbank.tpp.mivs.model.response;
 
+import com.fxbank.tpp.mivs.model.SIGN_DATA;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
@@ -12,7 +14,7 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "SysStsInf"})
-public class MIVS_801_001_01_SysStsNtfctn implements Serializable {
+public class MIVS_801_001_01_SysStsNtfctn implements Serializable, SIGN_DATA {
     private static final long serialVersionUID = 5496119707971949568L;
     private MsgHdr MsgHdr = new MsgHdr();
     private SysStsInf SysStsInf = new SysStsInf();
@@ -197,5 +199,11 @@ public class MIVS_801_001_01_SysStsNtfctn implements Serializable {
             }
         }
     }
+
+    @Override
+    public String signData() {
+        return null;
+    }
+
 }
 
