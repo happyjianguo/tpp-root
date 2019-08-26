@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 08:16:39
+ * @LastEditTime: 2019-07-10 08:16:39
+ * @LastEditors: your name
+ */
 package com.fxbank.tpp.mivs.model;
 
 import java.io.Serializable;
@@ -67,7 +74,7 @@ public class PMTS_HEAD implements Serializable{
 		this.mesgPriority = sb.substring(i, i = i + 1).trim();
 		this.mesgDirection = sb.substring(i, i = i + 1).trim();
 		this.reserve = sb.substring(i, i = i + 9).trim();
-		this.endFlag = sb.substring(i, i = i + 1).trim();
+		this.endFlag = "}";
 	}
 
 	/**

@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-08-26 10:53:54
+ * @LastEditTime: 2019-08-26 10:57:02
+ * @LastEditors: Please set LastEditors
+ */
 package com.fxbank.tpp.mivs.trade;
 
 import static org.junit.Assert.assertEquals;

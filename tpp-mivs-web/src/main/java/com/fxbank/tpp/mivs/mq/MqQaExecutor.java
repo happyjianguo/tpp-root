@@ -1,3 +1,10 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-07-10 08:16:39
+ * @LastEditTime: 2019-08-26 11:45:14
+ * @LastEditors: Please set LastEditors
+ */
 package com.fxbank.tpp.mivs.mq;
 
 import java.net.InetAddress;
@@ -46,7 +53,7 @@ public class MqQaExecutor {
         myLog.info(logger, "收到人行报文[" + message + "]");
         PMTS_HEAD head = new PMTS_HEAD();
         PMTS_SIGN sign = new PMTS_SIGN();
-        String[] splitPack = message.split("\r\n");
+        String[] splitPack = message.split("}\r\n");
         String sHead = null;
         String sSign = null;
         String xml = null;
