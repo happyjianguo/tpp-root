@@ -151,11 +151,16 @@ public class MIVS_332_001_01_FreeFrmt implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(this.getAbnmlVrfctnInf().getOrgnlInstgPty().getAbnmlType() + "|");
-//        sb.append(this.getAbnmlVrfctnInf().getOrgnlInstgPty().getDESC() + "|");
-//
-//        return sb.toString();
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getMsgHdr().getMsgId() + "|");
+        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
+        sb.append(this.getFreeFrmtInf().getRplyFlag() + "|");
+        sb.append(this.getFreeFrmtInf().getMsgCntt() + "|");
+
+        return sb.toString();
     }
 }

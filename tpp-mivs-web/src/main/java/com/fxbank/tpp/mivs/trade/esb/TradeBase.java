@@ -108,7 +108,7 @@ public class TradeBase {
 	public String  dateToIsoDate(String idate) {
 		StringBuilder sb = new StringBuilder(idate);//构造一个StringBuilder对象
 		sb.insert(4, "-");
-		sb.insert(6, "-");
+		sb.insert(7, "-");
 		String isoDate = sb.toString();
 		return isoDate;
 	}

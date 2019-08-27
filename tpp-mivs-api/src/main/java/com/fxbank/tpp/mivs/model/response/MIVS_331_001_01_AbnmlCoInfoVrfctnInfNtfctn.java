@@ -195,13 +195,11 @@ public class MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn implements Serializable,
             }
         }
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = { "PhNb","Nm", "AbnmlType", "DESC" })
+        @XmlType(propOrder = { "PhNb","Nm" })
         public static class AbnmlPhNb implements Serializable{
             private static final long serialVersionUID = -2229809197478941207L;
             private String PhNb = null;
             private String Nm = null;
-            private String AbnmlType = null;
-            private String DESC = null;
 
             public String getPhNb() {
                 return PhNb;
@@ -218,32 +216,29 @@ public class MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn implements Serializable,
             public void setNm(String nm) {
                 Nm = nm;
             }
-
-            public String getAbnmlType() {
-                return AbnmlType;
-            }
-
-            public void setAbnmlType(String abnmlType) {
-                AbnmlType = abnmlType;
-            }
-
-            public String getDESC() {
-                return DESC;
-            }
-
-            public void setDESC(String DESC) {
-                this.DESC = DESC;
-            }
         }
     }
 
     @Override
     public String signData() {
-//        StringBuffer sb = new StringBuffer();
-//        sb.append(this.getAbnmlVrfctnInf().getOrgnlInstgPty().getAbnmlType() + "|");
-//        sb.append(this.getAbnmlVrfctnInf().getOrgnlInstgPty().getDESC() + "|");
-//
-//        return sb.toString();
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getMsgHdr().getMsgId() + "|");
+        sb.append(this.getMsgHdr().getCreDtTm() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
+        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
+        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
+        if(this.getAbnmlVrfctnInf().getAbnmlCo() != null) {
+            sb.append(this.getAbnmlVrfctnInf().getAbnmlCo().getCoNm() + "|");
+            sb.append(this.getAbnmlVrfctnInf().getAbnmlCo().getUniSocCdtCd() + "|");
+        }
+        if(this.getAbnmlVrfctnInf().getAbnmlPhNb() != null) {
+            sb.append(this.getAbnmlVrfctnInf().getAbnmlPhNb().getPhNb() + "|");
+            sb.append(this.getAbnmlVrfctnInf().getAbnmlPhNb().getNm() + "|");
+        }
+        sb.append(this.getAbnmlVrfctnInf().getAbnmlType() + "|");
+        sb.append(this.getAbnmlVrfctnInf().getDESC() + "|");
+
+        return sb.toString();
     }
 }

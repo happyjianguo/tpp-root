@@ -60,12 +60,12 @@ public class AcctInfoFdbkTest {
         req = new REQ_50023000212();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("10");
+        reqSysHead.setSceneId("12");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-        reqSysHead.setBranchId("02002");
+        reqSysHead.setBranchId("00001");
         reqSysHead.setUserId("002241");
         reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
         reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
@@ -86,11 +86,11 @@ public class AcctInfoFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setEntNm("企业名称哈哈哈");
+        reqBody.setEntNm("北京市政交通一卡通有限公司");
 //        reqBody.setTraNm("个体户名称");
-        reqBody.setUniSocCdtCd("291238750123857");
+        reqBody.setUniSocCdtCd("91110000801145381H");
         reqBody.setAcctSts("OPEN");
-        reqBody.setChngDt("20190604");
+        reqBody.setChngDt("20190827");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();

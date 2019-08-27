@@ -46,7 +46,8 @@ public class GetIdVrfctnTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(GetIdVrfctnTest.class);
 	
-    private static final String URL="http://127.0.0.1:7006/esb/mivs.do";
+//    private static final String URL="http://127.0.0.1:8003/esb/mivs.do";
+    private static final String URL="http://57.25.3.165:8003/esb/mivs.do";
 	
 	@Resource
 	private LogPool logPool;

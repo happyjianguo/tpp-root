@@ -418,17 +418,6 @@ public class MIVS_349_001_01_RegVrfctnFdbk implements Serializable, SIGN_DATA {
     @Override
     public String signData() {
         StringBuffer sb = new StringBuffer();
-//        sb.append(this.getMsgHdr().getMsgId() + "|");
-//        sb.append(this.getMsgHdr().getCreDtTm() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
-//        sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
-//        sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
-//        sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
-//        sb.append(this.getVryDef().getSystemIndicator() + "|");
-//        sb.append(this.getVryDef().getQueryDate() + "|");
-//        return sb.toString();
         return null;
     }
 
