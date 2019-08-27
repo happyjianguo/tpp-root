@@ -197,6 +197,7 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "NmOfLglPrsn", "IdOfLglPrsn" })
         public static class Ent implements Serializable{
             private static final long serialVersionUID = -637900312057806102L;
             private String EntNm = null; //企业名称
@@ -238,6 +239,7 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(propOrder = { "TraNm", "UniSocCdtCd", "Nm", "Id" })
         public static class SlfEplydPpl implements Serializable{
             private static final long serialVersionUID = 5514694792803947807L;
             private String TraNm = null; //字号名称
@@ -277,6 +279,7 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
                 Id = id;
             }
         }
+
     }
 
     @Override
@@ -302,9 +305,12 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
             sb.append(this.getVryDef().getSlfEplydPpl().getNm() + "|");
             sb.append(this.getVryDef().getSlfEplydPpl().getId() + "|");
         }
-        sb.append(this.getVryDef().getAgtNm());
-        sb.append(this.getVryDef().getAgtId());
-        sb.append(this.getVryDef().getOpNm() + "|");
+        sb.append(this.getVryDef().getAgtNm() == null ? ""
+                : this.getVryDef().getAgtNm() + "|");
+        sb.append(this.getVryDef().getAgtId() == null ? ""
+                : this.getVryDef().getAgtId() + "|");
+        sb.append(this.getVryDef().getOpNm() == null ? ""
+                : this.getVryDef().getOpNm() + "|");
         return sb.toString();
     }
 

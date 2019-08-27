@@ -90,18 +90,18 @@ public class GetRegVrfctnTest {
 
         reqBody.setMarketType("ENT");
         if(reqBody.getMarketType().equals("ENT")){
-            reqBody.setEntNm("未来简史");
-            reqBody.setUniSocCdtCd("123456789012345678");
-            reqBody.setNmOfLglPrsn("杨小啊");
-            reqBody.setIdOfLglPrsn("210902199802048891");
+            reqBody.setEntNm("公司");
+            reqBody.setUniSocCdtCd("91110000801145381H");
+            reqBody.setNmOfLglPrsn("张三");
+            reqBody.setIdOfLglPrsn("123456789");
         }else if(reqBody.getMarketType().equals("TRA")){
-            reqBody.setTranm("个体户");
-            reqBody.setUniSocCdtCd("123456789012345678");
-            reqBody.setNm("杨小啊");
-            reqBody.setId("210902199802048891");
+            reqBody.setTranm("个人");
+            reqBody.setUniSocCdtCd("91110000801145382H");
+            reqBody.setNm("张三");
+            reqBody.setId("123456789");
         }
-        reqBody.setAgtNm("鼎鼎");
-        reqBody.setAgtId("2121379871230061237");
+//        reqBody.setAgtNm("鼎鼎");
+//        reqBody.setAgtId("2121379871230061237");
         reqBody.setOpNm("张三");
 
         String macDataStr = JsonUtil.toJson(reqBody);

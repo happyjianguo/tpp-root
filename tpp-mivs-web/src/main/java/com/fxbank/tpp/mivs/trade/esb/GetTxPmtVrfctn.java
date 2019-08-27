@@ -155,6 +155,8 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             txpmtvfctnInfoTableUpdate.setMivs_sts("02");
             txpmtvfctnInfoTableUpdate.setProc_cd(ccms911.getDscrdMsgNtfctn().getDscrdInf().getPrcCd());
             txpmtvfctnInfoTableUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
+            //更新业务数据表
+            mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate);
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.323.001.01")){
             MIVS_323_001_01 mivs323 = (MIVS_323_001_01)dtoBase;
@@ -167,6 +169,8 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
                 txpmtvfctnInfoTableUpdate.setProc_cd(oprlErr.getProcCd());
                 txpmtvfctnInfoTableUpdate.setProc_sts(oprlErr.getProcSts());
                 txpmtvfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctinf());
+                //更新业务数据表
+                mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate);
                 throw e;
             }
             //查询数据库主表条数数据+附表内容数据，以323应答报文的“原报文标识号，原发起机构”为查询条件

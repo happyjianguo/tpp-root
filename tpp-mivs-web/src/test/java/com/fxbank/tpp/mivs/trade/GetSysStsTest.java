@@ -87,8 +87,8 @@ public class GetSysStsTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setSysInd("PHNB");
-        reqBody.setQueDt("2019-08-26");
+        reqBody.setSysInd("MIIT");
+        reqBody.setQueDt("2019-08-27");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();

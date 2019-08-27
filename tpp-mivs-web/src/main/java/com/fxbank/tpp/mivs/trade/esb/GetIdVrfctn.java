@@ -161,6 +161,8 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         	idVrfctnTableUpdate.setMivs_sts("02");
         	idVrfctnTableUpdate.setProc_cd(ccms911.getDscrdMsgNtfctn().getDscrdInf().getPrcCd());
         	idVrfctnTableUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
+            //更新业务数据表
+            mivsIdVrfctnInfoService.updateSts(idVrfctnTableUpdate);
 
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.321.001.01")){
@@ -177,6 +179,9 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
                 idVrfctnTableUpdate.setProc_cd(oprlErr.getProcCd());
                 idVrfctnTableUpdate.setProc_sts(oprlErr.getProcSts());
                 idVrfctnTableUpdate.setRjct_inf(oprlErr.getRjctinf());
+
+                //更新业务数据表
+                mivsIdVrfctnInfoService.updateSts(idVrfctnTableUpdate);
                 throw e;
             }
 
