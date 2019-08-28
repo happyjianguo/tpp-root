@@ -131,7 +131,7 @@ public class MIVS_330_001_01_AbnmlAgtInfoVrfctnInfNtfctn implements Serializable
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "OrgnlInstgPty" })
+    @XmlType(propOrder = { "OrgnlInstgPty", "AbnmlType", "DESC" })
     public static class AbnmlVrfctnInf implements Serializable{
         private static final long serialVersionUID = 3207207101563741789L;
         private String  OrgnlInstgPty = null;
