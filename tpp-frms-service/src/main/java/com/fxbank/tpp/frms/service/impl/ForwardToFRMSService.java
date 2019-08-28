@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.common.HttpService;
+import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.frms.model.REQ_FRMS;
@@ -40,7 +41,7 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 	private static final String serviceKey = "bocm.frms_url";
 	
 	@Resource
-	JedisSentinelPool jedisPool;
+	private MyJedis myJedis;
 	
 	@Resource
 	HttpService httpService;
@@ -49,7 +50,7 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 	@Override
 	public <T> T sendToFRMS(REQ_FRMS request,Class<T> clazz) throws SysTradeExecuteException {
 		String url ;
-		try(Jedis jedis=jedisPool.getResource()){
+		try(Jedis jedis=myJedis.connect()){
 			url = jedis.get(serviceKey);
 			logger.info("风险监控服务地址：" + url);
 			url = "http://57.25.2.97:9180/order";
