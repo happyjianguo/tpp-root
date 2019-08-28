@@ -173,12 +173,12 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 
             REP_50023000201.REP_BODY repBody = rep.getRepBody();
             if(oprlErr.getProcSts()!=null) {
-            	MivsTradeExecuteException e = new MivsTradeExecuteException(oprlErr.getProcCd(),oprlErr.getRjctinf());
+            	MivsTradeExecuteException e = new MivsTradeExecuteException(oprlErr.getProcCd(),oprlErr.getRjctInf());
 
             	idVrfctnTableUpdate.setMivs_sts("03");
                 idVrfctnTableUpdate.setProc_cd(oprlErr.getProcCd());
                 idVrfctnTableUpdate.setProc_sts(oprlErr.getProcSts());
-                idVrfctnTableUpdate.setRjct_inf(oprlErr.getRjctinf());
+                idVrfctnTableUpdate.setRjct_inf(oprlErr.getRjctInf());
 
                 //更新业务数据表
                 mivsIdVrfctnInfoService.updateSts(idVrfctnTableUpdate);
