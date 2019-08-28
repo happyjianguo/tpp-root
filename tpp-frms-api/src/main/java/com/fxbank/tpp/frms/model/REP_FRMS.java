@@ -64,6 +64,12 @@ public class REP_FRMS implements Serializable{
 	@JSONField(name="customization")
 	private HashMap<String,String> customization;
 	
+	/**
+	 * 验证策略
+	 */
+	@JSONField(name="verifyPolicy")
+	private VerifyPolicy verifyPolicy;
+	
 	
 	
 	
@@ -584,5 +590,15 @@ public class REP_FRMS implements Serializable{
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
+
+	public VerifyPolicy getVerifyPolicy() {
+		return verifyPolicy;
+	}
+
+	public void setVerifyPolicy(VerifyPolicy verifyPolicy) {
+		this.verifyPolicy = verifyPolicy;
+	}
+	
+	
 
 }
