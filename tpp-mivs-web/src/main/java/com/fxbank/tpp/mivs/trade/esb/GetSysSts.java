@@ -79,7 +79,7 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
         myLog.info(logger, "企业信息联网核查查业务受理时间查询，机构号：" + branchId + "，人行行号：" + bankNumber);
 
         //发起行行号
-        mivs345.getHeader().setOrigSender(bankNumber);
+        mivs345.getHeader().setOrigSender(settlementBankNo);
         mivs345.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setInstgPty(bankNumber);

@@ -85,7 +85,7 @@ public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
         MIVS_333_001_01 mivs333 = new MIVS_333_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         MIVS_333_001_01_FreeFrmtConf.MsgHdr msgHdr = mivs333.getFreeFrmtConf().getMsgHdr();
         MIVS_333_001_01_FreeFrmtConf.OrgnlMsg orgnlMsg = mivs333.getFreeFrmtConf().getOrgnlMsg();
-        mivs333.getHeader().setOrigSender(bankNumber);
+        mivs333.getHeader().setOrigSender(settlementBankNo);
         mivs333.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setInstgPty(bankNumber);

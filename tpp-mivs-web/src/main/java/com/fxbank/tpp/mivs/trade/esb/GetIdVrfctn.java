@@ -87,7 +87,7 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         MIVS_320_001_01 mivs320 = new MIVS_320_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         MIVS_320_001_01_GetIdVrfctn.MsgHdr msgHdr = mivs320.getGetIdVrfctn().getMsgHdr();
         MIVS_320_001_01_GetIdVrfctn.VryDef vryDef = mivs320.getGetIdVrfctn().getVryDef();
-		mivs320.getHeader().setOrigSender(bankNumber);
+		mivs320.getHeader().setOrigSender(settlementBankNo);
         mivs320.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);

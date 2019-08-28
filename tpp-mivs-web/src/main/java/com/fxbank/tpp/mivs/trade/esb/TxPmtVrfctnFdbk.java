@@ -96,7 +96,7 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk fdbk = mivs348.getTxPmtVrfctnFdbk().getFdbk();
         myLog.info(logger, "纳税信息核查结果疑义反馈");
         //拼人行报文
-        mivs348.getHeader().setOrigSender(bankNumber);
+        mivs348.getHeader().setOrigSender(settlementBankNo);
         mivs348.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setInstgPty(bankNumber);

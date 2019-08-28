@@ -46,8 +46,9 @@ public class GetIdVrfctnTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(GetIdVrfctnTest.class);
 	
-//    private static final String URL="http://127.0.0.1:8003/esb/mivs.do";
-    private static final String URL="http://57.25.3.165:8003/esb/mivs.do";
+    private static final String URL="http://127.0.0.1:8003/esb/mivs.do";
+//	private static final String URL="http://57.25.3.165:8003/esb/mivs.do";
+//	private static final String URL="http://57.25.2.116:30010/CTS";
 	
 	@Resource
 	private LogPool logPool;
@@ -72,7 +73,7 @@ public class GetIdVrfctnTest {
 		reqSysHead.setTranMode("ONLINE");
 		reqSysHead.setSourceType("301907");	//网联
 //		reqSysHead.setSourceType("302200");	//银联
-		reqSysHead.setBranchId("00001");
+		reqSysHead.setBranchId("01001");
 		reqSysHead.setUserId("002241");
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
@@ -93,7 +94,7 @@ public class GetIdVrfctnTest {
 	@Test
 	public void payOk() throws Exception {
 		
-		reqBody.setMobNb("8618666060606");
+		reqBody.setMobNb("18666060606");
 		reqBody.setNm("旭格门窗有限公司");
 		reqBody.setIdTp("IC00");
 		reqBody.setId("110108198607224413");

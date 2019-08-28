@@ -95,7 +95,7 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         MIVS_347_001_01_IdVrfctnFdbk.Fdbk fdbk = mivs347.getIdVrfctnFdbk().getFdbk();
         myLog.info(logger, "手机号码核查结果疑义反馈");
         //拼人行报文
-        mivs347.getHeader().setOrigSender(bankNumber);
+        mivs347.getHeader().setOrigSender(settlementBankNo);
         mivs347.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setInstgPty(bankNumber);

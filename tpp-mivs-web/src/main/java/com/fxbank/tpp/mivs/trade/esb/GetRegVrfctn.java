@@ -17,7 +17,7 @@ import com.fxbank.tpp.mivs.dto.mivs.MIVS_325_001_01;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsRegVrfctnInfoModel;
 import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01;
-import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01_GetRegVrfctn;
+import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01_ENT;
 import com.fxbank.tpp.mivs.model.response.MIVS_325_001_01_RtrRegVrfctn;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.service.IMivsRegVrfctnInfoService;
@@ -84,10 +84,10 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         }
         myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + branchId + "，人行行号：" + bankNumber);
 
-        //拼发送人行322报文
+        //拼发送人行324报文
         MIVS_324_001_01 mivs324 = new MIVS_324_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
-        MIVS_324_001_01_GetRegVrfctn.MsgHdr msgHdr = mivs324.getGetRegVrfctn().getMsgHdr();
-        MIVS_324_001_01_GetRegVrfctn.VryDef vryDef = mivs324.getGetRegVrfctn().getVryDef();
+        MIVS_324_001_01.GetRegVrfctn.MsgHdr msgHdr = mivs324.getGetRegVrfctn().getMsgHdr();
+        MIVS_324_001_01.GetRegVrfctn.VryDef vryDef = mivs324.getGetRegVrfctn().getVryDef();
         mivs324.getHeader().setOrigSender(bankNumber);
         mivs324.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);

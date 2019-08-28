@@ -89,7 +89,7 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         MIVS_326_001_01_AcctInfoFdbk.MsgHdr msgHdr = mivs326.getAcctInfoFdbk().getMsgHdr();
         MIVS_326_001_01_AcctInfoFdbk.Fdbk fdbk = mivs326.getAcctInfoFdbk().getFdbk();
 
-        mivs326.getHeader().setOrigSender(bankNumber);
+        mivs326.getHeader().setOrigSender(settlementBankNo);
         mivs326.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);

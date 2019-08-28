@@ -98,7 +98,7 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfSlfEplydPpl vrfctnInfOfSlfEplydPpl = mivs349.getRegVrfctnFdbk().getFdbk().getOrgnlVrfctn().getOrgnlVrfctnInfo().getOrgnlVrfctnInfOfSlfEplydPpl();
         myLog.info(logger, "登记信息核查结果疑义反馈");
         //拼人行报文
-        mivs349.getHeader().setOrigSender(bankNumber);
+        mivs349.getHeader().setOrigSender(settlementBankNo);
         mivs349.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setInstgPty(bankNumber);

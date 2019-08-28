@@ -14,14 +14,14 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "VryDef" })
-public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
+public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
     private static final long serialVersionUID = 2671959651920079085L;
     private MsgHdr MsgHdr = new MsgHdr();
     private VryDef VryDef = new VryDef();
 
     @Override
     public String toString() {
-        return "登记信息联网核查申请请求报文[MIVS_320_001_01]";
+        return "登记信息联网核查申请请求报文[MIVS_324_001_01]";
     }
 
     public MsgHdr getMsgHdr() {
@@ -147,7 +147,7 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "Ent", "SlfEplydPpl", "AgtNm", "AgtId", "OpNm" })
+//    @XmlType(propOrder = { "Ent", "SlfEplydPpl", "AgtNm", "AgtId", "OpNm" })
     public static class VryDef implements Serializable{
         private static final long serialVersionUID = 7036312448035278706L;
         private Ent Ent = new Ent();
@@ -197,7 +197,7 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "NmOfLglPrsn", "IdOfLglPrsn" })
+//        @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "NmOfLglPrsn", "IdOfLglPrsn" })
         public static class Ent implements Serializable{
             private static final long serialVersionUID = -637900312057806102L;
             private String EntNm = null; //企业名称
@@ -239,7 +239,7 @@ public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = { "TraNm", "UniSocCdtCd", "Nm", "Id" })
+//        @XmlType(propOrder = { "TraNm", "UniSocCdtCd", "Nm", "Id" })
         public static class SlfEplydPpl implements Serializable{
             private static final long serialVersionUID = 5514694792803947807L;
             private String TraNm = null; //字号名称

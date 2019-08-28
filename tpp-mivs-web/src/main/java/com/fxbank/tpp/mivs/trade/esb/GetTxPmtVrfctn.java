@@ -88,7 +88,7 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         MIVS_322_001_01 mivs322 = new MIVS_322_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         MIVS_322_001_01_GetTxPmtVrfctn.MsgHdr msgHdr = mivs322.getGetTxPmtVrfctn().getMsgHdr();
         MIVS_322_001_01_GetTxPmtVrfctn.VryDef vryDef = mivs322.getGetTxPmtVrfctn().getVryDef();
-        mivs322.getHeader().setOrigSender(bankNumber);
+        mivs322.getHeader().setOrigSender(settlementBankNo);
         mivs322.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
