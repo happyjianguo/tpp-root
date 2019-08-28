@@ -228,14 +228,14 @@ public class MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn implements Serializable,
         sb.append(this.getMsgHdr().getInstgPty().getInstgPty() + "|");
         sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
         sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
-        if(this.getAbnmlVrfctnInf().getAbnmlCo() != null) {
-            sb.append(this.getAbnmlVrfctnInf().getAbnmlCo().getCoNm() + "|");
-            sb.append(this.getAbnmlVrfctnInf().getAbnmlCo().getUniSocCdtCd() + "|");
-        }
-        if(this.getAbnmlVrfctnInf().getAbnmlPhNb() != null) {
-            sb.append(this.getAbnmlVrfctnInf().getAbnmlPhNb().getPhNb() + "|");
-            sb.append(this.getAbnmlVrfctnInf().getAbnmlPhNb().getNm() + "|");
-        }
+        sb.append(this.getAbnmlVrfctnInf().getAbnmlCo().getCoNm() == null ? ""
+                : this.getAbnmlVrfctnInf().getAbnmlCo().getCoNm() + "|");
+        sb.append(this.getAbnmlVrfctnInf().getAbnmlCo().getUniSocCdtCd() == null ? ""
+                : this.getAbnmlVrfctnInf().getAbnmlCo().getUniSocCdtCd() + "|");
+        sb.append(this.getAbnmlVrfctnInf().getAbnmlPhNb().getPhNb() == null ? ""
+                : this.getAbnmlVrfctnInf().getAbnmlPhNb().getPhNb() + "|");
+        sb.append(this.getAbnmlVrfctnInf().getAbnmlPhNb().getNm() == null ? ""
+                : this.getAbnmlVrfctnInf().getAbnmlPhNb().getNm() + "|");
         sb.append(this.getAbnmlVrfctnInf().getAbnmlType() + "|");
         sb.append(this.getAbnmlVrfctnInf().getDESC() + "|");
 
