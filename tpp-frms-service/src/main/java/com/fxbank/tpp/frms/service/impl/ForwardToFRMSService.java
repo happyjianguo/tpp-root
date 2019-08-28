@@ -24,7 +24,6 @@ import com.fxbank.tpp.frms.model.REQ_FRMS;
 import com.fxbank.tpp.frms.service.IForwardToFRMSService;
 
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisSentinelPool;
 
 /** 
 * @ClassName: ForwardToFRMSService 
@@ -38,7 +37,7 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 
 	private static Logger logger = LoggerFactory.getLogger(ForwardToFRMSService.class);
 	
-	private static final String serviceKey = "bocm.frms_url";
+	private static final String serviceKey = "frms.frms_url";
 	
 	@Resource
 	private MyJedis myJedis;
@@ -53,7 +52,6 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 		try(Jedis jedis=myJedis.connect()){
 			url = jedis.get(serviceKey);
 			logger.info("风险监控服务地址：" + url);
-			url = "http://57.25.2.97:9180/order";
 		}
 		logger.info("风险监控服务地址：" + url);
 		if (url == null) {

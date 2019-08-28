@@ -83,8 +83,11 @@ public class DB_BocmCashTest {
 		reqSysHead.setBranchId("01037");
 		reqSysHead.setUserId("000777");
 		
-		reqSysHead.setBranchId("01003");
-		reqSysHead.setUserId("000271");
+		reqSysHead.setBranchId("01045");
+		reqSysHead.setUserId("000373");
+		
+//		reqSysHead.setBranchId("01003");
+//		reqSysHead.setUserId("000271");
 		
 		reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
 		reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));		
@@ -125,7 +128,9 @@ public class DB_BocmCashTest {
 		reqBody.setAcctTpT("0");
 		reqBody.setBusiMdT1("0");//业务模式
 		reqBody.setRdCardWyT("0");//存款时必输  0刷卡 1手工输入
-		reqBody.setOpnAcctBnkNoT8("301100000015");//开户行号
+//		reqBody.setOpnAcctBnkNoT8("301100000015");//开户行号
+		reqBody.setOpnAcctBnkNoT8("301651000023");//开户行号
+		
 		//15	居民身份证        
 		reqBody.setScdTrkInfoT2("6222600530011742438=4912120343981195");//二磁道信息
 		reqBody.setIcCardFlgT4("2");//IC卡磁条卡标志   0磁条卡  1IC卡

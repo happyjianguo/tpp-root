@@ -68,9 +68,6 @@ public class CHK_Fx implements TradeExecutionStrategy {
 			
 		MyLog myLog = logPool.get();
 		REQ_10103 req = (REQ_10103) dto;
-	
-		//发起行行号
-		String sbnkNo = req.getSbnkNo();
 		
 		REP_10103 rep = new REP_10103();
 		myLog.info(logger, "交行请求我行对账文件");

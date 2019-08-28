@@ -1,6 +1,7 @@
 package com.fxbank.tpp.bocm.trade.bocm;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -18,6 +19,9 @@ import com.fxbank.tpp.bocm.nettty.ServerInitializer;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
+import com.fxbank.tpp.frms.model.REP_FRMS;
+import com.fxbank.tpp.frms.model.REQ_FRMS;
+import com.fxbank.tpp.frms.service.IForwardToFRMSService;
 
 /**
  * @Description: 来账交易模版。适用场景：判断交易状态->核心记账,日终对账以银行为准。
@@ -73,6 +77,11 @@ public abstract class BaseTradeT1 {
 	
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService bocmRcvTraceService;
+	
+	@Reference(version = "1.0.0")
+	private IForwardToFRMSService forwardToFRMSService;
+	
+	private static final String BLOCK = "BLOCK";
 
 	/**
 	* @Title: validateMag 
@@ -226,7 +235,7 @@ public abstract class BaseTradeT1 {
 		
 		ModelBase model = null;
 		MyLog myLog = logPool.get();
-		myLog.info(logger, TRADE_DESC);
+		myLog.info(logger, TRADE_DESC);		
 		
 		//磁条卡二磁道校验
 //		try {
@@ -370,5 +379,56 @@ public abstract class BaseTradeT1 {
 			return "";
 		}
 		return errMsg.toString();
+	}
+	
+	//风险检查
+	public void riskCheck(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt,
+			String bizChnl,String bizCode) throws SysTradeExecuteException{
+		// 增加风险监控 检查20190809 begin
+		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
+		//业务渠道    String  O-柜面通
+		frmsModel.setBizChannel(bizChnl);
+		frmsModel.setBizCode(bizCode);
+		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
+		frmsModel.setOperAmount(amt);
+		frmsModel.setCardNo(payerAcno);
+		frmsModel.setRecAcct(payeeAcno);
+		frmsModel.setWhoReport("01");
+		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
+		if(frmsRep.getVerifyPolicy()!=null){
+			myLog.info(logger, "风险监控应答  Code："+frmsRep.getVerifyPolicy().getCode()+"  Name:"+frmsRep.getVerifyPolicy().getName());
+		}
+		if (frmsRep.getVerifyPolicy()!=null&&BLOCK.equalsIgnoreCase(frmsRep.getVerifyPolicy().getCode())) {
+			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
+		}
+		// 增加风险监控 检查20190809 end		
+	}
+	
+	//状态通知
+	public void statusNotify(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt
+			,String bizChnl,String bizCode,String operStatus,String respCode) throws SysTradeExecuteException{
+		// 增加风险监控 检查20190809 begin
+		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
+		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
+		frmsModel.setBizChannel(bizChnl);
+		frmsModel.setBizCode(bizCode);
+		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
+		frmsModel.setOperAmount(1L);
+		frmsModel.setCardNo(payerAcno);
+		frmsModel.setRecAcct(payeeAcno);
+		frmsModel.setWhoReport("01");
+		frmsModel.setOperStatus(operStatus);
+		//如果应答码为空，不发送该字段
+		if(!respCode.equals("")){
+			frmsModel.setRespCode(respCode);
+		}
+		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
+		if(frmsRep.getVerifyPolicy()!=null){
+			myLog.info(logger, "风险监控应答  Code："+frmsRep.getVerifyPolicy().getCode()+"  Name:"+frmsRep.getVerifyPolicy().getName());
+		}
+		if (frmsRep.getVerifyPolicy()!=null&&BLOCK.equalsIgnoreCase(frmsRep.getVerifyPolicy().getCode())) {
+			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
+		}
+		// 增加风险监控 检查20190809 end
 	}
 }

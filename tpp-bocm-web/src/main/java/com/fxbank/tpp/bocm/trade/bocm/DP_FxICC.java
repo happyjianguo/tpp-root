@@ -78,7 +78,15 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		
 		REQ_20000 req = (REQ_20000) dto;
-
+		
+		//风险检查
+		//风险监控检查调用
+		String payerAcno = req.getPactNo();
+		String payeeAcno = req.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(req.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//F-柜面  F01-跨行转账
+		riskCheck(myLog, req, payerAcno, payeeAcno, amt,"O","O04");
 		
 		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
 		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
@@ -140,6 +148,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	*/
 	@Override
 	public DataTransObject backMsg(DataTransObject dto,ModelBase model) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
 		REQ_20000 reqDto = (REQ_20000) dto;
 		REP_20000 rep = new REP_20000();
 		ESB_REP_30011000104 repPayment = (ESB_REP_30011000104)model;
@@ -155,6 +164,17 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		fee = NumberUtil.addPoint(fee);
 		rep.setActBal(actbal);
 		rep.setFee(fee);
+		
+		//风险监控通知 
+		String payerAcno = reqDto.getPactNo();
+		String payeeAcno = reqDto.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//通存  转账 交行卡付款转账到我行 跨行转入
+		//O-柜面通  O04-跨行转入    oper_status 01-成功，02-失败 
+		statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04","01","");
+		
+		
 		return rep;
 	}
 	
@@ -171,6 +191,7 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject backMsgOnTradeHave(DataTransObject dto,ModelBase rcvModel) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
+		REQ_20000 req = (REQ_20000) dto;
 		myLog.info(logger, "交易已经存在，根据渠道记录的数据返回报文");
 		REP_20000 rep = new REP_20000();
 		BocmRcvTraceQueryModel model = (BocmRcvTraceQueryModel)rcvModel;
@@ -186,6 +207,14 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 			double fee = Double.parseDouble(model.getFee().toString());
 			rep.setFee(NumberUtil.addPoint(fee));
 		}
+		
+		//风险监控通知 
+		String payerAcno = req.getPactNo();
+		String payeeAcno = req.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(req.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//O-柜面通  O04-跨行转入    oper_status 01-成功，02-失败 
+		statusNotify(myLog, req, payerAcno, payeeAcno, amt,"O","O04","01","");
 	
 		return rep;
 	}

@@ -77,6 +77,14 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061001001 reqDto = (REQ_30061001001) dto;
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061001001 rep = new REP_30061001001();
+		
+		//风险监控检查调用
+		String payerAcno = reqBody.getCardNoT3();
+		String payeeAcno = "";
+		Long amt = (long)Double.parseDouble(reqBody.getWthrAmtT());
+		//F-柜面  F01-跨行转账
+		super.riskCheck(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01");
+		
 		//交行记账流水号  原发起方交易流水
 		String bocmTraceNo = null;
 		int bocmDate = 0;
@@ -315,6 +323,10 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		rep.getRepBody().setHostTraceNo(hostTraceno);
 		rep.getRepBody().setBalance3T(actBal);
 		rep.getRepBody().setFeeT3(fee);
+		
+		//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+		super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","01","00");
+		
 		return rep;
 	}
 	

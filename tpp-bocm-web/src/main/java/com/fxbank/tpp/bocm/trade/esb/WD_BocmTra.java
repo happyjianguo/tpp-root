@@ -81,6 +81,14 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061000801 reqDto = (REQ_30061000801) dto;
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061000801 rep = new REP_30061000801();
+		
+		//风险监控检查调用
+		String payerAcno = reqBody.getPyrAcctNoT2();
+		String payeeAcno = reqBody.getRcptPrAcctNoT2();
+		Long amt = (long)Double.parseDouble(reqBody.getTrsrAmtT3());
+		//O-柜面通  O04-跨行转入
+		super.riskCheck(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04");
+		
 		int bocmDate = 0;
 		int bocmTime = 0;
 		String cardTypeName = "";
@@ -317,6 +325,10 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		rep.getRepBody().setHostTraceNo(hostTraceno);
 		rep.getRepBody().setBalance3T(actBal);
 		rep.getRepBody().setFeeT3(fee);
+		
+		//风险监控通知   oper_status 01-成功，02-失败  resp_code为空不发送字段给风控系统
+		super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04","01","");
+		
 		return rep;
 	}
 	

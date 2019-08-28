@@ -70,7 +70,14 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_30061000701 reqDto = (REQ_30061000701) dto;
 		REQ_30061000701.REQ_BODY reqBody = reqDto.getReqBody();
-		REP_30061000701 rep = new REP_30061000701();
+		REP_30061000701 rep = new REP_30061000701();		
+		
+		//风险监控检查调用
+		String payerAcno = reqBody.getBnkCardAcctNoT();
+		String payeeAcno = reqBody.getBcmCardAcctNoT();
+		Long amt = (long)Double.parseDouble(reqBody.getTrsrAmtT3());
+		//F-柜面  F01-跨行转账
+		super.riskCheck(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01");
 		
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
@@ -349,6 +356,10 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		rep.getRepBody().setHostTraceNo(hostTraceno);
 		rep.getRepBody().setChargeAmt(fee);
 		rep.getRepBody().setBalance(actBal);
+		
+		//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+		super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","01","00");
+		
 		return rep;
 	}
 

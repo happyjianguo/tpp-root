@@ -71,6 +71,14 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		REQ_30061000901 reqDto = (REQ_30061000901) dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061000901 rep = new REP_30061000901();		
+		
+		//风险监控检查调用
+		String payerAcno = "";
+		String payeeAcno = reqBody.getCardNoT3();
+		Long amt = (long)Double.parseDouble(reqBody.getDpsAmtT());
+		//O-柜面通    O04-跨行转入  跨行转入
+		super.riskCheck(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04");
+		
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
 		String hostDate = null;
@@ -344,6 +352,10 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		//4.交行记账成功,更新流水表交行记账状态
 		updateBocmRecord(reqDto,bocmDate,bocmTime,bocmTraceNo,"1",actBal,bocmRepcd,bocmRepmsg);
 		myLog.info(logger, "交行卡存现金,交行"+cardTypeName+"通存记账成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
+		
+		//风险监控通知   oper_status 01-成功，02-失败  resp_code为空不发送字段给风控系统
+		super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04","01","");
+		
 		return rep;
 	}
 

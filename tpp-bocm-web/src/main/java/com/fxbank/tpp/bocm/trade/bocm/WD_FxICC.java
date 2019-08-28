@@ -81,6 +81,15 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();		
 		REQ_20001 req = (REQ_20001) dto;
 
+		//风险检查
+		//风险监控检查调用
+		String payerAcno = req.getPactNo();
+		String payeeAcno = req.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(req.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//转账 交行卡付款转账到我行
+		//F-柜面  F01-跨行转账  本行卡转交行卡
+		riskCheck(myLog, req, payerAcno, payeeAcno, amt,"F","F01");
 		
 		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
 		if(req.getSlogNo()==null||req.getSlogNo().trim().equals("")){
@@ -141,6 +150,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	*/
 	@Override
 	public DataTransObject backMsg(DataTransObject dto,ModelBase model) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
 		REQ_20001 reqDto = (REQ_20001) dto;
 		REP_20001 rep = new REP_20001();
 		ESB_REP_30011000104 repPayment = (ESB_REP_30011000104)model;
@@ -157,6 +167,16 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		fee = NumberUtil.addPoint(fee);
 		rep.setActBal(actbal);
 		rep.setFee(fee);
+		
+		//风险监控通知 
+		String payerAcno = reqDto.getPactNo();
+		String payeeAcno = reqDto.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//通兑  跨行转账 本行卡转交行
+		//F-柜面  F01-跨行转账    oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+		statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","01","00");
+		
 		return rep;
 	}
 	
@@ -173,6 +193,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject backMsgOnTradeHave(DataTransObject dto,ModelBase rcvModel) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
+		REQ_20001 reqDto = (REQ_20001) dto;
 		myLog.info(logger, "交易已经存在，根据渠道记录的数据返回报文");
 		REP_20001 rep = new REP_20001();
 		BocmRcvTraceQueryModel model = (BocmRcvTraceQueryModel)rcvModel;
@@ -188,6 +209,15 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 			double fee = Double.parseDouble(model.getFee().toString());
 			rep.setFee(NumberUtil.addPoint(fee));
 		}
+		
+		//风险监控通知 
+		String payerAcno = reqDto.getPactNo();
+		String payeeAcno = reqDto.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//通兑  跨行转账 本行卡转交行
+		//F-柜面  F01-跨行转账    oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+		statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","01","00");
 	
 		return rep;
 	}

@@ -74,6 +74,16 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();		
 		REQ_10000 req = (REQ_10000) dto;
+		
+		//风险检查
+		//风险监控检查调用
+		String payerAcno = req.getPactNo();
+		String payeeAcno = req.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(req.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//转账 交行卡付款转账到我行
+		//F-柜面  F01-跨行转账
+		riskCheck(myLog, req, payerAcno, payeeAcno, amt,"O","O04");
 
 		
 		myLog.info(logger, "流水号："+req.getSlogNo()+"  渠道流水："+req.getSysTraceno());
@@ -136,6 +146,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	*/
 	@Override
 	public DataTransObject backMsg(DataTransObject dto,ModelBase model) throws SysTradeExecuteException {
+		MyLog myLog = logPool.get();
 		REQ_10000 reqDto = (REQ_10000) dto;
 		REP_10000 rep = new REP_10000();
 		ESB_REP_30011000104 repPayment = (ESB_REP_30011000104)model;
@@ -152,6 +163,15 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		//响应报文金额字段需要补小数位乘100
 		Double actBal = NumberUtil.addPoint(Double.valueOf(repPayment.getRepBody().getAvailBal()));
 		rep.setActBal(actBal);
+		
+		//风险监控通知 
+		String payerAcno = reqDto.getPactNo();
+		String payeeAcno = reqDto.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(reqDto.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//F-柜面  F01-跨行转账    oper_status 01-成功，02-失败  
+		statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04","01","");
+		
 		return rep;
 	}
 	
@@ -169,6 +189,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	public DataTransObject backMsgOnTradeHave(DataTransObject dto,ModelBase rcvModel) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		myLog.info(logger, "交易已经存在，根据渠道记录的数据返回报文");
+		REQ_10000 req = (REQ_10000) dto;
 		REP_10000 rep = new REP_10000();
 		BocmRcvTraceQueryModel model = (BocmRcvTraceQueryModel)rcvModel;
 		//通过model组装返回报文	
@@ -185,6 +206,16 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 			double fee = Double.parseDouble(model.getFee().toString());
 			rep.setFee(NumberUtil.addPoint(fee));
 		}
+		
+		//风险监控通知 
+		String payerAcno = req.getPactNo();
+		String payeeAcno = req.getRactNo();
+		String txnAmt = NumberUtil.removePointToString(req.getTxnAmt());
+		Long amt = (long)Double.parseDouble(txnAmt);
+		//通存  转账 交行卡付款转账到我行
+		//F-柜面  F01-跨行转账    oper_status 01-成功，02-失败
+		statusNotify(myLog, dto, payerAcno, payeeAcno, amt,"O","O04","01","");
+		
 		return rep;
 	}
 	

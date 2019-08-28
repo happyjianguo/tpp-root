@@ -8,16 +8,6 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.alibaba.fastjson.JSON;
-import com.fxbank.cip.base.common.LogPool;
-import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
-import com.fxbank.cip.base.util.JsonUtil;
-import com.fxbank.tpp.bocm.dto.esb.REP_30063001201;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30063001201;
-import com.fxbank.tpp.bocm.dto.esb.REQ_30063001301;
-import com.fxbank.tpp.esb.service.ISafeService;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,6 +22,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.alibaba.fastjson.JSON;
+import com.fxbank.cip.base.common.LogPool;
+import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
+import com.fxbank.cip.base.util.JsonUtil;
+import com.fxbank.tpp.bocm.dto.esb.REP_30063001201;
+import com.fxbank.tpp.bocm.dto.esb.REQ_30063001301;
+import com.fxbank.tpp.esb.service.ISafeService;
 
 /**
  * @Description: 交行账户信息查询单元测试
@@ -107,7 +106,7 @@ public class QR_BocmAccTest {
 		assertEquals(status, 200);
 		String repContent = mvcResult.getResponse().getContentAsString();
 		REP_30063001201 rep = JsonUtil.toBean(repContent, REP_30063001201.class);
-		System.out.println(rep);
+		logger.info(rep.getRspCode());
 	}
 
 }
