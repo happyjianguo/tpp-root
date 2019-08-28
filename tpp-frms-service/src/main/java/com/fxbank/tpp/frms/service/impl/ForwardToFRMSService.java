@@ -51,12 +51,13 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 		String url ;
 		try(Jedis jedis=jedisPool.getResource()){
 			url = jedis.get(serviceKey);
+			logger.info("风险监控服务地址：" + url);
 			url = "http://57.25.2.97:9180/order";
 		}
-		logger.debug("风险监控服务地址：" + url);
+		logger.info("风险监控服务地址：" + url);
 		if (url == null) {
 			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000001,"风险监控平台服务地址未配置");
-			logger.debug(e.getRspCode() + " | " + e.getRspMsg());
+			logger.info(e.getRspCode() + " | " + e.getRspMsg());
 			throw e;
 		}
 		
