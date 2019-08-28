@@ -109,7 +109,19 @@ public class TradeBase {
 		StringBuilder sb = new StringBuilder(idate);//构造一个StringBuilder对象
 		sb.insert(4, "-");
 		sb.insert(7, "-");
-		String isoDate = sb.toString();
-		return isoDate;
+		idate = sb.toString();
+		return idate;
+	}
+
+	/**
+	 * ESB日期转换成人行日期
+	 */
+	public String  moblePhoneAdd(String moblePhone) {
+		if(moblePhone.length() == 11) {
+			StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
+			sb.insert(0, "86");
+			moblePhone = sb.toString();
+		}
+		return moblePhone;
 	}
 }

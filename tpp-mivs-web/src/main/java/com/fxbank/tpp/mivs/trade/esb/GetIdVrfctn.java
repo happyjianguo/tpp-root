@@ -95,7 +95,7 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        vryDef.setMobNb(reqBody.getMobNb());
+        vryDef.setMobNb(moblePhoneAdd(reqBody.getMobNb()));
         vryDef.setNm(reqBody.getNm());
         vryDef.setIdTp(reqBody.getIdTp());
         vryDef.setId(reqBody.getId());
