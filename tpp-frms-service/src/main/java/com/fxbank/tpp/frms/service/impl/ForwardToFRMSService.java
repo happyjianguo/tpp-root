@@ -82,6 +82,9 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 		logger.debug("接收风险监控应答：" + result);
 		result = result.substring(1, result.length()-1);
 		result = result.replaceAll("@type", "unusetype");
+		if(result.equals("")){
+			result = "{}";
+		}
 		T resultModel = JsonUtil.toBean(result, clazz);
 		if(resultModel==null){
 			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
