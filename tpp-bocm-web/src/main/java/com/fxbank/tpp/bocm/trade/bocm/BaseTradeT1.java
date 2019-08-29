@@ -82,7 +82,17 @@ public abstract class BaseTradeT1 {
 	private IForwardToFRMSService forwardToFRMSService;
 	
 	private static final String BLOCK = "BLOCK";
-
+	//账号
+	public String payerAcno = "";
+	//转账对手
+	public String payeeAcno = "";
+	//操作金额
+	public long amt = 0L;
+	//业务渠道
+	public String bizChnl = "";
+	//业务类型
+	public String bizCode = "";
+	
 	/**
 	* @Title: validateMag 
 	* @Description: 磁条卡验证
@@ -237,6 +247,9 @@ public abstract class BaseTradeT1 {
 		MyLog myLog = logPool.get();
 		myLog.info(logger, TRADE_DESC);		
 		
+		//风险检查
+		riskCheck(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode);
+		
 		//磁条卡二磁道校验
 //		try {
 //			myLog.info(logger, "磁条卡二磁道校验");	
@@ -281,12 +294,16 @@ public abstract class BaseTradeT1 {
 						myLog.info(logger,"记账结果查询："+esbRep_30043000101.getRepBody().getAcctResult());
 						if(esbRep_30043000101.getRepBody().getAcctResult().equals("00")) {
 							//如果查询到结果，返回交易信息
-							updateTimeoutSuccess(dto,esbRep_30043000101);
+							updateTimeoutSuccess(dto,esbRep_30043000101);	
+							//状态通知 
+							statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"01","00");
 							return backMsgOnTradeHave(dto, revModel);
 						}
 					}
 				}catch (Exception e) {
 					myLog.error(logger,TRADE_DESC+"记账结果查询失败，返回超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
+					//状态通知 
+					statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 					throw e2;
 				}	
@@ -300,18 +317,26 @@ public abstract class BaseTradeT1 {
 					try {
 						if(errMsg.getBytes(ServerInitializer.CODING).length>30){
 							errMsg = getErrorMsg(errMsg);
+							//状态通知 
+							statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 							BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,errMsg);
 							throw e2;
 						}else{
+							//状态通知 
+							statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 							BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
 							throw e2;
 						}
 					} catch (UnsupportedEncodingException e1) {
+						//状态通知 
+						statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 						throw e2;
 					}
 				}
 				updateOthSuccess(dto, model);
+				//状态通知 
+				statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"01","00");
 				return backMsg(dto,model);
 			}
 		}
@@ -330,10 +355,14 @@ public abstract class BaseTradeT1 {
 					// 核心冲正
 					hostReversal(dto);
 				} catch (SysTradeExecuteException e1) {
+					//状态通知 
+					statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 					throw e2;
 				}
 				myLog.error(logger,TRADE_DESC+"核心记账超时，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
+				//状态通知 
+				statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 				throw hostTimeoutException;
 			} else {
 				myLog.error(logger,TRADE_DESC+"核心记账失败，渠道日期"+dto.getSysDate()+"渠道流水号"+dto.getSysTraceno(),e);
@@ -341,13 +370,19 @@ public abstract class BaseTradeT1 {
 				try {
 					if(errMsg.getBytes(ServerInitializer.CODING).length>30){
 						errMsg = getErrorMsg(errMsg);
+						//状态通知 
+						statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,errMsg);
 						throw e2;
 					}else{
+						//状态通知 
+						statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004,e.getRspMsg());
 						throw e2;
 					}
 				} catch (UnsupportedEncodingException e1) {
+					//状态通知 
+					statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"02","01");
 					BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10004);
 					throw e2;
 				}
@@ -355,7 +390,9 @@ public abstract class BaseTradeT1 {
 			}
 		}
 		// 主机成功登记
-		hostSuccessInitLog(dto, model); 				
+		hostSuccessInitLog(dto, model); 
+		//状态通知 
+		statusNotify(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode,"01","00");
 		return backMsg(dto,model);
 	}
 	
@@ -392,7 +429,10 @@ public abstract class BaseTradeT1 {
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
 		frmsModel.setCardNo(payerAcno);
-		frmsModel.setRecAcct(payeeAcno);
+		//如果业务类型为F01跨行转账，赋值转账对手账号
+		if(bizCode.equals("F01")){
+			frmsModel.setRecAcct(payeeAcno);
+		}
 		frmsModel.setWhoReport("01");
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
 		if(frmsRep.getVerifyPolicy()!=null){
@@ -418,8 +458,8 @@ public abstract class BaseTradeT1 {
 		frmsModel.setRecAcct(payeeAcno);
 		frmsModel.setWhoReport("01");
 		frmsModel.setOperStatus(operStatus);
-		//如果应答码为空，不发送该字段
-		if(!respCode.equals("")){
+		//如果是跨行转账赋值应答码
+		if(bizCode.equals("F01")){
 			frmsModel.setRespCode(respCode);
 		}
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);

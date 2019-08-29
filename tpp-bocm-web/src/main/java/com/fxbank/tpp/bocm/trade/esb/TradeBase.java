@@ -114,7 +114,10 @@ public class TradeBase {
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
 		frmsModel.setCardNo(payerAcno);
-		frmsModel.setRecAcct(payeeAcno);
+		//如果业务类型为F01跨行转账赋值转账对手和应答码
+		if(bizCode.equals("F01")){
+			frmsModel.setRecAcct(payeeAcno);
+		}
 		frmsModel.setWhoReport("01");
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
 		if(frmsRep.getVerifyPolicy()!=null){
@@ -135,22 +138,28 @@ public class TradeBase {
 		frmsModel.setBizCode(bizCode);
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
-		frmsModel.setCardNo(payerAcno);
-		frmsModel.setRecAcct(payeeAcno);
+		frmsModel.setCardNo(payerAcno);		
 		frmsModel.setWhoReport("01");
 		frmsModel.setOperStatus(operStatus);
-		//如果应答码为空，不发送该字段
-		if(!respCode.equals("")){
+		//如果业务类型为F01跨行转账赋值转账对手和应答码
+		if(bizCode.equals("F01")){
 			frmsModel.setRespCode(respCode);
+			frmsModel.setRecAcct(payeeAcno);
 		}
-		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
+		REP_FRMS frmsRep = null;
+		try {
+			frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
+		} catch (Exception e) {
+			myLog.info(logger, "风险监控状态通知请求失败,渠道日期"+dto.getSysDate()+"  渠道流水："+dto.getSysTraceno());
+			return;
+		}
 		if(frmsRep.getVerifyPolicy()!=null){
 			myLog.info(logger, "风险监控应答  Code："+frmsRep.getVerifyPolicy().getCode()+"  Name:"+frmsRep.getVerifyPolicy().getName());
 		}
-		if (frmsRep.getVerifyPolicy()!=null&&BLOCK.equalsIgnoreCase(frmsRep.getVerifyPolicy().getCode())) {
-			
-			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
-		}
+		//避免短款暂时通知不判断
+//		if (frmsRep.getVerifyPolicy()!=null&&BLOCK.equalsIgnoreCase(frmsRep.getVerifyPolicy().getCode())) {			
+//			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
+//		}
 		// 增加风险监控 检查20190809 end
 	}
 }

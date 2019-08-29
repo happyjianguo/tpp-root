@@ -76,8 +76,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		String payerAcno = "";
 		String payeeAcno = reqBody.getCardNoT3();
 		Long amt = (long)Double.parseDouble(reqBody.getDpsAmtT());
-		//O-柜面通    O04-跨行转入  跨行转入
-		super.riskCheck(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04");
+		//F-柜面  F01-跨行转账
+		super.riskCheck(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01");
 		
 		ESB_REP_30011000104 esbRep_30011000104 = null;
 		//核心记账日期
@@ -128,14 +128,20 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						"渠道流水号" + reqDto.getSysTraceno(), e);
 				
 				if(reversalMsg.equals("")){
+					//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+					super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",核心冲正成功");
 					throw e2;
 				}else{
+					//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+					super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 					SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:"+e.getRspMsg()+",核心冲正异常："+reversalMsg);
 					throw e2;
 				}		
 			//其他错误
 			}else {
+				//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+				super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 				myLog.error(logger, "交行卡存现金,本行核心记账失败,渠道日期" + reqDto.getSysDate() + 
 					"渠道流水号" + reqDto.getSysTraceno(), e);
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(e.getRspCode(),"交易失败:本行核心记账失败，"+e.getRspMsg());
@@ -222,10 +228,12 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 				}catch(SysTradeExecuteException e1) {
 					//如果冲正超时，交行记账失败，对账时返回记账流水，则对账失败
 					//接收ESB报文应答超时
-					if(SysTradeExecuteException.CIP_E_000004.equals(e1.getRspCode())||"ESB_E_000052".equals(e1.getRspCode())) {
+					if(SysTradeExecuteException.CIP_E_000004.equals(e1.getRspCode())||"ESB_E_000052".equals(e1.getRspCode())) {					
 						updateHostRecord(reqDto, "", "", "6", e1.getRspCode(), e1.getRspMsg());
 						myLog.error(logger, "交行卡存现金,本行核心冲正超时,渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);							
+						//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+						super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 						SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:请求交行系统失败,"+e.getRspMsg()+",核心冲正超时,请核对记账状态,如果记账成功请进行抹账处理");
 						throw e2;
 					//其他冲正错误
@@ -233,11 +241,15 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						updateHostRecord(reqDto, "", "", "5", e1.getRspCode(), e1.getRspMsg());
 						myLog.error(logger, "交行卡存现金,本行核心冲正失败,渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
+						//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+						super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10017,"交易失败:请求交行系统失败,"+e.getRspMsg()+",核心冲正失败,请核对记账状态,如果记账成功请进行抹账处理");
 						throw e2;
 					}
 				}
-				updateHostRecord(reqDto, hostDate, hostTraceno, "4", hostReversalCode, hostReversalMsg);
+				updateHostRecord(reqDto, hostDate, hostTraceno, "4", hostReversalCode, hostReversalMsg);			
+				//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+				super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:交行记账失败,"+e.getRspMsg());
 				myLog.error(logger, "交行卡存现金,本行核心冲正成功,渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(),e2);
@@ -293,6 +305,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						updateHostRecord(reqDto, "", "", "6", e1.getRspCode(), e1.getRspMsg());
 						myLog.error(logger, "交行卡存现金,本行核心冲正超时,渠道日期" + reqDto.getSysDate() + 
 								"渠道流水号" + reqDto.getSysTraceno(), e1);							
+						//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+						super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 						SysTradeExecuteException e2 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"交易失败:交行记账失败,"+e.getRspMsg()+",核心冲正超时:"+e1.getMessage()+",请核对记账状态,如果记账成功请进行抹账处理");
 						throw e2;
 					//其他冲正错误
@@ -300,11 +314,15 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 						updateHostRecord(reqDto, "", "", "5", e1.getRspCode(), e1.getRspMsg());
 						myLog.error(logger, "交行卡存现金,本行核心冲正失败,渠道日期" + reqDto.getSysDate() + 
 							"渠道流水号" + reqDto.getSysTraceno(), e1);
+						//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+						super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 						BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10017,"交易失败:交行记账失败,"+e.getRspMsg()+",核心冲正失败,请核对记账状态,如果记账成功请进行抹账处理");
 						throw e2;
 					}
 				}
 				updateHostRecord(reqDto, hostDate, hostTraceno, "4", hostReversalCode, hostReversalMsg);
+				//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+				super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","02","01");
 				BocmTradeExecuteException e2 = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10002,"交易失败:交行记账失败,"+e.getRspMsg());
 				myLog.error(logger, "交行卡存现金,本行核心冲正成功,渠道日期" + reqDto.getSysDate() + 
 						"渠道流水号" + reqDto.getSysTraceno(),e2);
@@ -353,8 +371,8 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		updateBocmRecord(reqDto,bocmDate,bocmTime,bocmTraceNo,"1",actBal,bocmRepcd,bocmRepmsg);
 		myLog.info(logger, "交行卡存现金,交行"+cardTypeName+"通存记账成功,渠道日期" + reqDto.getSysDate() + "渠道流水号" + reqDto.getSysTraceno());
 		
-		//风险监控通知   oper_status 01-成功，02-失败  resp_code为空不发送字段给风控系统
-		super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"O","O04","01","");
+		//风险监控通知   oper_status 01-成功，02-失败  resp_code 应答码   55-密码输错，51-余额不足，00-交易成功
+		super.statusNotify(myLog, reqDto, payerAcno, payeeAcno, amt,"F","F01","01","00");
 		
 		return rep;
 	}
