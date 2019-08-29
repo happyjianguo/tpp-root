@@ -55,25 +55,25 @@ public class REQ_50023000204 extends REQ_BASE {
     public class REQ_BODY {
 
         @JSONField(name = "COMPANY_NAME")
-        private String companyName;    //单位名称
+        private String companyName = null;    //单位名称
 
         @JSONField(name = "SOCIAL_CODE")
-        private String uniSocCdtCd;		//统一社会信用代码
+        private String uniSocCdtCd = null;		//统一社会信用代码
 
         @JSONField(name = "TXPYR_DIST_NO")
-        private String taxPayerId;		//纳税人识别号
+        private String taxPayerId = null;		//纳税人识别号
 
         @JSONField(name = "OPRTR_NAME")
-        private String opNm;		//操作员姓名
+        private String opNm = null;		//操作员姓名
 
         @JSONField(name = "RESERVE_FIELD1")
-        private String remarks1;		//备用字段1
+        private String remarks1 = null;		//备用字段1
         @JSONField(name = "RESERVE_FIELD2")
-        private String remarks2;		//备用字段2
+        private String remarks2 = null;		//备用字段2
         @JSONField(name = "RESERVE_FIELD3")
-        private String remarks3;		//备用字段3
+        private String remarks3 = null;		//备用字段3
         public String getRemarks1() {
-            return remarks1;
+            return remarks1 = null;
         }
         public void setRemarks1(String remarks1) {
             this.remarks1 = remarks1;

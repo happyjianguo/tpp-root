@@ -361,9 +361,9 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
         sb.append(this.getOrgnlBizQry().getMsgId() + "|");
         sb.append(this.getOrgnlBizQry().getInstgPty().getInstgDrctPty() + "|");
         sb.append(this.getOrgnlBizQry().getInstgPty().getInstgPty() + "|");
+        sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
+        sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
         if(this.getRspsn().getVrfctnInf().getRslt().equals("MCHD")) {
-            sb.append(this.getRspsn().getVrfctnInf().getRslt() + "|");
-            sb.append(this.getRspsn().getVrfctnInf().getDataResrcDt() + "|");
             if(!this.getRspsn().getVrfctnInf().getTxpmtInf().isEmpty()) {
                 for(MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf.TxpmtInf info:this.getRspsn().getVrfctnInf().getTxpmtInf()) {
                     sb.append(info.getTxAuthCd() + "|");
@@ -371,10 +371,12 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
                     sb.append(info.getTxpyrSts() + "|");
                 }
             }
-        }else if(!this.getRspsn().getOprlErr().equals(null)){
-            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
-            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
         }
+        sb.append(this.getRspsn().getOprlErr().getProcSts() == null ? ""
+                : this.getRspsn().getOprlErr().getProcSts()  + "|");
+        sb.append(this.getRspsn().getOprlErr().getProcCd() == null ? ""
+                : this.getRspsn().getOprlErr().getProcSts()  + "|");
+
         return sb.toString();
     }
 

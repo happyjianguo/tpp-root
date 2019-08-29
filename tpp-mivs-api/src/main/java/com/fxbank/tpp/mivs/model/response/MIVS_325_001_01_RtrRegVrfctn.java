@@ -1051,10 +1051,12 @@ public class MIVS_325_001_01_RtrRegVrfctn implements Serializable, SIGN_DATA {
                     sb.append(basInfOfSlfEplydPplInfo.getDtAppr() == null ? "" : basInfOfSlfEplydPplInfo.getDtAppr() + "|");
                 }
             }
-        }else if(this.getRspsn().getOprlErr().getProcCd()!=null){
-            sb.append(this.getRspsn().getOprlErr().getProcSts() + "|");
-            sb.append(this.getRspsn().getOprlErr().getProcCd() + "|");
         }
+        sb.append(this.getRspsn().getOprlErr().getProcSts() == null ? ""
+                : this.getRspsn().getOprlErr().getProcSts()  + "|");
+        sb.append(this.getRspsn().getOprlErr().getProcCd() == null ? ""
+                : this.getRspsn().getOprlErr().getProcSts()  + "|");
+
         return sb.toString();
     }
 

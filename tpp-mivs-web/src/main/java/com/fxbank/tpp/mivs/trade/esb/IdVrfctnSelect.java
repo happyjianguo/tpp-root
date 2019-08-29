@@ -52,8 +52,8 @@ public class IdVrfctnSelect extends TradeBase implements TradeExecutionStrategy 
 
         //查询数据落库
         MivsIdVrfctnInfoModel idVrfctnTableSelect =  new MivsIdVrfctnInfoModel();
-        idVrfctnTableSelect.setStart_dt(reqBody.getStartDt());
-        idVrfctnTableSelect.setEnd_dt(reqBody.getEndDt());
+        idVrfctnTableSelect.setStart_dt(Integer.parseInt(reqBody.getStartDt()));
+        idVrfctnTableSelect.setEnd_dt(Integer.parseInt(reqBody.getEndDt()));
         idVrfctnTableSelect.setBranch_id(reqBody.getOrigBranchId());
         idVrfctnTableSelect.setUser_id(reqBody.getOrigUserId());
         idVrfctnTableSelect.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());

@@ -92,7 +92,8 @@ public class GetTxPmtVrfctnTest {
 
         reqBody.setCompanyName("北京市政交通一卡通有限公司");
         reqBody.setUniSocCdtCd("91110000801145381H");
-//        reqBody.setTaxPayerId("19989898");
+//        reqBody.setUniSocCdtCd("123456789012345678");
+        reqBody.setTaxPayerId("");
         reqBody.setOpNm("李四");
 
         String macDataStr = JsonUtil.toJson(reqBody);

@@ -47,7 +47,7 @@ public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
         MIVS_801_001_01 mivs801 = (MIVS_801_001_01) dto;
         MIVS_801_001_01_SysStsNtfctn.MsgHdr msgHdr = mivs801.getSysStsNtfctn().getMsgHdr();
         MIVS_801_001_01_SysStsNtfctn.SysStsInf sysStsInf = mivs801.getSysStsNtfctn().getSysStsInf();
-        myLog.info(logger, "收到人行企业信息联网核查业务受理时间通知报文");
+        myLog.info(logger, "收到人行企业信息联网核查业务受理时间通知报文Trade交易");
         MivsSysStsNtfctnModel sysStsNtfctnModel = new MivsSysStsNtfctnModel();
         sysStsNtfctnModel.setPlat_date(mivs801.getSysDate());
         sysStsNtfctnModel.setPlat_trace(mivs801.getSysTraceno());

@@ -63,6 +63,11 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
 
         REQ_50023000204 req = (REQ_50023000204) dto;//接收ESB请求报文
         REQ_50023000204.REQ_BODY reqBody = req.getReqBody();
+        if(reqBody.getTaxPayerId() != null && reqBody.getTaxPayerId().equals("") &&
+                reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00001","统一社会信用代码和纳税人识别号只能填写其一");
+            throw e;
+        }
 
         // 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -97,8 +102,12 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setCoNm(reqBody.getCompanyName());
-        vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        vryDef.setTaxPayerId(reqBody.getTaxPayerId());
+        if(reqBody.getTaxPayerId() != null && reqBody.getTaxPayerId().equals("")) {
+            vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
+        }
+        if(reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")) {
+            vryDef.setTaxPayerId(reqBody.getTaxPayerId());
+        }
         vryDef.setOpNm(reqBody.getOpNm());
 
         //发送人行请求报文落地
