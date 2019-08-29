@@ -292,8 +292,8 @@ public class MIVS_349_001_01_RegVrfctnFdbk implements Serializable, SIGN_DATA {
             @XmlType(propOrder = { "OrgnlVrfctnInfOfEnt", "OrgnlVrfctnInfOfSlfEplydPpl", "Rslt", "DataResrcDt"})
             public static class OrgnlVrfctnInfo implements Serializable {
                 private static final long serialVersionUID = -1788371789925809875L;
-                private OrgnlVrfctnInfOfEnt OrgnlVrfctnInfOfEnt = new OrgnlVrfctnInfOfEnt();
-                private OrgnlVrfctnInfOfSlfEplydPpl OrgnlVrfctnInfOfSlfEplydPpl = new OrgnlVrfctnInfOfSlfEplydPpl();
+                private OrgnlVrfctnInfOfEnt OrgnlVrfctnInfOfEnt = null;
+                private OrgnlVrfctnInfOfSlfEplydPpl OrgnlVrfctnInfOfSlfEplydPpl = null;
                 private String Rslt = null;
                 private String DataResrcDt = null;
 

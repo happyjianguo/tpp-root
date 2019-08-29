@@ -94,8 +94,6 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         MIVS_349_001_01 mivs349 = new MIVS_349_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         MIVS_349_001_01_RegVrfctnFdbk.MsgHdr msgHdr = mivs349.getRegVrfctnFdbk().getMsgHdr();
         MIVS_349_001_01_RegVrfctnFdbk.Fdbk fdbk = mivs349.getRegVrfctnFdbk().getFdbk();
-        MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfEnt vrfctnInfOfEnt = mivs349.getRegVrfctnFdbk().getFdbk().getOrgnlVrfctn().getOrgnlVrfctnInfo().getOrgnlVrfctnInfOfEnt();
-        MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfSlfEplydPpl vrfctnInfOfSlfEplydPpl = mivs349.getRegVrfctnFdbk().getFdbk().getOrgnlVrfctn().getOrgnlVrfctnInfo().getOrgnlVrfctnInfOfSlfEplydPpl();
         myLog.info(logger, "登记信息核查结果疑义反馈");
         //拼人行报文
         mivs349.getHeader().setOrigSender(settlementBankNo);
@@ -108,15 +106,19 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(reqBody.getOrgnlDlvrgMsgId());
         fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(reqBody.getOrgnlRcvgMsgId());
         if(reqBody.getEntNm() != null) {
+            MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfEnt vrfctnInfOfEnt = mivs349.getRegVrfctnFdbk().getFdbk().getOrgnlVrfctn().getOrgnlVrfctnInfo().getOrgnlVrfctnInfOfEnt();
             vrfctnInfOfEnt.setEntNm(reqBody.getEntNm());
             vrfctnInfOfEnt.setUniSocCdtCd(reqBody.getUniSocCdtCd());
             vrfctnInfOfEnt.setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
             vrfctnInfOfEnt.setIdOfLglPrsn(reqBody.getIdOfLglPrsn());
+            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setOrgnlVrfctnInfOfEnt(vrfctnInfOfEnt);
         }else if(reqBody.getNm() != null){
+            MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfSlfEplydPpl vrfctnInfOfSlfEplydPpl = mivs349.getRegVrfctnFdbk().getFdbk().getOrgnlVrfctn().getOrgnlVrfctnInfo().getOrgnlVrfctnInfOfSlfEplydPpl();
             vrfctnInfOfSlfEplydPpl.setTraNm(reqBody.getTraNm());
             vrfctnInfOfSlfEplydPpl.setUniSocCdtCd(reqBody.getUniSocCdtCd());
             vrfctnInfOfSlfEplydPpl.setNm(reqBody.getNm());
             vrfctnInfOfSlfEplydPpl.setId(reqBody.getId());
+            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setOrgnlVrfctnInfOfSlfEplydPpl(vrfctnInfOfSlfEplydPpl);
         }
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(reqBody.getRslt());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(reqBody.getDataResrcDt());

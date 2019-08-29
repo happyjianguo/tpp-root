@@ -276,67 +276,80 @@ public class MIVS_347_001_01_IdVrfctnFdbk implements Serializable, SIGN_DATA {
 
                 // 手机号码
                 private String MobNb = null;
-                public String getMobNb() {
-                    return MobNb;
-                }
-                public void setMobNb(String mobNb) {
-                    this.MobNb = mobNb;
-                }
 
                 //姓名
                 private String Nm = null;
-                public String getNm() {
-                    return Nm;
-                }
-                public void setNm(String nm) {
-                    this.Nm = nm;
-                }
 
                 //证件类型
                 private String IdTp = null;
-                public String getIdTp() {
-                    return IdTp;
-                }
-                public void setIdTp(String idTp) {
-                    this.IdTp = idTp;
-                }
 
                 //证件号码
                 private String Id = null;
-                public String getId() {
-                    return Id;
-                }
-                public void setId(String id) {
-                    this.Id = id;
-                }
 
                 //统一社会信用代码
                 private String UniSocCdtCd = null;
-                public String getUniSocCdtCd() {
-                    return UniSocCdtCd;
-                }
-                public void setUniSocCdtCd(String uniSocCdtCd) {
-                    this.UniSocCdtCd = uniSocCdtCd;
-                }
 
                 //工商注册号
                 private String BizRegNb = null;
-                public String getBizRegNb() {
-                    return BizRegNb;
-                }
-                public void setBizRegNb(String bizRegNb) {
-                    this.BizRegNb = bizRegNb;
-                }
 
                 //手机号码核查结果
                 private String Rslt = null;
+
+                public String getMobNb() {
+                    return MobNb;
+                }
+
+                public void setMobNb(String mobNb) {
+                    MobNb = mobNb;
+                }
+
+                public String getNm() {
+                    return Nm;
+                }
+
+                public void setNm(String nm) {
+                    Nm = nm;
+                }
+
+                public String getIdTp() {
+                    return IdTp;
+                }
+
+                public void setIdTp(String idTp) {
+                    IdTp = idTp;
+                }
+
+                public String getId() {
+                    return Id;
+                }
+
+                public void setId(String id) {
+                    Id = id;
+                }
+
+                public String getUniSocCdtCd() {
+                    return UniSocCdtCd;
+                }
+
+                public void setUniSocCdtCd(String uniSocCdtCd) {
+                    UniSocCdtCd = uniSocCdtCd;
+                }
+
+                public String getBizRegNb() {
+                    return BizRegNb;
+                }
+
+                public void setBizRegNb(String bizRegNb) {
+                    BizRegNb = bizRegNb;
+                }
+
                 public String getRslt() {
                     return Rslt;
                 }
-                public void setRslt(String rslt) {
-                    this.Rslt = rslt;
-                }
 
+                public void setRslt(String rslt) {
+                    Rslt = rslt;
+                }
             }
         }
 
