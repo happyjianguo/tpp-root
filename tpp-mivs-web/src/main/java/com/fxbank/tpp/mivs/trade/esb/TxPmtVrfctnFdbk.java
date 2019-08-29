@@ -62,6 +62,11 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
 
         REQ_50023000207 req = (REQ_50023000207) dto;//接收ESB请求报文
         REQ_50023000207.REQ_BODY reqBody = req.getReqBody();
+        if(reqBody.getTxpyrIdNb() != null && reqBody.getTxpyrIdNb().equals("") &&
+                reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00001","统一社会信用代码和纳税人识别号只能填写其一");
+            throw e;
+        }
 
         MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModel = new MivsTxpmtVrfctnInfoModel();
         txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
@@ -106,8 +111,11 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(reqBody.getOrgnlDlvrgMsgId());
         fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(reqBody.getOrgnlRcvgMsgId());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setCoNm(reqBody.getCompanyName());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(reqBody.getTxpyrIdNb());
+        if(reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")) {
+            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(reqBody.getUniSocCdtCd());
+        }else if(reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")) {
+            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(reqBody.getTxpyrIdNb());
+        }
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(reqBody.getRslt());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(reqBody.getDataResrcDt());
         fdbk.setCntt(reqBody.getCntt());

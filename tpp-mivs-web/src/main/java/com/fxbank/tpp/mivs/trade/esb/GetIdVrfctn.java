@@ -62,6 +62,11 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
 
         REQ_50023000201 req = (REQ_50023000201) dto;
         REQ_50023000201.REQ_BODY reqBody = req.getReqBody();
+        if(reqBody.getBizRegNb() != null && reqBody.getBizRegNb().equals("") &&
+                reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00001","统一社会信用代码和工商注册号只能填写其一");
+            throw e;
+        }
 
 		// 通过机构号查询渠道接口获取（机构号查行号）
         String branchId = req.getReqSysHead().getBranchId();
@@ -99,7 +104,11 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         vryDef.setNm(reqBody.getNm());
         vryDef.setIdTp(reqBody.getIdTp());
         vryDef.setId(reqBody.getId());
-        vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
+        if(reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")) {
+            vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
+        }else if(reqBody.getBizRegNb() != null && reqBody.getBizRegNb().equals("")){
+        vryDef.setBizRegNb(reqBody.getBizRegNb());
+        }
         vryDef.setOpNm(reqBody.getOpNm());
 
         //发送人行请求数据落库

@@ -61,7 +61,7 @@ public class REQ_50023000204 extends REQ_BASE {
         private String uniSocCdtCd = null;		//统一社会信用代码
 
         @JSONField(name = "TXPYR_DIST_NO")
-        private String taxPayerId = null;		//纳税人识别号
+        private String txPayerId = null;		//纳税人识别号
 
         @JSONField(name = "OPRTR_NAME")
         private String opNm = null;		//操作员姓名
@@ -107,12 +107,12 @@ public class REQ_50023000204 extends REQ_BASE {
             this.uniSocCdtCd = uniSocCdtCd;
         }
 
-        public String getTaxPayerId() {
-            return taxPayerId;
+        public String getTxPayerId() {
+            return txPayerId;
         }
 
-        public void setTaxPayerId(String taxPayerId) {
-            this.taxPayerId = taxPayerId;
+        public void setTxPayerId(String txPayerId) {
+            this.txPayerId = txPayerId;
         }
 
         public String getOpNm() {

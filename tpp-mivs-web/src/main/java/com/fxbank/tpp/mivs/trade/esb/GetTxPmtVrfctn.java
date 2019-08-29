@@ -63,7 +63,7 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
 
         REQ_50023000204 req = (REQ_50023000204) dto;//接收ESB请求报文
         REQ_50023000204.REQ_BODY reqBody = req.getReqBody();
-        if(reqBody.getTaxPayerId() != null && reqBody.getTaxPayerId().equals("") &&
+        if(reqBody.getTxPayerId() != null && reqBody.getTxPayerId().equals("") &&
                 reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")){
             MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00001","统一社会信用代码和纳税人识别号只能填写其一");
             throw e;
@@ -102,11 +102,10 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setCoNm(reqBody.getCompanyName());
-        if(reqBody.getTaxPayerId() != null && reqBody.getTaxPayerId().equals("")) {
+        if(reqBody.getTxPayerId() != null && reqBody.getTxPayerId().equals("")) {
             vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        }
-        if(reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")) {
-            vryDef.setTaxPayerId(reqBody.getTaxPayerId());
+        }else if(reqBody.getUniSocCdtCd() != null && reqBody.getUniSocCdtCd().equals("")) {
+            vryDef.setTaxPayerId(reqBody.getTxPayerId());
         }
         vryDef.setOpNm(reqBody.getOpNm());
 
@@ -138,7 +137,7 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         txpmtvfctnInfoTableInsert.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         txpmtvfctnInfoTableInsert.setCo_nm(reqBody.getCompanyName());
         txpmtvfctnInfoTableInsert.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
-        txpmtvfctnInfoTableInsert.setTxpyr_id_nb(reqBody.getTaxPayerId());
+        txpmtvfctnInfoTableInsert.setTxpyr_id_nb(reqBody.getTxPayerId());
         txpmtvfctnInfoTableInsert.setOp_nm(reqBody.getOpNm());
 
         mivsTxpmtvfctnInfoService.insertMaster(txpmtvfctnInfoTableInsert); //插入数据库业务数据
