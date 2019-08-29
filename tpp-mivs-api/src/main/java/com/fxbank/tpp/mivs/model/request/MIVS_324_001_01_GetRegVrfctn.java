@@ -4,6 +4,7 @@ import com.fxbank.tpp.mivs.model.SIGN_DATA;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "MsgHdr", "VryDef" })
-public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
+public class MIVS_324_001_01_GetRegVrfctn implements Serializable, SIGN_DATA {
     private static final long serialVersionUID = 2671959651920079085L;
     private MsgHdr MsgHdr = new MsgHdr();
     private VryDef VryDef = new VryDef();
@@ -149,13 +150,14 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
     @XmlAccessorType(XmlAccessType.FIELD)
 //    @XmlType(propOrder = { "Ent", "SlfEplydPpl", "AgtNm", "AgtId", "OpNm" })
     public static class VryDef implements Serializable{
-        private static final long serialVersionUID = 7036312448035278706L;
-        private Ent Ent = new Ent();
-        private SlfEplydPpl SlfEplydPpl = new SlfEplydPpl();
+        private static final long serialVersionUID = -5047672462420131752L;
+        private Ent Ent = null;
+        private SlfEplydPpl SlfEplydPpl = null;
         private String AgtNm = null; //代理人姓名
         private String AgtId = null; //代理人身份证件号码
         private String OpNm = null; //操作员姓名
 
+//        @XmlElement(name = "Ent", required = true ,nillable=true)
         public Ent getEnt() {
             return Ent;
         }
@@ -164,6 +166,7 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
             Ent = ent;
         }
 
+//        @XmlElement(name = "SlfEplydPpl", required = true ,nillable=true)
         public SlfEplydPpl getSlfEplydPpl() {
             return SlfEplydPpl;
         }
@@ -172,6 +175,8 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
             SlfEplydPpl = slfEplydPpl;
         }
 
+//
+//        @XmlElement(name = "AgtNm")
         public String getAgtNm() {
             return AgtNm;
         }
@@ -180,6 +185,7 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
             AgtNm = agtNm;
         }
 
+//        @XmlElement(name = "AgtId")
         public String getAgtId() {
             return AgtId;
         }
@@ -188,6 +194,7 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
             AgtId = agtId;
         }
 
+//        @XmlElement(name = "OpNm")
         public String getOpNm() {
             return OpNm;
         }
@@ -196,9 +203,13 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
             OpNm = opNm;
         }
 
+        public static class EandSParent{
+
+        }
+
         @XmlAccessorType(XmlAccessType.FIELD)
-//        @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "NmOfLglPrsn", "IdOfLglPrsn" })
-        public static class Ent implements Serializable{
+        @XmlType(propOrder = { "EntNm", "UniSocCdtCd", "NmOfLglPrsn", "IdOfLglPrsn" })
+        public static class Ent  extends MIVS_324_001_01_GetRegVrfctn.VryDef.EandSParent implements  Serializable{
             private static final long serialVersionUID = -637900312057806102L;
             private String EntNm = null; //企业名称
             private String UniSocCdtCd = null; //统一社会信用代码
@@ -239,8 +250,8 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-//        @XmlType(propOrder = { "TraNm", "UniSocCdtCd", "Nm", "Id" })
-        public static class SlfEplydPpl implements Serializable{
+        @XmlType(propOrder = { "TraNm", "UniSocCdtCd", "Nm", "Id" })
+        public static class SlfEplydPpl extends MIVS_324_001_01_GetRegVrfctn.VryDef.EandSParent implements Serializable{
             private static final long serialVersionUID = 5514694792803947807L;
             private String TraNm = null; //字号名称
             private String UniSocCdtCd = null; //统一社会信用代码
@@ -293,12 +304,14 @@ public class MIVS_324_001_01_ENT implements Serializable, SIGN_DATA {
         sb.append(this.getMsgHdr().getInstgPty().getPtyNm() + "|");
         sb.append(this.getMsgHdr().getInstdPty().getInstdDrctPty() + "|");
         sb.append(this.getMsgHdr().getInstdPty().getInstdPty() + "|");
-        if(this.getVryDef().getEnt() != null) {
+        if(this.getVryDef().getEnt() != null){
+//            MIVS_324_001_01_GetRegVrfctn.VryDef.Ent ent = (MIVS_324_001_01_GetRegVrfctn.VryDef.Ent)this.getVryDef().getEandSParent();
             sb.append(this.getVryDef().getEnt().getEntNm() + "|");
             sb.append(this.getVryDef().getEnt().getUniSocCdtCd() + "|");
             sb.append(this.getVryDef().getEnt().getNmOfLglPrsn() + "|");
             sb.append(this.getVryDef().getEnt().getIdOfLglPrsn() + "|");
-        }else if(this.getVryDef().getSlfEplydPpl() !=null){
+        }else  if(this.getVryDef().getSlfEplydPpl() != null){
+//            MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl slf = (MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl)this.getVryDef().getEandSParent();
             sb.append(this.getVryDef().getSlfEplydPpl().getTraNm() == null ? ""
                     : this.getVryDef().getSlfEplydPpl().getTraNm() + "|");
             sb.append(this.getVryDef().getSlfEplydPpl().getUniSocCdtCd()+ "|");

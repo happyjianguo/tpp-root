@@ -17,7 +17,7 @@ import com.fxbank.tpp.mivs.dto.mivs.MIVS_325_001_01;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsRegVrfctnInfoModel;
 import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01;
-import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01_ENT;
+import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01_GetRegVrfctn;
 import com.fxbank.tpp.mivs.model.response.MIVS_325_001_01_RtrRegVrfctn;
 import com.fxbank.tpp.mivs.service.IForwardToPmtsService;
 import com.fxbank.tpp.mivs.service.IMivsRegVrfctnInfoService;
@@ -85,9 +85,9 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         myLog.info(logger, "通过本行机构号查询人行行号成功，机构号：" + branchId + "，人行行号：" + bankNumber);
 
         //拼发送人行324报文
-        MIVS_324_001_01 mivs324 = new MIVS_324_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
-        MIVS_324_001_01.GetRegVrfctn.MsgHdr msgHdr = mivs324.getGetRegVrfctn().getMsgHdr();
-        MIVS_324_001_01.GetRegVrfctn.VryDef vryDef = mivs324.getGetRegVrfctn().getVryDef();
+        MIVS_324_001_01 mivs324 = new MIVS_324_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno(), reqBody.getMarketType());
+        MIVS_324_001_01_GetRegVrfctn.MsgHdr msgHdr = mivs324.getGetRegVrfctn().getMsgHdr();
+        MIVS_324_001_01_GetRegVrfctn.VryDef vryDef = mivs324.getGetRegVrfctn().getVryDef();
         mivs324.getHeader().setOrigSender(bankNumber);
         mivs324.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
@@ -97,15 +97,19 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
         if(reqBody.getMarketType().equals("ENT")){
-            vryDef.getEnt().setEntNm(reqBody.getEntNm());
-            vryDef.getEnt().setUniSocCdtCd(reqBody.getUniSocCdtCd());
-            vryDef.getEnt().setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
-            vryDef.getEnt().setIdOfLglPrsn(reqBody.getIdOfLglPrsn());
+            MIVS_324_001_01_GetRegVrfctn.VryDef.Ent ent = new MIVS_324_001_01_GetRegVrfctn.VryDef.Ent();
+            ent.setEntNm(reqBody.getEntNm());
+            ent.setUniSocCdtCd(reqBody.getUniSocCdtCd());
+            ent.setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
+            ent.setIdOfLglPrsn(reqBody.getIdOfLglPrsn());
+            vryDef.setEnt(ent);
         }else if(reqBody.getMarketType().equals("TRA")){
-            vryDef.getSlfEplydPpl().setTraNm(reqBody.getTranm());
-            vryDef.getSlfEplydPpl().setUniSocCdtCd(reqBody.getUniSocCdtCd());
-            vryDef.getSlfEplydPpl().setNm(reqBody.getNm());
-            vryDef.getSlfEplydPpl().setId(reqBody.getId());
+            MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl slf = new MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl();
+            slf.setTraNm(reqBody.getTranm());
+            slf.setUniSocCdtCd(reqBody.getUniSocCdtCd());
+            slf.setNm(reqBody.getNm());
+            slf.setId(reqBody.getId());
+            vryDef.setSlfEplydPpl(slf);
         }
         vryDef.setAgtNm(reqBody.getAgtNm());
         vryDef.setAgtId(reqBody.getAgtId());

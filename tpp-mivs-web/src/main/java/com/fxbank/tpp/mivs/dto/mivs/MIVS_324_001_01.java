@@ -1,7 +1,7 @@
 package com.fxbank.tpp.mivs.dto.mivs;
 
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
-import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01_ENT;
+import com.fxbank.tpp.mivs.model.request.MIVS_324_001_01_GetRegVrfctn;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -23,7 +23,7 @@ public class MIVS_324_001_01 extends DTO_BASE {
         super.txDesc = "登记信息核查324";
     }
 
-    private MIVS_324_001_01_ENT GetRegVrfctn = new MIVS_324_001_01_ENT();
+    private MIVS_324_001_01_GetRegVrfctn GetRegVrfctn = new MIVS_324_001_01_GetRegVrfctn();
 
     /**
      * @return the comConf
@@ -47,14 +47,14 @@ public class MIVS_324_001_01 extends DTO_BASE {
     /**
      * @return the getTxPmtVrfctn
      */
-    public MIVS_324_001_01_ENT getTxPmtVrfctn() {
+    public MIVS_324_001_01_GetRegVrfctn getTxPmtVrfctn() {
         return GetRegVrfctn;
     }
 
     /**
      * @param getTxPmtVrfctn the getTxPmtVrfctn to set
      */
-    public void setTxPmtVrfctn(MIVS_324_001_01_ENT getTxPmtVrfctn) {
+    public void setTxPmtVrfctn(MIVS_324_001_01_GetRegVrfctn getTxPmtVrfctn) {
         GetRegVrfctn = getTxPmtVrfctn;
     }
 

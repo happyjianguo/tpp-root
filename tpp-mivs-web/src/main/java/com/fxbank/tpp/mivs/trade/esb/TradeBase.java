@@ -114,12 +114,26 @@ public class TradeBase {
 	}
 
 	/**
-	 * ESB日期转换成人行日期
+	 * 手机号添加86
 	 */
 	public String  moblePhoneAdd(String moblePhone) {
-		if(moblePhone.length() == 11) {
+		String subT = moblePhone.substring(0,2);
+		if(!subT.equals("86")) {
 			StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
 			sb.insert(0, "86");
+			moblePhone = sb.toString();
+		}
+		return moblePhone;
+	}
+
+	/**
+	 * 手机号删除86
+	 */
+	public String  moblePhoneDel(String moblePhone) {
+		String subT = moblePhone.substring(0,2);
+		if(subT.equals("86")) {
+			StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
+			sb.delete(0, 2);
 			moblePhone = sb.toString();
 		}
 		return moblePhone;

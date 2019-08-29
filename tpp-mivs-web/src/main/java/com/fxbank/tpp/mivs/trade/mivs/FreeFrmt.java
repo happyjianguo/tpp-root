@@ -47,7 +47,7 @@ public class FreeFrmt  extends TradeBase implements TradeExecutionStrategy {
         MIVS_332_001_01 mivs332 = (MIVS_332_001_01) dto;
         MIVS_332_001_01_FreeFrmt.MsgHdr msgHdr = mivs332.getFreeFrmt().getMsgHdr();
         MIVS_332_001_01_FreeFrmt.FreeFrmtInf freeFrmtInf = mivs332.getFreeFrmt().getFreeFrmtInf();
-        myLog.info(logger, "收到人行机构异常核查通知交易");
+        myLog.info(logger, "收到人行公告信息交易");
         MivsFreeFrmtModel freeFrmtModel = new MivsFreeFrmtModel();
         freeFrmtModel.setPlat_date(mivs332.getSysDate());
         freeFrmtModel.setPlat_trace(mivs332.getSysTraceno());

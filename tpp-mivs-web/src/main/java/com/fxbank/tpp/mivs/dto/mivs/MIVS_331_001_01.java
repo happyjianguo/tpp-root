@@ -19,7 +19,7 @@ public class MIVS_331_001_01 extends DTO_BASE {
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
     public MIVS_331_001_01() {
-        super.txDesc = "机构异常核查通知报文331";
+        super.txDesc = "企业异常核查通知报文331";
     }
 
     private MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn AbnmlCoInfoVrfctnInfNtfctn = new MIVS_331_001_01_AbnmlCoInfoVrfctnInfNtfctn();
