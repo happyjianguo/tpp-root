@@ -9,6 +9,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000213;
 import com.fxbank.tpp.mivs.dto.esb.REQ_50023000213;
+import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsFreeFrmtModel;
 import com.fxbank.tpp.mivs.service.IMivsFreeFrmtService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
@@ -57,7 +58,12 @@ public class FreeFrmtSelect extends TradeBase implements TradeExecutionStrategy{
             freeFrmtModel.setRply_flag(reqBody.getRplyFlag());
 
             List<MivsFreeFrmtModel> freeFrmtModels = freeFrmtService.selectResult(freeFrmtModel); //查询数据库业务数据
-            myLog.info(logger,"查询结果为：" + freeFrmtModel.toString());
+            if(freeFrmtModels != null && !freeFrmtModels.isEmpty()) {
+                myLog.info(logger, "查询结果为：" + freeFrmtModel.toString());
+            }else{
+                MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
+                throw e;
+            }
 
             REP_50023000213 rep = new REP_50023000213();
             if(freeFrmtModels != null && !freeFrmtModels.isEmpty()) {

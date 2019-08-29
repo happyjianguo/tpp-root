@@ -67,7 +67,13 @@ public class RegVrfctnSelect extends TradeBase implements TradeExecutionStrategy
         regVrfctnInfoModel.setId(reqBody.getId());
 
         List<MivsRegVrfctnInfoModel> regVrfctnInfoModels = mivsRegVrfctnInfoService.selectResult(regVrfctnInfoModel); //查询数据库业务数据
-        myLog.info(logger,"查询结果为：" + regVrfctnInfoModels.toString());
+        if(regVrfctnInfoModels != null && !regVrfctnInfoModels.isEmpty()) {
+            myLog.info(logger, "查询结果为：" + regVrfctnInfoModels.toString());
+        }else{
+            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
+            throw e;
+        }
+
         if(regVrfctnInfoModels == null || regVrfctnInfoModels.isEmpty()) {
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
             throw e;

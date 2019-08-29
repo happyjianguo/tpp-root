@@ -61,8 +61,9 @@ public class TxPmtVrfctnSelectDetail extends TradeBase implements TradeExecution
         txpmtVrfctnInfoModel.setDetail_flag("YES");//查询明细数据
 
         txpmtVrfctnInfoModel = mivsTxPmtVrfctnInfoService.selectMasterAndAttached(txpmtVrfctnInfoModel); //查询数据库业务数据
-        myLog.info(logger,"查询结果为：" + txpmtVrfctnInfoModel.toString());
-        if(txpmtVrfctnInfoModel == null) {
+        if(txpmtVrfctnInfoModel != null) {
+            myLog.info(logger, "查询结果为：" + txpmtVrfctnInfoModel.toString());
+        }else{
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
             throw e;
         }

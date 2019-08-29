@@ -92,8 +92,8 @@ public class IdVrfctnSelectTest {
 
         reqBody.setOrigBranchId("02002");
         reqBody.setOrigUserId("002241");
-        reqBody.setStartDt("20190801");
-        reqBody.setEndDt("20190829");
+//        reqBody.setStartDt("20190801");
+//        reqBody.setEndDt("20190829");
 
 //        reqBody.setMobNb("17702499222");
 //        reqBody.setNm("王鹏");

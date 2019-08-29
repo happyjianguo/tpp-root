@@ -9,6 +9,7 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000202;
 import com.fxbank.tpp.mivs.dto.esb.REQ_50023000202;
+import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsIdVrfctnInfoModel;
 import com.fxbank.tpp.mivs.service.IMivsIdVrfctnInfoService;
 import com.fxbank.tpp.mivs.sync.SyncCom;
@@ -50,10 +51,14 @@ public class IdVrfctnSelect extends TradeBase implements TradeExecutionStrategy 
         REQ_50023000202 req = (REQ_50023000202) dto;//接收ESB请求报文
         REQ_50023000202.REQ_BODY reqBody = req.getReqBody();
 
-        //查询数据落库
+        //查询数据库数据
         MivsIdVrfctnInfoModel idVrfctnTableSelect =  new MivsIdVrfctnInfoModel();
-        idVrfctnTableSelect.setStart_dt(Integer.parseInt(reqBody.getStartDt()));
-        idVrfctnTableSelect.setEnd_dt(Integer.parseInt(reqBody.getEndDt()));
+        if(reqBody.getStartDt() != null && reqBody.getStartDt().equals("")) {
+            idVrfctnTableSelect.setStart_dt(Integer.parseInt(reqBody.getStartDt()));
+        }
+        if(reqBody.getEndDt() != null && reqBody.getEndDt().equals("")) {
+            idVrfctnTableSelect.setEnd_dt(Integer.parseInt(reqBody.getEndDt()));
+        }
         idVrfctnTableSelect.setBranch_id(reqBody.getOrigBranchId());
         idVrfctnTableSelect.setUser_id(reqBody.getOrigUserId());
         idVrfctnTableSelect.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
@@ -66,7 +71,12 @@ public class IdVrfctnSelect extends TradeBase implements TradeExecutionStrategy 
         idVrfctnTableSelect.setBiz_reg_nb(reqBody.getBizRegNb());
 
         List<MivsIdVrfctnInfoModel> idVrfctnInfoModels = mivsIdVrfctnInfoService.selectResult(idVrfctnTableSelect); //查询数据库业务数据
-        myLog.info(logger,"查询结果为：" + idVrfctnInfoModels.toString());
+        if(idVrfctnInfoModels != null && !idVrfctnInfoModels.isEmpty()) {
+            myLog.info(logger, "查询结果为：" + idVrfctnInfoModels.toString());
+        }else{
+            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
+            throw e;
+        }
 
         REP_50023000202 rep = new REP_50023000202();
         if(idVrfctnInfoModels != null && !idVrfctnInfoModels.isEmpty()) {
