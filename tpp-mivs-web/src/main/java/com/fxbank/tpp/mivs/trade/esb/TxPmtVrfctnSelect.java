@@ -51,17 +51,35 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
         REQ_50023000205 req = (REQ_50023000205) dto;//接收ESB请求报文
         REQ_50023000205.REQ_BODY reqBody = req.getReqBody();
 
-        //查询数据落库
+        //查询数据
         MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModel =  new MivsTxpmtVrfctnInfoModel();
-        txpmtVrfctnInfoModel.setStart_dt(reqBody.getStartDt());
-        txpmtVrfctnInfoModel.setEnd_dt(reqBody.getEndDt());
-        txpmtVrfctnInfoModel.setBranch_id(reqBody.getOrigBranchId());
-        txpmtVrfctnInfoModel.setUser_id(reqBody.getOrigUserId());
-        txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
-        txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
-        txpmtVrfctnInfoModel.setCo_nm(reqBody.getCompanyName());
-        txpmtVrfctnInfoModel.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
-        txpmtVrfctnInfoModel.setTxpyr_id_nb(reqBody.getTaxPayerId());
+        if(reqBody.getStartDt() != null && !reqBody.getStartDt().equals("")) {
+            txpmtVrfctnInfoModel.setStart_dt(Integer.parseInt(reqBody.getStartDt()));
+        }
+        if(reqBody.getEndDt() != null && !reqBody.getEndDt().equals("")) {
+            txpmtVrfctnInfoModel.setEnd_dt(Integer.parseInt(reqBody.getEndDt()));
+        }
+        if(reqBody.getOrigBranchId() != null && !reqBody.getOrigBranchId().equals("")) {
+            txpmtVrfctnInfoModel.setBranch_id(reqBody.getOrigBranchId());
+        }
+        if(reqBody.getOrigUserId() != null && !reqBody.getOrigUserId().equals("")) {
+            txpmtVrfctnInfoModel.setUser_id(reqBody.getOrigUserId());
+        }
+        if(reqBody.getOrgnlDlvrgMsgId() != null && !reqBody.getOrgnlDlvrgMsgId().equals("")) {
+            txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
+        }
+        if(reqBody.getOrgnlRcvgMsgId() != null && !reqBody.getOrgnlRcvgMsgId().equals("")) {
+            txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
+        }
+        if(reqBody.getCompanyName() != null && !reqBody.getCompanyName().equals("")) {
+            txpmtVrfctnInfoModel.setCo_nm(reqBody.getCompanyName());
+        }
+        if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
+            txpmtVrfctnInfoModel.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
+        }
+        if(reqBody.getTaxPayerId() != null && !reqBody.getTaxPayerId().equals("")) {
+            txpmtVrfctnInfoModel.setTxpyr_id_nb(reqBody.getTaxPayerId());
+        }
         txpmtVrfctnInfoModel.setDetail_flag("NO");//不查询明细数据
 
         List<MivsTxpmtVrfctnInfoModel> txpmtVrfctnInfoModels = mivsTxPmtVrfctnInfoService.selectResult(txpmtVrfctnInfoModel); //查询数据库业务数据

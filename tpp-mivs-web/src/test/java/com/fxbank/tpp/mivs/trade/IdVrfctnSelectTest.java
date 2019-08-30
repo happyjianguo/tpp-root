@@ -92,14 +92,14 @@ public class IdVrfctnSelectTest {
 
         reqBody.setOrigBranchId("01001");
         reqBody.setOrigUserId("002241");
-//        reqBody.setStartDt("20190801");
-//        reqBody.setEndDt("20190829");
+        reqBody.setStartDt("");
+        reqBody.setEndDt("");
 
-//        reqBody.setMobNb("17702499222");
-//        reqBody.setNm("王鹏");
-//        reqBody.setIdTp("IC00");
-//        reqBody.setId("210904198703261013");
-//        reqBody.setUniSocCdtCd("123456789123456789");
+        reqBody.setMobNb("");
+        reqBody.setNm("");
+        reqBody.setIdTp("");
+        reqBody.setId("");
+        reqBody.setUniSocCdtCd("");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();

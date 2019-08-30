@@ -53,22 +53,42 @@ public class IdVrfctnSelect extends TradeBase implements TradeExecutionStrategy 
 
         //查询数据库数据
         MivsIdVrfctnInfoModel idVrfctnTableSelect =  new MivsIdVrfctnInfoModel();
-        if(reqBody.getStartDt() != null && reqBody.getStartDt().equals("")) {
+        if(reqBody.getStartDt() != null && !reqBody.getStartDt().equals("")) {
             idVrfctnTableSelect.setStart_dt(Integer.parseInt(reqBody.getStartDt()));
         }
-        if(reqBody.getEndDt() != null && reqBody.getEndDt().equals("")) {
+        if(reqBody.getEndDt() != null && !reqBody.getEndDt().equals("")) {
             idVrfctnTableSelect.setEnd_dt(Integer.parseInt(reqBody.getEndDt()));
         }
-        idVrfctnTableSelect.setBranch_id(reqBody.getOrigBranchId());
-        idVrfctnTableSelect.setUser_id(reqBody.getOrigUserId());
-        idVrfctnTableSelect.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
-        idVrfctnTableSelect.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
-        idVrfctnTableSelect.setMob_nb(reqBody.getMobNb());
-        idVrfctnTableSelect.setNm(reqBody.getNm());
-        idVrfctnTableSelect.setId_tp(reqBody.getIdTp());
-        idVrfctnTableSelect.setId(reqBody.getId());
-        idVrfctnTableSelect.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
-        idVrfctnTableSelect.setBiz_reg_nb(reqBody.getBizRegNb());
+        if(reqBody.getOrigBranchId() != null && !reqBody.getOrigBranchId().equals("")) {
+            idVrfctnTableSelect.setBranch_id(reqBody.getOrigBranchId());
+        }
+        if(reqBody.getOrigUserId() != null && !reqBody.getOrigUserId().equals("")) {
+            idVrfctnTableSelect.setUser_id(reqBody.getOrigUserId());
+        }
+        if(reqBody.getOrgnlDlvrgMsgId() != null && !reqBody.getOrgnlDlvrgMsgId().equals("")) {
+            idVrfctnTableSelect.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
+        }
+        if(reqBody.getOrgnlRcvgMsgId() != null && !reqBody.getOrgnlRcvgMsgId().equals("")) {
+            idVrfctnTableSelect.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
+        }
+        if(reqBody.getMobNb() != null && !reqBody.getMobNb().equals("")) {
+            idVrfctnTableSelect.setMob_nb(reqBody.getMobNb());
+        }
+        if(reqBody.getNm() != null && !reqBody.getNm().equals("")) {
+            idVrfctnTableSelect.setNm(reqBody.getNm());
+        }
+        if(reqBody.getIdTp() != null && !reqBody.getIdTp().equals("")) {
+            idVrfctnTableSelect.setId_tp(reqBody.getIdTp());
+        }
+        if(reqBody.getId() != null && !reqBody.getId().equals("")) {
+            idVrfctnTableSelect.setId(reqBody.getId());
+        }
+        if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
+            idVrfctnTableSelect.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
+        }
+        if(reqBody.getBizRegNb() != null && !reqBody.getBizRegNb().equals("")) {
+            idVrfctnTableSelect.setBiz_reg_nb(reqBody.getBizRegNb());
+        }
 
         List<MivsIdVrfctnInfoModel> idVrfctnInfoModels = mivsIdVrfctnInfoService.selectResult(idVrfctnTableSelect); //查询数据库业务数据
         if(idVrfctnInfoModels != null && !idVrfctnInfoModels.isEmpty()) {
