@@ -51,7 +51,7 @@ host_branch NVARCHAR2(20) NULL
 )
 
 ;
-COMMENT ON TABLE bocm_snd_log IS '交通银行柜面通发送流水日志';
+COMMENT ON TABLE bocm_snd_log IS '交通银行柜面通往账流水日志';
 COMMENT ON COLUMN bocm_snd_log.plat_date IS '渠道日期';
 COMMENT ON COLUMN bocm_snd_log.plat_trace IS '渠道流水';
 COMMENT ON COLUMN bocm_snd_log.plat_time IS '交易时间';
