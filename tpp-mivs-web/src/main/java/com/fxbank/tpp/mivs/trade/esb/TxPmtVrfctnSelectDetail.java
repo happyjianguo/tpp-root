@@ -60,10 +60,10 @@ public class TxPmtVrfctnSelectDetail extends TradeBase implements TradeExecution
             txpmtVrfctnInfoModel.setSeq_no(reqBody.getOrigSeqNo());
         }
         if(reqBody.getOrgnlDlvrgMsgId() != null && !reqBody.getOrgnlDlvrgMsgId().equals("")) {
-            txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlDlvrgMsgId());
+            txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
         }
         if(reqBody.getOrgnlRcvgMsgId() != null && !reqBody.getOrgnlRcvgMsgId().equals("")) {
-            txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlRcvgMsgId());
+            txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
         }
         if(reqBody.getOrigInstgPty() != null && !reqBody.getOrigInstgPty().equals("")) {
             txpmtVrfctnInfoModel.setOrig_instg_pty(reqBody.getOrigInstgPty());
