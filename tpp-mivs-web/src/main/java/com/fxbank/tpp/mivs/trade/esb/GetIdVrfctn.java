@@ -198,7 +198,7 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
             repBody.setMobNb(vrfctnInf.getMobNb());
             repBody.setRslt(vrfctnInf.getRslt());
             repBody.setMobCrr(vrfctnInf.getMobCrr());
-            repBody.setLocMobNb(vrfctnInf.getLocMobNb());
+            repBody.setLocMobNb(moblePhoneDel(vrfctnInf.getLocMobNb()));
             repBody.setLocNmMobNb(vrfctnInf.getLocNmMobNb());
             repBody.setCdTp(vrfctnInf.getCdTp());
             repBody.setSts(vrfctnInf.getSts());
