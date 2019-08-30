@@ -221,12 +221,12 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = { "CoNm", "UniSocCdtCd", "TaxPayerId", "OpNm" })
+    @XmlType(propOrder = { "CoNm", "UniSocCdtCd", "TxpyrIdNb", "OpNm" })
     public static class VryDef implements Serializable{
         private static final long serialVersionUID = 5043496881254050491L;
         private String CoNm = null;
         private String UniSocCdtCd = null;
-        private String TaxPayerId = null;
+        private String TxpyrIdNb = null;
         private String OpNm = null;
 
         /**
@@ -258,17 +258,17 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
         }
 
         /**
-         * @return the taxPayerId
+         * @return the txPayerId
          */
-        public String getTaxPayerId() {
-            return TaxPayerId;
+        public String getTxpyrIdNb() {
+            return TxpyrIdNb;
         }
 
         /**
-         * @param taxPayerId the id to set
+         * @param txPayerId the id to set
          */
-        public void setTaxPayerId(String taxPayerId) {
-            this.TaxPayerId = taxPayerId;
+        public void setTxpyrIdNb(String txPayerId) {
+            this.TxpyrIdNb = txPayerId;
         }
 
         /**
@@ -301,8 +301,8 @@ public class MIVS_322_001_01_GetTxPmtVrfctn implements Serializable, SIGN_DATA {
         sb.append(this.getVryDef().getCoNm() + "|");
         sb.append(this.getVryDef().getUniSocCdtCd() == null ? ""
                 : this.getVryDef().getUniSocCdtCd() + "|");
-        sb.append(this.getVryDef().getTaxPayerId() == null ? ""
-                : this.getVryDef().getTaxPayerId() + "|");
+        sb.append(this.getVryDef().getTxpyrIdNb() == null ? ""
+                : this.getVryDef().getTxpyrIdNb() + "|");
         sb.append(this.getVryDef().getOpNm() + "|");
         return sb.toString();
     }

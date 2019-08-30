@@ -90,7 +90,7 @@ public class IdVrfctnSelectTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrigBranchId("02002");
+        reqBody.setOrigBranchId("01001");
         reqBody.setOrigUserId("002241");
 //        reqBody.setStartDt("20190801");
 //        reqBody.setEndDt("20190829");

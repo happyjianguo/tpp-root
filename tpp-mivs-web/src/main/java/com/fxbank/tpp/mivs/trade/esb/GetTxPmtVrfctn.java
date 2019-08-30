@@ -103,7 +103,7 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setCoNm(reqBody.getCompanyName());
         if(reqBody.getTxPayerId() != null && !reqBody.getTxPayerId().equals("")) {
-            vryDef.setTaxPayerId(reqBody.getTxPayerId());
+            vryDef.setTxpyrIdNb(reqBody.getTxPayerId());
         }else if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
             vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
         }
