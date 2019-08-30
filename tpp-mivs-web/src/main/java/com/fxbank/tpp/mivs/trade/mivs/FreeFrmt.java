@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 /**
- * @Description: 企业通知人行请求交易
+ * @Description: 公告信息人行来账交易
  * @Author: 王鹏
  * @Date: 2019/7/3 15:54
  */

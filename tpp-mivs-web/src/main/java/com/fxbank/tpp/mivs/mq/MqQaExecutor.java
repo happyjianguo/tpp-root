@@ -90,21 +90,21 @@ public class MqQaExecutor {
             dtoBase.setHead(head);
             dtoBase.setSign(sign);
 
-            if (sign.getDigitalSignature() != null) {
-                String signData = dtoBase.signData();
-                try {
-                    HisuTSSCAPIResult result = this.hisuTSSCAPIForSecondPayment.hisuUniversalVerifyDataSign("CNAPS2",
-                            head.getOrigSender(), "X509", sign.getDigitalSignature(), signData.getBytes());
-                    if (result.getErrCode() < 0) {
-                        myLog.error(logger, "验证签名错误[" + signData + "][" + sign.getDigitalSignature().toString() + "]");
-                        throw new RuntimeException("验证签名错误");
-                    }
-                } catch (Exception e) {
-                    myLog.error(logger, "验证签名错误[" + signData + "][" + sSign + "]", e);
-                    throw new RuntimeException("验证签名错误");
-                }
-                myLog.info(logger,"验证签名成功");
-            }
+//            if (sign.getDigitalSignature() != null) {
+//                String signData = dtoBase.signData();
+//                try {
+//                    HisuTSSCAPIResult result = this.hisuTSSCAPIForSecondPayment.hisuUniversalVerifyDataSign("CNAPS2",
+//                            head.getOrigSender(), "X509", sign.getDigitalSignature(), signData.getBytes());
+//                    if (result.getErrCode() < 0) {
+//                        myLog.error(logger, "验证签名错误[" + signData + "][" + sign.getDigitalSignature().toString() + "]");
+//                        throw new RuntimeException("验证签名错误");
+//                    }
+//                } catch (Exception e) {
+//                    myLog.error(logger, "验证签名错误[" + signData + "][" + sSign + "]", e);
+//                    throw new RuntimeException("验证签名错误");
+//                }
+//                myLog.info(logger,"验证签名成功");
+//            }
         } catch (RuntimeException e) {
             myLog.error(logger, "解析报文失败[" + xml + "]", e);
             throw new RuntimeException(e);

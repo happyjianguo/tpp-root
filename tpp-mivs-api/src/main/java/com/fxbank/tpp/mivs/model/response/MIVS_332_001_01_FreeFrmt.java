@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 /**
- * @Description: 企业信息通知报文
+ * @Description: 公告信息报文
  * @Author: 王鹏
  * @Date: 2019/7/3 16:39
  */
