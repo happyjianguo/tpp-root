@@ -150,16 +150,13 @@ public class TradeBase {
 		try {
 			frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
 		} catch (Exception e) {
+			//避免短款暂时通知异常记录日志，不抛异常
 			myLog.info(logger, "风险监控状态通知请求失败,渠道日期"+dto.getSysDate()+"  渠道流水："+dto.getSysTraceno());
 			return;
 		}
 		if(frmsRep.getVerifyPolicy()!=null){
 			myLog.info(logger, "风险监控应答  Code："+frmsRep.getVerifyPolicy().getCode()+"  Name:"+frmsRep.getVerifyPolicy().getName());
 		}
-		//避免短款暂时通知不判断
-//		if (frmsRep.getVerifyPolicy()!=null&&BLOCK.equalsIgnoreCase(frmsRep.getVerifyPolicy().getCode())) {			
-//			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
-//		}
-		// 增加风险监控 检查20190809 end
+		
 	}
 }

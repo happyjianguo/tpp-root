@@ -455,11 +455,11 @@ public abstract class BaseTradeT1 {
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(1L);
 		frmsModel.setCardNo(payerAcno);
-		frmsModel.setRecAcct(payeeAcno);
 		frmsModel.setWhoReport("01");
 		frmsModel.setOperStatus(operStatus);
-		//如果是跨行转账赋值应答码
+		//如果是跨行转账赋值应答码和对手账号 
 		if(bizCode.equals("F01")){
+			frmsModel.setRecAcct(payeeAcno);
 			frmsModel.setRespCode(respCode);
 		}
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
