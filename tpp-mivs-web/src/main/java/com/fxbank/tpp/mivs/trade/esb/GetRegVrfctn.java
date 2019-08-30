@@ -111,8 +111,12 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             slf.setId(reqBody.getId());
             vryDef.setSlfEplydPpl(slf);
         }
-        vryDef.setAgtNm(reqBody.getAgtNm());
-        vryDef.setAgtId(reqBody.getAgtId());
+        if(reqBody.getAgtNm() != null && !reqBody.getAgtNm().equals("")) {
+            vryDef.setAgtNm(reqBody.getAgtNm());
+        }
+        if(reqBody.getAgtId() != null && !reqBody.getAgtId().equals("")) {
+            vryDef.setAgtId(reqBody.getAgtId());
+        }
         vryDef.setOpNm(reqBody.getOpNm());
 
         //发送人行请求报文落地
