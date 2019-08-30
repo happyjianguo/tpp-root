@@ -88,7 +88,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         MIVS_324_001_01 mivs324 = new MIVS_324_001_01(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno(), reqBody.getMarketType());
         MIVS_324_001_01_GetRegVrfctn.MsgHdr msgHdr = mivs324.getGetRegVrfctn().getMsgHdr();
         MIVS_324_001_01_GetRegVrfctn.VryDef vryDef = mivs324.getGetRegVrfctn().getVryDef();
-        mivs324.getHeader().setOrigSender(bankNumber);
+        mivs324.getHeader().setOrigSender(settlementBankNo);
         mivs324.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
