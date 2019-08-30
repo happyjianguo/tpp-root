@@ -87,7 +87,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** basInfoOfEntList的值为:" + basInfoOfEntList.toString());
                 //赋循环数据BasInfo附表数据
                 List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
-                myLog.info(logger,"照面信息的条数 = " + regvrfctnInfoTablSelectMaster.getBas_info_cnt());
+                myLog.info(logger,"已查到的照面信息的条数 = " + regvrfctnInfoTablSelectMaster.getBas_info_cnt());
                 int basInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getBas_info_cnt() == null ){
                     basInfoCnt = 0;
@@ -134,7 +134,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** basInfOfSlfEplydPplList的值为:" + basInfOfSlfEplydPplList.toString());
                 //赋循环数据BasInfo附表数据
                 List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
-                myLog.info(logger,"照面信息的条数 = " + regvrfctnInfoTablSelectMaster.getBas_info_cnt());
+                myLog.info(logger,"已查到的照面信息的条数 = " + regvrfctnInfoTablSelectMaster.getBas_info_cnt());
                 int basInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getBas_info_cnt() == null ){
                     basInfoCnt = 0;
@@ -180,7 +180,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** coShrhdrFndInfoList的值为:" + coShrhdrFndInfoList.toString());
                 //赋循环数据CoShrhdrFndInfo附表数据
                 List<MivsRegVrfctnInfoModel.CoShrhdrFndInfo> coShrhdrFndInfosArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.CoShrhdrFndInfo>();
-                myLog.info(logger,"企业股东及出资信息的条数 = " + regvrfctnInfoTablSelectMaster.getCo_shrhdrfnd_info_cnt());
+                myLog.info(logger,"已查到的企业股东及出资信息的条数 = " + regvrfctnInfoTablSelectMaster.getCo_shrhdrfnd_info_cnt());
                 int coShrhdrFndInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getCo_shrhdrfnd_info_cnt() == null ){
                     coShrhdrFndInfoCnt = 0;
@@ -221,7 +221,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** dirSupSrMgrInfoList的值为:" + dirSupSrMgrInfoList.toString());
                 //赋循环数据DirSupSrMgrInfo附表数据
                 List<MivsRegVrfctnInfoModel.DirSupSrMgrInfo> dirSupSrMgrInfosArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.DirSupSrMgrInfo>();
-                myLog.info(logger,"董事监事及高管信息的条数 = " + regvrfctnInfoTablSelectMaster.getDir_supsrsgr_info_cnt());
+                myLog.info(logger,"已查到的董事监事及高管信息的条数 = " + regvrfctnInfoTablSelectMaster.getDir_supsrsgr_info_cnt());
                 int dirSupSrMgrInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getDir_supsrsgr_info_cnt() == null ){
                     dirSupSrMgrInfoCnt = 0;
@@ -257,7 +257,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** chngInfoList的值为:" + chngInfoList.toString());
                 //赋循环数据ChngInfo附表数据
                 List<MivsRegVrfctnInfoModel.ChngInfo> chngInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.ChngInfo>();
-                myLog.info(logger,"变更信息的条数 = " + regvrfctnInfoTablSelectMaster.getChng_info_cnt());
+                myLog.info(logger,"已查到的变更信息的条数 = " + regvrfctnInfoTablSelectMaster.getChng_info_cnt());
                 int chgInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getChng_info_cnt() == null ){
                     chgInfoCnt = 0;
@@ -295,7 +295,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** abnmlBizInfoList的值为:" + abnmlBizInfoList.toString());
                 //赋循环数据AbnmlBizInfo附表数据
                 List<MivsRegVrfctnInfoModel.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.AbnmlBizInfo>();
-                myLog.info(logger,"异常经营信息的条数 = " + regvrfctnInfoTablSelectMaster.getAbnml_biz_info_cnt());
+                myLog.info(logger,"已查到的异常经营信息的条数 = " + regvrfctnInfoTablSelectMaster.getAbnml_biz_info_cnt());
                 int abnInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getAbnml_biz_info_cnt() == null ){
                     abnInfoCnt = 0;
@@ -335,7 +335,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** illDscrtInfoList的值为:" + illDscrtInfoList.toString());
                 //赋循环数据IllDscrtInfo附表数据
                 List<MivsRegVrfctnInfoModel.IllDscrtInfo> illInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.IllDscrtInfo>();
-                myLog.info(logger,"严重违法失信信息的条数 = " + regvrfctnInfoTablSelectMaster.getIll_dscrt_info_cnt());
+                myLog.info(logger,"已查到的严重违法失信信息的条数 = " + regvrfctnInfoTablSelectMaster.getIll_dscrt_info_cnt());
                 int illInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getIll_dscrt_info_cnt() == null ){
                     illInfoCnt = 0;
@@ -375,7 +375,7 @@ public class RtrRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 myLog.info(logger, "*** licNullList的值为:" + licNullList.toString());
                 //赋循环数据LicNull附表数据
                 List<MivsRegVrfctnInfoModel.LicInfo> licInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.LicInfo>();
-                myLog.info(logger,"营业执照作废声明的条数 = " + regvrfctnInfoTablSelectMaster.getLic_null_cnt());
+                myLog.info(logger,"已查到的营业执照作废声明的条数 = " + regvrfctnInfoTablSelectMaster.getLic_null_cnt());
                 int licInfoCnt;
                 if(regvrfctnInfoTablSelectMaster.getLic_null_cnt() == null ){
                     licInfoCnt = 0;
