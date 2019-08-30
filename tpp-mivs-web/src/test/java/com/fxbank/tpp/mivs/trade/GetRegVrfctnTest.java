@@ -100,8 +100,8 @@ public class GetRegVrfctnTest {
             reqBody.setNm("张三");
             reqBody.setId("123456789");
         }
-//        reqBody.setAgtNm("鼎鼎");
-//        reqBody.setAgtId("2121379871230061237");
+        reqBody.setAgtNm("");
+        reqBody.setAgtId("");
         reqBody.setOpNm("张三");
 
         String macDataStr = JsonUtil.toJson(reqBody);

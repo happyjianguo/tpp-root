@@ -71,7 +71,7 @@ public class REQ_50023000208 extends REQ_BASE {
         private String id;    //经营者证件号
         @JSONField(name = "PROXY_NAME")
         private String agtNm;    //代理人姓名
-        @JSONField(name = "PROXY_NAME")
+        @JSONField(name = "PROXY_ID_NO")
         private String agtId;    //代理人身份证件号码
         @JSONField(name = "OPRTR_NAME")
         private String opNm;		//操作员姓名
