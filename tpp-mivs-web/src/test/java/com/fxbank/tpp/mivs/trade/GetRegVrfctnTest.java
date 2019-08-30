@@ -91,7 +91,7 @@ public class GetRegVrfctnTest {
         reqBody.setMarketType("ENT");
         if(reqBody.getMarketType().equals("ENT")){
             reqBody.setEntNm("公司");
-            reqBody.setUniSocCdtCd("91110000801145381H");
+            reqBody.setUniSocCdtCd("91110000801199998H");
             reqBody.setNmOfLglPrsn("张三");
             reqBody.setIdOfLglPrsn("123456789");
         }else if(reqBody.getMarketType().equals("TRA")){

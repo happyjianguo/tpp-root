@@ -53,13 +53,23 @@ public class TxPmtVrfctnSelectDetail extends TradeBase implements TradeExecution
 
         //查询数据落库
         MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModel =  new MivsTxpmtVrfctnInfoModel();
-        txpmtVrfctnInfoModel.setTran_date(reqBody.getOrigTranDate());
-        txpmtVrfctnInfoModel.setSeq_no(reqBody.getOrigSeqNo());
-        txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
-        txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
-        txpmtVrfctnInfoModel.setOrig_instg_pty(reqBody.getOrigInstgPty());
-        txpmtVrfctnInfoModel.setDetail_flag("YES");//查询明细数据
-
+        if(reqBody.getOrigTranDate() != null && !reqBody.getOrigTranDate().equals("")) {
+            txpmtVrfctnInfoModel.setTran_date(reqBody.getOrigTranDate());
+        }
+        if(reqBody.getOrigSeqNo() != null && !reqBody.getOrigSeqNo().equals("")) {
+            txpmtVrfctnInfoModel.setSeq_no(reqBody.getOrigSeqNo());
+        }
+        if(reqBody.getOrgnlDlvrgMsgId() != null && !reqBody.getOrgnlDlvrgMsgId().equals("")) {
+            txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlDlvrgMsgId());
+        }
+        if(reqBody.getOrgnlRcvgMsgId() != null && !reqBody.getOrgnlRcvgMsgId().equals("")) {
+            txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlRcvgMsgId());
+        }
+        if(reqBody.getOrigInstgPty() != null && !reqBody.getOrigInstgPty().equals("")) {
+            txpmtVrfctnInfoModel.setOrig_instg_pty(reqBody.getOrigInstgPty());
+        }
+        txpmtVrfctnInfoModel.setDetail_flag("YES");
+        //查询明细数据
         txpmtVrfctnInfoModel = mivsTxPmtVrfctnInfoService.selectMasterAndAttached(txpmtVrfctnInfoModel); //查询数据库业务数据
         if(txpmtVrfctnInfoModel != null) {
             myLog.info(logger, "查询结果为：" + txpmtVrfctnInfoModel.toString());
