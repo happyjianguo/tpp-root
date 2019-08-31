@@ -66,7 +66,6 @@ public class RegVrfctnSelectTest {
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
-//		reqSysHead.setSourceType("302200");	//银联
         reqSysHead.setBranchId("02002");
         reqSysHead.setUserId("002241");
         reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
@@ -74,7 +73,6 @@ public class RegVrfctnSelectTest {
         reqSysHead.setUserLang("CHINESE");
         reqSysHead.setSeqNo(String.valueOf(Math.abs(new Random().nextInt())));
         reqSysHead.setSystemId("301907");	//网联
-//		reqSysHead.setSystemId("302200");	//银联
         reqSysHead.setCompany("COMPANY");
         reqSysHead.setSourceBranchNo("SOURCE_BRANCH_NO");
         reqSysHead.setDestBranchNo("DEST_BRANCH_NO");
