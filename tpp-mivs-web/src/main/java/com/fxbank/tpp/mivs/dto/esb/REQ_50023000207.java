@@ -71,7 +71,7 @@ public class REQ_50023000207 extends REQ_BASE {
         @JSONField(name = "TXPYR_DIST_NO")
         private String txpyrIdNb;		//纳税人识别号
 
-        @JSONField(name = "TXPYR_INFO_VER_RESULT")
+        @JSONField(name = "TXPYR_INFO_RESULT")
         private String rslt;//纳税核查结果
 
         //“数据源日期”为税务总局所返回数据的实际收集日期，目前为一般为 T-3
