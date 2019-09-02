@@ -109,7 +109,7 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         fdbk.setSysInd("MIIT");
         fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(reqBody.getOrgnlDlvrgMsgId());
         fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(reqBody.getOrgnlRcvgMsgId());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setMobNb(moblePhoneAdd(reqBody.getMobNb()));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setMobNb(moblePhoneAdd(reqBody.getMobNb(),"Y"));
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setNm(reqBody.getNm());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setIdTp(reqBody.getIdTp());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setId(reqBody.getId());

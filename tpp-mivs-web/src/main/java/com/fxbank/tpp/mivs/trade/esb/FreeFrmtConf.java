@@ -91,10 +91,10 @@ public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        orgnlMsg.setMsgId(reqBody.getOrigMsgId());
-        orgnlMsg.getInstgPty().setInstgDrctPty(reqBody.getOrigInstgDrctPty());
-        orgnlMsg.getInstgPty().setInstgPty(reqBody.getOrigInstgPty());
-        mivs333.getFreeFrmtConf().getFreeFrmtInf().setMsgCntt(reqBody.getMsgCntt());
+        orgnlMsg.setMsgId(isOrNotNull(reqBody.getOrigMsgId(),"原报文标识号"));
+        orgnlMsg.getInstgPty().setInstgDrctPty(isOrNotNull(reqBody.getOrigInstgDrctPty(),"原发起直接参与机构"));
+        orgnlMsg.getInstgPty().setInstgPty(isOrNotNull(reqBody.getOrigInstgPty(),"原发起参与机构"));
+        mivs333.getFreeFrmtConf().getFreeFrmtInf().setMsgCntt(isOrNotNull(reqBody.getMsgCntt(),"附加信息"));
 
         //发送人行请求数据落库
         MivsFreeFrmtModel freeFrmtModelInsert =  new MivsFreeFrmtModel();

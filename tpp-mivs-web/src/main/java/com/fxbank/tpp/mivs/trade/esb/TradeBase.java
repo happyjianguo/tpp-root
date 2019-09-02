@@ -104,7 +104,7 @@ public class TradeBase {
 //	}
 
 	/**
-	 * 判断是否为空
+	 * 判断字符串是否为空
 	 */
 	public String isOrNotNull(String stringNotNull, String msgNotNull) throws MivsTradeExecuteException {
 		if(stringNotNull == null || stringNotNull == ""){
@@ -135,14 +135,19 @@ public class TradeBase {
 	/**
 	 * 手机号添加86
 	 */
-	public String moblePhoneAdd(String moblePhone) {
-		String subT = moblePhone.substring(0,2);
-		if(!subT.equals("86")) {
-			StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
-			sb.insert(0, "86");
-			moblePhone = sb.toString();
+	public String moblePhoneAdd(String moblePhone, String isOrNotFlag) throws MivsTradeExecuteException{
+		if(isOrNotFlag == "Y" && (moblePhone == null || moblePhone == "")){
+			MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_10003","手机号码必填");
+			throw e;
+		}else {
+			String subT = moblePhone.substring(0, 2);
+			if (!subT.equals("86")) {
+				StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
+				sb.insert(0, "86");
+				moblePhone = sb.toString();
+			}
+			return moblePhone;
 		}
-		return moblePhone;
 	}
 
 	/**

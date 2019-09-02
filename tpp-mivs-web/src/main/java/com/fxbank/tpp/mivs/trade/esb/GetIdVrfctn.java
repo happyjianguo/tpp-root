@@ -100,16 +100,16 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        vryDef.setMobNb(moblePhoneAdd(reqBody.getMobNb()));
-        vryDef.setNm(reqBody.getNm());
-        vryDef.setIdTp(reqBody.getIdTp());
-        vryDef.setId(reqBody.getId());
+        vryDef.setMobNb(moblePhoneAdd(reqBody.getMobNb(),"Y"));
+        vryDef.setNm(isOrNotNull(reqBody.getNm(),"姓名"));
+        vryDef.setIdTp(isOrNotNull(reqBody.getIdTp(),"证件类型"));
+        vryDef.setId(isOrNotNull(reqBody.getId(),"证件号码"));
         if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
             vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
         }else if(reqBody.getBizRegNb() != null && !reqBody.getBizRegNb().equals("")){
         vryDef.setBizRegNb(reqBody.getBizRegNb());
         }
-        vryDef.setOpNm(reqBody.getOpNm());
+        vryDef.setOpNm(isOrNotNull(reqBody.getOpNm(),"操作员姓名"));
 
         //发送人行请求数据落库
         MivsIdVrfctnInfoModel idVrfctnTableInsert =  new MivsIdVrfctnInfoModel();

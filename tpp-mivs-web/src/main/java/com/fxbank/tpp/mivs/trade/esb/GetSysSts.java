@@ -78,17 +78,15 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
         }
         myLog.info(logger, "企业信息联网核查查业务受理时间查询，机构号：" + branchId + "，人行行号：" + bankNumber);
 
-        //发起行行号
+        //拼人行345报文
         mivs345.getHeader().setOrigSender(settlementBankNo);
         mivs345.getHeader().setOrigReceiver("0000");
         msgHdr.getInstgPty().setInstgDrctPty(settlementBankNo);
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-
-        mivs345.getSysSts().getQueInf().setSysInd(reqBody.getSysInd());
-        mivs345.getSysSts().getQueInf().setQueDt(reqBody.getQueDt());
-
+        mivs345.getSysSts().getQueInf().setSysInd(isOrNotNull(reqBody.getSysInd(),"核查系统标识"));
+        mivs345.getSysSts().getQueInf().setQueDt(dateToIsoDate(reqBody.getQueDt(),"查询日期","Y"));
         mivs345 = (MIVS_345_001_01) pmtsService.sendToPmts(mivs345); // 发送请求，实时等待990
 
         String msgid= mivs345.getHeader().getMesgID();    //为同步等待345，组合三要素
