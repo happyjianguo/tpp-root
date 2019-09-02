@@ -67,22 +67,6 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
             MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00001","统一社会信用代码和纳税人识别号只能填写其一");
             throw e;
         }
-        if(reqBody.getCntt() == null || reqBody.getCntt().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","疑义反馈内容必填");
-            throw e;
-        }
-        if(reqBody.getContactNb() == null || reqBody.getContactNb().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人电话必填");
-            throw e;
-        }
-        if(reqBody.getContactNm() == null || reqBody.getContactNm().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人姓名必填");
-            throw e;
-        }
-        if(reqBody.getDataResrcDt() ==null || reqBody.getDataResrcDt().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011", "数据源日期必填");
-            throw e;
-        }
 
         MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModel = new MivsTxpmtVrfctnInfoModel();
         txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
@@ -132,11 +116,11 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         }else if(reqBody.getTxpyrIdNb() != null && !reqBody.getTxpyrIdNb().equals("")) {
             fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(reqBody.getTxpyrIdNb());
         }
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(reqBody.getRslt());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(dateToIsoDate(reqBody.getDataResrcDt()));
-        fdbk.setCntt(reqBody.getCntt());
-        fdbk.setContactNb(reqBody.getContactNb());
-        fdbk.setContactNm(reqBody.getContactNm());
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"手机号码核查结果"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(dateToIsoDate(reqBody.getDataResrcDt(),"数据源日期","Y"));
+        fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容"));
+        fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话"));
+        fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名"));
         if(reqBody.getTxpyrInfoArrayMsg() != null && !reqBody.getTxpyrInfoArrayMsg().isEmpty()){
             List<MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf> txpmtInfList = new ArrayList<MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf>();
             for(REQ_50023000207.txpyrInfoArray info:reqBody.getTxpyrInfoArrayMsg()){

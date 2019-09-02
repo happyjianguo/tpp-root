@@ -61,23 +61,6 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         REQ_50023000211 req = (REQ_50023000211) dto;//接收ESB请求报文
         REQ_50023000211.REQ_BODY reqBody = req.getReqBody();
 
-        if(reqBody.getCntt() == null || reqBody.getCntt().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","疑义反馈内容必填");
-            throw e;
-        }
-        if(reqBody.getContactNb() == null || reqBody.getContactNb().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人电话必填");
-            throw e;
-        }
-        if(reqBody.getContactNm() == null || reqBody.getContactNm().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人姓名必填");
-            throw e;
-        }
-        if(reqBody.getDataResrcDt() ==null || reqBody.getDataResrcDt().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011", "数据源日期必填");
-            throw e;
-        }
-
         MivsRegVrfctnInfoModel regVrfctnInfoModel = new MivsRegVrfctnInfoModel();
         regVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
         regVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
@@ -137,11 +120,11 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
             vrfctnInfOfSlfEplydPpl.setId(reqBody.getId());
             fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setOrgnlVrfctnInfOfSlfEplydPpl(vrfctnInfOfSlfEplydPpl);
         }
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(reqBody.getRslt());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(dateToIsoDate(reqBody.getDataResrcDt()));
-        fdbk.setCntt(reqBody.getCntt());
-        fdbk.setContactNb(reqBody.getContactNb());
-        fdbk.setContactNm(reqBody.getContactNm());
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"手机号码核查结果"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(dateToIsoDate(reqBody.getDataResrcDt(),"数据源日期","Y"));
+        fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容"));
+        fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话"));
+        fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名"));
 
         //信息落地入库
         myLog.info(logger, "Date = " + req.getSysDate());

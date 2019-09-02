@@ -99,9 +99,9 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstdPty().setInstdPty("0000");
         fdbk.setEntNm(reqBody.getEntNm());
         fdbk.setTraNm(reqBody.getTraNm());
-        fdbk.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        fdbk.setAcctSts(reqBody.getAcctSts());
-        fdbk.setChngDt(dateToIsoDate(reqBody.getChngDt()));
+        fdbk.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码"));
+        fdbk.setAcctSts(isOrNotNull(reqBody.getAcctSts(),"账户状态标识"));
+        fdbk.setChngDt(dateToIsoDate(reqBody.getChngDt(),"变更日期","Y"));
 
         //发送人行请求数据落库
         MivsAcctInfoFdbkModel mivsAcctInfoFdbkModelInsert =  new MivsAcctInfoFdbkModel();

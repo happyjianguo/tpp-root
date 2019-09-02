@@ -13,6 +13,7 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 
+import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,22 +104,38 @@ public class TradeBase {
 //	}
 
 	/**
+	 * 判断是否为空
+	 */
+	public String isOrNotNull(String stringNotNull, String msgNotNull) throws MivsTradeExecuteException {
+		if(stringNotNull == null || stringNotNull == ""){
+			MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_10001",msgNotNull + "必填");
+			throw e;
+		}
+		return stringNotNull;
+	}
+
+	/**
 	 * ESB日期转换成人行日期
 	 */
-	public String  dateToIsoDate(String idate) {
-		if(idate.length() == 8) {
-			StringBuilder sb = new StringBuilder(idate);//构造一个StringBuilder对象
-			sb.insert(4, "-");
-			sb.insert(7, "-");
-			idate = sb.toString();
+	public String dateToIsoDate(String idate, String msgNotNull, String isOrNotFlag) throws MivsTradeExecuteException{
+		if(isOrNotFlag == "Y" && (idate == null || idate == "")){
+			MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_10002",msgNotNull + "必填");
+			throw e;
+		}else {
+			if (idate.length() == 8) {
+				StringBuilder sb = new StringBuilder(idate);//构造一个StringBuilder对象
+				sb.insert(4, "-");
+				sb.insert(7, "-");
+				idate = sb.toString();
+			}
+			return idate;
 		}
-		return idate;
 	}
 
 	/**
 	 * 手机号添加86
 	 */
-	public String  moblePhoneAdd(String moblePhone) {
+	public String moblePhoneAdd(String moblePhone) {
 		String subT = moblePhone.substring(0,2);
 		if(!subT.equals("86")) {
 			StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
@@ -131,7 +148,7 @@ public class TradeBase {
 	/**
 	 * 手机号删除86
 	 */
-	public String  moblePhoneDel(String moblePhone) {
+	public String moblePhoneDel(String moblePhone) {
 		String subT = moblePhone.substring(0,2);
 		if(subT.equals("86")) {
 			StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象

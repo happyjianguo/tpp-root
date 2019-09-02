@@ -66,18 +66,6 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
             MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","统一社会信用代码和工商注册号只能填写其一");
             throw e;
         }
-        if(reqBody.getCntt() == null || reqBody.getCntt().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","疑义反馈内容必填");
-            throw e;
-        }
-        if(reqBody.getContactNb() == null || reqBody.getContactNb().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人电话必填");
-            throw e;
-        }
-        if(reqBody.getContactNm() == null || reqBody.getContactNm().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人姓名必填");
-            throw e;
-        }
 
         MivsIdVrfctnInfoModel idVrfctnInfoModel = new MivsIdVrfctnInfoModel();
         idVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
@@ -130,10 +118,10 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         }else if(reqBody.getBizRegNb() != null && !reqBody.getBizRegNb().equals("")) {
             fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setBizRegNb(reqBody.getBizRegNb());
         }
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(reqBody.getRslt());
-        fdbk.setCntt(reqBody.getCntt());
-        fdbk.setContactNb(reqBody.getContactNb());
-        fdbk.setContactNm(reqBody.getContactNm());
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"手机号码核查结果"));
+        fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容"));
+        fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话"));
+        fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名"));
 
         //信息落地入库
 //        MivsIdVrfctnInfoModel idVrfctnInfoModel = new MivsIdVrfctnInfoModel();

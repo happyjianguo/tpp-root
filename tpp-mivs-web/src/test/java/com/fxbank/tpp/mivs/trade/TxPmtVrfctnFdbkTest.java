@@ -65,7 +65,7 @@ public class TxPmtVrfctnFdbkTest {
         req = new REQ_50023000207();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("06");
+        reqSysHead.setSceneId("07");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -89,13 +89,13 @@ public class TxPmtVrfctnFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrgnlDlvrgMsgId("2019070100003762");
-        reqBody.setOrgnlRcvgMsgId("2019070100000013");
-        reqBody.setCompanyName("拉哈哈娱乐股份有限公司");
-        reqBody.setUniSocCdtCd("52188802499222");
+        reqBody.setOrgnlDlvrgMsgId("2019082900004483");
+        reqBody.setOrgnlRcvgMsgId("2019082900306521");
+        reqBody.setCompanyName("北京市政交通一卡通有限公司");
+        reqBody.setUniSocCdtCd("91110000801145381H");
 //        reqBody.setTxpyrIdNb("123456789123456789");
-        reqBody.setRslt("WIDT");
-        reqBody.setDataResrcDt("2019-04-29");
+        reqBody.setRslt("MCHD");
+//        reqBody.setDataResrcDt("2019-04-29");
 
         List<REQ_50023000207.txpyrInfoArray> txpmtInfArrayList = new ArrayList<REQ_50023000207.txpyrInfoArray>();
         for(int i=0; i<4; i++){
