@@ -41,7 +41,7 @@ public class MivsFreeFrmtService implements IMivsFreeFrmtService {
         infoEntity.setRplyFlag(mivsFreeFrmtModel.getRply_flag());
         infoEntity.setMsgCntt(mivsFreeFrmtModel.getMsg_cntt());
         infoEntity.setIsornotRsp(mivsFreeFrmtModel.getIsornot_rsp());
-        infoEntityMapper.insertSelective(infoEntity);
+        infoEntityMapper.insert(infoEntity);
     }
 
     @Override

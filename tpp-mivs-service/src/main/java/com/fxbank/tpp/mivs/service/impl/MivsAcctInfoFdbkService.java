@@ -49,7 +49,7 @@ public class MivsAcctInfoFdbkService implements IMivsAcctInfoFdbkService {
         info.setRemark2(mivsAcctInfoFdbkModel.getRemark2());
         info.setRemark3(mivsAcctInfoFdbkModel.getRemark3());
 
-        mapper.insertSelective(info);
+        mapper.insert(info);
     }
 
     @Override
