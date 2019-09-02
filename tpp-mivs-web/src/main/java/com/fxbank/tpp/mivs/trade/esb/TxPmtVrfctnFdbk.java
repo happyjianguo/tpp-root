@@ -79,6 +79,10 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
             MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人姓名必填");
             throw e;
         }
+        if(reqBody.getDataResrcDt() ==null || reqBody.getDataResrcDt().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011", "数据源日期必填");
+            throw e;
+        }
 
         MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModel = new MivsTxpmtVrfctnInfoModel();
         txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
@@ -129,7 +133,7 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
             fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(reqBody.getTxpyrIdNb());
         }
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(reqBody.getRslt());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(reqBody.getDataResrcDt());
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(dateToIsoDate(reqBody.getDataResrcDt()));
         fdbk.setCntt(reqBody.getCntt());
         fdbk.setContactNb(reqBody.getContactNb());
         fdbk.setContactNm(reqBody.getContactNm());
