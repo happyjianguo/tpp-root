@@ -67,6 +67,18 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
             MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00001","统一社会信用代码和纳税人识别号只能填写其一");
             throw e;
         }
+        if(reqBody.getCntt() == null || reqBody.getCntt().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","疑义反馈内容必填");
+            throw e;
+        }
+        if(reqBody.getContactNb() == null || reqBody.getContactNb().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人电话必填");
+            throw e;
+        }
+        if(reqBody.getContactNm() == null || reqBody.getContactNm().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人姓名必填");
+            throw e;
+        }
 
         MivsTxpmtVrfctnInfoModel txpmtVrfctnInfoModel = new MivsTxpmtVrfctnInfoModel();
         txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());

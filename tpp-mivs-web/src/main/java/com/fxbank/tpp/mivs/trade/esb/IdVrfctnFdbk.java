@@ -63,7 +63,19 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         REQ_50023000203.REQ_BODY reqBody = req.getReqBody();
         if(reqBody.getBizRegNb() != null && !reqBody.getBizRegNb().equals("") &&
                 reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")){
-            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00001","统一社会信用代码和工商注册号只能填写其一");
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","统一社会信用代码和工商注册号只能填写其一");
+            throw e;
+        }
+        if(reqBody.getCntt() == null || reqBody.getCntt().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","疑义反馈内容必填");
+            throw e;
+        }
+        if(reqBody.getContactNb() == null || reqBody.getContactNb().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人电话必填");
+            throw e;
+        }
+        if(reqBody.getContactNm() == null || reqBody.getContactNm().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人姓名必填");
             throw e;
         }
 

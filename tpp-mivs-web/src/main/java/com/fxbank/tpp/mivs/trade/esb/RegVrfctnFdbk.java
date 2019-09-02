@@ -61,6 +61,19 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         REQ_50023000211 req = (REQ_50023000211) dto;//接收ESB请求报文
         REQ_50023000211.REQ_BODY reqBody = req.getReqBody();
 
+        if(reqBody.getCntt() == null || reqBody.getCntt().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","疑义反馈内容必填");
+            throw e;
+        }
+        if(reqBody.getContactNb() == null || reqBody.getContactNb().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人电话必填");
+            throw e;
+        }
+        if(reqBody.getContactNm() == null || reqBody.getContactNm().equals("")){
+            MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_00011","联系人姓名必填");
+            throw e;
+        }
+
         MivsRegVrfctnInfoModel regVrfctnInfoModel = new MivsRegVrfctnInfoModel();
         regVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
         regVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
