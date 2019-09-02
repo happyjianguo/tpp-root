@@ -107,7 +107,7 @@ public class TradeBase {
 	 * 判断字符串是否为空
 	 */
 	public String isOrNotNull(String stringNotNull, String msgNotNull) throws MivsTradeExecuteException {
-		if(stringNotNull == null || stringNotNull == ""){
+		if(stringNotNull == null || stringNotNull.equals("")){
 			MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_10001",msgNotNull + "必填");
 			throw e;
 		}
@@ -118,7 +118,7 @@ public class TradeBase {
 	 * ESB日期转换成人行日期
 	 */
 	public String dateToIsoDate(String idate, String msgNotNull, String isOrNotFlag) throws MivsTradeExecuteException{
-		if(isOrNotFlag == "Y" && (idate == null || idate == "")){
+		if(isOrNotFlag == "Y" && (idate == null || idate.equals(""))){
 			MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_10002",msgNotNull + "必填");
 			throw e;
 		}else {
@@ -136,7 +136,7 @@ public class TradeBase {
 	 * 手机号添加86
 	 */
 	public String moblePhoneAdd(String moblePhone, String isOrNotFlag) throws MivsTradeExecuteException{
-		if(isOrNotFlag == "Y" && (moblePhone == null || moblePhone == "")){
+		if(isOrNotFlag == "Y" && (moblePhone == null || moblePhone.equals(""))){
 			MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_10003","手机号码必填");
 			throw e;
 		}else {
