@@ -54,17 +54,29 @@ public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
         sysStsNtfctnModel.setPlat_time(mivs801.getSysTime());
         sysStsNtfctnModel.setMivs_sts("06");
         sysStsNtfctnModel.setMsg_id(msgHdr.getMsgId());
+        myLog.info(logger,"msgHdr.getMsgId() = " + msgHdr.getMsgId());
         sysStsNtfctnModel.setCre_dt_tm(msgHdr.getCreDtTm());
+        myLog.info(logger,"msgHdr.getCreDtTm() = " + msgHdr.getCreDtTm());
         sysStsNtfctnModel.setInstg_drct_pty(msgHdr.getInstgPty().getInstgDrctPty());
+        myLog.info(logger,"msgHdr.getInstgPty().getInstgDrctPty() = " + msgHdr.getInstgPty().getInstgDrctPty());
         sysStsNtfctnModel.setInstg_pty(msgHdr.getInstgPty().getInstgPty());
+        myLog.info(logger,"msgHdr.getInstgPty().getInstgPty() = " + msgHdr.getInstgPty().getInstgPty());
         sysStsNtfctnModel.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
+        myLog.info(logger,"msgHdr.getInstdPty().getInstdDrctPty() = " + msgHdr.getInstdPty().getInstdDrctPty());
         sysStsNtfctnModel.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
+        myLog.info(logger,"msgHdr.getInstdPty().getInstdPty() = " + msgHdr.getInstdPty().getInstdPty());
         sysStsNtfctnModel.setCur_sys_dt(sysStsInf.getCurSysDt());
+        myLog.info(logger,"sysStsInf.getCurSysDt() = " + sysStsInf.getCurSysDt());
         sysStsNtfctnModel.setNxt_sys_dt(sysStsInf.getNxtSysDt());
+        myLog.info(logger,"sysStsInf.getNxtSysDt() = " + sysStsInf.getNxtSysDt());
         sysStsNtfctnModel.setSys_ind(sysStsInf.getSvcInf().getSysInd());
+        myLog.info(logger,"sysStsInf.getSvcInf().getSysInd() = " + sysStsInf.getSvcInf().getSysInd());
         sysStsNtfctnModel.setSvc_ind(sysStsInf.getSvcInf().getSvcInd());
-        sysStsNtfctnModel.setNxt_sys_cl_tm(sysStsInf.getSvcInf().getNxtSysClTm());
+        myLog.info(logger,"sysStsInf.getSvcInf().getSvcInd() = " + sysStsInf.getSvcInf().getSvcInd());
+        sysStsNtfctnModel.setNxt_sys_cl_tm(sysStsInf.getSvcInf().getSvcInd());
+        myLog.info(logger,"sysStsInf.getSvcInf().getSvcInd() = " + sysStsInf.getSvcInf().getSvcInd());
         sysStsNtfctnModel.setNxt_sys_op_tm(sysStsInf.getSvcInf().getNxtSysOpTm());
+        myLog.info(logger,"sysStsInf.getSvcInf().getNxtSysOpTm() = " + sysStsInf.getSvcInf().getNxtSysOpTm());
 
         //信息落地
         mivsSysStsNtfctnService.insertInfo(sysStsNtfctnModel);

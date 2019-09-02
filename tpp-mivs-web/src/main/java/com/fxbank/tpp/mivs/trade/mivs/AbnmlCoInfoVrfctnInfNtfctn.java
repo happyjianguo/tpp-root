@@ -56,17 +56,29 @@ public class AbnmlCoInfoVrfctnInfNtfctn extends TradeBase implements TradeExecut
         mivsAbnmlVrfctnModel.setPlat_time(mivs331.getSysTime());
         mivsAbnmlVrfctnModel.setMivs_sts("06");
         mivsAbnmlVrfctnModel.setMsg_id(msgHdr.getMsgId());
+        myLog.info(logger,"msgHdr.getMsgId() = " + msgHdr.getMsgId());
         mivsAbnmlVrfctnModel.setCre_dt_tm(msgHdr.getCreDtTm());
+        myLog.info(logger,"msgHdr.getCreDtTm() = " + msgHdr.getCreDtTm());
         mivsAbnmlVrfctnModel.setInstg_drct_pty(msgHdr.getInstgPty().getInstgDrctPty());
+        myLog.info(logger,"msgHdr.getInstgPty().getInstgDrctPty() = " + msgHdr.getInstgPty().getInstgDrctPty());
         mivsAbnmlVrfctnModel.setInstg_pty(msgHdr.getInstgPty().getInstgPty());
+        myLog.info(logger,"msgHdr.getInstgPty().getInstgPty() = " + msgHdr.getInstgPty().getInstgPty());
         mivsAbnmlVrfctnModel.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
+        myLog.info(logger,"msgHdr.getInstdPty().getInstdDrctPty() = " + msgHdr.getInstdPty().getInstdDrctPty());
         mivsAbnmlVrfctnModel.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
+        myLog.info(logger,"msgHdr.getInstdPty().getInstdPty() = " + msgHdr.getInstdPty().getInstdPty());
         mivsAbnmlVrfctnModel.setCo_nm(abnmlVrfctnInf.getAbnmlCo().getCoNm());
+        myLog.info(logger,"abnmlVrfctnInf.getAbnmlCo().getCoNm() = " + abnmlVrfctnInf.getAbnmlCo().getCoNm());
         mivsAbnmlVrfctnModel.setUni_soc_cdt_cd(abnmlVrfctnInf.getAbnmlCo().getUniSocCdtCd());
+        myLog.info(logger,"abnmlVrfctnInf.getAbnmlCo().getUniSocCdtCd() = " + abnmlVrfctnInf.getAbnmlCo().getUniSocCdtCd());
         mivsAbnmlVrfctnModel.setMob_nb(abnmlVrfctnInf.getAbnmlPhNb().getPhNb());
+        myLog.info(logger,"abnmlVrfctnInf.getAbnmlPhNb().getPhNb() = " + abnmlVrfctnInf.getAbnmlPhNb().getPhNb());
         mivsAbnmlVrfctnModel.setNm(abnmlVrfctnInf.getAbnmlPhNb().getNm());
+        myLog.info(logger,"abnmlVrfctnInf.getAbnmlPhNb().getNm() = " + abnmlVrfctnInf.getAbnmlPhNb().getNm());
         mivsAbnmlVrfctnModel.setAbnml_type(abnmlVrfctnInf.getAbnmlType());
+        myLog.info(logger,"abnmlVrfctnInf.getAbnmlType() = " + abnmlVrfctnInf.getAbnmlType());
         mivsAbnmlVrfctnModel.setDescrip(abnmlVrfctnInf.getDESC());
+        myLog.info(logger,"abnmlVrfctnInf.getDESC()) = " + abnmlVrfctnInf.getDESC());
 
         //信息落地
         abnmlVrfctnService.insertStart(mivsAbnmlVrfctnModel);

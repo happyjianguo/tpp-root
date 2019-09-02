@@ -55,14 +55,23 @@ public class AbnmlAgtInfoVrfctnInfNtfctn extends TradeBase implements TradeExecu
         mivsAbnmlVrfctnModel.setPlat_time(mivs330.getSysTime());
         mivsAbnmlVrfctnModel.setMivs_sts("06");
         mivsAbnmlVrfctnModel.setMsg_id(msgHdr.getMsgId());
+        myLog.info(logger,"msgHdr.getMsgId() = " + msgHdr.getMsgId());
         mivsAbnmlVrfctnModel.setCre_dt_tm(msgHdr.getCreDtTm());
+        myLog.info(logger,"msgHdr.getCreDtTm() = " + msgHdr.getCreDtTm());
         mivsAbnmlVrfctnModel.setInstg_drct_pty(msgHdr.getInstgPty().getInstgDrctPty());
+        myLog.info(logger,"msgHdr.getInstgPty().getInstgDrctPty() = " + msgHdr.getInstgPty().getInstgDrctPty());
         mivsAbnmlVrfctnModel.setInstg_pty(msgHdr.getInstgPty().getInstgPty());
+        myLog.info(logger,"msgHdr.getInstgPty().getInstgPty() = " + msgHdr.getInstgPty().getInstgPty());
         mivsAbnmlVrfctnModel.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
+        myLog.info(logger,"msgHdr.getInstdPty().getInstdDrctPty() = " + msgHdr.getInstdPty().getInstdDrctPty());
         mivsAbnmlVrfctnModel.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
+        myLog.info(logger,"msgHdr.getInstdPty().getInstdPty() = " + msgHdr.getInstdPty().getInstdPty());
         mivsAbnmlVrfctnModel.setOrgnl_instg_pty(abnmlVrfctnInf.getOrgnlInstgPty());
+        myLog.info(logger,"abnmlVrfctnInf.getOrgnlInstgPty() = " + abnmlVrfctnInf.getOrgnlInstgPty());
         mivsAbnmlVrfctnModel.setAbnml_type(abnmlVrfctnInf.getAbnmlType());
+        myLog.info(logger,"abnmlVrfctnInf.getAbnmlType() = " + abnmlVrfctnInf.getAbnmlType());
         mivsAbnmlVrfctnModel.setDescrip(abnmlVrfctnInf.getDESC());
+        myLog.info(logger,"abnmlVrfctnInf.getDESC() = " + abnmlVrfctnInf.getDESC());
 
         //信息落地
         abnmlVrfctnService.insertStart(mivsAbnmlVrfctnModel);
