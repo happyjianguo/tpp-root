@@ -106,10 +106,12 @@ public class TradeBase {
 	 * ESB日期转换成人行日期
 	 */
 	public String  dateToIsoDate(String idate) {
-		StringBuilder sb = new StringBuilder(idate);//构造一个StringBuilder对象
-		sb.insert(4, "-");
-		sb.insert(7, "-");
-		idate = sb.toString();
+		if(idate.length() == 8) {
+			StringBuilder sb = new StringBuilder(idate);//构造一个StringBuilder对象
+			sb.insert(4, "-");
+			sb.insert(7, "-");
+			idate = sb.toString();
+		}
 		return idate;
 	}
 
