@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxbank.tpp.bocm.mapper.BocmRcvLogMapper">
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.bocm.entity.BocmRcvLog">
+    <id column="PLAT_DATE" jdbcType="DECIMAL" property="platDate" />
+    <id column="PLAT_TRACE" jdbcType="DECIMAL" property="platTrace" />
+    <result column="PLAT_TIME" jdbcType="DECIMAL" property="platTime" />
+    <result column="SOURCE_TYPE" jdbcType="NVARCHAR" property="sourceType" />
+    <result column="TX_BRANCH" jdbcType="NVARCHAR" property="txBranch" />
+    <result column="TRAN_TYPE" property="tranType" jdbcType="NVARCHAR" />
+    <result column="TX_IND" jdbcType="NVARCHAR" property="txInd" />
+    <result column="TX_CODE" jdbcType="NVARCHAR" property="txCode" />
+    <result column="DC_FLAG" jdbcType="NVARCHAR" property="dcFlag" />
+    <result column="TX_AMT" jdbcType="DECIMAL" property="txAmt" />
+    <result column="TX_DATE" jdbcType="DECIMAL" property="txDate" />
+    <result column="ACT_BAL" jdbcType="DECIMAL" property="actBal" />   
+    <result column="FEE_FLAG" jdbcType="NVARCHAR" property="feeFlag" />
+    <result column="FEE" jdbcType="DECIMAL" property="fee" />
+    <result column="PROXY_FLAG" jdbcType="NVARCHAR" property="proxyFlag" />
+    <result column="PROXY_FEE" jdbcType="DECIMAL" property="proxyFee" />
+    <result column="BOCM_FEE_FLAG" jdbcType="NVARCHAR" property="proxyFlag" />
+    <result column="BOCM_FEE" jdbcType="DECIMAL" property="proxyFee" />
+    <result column="HOST_DATE" jdbcType="DECIMAL" property="hostDate" />
+    <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />  
+    <result column="SND_BANKNO" jdbcType="NVARCHAR" property="sndBankno" />
+    <result column="RCV_BANKNO" jdbcType="NVARCHAR" property="rcvBankno" />
+    <result column="PAYER_BANK" jdbcType="NVARCHAR" property="payerBank" />
+    <result column="PAYER_ACTTP" jdbcType="NVARCHAR" property="payerActtp" />
+    <result column="PAYER_ACNO" jdbcType="NVARCHAR" property="payerAcno" />
+    <result column="PAYER_NAME" jdbcType="NVARCHAR" property="payerName" />
+    <result column="PAYEE_BANK" jdbcType="NVARCHAR" property="payeeBank" />
+    <result column="PAYEE_ACTTP" jdbcType="NVARCHAR" property="payeeActtp" />
+    <result column="PAYEE_ACNO" jdbcType="NVARCHAR" property="payeeAcno" />
+    <result column="PAYEE_NAME" jdbcType="NVARCHAR" property="payeeName" />
+    <result column="BOCM_BRANCH" jdbcType="NVARCHAR" property="bocmBranch" />
+    <result column="BOCM_DATE" jdbcType="DECIMAL" property="bocmDate" />
+    <result column="BOCM_TIME" jdbcType="DECIMAL" property="bocmTime" />
+    <result column="BOCM_TRACENO" jdbcType="NVARCHAR" property="bocmTraceno" />
+    <result column="CHECK_FLAG" jdbcType="NVARCHAR" property="checkFlag" />
+    <result column="HOST_STATE" jdbcType="NVARCHAR" property="hostState" />
+    <result column="BOCM_STATE" jdbcType="NVARCHAR" property="bocmState" />
+    <result column="TX_TEL" jdbcType="NVARCHAR" property="txTel" />
+    <result column="CHK_TEL" jdbcType="NVARCHAR" property="chkTel" />
+    <result column="AUTH_TEL" jdbcType="NVARCHAR" property="authTel" />
+    <result column="PRINT" jdbcType="NVARCHAR" property="print" />
+    <result column="INFO" jdbcType="NVARCHAR" property="info" />
+    <result column="RET_CODE" jdbcType="NVARCHAR" property="retCode" />
+    <result column="RET_MSG" jdbcType="NVARCHAR" property="retMsg" />
+    <result column="HOST_BRANCH" jdbcType="NVARCHAR" property="hostBranch" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SOURCE_TYPE, TX_BRANCH, TRAN_TYPE,TX_IND, TX_CODE,DC_FLAG, 
+    TX_AMT,TX_DATE, ACT_BAL, HOST_DATE, HOST_TRACENO, PAYER_ACNO, PAYER_NAME, PAYEE_ACNO, PAYEE_NAME, 
+    BOCM_BRANCH, BOCM_DATE, BOCM_TRACENO, CHECK_FLAG, HOST_STATE, BOCM_STATE, TX_TEL, 
+    CHK_TEL, AUTH_TEL, PRINT, INFO, RET_CODE, RET_MSG, HOST_BRANCH,
+    FEE_FLAG,FEE,SND_BANKNO,RCV_BANKNO,PAYER_BANK,PAYER_ACTTP,PAYEE_BANK,PAYEE_ACTTP
+    from BOCM_RCV_LOG
+  </select>
+  <select id="selectRcvTrace" resultMap="BaseResultMap">
+    select * from bocm_rcv_log
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+	  <if test="payeeAcno != null and payeeAcno != ''">
+        and payee_acno <![CDATA[ = ]]> #{payeeAcno}
+      </if>
+      <if test="hostTraceno != null and hostTraceno != ''">
+        and host_traceno <![CDATA[ = ]]> #{hostTraceno}
+      </if>
+      <if test="platTraceno != null and platTraceno != ''">
+        and plat_trace <![CDATA[ = ]]> #{platTraceno}
+      </if>
+      <if test="begDate != null and begDate != ''">
+        and tx_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and tx_date <![CDATA[ <= ]]> #{endDate}
+      </if>
+    </trim>
+     order by plat_trace desc
+  </select>
+
+  <select id="selectCheckedTrace" resultMap="BaseResultMap">
+    select plat_date, plat_trace, plat_time, source_type, tx_branch,tran_type, tx_ind,tx_code, dc_flag, 
+    tx_amt, host_date, host_traceno, payer_acno, payer_name, payee_acno, payee_name,
+    fee,fee_flag,proxy_fee,proxy_flag, 
+    bocm_branch, bocm_date, bocm_traceno, check_flag, host_state, bocm_state, tx_tel, 
+    chk_tel, auth_tel, print, info,ret_code,ret_msg,host_branch,
+    fee_flag,fee,snd_bankno,rcv_bankno,payer_bank,payer_acttp,payee_bank,payee_acttp
+    from bocm_rcv_log where tx_date=#{date} and host_state=1 and check_flag in ('2','3')
+  </select>
+  <select id="selectTraceNum" resultType="java.lang.String" >
+    select count(*) as num from bocm_rcv_log where tx_date=#{date}  
+     <if test='checkFlag != null and checkFlag != ""'>
+        and check_flag = #{checkFlag}
+     </if>
+  </select>
+  
+  <select id="selectChkRcvTotalSum" resultType="java.lang.String" >
+    select sum(tx_amt) as sum from bocm_rcv_log where 
+     tx_date=#{date} and host_state=1 and check_flag in ('2','3')
+  </select>
+
+</mapper>

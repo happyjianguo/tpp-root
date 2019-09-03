@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.bocm.mapper.BocmChkErrMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.bocm.entity.BocmChkErr" >
+    <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <result column="PRE_HOST_STATE" property="preHostState" jdbcType="NVARCHAR" />
+    <result column="RE_HOST_STATE" property="reHostState" jdbcType="NVARCHAR" />
+    <result column="TX_CODE" jdbcType="NVARCHAR" property="txCode" />
+    <result column="TX_DATE" jdbcType="NVARCHAR" property="txDate" />
+    <result column="TX_SOURCE" jdbcType="NVARCHAR" property="txSource" />
+    <result column="HOST_DATE" jdbcType="DECIMAL" property="hostDate" />
+    <result column="HOST_TRACENO" jdbcType="NVARCHAR" property="hostTraceno" />  
+    <result column="SND_BANKNO" jdbcType="NVARCHAR" property="sndBankno" />  
+    <result column="TX_BRANCH" jdbcType="NVARCHAR" property="txBranch" />
+    <result column="TX_TEL" jdbcType="NVARCHAR" property="txTel" />
+    <result column="TX_IND" jdbcType="NVARCHAR" property="txInd" />
+    <result column="PROXY_FLAG" jdbcType="NVARCHAR" property="proxyFlag" />
+    <result column="PROXY_FEE" jdbcType="DECIMAL" property="proxyFee" />
+    <result column="DC_FLAG" property="dcFlag" jdbcType="NVARCHAR" />
+    <result column="CHECK_FLAG" property="checkFlag" jdbcType="NVARCHAR" />
+    <result column="HOST_FLAG" property="hostFlag" jdbcType="NVARCHAR" />
+    <result column="BOCM_FLAG" property="bocmFlag" jdbcType="NVARCHAR" />
+    <result column="DIRECTION" property="direction" jdbcType="NVARCHAR" />
+    <result column="TX_AMT" property="txAmt" jdbcType="DECIMAL" />
+    <result column="PAYER_BANK" jdbcType="NVARCHAR" property="payerBank" />
+    <result column="PAYER_ACNO" jdbcType="NVARCHAR" property="payerAcno" />
+    <result column="PAYER_NAME" jdbcType="NVARCHAR" property="payerName" />
+    <result column="PAYEE_BANK" jdbcType="NVARCHAR" property="payeeBank" />
+    <result column="PAYEE_ACNO" jdbcType="NVARCHAR" property="payeeAcno" />
+    <result column="PAYEE_NAME" jdbcType="NVARCHAR" property="payeeName" />
+    <result column="HOST_STATE" jdbcType="NVARCHAR" property="hostState" />
+    <result column="BOCM_STATE" jdbcType="NVARCHAR" property="bocmState" />
+    <result column="MSG" property="msg" jdbcType="NVARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PLAT_DATE, PLAT_TRACE, PRE_HOST_STATE, RE_HOST_STATE, DC_FLAG, CHECK_FLAG, 
+    DIRECTION, TX_AMT, PAYER_ACNO, PAYER_NAME, PAYEE_ACNO, PAYEE_NAME, MSG
+    from BOCM_CHK_ERR
+  </select>
+  
+  <select id="selectByDate" resultMap="BaseResultMap">
+    select * from bocm_chk_err
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="begDate != null and begDate != ''">
+        and tx_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and tx_date <![CDATA[ <= ]]> #{endDate}
+      </if>
+    </trim>
+  </select>
+  
+  <select id="deleteByDate" >
+    delete from bocm_chk_err where tx_date = #{date}
+  </select>
+</mapper>

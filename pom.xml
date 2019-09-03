@@ -87,5 +87,10 @@
 		<module>tpp-esb-api</module>
 		<module>tpp-esb-service</module>
 		<module>tpp-manager</module>
+		<module>tpp-bocm-api</module>
+		<module>tpp-bocm-service</module>
+		<module>tpp-bocm-web</module>
+		<module>tpp-frms-api</module>
+		<module>tpp-frms-service</module>
 	</modules>
 </project>
