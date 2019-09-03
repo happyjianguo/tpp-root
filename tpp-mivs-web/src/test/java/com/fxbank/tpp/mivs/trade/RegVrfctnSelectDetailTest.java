@@ -5,8 +5,8 @@ import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.util.JsonUtil;
 import com.fxbank.tpp.esb.service.ISafeService;
-import com.fxbank.tpp.mivs.dto.esb.REP_50023000209;
-import com.fxbank.tpp.mivs.dto.esb.REQ_50023000209;
+import com.fxbank.tpp.mivs.dto.esb.REP_50023000204;
+import com.fxbank.tpp.mivs.dto.esb.REQ_50023000210;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,13 +32,13 @@ import static org.junit.Assert.assertEquals;
 /**
  * @Description:
  * @Author: 王鹏
- * @Date: 2019/7/2 15:35
+ * @Date: 2019/7/2 20:41
  */
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class RegVrfctnSelectTest {
-
+public class RegVrfctnSelectDetailTest{
 
     private static Logger logger = LoggerFactory.getLogger(GetTxPmtVrfctnTest.class);
 
@@ -50,19 +50,19 @@ public class RegVrfctnSelectTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private REQ_50023000209 req ;
+    private REQ_50023000210 req ;
     private REQ_SYS_HEAD reqSysHead;
-    private REQ_50023000209.REQ_BODY reqBody ;
+    private REQ_50023000210.REQ_BODY reqBody ;
 
     @Reference(version = "1.0.0")
     private ISafeService passwordService;
 
     @Before
     public void init(){
-        req = new REQ_50023000209();
+        req = new REQ_50023000210();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("09");
+        reqSysHead.setSceneId("10");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -86,14 +86,12 @@ public class RegVrfctnSelectTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrigBranchId("");
-        reqBody.setOrigUserId("002241");
-//        reqBody.setMobNb("17702499222");
-//        reqBody.setNm("王鹏");
-//        reqBody.setIdTp("IC00");
-//        reqBody.setId("210904198703261013");
-//        reqBody.setUniSocCdtCd("123456789123456789");
+        reqBody.setOrigTranDate("20190830");
+        reqBody.setOrigSeqNo("117293800");
+        reqBody.setOrgnlDlvrgMsgId("");
+        reqBody.setOrigInstgPty("");
 
+        logger.debug("模拟发送ESB请求报文");
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();
         reqSysHead.setMacValue(passwordService.calcCITY(logPool.get(), macBytes));
@@ -106,6 +104,7 @@ public class RegVrfctnSelectTest {
         int status = mvcResult.getResponse().getStatus();
         assertEquals(status, 200);
         String repContent = mvcResult.getResponse().getContentAsString();
-        REP_50023000209 rep = JsonUtil.toBean(repContent, REP_50023000209.class);
+        REP_50023000204 rep = JsonUtil.toBean(repContent, REP_50023000204.class);
     }
+
 }
