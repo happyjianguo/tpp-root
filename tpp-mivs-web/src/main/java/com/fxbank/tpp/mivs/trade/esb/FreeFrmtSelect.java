@@ -53,9 +53,13 @@ public class FreeFrmtSelect extends TradeBase implements TradeExecutionStrategy{
 
             //查询数据落库
             MivsFreeFrmtModel freeFrmtModel =  new MivsFreeFrmtModel();
-            freeFrmtModel.setStart_dt(reqBody.getStartDt());
-            freeFrmtModel.setEnd_dt(reqBody.getEndDt());
-            freeFrmtModel.setRply_flag(reqBody.getRplyFlag());
+            if(reqBody.getStartDt() != null && !reqBody.getStartDt().equals("")) {
+                freeFrmtModel.setStart_dt(Integer.parseInt(reqBody.getStartDt()));
+            }
+            if(reqBody.getEndDt() != null && !reqBody.getEndDt().equals("")) {
+                freeFrmtModel.setEnd_dt(Integer.parseInt(reqBody.getEndDt()));
+            }
+            freeFrmtModel.setRply_flag(isOrNotNull(reqBody.getRplyFlag(), "回复标志", "N"));
 
             List<MivsFreeFrmtModel> freeFrmtModels = freeFrmtService.selectResult(freeFrmtModel); //查询数据库业务数据
             if(freeFrmtModels != null && !freeFrmtModels.isEmpty()) {

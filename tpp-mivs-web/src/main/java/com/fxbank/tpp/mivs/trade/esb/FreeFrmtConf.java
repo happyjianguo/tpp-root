@@ -91,10 +91,10 @@ public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        orgnlMsg.setMsgId(isOrNotNull(reqBody.getOrigMsgId(),"原报文标识号"));
-        orgnlMsg.getInstgPty().setInstgDrctPty(isOrNotNull(reqBody.getOrigInstgDrctPty(),"原发起直接参与机构"));
-        orgnlMsg.getInstgPty().setInstgPty(isOrNotNull(reqBody.getOrigInstgPty(),"原发起参与机构"));
-        mivs333.getFreeFrmtConf().getFreeFrmtInf().setMsgCntt(isOrNotNull(reqBody.getMsgCntt(),"附加信息"));
+        orgnlMsg.setMsgId(isOrNotNull(reqBody.getOrigMsgId(),"原报文标识号", "Y"));
+        orgnlMsg.getInstgPty().setInstgDrctPty(isOrNotNull(reqBody.getOrigInstgDrctPty(),"原发起直接参与机构", "Y"));
+        orgnlMsg.getInstgPty().setInstgPty(isOrNotNull(reqBody.getOrigInstgPty(),"原发起参与机构", "Y"));
+        mivs333.getFreeFrmtConf().getFreeFrmtInf().setMsgCntt(isOrNotNull(reqBody.getMsgCntt(),"附加信息", "Y"));
 
         //发送人行请求数据落库
         MivsFreeFrmtModel freeFrmtModelInsert =  new MivsFreeFrmtModel();

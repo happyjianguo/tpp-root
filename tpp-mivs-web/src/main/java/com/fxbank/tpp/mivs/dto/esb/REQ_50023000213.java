@@ -50,27 +50,27 @@ public class REQ_50023000213 extends REQ_BASE {
 
     public class REQ_BODY {
         @JSONField(name = "CHK_START_DATE")
-        private Integer startDt;    // 核查开始时间
+        private String startDt;    // 核查开始时间
 
         @JSONField(name = "CHK_END_DATE")
-        private Integer endDt; //核查结束时间
+        private String endDt; //核查结束时间
 
         @JSONField(name = "RPLY_FLAG")
         private String rplyFlag;        //回复标志
 
-        public Integer getStartDt() {
+        public String getStartDt() {
             return startDt;
         }
 
-        public void setStartDt(Integer startDt) {
+        public void setStartDt(String startDt) {
             this.startDt = startDt;
         }
 
-        public Integer getEndDt() {
+        public String getEndDt() {
             return endDt;
         }
 
-        public void setEndDt(Integer endDt) {
+        public void setEndDt(String endDt) {
             this.endDt = endDt;
         }
 

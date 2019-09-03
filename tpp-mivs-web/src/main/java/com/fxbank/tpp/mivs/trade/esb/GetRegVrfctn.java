@@ -98,26 +98,22 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstdPty().setInstdPty("0000");
         if(reqBody.getMarketType().equals("ENT")){
             MIVS_324_001_01_GetRegVrfctn.VryDef.Ent ent = new MIVS_324_001_01_GetRegVrfctn.VryDef.Ent();
-            ent.setEntNm(isOrNotNull(reqBody.getEntNm(),"企业名称"));
-            ent.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码"));
-            ent.setNmOfLglPrsn(isOrNotNull(reqBody.getNmOfLglPrsn(),"法定代表人或单位负责人姓名"));
-            ent.setIdOfLglPrsn(isOrNotNull(reqBody.getIdOfLglPrsn(),"法定代表人或单位负责人身份证件号"));
+            ent.setEntNm(isOrNotNull(reqBody.getEntNm(),"企业名称", "Y"));
+            ent.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码", "Y"));
+            ent.setNmOfLglPrsn(isOrNotNull(reqBody.getNmOfLglPrsn(),"法定代表人或单位负责人姓名", "Y"));
+            ent.setIdOfLglPrsn(isOrNotNull(reqBody.getIdOfLglPrsn(),"法定代表人或单位负责人身份证件号", "Y"));
             vryDef.setEnt(ent);
         }else if(reqBody.getMarketType().equals("TRA")){
             MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl slf = new MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl();
             slf.setTraNm(reqBody.getTranm());
-            slf.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码"));
-            slf.setNm(isOrNotNull(reqBody.getNm(),"经营者姓名"));
-            slf.setId(isOrNotNull(reqBody.getId(),"经营者证件号"));
+            slf.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码", "Y"));
+            slf.setNm(isOrNotNull(reqBody.getNm(),"经营者姓名", "Y"));
+            slf.setId(isOrNotNull(reqBody.getId(),"经营者证件号", "Y"));
             vryDef.setSlfEplydPpl(slf);
         }
-        if(reqBody.getAgtNm() != null && !reqBody.getAgtNm().equals("")) {
-            vryDef.setAgtNm(reqBody.getAgtNm());
-        }
-        if(reqBody.getAgtId() != null && !reqBody.getAgtId().equals("")) {
-            vryDef.setAgtId(reqBody.getAgtId());
-        }
-        vryDef.setOpNm(isOrNotNull(reqBody.getOpNm(),"操作员姓名"));
+        vryDef.setAgtNm(isOrNotNull(reqBody.getAgtNm(), "代理人姓名", "N"));
+        vryDef.setAgtId(isOrNotNull(reqBody.getAgtId(), "代理人证件号", "N"));
+        vryDef.setOpNm(isOrNotNull(reqBody.getOpNm(),"操作员姓名", "Y"));
 
         //发送人行请求报文落地
         MivsRegVrfctnInfoModel regvrfctnInfoTableInsert = new MivsRegVrfctnInfoModel();

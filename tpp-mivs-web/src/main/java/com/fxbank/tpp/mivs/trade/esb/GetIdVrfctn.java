@@ -101,15 +101,12 @@ public class GetIdVrfctn extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setMobNb(moblePhoneAdd(reqBody.getMobNb(),"Y"));
-        vryDef.setNm(isOrNotNull(reqBody.getNm(),"姓名"));
-        vryDef.setIdTp(isOrNotNull(reqBody.getIdTp(),"证件类型"));
-        vryDef.setId(isOrNotNull(reqBody.getId(),"证件号码"));
-        if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
-            vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        }else if(reqBody.getBizRegNb() != null && !reqBody.getBizRegNb().equals("")){
-        vryDef.setBizRegNb(reqBody.getBizRegNb());
-        }
-        vryDef.setOpNm(isOrNotNull(reqBody.getOpNm(),"操作员姓名"));
+        vryDef.setNm(isOrNotNull(reqBody.getNm(),"姓名", "Y"));
+        vryDef.setIdTp(isOrNotNull(reqBody.getIdTp(),"证件类型", "Y"));
+        vryDef.setId(isOrNotNull(reqBody.getId(),"证件号码", "Y"));
+        vryDef.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(), "", "N"));
+        vryDef.setBizRegNb(isOrNotNull(reqBody.getBizRegNb(), "", "N"));
+        vryDef.setOpNm(isOrNotNull(reqBody.getOpNm(),"操作员姓名", "Y"));
 
         //发送人行请求数据落库
         MivsIdVrfctnInfoModel idVrfctnTableInsert =  new MivsIdVrfctnInfoModel();

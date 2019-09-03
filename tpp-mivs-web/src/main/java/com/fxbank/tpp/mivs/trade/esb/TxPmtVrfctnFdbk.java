@@ -111,16 +111,13 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(reqBody.getOrgnlDlvrgMsgId());
         fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(reqBody.getOrgnlRcvgMsgId());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setCoNm(reqBody.getCompanyName());
-        if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
-            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        }else if(reqBody.getTxpyrIdNb() != null && !reqBody.getTxpyrIdNb().equals("")) {
-            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(reqBody.getTxpyrIdNb());
-        }
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"核查结果"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"", "N"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(isOrNotNull(reqBody.getTxpyrIdNb(), "", "N"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"核查结果", "Y"));
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(dateToIsoDate(reqBody.getDataResrcDt(),"数据源日期","Y"));
-        fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容"));
-        fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话"));
-        fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名"));
+        fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容", "Y"));
+        fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话", "Y"));
+        fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名", "Y"));
         if(reqBody.getTxpyrInfoArrayMsg() != null && !reqBody.getTxpyrInfoArrayMsg().isEmpty()){
             List<MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf> txpmtInfList = new ArrayList<MIVS_348_001_01_TxPmtVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.TxpmtInf>();
             for(REQ_50023000207.txpyrInfoArray info:reqBody.getTxpyrInfoArrayMsg()){

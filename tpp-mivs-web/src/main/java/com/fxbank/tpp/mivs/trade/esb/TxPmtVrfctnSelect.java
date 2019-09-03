@@ -59,27 +59,13 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
         if(reqBody.getEndDt() != null && !reqBody.getEndDt().equals("")) {
             txpmtVrfctnInfoModel.setEnd_dt(Integer.parseInt(reqBody.getEndDt()));
         }
-        if(reqBody.getOrigBranchId() != null && !reqBody.getOrigBranchId().equals("")) {
-            txpmtVrfctnInfoModel.setBranch_id(reqBody.getOrigBranchId());
-        }
-        if(reqBody.getOrigUserId() != null && !reqBody.getOrigUserId().equals("")) {
-            txpmtVrfctnInfoModel.setUser_id(reqBody.getOrigUserId());
-        }
-        if(reqBody.getOrgnlDlvrgMsgId() != null && !reqBody.getOrgnlDlvrgMsgId().equals("")) {
-            txpmtVrfctnInfoModel.setOrig_dlv_msgid(reqBody.getOrgnlDlvrgMsgId());
-        }
-        if(reqBody.getOrgnlRcvgMsgId() != null && !reqBody.getOrgnlRcvgMsgId().equals("")) {
-            txpmtVrfctnInfoModel.setOrig_rcv_msgid(reqBody.getOrgnlRcvgMsgId());
-        }
-        if(reqBody.getCompanyName() != null && !reqBody.getCompanyName().equals("")) {
-            txpmtVrfctnInfoModel.setCo_nm(reqBody.getCompanyName());
-        }
-        if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
-            txpmtVrfctnInfoModel.setUni_soc_cdt_cd(reqBody.getUniSocCdtCd());
-        }
-        if(reqBody.getTaxPayerId() != null && !reqBody.getTaxPayerId().equals("")) {
-            txpmtVrfctnInfoModel.setTxpyr_id_nb(reqBody.getTaxPayerId());
-        }
+        txpmtVrfctnInfoModel.setBranch_id(isOrNotNull(reqBody.getOrigBranchId(),"原核查人行机构号", "N"));
+        txpmtVrfctnInfoModel.setUser_id(isOrNotNull(reqBody.getOrigUserId(),"原核查柜员号", "N"));
+        txpmtVrfctnInfoModel.setOrig_dlv_msgid(isOrNotNull(reqBody.getOrgnlDlvrgMsgId(),"原请求报文编号","N"));
+        txpmtVrfctnInfoModel.setOrig_rcv_msgid(isOrNotNull(reqBody.getOrgnlRcvgMsgId(),"原应答报文编号","N"));
+        txpmtVrfctnInfoModel.setCo_nm(isOrNotNull(reqBody.getCompanyName(),"单位名称","N"));
+        txpmtVrfctnInfoModel.setUni_soc_cdt_cd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码","N"));
+        txpmtVrfctnInfoModel.setTxpyr_id_nb(isOrNotNull(reqBody.getTaxPayerId(),"纳税人识别号 ","N"));
         txpmtVrfctnInfoModel.setDetail_flag("NO");//不查询明细数据
 
         List<MivsTxpmtVrfctnInfoModel> txpmtVrfctnInfoModels = mivsTxPmtVrfctnInfoService.selectResult(txpmtVrfctnInfoModel); //查询数据库业务数据

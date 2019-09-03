@@ -101,13 +101,10 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        vryDef.setCoNm(isOrNotNull(reqBody.getCompanyName(),"单位名称"));
-        if(reqBody.getTxPayerId() != null && !reqBody.getTxPayerId().equals("")) {
-            vryDef.setTxpyrIdNb(reqBody.getTxPayerId());
-        }else if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
-            vryDef.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        }
-        vryDef.setOpNm(isOrNotNull(reqBody.getOpNm(),"操作员姓名"));
+        vryDef.setCoNm(isOrNotNull(reqBody.getCompanyName(),"单位名称", "Y"));
+        vryDef.setTxpyrIdNb(isOrNotNull(reqBody.getTxPayerId(),"", "N"));
+        vryDef.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(), "", "N"));
+        vryDef.setOpNm(isOrNotNull(reqBody.getOpNm(),"操作员姓名", "Y"));
 
         //发送人行请求报文落地
         MivsTxpmtVrfctnInfoModel txpmtvfctnInfoTableInsert = new MivsTxpmtVrfctnInfoModel();

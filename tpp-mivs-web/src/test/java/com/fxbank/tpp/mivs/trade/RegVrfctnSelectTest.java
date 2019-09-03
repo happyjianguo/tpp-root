@@ -62,7 +62,7 @@ public class RegVrfctnSelectTest {
         req = new REQ_50023000209();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("08");
+        reqSysHead.setSceneId("09");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联

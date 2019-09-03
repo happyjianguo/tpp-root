@@ -107,21 +107,18 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
         fdbk.setSysInd("MIIT");
-        fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(reqBody.getOrgnlDlvrgMsgId());
-        fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(reqBody.getOrgnlRcvgMsgId());
+        fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(isOrNotNull(reqBody.getOrgnlDlvrgMsgId(),"原申请报文标识号","Y"));
+        fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(isOrNotNull(reqBody.getOrgnlRcvgMsgId(),"原应答报文标识号","Y"));
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setMobNb(moblePhoneAdd(reqBody.getMobNb(),"Y"));
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setNm(reqBody.getNm());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setIdTp(reqBody.getIdTp());
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setId(reqBody.getId());
-        if(reqBody.getUniSocCdtCd() != null && !reqBody.getUniSocCdtCd().equals("")) {
-            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(reqBody.getUniSocCdtCd());
-        }else if(reqBody.getBizRegNb() != null && !reqBody.getBizRegNb().equals("")) {
-            fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setBizRegNb(reqBody.getBizRegNb());
-        }
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"核查结果"));
-        fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容"));
-        fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话"));
-        fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setNm(isOrNotNull(reqBody.getNm(),"姓名","Y"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setIdTp(isOrNotNull(reqBody.getIdTp(),"证件类型","Y"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setId(isOrNotNull(reqBody.getId(),"证件号码","Y"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码","N"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setBizRegNb(isOrNotNull(reqBody.getBizRegNb(),"工商注册号","N"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"核查结果", "Y"));
+        fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容", "Y"));
+        fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话", "Y"));
+        fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名", "Y"));
 
         //信息落地入库
 //        MivsIdVrfctnInfoModel idVrfctnInfoModel = new MivsIdVrfctnInfoModel();
