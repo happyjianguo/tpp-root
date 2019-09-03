@@ -2076,4 +2076,88 @@ public class MivsRegVrfctnInfoModel implements Serializable {
         this.licInfo = licInfo;
     }
 
+    @Override
+    public String toString() {
+        return "MivsRegVrfctnInfoModel{" +
+                "plat_date=" + plat_date +
+                ", plat_trace=" + plat_trace +
+                ", plat_time=" + plat_time +
+                ", system_id='" + system_id + '\'' +
+                ", tran_date='" + tran_date + '\'' +
+                ", seq_no='" + seq_no + '\'' +
+                ", tran_time='" + tran_time + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", branch_id='" + branch_id + '\'' +
+                ", mivs_sts='" + mivs_sts + '\'' +
+                ", msg_id='" + msg_id + '\'' +
+                ", cre_dt_tm='" + cre_dt_tm + '\'' +
+                ", instg_drct_pty='" + instg_drct_pty + '\'' +
+                ", drct_pty_nm='" + drct_pty_nm + '\'' +
+                ", instg_pty='" + instg_pty + '\'' +
+                ", pty_nm='" + pty_nm + '\'' +
+                ", instd_drct_pty='" + instd_drct_pty + '\'' +
+                ", instd_pty='" + instd_pty + '\'' +
+                ", rcv_msg_id='" + rcv_msg_id + '\'' +
+                ", rcv_cre_dt_tm='" + rcv_cre_dt_tm + '\'' +
+                ", market_type='" + market_type + '\'' +
+                ", tra_nm='" + tra_nm + '\'' +
+                ", nm='" + nm + '\'' +
+                ", id='" + id + '\'' +
+                ", nm_of_lgl_prsn='" + nm_of_lgl_prsn + '\'' +
+                ", id_of_lgl_prsn='" + id_of_lgl_prsn + '\'' +
+                ", ent_nm='" + ent_nm + '\'' +
+                ", agt_id='" + agt_id + '\'' +
+                ", agt_nm='" + agt_nm + '\'' +
+                ", uni_soc_cdt_cd='" + uni_soc_cdt_cd + '\'' +
+                ", op_nm='" + op_nm + '\'' +
+                ", pg_nb=" + pg_nb +
+                ", last_pg_ind='" + last_pg_ind + '\'' +
+                ", rslt='" + rslt + '\'' +
+                ", data_resrc_dt='" + data_resrc_dt + '\'' +
+                ", bas_info_cnt=" + bas_info_cnt +
+                ", co_shrhdrfnd_info_cnt=" + co_shrhdrfnd_info_cnt +
+                ", dir_supsrsgr_info_cnt=" + dir_supsrsgr_info_cnt +
+                ", chng_info_cnt=" + chng_info_cnt +
+                ", abnml_biz_info_cnt=" + abnml_biz_info_cnt +
+                ", ill_dscrt_info_cnt=" + ill_dscrt_info_cnt +
+                ", lic_null_cnt=" + lic_null_cnt +
+                ", proc_sts='" + proc_sts + '\'' +
+                ", proc_cd='" + proc_cd + '\'' +
+                ", rjct_inf='" + rjct_inf + '\'' +
+                ", fdbk_flag='" + fdbk_flag + '\'' +
+                ", remark1='" + remark1 + '\'' +
+                ", remark2='" + remark2 + '\'' +
+                ", remark3='" + remark3 + '\'' +
+                ", bas_info='" + bas_info + '\'' +
+                ", cos_info='" + cos_info + '\'' +
+                ", dir_info='" + dir_info + '\'' +
+                ", chng_info='" + chng_info + '\'' +
+                ", abn_info='" + abn_info + '\'' +
+                ", ill_info='" + ill_info + '\'' +
+                ", lic_info='" + lic_info + '\'' +
+                ", start_dt=" + start_dt +
+                ", end_dt=" + end_dt +
+                ", sys_ind='" + sys_ind + '\'' +
+                ", orig_dlv_msgid='" + orig_dlv_msgid + '\'' +
+                ", orig_rcv_msgid='" + orig_rcv_msgid + '\'' +
+                ", orig_instg_drct_pty='" + orig_instg_drct_pty + '\'' +
+                ", orig_instg_pty='" + orig_instg_pty + '\'' +
+                ", txpmt_inf='" + txpmt_inf + '\'' +
+                ", cntt='" + cntt + '\'' +
+                ", contact_nm='" + contact_nm + '\'' +
+                ", contact_nb='" + contact_nb + '\'' +
+                ", pty_id='" + pty_id + '\'' +
+                ", pty_prc_cd='" + pty_prc_cd + '\'' +
+                ", prc_dt='" + prc_dt + '\'' +
+                ", netg_rnd='" + netg_rnd + '\'' +
+                ", detail_flag='" + detail_flag + '\'' +
+                ", basInfo=" + basInfo +
+                ", coShrhdrFndInfo=" + coShrhdrFndInfo +
+                ", dirSupSrMgrInfo=" + dirSupSrMgrInfo +
+                ", chngInfo=" + chngInfo +
+                ", abnmlBizInfo=" + abnmlBizInfo +
+                ", illDscrtInfo=" + illDscrtInfo +
+                ", licInfo=" + licInfo +
+                '}';
+    }
 }
