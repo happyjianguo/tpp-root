@@ -78,6 +78,7 @@ public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
         sysStsNtfctnModel.setNxt_sys_op_tm(sysStsInf.getSvcInf().getNxtSysOpTm());
         myLog.info(logger,"sysStsInf.getSvcInf().getNxtSysOpTm() = " + sysStsInf.getSvcInf().getNxtSysOpTm());
 
+        myLog.info(logger, "sysStsNtfctnModel 的值为： " + sysStsNtfctnModel.toString());
         //信息落地
         mivsSysStsNtfctnService.insertInfo(sysStsNtfctnModel);
 

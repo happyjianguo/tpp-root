@@ -200,4 +200,31 @@ public class MivsSysStsNtfctnModel implements Serializable {
     public void setEnd_dt(Integer end_dt) {
         this.end_dt = end_dt;
     }
+
+    @Override
+    public String toString() {
+        return "MivsSysStsNtfctnModel{" +
+                "plat_date=" + plat_date +
+                ", plat_trace=" + plat_trace +
+                ", plat_time=" + plat_time +
+                ", mivs_sts='" + mivs_sts + '\'' +
+                ", msg_id='" + msg_id + '\'' +
+                ", cre_dt_tm='" + cre_dt_tm + '\'' +
+                ", instg_drct_pty='" + instg_drct_pty + '\'' +
+                ", instg_pty='" + instg_pty + '\'' +
+                ", instd_drct_pty='" + instd_drct_pty + '\'' +
+                ", instd_pty='" + instd_pty + '\'' +
+                ", cur_sys_dt='" + cur_sys_dt + '\'' +
+                ", nxt_sys_dt='" + nxt_sys_dt + '\'' +
+                ", sys_ind='" + sys_ind + '\'' +
+                ", svc_ind='" + svc_ind + '\'' +
+                ", nxt_sys_op_tm='" + nxt_sys_op_tm + '\'' +
+                ", nxt_sys_cl_tm='" + nxt_sys_cl_tm + '\'' +
+                ", remark1='" + remark1 + '\'' +
+                ", remark2='" + remark2 + '\'' +
+                ", remark3='" + remark3 + '\'' +
+                ", start_dt=" + start_dt +
+                ", end_dt=" + end_dt +
+                '}';
+    }
 }

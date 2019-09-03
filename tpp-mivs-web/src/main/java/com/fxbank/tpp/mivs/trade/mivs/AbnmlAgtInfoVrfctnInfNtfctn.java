@@ -73,6 +73,7 @@ public class AbnmlAgtInfoVrfctnInfNtfctn extends TradeBase implements TradeExecu
         mivsAbnmlVrfctnModel.setDescrip(abnmlVrfctnInf.getDESC());
         myLog.info(logger,"abnmlVrfctnInf.getDESC() = " + abnmlVrfctnInf.getDESC());
 
+        myLog.info(logger, "mivsAbnmlVrfctnModel 的值为： " + mivsAbnmlVrfctnModel.toString());
         //信息落地
         abnmlVrfctnService.insertStart(mivsAbnmlVrfctnModel);
 

@@ -61,6 +61,7 @@ public class FreeFrmt  extends TradeBase implements TradeExecutionStrategy {
         freeFrmtModel.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         freeFrmtModel.setRply_flag(freeFrmtInf.getRplyFlag());
         freeFrmtModel.setMsg_cntt(freeFrmtInf.getMsgCntt());
+        myLog.info(logger, "freeFrmtModel 的值为： " + freeFrmtModel.toString());
 
         //信息落地
         freeFrmtService.insertInfo(freeFrmtModel);
