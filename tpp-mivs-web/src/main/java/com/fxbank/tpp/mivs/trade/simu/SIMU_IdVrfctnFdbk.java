@@ -24,7 +24,7 @@ import javax.annotation.Resource;
  * @Author: 王鹏
  * @Date: 2019/5/16 10:47
  */
-@Service("MIVS_347_001_01")
+//@Service("MIVS_347_001_01")
 public class SIMU_IdVrfctnFdbk implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

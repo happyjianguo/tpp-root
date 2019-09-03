@@ -23,7 +23,7 @@ import javax.annotation.Resource;
  * @Author: 王鹏
  * @Date: 2019/5/10 8:51
  */
-@Service("MIVS_345_001_01")
+//@Service("MIVS_345_001_01")
 public class SIMU_GetSysSts implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

@@ -29,7 +29,7 @@ import java.util.List;
  * @Author: 王鹏
  * @Date: 2019/6/4 14:58
  */
-@Service("MIVS_324_001_01")
+//@Service("MIVS_324_001_01")
 public class SIMU_GetRegVrfctn implements TradeExecutionStrategy {
 
     private static Logger logger = LoggerFactory.getLogger(ComConf.class);

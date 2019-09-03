@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  * @Author: 周勇沩
  * @Date: 2019-04-23 22:25:09
  */
-@Service("MIVS_320_001_01")
+//@Service("MIVS_320_001_01")
 public class SIMU_GetIdVrfctn implements TradeExecutionStrategy {
 
 	private static Logger logger = LoggerFactory.getLogger(ComConf.class);
