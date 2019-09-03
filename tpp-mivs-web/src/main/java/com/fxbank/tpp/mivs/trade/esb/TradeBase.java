@@ -107,15 +107,15 @@ public class TradeBase {
 	 * 判断字符串是否为空
 	 */
 	public String isOrNotNull(String stringNotNull, String msgNotNull, String isOrNotFlag) throws MivsTradeExecuteException {
-		if(isOrNotFlag == "Y") {
-			if (stringNotNull == null || stringNotNull.equals("")) {
+		if (stringNotNull == null || stringNotNull.equals("")) {
+			if(isOrNotFlag == "Y") {
 				MivsTradeExecuteException e = new MivsTradeExecuteException("MIVS_E_10001", msgNotNull + "必填");
 				throw e;
+			}else{
+				return null;
 			}
-			return stringNotNull;
-		}else{
-			return null;
 		}
+		return stringNotNull;
 	}
 
 	/**

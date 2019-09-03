@@ -528,7 +528,10 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                 infoResult.setSeq_no(regInfo.getSeqNo());
                 infoResult.setTran_time(regInfo.getTranTime());
                 infoResult.setOrig_dlv_msgid(regInfo.getMsgId());
-//                infoResult.setOrig_rcv_msgid(regInfo.getRcvMsgId());
+                infoResult.setOrig_instg_pty(regInfo.getInstgDrctPty());
+                infoResult.setBranch_id(regInfo.getBranchId());
+                infoResult.setUser_id(regInfo.getUserId());
+                infoResult.setMarket_type(regInfo.getMarketType());
                 infoResult.setEnt_nm(regInfo.getEntNm());
                 infoResult.setUni_soc_cdt_cd(regInfo.getUniSocCdtCd());
                 infoResult.setNm_of_lgl_prsn(regInfo.getNmOfLglPrsn());

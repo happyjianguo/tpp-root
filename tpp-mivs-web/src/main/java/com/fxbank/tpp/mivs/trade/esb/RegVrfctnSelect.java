@@ -75,12 +75,12 @@ public class RegVrfctnSelect extends TradeBase implements TradeExecutionStrategy
         if(regVrfctnInfoModels != null && !regVrfctnInfoModels.isEmpty()) {
             myLog.info(logger, "查询结果为：" + regVrfctnInfoModels.toString());
         }else{
-            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
+            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "查询无记录");
             throw e;
         }
 
         if(regVrfctnInfoModels == null || regVrfctnInfoModels.isEmpty()) {
-            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
+            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "查询无记录");
             throw e;
         }
 
@@ -110,12 +110,12 @@ public class RegVrfctnSelect extends TradeBase implements TradeExecutionStrategy
                 resultList.setRslt(infoModel.getRslt());
                 resultList.setDataResrcDt(infoModel.getData_resrc_dt());
                 resultList.setBasInfoCnt(String.valueOf(infoModel.getBas_info_cnt()));
-                resultList.setCoShrhdrfndInfoCnt(String.valueOf(infoModel.getCo_shrhdrfnd_info_cnt()));
-                resultList.setDirSupsrsgrInfoCnt(String.valueOf(infoModel.getDir_supsrsgr_info_cnt()));
-                resultList.setChngInfoCnt(String.valueOf(infoModel.getChng_info_cnt()));
-                resultList.setAbnmlBizInfoCnt(String.valueOf(infoModel.getAbnml_biz_info_cnt()));
-                resultList.setIllDscrtInfoCnt(String.valueOf(infoModel.getIll_dscrt_info_cnt()));
-                resultList.setLicNullCnt(String.valueOf(infoModel.getLic_null_cnt()));
+                resultList.setCoShrhdrfndInfoCnt(isOrNotNull(String.valueOf(infoModel.getCo_shrhdrfnd_info_cnt()),"","N"));
+                resultList.setDirSupsrsgrInfoCnt(isOrNotNull(String.valueOf(infoModel.getDir_supsrsgr_info_cnt()),"","N"));
+                resultList.setChngInfoCnt(isOrNotNull(String.valueOf(infoModel.getChng_info_cnt()),"","N"));
+                resultList.setAbnmlBizInfoCnt(isOrNotNull(String.valueOf(infoModel.getAbnml_biz_info_cnt()),"","N"));
+                resultList.setIllDscrtInfoCnt(isOrNotNull(String.valueOf(infoModel.getIll_dscrt_info_cnt()),"","N"));
+                resultList.setLicNullCnt(isOrNotNull(String.valueOf(infoModel.getLic_null_cnt()),"","N"));
                 resultList.setProcSts(infoModel.getProc_sts());
                 resultList.setProcCd(infoModel.getProc_cd());
                 resultList.setRjctinf(infoModel.getRjct_inf());
