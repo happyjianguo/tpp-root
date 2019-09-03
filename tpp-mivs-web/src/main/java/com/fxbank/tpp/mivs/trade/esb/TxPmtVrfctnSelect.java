@@ -75,10 +75,6 @@ public class TxPmtVrfctnSelect extends TradeBase implements TradeExecutionStrate
             MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
             throw e;
         }
-        if(txpmtVrfctnInfoModels == null || txpmtVrfctnInfoModels.isEmpty()) {
-            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10003, "无查询记录");
-            throw e;
-        }
 
         REP_50023000205 rep = new REP_50023000205();
         if(txpmtVrfctnInfoModels != null && !txpmtVrfctnInfoModels.isEmpty()) {
