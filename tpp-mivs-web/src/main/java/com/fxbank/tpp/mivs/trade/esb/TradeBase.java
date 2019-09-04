@@ -158,11 +158,13 @@ public class TradeBase {
 	 * 手机号删除86
 	 */
 	public String moblePhoneDel(String moblePhone) {
-		String subT = moblePhone.substring(0,2);
-		if(subT.equals("86")) {
-			StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
-			sb.delete(0, 2);
-			moblePhone = sb.toString();
+		if(moblePhone != null || !moblePhone.equals("")) {
+			String subT = moblePhone.substring(0, 2);
+			if (subT.equals("86")) {
+				StringBuilder sb = new StringBuilder(moblePhone);//构造一个StringBuilder对象
+				sb.delete(0, 2);
+				moblePhone = sb.toString();
+			}
 		}
 		return moblePhone;
 	}
