@@ -73,16 +73,35 @@ public class BocmLenghtDecoder extends ByteToMessageDecoder {
 		StringBuffer msgbuf = new StringBuffer(1024);
 		// 一次做多只能读取1024个字节
 		int onceLen = 1024;
+		this.myLog.info(logger, "接收到报文长度="+len);
+		/**20190904 修改中文可能会被截断的问题 begin**/
+		byte[] byteMsg = new byte[len];
+		int pos = 0;
+		/**20190904 修改中文可能会被截断的问题 end **/
 		if (len > onceLen) {
-			while (in.readableBytes() > 0) {
+			while (in.readableBytes() > 0) {				
 				int readLen = in.readableBytes() > onceLen ? onceLen: in.readableBytes();
+				/**20190904 修改中文可能会被截断的问题 begin**/
+				//读取长度超过传的总长度，则按传递的长度读取
+				readLen = readLen>len ? len : readLen;
+				if (readLen <= 0) {
+					break;
+				}
+				len -= readLen;
+				/**20190904 修改中文可能会被截断的问题 end **/
 				ByteBuf buf = in.readBytes(readLen);
-				byte[] data = new byte[readLen];
-				buf.readBytes(data);
-				msgbuf.append(new String(data, ServerInitializer.CODING));
-				ReferenceCountUtil.release(buf);
-				this.myLog.info(logger, "剩余字节数量"+in.readableBytes());
+				byte[] req = new byte[readLen];			
+				buf.readBytes(req);
+				/**20190904 修改中文可能会被截断的问题 begin**/				
+				System.arraycopy(req,0,byteMsg,pos,readLen);
+				pos += readLen;
+				/**20190904 修改中文可能会被截断的问题 end **/
+				//解决io.netty.util.ResourceLeakDetector - LEAK问题
+				buf.release();	
 			}
+			/**20190904 修改中文可能会被截断的问题 begin**/
+			msgbuf.append(new String(byteMsg, ServerInitializer.CODING));			
+			/**20190904 修改中文可能会被截断的问题 end **/
 		} else {
 			ByteBuf buf = in.readBytes(len);
 			byte[] req = new byte[buf.readableBytes()];
@@ -90,11 +109,8 @@ public class BocmLenghtDecoder extends ByteToMessageDecoder {
 			msgbuf.append(new String(req, ServerInitializer.CODING));
 			ReferenceCountUtil.release(buf);
 		}
-
 		String body = msgbuf.toString();
-
 		this.myLog.info(logger, "接收到客户端请求["+body+"]");
-
 		return body;
 	}
 
