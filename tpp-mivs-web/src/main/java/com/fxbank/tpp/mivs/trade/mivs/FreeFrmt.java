@@ -64,7 +64,7 @@ public class FreeFrmt  extends TradeBase implements TradeExecutionStrategy {
         myLog.info(logger, "freeFrmtModel 的值为： " + freeFrmtModel.toString());
 
         //信息落地
-        freeFrmtService.insertInfo(freeFrmtModel);
+//        freeFrmtService.insertInfo(freeFrmtModel);
 
         //返回990报文
         CCMS_990_001_02 ccms990 = new CCMS_990_001_02();
