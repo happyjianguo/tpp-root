@@ -97,8 +97,8 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        fdbk.setEntNm(reqBody.getEntNm());
-        fdbk.setTraNm(reqBody.getTraNm());
+        fdbk.setEntNm(isOrNotNull(reqBody.getEntNm(),"企业名称","N"));
+        fdbk.setTraNm(isOrNotNull(reqBody.getTraNm(),"字号名称","N"));
         fdbk.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码", "Y"));
         fdbk.setAcctSts(isOrNotNull(reqBody.getAcctSts(),"账户状态标识", "Y"));
         fdbk.setChngDt(dateToIsoDate(reqBody.getChngDt(),"变更日期","Y"));
@@ -129,11 +129,11 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         mivsAcctInfoFdbkModelInsert.setPty_nm(bnkNmT);
         mivsAcctInfoFdbkModelInsert.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
         mivsAcctInfoFdbkModelInsert.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
-        mivsAcctInfoFdbkModelInsert.setEnt_nm(isOrNotNull(fdbk.getEntNm(),"企业名称","N"));
-        mivsAcctInfoFdbkModelInsert.setTra_nm(isOrNotNull(fdbk.getTraNm(),"字号名称","N"));
-        mivsAcctInfoFdbkModelInsert.setUni_soc_cdt_cd(isOrNotNull(fdbk.getUniSocCdtCd(),"统一社会信用代码","Y"));
-        mivsAcctInfoFdbkModelInsert.setAcct_sts(isOrNotNull(fdbk.getAcctSts(),"账户状态标识","Y"));
-        mivsAcctInfoFdbkModelInsert.setChng_dt(isOrNotNull(fdbk.getChngDt(),"变更日期","Y"));
+        mivsAcctInfoFdbkModelInsert.setEnt_nm(fdbk.getEntNm());
+        mivsAcctInfoFdbkModelInsert.setTra_nm(fdbk.getTraNm());
+        mivsAcctInfoFdbkModelInsert.setUni_soc_cdt_cd(fdbk.getUniSocCdtCd());
+        mivsAcctInfoFdbkModelInsert.setAcct_sts(fdbk.getAcctSts());
+        mivsAcctInfoFdbkModelInsert.setChng_dt(fdbk.getChngDt());
         mivsAcctInfoFdbkModelInsert.setRemark1(reqBody.getRemarks1());
         mivsAcctInfoFdbkModelInsert.setRemark2(reqBody.getRemarks2());
         mivsAcctInfoFdbkModelInsert.setRemark3(reqBody.getRemarks3());
