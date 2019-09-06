@@ -343,6 +343,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     List<MivsRegVrfctnInfoModel.BasInfo> basInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.BasInfo>();
                     for (MivsRegvrfctnBasInfoEntity Info : mivsRegvrfctnBasInfoEntities) {
                         MivsRegVrfctnInfoModel.BasInfo basInfoMsg = new MivsRegVrfctnInfoModel.BasInfo();
+                        basInfoMsg.setMsg_id(Info.getMsgId());
                         basInfoMsg.setPg_nb(Info.getPgNb());
                         basInfoMsg.setBas_info_nb(Info.getBasInfoNb());
                         basInfoMsg.setEnt_nm(Info.getEntNm());
@@ -378,6 +379,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     List<MivsRegVrfctnInfoModel.CoShrhdrFndInfo> coShrhdrFndInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.CoShrhdrFndInfo>();
                     for (MivsRegvrfctnCosInfoEntity Info : cosInfoEntities) {
                         MivsRegVrfctnInfoModel.CoShrhdrFndInfo coShrhdrFndInfoMsg = new MivsRegVrfctnInfoModel.CoShrhdrFndInfo();
+                        coShrhdrFndInfoMsg.setMsg_id(Info.getMsgId());
                         coShrhdrFndInfoMsg.setPg_nb(Info.getPgNb());
                         coShrhdrFndInfoMsg.setCo_shrhdrfnd_info_nb(Info.getCoShrhdrfndInfoNb());
                         coShrhdrFndInfoMsg.setNatl_prsn_flag(Info.getNatlPrsnFlag());
@@ -401,6 +403,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     List<MivsRegVrfctnInfoModel.DirSupSrMgrInfo> dirSupSrMgrInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.DirSupSrMgrInfo>();
                     for (MivsRegvrfctnDirInfoEntity Info : dirInfoEntities) {
                         MivsRegVrfctnInfoModel.DirSupSrMgrInfo dirSupSrMgrInfoMsg = new MivsRegVrfctnInfoModel.DirSupSrMgrInfo();
+                        dirSupSrMgrInfoMsg.setMsg_id(Info.getMsgId());
                         dirSupSrMgrInfoMsg.setPg_nb(Info.getPgNb());
                         dirSupSrMgrInfoMsg.setDir_supsrsgr_info_nb(Info.getDirSupsrsgrInfoNb());
                         dirSupSrMgrInfoMsg.setNm(Info.getNm());
@@ -419,6 +422,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     List<MivsRegVrfctnInfoModel.ChngInfo> chngInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.ChngInfo>();
                     for (MivsRegvrfctnChngInfoEntity Info : chngInfoEntities) {
                         MivsRegVrfctnInfoModel.ChngInfo chngInfoMsg = new MivsRegVrfctnInfoModel.ChngInfo();
+                        chngInfoMsg.setMsg_id(Info.getMsgId());
                         chngInfoMsg.setPg_nb(Info.getPgNb());
                         chngInfoMsg.setChng_info_nb(Info.getChngInfoNb());
                         chngInfoMsg.setChng_itm(Info.getChngItm());
@@ -439,6 +443,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     List<MivsRegVrfctnInfoModel.AbnmlBizInfo> abnInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.AbnmlBizInfo>();
                     for (MivsRegvrfctnAbnInfoEntity Info : abnInfoEntities) {
                         MivsRegVrfctnInfoModel.AbnmlBizInfo abnInfoMsg = new MivsRegVrfctnInfoModel.AbnmlBizInfo();
+                        abnInfoMsg.setMsg_id(Info.getMsgId());
                         abnInfoMsg.setPg_nb(Info.getPgNb());
                         abnInfoMsg.setAbn_info_nb(Info.getAbnInfoNb());
                         abnInfoMsg.setAbnml_cause(Info.getAbnmlCause());
@@ -461,6 +466,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     List<MivsRegVrfctnInfoModel.IllDscrtInfo> illInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.IllDscrtInfo>();
                     for (MivsRegvrfctnIllInfoEntity Info : illInfoEntities) {
                         MivsRegVrfctnInfoModel.IllDscrtInfo illInfoMsg = new MivsRegVrfctnInfoModel.IllDscrtInfo();
+                        illInfoMsg.setMsg_id(Info.getMsgId());
                         illInfoMsg.setPg_nb(Info.getPgNb());
                         illInfoMsg.setIll_info_nb(Info.getIllInfoNb());
                         illInfoMsg.setIll_dscrt_cause(Info.getIllDscrtCause());
@@ -483,6 +489,7 @@ public class MivsRegVrfctnInfoService implements IMivsRegVrfctnInfoService {
                     List<MivsRegVrfctnInfoModel.LicInfo> licInfoArrayMsg = new ArrayList<MivsRegVrfctnInfoModel.LicInfo>();
                     for (MivsRegvrfctnLicInfoEntity Info : licInfoEntities) {
                         MivsRegVrfctnInfoModel.LicInfo licInfoMsg = new MivsRegVrfctnInfoModel.LicInfo();
+                        licInfoMsg.setMsg_id(Info.getMsgId());
                         licInfoMsg.setPg_nb(Info.getPgNb());
                         licInfoMsg.setLic_info_nb(Info.getLicInfoNb());
                         licInfoMsg.setOrgnl_or_cp(Info.getOrgnlOrCp());
