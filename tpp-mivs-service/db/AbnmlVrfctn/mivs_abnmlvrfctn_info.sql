@@ -42,4 +42,4 @@ COMMENT ON COLUMN mivs_abnmlvrfctn_info.uni_soc_cdt_cd IS '统一社会信用代
 COMMENT ON COLUMN mivs_abnmlvrfctn_info.mob_nb IS '手机号';
 COMMENT ON COLUMN mivs_abnmlvrfctn_info.nm IS '姓名';
 
-ALTER TABLE mivs_abnmlvrfctn_info ADD PRIMARY KEY (plat_date, plat_trace, msg_id);
+ALTER TABLE mivs_abnmlvrfctn_info ADD PRIMARY KEY (plat_date, plat_trace);

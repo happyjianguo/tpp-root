@@ -44,4 +44,4 @@ COMMENT ON COLUMN mivs_sysstsntfctn_info.remark1 IS '备用字段1';
 COMMENT ON COLUMN mivs_sysstsntfctn_info.remark2 IS '备用字段2';
 COMMENT ON COLUMN mivs_sysstsntfctn_info.remark3 IS '备用字段3';
 
-ALTER TABLE mivs_sysstsntfctn_info ADD PRIMARY KEY (plat_date, plat_trace, msg_id);
+ALTER TABLE mivs_sysstsntfctn_info ADD PRIMARY KEY (plat_date, plat_trace);

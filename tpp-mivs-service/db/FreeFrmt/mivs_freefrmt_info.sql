@@ -32,4 +32,4 @@ COMMENT ON COLUMN mivs_freefrmt_info.rply_flag IS '回复标志';
 COMMENT ON COLUMN mivs_freefrmt_info.msg_cntt IS '信息内容';
 COMMENT ON COLUMN mivs_freefrmt_info.isornot_rsp IS '是否已回复: YES：已回复，NOT：未回复';
 
-ALTER TABLE mivs_freefrmt_info ADD PRIMARY KEY (plat_date, plat_trace, msg_id);
+ALTER TABLE mivs_freefrmt_info ADD PRIMARY KEY (plat_date, plat_trace);
