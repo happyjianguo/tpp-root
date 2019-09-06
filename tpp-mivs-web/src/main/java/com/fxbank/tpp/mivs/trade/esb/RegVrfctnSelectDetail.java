@@ -85,6 +85,7 @@ public class RegVrfctnSelectDetail extends TradeBase implements TradeExecutionSt
                     if(Info.getMarket_type().equals("ENT")) {
                         REP_50023000210.BasInfoEnt basInfoArMsg = new REP_50023000210.BasInfoEnt();
                         basInfoArMsg.setOrgnlRcvgMsgId(Info.getMsg_id());
+                        basInfoArMsg.setMarketType("ENT");
                         basInfoArMsg.setPgNb(Info.getPg_nb());
                         basInfoArMsg.setEntNm(Info.getEnt_nm());
                         basInfoArMsg.setUniSocCdtCd(Info.getUni_soc_cdt_cd());
@@ -103,6 +104,7 @@ public class RegVrfctnSelectDetail extends TradeBase implements TradeExecutionSt
                     }else if(Info.getMarket_type().equals("TRA")){
                         REP_50023000210.BasInfOfSlfEplydPpl basInfoArMsg = new REP_50023000210.BasInfOfSlfEplydPpl();
                         basInfoArMsg.setOrgnlRcvgMsgId(Info.getMsg_id());
+                        basInfoArMsg.setMarketType("TRA");
                         basInfoArMsg.setPgNb(Info.getPg_nb());
                         basInfoArMsg.setTraNm(Info.getTra_nm());
                         basInfoArMsg.setUniSocCdtCd(Info.getUni_soc_cdt_cd());

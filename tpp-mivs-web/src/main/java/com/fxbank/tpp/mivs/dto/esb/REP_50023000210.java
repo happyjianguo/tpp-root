@@ -178,7 +178,7 @@ public class REP_50023000210 extends REP_BASE {
         private Integer pgNb;
 
         @JSONField(name ="MAIN_BODY_TYPE")
-        private Integer marketType;
+        private String marketType;
 
         @JSONField(name = "CORP_NAME")
         private String entNm;
@@ -235,11 +235,11 @@ public class REP_50023000210 extends REP_BASE {
             this.pgNb = pgNb;
         }
 
-        public Integer getMarketType() {
+        public String getMarketType() {
             return marketType;
         }
 
-        public void setMarketType(Integer marketType) {
+        public void setMarketType(String marketType) {
             this.marketType = marketType;
         }
 
@@ -379,7 +379,7 @@ public class REP_50023000210 extends REP_BASE {
         private Integer pgNb;
 
         @JSONField(name = "MAIN_BODY_TYPE")
-        private Integer marketType;
+        private String marketType;
 
         @JSONField(name = "FONT_NAME")
         private String traNm;
@@ -430,11 +430,11 @@ public class REP_50023000210 extends REP_BASE {
             this.pgNb = pgNb;
         }
 
-        public Integer getMarketType() {
+        public String getMarketType() {
             return marketType;
         }
 
-        public void setMarketType(Integer marketType) {
+        public void setMarketType(String marketType) {
             this.marketType = marketType;
         }
 
