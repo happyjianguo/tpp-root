@@ -36,6 +36,6 @@ public class MivsSysStsNtfctnService implements IMivsSysStsNtfctnService {
         infoEntity.setSvcInd(mivsSysStsNtfctnModel.getSvc_ind());
         infoEntity.setNxtSysClTm(mivsSysStsNtfctnModel.getNxt_sys_cl_tm());
         infoEntity.setNxtSysOpTm(mivsSysStsNtfctnModel.getNxt_sys_op_tm());
-        infoEntityMapper.insert(infoEntity);
+        infoEntityMapper.insertSelective(infoEntity);
     }
 }

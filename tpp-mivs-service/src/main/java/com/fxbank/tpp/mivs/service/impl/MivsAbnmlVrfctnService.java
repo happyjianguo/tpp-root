@@ -38,7 +38,7 @@ public class MivsAbnmlVrfctnService implements IMivsAbnmlVrfctnService {
         infoEntity.setUniSocCdtCd(mivsAbnmlVrfctnModel.getUni_soc_cdt_cd());
         infoEntity.setMobNb(mivsAbnmlVrfctnModel.getMob_nb());
         infoEntity.setNm(mivsAbnmlVrfctnModel.getNm());
-        mapper.insert(infoEntity);
+        mapper.insertSelective(infoEntity);
     }
 
     @Override
