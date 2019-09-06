@@ -34,7 +34,7 @@ COMMENT ON COLUMN mivs_cmonconf_info.plat_trace IS '平台流水';
 COMMENT ON COLUMN mivs_cmonconf_info.plat_time IS '平台时间';
 COMMENT ON COLUMN mivs_cmonconf_info.msg_id IS '报文标识号';
 COMMENT ON COLUMN mivs_cmonconf_info.cre_dt_tm IS '报文发送时间';
-COMMENT ON COLUMN mivs_cmonconf_info.instg_drct_pty IS '发起直接参与机构'
+COMMENT ON COLUMN mivs_cmonconf_info.instg_drct_pty IS '发起直接参与机构';
 COMMENT ON COLUMN mivs_cmonconf_info.instg_pty IS '发起参与机构';
 COMMENT ON COLUMN mivs_cmonconf_info.instd_drct_pty IS '接收直接参与机构';
 COMMENT ON COLUMN mivs_cmonconf_info.instd_pty IS '接收参与机构';
