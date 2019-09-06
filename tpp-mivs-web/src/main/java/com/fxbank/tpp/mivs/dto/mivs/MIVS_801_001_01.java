@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MIVS_801_001_01 extends DTO_BASE {
-    private static final long serialVersionUID = 915819775770423106L;
+    private static final long serialVersionUID = -3684747255834937414L;
     private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
     public MIVS_801_001_01() {

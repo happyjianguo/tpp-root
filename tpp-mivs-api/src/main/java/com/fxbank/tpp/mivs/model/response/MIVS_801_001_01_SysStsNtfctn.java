@@ -19,6 +19,11 @@ public class MIVS_801_001_01_SysStsNtfctn implements Serializable, SIGN_DATA {
     private MsgHdr MsgHdr = new MsgHdr();
     private SysStsInf SysStsInf = new SysStsInf();
 
+    @Override
+    public String toString() {
+        return "企业信息联网核查业务受理时间通知报文[MIVS_801_001_01]";
+    }
+
     public MsgHdr getMsgHdr() {
         return MsgHdr;
     }

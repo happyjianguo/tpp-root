@@ -19,6 +19,11 @@ public class MIVS_332_001_01_FreeFrmt implements Serializable, SIGN_DATA {
     private MsgHdr MsgHdr = new MsgHdr();
     private FreeFrmtInf FreeFrmtInf = new FreeFrmtInf();
 
+    @Override
+    public String toString() {
+        return "公告信息报文[MIVS_332_001_01]";
+    }
+
     public MsgHdr getMsgHdr() {
         return MsgHdr;
     }

@@ -14,7 +14,6 @@ import com.fxbank.tpp.mivs.model.response.MIVS_321_001_01_RtrIdVrfctn;
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MIVS_321_001_01 extends DTO_BASE {
-
 	private static final long serialVersionUID = 7316738795732586625L;
 	private CCMS_990_001_02_ComConf comConf = new CCMS_990_001_02_ComConf();
 
