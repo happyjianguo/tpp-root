@@ -84,8 +84,8 @@ public class AcctInfoFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setEntNm("长春第一汽车厂分超大报文");
-//        reqBody.setTraNm("个体户名称");
+        reqBody.setEntNm("");
+        reqBody.setTraNm("");
         reqBody.setUniSocCdtCd("91110000801199997H");
         reqBody.setAcctSts("OPEN");
         reqBody.setChngDt("20190906");
