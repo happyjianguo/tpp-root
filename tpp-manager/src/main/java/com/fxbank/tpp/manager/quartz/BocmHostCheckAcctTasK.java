@@ -769,7 +769,7 @@ public class BocmHostCheckAcctTasK {
 			exp = jedis.get(QuartzJobConfigration.TPP_CRON + JOBNAME);
 		}
 		if (exp == null) {
-			exp = "0 30 7 ? * *";
+			exp = "0 15 18 ? * *";
 		}
 		logger.info("任务[" + JOBNAME + "]启动[" + exp + "]");
 		tigger.setCronExpression(exp);
