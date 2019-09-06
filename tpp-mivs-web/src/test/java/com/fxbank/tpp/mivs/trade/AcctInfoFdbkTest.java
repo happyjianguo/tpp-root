@@ -84,11 +84,11 @@ public class AcctInfoFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setEntNm("北京市政交通一卡通有限公司");
+        reqBody.setEntNm("长春第一汽车厂分超大报文");
 //        reqBody.setTraNm("个体户名称");
-        reqBody.setUniSocCdtCd("91110000801145381H");
+        reqBody.setUniSocCdtCd("91110000801199997H");
         reqBody.setAcctSts("OPEN");
-        reqBody.setChngDt("20190827");
+        reqBody.setChngDt("20190906");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();
