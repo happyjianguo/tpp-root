@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Description: 企业信息联网核查业务受理时间通知报文
@@ -136,7 +137,7 @@ public class MIVS_801_001_01_SysStsNtfctn implements Serializable, SIGN_DATA {
         private static final long serialVersionUID = -5837765195992959243L;
         private String CurSysDt = null;
         private String NxtSysDt = null;
-        private SvcInf SvcInf = new SvcInf();
+        private List<SvcInf> SvcInf;
 
         public String getCurSysDt() {
             return CurSysDt;
@@ -154,11 +155,11 @@ public class MIVS_801_001_01_SysStsNtfctn implements Serializable, SIGN_DATA {
             NxtSysDt = nxtSysDt;
         }
 
-        public SvcInf getSvcInf() {
+        public List<MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf> getSvcInf() {
             return SvcInf;
         }
 
-        public void setSvcInf(SvcInf svcInf) {
+        public void setSvcInf(List<MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf> svcInf) {
             SvcInf = svcInf;
         }
 
