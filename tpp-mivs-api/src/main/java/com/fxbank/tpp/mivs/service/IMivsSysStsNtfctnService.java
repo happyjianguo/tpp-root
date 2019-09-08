@@ -9,9 +9,15 @@ import com.fxbank.tpp.mivs.model.mivsmodel.MivsSysStsNtfctnModel;
  */
 public interface IMivsSysStsNtfctnService {
     /**
-     * 新增企业信息联网核查业务受理时间通知
+     * 新增企业信息联网核查业务受理时间查询
      *
      * @param mivsSysStsNtfctnModel
      */
     void insertInfo(MivsSysStsNtfctnModel mivsSysStsNtfctnModel);
+    /**
+     * 新增企业信息联网核查业务受理时间通知
+     *
+     * @param mivsSysStsNtfctnModel
+     */
+    void insertMsg(MivsSysStsNtfctnModel mivsSysStsNtfctnModel);
 }

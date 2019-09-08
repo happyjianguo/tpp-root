@@ -203,6 +203,16 @@ public class MIVS_801_001_01_SysStsNtfctn implements Serializable, SIGN_DATA {
             public void setNxtSysClTm(String nxtSysClTm) {
                 NxtSysClTm = nxtSysClTm;
             }
+
+            @Override
+            public String toString() {
+                return "SvcInf{" +
+                        "SysInd='" + SysInd + '\'' +
+                        ", SvcInd='" + SvcInd + '\'' +
+                        ", NxtSysOpTm='" + NxtSysOpTm + '\'' +
+                        ", NxtSysClTm='" + NxtSysClTm + '\'' +
+                        '}';
+            }
         }
     }
 

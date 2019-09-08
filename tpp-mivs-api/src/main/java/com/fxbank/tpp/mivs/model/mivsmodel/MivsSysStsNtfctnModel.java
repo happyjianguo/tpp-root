@@ -1,6 +1,7 @@
 package com.fxbank.tpp.mivs.model.mivsmodel;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Description:
@@ -22,16 +23,109 @@ public class MivsSysStsNtfctnModel implements Serializable {
 
     private String cur_sys_dt; //系统当前日期
     private String nxt_sys_dt; //系统下一日期
-    private String sys_ind; //系统类型
-    private String svc_ind; //系统下一日期受理业务状态
-    private String nxt_sys_op_tm; //系统下一日期开始受理时间
-    private String nxt_sys_cl_tm; //系统下一日期结束受理时间
     private String remark1;
     private String remark2;
     private String remark3;
 
     private Integer start_dt;
     private Integer end_dt;
+
+    private String sys_ind; //系统类型
+    private String svc_ind; //系统下一日期受理业务状态
+    private String nxt_sys_op_tm; //系统下一日期开始受理时间
+    private String nxt_sys_cl_tm; //系统下一日期结束受理时间
+
+    public String getSys_ind() {
+        return sys_ind;
+    }
+
+    public void setSys_ind(String sys_ind) {
+        this.sys_ind = sys_ind;
+    }
+
+    public String getSvc_ind() {
+        return svc_ind;
+    }
+
+    public void setSvc_ind(String svc_ind) {
+        this.svc_ind = svc_ind;
+    }
+
+    public String getNxt_sys_op_tm() {
+        return nxt_sys_op_tm;
+    }
+
+    public void setNxt_sys_op_tm(String nxt_sys_op_tm) {
+        this.nxt_sys_op_tm = nxt_sys_op_tm;
+    }
+
+    public String getNxt_sys_cl_tm() {
+        return nxt_sys_cl_tm;
+    }
+
+    public void setNxt_sys_cl_tm(String nxt_sys_cl_tm) {
+        this.nxt_sys_cl_tm = nxt_sys_cl_tm;
+    }
+
+    //svcinfo附表
+    private List<SvcInf> svcInfo;
+    public static class SvcInf implements Serializable {
+        private static final long serialVersionUID = 6644609694755098615L;
+        private String sys_ind; //系统类型
+        private String svc_ind; //系统下一日期受理业务状态
+        private String nxt_sys_op_tm; //系统下一日期开始受理时间
+        private String nxt_sys_cl_tm; //系统下一日期结束受理时间
+
+        public String getSys_ind() {
+            return sys_ind;
+        }
+
+        public void setSys_ind(String sys_ind) {
+            this.sys_ind = sys_ind;
+        }
+
+        public String getSvc_ind() {
+            return svc_ind;
+        }
+
+        public void setSvc_ind(String svc_ind) {
+            this.svc_ind = svc_ind;
+        }
+
+        public String getNxt_sys_op_tm() {
+            return nxt_sys_op_tm;
+        }
+
+        public void setNxt_sys_op_tm(String nxt_sys_op_tm) {
+            this.nxt_sys_op_tm = nxt_sys_op_tm;
+        }
+
+        public String getNxt_sys_cl_tm() {
+            return nxt_sys_cl_tm;
+        }
+
+        public void setNxt_sys_cl_tm(String nxt_sys_cl_tm) {
+            this.nxt_sys_cl_tm = nxt_sys_cl_tm;
+        }
+
+        @Override
+        public String toString() {
+            return "SvcInf{" +
+                    "sys_ind='" + sys_ind + '\'' +
+                    ", svc_ind='" + svc_ind + '\'' +
+                    ", nxt_sys_op_tm='" + nxt_sys_op_tm + '\'' +
+                    ", nxt_sys_cl_tm='" + nxt_sys_cl_tm + '\'' +
+                    '}';
+        }
+    }
+
+    public List<SvcInf> getSvcInfo() {
+        return svcInfo;
+    }
+
+    public void setSvcInfo(List<SvcInf> svcInfo) {
+        this.svcInfo = svcInfo;
+    }
 
     public Integer getPlat_date() {
         return plat_date;
@@ -129,38 +223,6 @@ public class MivsSysStsNtfctnModel implements Serializable {
         this.nxt_sys_dt = nxt_sys_dt;
     }
 
-    public String getSys_ind() {
-        return sys_ind;
-    }
-
-    public void setSys_ind(String sys_ind) {
-        this.sys_ind = sys_ind;
-    }
-
-    public String getSvc_ind() {
-        return svc_ind;
-    }
-
-    public void setSvc_ind(String svc_ind) {
-        this.svc_ind = svc_ind;
-    }
-
-    public String getNxt_sys_op_tm() {
-        return nxt_sys_op_tm;
-    }
-
-    public void setNxt_sys_op_tm(String nxt_sys_op_tm) {
-        this.nxt_sys_op_tm = nxt_sys_op_tm;
-    }
-
-    public String getNxt_sys_cl_tm() {
-        return nxt_sys_cl_tm;
-    }
-
-    public void setNxt_sys_cl_tm(String nxt_sys_cl_tm) {
-        this.nxt_sys_cl_tm = nxt_sys_cl_tm;
-    }
-
     public String getRemark1() {
         return remark1;
     }
@@ -216,15 +278,12 @@ public class MivsSysStsNtfctnModel implements Serializable {
                 ", instd_pty='" + instd_pty + '\'' +
                 ", cur_sys_dt='" + cur_sys_dt + '\'' +
                 ", nxt_sys_dt='" + nxt_sys_dt + '\'' +
-                ", sys_ind='" + sys_ind + '\'' +
-                ", svc_ind='" + svc_ind + '\'' +
-                ", nxt_sys_op_tm='" + nxt_sys_op_tm + '\'' +
-                ", nxt_sys_cl_tm='" + nxt_sys_cl_tm + '\'' +
                 ", remark1='" + remark1 + '\'' +
                 ", remark2='" + remark2 + '\'' +
                 ", remark3='" + remark3 + '\'' +
                 ", start_dt=" + start_dt +
                 ", end_dt=" + end_dt +
+                ", svcInfo=" + svcInfo +
                 '}';
     }
 }

@@ -38,4 +38,24 @@ public class MivsSysStsNtfctnService implements IMivsSysStsNtfctnService {
         infoEntity.setNxtSysOpTm(mivsSysStsNtfctnModel.getNxt_sys_op_tm());
         infoEntityMapper.insertSelective(infoEntity);
     }
+
+    @Override
+    public void insertMsg(MivsSysStsNtfctnModel mivsSysStsNtfctnModel){
+        MivsSysstsntfctnInfoEntity infoEntity = new MivsSysstsntfctnInfoEntity();
+        infoEntity.setPlatDate(mivsSysStsNtfctnModel.getPlat_date());
+        infoEntity.setPlatTrace(mivsSysStsNtfctnModel.getPlat_trace());
+        infoEntity.setPlatTime(mivsSysStsNtfctnModel.getPlat_time());
+        infoEntity.setMivsSts(mivsSysStsNtfctnModel.getMivs_sts());
+        infoEntity.setMsgId(mivsSysStsNtfctnModel.getMsg_id());
+        infoEntity.setInstgDrctPty(mivsSysStsNtfctnModel.getInstg_drct_pty());
+        infoEntity.setInstgPty(mivsSysStsNtfctnModel.getInstg_pty());
+        infoEntity.setInstdDrctPty(mivsSysStsNtfctnModel.getInstd_drct_pty());
+        infoEntity.setInstdPty(mivsSysStsNtfctnModel.getInstd_pty());
+        infoEntity.setCurSysDt(mivsSysStsNtfctnModel.getCur_sys_dt());
+        infoEntity.setNxtSysDt(mivsSysStsNtfctnModel.getNxt_sys_dt());
+        if(mivsSysStsNtfctnModel.getSvcInfo() !=null && !mivsSysStsNtfctnModel.getSvcInfo().isEmpty()){
+            infoEntity.setRemark1(mivsSysStsNtfctnModel.getSvcInfo().toString());
+        }
+        infoEntityMapper.insertSelective(infoEntity);
+    }
 }

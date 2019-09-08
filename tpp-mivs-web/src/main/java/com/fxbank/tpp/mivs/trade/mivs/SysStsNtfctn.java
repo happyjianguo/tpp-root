@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Description:  企业信息联网核查业务受理时间通知报文 mivs.801.001.01
@@ -69,18 +70,24 @@ public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
         myLog.info(logger,"sysStsInf.getCurSysDt() = " + sysStsInf.getCurSysDt());
         sysStsNtfctnModel.setNxt_sys_dt(sysStsInf.getNxtSysDt());
         myLog.info(logger,"sysStsInf.getNxtSysDt() = " + sysStsInf.getNxtSysDt());
-        sysStsNtfctnModel.setSys_ind(sysStsInf.getSvcInf().getSysInd());
-        myLog.info(logger,"sysStsInf.getSvcInf().getSysInd() = " + sysStsInf.getSvcInf().getSysInd());
-        sysStsNtfctnModel.setSvc_ind(sysStsInf.getSvcInf().getSvcInd());
-        myLog.info(logger,"sysStsInf.getSvcInf().getSvcInd() = " + sysStsInf.getSvcInf().getSvcInd());
-        sysStsNtfctnModel.setNxt_sys_cl_tm(sysStsInf.getSvcInf().getSvcInd());
-        myLog.info(logger,"sysStsInf.getSvcInf().getSvcInd() = " + sysStsInf.getSvcInf().getSvcInd());
-        sysStsNtfctnModel.setNxt_sys_op_tm(sysStsInf.getSvcInf().getNxtSysOpTm());
-        myLog.info(logger,"sysStsInf.getSvcInf().getNxtSysOpTm() = " + sysStsInf.getSvcInf().getNxtSysOpTm());
-
+        List<MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf> svcInfList = mivs801.getSysStsNtfctn().getSysStsInf().getSvcInf();
+        if(svcInfList != null && !svcInfList.isEmpty()) {
+            myLog.info(logger, "*** svcInfList的值为:" + svcInfList.toString());
+            for (MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf info : svcInfList) {
+                MivsSysStsNtfctnModel.SvcInf svcInf = new MivsSysStsNtfctnModel.SvcInf();
+                svcInf.setSys_ind(info.getSysInd());
+                myLog.info(logger, "SysInd() = " + info.getSysInd());
+                svcInf.setSvc_ind(info.getSvcInd());
+                myLog.info(logger, "SvcInd() = " + info.getSvcInd());
+                svcInf.setNxt_sys_cl_tm(info.getNxtSysOpTm());
+                myLog.info(logger, "NxtSysOpTm() = " + info.getNxtSysOpTm());
+                svcInf.setNxt_sys_op_tm(info.getNxtSysClTm());
+                myLog.info(logger, "NxtSysClTm() = " + info.getNxtSysClTm());
+            }
+        }
         myLog.info(logger, "sysStsNtfctnModel 的值为： " + sysStsNtfctnModel.toString());
         //信息落地
-        mivsSysStsNtfctnService.insertInfo(sysStsNtfctnModel);
+        mivsSysStsNtfctnService.insertMsg(sysStsNtfctnModel);
 
         //返回990报文
         CCMS_990_001_02 ccms990 = new CCMS_990_001_02();
