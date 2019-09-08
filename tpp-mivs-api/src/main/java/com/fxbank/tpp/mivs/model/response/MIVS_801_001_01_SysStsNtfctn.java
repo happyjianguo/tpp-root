@@ -155,11 +155,11 @@ public class MIVS_801_001_01_SysStsNtfctn implements Serializable, SIGN_DATA {
             NxtSysDt = nxtSysDt;
         }
 
-        public List<MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf> getSvcInf() {
+        public List<SvcInf> getSvcInf() {
             return SvcInf;
         }
 
-        public void setSvcInf(List<MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf> svcInf) {
+        public void setSvcInf(List<SvcInf> svcInf) {
             SvcInf = svcInf;
         }
 
