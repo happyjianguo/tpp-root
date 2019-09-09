@@ -75,7 +75,7 @@ public class AbnmlAgtInfoVrfctnInfNtfctn extends TradeBase implements TradeExecu
 
         myLog.info(logger, "mivsAbnmlVrfctnModel 的值为： " + mivsAbnmlVrfctnModel.toString());
         //信息落地
-//        abnmlVrfctnService.insertStart(mivsAbnmlVrfctnModel);
+        abnmlVrfctnService.insertStart(mivsAbnmlVrfctnModel);
 
         //返回990报文
         CCMS_990_001_02 ccms990 = new CCMS_990_001_02();
