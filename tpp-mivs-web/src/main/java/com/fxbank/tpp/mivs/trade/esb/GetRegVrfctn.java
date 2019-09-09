@@ -191,6 +191,9 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
                 regVrfctnInfoTableUpdate.setProc_cd(oprlErr.getProcCd());
                 regVrfctnInfoTableUpdate.setProc_sts(oprlErr.getProcSts());
                 regVrfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctInf());
+                //更新业务数据表
+                regVrfctnInfoTableUpdate.setDetail_flag("NO");
+                mivsRegVrfctnInfoService.uMasterAndiAttached(regVrfctnInfoTableUpdate);
                 throw e;
             }
             //附ESB应答报文

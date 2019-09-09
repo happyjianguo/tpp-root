@@ -175,6 +175,7 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
                 txpmtvfctnInfoTableUpdate.setProc_sts(oprlErr.getProcSts());
                 txpmtvfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctInf());
                 //更新业务数据表
+                txpmtvfctnInfoTableUpdate.setDetail_flag("NO");
                 mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate);
                 throw e;
             }
