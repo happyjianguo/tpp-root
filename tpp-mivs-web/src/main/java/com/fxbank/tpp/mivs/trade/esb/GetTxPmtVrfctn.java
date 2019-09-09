@@ -155,12 +155,13 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
 
         if(dtoBase.getHead().getMesgType().equals("ccms.911.001.02")){  //根据911组织应答报文
             CCMS_911_001_02 ccms911 = (CCMS_911_001_02)dtoBase;
-            MivsTradeExecuteException e = new MivsTradeExecuteException(MivsTradeExecuteException.MIVS_E_10002,ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
+            MivsTradeExecuteException e = new MivsTradeExecuteException(ccms911.getDscrdMsgNtfctn().getDscrdInf().getPrcCd(),ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             //根据人行返回报文更新数据库状态
             txpmtvfctnInfoTableUpdate.setMivs_sts("02");
             txpmtvfctnInfoTableUpdate.setProc_cd(ccms911.getDscrdMsgNtfctn().getDscrdInf().getPrcCd());
             txpmtvfctnInfoTableUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
             //更新业务数据表
+            txpmtvfctnInfoTableUpdate.setDetail_flag("NO");
             mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate);
             throw e;
         }else if(dtoBase.getHead().getMesgType().equals("mivs.323.001.01")){
