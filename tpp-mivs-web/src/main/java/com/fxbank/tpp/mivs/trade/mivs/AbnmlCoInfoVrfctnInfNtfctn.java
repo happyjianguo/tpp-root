@@ -91,7 +91,7 @@ public class AbnmlCoInfoVrfctnInfNtfctn extends TradeBase implements TradeExecut
         ccms990.getComConf().getConfInf().setMT(mivs331.getHead().getMesgType());
         ccms990.getComConf().getConfInf().setMsgId(mivs331.getHead().getMesgID());
         ccms990.getComConf().getConfInf().setMsgRefId(mivs331.getHead().getMesgRefID());
-        ccms990.getComConf().getConfInf().setMsgPrcCd("PR01");
+        ccms990.getComConf().getConfInf().setMsgPrcCd("PM1I0000");
         ccms990 = (CCMS_990_001_02) pmtsService.sendToPmtsNoWait(ccms990);
 
         return mivs331;

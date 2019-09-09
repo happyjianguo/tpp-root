@@ -73,7 +73,7 @@ public class FreeFrmt  extends TradeBase implements TradeExecutionStrategy {
         ccms990.getComConf().getConfInf().setMT(mivs332.getHead().getMesgType());
         ccms990.getComConf().getConfInf().setMsgId(mivs332.getHead().getMesgID());
         ccms990.getComConf().getConfInf().setMsgRefId(mivs332.getHead().getMesgRefID());
-        ccms990.getComConf().getConfInf().setMsgPrcCd("PR01");
+        ccms990.getComConf().getConfInf().setMsgPrcCd("PM1I0000");
         ccms990 = (CCMS_990_001_02) pmtsService.sendToPmtsNoWait(ccms990);
 
         return mivs332;
