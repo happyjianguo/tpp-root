@@ -421,6 +421,7 @@ public abstract class BaseTradeT1 {
 	//风险检查
 	public void riskCheck(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt,
 			String bizChnl,String bizCode) throws SysTradeExecuteException{
+		/**
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		//业务渠道    String  O-柜面通
@@ -441,12 +442,14 @@ public abstract class BaseTradeT1 {
 		if (frmsRep.getVerifyPolicy()!=null&&BLOCK.equalsIgnoreCase(frmsRep.getVerifyPolicy().getCode())) {
 			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
 		}
-		// 增加风险监控 检查20190809 end		
+		// 增加风险监控 检查20190809 end	
+		 */
 	}
 	
 	//状态通知
 	public void statusNotify(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt
 			,String bizChnl,String bizCode,String operStatus,String respCode) throws SysTradeExecuteException{
+		/**
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
@@ -470,5 +473,6 @@ public abstract class BaseTradeT1 {
 			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
 		}
 		// 增加风险监控 检查20190809 end
+		 */
 	}
 }
