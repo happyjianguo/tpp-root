@@ -99,7 +99,7 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
         msgHdr.getInstgPty().setDrctPtyNm(lqtnBnkNmT1);
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstgPty().setPtyNm(bnkNmT);
-        msgHdr.getInstdPty().setInstdDrctPty("0001");
+        msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
         vryDef.setCoNm(isOrNotNull(reqBody.getCompanyName(),"单位名称", "Y"));
         vryDef.setTxpyrIdNb(isOrNotNull(reqBody.getTxPayerId(),"", "N"));
