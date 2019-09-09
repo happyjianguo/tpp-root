@@ -64,7 +64,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 					myLog.error(logger, "计算签名错误[" + result.getErrCode() + "]");
 					throw new RuntimeException("计算签名错误");
 				}
-				signature = result.getProperties("sign");
+				signature = result.getProperties("sign")+"null";
 			} catch (Exception e) {
 				myLog.error(logger, "计算签名错误",e);
 				throw new RuntimeException("计算签名错误");
