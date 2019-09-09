@@ -23,7 +23,7 @@ public class MIVS_349_001_01 extends DTO_BASE {
         super.txDesc = "登记信息核查结果疑义反馈报文349";
     }
 
-    private MIVS_349_001_01_RegVrfctnFdbk regVrfctnFdbk = new MIVS_349_001_01_RegVrfctnFdbk();
+    private MIVS_349_001_01_RegVrfctnFdbk RegVrfctnFdbk = new MIVS_349_001_01_RegVrfctnFdbk();
 
     /**
      * @return the comConf
@@ -41,14 +41,14 @@ public class MIVS_349_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.regVrfctnFdbk.signData();
+        return this.RegVrfctnFdbk.signData();
     }
 
     public MIVS_349_001_01_RegVrfctnFdbk getRegVrfctnFdbk() {
-        return regVrfctnFdbk;
+        return RegVrfctnFdbk;
     }
 
     public void setRegVrfctnFdbk(MIVS_349_001_01_RegVrfctnFdbk regVrfctnFdbk) {
-        this.regVrfctnFdbk = regVrfctnFdbk;
+        this.RegVrfctnFdbk = regVrfctnFdbk;
     }
 }

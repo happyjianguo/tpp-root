@@ -22,7 +22,7 @@ public class MIVS_326_001_01 extends DTO_BASE {
         super.txDesc = "企业开销户状态反馈326";
     }
 
-    private MIVS_326_001_01_AcctInfoFdbk acctInfoFdbk = new MIVS_326_001_01_AcctInfoFdbk();
+    private MIVS_326_001_01_AcctInfoFdbk AcctInfoFdbk = new MIVS_326_001_01_AcctInfoFdbk();
 
     /**
      * @return the comConf
@@ -40,21 +40,21 @@ public class MIVS_326_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.acctInfoFdbk.signData();
+        return this.AcctInfoFdbk.signData();
     }
 
     /**
      * @return the getAcctInfoFdbk
      */
     public MIVS_326_001_01_AcctInfoFdbk getAcctInfoFdbk() {
-        return acctInfoFdbk;
+        return AcctInfoFdbk;
     }
 
     /**
      * @param getAcctInfoFdbk the getAcctInfoFdbk to set
      */
     public void setAcctInfoFdbk(MIVS_326_001_01_AcctInfoFdbk getAcctInfoFdbk) {
-        acctInfoFdbk = getAcctInfoFdbk;
+        AcctInfoFdbk = getAcctInfoFdbk;
     }
 
 

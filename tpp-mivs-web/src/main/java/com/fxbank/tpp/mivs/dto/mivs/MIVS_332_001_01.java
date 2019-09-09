@@ -22,7 +22,7 @@ public class MIVS_332_001_01 extends DTO_BASE {
         super.txDesc = "公告信息报文332";
     }
 
-    private MIVS_332_001_01_FreeFrmt freeFrmt = new MIVS_332_001_01_FreeFrmt();
+    private MIVS_332_001_01_FreeFrmt FreeFrmt = new MIVS_332_001_01_FreeFrmt();
 
     /**
      * @return the comConf
@@ -40,14 +40,14 @@ public class MIVS_332_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.freeFrmt.signData();
+        return this.FreeFrmt.signData();
     }
 
     public MIVS_332_001_01_FreeFrmt getFreeFrmt() {
-        return freeFrmt;
+        return FreeFrmt;
     }
 
     public void setFreeFrmt(MIVS_332_001_01_FreeFrmt freeFrmt) {
-        this.freeFrmt = freeFrmt;
+        this.FreeFrmt = freeFrmt;
     }
 }

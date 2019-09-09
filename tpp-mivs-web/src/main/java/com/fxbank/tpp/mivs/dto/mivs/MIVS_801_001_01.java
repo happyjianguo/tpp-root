@@ -22,7 +22,7 @@ public class MIVS_801_001_01 extends DTO_BASE {
         super.txDesc = "企业信息联网核查业务受理时间通知报文801";
     }
 
-    private MIVS_801_001_01_SysStsNtfctn sysStsNtfctn = new MIVS_801_001_01_SysStsNtfctn();
+    private MIVS_801_001_01_SysStsNtfctn SysStsNtfctn = new MIVS_801_001_01_SysStsNtfctn();
 
     /**
      * @return the comConf
@@ -40,14 +40,14 @@ public class MIVS_801_001_01 extends DTO_BASE {
 
     @Override
     public String signData() {
-        return this.sysStsNtfctn.signData();
+        return this.SysStsNtfctn.signData();
     }
 
     public MIVS_801_001_01_SysStsNtfctn getSysStsNtfctn() {
-        return sysStsNtfctn;
+        return SysStsNtfctn;
     }
 
     public void setSysStsNtfctn(MIVS_801_001_01_SysStsNtfctn sysStsNtfctn) {
-        this.sysStsNtfctn = sysStsNtfctn;
+        SysStsNtfctn = sysStsNtfctn;
     }
 }
