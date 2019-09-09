@@ -73,16 +73,16 @@ public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
         List<MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf> svcInfList = mivs801.getSysStsNtfctn().getSysStsInf().getSvcInf();
         if(svcInfList != null && !svcInfList.isEmpty()) {
             myLog.info(logger, "*** svcInfList的值为:" + svcInfList.toString());
-            for (MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf info : svcInfList) {
+            for (MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf svcInfo : svcInfList) {
                 MivsSysStsNtfctnModel.SvcInf svcInf = new MivsSysStsNtfctnModel.SvcInf();
-                svcInf.setSys_ind(info.getSysInd());
-                myLog.info(logger, "SysInd() = " + info.getSysInd());
-                svcInf.setSvc_ind(info.getSvcInd());
-                myLog.info(logger, "SvcInd() = " + info.getSvcInd());
-                svcInf.setNxt_sys_cl_tm(info.getNxtSysOpTm());
-                myLog.info(logger, "NxtSysOpTm() = " + info.getNxtSysOpTm());
-                svcInf.setNxt_sys_op_tm(info.getNxtSysClTm());
-                myLog.info(logger, "NxtSysClTm() = " + info.getNxtSysClTm());
+                svcInf.setSys_ind(svcInfo.getSysInd());
+                myLog.info(logger, "SysInd() = " + svcInfo.getSysInd());
+                svcInf.setSvc_ind(svcInfo.getSvcInd());
+                myLog.info(logger, "SvcInd() = " + svcInfo.getSvcInd());
+                svcInf.setNxt_sys_cl_tm(svcInfo.getNxtSysOpTm());
+                myLog.info(logger, "NxtSysOpTm() = " + svcInfo.getNxtSysOpTm());
+                svcInf.setNxt_sys_op_tm(svcInfo.getNxtSysClTm());
+                myLog.info(logger, "NxtSysClTm() = " + svcInfo.getNxtSysClTm());
             }
         }
         myLog.info(logger, "sysStsNtfctnModel 的值为： " + sysStsNtfctnModel.toString());
