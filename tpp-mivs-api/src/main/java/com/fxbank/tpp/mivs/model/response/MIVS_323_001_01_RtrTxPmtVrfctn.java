@@ -319,12 +319,12 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(propOrder = {"ProcSts","ProcCd","Rjctinf"})
+        @XmlType(propOrder = {"ProcSts","ProcCd","RjctInf"})
         public static class OprlErr implements Serializable{
             private static final long serialVersionUID = 5982468996471624782L;
             private String ProcSts;
             private String ProcCd;
-            private String Rjctinf;
+            private String RjctInf;
 
             public String getProcSts() {
                 return ProcSts;
@@ -340,14 +340,13 @@ public class MIVS_323_001_01_RtrTxPmtVrfctn implements Serializable, SIGN_DATA {
                 ProcCd = procCd;
             }
 
-            public String getRjctinf() {
-                return Rjctinf;
-            }
-            public void setRjctinf(String rjctinf) {
-                Rjctinf = rjctinf;
+            public String getRjctInf() {
+                return RjctInf;
             }
 
-
+            public void setRjctInf(String rjctInf) {
+                RjctInf = rjctInf;
+            }
         }
     }
 

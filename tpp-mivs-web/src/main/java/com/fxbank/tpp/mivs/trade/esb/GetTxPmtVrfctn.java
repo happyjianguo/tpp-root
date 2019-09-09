@@ -169,11 +169,11 @@ public class GetTxPmtVrfctn extends TradeBase implements TradeExecutionStrategy 
             MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.VrfctnInf vrfctnInf = mivs323.getRtrTxPmtVrfctn().getRspsn().getVrfctnInf();
             MIVS_323_001_01_RtrTxPmtVrfctn.Rspsn.OprlErr oprlErr = mivs323.getRtrTxPmtVrfctn().getRspsn().getOprlErr();
             if(oprlErr.getProcSts()!=null) {
-                MivsTradeExecuteException e = new MivsTradeExecuteException(oprlErr.getProcCd(),oprlErr.getRjctinf());
+                MivsTradeExecuteException e = new MivsTradeExecuteException(oprlErr.getProcCd(),oprlErr.getRjctInf());
                 txpmtvfctnInfoTableUpdate.setMivs_sts("03");
                 txpmtvfctnInfoTableUpdate.setProc_cd(oprlErr.getProcCd());
                 txpmtvfctnInfoTableUpdate.setProc_sts(oprlErr.getProcSts());
-                txpmtvfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctinf());
+                txpmtvfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctInf());
                 //更新业务数据表
                 mivsTxpmtvfctnInfoService.uMasterAndiAttached(txpmtvfctnInfoTableUpdate);
                 throw e;

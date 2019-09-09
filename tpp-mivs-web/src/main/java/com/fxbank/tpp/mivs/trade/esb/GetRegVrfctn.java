@@ -185,12 +185,12 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             MIVS_325_001_01_RtrRegVrfctn.OrgnlBizQry orgnlBizQry = mivs325.getRtrRegVrfctn().getOrgnlBizQry();
             MIVS_325_001_01_RtrRegVrfctn.Rspsn.OprlErr oprlErr = mivs325.getRtrRegVrfctn().getRspsn().getOprlErr();
             if(oprlErr.getProcSts()!=null) {
-                MivsTradeExecuteException e = new MivsTradeExecuteException(mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getProcCd(),mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getRjctinf());
+                MivsTradeExecuteException e = new MivsTradeExecuteException(mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getProcCd(),mivs325.getRtrRegVrfctn().getRspsn().getOprlErr().getRjctInf());
                 //更新数据库状态
                 regVrfctnInfoTableUpdate.setMivs_sts("03");
                 regVrfctnInfoTableUpdate.setProc_cd(oprlErr.getProcCd());
                 regVrfctnInfoTableUpdate.setProc_sts(oprlErr.getProcSts());
-                regVrfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctinf());
+                regVrfctnInfoTableUpdate.setRjct_inf(oprlErr.getRjctInf());
                 throw e;
             }
             //附ESB应答报文
