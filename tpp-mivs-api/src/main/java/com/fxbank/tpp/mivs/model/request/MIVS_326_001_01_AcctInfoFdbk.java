@@ -200,7 +200,7 @@ public class MIVS_326_001_01_AcctInfoFdbk implements Serializable, SIGN_DATA {
     @Override
     public String signData() {
         StringBuffer sb = new StringBuffer();
-//        sb.append(this.getMsgHdr().getMsgId() + "|");
+        sb.append(this.getMsgHdr().getMsgId() + "|");
         sb.append(this.getMsgHdr().getCreDtTm() + "|");
         sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
         sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
