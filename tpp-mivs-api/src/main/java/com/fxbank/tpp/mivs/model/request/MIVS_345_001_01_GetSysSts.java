@@ -228,7 +228,10 @@ public class MIVS_345_001_01_GetSysSts implements Serializable, SIGN_DATA {
 
     @Override
     public String signData() {
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getMsgHdr().getMsgId() + "|");
+        return sb.toString();
+//        return null;
     }
 
 }

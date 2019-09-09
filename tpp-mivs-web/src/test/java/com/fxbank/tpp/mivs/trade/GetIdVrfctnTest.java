@@ -95,8 +95,8 @@ public class GetIdVrfctnTest {
 		reqBody.setMobNb("18666060606");
 		reqBody.setNm("旭格门窗有限公司");
 		reqBody.setIdTp("IC00");
-//		reqBody.setId("110108198607224413");
-		reqBody.setId("1001002019081026477496");
+		reqBody.setId("110108198607224413");
+//		reqBody.setId("1001002019081026477496");
 		reqBody.setUniSocCdtCd("123456789012345678");
 		reqBody.setOpNm("001128");
 		

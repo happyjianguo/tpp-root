@@ -360,7 +360,7 @@ public class MIVS_320_001_01_GetIdVrfctn implements Serializable, SIGN_DATA {
     @Override
     public String signData() {
         StringBuffer sb = new StringBuffer();
-        sb.append(this.getMsgHdr().getMsgId() + "|");
+//        sb.append(this.getMsgHdr().getMsgId() + "|");
         sb.append(this.getMsgHdr().getCreDtTm() + "|");
         sb.append(this.getMsgHdr().getInstgPty().getInstgDrctPty() + "|");
         sb.append(this.getMsgHdr().getInstgPty().getDrctPtyNm() + "|");
