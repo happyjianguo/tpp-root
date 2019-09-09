@@ -78,7 +78,7 @@ public class AbnmlAgtInfoVrfctnInfNtfctn extends TradeBase implements TradeExecu
         abnmlVrfctnService.insertStart(mivsAbnmlVrfctnModel);
 
         //返回990报文
-        CCMS_990_001_02 ccms990 = new CCMS_990_001_02();
+        CCMS_990_001_02 ccms990 = new CCMS_990_001_02(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         ccms990.getComConf().getConfInf().setOrigSndr(mivs330.getHead().getOrigSender());
         ccms990.getComConf().getConfInf().setOrigSndDt(mivs330.getHead().getOrigSendDate().toString());
         ccms990.getComConf().getConfInf().setMT(mivs330.getHead().getMesgType());

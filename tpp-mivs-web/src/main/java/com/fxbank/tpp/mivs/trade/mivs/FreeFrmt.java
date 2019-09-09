@@ -67,7 +67,7 @@ public class FreeFrmt  extends TradeBase implements TradeExecutionStrategy {
         freeFrmtService.insertInfo(freeFrmtModel);
 
         //返回990报文
-        CCMS_990_001_02 ccms990 = new CCMS_990_001_02();
+        CCMS_990_001_02 ccms990 = new CCMS_990_001_02(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         ccms990.getComConf().getConfInf().setOrigSndr(mivs332.getHead().getOrigSender());
         ccms990.getComConf().getConfInf().setOrigSndDt(mivs332.getHead().getOrigSendDate().toString());
         ccms990.getComConf().getConfInf().setMT(mivs332.getHead().getMesgType());

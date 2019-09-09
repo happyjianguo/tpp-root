@@ -90,7 +90,7 @@ public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
         mivsSysStsNtfctnService.insertMsg(sysStsNtfctnModel);
 
         //返回990报文
-        CCMS_990_001_02 ccms990 = new CCMS_990_001_02();
+        CCMS_990_001_02 ccms990 = new CCMS_990_001_02(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
         ccms990.getComConf().getConfInf().setOrigSndr(mivs801.getHead().getOrigSender());
         ccms990.getComConf().getConfInf().setOrigSndDt(mivs801.getHead().getOrigSendDate().toString());
         ccms990.getComConf().getConfInf().setMT(mivs801.getHead().getMesgType());
