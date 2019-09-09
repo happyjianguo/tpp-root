@@ -68,7 +68,7 @@ public class GetTxPmtVrfctnTest {
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
-        reqSysHead.setBranchId("00001");
+        reqSysHead.setBranchId("01001");
         reqSysHead.setUserId("002241");
         reqSysHead.setTranDate(String.valueOf(new SimpleDateFormat("yyyyMMdd").format(new Date())));
         reqSysHead.setTranTimestamp(String.valueOf(new SimpleDateFormat("HHmmss").format(new Date())));
