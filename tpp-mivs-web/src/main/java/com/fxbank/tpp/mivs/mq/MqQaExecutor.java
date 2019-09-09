@@ -53,7 +53,7 @@ public class MqQaExecutor {
         myLog.info(logger, "收到人行报文[" + message + "]");
         PMTS_HEAD head = new PMTS_HEAD();
         PMTS_SIGN sign = new PMTS_SIGN();
-        String[] splitPack = message.split("}\r\n");
+        String[] splitPack = message.split("}\r?\n");
         String sHead = null;
         String sSign = null;
         String xml = null;
