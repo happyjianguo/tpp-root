@@ -105,7 +105,7 @@ public class GetRegVrfctn extends TradeBase implements TradeExecutionStrategy {
             vryDef.setEnt(ent);
         }else if(reqBody.getMarketType().equals("TRA")){
             MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl slf = new MIVS_324_001_01_GetRegVrfctn.VryDef.SlfEplydPpl();
-            slf.setTraNm(reqBody.getTranm());
+            slf.setTraNm(isOrNotNull(reqBody.getTranm(),"字号","N"));
             slf.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码", "Y"));
             slf.setNm(isOrNotNull(reqBody.getNm(),"经营者姓名", "Y"));
             slf.setId(isOrNotNull(reqBody.getId(),"经营者证件号", "Y"));
