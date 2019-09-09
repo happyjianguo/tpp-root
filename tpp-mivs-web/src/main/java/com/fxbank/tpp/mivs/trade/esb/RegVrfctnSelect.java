@@ -109,7 +109,7 @@ public class RegVrfctnSelect extends TradeBase implements TradeExecutionStrategy
                 resultList.setAgtId(infoModel.getAgt_id());
                 resultList.setRslt(infoModel.getRslt());
                 resultList.setDataResrcDt(infoModel.getData_resrc_dt());
-                resultList.setBasInfoCnt(String.valueOf(infoModel.getBas_info_cnt()));
+                resultList.setBasInfoCnt(String.valueOf(isOrNotNull(String.valueOf(infoModel.getBas_info_cnt()),"","N")));
                 resultList.setCoShrhdrfndInfoCnt(isOrNotNull(String.valueOf(infoModel.getCo_shrhdrfnd_info_cnt()),"","N"));
                 resultList.setDirSupsrsgrInfoCnt(isOrNotNull(String.valueOf(infoModel.getDir_supsrsgr_info_cnt()),"","N"));
                 resultList.setChngInfoCnt(isOrNotNull(String.valueOf(infoModel.getChng_info_cnt()),"","N"));
