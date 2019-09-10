@@ -57,7 +57,7 @@ public class REP_50023000206 extends REP_BASE {
         @JSONField(name = "TXPYR_DIST_NO")
         private String txpyrIdNb;
 
-        @JSONField(name = "TXPYR_INFO_VER_RESULT")
+        @JSONField(name = "TXPYR_INFO_RESULT")
         private String rslt;
 
         @JSONField(name = "DATA_SOURCE_DATE")
