@@ -113,7 +113,7 @@ public class TxPmtVrfctnFdbk extends TradeBase implements TradeExecutionStrategy
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setCoNm(reqBody.getCompanyName());
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"", "N"));
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setTxpyrIdNb(isOrNotNull(reqBody.getTxpyrIdNb(), "", "N"));
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt("YENO");
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"核查结果", "Y"));
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setDataResrcDt(dateToIsoDate(reqBody.getDataResrcDt(),"数据源日期","Y"));
         fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容", "Y"));
         fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话", "Y"));

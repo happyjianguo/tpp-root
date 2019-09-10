@@ -61,7 +61,7 @@ public class FreeFrmtConfTest {
         req = new REQ_50023000214();
         reqSysHead = new REQ_SYS_HEAD();
         reqSysHead.setServiceId("500230002");
-        reqSysHead.setSceneId("12");
+        reqSysHead.setSceneId("14");
         reqSysHead.setSystemId("301907");
         reqSysHead.setTranMode("ONLINE");
         reqSysHead.setSourceType("301907");	//网联
@@ -85,10 +85,10 @@ public class FreeFrmtConfTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrigMsgId("301133201132");
-        reqBody.setOrigInstgDrctPty("123123213");
-        reqBody.setOrigInstgPty("3231254243");
-        reqBody.setMsgCntt("我就是个测试回复确认");
+        reqBody.setOrigMsgId("2019081415200018");
+        reqBody.setOrigInstgDrctPty("0000");
+        reqBody.setOrigInstgPty("0000");
+        reqBody.setMsgCntt("阜新银行测试回复确认");
 
         String macDataStr = JsonUtil.toJson(reqBody);
         byte[] macBytes = macDataStr.getBytes();

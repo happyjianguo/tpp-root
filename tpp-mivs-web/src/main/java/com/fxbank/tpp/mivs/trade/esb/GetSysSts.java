@@ -85,7 +85,7 @@ public class GetSysSts extends TradeBase implements TradeExecutionStrategy {
         msgHdr.getInstgPty().setInstgPty(bankNumber);
         msgHdr.getInstdPty().setInstdDrctPty("0000");
         msgHdr.getInstdPty().setInstdPty("0000");
-        mivs345.getSysSts().getQueInf().setSysInd("YENO");
+        mivs345.getSysSts().getQueInf().setSysInd(isOrNotNull(reqBody.getSysInd(),"核查系统标识", "Y"));
         mivs345.getSysSts().getQueInf().setQueDt(dateToIsoDate(reqBody.getQueDt(),"查询日期","Y"));
         mivs345 = (MIVS_345_001_01) pmtsService.sendToPmts(mivs345); // 发送请求，实时等待990
 
