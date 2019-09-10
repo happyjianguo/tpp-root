@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ import java.util.List;
 @Service("MIVS_801_001_01")
 public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
 
-    private static Logger logger = LoggerFactory.getLogger(RtrTxPmtVrfctn.class);
+    private static Logger logger = LoggerFactory.getLogger(SysStsNtfctn.class);
 
     @Resource
     private MyJedis myJedis;
@@ -49,45 +50,47 @@ public class SysStsNtfctn extends TradeBase implements TradeExecutionStrategy {
         MIVS_801_001_01_SysStsNtfctn.MsgHdr msgHdr = mivs801.getSysStsNtfctn().getMsgHdr();
         MIVS_801_001_01_SysStsNtfctn.SysStsInf sysStsInf = mivs801.getSysStsNtfctn().getSysStsInf();
         myLog.info(logger, "收到人行企业信息联网核查业务受理时间通知报文Trade交易");
-        MivsSysStsNtfctnModel sysStsNtfctnModel = new MivsSysStsNtfctnModel();
-        sysStsNtfctnModel.setPlat_date(mivs801.getSysDate());
-        sysStsNtfctnModel.setPlat_trace(mivs801.getSysTraceno());
-        sysStsNtfctnModel.setPlat_time(mivs801.getSysTime());
-        sysStsNtfctnModel.setMivs_sts("06");
-        sysStsNtfctnModel.setMsg_id(msgHdr.getMsgId());
-        myLog.info(logger,"msgHdr.getMsgId() = " + msgHdr.getMsgId());
-        sysStsNtfctnModel.setCre_dt_tm(msgHdr.getCreDtTm());
         myLog.info(logger,"msgHdr.getCreDtTm() = " + msgHdr.getCreDtTm());
-        sysStsNtfctnModel.setInstg_drct_pty(msgHdr.getInstgPty().getInstgDrctPty());
+        myLog.info(logger,"msgHdr.getMsgId() = " + msgHdr.getMsgId());
         myLog.info(logger,"msgHdr.getInstgPty().getInstgDrctPty() = " + msgHdr.getInstgPty().getInstgDrctPty());
-        sysStsNtfctnModel.setInstg_pty(msgHdr.getInstgPty().getInstgPty());
         myLog.info(logger,"msgHdr.getInstgPty().getInstgPty() = " + msgHdr.getInstgPty().getInstgPty());
-        sysStsNtfctnModel.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
         myLog.info(logger,"msgHdr.getInstdPty().getInstdDrctPty() = " + msgHdr.getInstdPty().getInstdDrctPty());
-        sysStsNtfctnModel.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
         myLog.info(logger,"msgHdr.getInstdPty().getInstdPty() = " + msgHdr.getInstdPty().getInstdPty());
-        sysStsNtfctnModel.setCur_sys_dt(sysStsInf.getCurSysDt());
         myLog.info(logger,"sysStsInf.getCurSysDt() = " + sysStsInf.getCurSysDt());
-        sysStsNtfctnModel.setNxt_sys_dt(sysStsInf.getNxtSysDt());
         myLog.info(logger,"sysStsInf.getNxtSysDt() = " + sysStsInf.getNxtSysDt());
+        List<MivsSysStsNtfctnModel> sysStsNtfctnModelList = new ArrayList<MivsSysStsNtfctnModel>();
         List<MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf> svcInfList = mivs801.getSysStsNtfctn().getSysStsInf().getSvcInf();
         if(svcInfList != null && !svcInfList.isEmpty()) {
             myLog.info(logger, "*** svcInfList的值为:" + svcInfList.toString());
             for (MIVS_801_001_01_SysStsNtfctn.SysStsInf.SvcInf svcInfo : svcInfList) {
-                MivsSysStsNtfctnModel.SvcInf svcInf = new MivsSysStsNtfctnModel.SvcInf();
-                svcInf.setSys_ind(svcInfo.getSysInd());
+                MivsSysStsNtfctnModel sysStsNtfctnModel = new MivsSysStsNtfctnModel();
+                sysStsNtfctnModel.setPlat_date(mivs801.getSysDate());
+                sysStsNtfctnModel.setPlat_trace(mivs801.getSysTraceno());
+                sysStsNtfctnModel.setPlat_time(mivs801.getSysTime());
+                sysStsNtfctnModel.setMivs_sts("06");
+                sysStsNtfctnModel.setMsg_id(msgHdr.getMsgId());
+                sysStsNtfctnModel.setCre_dt_tm(msgHdr.getCreDtTm());
+                sysStsNtfctnModel.setInstg_drct_pty(msgHdr.getInstgPty().getInstgDrctPty());
+                sysStsNtfctnModel.setInstg_pty(msgHdr.getInstgPty().getInstgPty());
+                sysStsNtfctnModel.setInstd_drct_pty(msgHdr.getInstdPty().getInstdDrctPty());
+                sysStsNtfctnModel.setInstd_pty(msgHdr.getInstdPty().getInstdPty());
+                sysStsNtfctnModel.setCur_sys_dt(sysStsInf.getCurSysDt());
+                sysStsNtfctnModel.setNxt_sys_dt(sysStsInf.getNxtSysDt());
+                sysStsNtfctnModel.setSys_ind(svcInfo.getSysInd());
                 myLog.info(logger, "SysInd() = " + svcInfo.getSysInd());
-                svcInf.setSvc_ind(svcInfo.getSvcInd());
+                sysStsNtfctnModel.setSvc_ind(svcInfo.getSvcInd());
                 myLog.info(logger, "SvcInd() = " + svcInfo.getSvcInd());
-                svcInf.setNxt_sys_cl_tm(svcInfo.getNxtSysOpTm());
+                sysStsNtfctnModel.setNxt_sys_cl_tm(svcInfo.getNxtSysOpTm());
                 myLog.info(logger, "NxtSysOpTm() = " + svcInfo.getNxtSysOpTm());
-                svcInf.setNxt_sys_op_tm(svcInfo.getNxtSysClTm());
+                sysStsNtfctnModel.setNxt_sys_op_tm(svcInfo.getNxtSysClTm());
                 myLog.info(logger, "NxtSysClTm() = " + svcInfo.getNxtSysClTm());
+                sysStsNtfctnModelList.add(sysStsNtfctnModel);
             }
         }
-        myLog.info(logger, "sysStsNtfctnModel 的值为： " + sysStsNtfctnModel.toString());
+        myLog.info(logger, "sysStsNtfctnModelList 的值为： " + sysStsNtfctnModelList.toString());
         //信息落地
-        mivsSysStsNtfctnService.insertMsg(sysStsNtfctnModel);
+        String status = mivsSysStsNtfctnService.insertMsg(sysStsNtfctnModelList);
+        myLog.info(logger,"status的值为："+status);
 
         //返回990报文
         CCMS_990_001_02 ccms990 = new CCMS_990_001_02(new MyLog(), dto.getSysDate(),dto.getSysTime(), dto.getSysTraceno());
