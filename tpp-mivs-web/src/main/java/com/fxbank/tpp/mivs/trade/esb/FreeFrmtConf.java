@@ -132,7 +132,7 @@ public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
         myLog.info(logger,"断点1");
         mivs333 = (MIVS_333_001_01) pmtsService.sendToPmts(mivs333); // 发送请求，实时等待990
         myLog.info(logger,"断点2");
-        String channel = "990_"+ mivs333.getHeader().getMesgID();  //为同步等待，组合报文{H:的三要素
+        String channel = "900_"+ mivs333.getHeader().getMesgID();  //为同步等待，组合报文{H:的三要素
         myLog.info(logger,"333报文发送通道编号=[" + channel);
         DTO_BASE dtoBase = syncCom.get(myLog, channel, super.queryTimeout911(myLog), TimeUnit.SECONDS);
         myLog.info(logger,"断点3");
