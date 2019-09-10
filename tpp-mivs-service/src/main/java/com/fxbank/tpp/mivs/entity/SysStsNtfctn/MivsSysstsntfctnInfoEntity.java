@@ -9,14 +9,12 @@ public class MivsSysstsntfctnInfoEntity {
     /**
      * null
      */
-    @Id
     @Column(name = "PLAT_DATE")
     private Integer platDate;
 
     /**
      * null
      */
-    @Id
     @Column(name = "PLAT_TRACE")
     private Integer platTrace;
 
@@ -90,6 +88,7 @@ public class MivsSysstsntfctnInfoEntity {
     /**
      * null
      */
+    @Id
     @Column(name = "SYS_IND")
     private String sysInd;
 
