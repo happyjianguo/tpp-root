@@ -20,7 +20,7 @@ public class MIVS_333_001_01 extends MODEL_BASE {
     private static final String MESGTYPE = "mivs.333.001.01";
     private static final String XMLNS = "urn:cnaps:std:mivs:2010:tech:xsd:mivs.333.001.01";
 
-    private MIVS_333_001_01_FreeFrmtConf freeFrmtConf = new MIVS_333_001_01_FreeFrmtConf();
+    private MIVS_333_001_01_FreeFrmtConf FreeFrmtConf = new MIVS_333_001_01_FreeFrmtConf();
 
     public MIVS_333_001_01() {
         super(null, 0, 0, 0);
@@ -30,20 +30,20 @@ public class MIVS_333_001_01 extends MODEL_BASE {
         super(mylog, sysDate, sysTime, sysTraceno);
         super.mesgType = MIVS_333_001_01.MESGTYPE;
         super.XMLNS= MIVS_333_001_01.XMLNS;
-        this.freeFrmtConf.getMsgHdr().setMsgId(super.msgId());
-        this.freeFrmtConf.getMsgHdr().setCreDtTm(super.creDtTm());
+        this.FreeFrmtConf.getMsgHdr().setMsgId(super.msgId());
+        this.FreeFrmtConf.getMsgHdr().setCreDtTm(super.creDtTm());
     }
 
     public MIVS_333_001_01_FreeFrmtConf getFreeFrmtConf() {
-        return freeFrmtConf;
+        return FreeFrmtConf;
     }
 
     public void setFreeFrmtConf(MIVS_333_001_01_FreeFrmtConf freeFrmtConf) {
-        this.freeFrmtConf = freeFrmtConf;
+        this.FreeFrmtConf = freeFrmtConf;
     }
 
     @Override
     public String signData() {
-        return this.freeFrmtConf.signData();
+        return this.FreeFrmtConf.signData();
     }
 }
