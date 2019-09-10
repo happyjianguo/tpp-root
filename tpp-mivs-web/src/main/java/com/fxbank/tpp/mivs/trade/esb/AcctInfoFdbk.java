@@ -190,7 +190,7 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         }
 
         //更新业务数据表
-        acctInfoFdbkService.updateSts(mivsAcctInfoFdbkModelUpdate);
+//        acctInfoFdbkService.updateSts(mivsAcctInfoFdbkModelUpdate);
 
         return rep;
     }
