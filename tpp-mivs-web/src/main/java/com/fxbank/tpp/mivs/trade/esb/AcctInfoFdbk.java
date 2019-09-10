@@ -100,7 +100,7 @@ public class AcctInfoFdbk extends TradeBase implements TradeExecutionStrategy {
         fdbk.setEntNm(isOrNotNull(reqBody.getEntNm(),"企业名称","N"));
         fdbk.setTraNm(isOrNotNull(reqBody.getTraNm(),"字号名称","N"));
         fdbk.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码", "Y"));
-        fdbk.setAcctSts(isOrNotNull(reqBody.getAcctSts(),"账户状态标识", "Y"));
+        fdbk.setAcctSts("YENO");
         fdbk.setChngDt(dateToIsoDate(reqBody.getChngDt(),"变更日期","Y"));
 
         //发送人行请求数据落库

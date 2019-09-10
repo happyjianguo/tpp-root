@@ -86,17 +86,17 @@ public class RegVrfctnFdbkTest{
         @Test
         public void payOk() throws Exception {
 
-            reqBody.setOrgnlDlvrgMsgId("2019070200003816");
-            reqBody.setOrgnlRcvgMsgId("2019070200001807");
-            reqBody.setEntNm("李哈哈");
+            reqBody.setOrgnlDlvrgMsgId("2019091100009755");
+            reqBody.setOrgnlRcvgMsgId("2019091000221312");
+            reqBody.setEntNm("公司");
 //            reqBody.setNm("李明");
 //            reqBody.setId("610123199002140010");
-            reqBody.setUniSocCdtCd("123456789012345678");
-            reqBody.setNmOfLglPrsn("李哈哈");
-            reqBody.setIdOfLglPrsn("1111111111");
+            reqBody.setUniSocCdtCd("91110000801145381H");
+            reqBody.setNmOfLglPrsn("张三");
+            reqBody.setIdOfLglPrsn("123456789");
             reqBody.setRslt("MACH");
-            reqBody.setDataResrcDt("2019-03-20");
-            reqBody.setCntt("对核查结果有疑义");
+            reqBody.setDataResrcDt("20190419");
+            reqBody.setCntt("阜新银行测试登记信息核查反馈（企业类型公司）");
             reqBody.setContactNm("哈哈精");
             reqBody.setContactNb("17702499222");
 

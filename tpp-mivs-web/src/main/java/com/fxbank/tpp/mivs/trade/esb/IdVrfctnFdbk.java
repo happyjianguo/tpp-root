@@ -115,7 +115,7 @@ public class IdVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setId(isOrNotNull(reqBody.getId(),"证件号码","Y"));
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码","N"));
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setBizRegNb(isOrNotNull(reqBody.getBizRegNb(),"工商注册号","N"));
-        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"核查结果", "Y"));
+        fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt("YENO");
         fdbk.setCntt(isOrNotNull(reqBody.getCntt(),"疑义反馈内容", "Y"));
         fdbk.setContactNb(isOrNotNull(reqBody.getContactNb(),"联系人电话", "Y"));
         fdbk.setContactNm(isOrNotNull(reqBody.getContactNm(),"联系人姓名", "Y"));
