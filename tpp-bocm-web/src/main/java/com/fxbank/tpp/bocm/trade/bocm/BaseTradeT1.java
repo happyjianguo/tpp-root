@@ -423,6 +423,7 @@ public abstract class BaseTradeT1 {
 			String bizChnl,String bizCode) throws SysTradeExecuteException{		
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
+		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
 		//业务渠道    String  O-柜面通
 		frmsModel.setBizChannel(bizChnl);
 		frmsModel.setBizCode(bizCode);

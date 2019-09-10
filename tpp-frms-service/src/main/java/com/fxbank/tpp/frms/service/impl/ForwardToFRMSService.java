@@ -59,15 +59,25 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 			logger.info(e.getRspCode() + " | " + e.getRspMsg());
 			throw e;
 		}
-		
-		String jsonReq = JsonUtil.toJson(request);
-		jsonReq = "["+jsonReq+"]";
-		
-		logger.debug("发送请求至风险监控平台：" + jsonReq);
-		
-		String result=null;
 		try {
+			String jsonReq = JsonUtil.toJson(request);
+			jsonReq = "["+jsonReq+"]";		
+			logger.debug("发送请求至风险监控平台：" + jsonReq);			
+			String result=null;
 			result = httpService.doJsonPost(url,jsonReq);
+			logger.debug("接收风险监控应答：" + result);
+			result = result.substring(1, result.length()-1);
+			result = result.replaceAll("@type", "unusetype");
+			if(result.equals("")){
+				result = "{}";
+			}
+			T resultModel = JsonUtil.toBean(result, clazz);
+			if(resultModel==null){
+				SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
+				logger.error(e.getRspCode() + " | " + e.getRspMsg());
+				throw e;
+			}
+			return resultModel;
 		} catch (SocketTimeoutException e) {
 			logger.error(e.toString());
 			SysTradeExecuteException e1 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000004,"接收风险监控平台应答超时");
@@ -78,20 +88,6 @@ public class ForwardToFRMSService  implements IForwardToFRMSService {
 			SysTradeExecuteException e1 = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_000005,"调用风险监控平台服务异常");
 			logger.error(e1.getRspCode() + " | " + e1.getRspMsg());
 			throw e1;
-		}
-		logger.debug("接收风险监控应答：" + result);
-		result = result.substring(1, result.length()-1);
-		result = result.replaceAll("@type", "unusetype");
-		if(result.equals("")){
-			result = "{}";
-		}
-		T resultModel = JsonUtil.toBean(result, clazz);
-		if(resultModel==null){
-			SysTradeExecuteException e = new SysTradeExecuteException(SysTradeExecuteException.CIP_E_999999);
-			logger.error(e.getRspCode() + " | " + e.getRspMsg());
-			throw e;
-		}
-		
-		return resultModel;
+		}		
 	}
 }
