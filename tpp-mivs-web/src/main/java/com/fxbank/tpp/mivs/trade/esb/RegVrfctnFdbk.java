@@ -105,16 +105,16 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         fdbk.setSysInd("SAMR");
         fdbk.getOrgnlVrfctn().setOrgnlDlvrgMsgId(reqBody.getOrgnlDlvrgMsgId());
         fdbk.getOrgnlVrfctn().setOrgnlRcvgMsgId(reqBody.getOrgnlRcvgMsgId());
-        if(reqBody.getEntNm() != null) {
+        if(isOrNotNull(reqBody.getEntNm(),"","N") != null){
             MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfEnt vrfctnInfOfEnt = new MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfEnt();
             vrfctnInfOfEnt.setEntNm(reqBody.getEntNm());
             vrfctnInfOfEnt.setUniSocCdtCd(reqBody.getUniSocCdtCd());
             vrfctnInfOfEnt.setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
             vrfctnInfOfEnt.setIdOfLglPrsn(reqBody.getIdOfLglPrsn());
             fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setOrgnlVrfctnInfOfEnt(vrfctnInfOfEnt);
-        }else if(reqBody.getNm() != null){
+        }else if(isOrNotNull(reqBody.getNm(),"","N") != null){
             MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfSlfEplydPpl vrfctnInfOfSlfEplydPpl = new MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfSlfEplydPpl();
-            vrfctnInfOfSlfEplydPpl.setTraNm(reqBody.getTraNm());
+            vrfctnInfOfSlfEplydPpl.setTraNm(isOrNotNull(reqBody.getTraNm(),"字号名称","N"));
             vrfctnInfOfSlfEplydPpl.setUniSocCdtCd(reqBody.getUniSocCdtCd());
             vrfctnInfOfSlfEplydPpl.setNm(reqBody.getNm());
             vrfctnInfOfSlfEplydPpl.setId(reqBody.getId());
