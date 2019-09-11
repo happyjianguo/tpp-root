@@ -87,14 +87,14 @@ public class IdVrfctnFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrgnlDlvrgMsgId("2019083000004698");
-        reqBody.setOrgnlRcvgMsgId("2019083000309329");
+        reqBody.setOrgnlDlvrgMsgId("2019091000009675");
+        reqBody.setOrgnlRcvgMsgId("2019091000219641");
         reqBody.setMobNb("18666060606");
         reqBody.setNm("旭格门窗有限公司");
         reqBody.setIdTp("IC00");
         reqBody.setId("110108198607224413");
-//        reqBody.setUniSocCdtCd("123456789012345678");
-        reqBody.setBizRegNb("123456789123456789");
+        reqBody.setUniSocCdtCd("123456789012345678");
+//        reqBody.setBizRegNb("123456789123456789");
         reqBody.setRslt("MACH");
         reqBody.setCntt("对核查结果有疑义");
         reqBody.setContactNm("哈哈精");

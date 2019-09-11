@@ -89,13 +89,13 @@ public class TxPmtVrfctnFdbkTest {
     @Test
     public void payOk() throws Exception {
 
-        reqBody.setOrgnlDlvrgMsgId("2019082900004483");
-        reqBody.setOrgnlRcvgMsgId("2019082900306521");
+        reqBody.setOrgnlDlvrgMsgId("2019090900009338");
+        reqBody.setOrgnlRcvgMsgId("2019090900187776");
         reqBody.setCompanyName("北京市政交通一卡通有限公司");
         reqBody.setUniSocCdtCd("91110000801145381H");
 //        reqBody.setTxpyrIdNb("123456789123456789");
-        reqBody.setRslt("MCHD");
-//        reqBody.setDataResrcDt("2019-04-29");
+        reqBody.setRslt("MACD");
+        reqBody.setDataResrcDt("2018-12-16");
 
         List<REQ_50023000207.txpyrInfoArray> txpmtInfArrayList = new ArrayList<REQ_50023000207.txpyrInfoArray>();
         for(int i=0; i<4; i++){

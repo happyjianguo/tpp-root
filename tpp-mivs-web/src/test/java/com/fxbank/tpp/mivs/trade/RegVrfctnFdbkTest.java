@@ -86,8 +86,8 @@ public class RegVrfctnFdbkTest{
         @Test
         public void payOk() throws Exception {
 
-            reqBody.setOrgnlDlvrgMsgId("2019091100009755");
-            reqBody.setOrgnlRcvgMsgId("2019091000221312");
+            reqBody.setOrgnlDlvrgMsgId("2019090900009415");
+            reqBody.setOrgnlRcvgMsgId("2019090900214554");
             reqBody.setEntNm("公司");
 //            reqBody.setNm("李明");
 //            reqBody.setId("610123199002140010");
@@ -96,7 +96,7 @@ public class RegVrfctnFdbkTest{
             reqBody.setIdOfLglPrsn("123456789");
             reqBody.setRslt("MACH");
             reqBody.setDataResrcDt("20190419");
-            reqBody.setCntt("阜新银行测试登记信息核查反馈（企业类型公司）");
+            reqBody.setCntt("阜新银行测试登记信息核查反馈（企业类型公司）,业务校验错");
             reqBody.setContactNm("哈哈精");
             reqBody.setContactNb("17702499222");
 

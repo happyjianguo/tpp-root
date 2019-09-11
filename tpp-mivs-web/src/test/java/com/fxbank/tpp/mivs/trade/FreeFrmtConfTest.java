@@ -86,6 +86,7 @@ public class FreeFrmtConfTest {
     public void payOk() throws Exception {
 
         reqBody.setOrigMsgId("2019081415200018");
+//        reqBody.setOrigMsgId("111111111111111111111111111111");
         reqBody.setOrigInstgDrctPty("0000");
         reqBody.setOrigInstgPty("0000");
         reqBody.setMsgCntt("阜新银行测试回复确认");

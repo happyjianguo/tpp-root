@@ -87,7 +87,7 @@ public class AcctInfoFdbkTest {
         reqBody.setEntNm("");
         reqBody.setTraNm("");
         reqBody.setUniSocCdtCd("91110000801199997H");
-        reqBody.setAcctSts("OPEN");
+        reqBody.setAcctSts("YENO");
         reqBody.setChngDt("20190906");
 
         String macDataStr = JsonUtil.toJson(reqBody);
