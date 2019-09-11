@@ -10,10 +10,12 @@ import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
 import com.fxbank.tpp.mivs.dto.esb.REP_50023000214;
 import com.fxbank.tpp.mivs.dto.esb.REQ_50023000214;
+import com.fxbank.tpp.mivs.dto.mivs.CCMS_900_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_911_001_02;
 import com.fxbank.tpp.mivs.dto.mivs.DTO_BASE;
 import com.fxbank.tpp.mivs.exception.MivsTradeExecuteException;
 import com.fxbank.tpp.mivs.dto.mivs.CCMS_990_001_02;
+import com.fxbank.tpp.mivs.model.CCMS_900_001_02_CmonConf;
 import com.fxbank.tpp.mivs.model.CCMS_990_001_02_ComConf;
 import com.fxbank.tpp.mivs.model.mivsmodel.MivsFreeFrmtModel;
 import com.fxbank.tpp.mivs.model.request.MIVS_333_001_01;
@@ -158,17 +160,25 @@ public class FreeFrmtConf extends TradeBase implements TradeExecutionStrategy {
             freeFrmtModeltUpdate.setRjct_inf(ccms911.getDscrdMsgNtfctn().getDscrdInf().getRjctInf());
 
             throw e;
-        }else if(dtoBase.getHead().getMesgType().equals("ccms.990.001.02")){
+        }else if(dtoBase.getHead().getMesgType().equals("ccms.900.001.02")){
 
-            CCMS_990_001_02 ccms990 = (CCMS_990_001_02)dtoBase;
-            CCMS_990_001_02_ComConf.ConfInf confInf = ccms990.getComConf().getConfInf();
+            CCMS_900_001_02 ccms900 = (CCMS_900_001_02)dtoBase;
+            CCMS_900_001_02_CmonConf.CmonConfInf cmonConfInf = ccms900.getCmonConf().getCmonConfInf();
 
             //返回ESB报文
-            repBody.setProcCd(ccms990.getComConf().getConfInf().getMsgPrcCd());
+            repBody.setProcSts(cmonConfInf.getPrcSts());
+            repBody.setProcCd(cmonConfInf.getPrcCd());
+            repBody.setPtyId(cmonConfInf.getPtyId());
+            repBody.setPtyPrcCd(cmonConfInf.getPtyPrcCd());
+            repBody.setRjctInf(cmonConfInf.getRjctInf());
+            repBody.setPrcDt(cmonConfInf.getPrcDt());
+            repBody.setRemark1(cmonConfInf.getNetgRnd());
 
             //待更新数据库数据
             freeFrmtModeltUpdate.setMivs_sts("04");
-            freeFrmtModeltUpdate.setProc_cd(confInf.getMsgPrcCd());
+            freeFrmtModeltUpdate.setProc_sts(cmonConfInf.getPrcSts());
+            freeFrmtModeltUpdate.setProc_cd(cmonConfInf.getPrcCd());
+            freeFrmtModeltUpdate.setRjct_inf(cmonConfInf.getRjctInf());
             freeFrmtModeltUpdate.setIsornot_rsp("YES");
         }
 
