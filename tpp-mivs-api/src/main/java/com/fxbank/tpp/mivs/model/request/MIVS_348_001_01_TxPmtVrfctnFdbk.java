@@ -391,9 +391,7 @@ public class MIVS_348_001_01_TxPmtVrfctnFdbk implements Serializable, SIGN_DATA 
 
     @Override
     public String signData() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(this.MsgHdr.MsgId);
-        return sb.toString();
+        return null;
     }
 
 }
