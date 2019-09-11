@@ -114,10 +114,10 @@ public class TradeBase {
 		frmsModel.setBizCode(bizCode);
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
-		frmsModel.setCardNo(payerAcno);
+		frmsModel.setCardNo(payeeAcno);
 		//如果业务类型为F01跨行转账赋值转账对手和应答码
 		if(bizCode.equals("F01")){
-			frmsModel.setRecAcct(payeeAcno);
+			frmsModel.setRecAcct(payerAcno);
 		}
 		frmsModel.setWhoReport("01");
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
@@ -139,13 +139,13 @@ public class TradeBase {
 		frmsModel.setBizCode(bizCode);
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
-		frmsModel.setCardNo(payerAcno);		
+		frmsModel.setCardNo(payeeAcno);		
 		frmsModel.setWhoReport("01");
 		frmsModel.setOperStatus(operStatus);
 		//如果业务类型为F01跨行转账赋值转账对手和应答码
 		if(bizCode.equals("F01")){
 			frmsModel.setRespCode(respCode);
-			frmsModel.setRecAcct(payeeAcno);
+			frmsModel.setRecAcct(payerAcno);
 		}
 		REP_FRMS frmsRep = null;
 		try {
