@@ -429,10 +429,19 @@ public abstract class BaseTradeT1 {
 		frmsModel.setBizCode(bizCode);
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
-		frmsModel.setCardNo(payerAcno);
-		//如果业务类型为F01跨行转账，赋值转账对手账号
+		//如果业务类型为F01跨行转账赋值转账对手和应答码
+		//他代本取款
 		if(bizCode.equals("F01")){
+			if(payeeAcno.equals("")){
+				return ;
+			}
+			frmsModel.setCardNo(payerAcno);
 			frmsModel.setRecAcct(payeeAcno);
+		}
+		//O04为跨行转入,cardNo为本行卡号
+		//他代本存款
+		if(bizCode.equals("O04")){
+			frmsModel.setCardNo(payeeAcno);		
 		}
 		frmsModel.setWhoReport("01");
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
@@ -458,10 +467,19 @@ public abstract class BaseTradeT1 {
 		frmsModel.setCardNo(payerAcno);
 		frmsModel.setWhoReport("01");
 		frmsModel.setOperStatus(operStatus);
-		//如果是跨行转账赋值应答码和对手账号 
+		//如果业务类型为F01跨行转账赋值转账对手和应答码
 		if(bizCode.equals("F01")){
-			frmsModel.setRecAcct(payeeAcno);
+			if(payeeAcno.equals("")){
+				return ;
+			}
 			frmsModel.setRespCode(respCode);
+			frmsModel.setCardNo(payerAcno);
+			frmsModel.setRecAcct(payeeAcno);
+		}
+		//O04为跨行转入,cardNo为本行卡号
+		//他代本存款
+		if(bizCode.equals("O04")){
+			frmsModel.setCardNo(payeeAcno);			
 		}
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
 		if(frmsRep.getVerifyPolicy()!=null){

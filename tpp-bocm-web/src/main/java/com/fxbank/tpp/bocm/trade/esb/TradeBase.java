@@ -114,10 +114,23 @@ public class TradeBase {
 		frmsModel.setBizCode(bizCode);
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
-		frmsModel.setCardNo(payeeAcno);
+		
 		//如果业务类型为F01跨行转账赋值转账对手和应答码
+		//本行卡转交行卡  交行卡存现金
 		if(bizCode.equals("F01")){
-			frmsModel.setRecAcct(payerAcno);
+			if(payerAcno.equals("")){
+				return;
+			}
+			frmsModel.setCardNo(payerAcno);
+			frmsModel.setRecAcct(payeeAcno);
+		}
+		//O04为跨行转入,cardNo为本行卡号
+		//交行卡取现金   交行卡转本行卡
+		if(bizCode.equals("O04")){
+			if(payeeAcno.equals("")){
+				return;
+			}
+			frmsModel.setCardNo(payeeAcno);		
 		}
 		frmsModel.setWhoReport("01");
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
@@ -138,14 +151,25 @@ public class TradeBase {
 		frmsModel.setBizChannel(bizChnl);
 		frmsModel.setBizCode(bizCode);
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
-		frmsModel.setOperAmount(amt);
-		frmsModel.setCardNo(payeeAcno);		
+		frmsModel.setOperAmount(amt);	
 		frmsModel.setWhoReport("01");
 		frmsModel.setOperStatus(operStatus);
 		//如果业务类型为F01跨行转账赋值转账对手和应答码
 		if(bizCode.equals("F01")){
+			if(payerAcno.equals("")){
+				return;
+			}
 			frmsModel.setRespCode(respCode);
-			frmsModel.setRecAcct(payerAcno);
+			frmsModel.setCardNo(payerAcno);
+			frmsModel.setRecAcct(payeeAcno);
+		}
+		//O04为跨行转入,cardNo为本行卡号
+		//交行卡取现金   交行卡转本行卡
+		if(bizCode.equals("O04")){
+			if(payeeAcno.equals("")){
+				return;
+			}
+			frmsModel.setCardNo(payeeAcno);			
 		}
 		REP_FRMS frmsRep = null;
 		try {
