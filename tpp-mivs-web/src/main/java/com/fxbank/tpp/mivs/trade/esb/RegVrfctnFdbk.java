@@ -108,16 +108,16 @@ public class RegVrfctnFdbk extends TradeBase implements TradeExecutionStrategy {
         if(isOrNotNull(reqBody.getEntNm(),"","N") != null){
             MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfEnt vrfctnInfOfEnt = new MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfEnt();
             vrfctnInfOfEnt.setEntNm(reqBody.getEntNm());
-            vrfctnInfOfEnt.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-            vrfctnInfOfEnt.setNmOfLglPrsn(reqBody.getNmOfLglPrsn());
-            vrfctnInfOfEnt.setIdOfLglPrsn(reqBody.getIdOfLglPrsn());
+            vrfctnInfOfEnt.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码","Y"));
+            vrfctnInfOfEnt.setNmOfLglPrsn(isOrNotNull(reqBody.getNmOfLglPrsn(),"企业类型为企业，法定代表人或单位负责人姓名","Y"));
+            vrfctnInfOfEnt.setIdOfLglPrsn(isOrNotNull(reqBody.getIdOfLglPrsn(),"企业类型为企业，法定代表人或单位负责人身份证件号","Y"));
             fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setOrgnlVrfctnInfOfEnt(vrfctnInfOfEnt);
         }else if(isOrNotNull(reqBody.getNm(),"","N") != null){
             MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfSlfEplydPpl vrfctnInfOfSlfEplydPpl = new MIVS_349_001_01_RegVrfctnFdbk.Fdbk.OrgnlVrfctn.OrgnlVrfctnInfo.OrgnlVrfctnInfOfSlfEplydPpl();
             vrfctnInfOfSlfEplydPpl.setTraNm(isOrNotNull(reqBody.getTraNm(),"字号名称","N"));
-            vrfctnInfOfSlfEplydPpl.setUniSocCdtCd(reqBody.getUniSocCdtCd());
-            vrfctnInfOfSlfEplydPpl.setNm(reqBody.getNm());
-            vrfctnInfOfSlfEplydPpl.setId(reqBody.getId());
+            vrfctnInfOfSlfEplydPpl.setUniSocCdtCd(isOrNotNull(reqBody.getUniSocCdtCd(),"统一社会信用代码","Y"));
+            vrfctnInfOfSlfEplydPpl.setNm(isOrNotNull(reqBody.getNm(),"企业类型为个人，经营者姓名","Y"));
+            vrfctnInfOfSlfEplydPpl.setId(isOrNotNull(reqBody.getId(),"企业类型为个人，经营者证件号","Y"));
             fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setOrgnlVrfctnInfOfSlfEplydPpl(vrfctnInfOfSlfEplydPpl);
         }
         fdbk.getOrgnlVrfctn().getOrgnlVrfctnInfo().setRslt(isOrNotNull(reqBody.getRslt(),"核查结果", "Y"));
