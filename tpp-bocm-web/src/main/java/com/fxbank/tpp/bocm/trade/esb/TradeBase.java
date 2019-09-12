@@ -145,6 +145,7 @@ public class TradeBase {
 	//状态通知
 	public void statusNotify(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt
 			,String bizChnl,String bizCode,String operStatus,String respCode) throws SysTradeExecuteException{
+		/*
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
@@ -182,5 +183,6 @@ public class TradeBase {
 		if(frmsRep.getVerifyPolicy()!=null){
 			myLog.info(logger, "风险监控应答  Code："+frmsRep.getVerifyPolicy().getCode()+"  Name:"+frmsRep.getVerifyPolicy().getName());
 		}
+		*/
 	}
 }

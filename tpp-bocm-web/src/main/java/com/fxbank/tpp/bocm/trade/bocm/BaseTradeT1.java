@@ -251,22 +251,22 @@ public abstract class BaseTradeT1 {
 		riskCheck(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode);
 		
 		//磁条卡二磁道校验
-//		try {
-//			myLog.info(logger, "磁条卡二磁道校验");	
-//			validateMag(dto);
-//		} catch (SysTradeExecuteException e) {
-//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败",e);	
-//			throw cardMagValidateException;
-//		}
+		try {
+			myLog.info(logger, "磁条卡二磁道校验");	
+			validateMag(dto);
+		} catch (SysTradeExecuteException e) {
+			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败",e);	
+			throw cardMagValidateException;
+		}
 		
 //		IC卡校验
-//		try {
-//			myLog.info(logger, "IC卡55域校验");	
-//			validateIC(dto);
-//		} catch (SysTradeExecuteException e) {
-//			myLog.info(logger, "IC卡状态异常,IC卡55域校验失败");	
-//			throw cardIcValidateException;
-//		}
+		try {
+			myLog.info(logger, "IC卡55域校验");	
+			validateIC(dto);
+		} catch (SysTradeExecuteException e) {
+			myLog.info(logger, "IC卡状态异常,IC卡55域校验失败");	
+			throw cardIcValidateException;
+		}
 		
 		//递归调用来账查询
 		BocmRcvTraceQueryModel revModel = checkBocmRcvTrace(dto,1);	
@@ -421,6 +421,7 @@ public abstract class BaseTradeT1 {
 	//风险检查
 	public void riskCheck(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt,
 			String bizChnl,String bizCode) throws SysTradeExecuteException{		
+		/*
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
@@ -452,11 +453,13 @@ public abstract class BaseTradeT1 {
 			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
 		}
 		// 增加风险监控 检查20190809 end		
+		 */
 	}
 	
 	//状态通知
 	public void statusNotify(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt
-			,String bizChnl,String bizCode,String operStatus,String respCode) throws SysTradeExecuteException{		
+			,String bizChnl,String bizCode,String operStatus,String respCode) throws SysTradeExecuteException{
+		/*
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
@@ -489,5 +492,6 @@ public abstract class BaseTradeT1 {
 			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
 		}
 		// 增加风险监控 检查20190809 end		
+		 */
 	}
 }
