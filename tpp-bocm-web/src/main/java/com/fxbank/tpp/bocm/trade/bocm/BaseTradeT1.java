@@ -251,22 +251,22 @@ public abstract class BaseTradeT1 {
 		riskCheck(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode);
 		
 		//磁条卡二磁道校验
-//		try {
-//			myLog.info(logger, "磁条卡二磁道校验");	
-//			validateMag(dto);
-//		} catch (SysTradeExecuteException e) {
-//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败",e);	
-//			throw cardMagValidateException;
-//		}
+		try {
+			myLog.info(logger, "磁条卡二磁道校验");	
+			validateMag(dto);
+		} catch (SysTradeExecuteException e) {
+			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败",e);	
+			throw cardMagValidateException;
+		}
 		
 //		IC卡校验
-//		try {
-//			myLog.info(logger, "IC卡55域校验");	
-//			validateIC(dto);
-//		} catch (SysTradeExecuteException e) {
-//			myLog.info(logger, "IC卡状态异常,IC卡55域校验失败");	
-//			throw cardIcValidateException;
-//		}
+		try {
+			myLog.info(logger, "IC卡55域校验");	
+			validateIC(dto);
+		} catch (SysTradeExecuteException e) {
+			myLog.info(logger, "IC卡状态异常,IC卡55域校验失败");	
+			throw cardIcValidateException;
+		}
 		
 		//递归调用来账查询
 		BocmRcvTraceQueryModel revModel = checkBocmRcvTrace(dto,1);	
@@ -420,18 +420,29 @@ public abstract class BaseTradeT1 {
 	
 	//风险检查
 	public void riskCheck(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt,
-			String bizChnl,String bizCode) throws SysTradeExecuteException{
+			String bizChnl,String bizCode) throws SysTradeExecuteException{		
+		/*
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
+		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
 		//业务渠道    String  O-柜面通
 		frmsModel.setBizChannel(bizChnl);
 		frmsModel.setBizCode(bizCode);
 		frmsModel.setOperTime(String.valueOf(new Date().getTime()));
 		frmsModel.setOperAmount(amt);
-		frmsModel.setCardNo(payerAcno);
-		//如果业务类型为F01跨行转账，赋值转账对手账号
+		//如果业务类型为F01跨行转账赋值转账对手和应答码
+		//他代本取款
 		if(bizCode.equals("F01")){
+			if(payeeAcno.equals("")){
+				return ;
+			}
+			frmsModel.setCardNo(payerAcno);
 			frmsModel.setRecAcct(payeeAcno);
+		}
+		//O04为跨行转入,cardNo为本行卡号
+		//他代本存款
+		if(bizCode.equals("O04")){
+			frmsModel.setCardNo(payeeAcno);		
 		}
 		frmsModel.setWhoReport("01");
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
@@ -442,11 +453,13 @@ public abstract class BaseTradeT1 {
 			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
 		}
 		// 增加风险监控 检查20190809 end		
+		 */
 	}
 	
 	//状态通知
 	public void statusNotify(MyLog myLog,DataTransObject dto,String payerAcno,String payeeAcno,Long amt
 			,String bizChnl,String bizCode,String operStatus,String respCode) throws SysTradeExecuteException{
+		/*
 		// 增加风险监控 检查20190809 begin
 		REQ_FRMS frmsModel = new REQ_FRMS(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
 		frmsModel.setSerialId(dto.getSysDate()+String.valueOf(dto.getSysTraceno()));
@@ -457,10 +470,19 @@ public abstract class BaseTradeT1 {
 		frmsModel.setCardNo(payerAcno);
 		frmsModel.setWhoReport("01");
 		frmsModel.setOperStatus(operStatus);
-		//如果是跨行转账赋值应答码和对手账号 
+		//如果业务类型为F01跨行转账赋值转账对手和应答码
 		if(bizCode.equals("F01")){
-			frmsModel.setRecAcct(payeeAcno);
+			if(payeeAcno.equals("")){
+				return ;
+			}
 			frmsModel.setRespCode(respCode);
+			frmsModel.setCardNo(payerAcno);
+			frmsModel.setRecAcct(payeeAcno);
+		}
+		//O04为跨行转入,cardNo为本行卡号
+		//他代本存款
+		if(bizCode.equals("O04")){
+			frmsModel.setCardNo(payeeAcno);			
 		}
 		REP_FRMS frmsRep = forwardToFRMSService.sendToFRMS(frmsModel, REP_FRMS.class);
 		if(frmsRep.getVerifyPolicy()!=null){
@@ -469,6 +491,7 @@ public abstract class BaseTradeT1 {
 		if (frmsRep.getVerifyPolicy()!=null&&BLOCK.equalsIgnoreCase(frmsRep.getVerifyPolicy().getCode())) {
 			throw new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10019);
 		}
-		// 增加风险监控 检查20190809 end
+		// 增加风险监控 检查20190809 end		
+		 */
 	}
 }
