@@ -250,23 +250,23 @@ public abstract class BaseTradeT1 {
 		//风险检查
 		riskCheck(myLog, dto, payerAcno, payeeAcno, amt,bizChnl,bizCode);
 		
-		//磁条卡二磁道校验
-		try {
-			myLog.info(logger, "磁条卡二磁道校验");	
-			validateMag(dto);
-		} catch (SysTradeExecuteException e) {
-			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败",e);	
-			throw cardMagValidateException;
-		}
-		
-//		IC卡校验
-		try {
-			myLog.info(logger, "IC卡55域校验");	
-			validateIC(dto);
-		} catch (SysTradeExecuteException e) {
-			myLog.info(logger, "IC卡状态异常,IC卡55域校验失败");	
-			throw cardIcValidateException;
-		}
+//		//磁条卡二磁道校验
+//		try {
+//			myLog.info(logger, "磁条卡二磁道校验");	
+//			validateMag(dto);
+//		} catch (SysTradeExecuteException e) {
+//			myLog.info(logger, "磁条卡状态异常,磁条卡二磁道校验失败",e);	
+//			throw cardMagValidateException;
+//		}
+//		
+////		IC卡校验
+//		try {
+//			myLog.info(logger, "IC卡55域校验");	
+//			validateIC(dto);
+//		} catch (SysTradeExecuteException e) {
+//			myLog.info(logger, "IC卡状态异常,IC卡55域校验失败");	
+//			throw cardIcValidateException;
+//		}
 		
 		//递归调用来账查询
 		BocmRcvTraceQueryModel revModel = checkBocmRcvTrace(dto,1);	
