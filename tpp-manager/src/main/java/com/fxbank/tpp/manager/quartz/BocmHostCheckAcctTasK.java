@@ -128,6 +128,13 @@ public class BocmHostCheckAcctTasK {
 			chkStatusService.chkStatusInit(record);
 			chkModel = chkStatusService.selectByDate(date.toString());
 		}
+		//2019-09-24 判断与核心对账状态如果成功则退出
+		myLog.info(logger, "检索核心对账状态");
+		if(chkModel.getHostStatus()==1){
+			myLog.info(logger, "渠道与核心已对账,跳出定时任务");
+			return;
+		}
+		
 		myLog.info(logger, "核心对账状态： " + chkModel.getHostStatus() + " 交行对账状态：  " + chkModel.getBocmStatus());
 		myLog.info(logger, "核心与外围对账开始");
 		// 删除对账错误日志

@@ -259,7 +259,7 @@ public abstract class BaseTradeT1 {
 			throw cardMagValidateException;
 		}
 		
-//		IC卡校验
+		//IC卡校验
 		try {
 			myLog.info(logger, "IC卡55域校验");	
 			validateIC(dto);

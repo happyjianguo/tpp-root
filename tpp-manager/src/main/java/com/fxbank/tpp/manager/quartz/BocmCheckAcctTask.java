@@ -99,6 +99,12 @@ public class BocmCheckAcctTask {
 		Integer sysTraceno = publicService.getSysTraceno();
 		Integer sysDate = date;
 		BocmChkStatusModel chkModel = chkStatusService.selectByDate(date + "");
+		//2019-09-24 判断渠道与交行对账状态如果成功则退出
+		myLog.info(logger, "检索渠道与交行对账状态");
+		if(chkModel.getBocmStatus()==1){
+			myLog.info(logger, "渠道与交行已对账,跳出定时任务");
+			return;
+		}	
 		if (chkModel.getHostStatus() == 0) {
 			myLog.error(logger, "渠道未与核心对账，与交行对账失败");
 			BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10013,
