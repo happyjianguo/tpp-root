@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.bocm.mapper.BocmChkStatusMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.bocm.entity.BocmChkStatus" >
+    <id column="TX_DATE" property="txDate" jdbcType="DECIMAL" />
+    <result column="CHK_DATE" property="chkDate" jdbcType="DECIMAL" />
+    <result column="CHK_TIME" property="chkTime" jdbcType="DECIMAL" />
+    <result column="HOST_STATUS" property="hostStatus" jdbcType="DECIMAL" />
+	<result column="BOCM_STATUS" property="bocmStatus" jdbcType="DECIMAL" />
+	<result column="PLAT_STATUS" property="platStatus" jdbcType="DECIMAL" />
+	<result column="BOCM_TX_CNT" property="bocmTxCnt" jdbcType="DECIMAL" />
+	<result column="BOCM_TX_AMT" property="bocmTxAmt" jdbcType="DECIMAL" />
+	<result column="HOST_TX_CNT" property="hostTxCnt" jdbcType="DECIMAL" />
+	<result column="HOST_TX_AMT" property="hostTxAmt" jdbcType="DECIMAL" />
+	<result column="PLAT_TX_CNT" property="platTxCnt" jdbcType="DECIMAL" />
+	<result column="PLAT_TX_AMT" property="platTxAmt" jdbcType="DECIMAL" />
+	<result column="TX_BRANCH" jdbcType="NVARCHAR" property="txBranch" />
+	<result column="TX_TEL" jdbcType="NVARCHAR" property="txTel" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select CHK_DATE, HOST_STATUS, BOCM_STATUS, PLAT_STATUS
+    from BOCM_CHK_STATUS
+  </select>
+  
+  <select id="selectByDateSuccess" resultMap="BaseResultMap">
+    select * from bocm_chk_status
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="begDate != null and begDate != ''">
+        and tx_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and tx_date <![CDATA[ <= ]]> #{endDate}
+      </if>
+      <if test="state != null and state != ''">
+        and host_status <![CDATA[ = ]]> #{state}
+      </if>
+      <if test="state != null and state != ''">
+        and bocm_status <![CDATA[ = ]]> #{state}
+      </if>
+    </trim>
+     order by tx_date desc
+  </select>
+  
+  <select id="selectByDateError" resultMap="BaseResultMap">
+    select * from bocm_chk_status
+    <trim prefix="WHERE" prefixOverrides="AND | OR ">
+      <if test="begDate != null and begDate != ''">
+        and tx_date <![CDATA[ >= ]]> #{begDate}
+      </if>
+      <if test="endDate != null and endDate != ''">
+        and tx_date <![CDATA[ <= ]]> #{endDate}
+      </if>    
+    </trim>
+        and 
+        (
+          host_status <![CDATA[ <> ]]> 1    
+          or bocm_status <![CDATA[ <> ]]> 1
+        )
+     order by tx_date desc
+  </select>
+
+</mapper>

@@ -34,7 +34,7 @@ public class CitySndTraceQueryTest {
 	
 	private static Logger logger = LoggerFactory.getLogger(CitySndTraceQueryTest.class);
 	
-	private static final String URL="http://127.0.0.1:7000/tcex/city.do";
+	private static final String URL="http://57.25.3.165:8001/tcex/city.do";
 
 	@Autowired
 	private MockMvc mockMvc;

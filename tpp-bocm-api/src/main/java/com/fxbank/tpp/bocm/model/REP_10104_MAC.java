@@ -1,0 +1,95 @@
+package com.fxbank.tpp.bocm.model;
+
+import com.fxbank.cip.base.log.MyLog;
+import com.fxbank.cip.base.pkg.fixed.FixedAnno.FixedField;
+
+/** 
+* @ClassName: REP_10104 
+* @Description: 工作密钥申请应答
+* @author YePuLiang
+* @date 2019年5月23日 下午3:44:42 
+*  
+*/
+public class REP_10104_MAC extends REP_BASE {
+	
+	private static final long serialVersionUID = -6800285963364978524L;
+
+	@Deprecated
+	 public REP_10104_MAC() {
+		super(null, 0, 0, 0);
+        super.setCheckMac(false);
+	 }
+
+	 public REP_10104_MAC(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+	    super(mylog, sysDate, sysTime, sysTraceno);
+	    super.setCheckMac(false);
+	 }
+	 
+		@FixedField(order = 5, len = 2, scale = 0, desc = "应用代码")
+		private Integer appCod;
+
+		@FixedField(order = 6, len = 1, scale = 0, desc = "响应标示")
+	    private String rspFlg;
+
+		@FixedField(order = 7, len = 2, scale = 0, desc = "密文长度")
+	    private Integer blkLen;
+		
+		@FixedField(order = 8, len = 16, scale = 0, desc = "密文值")
+	    private String blkVal;
+		
+		@FixedField(order = 9, len = 2, scale = 0, desc = "密钥校验值长度")
+	    private Integer chkLen;
+		
+		@FixedField(order = 10, len = 6, scale = 0, desc = "密钥校验值")
+	    private String chkVal;
+		
+
+		public Integer getAppCod() {
+			return appCod;
+		}
+
+		public void setAppCod(Integer appCod) {
+			this.appCod = appCod;
+		}
+
+		public String getRspFlg() {
+			return rspFlg;
+		}
+
+		public void setRspFlg(String rspFlg) {
+			this.rspFlg = rspFlg;
+		}
+
+		public Integer getBlkLen() {
+			return blkLen;
+		}
+
+		public void setBlkLen(Integer blkLen) {
+			this.blkLen = blkLen;
+		}
+
+		public String getBlkVal() {
+			return blkVal;
+		}
+
+		public void setBlkVal(String blkVal) {
+			this.blkVal = blkVal;
+		}
+
+		public Integer getChkLen() {
+			return chkLen;
+		}
+
+		public void setChkLen(Integer chkLen) {
+			this.chkLen = chkLen;
+		}
+
+		public String getChkVal() {
+			return chkVal;
+		}
+
+		public void setChkVal(String chkVal) {
+			this.chkVal = chkVal;
+		}
+
+}
