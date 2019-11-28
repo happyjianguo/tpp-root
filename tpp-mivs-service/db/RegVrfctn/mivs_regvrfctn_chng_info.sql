@@ -35,4 +35,5 @@ COMMENT ON COLUMN mivs_regvrfctn_chng_info.dt_of_chng IS '变更日期';
 
 
 ALTER TABLE mivs_regvrfctn_chng_info ADD PRIMARY KEY (instg_pty, msg_id, chng_info_nb);
-alter table mivs_regvrfctn_chng_info modify(BF_CHNG NVARCHAR2(200));
+alter table mivs_regvrfctn_chng_info modify(BF_CHNG VARCHAR2(4000));
+alter table mivs_regvrfctn_chng_info modify(AFT_CHNG VARCHAR2(4000));
