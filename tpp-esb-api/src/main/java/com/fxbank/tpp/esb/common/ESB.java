@@ -9,4 +9,5 @@ public class ESB extends CIP{
 	public static final String macKeyModelId = "RZAK";
 	public static final String macPlaceHolder = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
 
+	public static final String SYSTEM_ID = "3002300";
 }
