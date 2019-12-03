@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import com.dcfs.esb.ftp.client.FtpClientConfigSet;
 import com.dcfs.esb.ftp.client.FtpGet;
 import com.dcfs.esb.ftp.server.error.FtpException;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
@@ -527,7 +527,8 @@ public class TS_10103 {
 	
 	private String getEsbCheckFile(MyLog myLog, String date, String txBrno, String txTel,DataTransObject dto) throws SysTradeExecuteException {
 		ESB_REQ_50015000101 esbReq_50015000101 = new ESB_REQ_50015000101(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).setSourceType("BU").build();
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto.getSourceType(), dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno()).setBranchId(txBrno).setUserId(txTel).setSourceType("BU").build();
 		esbReq_50015000101.setReqSysHead(reqSysHead);
 		ESB_REQ_50015000101.REQ_BODY esbReqBody_50015000101 = esbReq_50015000101.getReqBody();
 		esbReqBody_50015000101.setChannelType("BU");

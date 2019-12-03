@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -60,7 +60,8 @@ public class TownQueryAcctInfo extends TradeBase implements TradeExecutionStrate
 		
 		//请求核心获取账户信息
 		ESB_REQ_30013000201 esbReq_30013000201 = new ESB_REQ_30013000201(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30013000201.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30013000201.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(txBrno).setUserId(txTel).build();
 		esbReq_30013000201.setReqSysHead(reqSysHead);	
 		ESB_REQ_30013000201.REQ_BODY reqBody_30013000201 = esbReq_30013000201.getReqBody();

@@ -3,7 +3,7 @@ package com.fxbank.tpp.mivs.trade.esb;
 import javax.annotation.Resource;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
@@ -53,7 +53,8 @@ public class TradeBase {
 		}
 		ESB_REQ_30043003001 esbReq_30043003001 = new ESB_REQ_30043003001(myLog, dto.getSysDate(), dto.getSysTime(),
 				dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043003001.getReqSysHead(), dto).build();
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043003001.getReqSysHead(), dto.getSourceType(), dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno()).build();
 		reqSysHead.setBranchId(branchId);
 		esbReq_30043003001.setReqSysHead(reqSysHead);
 		ESB_REQ_30043003001.REQ_BODY reqBody_30043003001 = esbReq_30043003001.getReqBody();
