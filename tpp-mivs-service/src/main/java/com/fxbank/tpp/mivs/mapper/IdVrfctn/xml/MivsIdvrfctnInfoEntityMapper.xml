@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxbank.tpp.mivs.mapper.IdVrfctn.MivsIdvrfctnInfoEntityMapper">
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.IdVrfctn.MivsIdvrfctnInfoEntity">
+    <id column="PLAT_DATE" jdbcType="DECIMAL" property="platDate" />
+    <id column="PLAT_TRACE" jdbcType="DECIMAL" property="platTrace" />
+    <result column="PLAT_TIME" jdbcType="DECIMAL" property="platTime" />
+    <result column="SYSTEM_ID" jdbcType="NVARCHAR" property="systemId" />
+    <result column="TRAN_DATE" jdbcType="NVARCHAR" property="tranDate" />
+    <result column="SEQ_NO" jdbcType="NVARCHAR" property="seqNo" />
+    <result column="TRAN_TIME" jdbcType="NVARCHAR" property="tranTime" />
+    <result column="USER_ID" jdbcType="NVARCHAR" property="userId" />
+    <result column="BRANCH_ID" jdbcType="NVARCHAR" property="branchId" />
+    <result column="MIVS_STS" jdbcType="NVARCHAR" property="mivsSts" />
+    <result column="MSG_ID" jdbcType="NVARCHAR" property="msgId" />
+    <result column="CRE_DT_TM" jdbcType="NVARCHAR" property="creDtTm" />
+    <result column="INSTG_DRCT_PTY" jdbcType="NVARCHAR" property="instgDrctPty" />
+    <result column="DRCT_PTY_NM" jdbcType="NVARCHAR" property="drctPtyNm" />
+    <result column="INSTG_PTY" jdbcType="NVARCHAR" property="instgPty" />
+    <result column="PTY_NM" jdbcType="NVARCHAR" property="ptyNm" />
+    <result column="INSTD_DRCT_PTY" jdbcType="NVARCHAR" property="instdDrctPty" />
+    <result column="INSTD_PTY" jdbcType="NVARCHAR" property="instdPty" />
+    <result column="RCV_MSG_ID" jdbcType="NVARCHAR" property="rcvMsgId" />
+    <result column="RCV_CRE_DT_TM" jdbcType="NVARCHAR" property="rcvCreDtTm" />
+    <result column="MOB_NB" jdbcType="NVARCHAR" property="mobNb" />
+    <result column="NM" jdbcType="NVARCHAR" property="nm" />
+    <result column="ID_TP" jdbcType="NVARCHAR" property="idTp" />
+    <result column="ID" jdbcType="NVARCHAR" property="id" />
+    <result column="UNI_SOC_CDT_CD" jdbcType="NVARCHAR" property="uniSocCdtCd" />
+    <result column="BIZ_REG_NB" jdbcType="NVARCHAR" property="bizRegNb" />
+    <result column="OP_NM" jdbcType="NVARCHAR" property="opNm" />
+    <result column="RSLT" jdbcType="NVARCHAR" property="rslt" />
+    <result column="MOB_CRR" jdbcType="NVARCHAR" property="mobCrr" />
+    <result column="LOC_MOB_NB" jdbcType="NVARCHAR" property="locMobNb" />
+    <result column="LOC_NM_MOB_NB" jdbcType="NVARCHAR" property="locNmMobNb" />
+    <result column="CD_TP" jdbcType="NVARCHAR" property="cdTp" />
+    <result column="STS" jdbcType="NVARCHAR" property="sts" />
+    <result column="PROC_STS" jdbcType="NVARCHAR" property="procSts" />
+    <result column="PROC_CD" jdbcType="NVARCHAR" property="procCd" />
+    <result column="RJCT_INF" jdbcType="NVARCHAR" property="rjctInf" />
+    <result column="REMARK1" jdbcType="NVARCHAR" property="remark1" />
+    <result column="REMARK2" jdbcType="NVARCHAR" property="remark2" />
+    <result column="REMARK3" jdbcType="NVARCHAR" property="remark3" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SYSTEM_ID, TRAN_DATE, SEQ_NO, TRAN_TIME,
+    USER_ID, BRANCH_ID, MIVS_STS, MSG_ID, CRE_DT_TM, INSTG_DRCT_PTY, DRCT_PTY_NM, INSTG_PTY,
+    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, RCV_MSG_ID, RCV_CRE_DT_TM, MOB_NB, NM, ID_TP,
+    ID, UNI_SOC_CDT_CD, BIZ_REG_NB, OP_NM, RSLT, MOB_CRR, LOC_MOB_NB, LOC_NM_MOB_NB,
+    CD_TP, STS, PROC_STS, PROC_CD, RJCT_INF, REMARK1, REMARK2, REMARK3
+    from MIVS_IDVRFCTN_INFO
+  </select>
+  <select id="selectResult" resultMap="BaseResultMap">
+    select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SYSTEM_ID, TRAN_DATE, SEQ_NO, TRAN_TIME,
+    USER_ID, BRANCH_ID, MIVS_STS, MSG_ID, CRE_DT_TM, INSTG_DRCT_PTY, DRCT_PTY_NM, INSTG_PTY,
+    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, RCV_MSG_ID, RCV_CRE_DT_TM, MOB_NB, NM, ID_TP,
+    ID, UNI_SOC_CDT_CD, BIZ_REG_NB, OP_NM, RSLT, MOB_CRR, LOC_MOB_NB, LOC_NM_MOB_NB,
+    CD_TP, STS, PROC_STS, PROC_CD, RJCT_INF, REMARK1, REMARK2, REMARK3
+    from MIVS_IDVRFCTN_INFO
+    <where>
+      <if test="StartDt != null and StartDt ！= ''">
+        PLAT_DATE&gt;#{StartDt,jdbcType=TIMESTAMP}
+      </if>
+      <if test="EndDt != null and EndDt != ''">
+        and PLAT_DATE&gt;#{EndDt,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+</mapper>

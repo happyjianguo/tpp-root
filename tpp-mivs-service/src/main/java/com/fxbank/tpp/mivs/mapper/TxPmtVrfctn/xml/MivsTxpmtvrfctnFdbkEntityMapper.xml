@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.TxPmtVrfctn.MivsTxpmtvrfctnFdbkEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.TxPmtVrfctn.MivsTxpmtvrfctnFdbkEntity" >
+    <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
+    <result column="SYSTEM_ID" property="systemId" jdbcType="NVARCHAR" />
+    <result column="TRAN_DATE" property="tranDate" jdbcType="NVARCHAR" />
+    <result column="SEQ_NO" property="seqNo" jdbcType="NVARCHAR" />
+    <result column="TRAN_TIME" property="tranTime" jdbcType="NVARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="NVARCHAR" />
+    <result column="BRANCH_ID" property="branchId" jdbcType="NVARCHAR" />
+    <result column="MIVS_STS" property="mivsSts" jdbcType="NVARCHAR" />
+    <result column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
+    <result column="CRE_DT_TM" property="creDtTm" jdbcType="NVARCHAR" />
+    <result column="INSTG_DRCT_PTY" property="instgDrctPty" jdbcType="NVARCHAR" />
+    <result column="DRCT_PTY_NM" property="drctPtyNm" jdbcType="NVARCHAR" />
+    <result column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
+    <result column="PTY_NM" property="ptyNm" jdbcType="NVARCHAR" />
+    <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
+    <result column="RCV_MSG_ID" property="rcvMsgId" jdbcType="NVARCHAR" />
+    <result column="RCV_CRE_DT_TM" property="rcvCreDtTm" jdbcType="NVARCHAR" />
+    <result column="SYS_IND" property="sysInd" jdbcType="NVARCHAR" />
+    <result column="ORIG_DLV_MSGID" property="origDlvMsgid" jdbcType="NVARCHAR" />
+    <result column="ORIG_RCV_MSGID" property="origRcvMsgid" jdbcType="NVARCHAR" />
+    <result column="CO_NM" property="coNm" jdbcType="NVARCHAR" />
+    <result column="UNI_SOC_CDT_CD" property="uniSocCdtCd" jdbcType="NVARCHAR" />
+    <result column="TXPYR_ID_NB" property="txpyrIdNb" jdbcType="NVARCHAR" />
+    <result column="RSLT" property="rslt" jdbcType="NVARCHAR" />
+    <result column="DATA_RESRC_DT" property="dataResrcDt" jdbcType="NVARCHAR" />
+    <result column="CNTT" property="cntt" jdbcType="NVARCHAR" />
+    <result column="CONTACT_NM" property="contactNm" jdbcType="NVARCHAR" />
+    <result column="CONTACT_NB" property="contactNb" jdbcType="NVARCHAR" />
+    <result column="PROC_STS" property="procSts" jdbcType="NVARCHAR" />
+    <result column="PROC_CD" property="procCd" jdbcType="NVARCHAR" />
+    <result column="PTY_ID" property="ptyId" jdbcType="NVARCHAR" />
+    <result column="PTY_PRC_CD" property="ptyPrcCd" jdbcType="NVARCHAR" />
+    <result column="RJCT_INF" property="rjctInf" jdbcType="NVARCHAR" />
+    <result column="PRC_DT" property="prcDt" jdbcType="NVARCHAR" />
+    <result column="NETG_RND" property="netgRnd" jdbcType="NVARCHAR" />
+    <result column="REMARK1" property="remark1" jdbcType="NVARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="NVARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="NVARCHAR" />
+    <result column="TXPMT_INF" property="txpmtInf" jdbcType="CLOB" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PLAT_DATE, PLAT_TRACE, PLAT_TIME, SYSTEM_ID, TRAN_DATE, SEQ_NO, TRAN_TIME, 
+    USER_ID, BRANCH_ID, MIVS_STS, MSG_ID, CRE_DT_TM, INSTG_DRCT_PTY, DRCT_PTY_NM, INSTG_PTY, 
+    PTY_NM, INSTD_DRCT_PTY, INSTD_PTY, RCV_MSG_ID, RCV_CRE_DT_TM, SYS_IND, ORIG_DLV_MSGID, 
+    ORIG_RCV_MSGID, CO_NM, UNI_SOC_CDT_CD, TXPYR_ID_NB, RSLT, DATA_RESRC_DT, CNTT, CONTACT_NM, 
+    CONTACT_NB, PROC_STS, PROC_CD, PTY_ID, PTY_PRC_CD, RJCT_INF, PRC_DT, NETG_RND, REMARK1, 
+    REMARK2, REMARK3, TXPMT_INF
+    from MIVS_TXPMTVRFCTN_FDBK
+  </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.RegVrfctn.MivsRegvrfctnChngInfoEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.RegVrfctn.MivsRegvrfctnChngInfoEntity" >
+    <id column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
+    <id column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
+    <id column="CHNG_INFO_NB" property="chngInfoNb" jdbcType="DECIMAL" />
+    <result column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <result column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
+    <result column="CRE_DT_TM" property="creDtTm" jdbcType="NVARCHAR" />
+    <result column="ORIG_MSG_ID" property="origMsgId" jdbcType="NVARCHAR" />
+    <result column="ORIG_INSTG_DRCT_PTY" property="origInstgDrctPty" jdbcType="NVARCHAR" />
+    <result column="ORIG_INSTG_PTY" property="origInstgPty" jdbcType="NVARCHAR" />
+    <result column="PG_NB" property="pgNb" jdbcType="DECIMAL" />
+    <result column="CHNG_ITM" property="chngItm" jdbcType="NVARCHAR" />
+    <result column="BF_CHNG" property="bfChng" jdbcType="NVARCHAR" />
+    <result column="AFT_CHNG" property="aftChng" jdbcType="NVARCHAR" />
+    <result column="DT_OF_CHNG" property="dtOfChng" jdbcType="NVARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select INSTG_PTY, MSG_ID, CHNG_INFO_NB, PLAT_DATE, PLAT_TRACE, PLAT_TIME, CRE_DT_TM, 
+    ORIG_MSG_ID, ORIG_INSTG_DRCT_PTY, ORIG_INSTG_PTY, PG_NB, CHNG_ITM, BF_CHNG, AFT_CHNG, 
+    DT_OF_CHNG
+    from MIVS_REGVRFCTN_CHNG_INFO
+  </select>
+</mapper>
