@@ -12,10 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
-import com.fxbank.cip.base.constant.CIP;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -32,6 +30,8 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.service.IBocmSafeService;
 import com.fxbank.tpp.bocm.util.NumberUtil;
+import com.fxbank.tpp.esb.common.ESB;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
@@ -417,7 +417,7 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 
 		String platTrace = String.format("%08d", reqDto.getSysTraceno());// 左补零
 		// 渠道流水号
-		reqBody_30043000101.setChannelSeqNo(CIP.SYSTEM_ID + reqDto.getSysDate() + platTrace);
+		reqBody_30043000101.setChannelSeqNo(ESB.SYSTEM_ID + reqDto.getSysDate() + platTrace);
 		ESB_REP_30043000101 esb_rep_30043000101 = null;
 		try {
 			// 如果第一次查询没查到内容再查询一次
