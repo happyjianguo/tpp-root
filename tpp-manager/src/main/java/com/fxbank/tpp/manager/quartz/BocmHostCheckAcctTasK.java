@@ -28,7 +28,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dcfs.esb.ftp.client.FtpClientConfigSet;
 import com.dcfs.esb.ftp.client.FtpGet;
 import com.dcfs.esb.ftp.server.error.FtpException;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
@@ -63,9 +63,9 @@ import redis.clients.jedis.Jedis;
 *  
 */
 
-@Configuration
-@Component
-@EnableScheduling
+//@Configuration
+//@Component
+//@EnableScheduling
 public class BocmHostCheckAcctTasK {
 	
 	private static Logger logger = LoggerFactory.getLogger(BocmHostCheckAcctTasK.class);
@@ -591,7 +591,8 @@ public class BocmHostCheckAcctTasK {
 		reqDto.setSysDate(date);
 		reqDto.setSysTime(sysTime);
 		reqDto.setSysTraceno(sysTraceno);
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
 		esbReq_50015000101.setReqSysHead(reqSysHead);
 		ESB_REQ_50015000101.REQ_BODY esbReqBody_50015000101 = esbReq_50015000101.getReqBody();

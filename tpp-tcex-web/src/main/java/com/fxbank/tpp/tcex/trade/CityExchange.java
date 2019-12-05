@@ -1,20 +1,22 @@
 package com.fxbank.tpp.tcex.trade;
 
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
-import com.fxbank.cip.base.constant.CIP;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.dto.REQ_SYS_HEAD;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.tpp.esb.common.ESB;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000103;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000103;
@@ -33,8 +35,6 @@ import com.fxbank.tpp.tcex.exception.TcexTradeExecuteException;
 import com.fxbank.tpp.tcex.model.SndTraceInitModel;
 import com.fxbank.tpp.tcex.model.SndTraceUpdModel;
 import com.fxbank.tpp.tcex.service.ISndTraceService;
-
-import redis.clients.jedis.Jedis;
 
 /** 
 * @ClassName: CityExchange 
@@ -166,7 +166,8 @@ public class CityExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		ESB_REQ_TS0014 esbReq_TS004 = new ESB_REQ_TS0014(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqTS004SysHead = new EsbReqHeaderBuilder(esbReq_TS004.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqTS004SysHead = new EsbReqHeaderBuilder(esbReq_TS004.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(reqDto.getReqSysHead().getBranchId()).setUserId(reqDto.getReqSysHead().getUserId())
 				.build();
 		esbReq_TS004.setReqSysHead(reqTS004SysHead);
@@ -190,7 +191,8 @@ public class CityExchange implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		ESB_REQ_TS0012 esbReq_TS002 = new ESB_REQ_TS0012(myLog, reqDto.getSysDate(), reqDto.getSysTime(),
 				reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_TS002.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_TS002.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(reqDto.getReqSysHead().getBranchId()).setUserId(reqDto.getReqSysHead().getUserId())
 				.build();
 		esbReq_TS002.setReqSysHead(reqSysHead);
@@ -239,7 +241,8 @@ public class CityExchange implements TradeExecutionStrategy {
 
 		ESB_REQ_30011000103 esbReq_30011000103 = new ESB_REQ_30011000103(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000103.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000103.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
 		esbReq_30011000103.setReqSysHead(reqSysHead);
 
@@ -372,7 +375,8 @@ public class CityExchange implements TradeExecutionStrategy {
 
 		ESB_REQ_30043000101 esbReq_30043000101 = new ESB_REQ_30043000101(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043000101.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30043000101.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(reqDto.getReqSysHead().getBranchId()).setUserId(reqDto.getReqSysHead().getUserId())
 				.build();
 		esbReq_30043000101.setReqSysHead(reqSysHead);
@@ -383,7 +387,7 @@ public class CityExchange implements TradeExecutionStrategy {
 
 		String platTrace = String.format("%08d", reqDto.getSysTraceno());// 左补零
 		// 渠道流水号
-		reqBody_30043000101.setChannelSeqNo(CIP.SYSTEM_ID + reqDto.getSysDate() + platTrace);
+		reqBody_30043000101.setChannelSeqNo(ESB.SYSTEM_ID + reqDto.getSysDate() + platTrace);
 		ESB_REP_30043000101 esb_rep_30043000101 = null;
 		try {
 			// 如果第一次查询没查到内容再查询一次

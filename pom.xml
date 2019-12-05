@@ -81,6 +81,9 @@
 		</plugins>
 	</reporting>
 	<modules>
+	    <module>tpp-mivs-api</module>
+		<module>tpp-mivs-service</module>
+		<module>tpp-mivs-web</module>
 		<module>tpp-tcex-api</module>
 		<module>tpp-tcex-service</module>
 		<module>tpp-tcex-web</module>

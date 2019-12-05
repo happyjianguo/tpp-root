@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -32,6 +31,7 @@ import com.fxbank.tpp.bocm.model.REQ_20000;
 import com.fxbank.tpp.bocm.service.IBocmSndTraceService;
 import com.fxbank.tpp.bocm.service.IForwardToBocmService;
 import com.fxbank.tpp.bocm.util.NumberUtil;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30011000104;
@@ -475,7 +475,8 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		txBrno = reqDto.getReqSysHead().getBranchId();
 		ESB_REQ_30011000104 esbReq_30011000104 = new ESB_REQ_30011000104(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000104.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30011000104.getReqSysHead(), dto.getSourceType(), dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno())
 				.setBranchId(txBrno).setUserId(txTel).build();
 		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());
 		reqSysHead.setSourceBranchNo(reqDto.getReqSysHead().getSourceBranchNo());
@@ -636,7 +637,8 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		txBrno = reqDto.getReqSysHead().getBranchId();
 		ESB_REQ_30014000101 esbReq_30014000101 = new ESB_REQ_30014000101(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), dto.getSourceType(), dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno())
 				.setBranchId(txBrno).setUserId(txTel).build();
 		
 		reqSysHead.setProgramId(reqDto.getReqSysHead().getProgramId());

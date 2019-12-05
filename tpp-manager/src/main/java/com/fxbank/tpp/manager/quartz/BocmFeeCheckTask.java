@@ -47,9 +47,9 @@ import redis.clients.jedis.Jedis;
 * @date 2019年7月16日 上午10:32:48 
 *  
 */
-@Configuration
-@Component
-@EnableScheduling
+//@Configuration
+//@Component
+//@EnableScheduling
 public class BocmFeeCheckTask {
 	private static Logger logger = LoggerFactory.getLogger(BocmFeeCheckTask.class);
 

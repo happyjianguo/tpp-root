@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
-import com.fxbank.cip.base.constant.CIP;
 import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
@@ -26,6 +24,8 @@ import com.fxbank.tpp.bocm.exception.BocmTradeExecuteException;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
+import com.fxbank.tpp.esb.common.ESB;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30014000101;
 import com.fxbank.tpp.esb.service.IForwardToESBService;
@@ -169,7 +169,8 @@ public class RV_Fx implements TradeExecutionStrategy {
 
 		ESB_REQ_30014000101 esbReq_30014000101 = new ESB_REQ_30014000101(myLog, reqDto.getSysDate(),
 				reqDto.getSysTime(), reqDto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30014000101.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(txBrno).setUserId(txTel).build();
 		
 		reqSysHead.setSourceType(dto.getSourceType());
@@ -179,7 +180,7 @@ public class RV_Fx implements TradeExecutionStrategy {
 		ESB_REQ_30014000101.REQ_BODY reqBody_30014000101 = esbReq_30014000101.getReqBody();
 		esbReq_30014000101.setReqSysHead(reqSysHead);	
 
-		reqBody_30014000101.setChannelSeqNo(CIP.SYSTEM_ID+model.getPlatDate()+String.format("%08d",model.getPlatTrace()));
+		reqBody_30014000101.setChannelSeqNo(ESB.SYSTEM_ID+model.getPlatDate()+String.format("%08d",model.getPlatTrace()));
 		reqBody_30014000101.setReversalReason("交行发起抹账请求");
 		ESB_REP_30014000101 esbRep_30014000101 = forwardToESBService.sendToESB(esbReq_30014000101, reqBody_30014000101,
 				ESB_REP_30014000101.class);

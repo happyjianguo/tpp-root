@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -78,7 +78,8 @@ public class TownCashQuery implements TradeExecutionStrategy{
 		}
 		//调用核心接口查询头寸余额
 		ESB_REQ_30013000801 esbReq_30013000801 = new ESB_REQ_30013000801(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30013000801.getReqSysHead(), reqDto)
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_30013000801.getReqSysHead(), reqDto.getSourceType(),reqDto.getSysDate(),reqDto.getSysTime(),reqDto.getSysTraceno())
 				.setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
 		esbReq_30013000801.setReqSysHead(reqSysHead);	
 		ESB_REQ_30013000801.REQ_BODY reqBody_30013000801 = esbReq_30013000801.getReqBody();

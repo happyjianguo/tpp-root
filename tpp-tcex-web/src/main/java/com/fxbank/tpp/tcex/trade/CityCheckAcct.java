@@ -21,7 +21,6 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dcfs.esb.ftp.client.FtpClientConfigSet;
 import com.dcfs.esb.ftp.client.FtpGet;
 import com.dcfs.esb.ftp.server.error.FtpException;
-import com.fxbank.cip.base.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -29,6 +28,7 @@ import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_50015000101;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_50015000101;
 import com.fxbank.tpp.esb.model.tcex.ESB_REP_TCHK01;
@@ -231,7 +231,10 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 		//调用村镇接口，通知村镇对账
 		ESB_REQ_TCHK01 esbReq_tchk01 = new ESB_REQ_TCHK01(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
 		esbReq_tchk01.getReqSysHead().setFilePath(localFile);
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tchk01.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).build();
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		//ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tchk01.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).build();
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tchk01.getReqSysHead(), dto.getSourceType(), dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno()).setBranchId(txBrno).setUserId(txTel).build();
+		/** END */
 		esbReq_tchk01.setReqSysHead(reqSysHead);
 		ESB_REQ_TCHK01.REQ_BODY esbReqBody_tchk01 = esbReq_tchk01.getReqBody();
 		esbReqBody_tchk01.setFileName(fileName);
@@ -544,7 +547,10 @@ public class CityCheckAcct extends TradeBase implements TradeExecutionStrategy {
 	
 	private String getEsbCheckFile(MyLog myLog, String date, String txBrno, String txTel,DataTransObject dto,String direction) throws SysTradeExecuteException {
 		ESB_REQ_50015000101 esbReq_50015000101 = new ESB_REQ_50015000101(myLog, dto.getSysDate(),dto.getSysTime(),dto.getSysTraceno());
-		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
+		/** Add by 叶浦亮 At 2019/12/3 15:48 For 不同渠道平台调用核心接口使用不一样的systemID */
+		//ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_tchk01.getReqSysHead(),dto).setBranchId(txBrno).setUserId(txTel).build();
+		ESB_REQ_SYS_HEAD reqSysHead = new EsbReqHeaderBuilder(esbReq_50015000101.getReqSysHead(),dto.getSourceType(), dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno()).setBranchId(txBrno).setUserId(txTel).setSourceType("LV").build();
+		/** END */		
 		esbReq_50015000101.setReqSysHead(reqSysHead);
 		ESB_REQ_50015000101.REQ_BODY esbReqBody_50015000101 = esbReq_50015000101.getReqBody();
 		esbReqBody_50015000101.setChannelType("LV");

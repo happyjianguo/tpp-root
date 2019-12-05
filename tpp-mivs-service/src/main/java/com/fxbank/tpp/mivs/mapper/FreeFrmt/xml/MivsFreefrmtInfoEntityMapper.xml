@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.FreeFrmt.MivsFreefrmtInfoEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.FreeFrmt.MivsFreefrmtInfoEntity" >
+    <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <id column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
+    <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
+    <result column="CHECK_TYPE" property="checkType" jdbcType="NVARCHAR" />
+    <result column="MIVS_STS" property="mivsSts" jdbcType="NVARCHAR" />
+    <result column="CRE_DT_TM" property="creDtTm" jdbcType="NVARCHAR" />
+    <result column="INSTG_DRCT_PTY" property="instgDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
+    <result column="RPLY_FLAG" property="rplyFlag" jdbcType="NVARCHAR" />
+    <result column="MSG_CNTT" property="msgCntt" jdbcType="NVARCHAR" />
+    <result column="ISORNOT_RSP" property="isornotRsp" jdbcType="NVARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PLAT_DATE, PLAT_TRACE, MSG_ID, PLAT_TIME, CHECK_TYPE, MIVS_STS, CRE_DT_TM, 
+    INSTG_DRCT_PTY, INSTG_PTY, INSTD_DRCT_PTY, INSTD_PTY, RPLY_FLAG, MSG_CNTT, ISORNOT_RSP
+    from MIVS_FREEFRMT_INFO
+  </select>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.mivs.mapper.SysStsNtfctn.MivsSysstsntfctnInfoEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.mivs.entity.SysStsNtfctn.MivsSysstsntfctnInfoEntity" >
+    <id column="PLAT_DATE" property="platDate" jdbcType="DECIMAL" />
+    <id column="PLAT_TRACE" property="platTrace" jdbcType="DECIMAL" />
+    <id column="MSG_ID" property="msgId" jdbcType="NVARCHAR" />
+    <result column="PLAT_TIME" property="platTime" jdbcType="DECIMAL" />
+    <result column="CHECK_TYPE" property="checkType" jdbcType="NVARCHAR" />
+    <result column="MIVS_STS" property="mivsSts" jdbcType="NVARCHAR" />
+    <result column="CRE_DT_TM" property="creDtTm" jdbcType="NVARCHAR" />
+    <result column="INSTG_DRCT_PTY" property="instgDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTG_PTY" property="instgPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_DRCT_PTY" property="instdDrctPty" jdbcType="NVARCHAR" />
+    <result column="INSTD_PTY" property="instdPty" jdbcType="NVARCHAR" />
+    <result column="CUR_SYS_DT" property="curSysDt" jdbcType="NVARCHAR" />
+    <result column="NXT_SYS_DT" property="nxtSysDt" jdbcType="NVARCHAR" />
+    <result column="SYS_IND" property="sysInd" jdbcType="NVARCHAR" />
+    <result column="SVC_IND" property="svcInd" jdbcType="NVARCHAR" />
+    <result column="NXT_SYS_OP_TM" property="nxtSysOpTm" jdbcType="NVARCHAR" />
+    <result column="NXT_SYS_CL_TM" property="nxtSysClTm" jdbcType="NVARCHAR" />
+    <result column="REMARK1" property="remark1" jdbcType="NVARCHAR" />
+    <result column="REMARK2" property="remark2" jdbcType="NVARCHAR" />
+    <result column="REMARK3" property="remark3" jdbcType="NVARCHAR" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select PLAT_DATE, PLAT_TRACE, MSG_ID, PLAT_TIME, CHECK_TYPE, MIVS_STS, CRE_DT_TM, 
+    INSTG_DRCT_PTY, INSTG_PTY, INSTD_DRCT_PTY, INSTD_PTY, CUR_SYS_DT, NXT_SYS_DT, SYS_IND, 
+    SVC_IND, NXT_SYS_OP_TM, NXT_SYS_CL_TM, REMARK1, REMARK2, REMARK3
+    from MIVS_SYSSTSNTFCTN_INFO
+  </select>
+</mapper>
