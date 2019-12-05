@@ -63,9 +63,9 @@ import redis.clients.jedis.Jedis;
 *  
 */
 
-@Configuration
-@Component
-@EnableScheduling
+//@Configuration
+//@Component
+//@EnableScheduling
 public class BocmHostCheckAcctTasK {
 	
 	private static Logger logger = LoggerFactory.getLogger(BocmHostCheckAcctTasK.class);
