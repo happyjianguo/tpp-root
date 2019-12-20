@@ -467,7 +467,7 @@ public class BocmHostCheckAcctTasK {
 				if (hostState.equals("1")) {
 					// 如果来账交易类型是他代本通存和他代本现金通兑,不更新对账状态
 					if (rcvTraceQueryModel.getTranType().equals("JH02")
-							|| (rcvTraceQueryModel.equals("JH01") && rcvTraceQueryModel.getTxInd().equals("0"))) {
+							|| (rcvTraceQueryModel.getTranType().equals("JH01") && rcvTraceQueryModel.getTxInd().equals("0"))) {
 						continue;
 					}
 					// 核心与渠道状态一致
