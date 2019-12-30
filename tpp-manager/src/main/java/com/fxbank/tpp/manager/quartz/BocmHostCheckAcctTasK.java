@@ -63,9 +63,9 @@ import redis.clients.jedis.Jedis;
 *  
 */
 
-//@Configuration
-//@Component
-//@EnableScheduling
+@Configuration
+@Component
+@EnableScheduling
 public class BocmHostCheckAcctTasK {
 	
 	private static Logger logger = LoggerFactory.getLogger(BocmHostCheckAcctTasK.class);
@@ -342,7 +342,6 @@ public class BocmHostCheckAcctTasK {
 			} else {
 				// dc_flag IS '通存通兑标志；0通存、1通兑';
 				String hostState = sndTraceQueryModel.getHostState(); // 渠道记录的核心状态
-				// 通存
 				if (hostState.equals("1")) {
 					// 如果往账交易类型是交行卡转本行不更新对账状态
 					if (sndTraceQueryModel.getTranType().equals("JH11")) {
@@ -441,6 +440,7 @@ public class BocmHostCheckAcctTasK {
 				aceModel.setBocmState("0");
 				aceModel.setHostFlag("1");
 				aceModel.setBocmFlag("0");	
+				//对账文件没有区分现金和转账，通兑无法确定以谁为主
 				if(model.getTranType().equals("JH02")){
 					aceModel.setCheckFlag("以交行对账为准");
 				}			
