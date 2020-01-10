@@ -70,6 +70,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 
 	@Resource
 	private MyJedis myJedis;
+	
+	private String txDate = "";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -418,8 +420,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		record.setChkTel(reqSysHead.getApprUserId());
 		record.setAuthTel(reqSysHead.getAuthUserId());
 		//记账系统日期
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(settlementDate));	
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(txDate));	
 	
 		bocmSndTraceService.sndTraceInit(record);
 	}
@@ -545,8 +547,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setTranCcy("CNY");
 		reqBody_30011000104.setTranAmt(reqBody.getWthrAmtT());
 		//记账系统日期
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(settlementDate);
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(txDate);
 		reqBody_30011000104.setCollateFlag("Y");
 		//TT-账户内扣 CA-现金
 		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());
@@ -572,7 +574,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	private REP_10009 bocmReversal(REQ_30061001001 reqDto, String bocmTraceNo, String oTxnCd)
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();		
-		Integer sysTraceno = publicService.getSysTraceno();		
+		Integer sysTraceno = reqDto.getSysTraceno();		
 		REQ_10009 req_10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), sysTraceno);
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req_10009); // 设置报文头中的行号信息		

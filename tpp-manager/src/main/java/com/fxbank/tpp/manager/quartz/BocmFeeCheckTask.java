@@ -79,6 +79,8 @@ public class BocmFeeCheckTask {
 	@Reference(version = "1.0.0")
 	private IBocmChkStatusService chkStatusService;
 	
+	private String txDate = "";
+	
 	@Resource
 	private MyJedis myJedis;
 
@@ -87,10 +89,10 @@ public class BocmFeeCheckTask {
 	public void exec() throws Exception {
 		MyLog myLog = new MyLog();				
 		myLog.info(logger, "获取交行记录手续费对账文件信息");
-		
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		myLog.info(logger, "对账日期："+settlementDate);
-		Integer date = Integer.parseInt(settlementDate);
+		txDate = publicService.getSysDate("CIP")+"";
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		myLog.info(logger, "对账日期："+txDate);
+		Integer date = Integer.parseInt(txDate);
 		Integer sysTime = publicService.getSysTime();
 		Integer sysTraceno = publicService.getSysTraceno();
 		Integer sysDate = date;

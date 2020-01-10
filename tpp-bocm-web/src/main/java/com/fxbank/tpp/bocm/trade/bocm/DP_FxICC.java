@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.tpp.esb.common.ESB;
-import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -22,6 +20,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
 import com.fxbank.cip.base.model.ModelBase;
 import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
+import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.bocm.dto.bocm.REP_20000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_10000;
 import com.fxbank.tpp.bocm.dto.bocm.REQ_20000;
@@ -31,6 +30,8 @@ import com.fxbank.tpp.bocm.model.BocmRcvTraceQueryModel;
 import com.fxbank.tpp.bocm.model.BocmRcvTraceUpdModel;
 import com.fxbank.tpp.bocm.service.IBocmRcvTraceService;
 import com.fxbank.tpp.bocm.util.NumberUtil;
+import com.fxbank.tpp.esb.common.ESB;
+import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30011000104.Fee;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30014000101;
@@ -71,12 +72,17 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
+	@Reference(version = "1.0.0")
+	private IPublicService publicService;
+	
+	private String txDate = "";
+	
 	private final static String COMMON_PREFIX = "bocm.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		
+		txDate = publicService.getSysDate("CIP")+"";
 		REQ_20000 req = (REQ_20000) dto;
 		
 		String sbnkNo = req.getSbnkNo();//发起行行号
@@ -273,8 +279,8 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		//手续费扣款方式
 		
 		//记账系统日期
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(settlementDate);
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		reqBody_30011000104.setSettlementDate(txDate);
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("I");
 		
@@ -372,8 +378,8 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		//交易码
 		record.setTxCode(reqDto.getTtxnCd());
 		//记账系统日期
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(settlementDate));	
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(txDate));	
 		bocmRcvTraceService.rcvTraceInit(record);
 		myLog.info(logger,TRADE_DESC+"插入来账流水表，核心日期"+rep.getRepSysHead().getTranDate()+"核心流水号"+rep.getRepSysHead().getReference());
 		
@@ -546,8 +552,8 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		//交易码
 		record.setTxCode(reqDto.getTtxnCd());
 		//记账系统日期
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(settlementDate));	
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		record.setTxDate(Integer.parseInt(txDate));	
 		bocmRcvTraceService.rcvTraceInit(record);
 		myLog.info(logger,TRADE_DESC+"，核心记账超时，插入来账流水表");
 		

@@ -85,16 +85,18 @@ public class BocmCheckAcctTask {
 	
 	@Resource
 	private MyJedis myJedis;
+	
+	private String txDate = "";
 
 	private final static String COMMON_PREFIX = "bocm.";
 	
 	public void exec() throws Exception {
 		MyLog myLog = new MyLog();				
 		myLog.info(logger, "外围与交行对账定时任务开始");
-		
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		myLog.info(logger, "对账日期："+settlementDate);
-		Integer date = Integer.parseInt(settlementDate);
+		txDate = publicService.getSysDate("CIP")+"";
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		myLog.info(logger, "对账日期："+txDate);
+		Integer date = Integer.parseInt(txDate);
 		Integer sysTime = publicService.getSysTime();
 		Integer sysTraceno = publicService.getSysTraceno();
 		Integer sysDate = date;
