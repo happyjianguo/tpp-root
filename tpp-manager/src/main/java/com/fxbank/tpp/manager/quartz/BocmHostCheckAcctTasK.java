@@ -98,12 +98,14 @@ public class BocmHostCheckAcctTasK {
 	
 	@Resource
 	private MyJedis myJedis;
+	
+	private String txDate = "";
 
 	private final static String COMMON_PREFIX = "bocm.";
 	
 	public void exec() throws Exception {
 		MyLog myLog = new MyLog();
-		
+		txDate = publicService.getSysDate("CIP")+"";
 		// 交易机构
 		String txBrno = null;
 		// 柜员号
@@ -113,9 +115,9 @@ public class BocmHostCheckAcctTasK {
 			txTel = jedis.get(COMMON_PREFIX+"TXTEL");
         }
 
-		String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		myLog.info(logger, "对账日期："+settlementDate);
-		Integer date = Integer.parseInt(settlementDate);
+		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		myLog.info(logger, "对账日期："+txDate);
+		Integer date = Integer.parseInt(txDate);
 		Integer sysTime = publicService.getSysTime();
 		Integer sysTraceno = publicService.getSysTraceno();
 		
