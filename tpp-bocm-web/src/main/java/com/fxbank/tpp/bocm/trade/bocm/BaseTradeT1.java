@@ -30,7 +30,7 @@ import com.fxbank.tpp.frms.service.IForwardToFRMSService;
  */
 public abstract class BaseTradeT1 {
 	//卡磁道校验
-	public static boolean cardCheck = true;
+	public static boolean cardCheck = false;
 	//风险监控校验
 	public static boolean frmsCheck = true;
 	

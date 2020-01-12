@@ -76,6 +76,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
+		txDate = publicService.getSysDate("CIP")+"";
 		REQ_30061001001 reqDto = (REQ_30061001001) dto;
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061001001 rep = new REP_30061001001();
