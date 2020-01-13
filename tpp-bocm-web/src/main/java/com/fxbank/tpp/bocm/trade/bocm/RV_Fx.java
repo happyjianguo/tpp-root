@@ -50,11 +50,6 @@ public class RV_Fx implements TradeExecutionStrategy {
 	@Reference(version = "1.0.0")
 	private IBocmRcvTraceService bocmRcvTraceService;
 	
-	@Reference(version = "1.0.0")
-	private IPublicService publicService;
-	
-	private String txDate = "";
-	
 	@Resource
 	private LogPool logPool;
 	
@@ -66,7 +61,6 @@ public class RV_Fx implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		txDate = publicService.getSysDate("CIP")+"";
 		myLog.info(logger, "交行向本行发起抹账交易");
 		REQ_10009 req = (REQ_10009) dto;
 		REP_10009 rep = new REP_10009();
@@ -96,9 +90,9 @@ public class RV_Fx implements TradeExecutionStrategy {
 				return rep;
 			}
 			//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-			if(model.getTxDate()!=Integer.parseInt(txDate)) {
+			if(model.getTxDate()!=dto.getSysDate()) {
 				myLog.error(logger, "不能隔日冲正，交易日期" + model.getTxDate() + 
-						"渠道流水号" + model.getPlatTrace()+",当前日期"+txDate);
+						"渠道流水号" + model.getPlatTrace()+",当前日期"+dto.getSysDate());
 				BocmTradeExecuteException e = new BocmTradeExecuteException(BocmTradeExecuteException.BOCM_E_10011);
 				throw e;
 			}

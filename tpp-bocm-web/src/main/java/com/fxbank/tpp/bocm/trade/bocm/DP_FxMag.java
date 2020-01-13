@@ -69,17 +69,11 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	@Resource
 	private MyJedis myJedis;
 	
-	@Reference(version = "1.0.0")
-	private IPublicService publicService;
-	
-	private String txDate = "";
-	
 	private final static String COMMON_PREFIX = "bocm.";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();	
-		txDate = publicService.getSysDate("CIP")+"";
 		REQ_10000 req = (REQ_10000) dto;
 		
 		String sbnkNo = req.getSbnkNo();//发起行行号
@@ -294,7 +288,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(txDate);		
+		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");		
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("I");
 
@@ -397,7 +391,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTxCode(reqDto.getTtxnCd());
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(txDate));	
+		record.setTxDate(dto.getSysDate());	
 		bocmRcvTraceService.rcvTraceInit(record);
 		myLog.info(logger,TRADE_DESC+"插入来账流水表，核心日期"+rep.getRepSysHead().getTranDate()+"核心流水号"+rep.getRepSysHead().getReference());
 		
@@ -565,7 +559,7 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		record.setTxCode(reqDto.getTtxnCd());
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(txDate));	
+		record.setTxDate(dto.getSysDate());	
 		bocmRcvTraceService.rcvTraceInit(record);	
 		myLog.info(logger,TRADE_DESC+"，核心记账超时，插入来账流水表");
 	}
