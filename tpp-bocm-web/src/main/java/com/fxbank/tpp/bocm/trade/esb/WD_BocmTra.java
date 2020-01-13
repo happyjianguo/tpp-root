@@ -67,11 +67,6 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 
 	@Reference(version = "1.0.0")
 	private IBocmSndTraceService bocmSndTraceService;
-
-	@Reference(version = "1.0.0")
-	private IPublicService publicService;
-	
-	private String txDate = "";
 	
 	@Resource
 	private MyJedis myJedis;
@@ -79,7 +74,6 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		txDate = publicService.getSysDate("CIP")+"";
 		myLog.info(logger, "交行卡付款转账");
 		REQ_30061000801 reqDto = (REQ_30061000801) dto;
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
@@ -505,7 +499,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		record.setAuthTel(reqSysHead.getAuthUserId());
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(txDate));	
+		record.setTxDate(dto.getSysDate());	
 		bocmSndTraceService.sndTraceInit(record);
 	}
 
@@ -555,7 +549,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setChannelType("BU");
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(txDate);
+		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("O");
 		
@@ -703,8 +697,7 @@ public class WD_BocmTra extends TradeBase implements TradeExecutionStrategy {
 			throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
 		REQ_30061000801.REQ_BODY reqBody = reqDto.getReqBody();
-		Integer sysTraceno = publicService.getSysTraceno();		
-		REQ_10009 req10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), sysTraceno);
+		REQ_10009 req10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req10009); // 设置报文头中的行号信息
 		req10009.setOlogNo(String.format("%06d%08d", reqDto.getSysDate() % 1000000, reqDto.getSysTraceno()));
 

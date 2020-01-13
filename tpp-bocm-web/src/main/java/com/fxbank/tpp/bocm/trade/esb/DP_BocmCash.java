@@ -65,16 +65,10 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 
 	@Resource
 	private MyJedis myJedis;
-	
-	@Reference(version = "1.0.0")
-	private IPublicService publicService;
-	
-	private String txDate = "";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		txDate = publicService.getSysDate("CIP")+"";
 		REQ_30061000901 reqDto = (REQ_30061000901) dto;
 		REQ_30061000901.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061000901 rep = new REP_30061000901();		
@@ -444,7 +438,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		record.setRetMsg(retMsg);
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(txDate));	
+		record.setTxDate(dto.getSysDate());	
 		bocmSndTraceService.sndTraceInit(record);
 	}
 
@@ -490,7 +484,7 @@ public class DP_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setChannelType("BU");
 		//记账日期直接取系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(txDate);
+		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");		
 		reqBody_30011000104.setDirection("O");
 		//SEND_BANK_CODE	 发起行行号

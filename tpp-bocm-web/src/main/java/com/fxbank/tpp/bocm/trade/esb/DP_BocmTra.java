@@ -65,16 +65,10 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 
 	@Resource
 	private MyJedis myJedis;
-	
-	@Reference(version = "1.0.0")
-	private IPublicService publicService;
-	
-	private String txDate = "";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
 		MyLog myLog = logPool.get();
-		txDate = publicService.getSysDate("CIP")+"";
 		REQ_30061000701 reqDto = (REQ_30061000701) dto;
 		REQ_30061000701.REQ_BODY reqBody = reqDto.getReqBody();
 		REP_30061000701 rep = new REP_30061000701();		
@@ -454,7 +448,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		record.setRetMsg(retMsg);
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(txDate));	
+		record.setTxDate(dto.getSysDate());	
 		bocmSndTraceService.sndTraceInit(record);
 	}
 
@@ -509,7 +503,7 @@ public class DP_BocmTra extends TradeBase implements TradeExecutionStrategy {
 		
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(txDate);
+		reqBody_30011000104.setSettlementDate(dto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
 		reqBody_30011000104.setDirection("O");
 		

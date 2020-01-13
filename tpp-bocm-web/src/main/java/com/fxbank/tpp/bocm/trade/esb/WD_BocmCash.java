@@ -64,14 +64,9 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	
 	@Reference(version = "1.0.0")
 	private IBocmSndTraceService bocmSndTraceService;
-	
-	@Reference(version = "1.0.0")
-	private IPublicService publicService;
 
 	@Resource
 	private MyJedis myJedis;
-	
-	private String txDate = "";
 
 	@Override
 	public DataTransObject execute(DataTransObject dto) throws SysTradeExecuteException {
@@ -421,7 +416,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		record.setAuthTel(reqSysHead.getAuthUserId());
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		record.setTxDate(Integer.parseInt(txDate));	
+		record.setTxDate(dto.getSysDate());	
 	
 		bocmSndTraceService.sndTraceInit(record);
 	}
@@ -548,7 +543,7 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 		reqBody_30011000104.setTranAmt(reqBody.getWthrAmtT());
 		//记账系统日期
 		//String settlementDate = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		reqBody_30011000104.setSettlementDate(txDate);
+		reqBody_30011000104.setSettlementDate(reqDto.getSysDate()+"");
 		reqBody_30011000104.setCollateFlag("Y");
 		//TT-账户内扣 CA-现金
 		reqBody_30011000104.setChargeMethod(reqBody.getFeeRcveWyT1());
@@ -573,9 +568,8 @@ public class WD_BocmCash extends TradeBase implements TradeExecutionStrategy {
 	*/
 	private REP_10009 bocmReversal(REQ_30061001001 reqDto, String bocmTraceNo, String oTxnCd)
 			throws SysTradeExecuteException {
-		MyLog myLog = logPool.get();		
-		Integer sysTraceno = reqDto.getSysTraceno();		
-		REQ_10009 req_10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), sysTraceno);
+		MyLog myLog = logPool.get();			
+		REQ_10009 req_10009 = new REQ_10009(myLog, reqDto.getSysDate(), reqDto.getSysTime(), reqDto.getSysTraceno());
 		REQ_30061001001.REQ_BODY reqBody = reqDto.getReqBody();
 		super.setBankno(myLog, reqDto, reqDto.getReqSysHead().getBranchId(), req_10009); // 设置报文头中的行号信息		
 		//组装抹账报文体
