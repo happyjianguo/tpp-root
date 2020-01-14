@@ -95,8 +95,12 @@ public class REP_10103 extends REP_BASE {
     	@FixedField(order = 820, len = 30, desc = "收款人名称")
     	private String RecNam;
     	//交易状态
-    	@FixedField(order = 821, len = 1, desc = "交易状态")
+    	@FixedField(order = 821, len = 1, desc = "交易状态")   	
     	private String txnSts;
+       	//换行占位符
+    	@FixedField(order = 822, len = 1, desc = "换行占位符")
+    	private String rn = "\n";
+    	
 		public String getTlogNo() {
 			return TlogNo;
 		}
@@ -222,6 +226,12 @@ public class REP_10103 extends REP_BASE {
 		}
 		public void setTxnSts(String txnSts) {
 			this.txnSts = txnSts;
+		}
+		public String getRn() {
+			return rn;
+		}
+		public void setRn(String rn) {
+			this.rn = rn;
 		}
     	
     }
