@@ -123,8 +123,11 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	}
 	
 	public ESB_REP_30033000203 validateMag(DataTransObject dto) throws SysTradeExecuteException {		
-		MyLog myLog = logPool.get();
+		MyLog myLog = logPool.get();		
 		REQ_10000 reqDto = (REQ_10000) dto;
+		if(reqDto.getSecMag()==null||reqDto.getSecMag().equals("")){
+			return null;
+		}
 		// 交易机构
 		String txBrno = null;
 		// 柜员号

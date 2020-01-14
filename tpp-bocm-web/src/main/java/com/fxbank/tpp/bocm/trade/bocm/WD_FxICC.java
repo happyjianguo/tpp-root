@@ -123,6 +123,9 @@ public class WD_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	}
 	public ESB_REP_30033000202 validateIC(DataTransObject dto) throws SysTradeExecuteException {
 		REQ_20001 reqDto = (REQ_20001) dto;
+		if(reqDto.getICData()==null||reqDto.getICData().equals("")){
+			return null;
+		}
 		MyLog myLog = logPool.get();
 		// 交易机构
 		String txBrno = null;
