@@ -255,7 +255,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//接收行行号  联机交易接收方总行行号。(往账交易，接收方为交行)
 		chk.setRbnkNo(model.getRcvBankno());
 		chk.setTactDt(model.getPlatDate()+"");
-		chk.setTxnAmt(Double.parseDouble(model.getTxAmt().toString()));
+		chk.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(model.getTxAmt().toString())));
 		//手续费收取方式
 		chk.setFeeFlg(model.getFeeFlag());
 		//开户行手续费
