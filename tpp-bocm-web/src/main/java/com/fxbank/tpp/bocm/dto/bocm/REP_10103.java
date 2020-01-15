@@ -99,7 +99,7 @@ public class REP_10103 extends REP_BASE {
     	private String txnSts;
        	//换行占位符
     	@FixedField(order = 822, len = 1, desc = "换行占位符")
-    	private String rn = "\n";
+    	private String rn = "\r";
     	
 		public String getTlogNo() {
 			return TlogNo;
