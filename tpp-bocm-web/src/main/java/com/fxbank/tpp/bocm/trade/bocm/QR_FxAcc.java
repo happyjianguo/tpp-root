@@ -64,20 +64,20 @@ public class QR_FxAcc implements TradeExecutionStrategy {
 		REQ_10102 req = (REQ_10102) dto;
 		REP_10102 rep = new REP_10102();
 		
-		String sbnkNo = req.getSbnkNo();//发起行行号
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			//TODO 获取交行账户信息	 301000000000  挡板交行行号	
-			//发起行行号为本行直接走挡板
-			rep.setActNo("6288880210000209903");
-			rep.setActBnk("301000000000");
-			rep.setActNam("挡板用户");
-			rep.setActTyp("5");
-			rep.setAmtLmt("0");
-			rep.setFee(1d);		
-			
-			return rep;
-		}
+//		String sbnkNo = req.getSbnkNo();//发起行行号
+//		if(sbnkNo.substring(0, 3).equals("313")){
+//			myLog.info(logger, "交易发起行为本行，启用挡板数据");
+//			//TODO 获取交行账户信息	 301000000000  挡板交行行号	
+//			//发起行行号为本行直接走挡板
+//			rep.setActNo("6288880210000209903");
+//			rep.setActBnk("301000000000");
+//			rep.setActNam("挡板用户");
+//			rep.setActTyp("5");
+//			rep.setAmtLmt("0");
+//			rep.setFee(1d);		
+//			
+//			return rep;
+//		}
 		ESB_REP_30013000201 esbRep_30013000201 = null;
 		try {
 			//1.调用核心查询账户信息

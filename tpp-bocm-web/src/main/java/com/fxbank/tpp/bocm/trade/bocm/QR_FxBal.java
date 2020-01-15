@@ -56,15 +56,15 @@ public class QR_FxBal implements TradeExecutionStrategy {
 		REQ_10101 req = (REQ_10101) dto;
 		
 		
-		String sbnkNo = req.getSbnkNo();//发起行行号
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			REP_10101 rep = new REP_10101();
-			rep.setActNo("623166000009897");
-			rep.setActNam("挡板用户");
-			rep.setActBal(new Double(100));
-			return rep;
-		}
+//		String sbnkNo = req.getSbnkNo();//发起行行号
+//		if(sbnkNo.substring(0, 3).equals("313")){
+//			myLog.info(logger, "交易发起行为本行，启用挡板数据");
+//			REP_10101 rep = new REP_10101();
+//			rep.setActNo("623166000009897");
+//			rep.setActNam("挡板用户");
+//			rep.setActBal(new Double(100));
+//			return rep;
+//		}
 		ESB_REP_30013000201 esbRep_30013000201 = null;
 		REP_10101 rep = new REP_10101();
 	

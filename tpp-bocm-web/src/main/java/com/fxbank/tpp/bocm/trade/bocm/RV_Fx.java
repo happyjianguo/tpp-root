@@ -65,11 +65,11 @@ public class RV_Fx implements TradeExecutionStrategy {
 		REQ_10009 req = (REQ_10009) dto;
 		REP_10009 rep = new REP_10009();
 		
-		String sbnkNo = req.getSbnkNo();//发起行行号
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			return rep;
-		}
+//		String sbnkNo = req.getSbnkNo();//发起行行号
+//		if(sbnkNo.substring(0, 3).equals("313")){
+//			myLog.info(logger, "交易发起行为本行，启用挡板数据");
+//			return rep;
+//		}
 
 	
 
