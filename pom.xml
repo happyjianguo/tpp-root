@@ -95,5 +95,6 @@
 		<module>tpp-bocm-web</module>
 		<module>tpp-frms-api</module>
 		<module>tpp-frms-service</module>
+		<module>tpp-simu-web</module>
 	</modules>
 </project>
