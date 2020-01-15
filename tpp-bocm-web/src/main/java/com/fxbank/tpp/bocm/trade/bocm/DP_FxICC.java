@@ -79,20 +79,20 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();
 		REQ_20000 req = (REQ_20000) dto;
 		
-		String sbnkNo = req.getSbnkNo();//发起行行号
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			REP_20000 rep = new REP_20000();
-			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
-			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
-			
-			rep.setOtxnAmt(req.getTxnAmt());		
-			Double fee = new Double(5d);
-			rep.setFee(fee);
-			rep.setActBal(10000d);
-			return rep;
-		}
+//		String sbnkNo = req.getSbnkNo();//发起行行号
+//		if(sbnkNo.substring(0, 3).equals("313")){
+//			myLog.info(logger, "交易发起行为本行，启用挡板数据");
+//			REP_20000 rep = new REP_20000();
+//			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
+//			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
+//			
+//			rep.setOtxnAmt(req.getTxnAmt());		
+//			Double fee = new Double(5d);
+//			rep.setFee(fee);
+//			rep.setActBal(10000d);
+//			return rep;
+//		}
 		
 		//风险检查
 		//风险监控检查调用
@@ -122,6 +122,9 @@ public class DP_FxICC extends BaseTradeT1 implements TradeExecutionStrategy {
 	
 	public ESB_REP_30033000202 validateIC(DataTransObject dto) throws SysTradeExecuteException {
 		REQ_20000 reqDto = (REQ_20000) dto;
+		if(reqDto.getICData()==null||reqDto.getICData().equals("")){
+			return null;
+		}
 		MyLog myLog = logPool.get();
 		// 交易机构
 		String txBrno = null;

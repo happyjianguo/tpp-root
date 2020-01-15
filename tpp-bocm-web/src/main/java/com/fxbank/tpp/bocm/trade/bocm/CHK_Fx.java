@@ -154,9 +154,9 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		}	
 		myLog.info(logger, "以我行为主交易总金额【"+totalAmt+"】");
 		myLog.info(logger, "以我行为主交易数量【"+tradList.size()+"】");
-		rep.setFilLen(254*tradList.size());	
+		rep.setFilLen(255*tradList.size());	
 		rep.setTolCnt(tradList.size());
-		rep.setTolAmt(NumberUtil.addPoint(Double.parseDouble(totalAmt.toString())));
+		rep.setTolAmt(Double.parseDouble(totalAmt.toString()));
 		myLog.info(logger, "返回报文文件长度："+rep.getFilLen());
 				
 		rep.setFilTxt(tradList);
@@ -166,7 +166,8 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		record.setTxDate(Integer.parseInt(date));
 		record.setPlatStatus(1);
 		record.setPlatTxCnt(tradList.size());
-		record.setPlatTxAmt(new BigDecimal(totalAmt.toString()));
+		String total = NumberUtil.removePointToString(Double.parseDouble(totalAmt.toString()));
+		record.setPlatTxAmt(new BigDecimal(total));
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新对账状态表信息");		
 
@@ -192,12 +193,13 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//接收行行号  联机交易接收方总行行号。
 		chk.setRbnkNo(model.getRcvBankno());
 		chk.setTactDt(model.getPlatDate()+"");
-		chk.setTxnAmt(Double.parseDouble(model.getTxAmt().toString()));
+		
+		chk.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(model.getTxAmt().toString())));
 		//手续费收取方式
 		chk.setFeeFlg(model.getFeeFlag());
 		//开户行手续费
 		if(model.getFee()!=null){
-			chk.setFee(Double.parseDouble(model.getFee().toString()));
+			chk.setFee(NumberUtil.addPoint(Double.parseDouble(model.getFee().toString())));
 		}
 		//通存通兑业务模式 0 现金 1 转账
 		chk.setTxnMod(model.getTxInd());
@@ -241,7 +243,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//本方交易流水号  TlogNo长度不足前补‘0’，例如农商行生成对账文件给交行，本方交易流水号填农商行流水号，对方交易流水号填交行流水号（如果存在），发起方流水号必输		
 		//对方交易流水号 logNo 长度不足前补‘0’，发起方流水号必输
 		//给交行返回交易流水
-		chk.setTlogNo(String.format("%06d%08d", model.getSysDate()%1000000,model.getSysTraceno()));
+		chk.setTlogNo(String.format("%06d%08d", model.getPlatDate()%1000000,model.getPlatTrace()));
 		chk.setLogNo(model.getBocmTraceno());
 		
 		chk.setThdCod(model.getTxCode());
@@ -254,12 +256,12 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//接收行行号  联机交易接收方总行行号。(往账交易，接收方为交行)
 		chk.setRbnkNo(model.getRcvBankno());
 		chk.setTactDt(model.getPlatDate()+"");
-		chk.setTxnAmt(Double.parseDouble(model.getTxAmt().toString()));
+		chk.setTxnAmt(NumberUtil.addPoint(Double.parseDouble(model.getTxAmt().toString())));
 		//手续费收取方式
 		chk.setFeeFlg(model.getFeeFlag());
 		//开户行手续费
 		if(model.getFee()!=null){
-			chk.setFee(Double.parseDouble(model.getFee().toString()));
+			chk.setFee(NumberUtil.addPoint(Double.parseDouble(model.getFee().toString())));
 		}
 		//通存通兑业务模式 0 现金 1 转账
 		chk.setTxnMod(model.getTxInd());

@@ -76,21 +76,21 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 		MyLog myLog = logPool.get();	
 		REQ_10000 req = (REQ_10000) dto;
 		
-		String sbnkNo = req.getSbnkNo();//发起行行号
-		if(sbnkNo.substring(0, 3).equals("313")){
-			myLog.info(logger, "交易发起行为本行，启用挡板数据");
-			REP_10000 rep = new REP_10000();
-			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
-			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
-			
-			rep.setOtxnAmt(req.getTxnAmt());		
-			//JHF1-异地手续费JHF2-代理手续费
-			Double fee = new Double(5d);
-			rep.setFee(fee);
-			rep.setActBal(10000d);
-			return rep;
-		}
+//		String sbnkNo = req.getSbnkNo();//发起行行号
+//		if(sbnkNo.substring(0, 3).equals("313")){
+//			myLog.info(logger, "交易发起行为本行，启用挡板数据");
+//			REP_10000 rep = new REP_10000();
+//			String sDate = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+//			rep.setSysDate(Integer.valueOf(sDate.substring(0, 8)));
+//			rep.setSysTime(Integer.valueOf(sDate.substring(8))); 
+//			
+//			rep.setOtxnAmt(req.getTxnAmt());		
+//			//JHF1-异地手续费JHF2-代理手续费
+//			Double fee = new Double(5d);
+//			rep.setFee(fee);
+//			rep.setActBal(10000d);
+//			return rep;
+//		}
 		
 		//风险检查
 		//风险监控检查调用
@@ -123,8 +123,11 @@ public class DP_FxMag extends BaseTradeT1 implements TradeExecutionStrategy {
 	}
 	
 	public ESB_REP_30033000203 validateMag(DataTransObject dto) throws SysTradeExecuteException {		
-		MyLog myLog = logPool.get();
+		MyLog myLog = logPool.get();		
 		REQ_10000 reqDto = (REQ_10000) dto;
+		if(reqDto.getSecMag()==null||reqDto.getSecMag().equals("")){
+			return null;
+		}
 		// 交易机构
 		String txBrno = null;
 		// 柜员号
