@@ -154,7 +154,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		}	
 		myLog.info(logger, "以我行为主交易总金额【"+totalAmt+"】");
 		myLog.info(logger, "以我行为主交易数量【"+tradList.size()+"】");
-		rep.setFilLen(254*tradList.size());	
+		rep.setFilLen(255*tradList.size());	
 		rep.setTolCnt(tradList.size());
 		rep.setTolAmt(Double.parseDouble(totalAmt.toString()));
 		myLog.info(logger, "返回报文文件长度："+rep.getFilLen());
