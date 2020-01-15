@@ -243,7 +243,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		//本方交易流水号  TlogNo长度不足前补‘0’，例如农商行生成对账文件给交行，本方交易流水号填农商行流水号，对方交易流水号填交行流水号（如果存在），发起方流水号必输		
 		//对方交易流水号 logNo 长度不足前补‘0’，发起方流水号必输
 		//给交行返回交易流水
-		chk.setTlogNo(String.format("%06d%08d", model.getSysDate()%1000000,model.getSysTraceno()));
+		chk.setTlogNo(String.format("%06d%08d", model.getPlatDate()%1000000,model.getPlatTrace()));
 		chk.setLogNo(model.getBocmTraceno());
 		
 		chk.setThdCod(model.getTxCode());
