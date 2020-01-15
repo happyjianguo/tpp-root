@@ -156,7 +156,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		myLog.info(logger, "以我行为主交易数量【"+tradList.size()+"】");
 		rep.setFilLen(254*tradList.size());	
 		rep.setTolCnt(tradList.size());
-		rep.setTolAmt(NumberUtil.addPoint(Double.parseDouble(totalAmt.toString())));
+		rep.setTolAmt(Double.parseDouble(totalAmt.toString()));
 		myLog.info(logger, "返回报文文件长度："+rep.getFilLen());
 				
 		rep.setFilTxt(tradList);
@@ -166,7 +166,8 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		record.setTxDate(Integer.parseInt(date));
 		record.setPlatStatus(1);
 		record.setPlatTxCnt(tradList.size());
-		record.setPlatTxAmt(new BigDecimal(totalAmt.toString()));
+		String total = NumberUtil.removePointToString(Double.parseDouble(totalAmt.toString()));
+		record.setPlatTxAmt(new BigDecimal(total));
 		chkStatusService.chkStatusUpd(record);
 		myLog.info(logger, "更新对账状态表信息");		
 
@@ -198,7 +199,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		chk.setFeeFlg(model.getFeeFlag());
 		//开户行手续费
 		if(model.getFee()!=null){
-			chk.setFee(Double.parseDouble(model.getFee().toString()));
+			chk.setFee(NumberUtil.addPoint(Double.parseDouble(model.getFee().toString())));
 		}
 		//通存通兑业务模式 0 现金 1 转账
 		chk.setTxnMod(model.getTxInd());
@@ -260,7 +261,7 @@ public class CHK_Fx implements TradeExecutionStrategy {
 		chk.setFeeFlg(model.getFeeFlag());
 		//开户行手续费
 		if(model.getFee()!=null){
-			chk.setFee(Double.parseDouble(model.getFee().toString()));
+			chk.setFee(NumberUtil.addPoint(Double.parseDouble(model.getFee().toString())));
 		}
 		//通存通兑业务模式 0 现金 1 转账
 		chk.setTxnMod(model.getTxInd());
