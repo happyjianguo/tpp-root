@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxbank.tpp.beps.mapper.CcmsFreeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.fxbank.tpp.beps.entity.CcmsFreeInfo" >
+    <result column="SYSCODE" property="syscode" jdbcType="CHAR" />
+    <result column="BRANCHNO" property="branchno" jdbcType="CHAR" />
+    <result column="PLATDATE" property="platdate" jdbcType="INTEGER" />
+    <result column="PLATTRACE" property="plattrace" jdbcType="INTEGER" />
+    <result column="MSGID" property="msgid" jdbcType="CHAR" />
+    <result column="DTLSND_BKNO" property="dtlsndBkno" jdbcType="CHAR" />
+    <result column="CMTNO" property="cmtno" jdbcType="CHAR" />
+    <result column="TSSNO" property="tssno" jdbcType="INTEGER" />
+    <result column="SNDDATE" property="snddate" jdbcType="INTEGER" />
+    <result column="SNDCCPC" property="sndccpc" jdbcType="CHAR" />
+    <result column="SNDSABKNO" property="sndsabkno" jdbcType="CHAR" />
+    <result column="SNDBANKNO" property="sndbankno" jdbcType="CHAR" />
+    <result column="RCVCCPC" property="rcvccpc" jdbcType="CHAR" />
+    <result column="RCVSABKNO" property="rcvsabkno" jdbcType="CHAR" />
+    <result column="RCVBANKNO" property="rcvbankno" jdbcType="CHAR" />
+    <result column="BUSITYPE" property="busitype" jdbcType="CHAR" />
+    <result column="BUSIKIND" property="busikind" jdbcType="CHAR" />
+    <result column="INFOTYPE" property="infotype" jdbcType="CHAR" />
+    <result column="PROCSTATE" property="procstate" jdbcType="CHAR" />
+    <result column="INFOSOURCE" property="infosource" jdbcType="CHAR" />
+    <result column="INFOTITLE" property="infotitle" jdbcType="CHAR" />
+    <result column="INFORMATION" property="information" jdbcType="CHAR" />
+    <result column="ATTACHLEN" property="attachlen" jdbcType="INTEGER" />
+    <result column="ATTACHNAME" property="attachname" jdbcType="CHAR" />
+    <result column="AGENCY" property="agency" jdbcType="CHAR" />
+    <result column="REPLYINFO" property="replyinfo" jdbcType="CHAR" />
+    <result column="NPCSTS" property="npcsts" jdbcType="CHAR" />
+    <result column="NPCCODE" property="npccode" jdbcType="CHAR" />
+    <result column="NPCMSG" property="npcmsg" jdbcType="CHAR" />
+    <result column="NPCDATE" property="npcdate" jdbcType="INTEGER" />
+    <result column="PUTUSER" property="putuser" jdbcType="CHAR" />
+    <result column="FRCHNL" property="frchnl" jdbcType="CHAR" />
+    <result column="IFTOWN" property="iftown" jdbcType="CHAR" />
+    <result column="PRINTNO" property="printno" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select SYSCODE, BRANCHNO, PLATDATE, PLATTRACE, MSGID, DTLSND_BKNO, CMTNO, TSSNO, 
+    SNDDATE, SNDCCPC, SNDSABKNO, SNDBANKNO, RCVCCPC, RCVSABKNO, RCVBANKNO, BUSITYPE, 
+    BUSIKIND, INFOTYPE, PROCSTATE, INFOSOURCE, INFOTITLE, INFORMATION, ATTACHLEN, ATTACHNAME, 
+    AGENCY, REPLYINFO, NPCSTS, NPCCODE, NPCMSG, NPCDATE, PUTUSER, FRCHNL, IFTOWN, PRINTNO
+    from CCMS_FREEINFO
+  </select>
+</mapper>

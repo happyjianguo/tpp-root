@@ -96,5 +96,8 @@
 		<module>tpp-frms-api</module>
 		<module>tpp-frms-service</module>
 		<module>tpp-simu-web</module>
+		<module>tpp-beps-api</module>
+		<module>tpp-beps-service</module>
+		<module>tpp-beps-web</module>
 	</modules>
 </project>
