@@ -4,6 +4,12 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * @description: 交易报文同步slot
+ * @author     : 周勇沩
+ * @Date       : 2020/2/21 11:10
+ */
 public class SyncSlot<T> implements Future<T> {
     private CountDownLatch latch = new CountDownLatch(1);
     private boolean isCancel = false;

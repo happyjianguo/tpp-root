@@ -1,28 +1,21 @@
 package com.fxbank.tpp.beps.mq;
 
+import com.fxbank.cip.base.common.LogPool;
+import com.ibm.mq.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.annotation.Resource;
-
-import com.fxbank.cip.base.common.LogPool;
-import com.ibm.mq.MQC;
-import com.ibm.mq.MQException;
-import com.ibm.mq.MQGetMessageOptions;
-import com.ibm.mq.MQMessage;
-import com.ibm.mq.MQQueue;
-import com.ibm.mq.MQQueueManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 /**
- * @Description: IBM MQ 连接方式QA，客户端类
- * @Author: 周勇沩
- * @Date: 2019-04-22 06:36:16
+ * @description: IBM MQ 连接方式QA，客户端类
+ * @author     : 周勇沩
+ * @Date       : 2020/2/21 11:06
  */
 @Component
 public class MqQaServer {
@@ -108,16 +101,10 @@ public class MqQaServer {
 		}
 	}
 
-	/**
-	 * @return the qMgrList
-	 */
 	public List<MqQaManager> getqMgrList() {
 		return qMgrList;
 	}
 
-	/**
-	 * @param qMgrList the qMgrList to set
-	 */
 	public void setqMgrList(List<MqQaManager> qMgrList) {
 		this.qMgrList = qMgrList;
 	}

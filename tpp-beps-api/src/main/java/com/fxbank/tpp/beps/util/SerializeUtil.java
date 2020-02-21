@@ -6,16 +6,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * @Description: 序列化反序列化工具
- * @Author: 周勇沩
- * @Date: 2019-04-23 20:34:13
+ * @author : 周勇沩
+ * @description: 序列化反序列化工具
+ * @Date : 2020/2/20 20:16
  */
 public class SerializeUtil {
 
     /**
-     * @Description: 序列化
-     * @Author: 周勇沩
-     * @Date: 2019-04-23 20:35:48
+     * @description: 序列化
+     * @Date : 2020/2/20 20:16
      */
     public static byte[] serialize(Object object) {
         try {
@@ -30,9 +29,8 @@ public class SerializeUtil {
     }
 
     /**
-     * @Description: 反序列化
-     * @Author: 周勇沩
-     * @Date: 2019-04-23 20:35:56
+     * @description: 反序列化
+     * @Date : 2020/2/20 20:16
      */
     public static Object unserialize(byte[] bytes) {
         try {

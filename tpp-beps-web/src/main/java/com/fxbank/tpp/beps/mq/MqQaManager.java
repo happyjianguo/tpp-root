@@ -1,18 +1,17 @@
 package com.fxbank.tpp.beps.mq;
 
-import java.util.Hashtable;
-
 import com.ibm.mq.MQC;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Hashtable;
+
 /**
- * @Description: IBM MQ队列管理器管理类
- * @Author: 周勇沩
- * @Date: 2019-04-22 06:34:03
+ * @description: IBM MQ队列管理器管理类
+ * @author     : 周勇沩
+ * @Date       : 2020/2/21 11:04
  */
 public class MqQaManager {
 
@@ -62,114 +61,66 @@ public class MqQaManager {
         return sb.toString();
     }
 
-    /**
-     * @param qManager the qManager to set
-     */
     public void setQManager(String qManager) {
         QManager = qManager;
     }
 
-    /**
-     * @return the qManager
-     */
     public String getQManager() {
         return QManager;
     }
 
-    /**
-     * @param queue the queue to set
-     */
     public void setQueue(String queue) {
         Queue = queue;
     }
 
-    /**
-     * @return the queue
-     */
     public String getQueue() {
         return Queue;
     }
 
-    /**
-     * @param hostname the hostname to set
-     */
     public void setHostname(String hostname) {
         this.hostname = hostname;
     }
 
-    /**
-     * @return the hostname
-     */
     public String getHostname() {
         return hostname;
     }
 
-    /**
-     * @param channel the channel to set
-     */
     public void setChannel(String channel) {
         this.channel = channel;
     }
 
-    /**
-     * @return the channel
-     */
     public String getChannel() {
         return channel;
     }
 
-    /**
-     * @param ccsid the ccsid to set
-     */
     public void setCcsid(Integer ccsid) {
         this.ccsid = ccsid;
     }
 
-    /**
-     * @return the ccsid
-     */
     public Integer getCcsid() {
         return ccsid;
     }
 
-    /**
-     * @param port the port to set
-     */
     public void setPort(Integer port) {
         this.port = port;
     }
 
-    /**
-     * @return the port
-     */
     public Integer getPort() {
         return port;
     }
 
-    /**
-     * @param waitinterval the waitinterval to set
-     */
     public void setWaitinterval(Integer waitinterval) {
         this.waitinterval = waitinterval;
     }
 
-    /**
-     * @return the waitinterval
-     */
     public Integer getWaitinterval() {
         return waitinterval;
     }
 
-    /**
-     * @return the qMgr
-     */
     public MQQueueManager getqMgr() {
         return qMgr;
     }
 
-    /**
-     * @param qMgr the qMgr to set
-     */
     public void setqMgr(MQQueueManager qMgr) {
         this.qMgr = qMgr;
     }

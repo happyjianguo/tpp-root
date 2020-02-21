@@ -1,24 +1,18 @@
 package com.fxbank.tpp.beps.mq;
 
-import java.util.List;
-import java.util.Random;
-
 import com.fxbank.cip.base.log.MyLog;
-import com.ibm.mq.MQC;
-import com.ibm.mq.MQException;
-import com.ibm.mq.MQMessage;
-import com.ibm.mq.MQPutMessageOptions;
-import com.ibm.mq.MQQueue;
-import com.ibm.mq.MQQueueManager;
-
+import com.ibm.mq.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Random;
+
 /**
- * @Description: IBM MQ 连接方式QA，客户端类
- * @Author: 周勇沩
- * @Date: 2019-04-22 06:36:16
+ * @description: IBM MQ 连接方式QA，客户端类
+ * @author     : 周勇沩
+ * @Date       : 2020/2/21 12:00
  */
 @Component
 public class MqQaClient {
@@ -72,16 +66,10 @@ public class MqQaClient {
 		}
 	}
 
-	/**
-	 * @return the qMgrList
-	 */
 	public List<MqQaManager> getqMgrList() {
 		return qMgrList;
 	}
 
-	/**
-	 * @param qMgrList the qMgrList to set
-	 */
 	public void setqMgrList(List<MqQaManager> qMgrList) {
 		this.qMgrList = qMgrList;
 	}

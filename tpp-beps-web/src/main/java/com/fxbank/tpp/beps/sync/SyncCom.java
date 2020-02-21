@@ -1,23 +1,26 @@
 package com.fxbank.tpp.beps.sync;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Resource;
-
 import com.fxbank.cip.base.common.MyJedis;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
-import com.fxbank.tpp.beps.exception.BepsTradeExecuteException;
+import com.fxbank.tpp.beps.exception.PmtsTradeExecuteException;
 import com.fxbank.tpp.beps.util.SerializeUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
 import redis.clients.jedis.BinaryJedisPubSub;
 import redis.clients.jedis.Jedis;
 
+import javax.annotation.Resource;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+
+/**
+ * @description: 交易报文同步
+ * @author     : 周勇沩
+ * @Date       : 2020/2/21 11:11
+ */
 @Component
 public class SyncCom {
 
@@ -66,11 +69,11 @@ public class SyncCom {
 			myLog.info(logger, "收到实时应答["+channel+"]["+t+"]...");
 		} catch (InterruptedException e) {
 			myLog.error(logger, "等待服务端应答被中断", e);
-			BepsTradeExecuteException e1 = new BepsTradeExecuteException(BepsTradeExecuteException.BEPS_E_10001);
+			PmtsTradeExecuteException e1 = new PmtsTradeExecuteException(PmtsTradeExecuteException.PMTS_E_10001);
 			throw e1;
 		} catch (Exception e) {
 			myLog.error(logger, "等待服务端应答超时", e);
-			BepsTradeExecuteException e1 = new BepsTradeExecuteException(BepsTradeExecuteException.BEPS_E_10001);
+			PmtsTradeExecuteException e1 = new PmtsTradeExecuteException(PmtsTradeExecuteException.PMTS_E_10001);
 			throw e1;
 		}finally {
 			try (Jedis jedis = myJedis.connect()) {
@@ -80,7 +83,7 @@ public class SyncCom {
 		}
 		if (!slot.isDone()) {
 			myLog.error(logger, "等待服务端应答超时");
-			BepsTradeExecuteException e1 = new BepsTradeExecuteException(BepsTradeExecuteException.BEPS_E_10001);
+			PmtsTradeExecuteException e1 = new PmtsTradeExecuteException(PmtsTradeExecuteException.PMTS_E_10001);
 			throw e1;
 		}
 		return t;

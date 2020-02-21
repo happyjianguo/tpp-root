@@ -11,7 +11,7 @@ import com.fxbank.cip.base.dto.DataTransObject;
 import com.fxbank.cip.base.exception.SysTradeExecuteException;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.base.model.ESB_REQ_SYS_HEAD;
-import com.fxbank.tpp.beps.exception.BepsTradeExecuteException;
+import com.fxbank.tpp.beps.exception.PmtsTradeExecuteException;
 import com.fxbank.tpp.esb.common.EsbReqHeaderBuilder;
 import com.fxbank.tpp.esb.model.ses.ESB_REP_30043003001;
 import com.fxbank.tpp.esb.model.ses.ESB_REQ_30043003001;
@@ -105,10 +105,10 @@ public class TradeBase {
 	/**
 	 * 判断字符串是否为空
 	 */
-	public String isOrNotNull(String stringNotNull, String msgNotNull, String isOrNotFlag) throws BepsTradeExecuteException {
+	public String isOrNotNull(String stringNotNull, String msgNotNull, String isOrNotFlag) throws PmtsTradeExecuteException {
 		if (stringNotNull == null || stringNotNull.equals("") || stringNotNull.equals("null")) {
 			if(isOrNotFlag == "Y") {
-				BepsTradeExecuteException e = new BepsTradeExecuteException("MIVS_E_10001", msgNotNull + "必填");
+				PmtsTradeExecuteException e = new PmtsTradeExecuteException("MIVS_E_10001", msgNotNull + "必填");
 				throw e;
 			}else{
 				return null;
@@ -120,9 +120,9 @@ public class TradeBase {
 	/**
 	 * ESB日期转换成人行日期
 	 */
-	public String dateToIsoDate(String idate, String msgNotNull, String isOrNotFlag) throws BepsTradeExecuteException{
+	public String dateToIsoDate(String idate, String msgNotNull, String isOrNotFlag) throws PmtsTradeExecuteException {
 		if(isOrNotFlag == "Y" && (idate == null || idate.equals(""))){
-			BepsTradeExecuteException e = new BepsTradeExecuteException("BEPS_E_10002",msgNotNull + "必填");
+			PmtsTradeExecuteException e = new PmtsTradeExecuteException("BEPS_E_10002",msgNotNull + "必填");
 			throw e;
 		}else {
 			if (idate.length() == 8) {
