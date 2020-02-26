@@ -1,9 +1,11 @@
 package com.fxbank.tpp.beps.pmts;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.io.Serializable;
 
 /**
  * @author YePuLiang
@@ -158,9 +160,9 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = {"ChngTp", "CtrctTp", "CstmrId", "RegId", "CstmrNm",
-            "UniSocCdtCd", "NbOfPmtItms", "PmtItms", "PmtItmCd", "CtrctNb", "ReqId",
+            "UniSocCdtCd", "NbOfPmtItms", "PmtItms", "CtrctNb", "ReqId",
             "Issr", "CstmrAcctType", "AcctId", "OncDdctnLmt", "CycDdctnNumLmt",
-            "CtrctDueDt", "CtrctSgnDt", "EctDt", "PyrInf", "Nm", "IdTp", "Id", "TelNb",
+            "CtrctDueDt", "CtrctSgnDt", "EctDt", "PyrInf", "TelNb",
             "AdrLine", "Rmk", "AuthMd", "TmUt", "TmSp", "TmDc", "CycDdctnLmt", "CtrctAddtlInf"})
     public static class CtrctChngInf implements Serializable {
 
@@ -173,8 +175,7 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         private String CstmrNm;
         private String UniSocCdtCd;
         private String NbOfPmtItms;
-        private String PmtItms;
-        private String PmtItmCd;
+        private PmtItms PmtItms = new PmtItms();
         private String CtrctNb;
         private String ReqId;
         private String Issr;
@@ -185,10 +186,7 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         private String CtrctDueDt;
         private String CtrctSgnDt;
         private String EctDt;
-        private String PyrInf;
-        private String Nm;
-        private String IdTp;
-        private String Id;
+        private PyrInf PyrInf = new PyrInf();
         private String TelNb;
         private String AdrLine;
         private String Rmk;
@@ -255,23 +253,15 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
             NbOfPmtItms = nbOfPmtItms;
         }
 
-        public String getPmtItms() {
-            return PmtItms;
-        }
+        public PmtItms getPmtItms() {
+			return PmtItms;
+		}
 
-        public void setPmtItms(String pmtItms) {
-            PmtItms = pmtItms;
-        }
+		public void setPmtItms(PmtItms pmtItms) {
+			PmtItms = pmtItms;
+		}
 
-        public String getPmtItmCd() {
-            return PmtItmCd;
-        }
-
-        public void setPmtItmCd(String pmtItmCd) {
-            PmtItmCd = pmtItmCd;
-        }
-
-        public String getCtrctNb() {
+		public String getCtrctNb() {
             return CtrctNb;
         }
 
@@ -351,36 +341,12 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
             EctDt = ectDt;
         }
 
-        public String getPyrInf() {
+        public PyrInf getPyrInf() {
             return PyrInf;
         }
 
-        public void setPyrInf(String pyrInf) {
+        public void setPyrInf(PyrInf pyrInf) {
             PyrInf = pyrInf;
-        }
-
-        public String getNm() {
-            return Nm;
-        }
-
-        public void setNm(String nm) {
-            Nm = nm;
-        }
-
-        public String getIdTp() {
-            return IdTp;
-        }
-
-        public void setIdTp(String idTp) {
-            IdTp = idTp;
-        }
-
-        public String getId() {
-            return Id;
-        }
-
-        public void setId(String id) {
-            Id = id;
         }
 
         public String getTelNb() {
@@ -454,7 +420,64 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         public void setCtrctAddtlInf(String ctrctAddtlInf) {
             CtrctAddtlInf = ctrctAddtlInf;
         }
+        
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "CtrctChngInf.PmtItms")
+        public static class PmtItms implements Serializable {
 
+			private static final long serialVersionUID = -6773638064390328019L;
+			
+			private List<String> PmtItmCd;
+
+			public List<String> getPmtItmCd() {
+				return PmtItmCd;
+			}
+
+			public void setPmtItmCd(List<String> pmtItmCd) {
+				PmtItmCd = pmtItmCd;
+			}
+
+        }
+        
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "CtrctChngInf.PyrInf")
+        public static class PyrInf implements Serializable {
+
+			private static final long serialVersionUID = -7559196732322207266L;
+			
+	        private String Nm;
+	        
+	        private String IdTp;
+	        
+	        private String Id;
+	        
+	        public String getNm() {
+	            return Nm;
+	        }
+
+	        public void setNm(String nm) {
+	            Nm = nm;
+	        }
+
+	        public String getIdTp() {
+	            return IdTp;
+	        }
+
+	        public void setIdTp(String idTp) {
+	            IdTp = idTp;
+	        }
+
+	        public String getId() {
+	            return Id;
+	        }
+
+	        public void setId(String id) {
+	            Id = id;
+	        }
+
+        }
+        
+        
 
     }
 
@@ -478,8 +501,7 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         sb.append(this.CtrctChngInf.getCstmrNm() == null ? "" : this.CtrctChngInf.getCstmrNm() + "|");
         sb.append(this.CtrctChngInf.getUniSocCdtCd() == null ? "" : this.CtrctChngInf.getUniSocCdtCd() + "|");
         sb.append(this.CtrctChngInf.getNbOfPmtItms() == null ? "" : this.CtrctChngInf.getNbOfPmtItms() + "|");
-        sb.append(this.CtrctChngInf.getPmtItms() == null ? "" : this.CtrctChngInf.getPmtItms() + "|");
-        sb.append(this.CtrctChngInf.getPmtItmCd() == null ? "" : this.CtrctChngInf.getPmtItmCd() + "|");
+        sb.append(this.CtrctChngInf.getPmtItms().getPmtItmCd() == null ? "" : this.CtrctChngInf.getPmtItms().getPmtItmCd() + "|");
         sb.append(this.CtrctChngInf.getCtrctNb() == null ? "" : this.CtrctChngInf.getCtrctNb() + "|");
         sb.append(this.CtrctChngInf.getReqId() == null ? "" : this.CtrctChngInf.getReqId() + "|");
         sb.append(this.CtrctChngInf.getIssr() == null ? "" : this.CtrctChngInf.getIssr() + "|");
@@ -490,10 +512,9 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         sb.append(this.CtrctChngInf.getCtrctDueDt() == null ? "" : this.CtrctChngInf.getCtrctDueDt() + "|");
         sb.append(this.CtrctChngInf.getCtrctSgnDt() == null ? "" : this.CtrctChngInf.getCtrctSgnDt() + "|");
         sb.append(this.CtrctChngInf.getEctDt() == null ? "" : this.CtrctChngInf.getEctDt() + "|");
-        sb.append(this.CtrctChngInf.getPyrInf() == null ? "" : this.CtrctChngInf.getPyrInf() + "|");
-        sb.append(this.CtrctChngInf.getNm() == null ? "" : this.CtrctChngInf.getNm() + "|");
-        sb.append(this.CtrctChngInf.getIdTp() == null ? "" : this.CtrctChngInf.getIdTp() + "|");
-        sb.append(this.CtrctChngInf.getId() == null ? "" : this.CtrctChngInf.getId() + "|");
+        sb.append(this.CtrctChngInf.getPyrInf().getNm() == null ? "" : this.CtrctChngInf.getPyrInf().getNm() + "|");
+        sb.append(this.CtrctChngInf.getPyrInf().getIdTp() == null ? "" : this.CtrctChngInf.getPyrInf().getIdTp() + "|");
+        sb.append(this.CtrctChngInf.getPyrInf().getId() == null ? "" : this.CtrctChngInf.getPyrInf().getId() + "|");
         sb.append(this.CtrctChngInf.getTelNb() == null ? "" : this.CtrctChngInf.getTelNb() + "|");
         sb.append(this.CtrctChngInf.getAdrLine() == null ? "" : this.CtrctChngInf.getAdrLine() + "|");
         sb.append(this.CtrctChngInf.getRmk() == null ? "" : this.CtrctChngInf.getRmk() + "|");
