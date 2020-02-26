@@ -210,7 +210,7 @@ public class BEPS_352_001_01_ResFrPtcSn implements Serializable, SIGN_DATA {
 
 		private static final long serialVersionUID = -5865956041555846419L;
 
-		private String RspnInf;
+		private RspnInf RspnInf;
         private String CtrctRtrFlg;
         private String CtrctNb;
         private String OrgnlReqId;
@@ -218,10 +218,11 @@ public class BEPS_352_001_01_ResFrPtcSn implements Serializable, SIGN_DATA {
         private String AuthChl;
         private String AuthUrl;
         private String Rmk;
-		public String getRspnInf() {
+        
+		public RspnInf getRspnInf() {
 			return RspnInf;
 		}
-		public void setRspnInf(String rspnInf) {
+		public void setRspnInf(RspnInf rspnInf) {
 			RspnInf = rspnInf;
 		}
 		public String getCtrctRtrFlg() {
@@ -266,6 +267,44 @@ public class BEPS_352_001_01_ResFrPtcSn implements Serializable, SIGN_DATA {
 		public void setRmk(String rmk) {
 			Rmk = rmk;
 		}
+		
+        @XmlAccessorType(XmlAccessType.FIELD)
+        @XmlType(name = "CtrctChngRspnInf.RspnInf")
+        public static class RspnInf implements Serializable {
+
+			private static final long serialVersionUID = 7938983447603213901L;
+			
+			private String Sts;
+            private String RjctCd;
+            private String RjctInf;
+            private String PrcPty;
+            
+			public String getSts() {
+				return Sts;
+			}
+			public void setSts(String sts) {
+				Sts = sts;
+			}
+			public String getRjctCd() {
+				return RjctCd;
+			}
+			public void setRjctCd(String rjctCd) {
+				RjctCd = rjctCd;
+			}
+			public String getRjctInf() {
+				return RjctInf;
+			}
+			public void setRjctInf(String rjctInf) {
+				RjctInf = rjctInf;
+			}
+			public String getPrcPty() {
+				return PrcPty;
+			}
+			public void setPrcPty(String prcPty) {
+				PrcPty = prcPty;
+			}
+    
+        }
 
     }
     
@@ -286,7 +325,10 @@ public class BEPS_352_001_01_ResFrPtcSn implements Serializable, SIGN_DATA {
         sb.append(this.getOrgnlGrpHdr().getOrgnlInstgPty() + "|");
         sb.append(this.getOrgnlGrpHdr().getOrgnlMT() + "|");
         //CtrctChngRspnInf组包
-        sb.append(this.CtrctChngRspnInf.getRspnInf() == null ? "" : this.CtrctChngRspnInf.getRspnInf() + "|");
+        sb.append(this.CtrctChngRspnInf.getRspnInf().getSts() == null ? "" : this.CtrctChngRspnInf.getRspnInf().getSts() + "|");
+        sb.append(this.CtrctChngRspnInf.getRspnInf().getRjctCd() == null ? "" : this.CtrctChngRspnInf.getRspnInf().getRjctCd() + "|");
+        sb.append(this.CtrctChngRspnInf.getRspnInf().getRjctInf() == null ? "" : this.CtrctChngRspnInf.getRspnInf().getRjctInf() + "|");
+        sb.append(this.CtrctChngRspnInf.getRspnInf().getPrcPty() == null ? "" : this.CtrctChngRspnInf.getRspnInf().getPrcPty() + "|");
         sb.append(this.CtrctChngRspnInf.getCtrctRtrFlg() == null ? "" : this.CtrctChngRspnInf.getCtrctRtrFlg() + "|");
         sb.append(this.CtrctChngRspnInf.getCtrctNb() == null ? "" : this.CtrctChngRspnInf.getCtrctNb() + "|");
         sb.append(this.CtrctChngRspnInf.getOrgnlReqId() == null ? "" : this.CtrctChngRspnInf.getOrgnlReqId() + "|");
