@@ -34,6 +34,7 @@ public class P99002_35201 extends TradeBase implements TradeExecutionStrategy {
         MyLog myLog = logPool.get();
         CCMS_990_001_02 ccms990 = (CCMS_990_001_02) dto;
         //TODO 数据库操作
+        jedisPublish990(myLog, ccms990.getComConf().getConfInf().getMsgId(), ccms990.getComConf());
         return ccms990;
     }
 

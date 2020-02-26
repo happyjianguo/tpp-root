@@ -32,7 +32,7 @@ public class PMTS_SIGN implements Serializable {
         int i = 0;
         this.beginFlag = sb.substring(0, i = i + 3);
         this.digitalSignature = sb.substring(i, sb.length());
-        //this.endFlag = sb.substring(sb.length() - 1, sb.length());
+        this.endFlag = sb.substring(sb.length() - 1, sb.length());
     }
 
     public String getDigitalSignature() {

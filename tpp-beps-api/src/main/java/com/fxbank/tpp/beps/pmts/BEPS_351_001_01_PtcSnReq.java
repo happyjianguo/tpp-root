@@ -34,6 +34,14 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         GrpHdr = grpHdr;
     }
 
+    public BEPS_351_001_01_PtcSnReq.CtrctChngInf getCtrctChngInf() {
+        return CtrctChngInf;
+    }
+
+    public void setCtrctChngInf(BEPS_351_001_01_PtcSnReq.CtrctChngInf ctrctChngInf) {
+        CtrctChngInf = ctrctChngInf;
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = {"MsgId", "CreDtTm", "InstgPty", "InstdPty", "SysCd", "Rmk"})
     public static class GrpHdr implements Serializable {

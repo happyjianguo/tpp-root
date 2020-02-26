@@ -1,6 +1,5 @@
 package com.fxbank.tpp.beps.service.impl;
 
-import cn.highsuccess.connPool.api.tssc.HisuTSSCAPIResult;
 import cn.highsuccess.connPool.api.tssc.secondpayment.HisuTSSCAPIForSecondPayment;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fxbank.cip.base.common.MyJedis;
@@ -111,6 +110,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
 
         String signData = modelBase.signData(); // 待签名数据
         myLog.info(logger, "签名字段为：" + signData.toString());
+        /*
         if (signData != null) { // 需要签名
             String signature = null;
             try {
@@ -128,6 +128,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
             myLog.info(logger, "计算签名成功");
             modelBase.getSign().setDigitalSignature(signature);
         }
+        */
         String pack = modelBase.creaPack();
         myLog.info(logger, "发送至PMTS的请求报文=[" + pack + "]");
         mqQaClient.put(myLog, pack);

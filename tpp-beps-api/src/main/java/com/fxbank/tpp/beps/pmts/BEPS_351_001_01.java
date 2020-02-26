@@ -36,7 +36,15 @@ public class BEPS_351_001_01 extends MODEL_BASE {
         super.XMLNS = XMLNS;
         super.XMLNS_XSI = XMLNS_XSI;
     }
-    
+
+    public BEPS_351_001_01_PtcSnReq getPtcSnReq() {
+        return PtcSnReq;
+    }
+
+    public void setPtcSnReq(BEPS_351_001_01_PtcSnReq ptcSnReq) {
+        PtcSnReq = ptcSnReq;
+    }
+
     @Override
     public String signData() {
         return PtcSnReq.signData();

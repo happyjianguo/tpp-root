@@ -29,9 +29,9 @@ import java.util.UUID;
 
 
 /**
+ * @author : 周勇沩
  * @description: 人行来账报文处理
- * @author     : 周勇沩
- * @Date       : 2020/2/21 11:07
+ * @Date : 2020/2/21 11:07
  */
 @Component
 public class MqQaExecutor {
@@ -57,16 +57,16 @@ public class MqQaExecutor {
         logPool.init(myLog);
         myLog.info(logger, "收到人行报文[" + message + "]");
         PMTS_SIGN sign = new PMTS_SIGN();
-        String[] splitPack = message.split("}\r?\n");
+        String[] splitPack = message.split("}\r\n");
         String sHead = null;
         String sSign = null;
         String xml = null;
         if (splitPack.length == 2) { // 无签名
-            sHead = splitPack[0];
+            sHead = splitPack[0] + "}\r\n";
             xml = splitPack[1];
         } else if (splitPack.length == 3) { // 有签名
-            sHead = splitPack[0];
-            sSign = splitPack[1];
+            sHead = splitPack[0] + "}\r\n";
+            sSign = splitPack[1] + "}\r\n";
             xml = splitPack[2];
             sign.chanFixPack(sSign);
         }

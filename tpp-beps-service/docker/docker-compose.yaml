@@ -1,0 +1,24 @@
+version: '3'
+services:
+  cip-manager:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    image: cip-manager:1.0.0
+    container_name: cip-manager
+    hostname : cip-manager
+    extra_hosts:
+        - "DB:172.16.89.1"
+    ports:
+        - "5000:5000"
+    networks:
+        - "mynet"
+    environment:
+      DOCKER_IP: "172.16.89.1"
+    volumes:
+        - "$HOME/DockerApp/cip-manager/log1:/home/hammer/app/log"
+
+networks:
+   mynet:
+     external:
+       name: cip-net
