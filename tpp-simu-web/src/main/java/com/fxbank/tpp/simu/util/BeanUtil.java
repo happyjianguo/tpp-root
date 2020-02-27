@@ -1,22 +1,17 @@
 package com.fxbank.tpp.simu.util;
 
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.beans.PropertyDescriptor;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.fxbank.cip.base.anno.EsbSimuAnno;
-import com.fxbank.cip.base.util.JsonUtil;
 
 /**
  * @Description: Bean反射填充
@@ -241,11 +236,6 @@ public class BeanUtil {
             sb.append(getRandomChar());
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-    	//ESB_REP_30011000101 bean = toBean(ESB_REP_30011000101.class);
-        //logger.info(JsonUtil.toJson(bean));
     }
 
 }

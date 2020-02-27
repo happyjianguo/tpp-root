@@ -1,24 +1,26 @@
 version: '3'
 services:
-  cip-manager:
+  tpp-beps-service-1:
     build:
       context: ../
       dockerfile: docker/Dockerfile
-    image: cip-manager:1.0.0
-    container_name: cip-manager
-    hostname : cip-manager
+    image: tpp-beps-service:1.0.0
+    container_name: tpp-beps-service
+    hostname : tpp-beps-service
     extra_hosts:
-        - "DB:172.16.89.1"
+        - "HSM2:57.25.2.132"
+        - "DB:57.25.3.167"
     ports:
-        - "5000:5000"
+        - "9039:9039"
+        - "20919:20919"
     networks:
         - "mynet"
     environment:
-      DOCKER_IP: "172.16.89.1"
+      DOCKER_IP: "57.25.8.121"
     volumes:
-        - "$HOME/DockerApp/cip-manager/log1:/home/hammer/app/log"
+        - "/home/tpp/app-tpp/tpp-beps-service/log1:/home/hammer/app/log"
 
 networks:
    mynet:
      external:
-       name: cip-net
+       name: tpp-net

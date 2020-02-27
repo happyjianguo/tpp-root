@@ -1,0 +1,24 @@
+version: '3'
+services:
+  tpp-beps-web-1:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    image: tpp-beps-web:1.0.0
+    container_name: tpp-beps-web
+    hostname : tpp-beps-web
+    extra_hosts:
+        - "HSM2:57.25.2.132"
+    ports:
+        - "7024:7024"
+    networks:
+        - "mynet"
+    environment:
+        DOCKER_IP: "57.25.8.121"
+    volumes:
+        - "/home/tpp/app-tpp/tpp-beps-web/log1:/home/hammer/app/log"
+
+networks:
+   mynet:
+     external:
+       name: tpp-net

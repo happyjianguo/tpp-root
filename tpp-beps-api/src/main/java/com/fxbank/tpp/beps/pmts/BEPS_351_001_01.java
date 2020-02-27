@@ -24,7 +24,7 @@ public class BEPS_351_001_01 extends MODEL_BASE {
     private static final String XMLNS = "urn:cnaps:std:beps:2010:tech:xsd:beps.351.001.01";
     private static final String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
     
-    private BEPS_351_001_01_PtcSnReq PtcSnReq = new BEPS_351_001_01_PtcSnReq();
+    private BEPS_351_001_01_PtcSnReq ptcSnReq = new BEPS_351_001_01_PtcSnReq();
 
 	public BEPS_351_001_01() {
         super(null, 0, 0, 0);
@@ -35,18 +35,20 @@ public class BEPS_351_001_01 extends MODEL_BASE {
         super.mesgType = MESGTYPE;
         super.XMLNS = XMLNS;
         super.XMLNS_XSI = XMLNS_XSI;
+        ptcSnReq.getGrpHdr().setMsgId(super.msgId());
+        ptcSnReq.getGrpHdr().setCreDtTm(super.creDtTm());
     }
 
     public BEPS_351_001_01_PtcSnReq getPtcSnReq() {
-        return PtcSnReq;
+        return ptcSnReq;
     }
 
     public void setPtcSnReq(BEPS_351_001_01_PtcSnReq ptcSnReq) {
-        PtcSnReq = ptcSnReq;
+        this.ptcSnReq = ptcSnReq;
     }
 
     @Override
     public String signData() {
-        return PtcSnReq.signData();
+        return ptcSnReq.signData();
     }
 }

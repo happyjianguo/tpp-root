@@ -108,10 +108,10 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
         modelBase.getHead()
                 .setMesgRefID(String.format("%08d%08d", modelBase.getSysDate(), modelBase.getSysTraceno()));
 
-        String signData = modelBase.signData(); // 待签名数据
-        myLog.info(logger, "签名字段为：" + signData.toString());
         /*
         if (signData != null) { // 需要签名
+            String signData = modelBase.signData(); // 待签名数据
+            myLog.info(logger, "签名字段为：" + signData.toString());
             String signature = null;
             try {
                 HisuTSSCAPIResult result = this.hisuTSSCAPIForSecondPayment.hisuUniveralGenDataSign("CNAPS2",
@@ -128,7 +128,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
             myLog.info(logger, "计算签名成功");
             modelBase.getSign().setDigitalSignature(signature);
         }
-        */
+         */
         String pack = modelBase.creaPack();
         myLog.info(logger, "发送至PMTS的请求报文=[" + pack + "]");
         mqQaClient.put(myLog, pack);

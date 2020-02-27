@@ -210,7 +210,7 @@ public class BEPS_352_001_01_ResFrPtcSn implements Serializable, SIGN_DATA {
 
 		private static final long serialVersionUID = -5865956041555846419L;
 
-		private RspnInf RspnInf;
+		private RspnInf RspnInf = new RspnInf();
         private String CtrctRtrFlg;
         private String CtrctNb;
         private String OrgnlReqId;

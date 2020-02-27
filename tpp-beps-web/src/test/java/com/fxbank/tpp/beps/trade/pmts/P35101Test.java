@@ -3,9 +3,10 @@ package com.fxbank.tpp.beps.trade.pmts;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.pub.service.IPublicService;
+import com.fxbank.tpp.beps.constant.CONST;
 import com.fxbank.tpp.beps.pmts.BEPS_351_001_01;
 import com.fxbank.tpp.beps.pmts.BEPS_351_001_01_PtcSnReq;
-import com.fxbank.tpp.beps.pmts.PMTS_HEAD;
+import com.fxbank.tpp.beps.pmts.GrpHdr;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
 import org.junit.After;
 import org.junit.Before;
@@ -41,8 +42,6 @@ public class P35101Test {
     private Integer sysTime;
     private Integer sysTraceno;
 
-    private PMTS_HEAD head;
-
     @Reference(version = "1.0.0")
     private IPublicService publicService;
 
@@ -51,7 +50,6 @@ public class P35101Test {
 
     @Before
     public void before(){
-        head = new PMTS_HEAD();
         sysDate = publicService.getSysDate("CIP");
         sysTime = publicService.getSysTime();
         sysTraceno = publicService.getSysTraceno();
@@ -61,7 +59,6 @@ public class P35101Test {
 
     @Test
     public void payOk() throws Exception {
-        beps351.setHead(head);
         BEPS_351_001_01_PtcSnReq.CtrctChngInf ctrctChngInf = new BEPS_351_001_01_PtcSnReq.CtrctChngInf();
         ctrctChngInf.setChngTp("CC00");
         ctrctChngInf.setCtrctTp("CO00");
@@ -99,6 +96,8 @@ public class P35101Test {
         ctrctChngInf.setCycDdctnLmt("CNY650000.00");
         ctrctChngInf.setCtrctAddtlInf("协议附加数据");
         ptcSnReq.setCtrctChngInf(ctrctChngInf);
+        GrpHdr grpHdr = new GrpHdr(CONST.SABKNO,CONST.SABKNO,"000000000000","0000000000");
+        beps351.getPtcSnReq().setGrpHdr(grpHdr);
         forwardToPmtsService.sendToPmtsNoWait(beps351);
     }
 

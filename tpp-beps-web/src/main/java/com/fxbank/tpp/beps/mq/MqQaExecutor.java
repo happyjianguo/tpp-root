@@ -103,12 +103,12 @@ public class MqQaExecutor {
                         myLog.error(logger, "验证签名错误[" + signData + "][" + sign.getDigitalSignature().toString() + "]");
                         dtoBase.setSignChkRes("FAIL");
                     }
+                    myLog.info(logger, "验证签名成功");
+                    dtoBase.setSignChkRes("SUCCESS");
                 } catch (Exception e) {
                     myLog.error(logger, "验证签名错误[" + signData + "][" + sSign + "]", e);
                     dtoBase.setSignChkRes("FAIL");
                 }
-                myLog.info(logger, "验证签名成功");
-                dtoBase.setSignChkRes("SUCCESS");
             }
         } catch (RuntimeException e) {
             myLog.error(logger, "解析报文失败[" + xml + "]", e);

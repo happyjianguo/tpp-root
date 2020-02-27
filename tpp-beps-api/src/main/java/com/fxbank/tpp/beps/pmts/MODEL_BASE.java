@@ -35,7 +35,7 @@ public abstract class MODEL_BASE extends ModelBase implements Serializable, SIGN
     protected String XMLNS_XSI;
 
     @XmlTransient
-    private PMTS_HEAD head;
+    private PMTS_HEAD head = new PMTS_HEAD();
 
     @XmlTransient
     private PMTS_SIGN sign = new PMTS_SIGN();

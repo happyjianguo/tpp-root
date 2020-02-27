@@ -17,7 +17,7 @@ public class REQ_TP35101A01 extends REQ_BASE {
 	private REQ_SYS_HEAD reqSysHead;
 
 	@JSONField(name = "BODY")
-	private REQ_BODY reqBody;
+	private REQ_BODY reqBody = new REQ_BODY();
 
 	public REQ_TP35101A01(){
 		super.txDesc = "协议付款方签约交易处理";

@@ -1,11 +1,10 @@
 package com.fxbank.tpp.beps.pmts;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author YePuLiang
@@ -19,7 +18,7 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = -2107007006054449808L;
 
-    private GrpHdr GrpHdr = new GrpHdr();
+    private GrpHdr GrpHdr;
 
     private CtrctChngInf CtrctChngInf = new CtrctChngInf();
 
@@ -28,11 +27,11 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         return "通用处理确认报文[BEPS_351_001_01][" + this.GrpHdr.getMsgId() + "][" + this.CtrctChngInf.getCstmrId() + "][" + this.CtrctChngInf.getCstmrNm() + "]";
     }
 
-    public BEPS_351_001_01_PtcSnReq.GrpHdr getGrpHdr() {
+    public GrpHdr getGrpHdr() {
         return GrpHdr;
     }
 
-    public void setGrpHdr(BEPS_351_001_01_PtcSnReq.GrpHdr grpHdr) {
+    public void setGrpHdr(GrpHdr grpHdr) {
         GrpHdr = grpHdr;
     }
 
@@ -42,120 +41,6 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
 
     public void setCtrctChngInf(BEPS_351_001_01_PtcSnReq.CtrctChngInf ctrctChngInf) {
         CtrctChngInf = ctrctChngInf;
-    }
-
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = {"MsgId", "CreDtTm", "InstgPty", "InstdPty", "SysCd", "Rmk"})
-    public static class GrpHdr implements Serializable {
-
-        private static final long serialVersionUID = -7164625084979709481L;
-
-        private String MsgId;
-        private String CreDtTm;
-        private InstgPty InstgPty = new InstgPty();
-        private InstdPty InstdPty = new InstdPty();
-        private String SysCd;
-        private String Rmk;
-
-        public String getMsgId() {
-            return MsgId;
-        }
-
-        public void setMsgId(String msgId) {
-            this.MsgId = msgId;
-        }
-
-        public String getCreDtTm() {
-            return CreDtTm;
-        }
-
-        public void setCreDtTm(String creDtTm) {
-            this.CreDtTm = creDtTm;
-        }
-
-        public String getSysCd() {
-            return SysCd;
-        }
-
-        public void setSysCd(String sysCd) {
-            this.SysCd = sysCd;
-        }
-
-        public String getRmk() {
-            return Rmk;
-        }
-
-        public void setRmk(String rmk) {
-            this.Rmk = rmk;
-        }
-
-        public InstgPty getInstgPty() {
-            return InstgPty;
-        }
-
-        public void setInstgPty(InstgPty instgPty) {
-            this.InstgPty = instgPty;
-        }
-
-        public InstdPty getInstdPty() {
-            return InstdPty;
-        }
-
-        public void setInstdPty(InstdPty instdPty) {
-            this.InstdPty = instdPty;
-        }
-
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "GrpHdr.InstgPty")
-        public static class InstgPty implements Serializable {
-
-            private static final long serialVersionUID = -6877011574990490256L;
-
-            private String InstgDrctPty;
-            private String InstgPty;
-
-            public String getInstgDrctPty() {
-                return InstgDrctPty;
-            }
-
-            public void setInstgDrctPty(String instgDrctPty) {
-                this.InstgDrctPty = instgDrctPty;
-            }
-
-            public String getInstgPty() {
-                return InstgPty;
-            }
-
-            public void setInstgPty(String instgPty) {
-                this.InstgPty = instgPty;
-            }
-        }
-
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "GrpHdr.InstdPty")
-        public static class InstdPty implements Serializable {
-
-            private static final long serialVersionUID = 8084891028404642070L;
-
-            private String InstdDrctPty;
-            private String InstdPty;
-
-            public String getInstdDrctPty() {
-                return InstdDrctPty;
-            }
-
-            public void setInstdDrctPty(String instdDrctPty) {
-                this.InstdDrctPty = instdDrctPty;
-            }
-
-            public String getInstdPty() {
-                return InstdPty;
-            }
-
-            public void setInstdPty(String instdPty) {
-                this.InstdPty = instdPty;
-            }
-        }
     }
 
     @XmlAccessorType(XmlAccessType.FIELD)
@@ -254,14 +139,14 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         }
 
         public PmtItms getPmtItms() {
-			return PmtItms;
-		}
+            return PmtItms;
+        }
 
-		public void setPmtItms(PmtItms pmtItms) {
-			PmtItms = pmtItms;
-		}
+        public void setPmtItms(PmtItms pmtItms) {
+            PmtItms = pmtItms;
+        }
 
-		public String getCtrctNb() {
+        public String getCtrctNb() {
             return CtrctNb;
         }
 
@@ -420,64 +305,63 @@ public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
         public void setCtrctAddtlInf(String ctrctAddtlInf) {
             CtrctAddtlInf = ctrctAddtlInf;
         }
-        
+
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "CtrctChngInf.PmtItms")
         public static class PmtItms implements Serializable {
 
-			private static final long serialVersionUID = -6773638064390328019L;
-			
-			private List<String> PmtItmCd;
+            private static final long serialVersionUID = -6773638064390328019L;
 
-			public List<String> getPmtItmCd() {
-				return PmtItmCd;
-			}
+            private List<String> PmtItmCd;
 
-			public void setPmtItmCd(List<String> pmtItmCd) {
-				PmtItmCd = pmtItmCd;
-			}
+            public List<String> getPmtItmCd() {
+                return PmtItmCd;
+            }
+
+            public void setPmtItmCd(List<String> pmtItmCd) {
+                PmtItmCd = pmtItmCd;
+            }
 
         }
-        
+
         @XmlAccessorType(XmlAccessType.FIELD)
         @XmlType(name = "CtrctChngInf.PyrInf")
         public static class PyrInf implements Serializable {
 
-			private static final long serialVersionUID = -7559196732322207266L;
-			
-	        private String Nm;
-	        
-	        private String IdTp;
-	        
-	        private String Id;
-	        
-	        public String getNm() {
-	            return Nm;
-	        }
+            private static final long serialVersionUID = -7559196732322207266L;
 
-	        public void setNm(String nm) {
-	            Nm = nm;
-	        }
+            private String Nm;
 
-	        public String getIdTp() {
-	            return IdTp;
-	        }
+            private String IdTp;
 
-	        public void setIdTp(String idTp) {
-	            IdTp = idTp;
-	        }
+            private String Id;
 
-	        public String getId() {
-	            return Id;
-	        }
+            public String getNm() {
+                return Nm;
+            }
 
-	        public void setId(String id) {
-	            Id = id;
-	        }
+            public void setNm(String nm) {
+                Nm = nm;
+            }
+
+            public String getIdTp() {
+                return IdTp;
+            }
+
+            public void setIdTp(String idTp) {
+                IdTp = idTp;
+            }
+
+            public String getId() {
+                return Id;
+            }
+
+            public void setId(String id) {
+                Id = id;
+            }
 
         }
-        
-        
+
 
     }
 

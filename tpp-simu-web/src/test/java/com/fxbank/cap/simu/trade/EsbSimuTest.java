@@ -1,10 +1,8 @@
 package com.fxbank.cap.simu.trade;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
-
-import javax.xml.bind.JAXBException;
-
+import com.alibaba.dubbo.config.annotation.Reference;
+import com.fxbank.cip.base.exception.SysTradeExecuteException;
+import com.fxbank.tpp.esb.service.IForwardToESBService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.alibaba.dubbo.config.annotation.Reference;
-import com.fxbank.cip.base.exception.SysTradeExecuteException;
-import com.fxbank.tpp.esb.service.IForwardToESBService;
-
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,8 +39,7 @@ public class EsbSimuTest {
 	
 	
 	@Test
-	public void EsbTest() throws JAXBException, IOException, SysTradeExecuteException {
-		logger.info("测试");
+	public void VerifyAccountIn1() throws JAXBException, IOException, SysTradeExecuteException {
 	}
 	
 	
@@ -56,4 +52,5 @@ public class EsbSimuTest {
 		}
 		*/
 	}
+
 }
