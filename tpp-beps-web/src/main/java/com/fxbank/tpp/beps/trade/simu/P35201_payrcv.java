@@ -1,5 +1,13 @@
 package com.fxbank.tpp.beps.trade.simu;
 
+import java.util.Random;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -13,14 +21,10 @@ import com.fxbank.tpp.beps.pmts.CCMS_900_001_02;
 import com.fxbank.tpp.beps.pmts.CCMS_900_001_02_CmonConf;
 import com.fxbank.tpp.beps.pmts.CCMS_911_001_02;
 import com.fxbank.tpp.beps.pmts.CCMS_990_001_02;
+import com.fxbank.tpp.beps.pmts.GrpHdr;
+import com.fxbank.tpp.beps.pmts.OrgnlGrpHdr;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
 import com.fxbank.tpp.beps.trade.pmts.TradeBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.Random;
 
 
 @Service("BEPS_352_001_01")
@@ -62,13 +66,13 @@ public class P35201_payrcv extends TradeBase implements TradeExecutionStrategy {
 
         if (new Random().nextBoolean()) {
             CCMS_900_001_02 ccms900 = new CCMS_900_001_02(myLog, sysDate, sysTime, sysTraceno);
-            CCMS_900_001_02_CmonConf.GrpHdr grpHdr = ccms900.getCmonConf().getGrpHdr();
+            GrpHdr grpHdr = ccms900.getCmonConf().getGrpHdr();
             grpHdr.getInstgPty().setInstgPty("000000000000");
             grpHdr.getInstgPty().setInstgDrctPty("000000000000");
             grpHdr.getInstdPty().setInstdPty(CONST.SABKNO);
             grpHdr.getInstdPty().setInstdDrctPty(CONST.SABKNO);
             grpHdr.setSysCd("BEPS");
-            CCMS_900_001_02_CmonConf.OrgnlGrpHdr orgnlGrpHdr = ccms900.getCmonConf().getOrgnlGrpHdr();
+            OrgnlGrpHdr orgnlGrpHdr = ccms900.getCmonConf().getOrgnlGrpHdr();
             orgnlGrpHdr.setOrgnlMsgId(beps352.getResFrPtcSn().getGrpHdr().getMsgId());
             orgnlGrpHdr.setOrgnlInstgPty(beps352.getResFrPtcSn().getGrpHdr().getInstgPty().getInstgDrctPty());
             orgnlGrpHdr.setOrgnlMT(beps352.getHead().getMesgType());

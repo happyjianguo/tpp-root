@@ -1,5 +1,11 @@
 package com.fxbank.tpp.beps.trade.task;
 
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -11,13 +17,10 @@ import com.fxbank.tpp.beps.dto.task.REP_TP35101A01;
 import com.fxbank.tpp.beps.dto.task.REQ_TP35101A01;
 import com.fxbank.tpp.beps.pmts.BEPS_352_001_01;
 import com.fxbank.tpp.beps.pmts.BEPS_352_001_01_ResFrPtcSn;
+import com.fxbank.tpp.beps.pmts.GrpHdr;
+import com.fxbank.tpp.beps.pmts.OrgnlGrpHdr;
 import com.fxbank.tpp.beps.pmts.REP_BASE;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author : 周勇沩
@@ -46,13 +49,13 @@ public class TP35101A extends TradeBase implements TradeExecutionStrategy {
 
         BEPS_352_001_01 beps352 = new BEPS_352_001_01(myLog, dto.getSysDate(), dto.getSysTime(), dto.getSysTraceno());
         BEPS_352_001_01_ResFrPtcSn resFrPtcSn = beps352.getResFrPtcSn();
-        BEPS_352_001_01_ResFrPtcSn.GrpHdr grpHdr = resFrPtcSn.getGrpHdr();
+        GrpHdr grpHdr = resFrPtcSn.getGrpHdr();
         grpHdr.getInstgPty().setInstgPty(CONST.SABKNO);
         grpHdr.getInstgPty().setInstgDrctPty(CONST.SABKNO);
         grpHdr.getInstdPty().setInstdPty("000000000000");
         grpHdr.getInstdPty().setInstdDrctPty("000000000000");
         grpHdr.setSysCd("BEPS");
-        BEPS_352_001_01_ResFrPtcSn.OrgnlGrpHdr orgnlGrpHdr = resFrPtcSn.getOrgnlGrpHdr();
+        OrgnlGrpHdr orgnlGrpHdr = resFrPtcSn.getOrgnlGrpHdr();
         orgnlGrpHdr.setOrgnlInstgPty("000000000000");
         orgnlGrpHdr.setOrgnlMsgId("msgid");
         orgnlGrpHdr.setOrgnlMT("mt");
