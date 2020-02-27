@@ -46,21 +46,21 @@ public class P35201_payrcv extends TradeBase implements TradeExecutionStrategy {
         myLog.info(logger, "352报文-仿真程序--------------------------------------------");
         BEPS_352_001_01 beps352 = (BEPS_352_001_01) dto;
 
-        if (new Random().nextBoolean()) {
-            CCMS_990_001_02 ccms990 = new CCMS_990_001_02(myLog, sysDate, sysTime, sysTraceno);
-            ccms990.getComConf().getConfInf().setOrigSndr(beps352.getHead().getOrigSender());
-            ccms990.getComConf().getConfInf().setOrigSndDt(String.valueOf(beps352.getHead().getOrigSendDate()));
-            ccms990.getComConf().getConfInf().setMT(beps352.getHead().getMesgType());
-            ccms990.getComConf().getConfInf().setMsgId(beps352.getHead().getMesgID());
-            ccms990.getComConf().getConfInf().setMsgRefId(beps352.getHead().getMesgRefID());
-            ccms990.getComConf().getConfInf().setMsgPrcCd("PM1I0000");
-            try {
-                forwardToPmtsService.sendToPmtsNoWait(ccms990);
-            } catch (SysTradeExecuteException e) {
-                myLog.error(logger, "程序异常", e);
-                throw e;
-            }
+        CCMS_990_001_02 ccms990 = new CCMS_990_001_02(myLog, sysDate, sysTime, sysTraceno);
+        ccms990.getComConf().getConfInf().setOrigSndr(beps352.getHead().getOrigSender());
+        ccms990.getComConf().getConfInf().setOrigSndDt(String.valueOf(beps352.getHead().getOrigSendDate()));
+        ccms990.getComConf().getConfInf().setMT(beps352.getHead().getMesgType());
+        ccms990.getComConf().getConfInf().setMsgId(beps352.getHead().getMesgID());
+        ccms990.getComConf().getConfInf().setMsgRefId(beps352.getHead().getMesgRefID());
+        ccms990.getComConf().getConfInf().setMsgPrcCd("PM1I0000");
+        try {
+            forwardToPmtsService.sendToPmtsNoWait(ccms990);
+        } catch (SysTradeExecuteException e) {
+            myLog.error(logger, "程序异常", e);
+            throw e;
+        }
 
+        if (new Random().nextBoolean()) {
             CCMS_900_001_02 ccms900 = new CCMS_900_001_02(myLog, sysDate, sysTime, sysTraceno);
             CCMS_900_001_02_CmonConf.GrpHdr grpHdr = ccms900.getCmonConf().getGrpHdr();
             grpHdr.getInstgPty().setInstgPty("000000000000");

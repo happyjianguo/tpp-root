@@ -23,7 +23,7 @@ public class GrpHdr implements Serializable {
     private String SysCd = "BEPS";
     private String Rmk;
 
-    public GrpHdr(String sndsabkno, String sndbankno, String rcvsabkno, String rcvbankno) {
+    public void fill(String sndsabkno, String sndbankno, String rcvsabkno, String rcvbankno) {
         InstgPty.setInstgDrctPty(sndsabkno);
         InstgPty.setInstgPty(sndbankno);
         InstdPty.setInstdDrctPty(rcvsabkno);

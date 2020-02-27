@@ -1,63 +1,67 @@
 package com.fxbank.tpp.beps.pmts;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 
-/** 
-* @Description: 客户身份认证回执报文
-* @author 周勇沩
-* @date 2020/2/21 10:12:54 
-*  
-*/
-public class BEPS_353_001_01_TxAuthReq implements Serializable, SIGN_DATA {
+/**
+ * @author 周勇沩
+ * @Description: 客户身份认证回执报文
+ * @date 2020/2/21 10:12:54
+ */
+public class BEPS_353_001_01_TxAuthReq extends REP_BASE implements Serializable, SIGN_DATA {
 
-	private static final long serialVersionUID = 7027401474114391377L;
-	
-	private GrpHdr GrpHdr = new GrpHdr();
-	
-	private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
-	
-	private CtrctChngRspnInf CtrctChngRspnInf = new CtrctChngRspnInf();
-	
-	 @Override
-	    public String toString() {
-	        return "客户身份认证回执报文[BEPS_353_001_01][" + this.GrpHdr.getMsgId() + "][" + this.CtrctChngRspnInf.getCtrctNb() + "][" + this.CtrctChngRspnInf.getAuthCnt() + "]";
-	    }
+    private static final long serialVersionUID = 7027401474114391377L;
 
-	public GrpHdr getGrpHdr() {
-		return GrpHdr;
-	}
+    private static final String MESGTYPE = "beps.353.001.01";
 
-	public void setGrpHdr(GrpHdr grpHdr) {
-		GrpHdr = grpHdr;
-	}
+    private GrpHdr GrpHdr = new GrpHdr();
 
-	public OrgnlGrpHdr getOrgnlGrpHdr() {
-		return OrgnlGrpHdr;
-	}
+    private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
 
-	public void setOrgnlGrpHdr(OrgnlGrpHdr orgnlGrpHdr) {
-		OrgnlGrpHdr = orgnlGrpHdr;
-	}
+    private CtrctChngRspnInf CtrctChngRspnInf = new CtrctChngRspnInf();
 
-	public CtrctChngRspnInf getCtrctChngRspnInf() {
-		return CtrctChngRspnInf;
-	}
+    public BEPS_353_001_01_TxAuthReq(){
+        super.mesgType = MESGTYPE;
+    }
 
-	public void setCtrctChngRspnInf(CtrctChngRspnInf ctrctChngRspnInf) {
-		CtrctChngRspnInf = ctrctChngRspnInf;
-	}	
-	
-	
-	@XmlAccessorType(XmlAccessType.FIELD)
+    @Override
+    public String toString() {
+        return "客户身份认证回执报文[BEPS_353_001_01][" + this.GrpHdr.getMsgId() + "][" + this.CtrctChngRspnInf.getCtrctNb() + "][" + this.CtrctChngRspnInf.getAuthCnt() + "]";
+    }
+
+    public GrpHdr getGrpHdr() {
+        return GrpHdr;
+    }
+
+    public void setGrpHdr(GrpHdr grpHdr) {
+        GrpHdr = grpHdr;
+    }
+
+    public OrgnlGrpHdr getOrgnlGrpHdr() {
+        return OrgnlGrpHdr;
+    }
+
+    public void setOrgnlGrpHdr(OrgnlGrpHdr orgnlGrpHdr) {
+        OrgnlGrpHdr = orgnlGrpHdr;
+    }
+
+    public CtrctChngRspnInf getCtrctChngRspnInf() {
+        return CtrctChngRspnInf;
+    }
+
+    public void setCtrctChngRspnInf(CtrctChngRspnInf ctrctChngRspnInf) {
+        CtrctChngRspnInf = ctrctChngRspnInf;
+    }
+
+
+    @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = {"MsgId", "CreDtTm", "InstgPty", "InstdPty", "SysCd", "Rmk"})
     public static class GrpHdr implements Serializable {
 
-		private static final long serialVersionUID = 7971032175761100714L;
-		private String MsgId;
+        private static final long serialVersionUID = 7971032175761100714L;
+        private String MsgId;
         private String CreDtTm;
         private InstgPty InstgPty = new InstgPty();
         private InstdPty InstdPty = new InstdPty();
@@ -116,8 +120,8 @@ public class BEPS_353_001_01_TxAuthReq implements Serializable, SIGN_DATA {
         @XmlType(name = "GrpHdr.InstgPty")
         public static class InstgPty implements Serializable {
 
-			private static final long serialVersionUID = -7561835102230653918L;
-			private String InstgDrctPty;
+            private static final long serialVersionUID = -7561835102230653918L;
+            private String InstgDrctPty;
             private String InstgPty;
 
             public String getInstgDrctPty() {
@@ -141,8 +145,8 @@ public class BEPS_353_001_01_TxAuthReq implements Serializable, SIGN_DATA {
         @XmlType(name = "GrpHdr.InstdPty")
         public static class InstdPty implements Serializable {
 
-			private static final long serialVersionUID = -8468615696562536092L;
-			private String InstdDrctPty;
+            private static final long serialVersionUID = -8468615696562536092L;
+            private String InstdDrctPty;
             private String InstdPty;
 
             public String getInstdDrctPty() {
@@ -162,14 +166,14 @@ public class BEPS_353_001_01_TxAuthReq implements Serializable, SIGN_DATA {
             }
         }
     }
-    
-    
+
+
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = {"OrgnlMsgId", "OrgnlInstgPty", "OrgnlMT"})
     public static class OrgnlGrpHdr implements Serializable {
 
-		private static final long serialVersionUID = -7856406155601141430L;
-		private String OrgnlMsgId;
+        private static final long serialVersionUID = -7856406155601141430L;
+        private String OrgnlMsgId;
         private String OrgnlInstgPty;
         private String OrgnlMT;
 
@@ -197,50 +201,57 @@ public class BEPS_353_001_01_TxAuthReq implements Serializable, SIGN_DATA {
             this.OrgnlMT = orgnlMT;
         }
     }
-	
-	
+
+
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = {"CtrctNb", "OrgnlReqId", "AuthCnt", "Rmk"})
     public static class CtrctChngRspnInf implements Serializable {
 
-		private static final long serialVersionUID = -3564252489098769732L;
+        private static final long serialVersionUID = -3564252489098769732L;
 
-    	private String CtrctNb;
-    	private String OrgnlReqId;
-    	private String AuthCnt;
-    	private String Rmk;
-    	
-		public String getCtrctNb() {
-			return CtrctNb;
-		}
-		public void setCtrctNb(String ctrctNb) {
-			CtrctNb = ctrctNb;
-		}
-		public String getOrgnlReqId() {
-			return OrgnlReqId;
-		}
-		public void setOrgnlReqId(String orgnlReqId) {
-			OrgnlReqId = orgnlReqId;
-		}
-		public String getAuthCnt() {
-			return AuthCnt;
-		}
-		public void setAuthCnt(String authCnt) {
-			AuthCnt = authCnt;
-		}
-		public String getRmk() {
-			return Rmk;
-		}
-		public void setRmk(String rmk) {
-			Rmk = rmk;
-		}
-	
+        private String CtrctNb;
+        private String OrgnlReqId;
+        private String AuthCnt;
+        private String Rmk;
+
+        public String getCtrctNb() {
+            return CtrctNb;
+        }
+
+        public void setCtrctNb(String ctrctNb) {
+            CtrctNb = ctrctNb;
+        }
+
+        public String getOrgnlReqId() {
+            return OrgnlReqId;
+        }
+
+        public void setOrgnlReqId(String orgnlReqId) {
+            OrgnlReqId = orgnlReqId;
+        }
+
+        public String getAuthCnt() {
+            return AuthCnt;
+        }
+
+        public void setAuthCnt(String authCnt) {
+            AuthCnt = authCnt;
+        }
+
+        public String getRmk() {
+            return Rmk;
+        }
+
+        public void setRmk(String rmk) {
+            Rmk = rmk;
+        }
+
     }
-	
-	
+
+
     @Override
     public String signData() {
-    	StringBuffer sb = new StringBuffer();
+        StringBuffer sb = new StringBuffer();
         //GrpHdr组包
         sb.append(this.getGrpHdr().getMsgId() + "|");
         sb.append(this.getGrpHdr().getCreDtTm() + "|");

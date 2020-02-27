@@ -21,7 +21,7 @@ import java.util.Date;
  * @Date : 2020/4/20 9:36
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class MODEL_BASE extends ModelBase implements Serializable, SIGN_DATA {
+public abstract class REQ_BASE extends ModelBase implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = -8499304188268368371L;
 
@@ -40,7 +40,7 @@ public abstract class MODEL_BASE extends ModelBase implements Serializable, SIGN
     @XmlTransient
     private PMTS_SIGN sign = new PMTS_SIGN();
 
-    public MODEL_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
+    public REQ_BASE(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
     }
 
@@ -80,14 +80,6 @@ public abstract class MODEL_BASE extends ModelBase implements Serializable, SIGN
         }
     }
 
-    public String getMesgType() {
-        return mesgType;
-    }
-
-    public void setMesgType(String mesgType) {
-        this.mesgType = mesgType;
-    }
-
     public String getXMLNS() {
         return XMLNS;
     }
@@ -118,5 +110,13 @@ public abstract class MODEL_BASE extends ModelBase implements Serializable, SIGN
 
     public void setSign(PMTS_SIGN sign) {
         this.sign = sign;
+    }
+
+    public String getMesgType() {
+        return mesgType;
+    }
+
+    public void setMesgType(String mesgType) {
+        this.mesgType = mesgType;
     }
 }

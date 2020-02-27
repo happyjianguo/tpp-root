@@ -11,6 +11,7 @@ import com.fxbank.tpp.beps.dto.task.REP_TP35101A01;
 import com.fxbank.tpp.beps.dto.task.REQ_TP35101A01;
 import com.fxbank.tpp.beps.pmts.BEPS_352_001_01;
 import com.fxbank.tpp.beps.pmts.BEPS_352_001_01_ResFrPtcSn;
+import com.fxbank.tpp.beps.pmts.REP_BASE;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,12 +60,15 @@ public class TP35101A extends TradeBase implements TradeExecutionStrategy {
         BEPS_352_001_01_ResFrPtcSn.CtrctChngRspnInf.RspnInf rspnInf = new BEPS_352_001_01_ResFrPtcSn.CtrctChngRspnInf.RspnInf();
         ctrctChngRspnInf.setRspnInf(rspnInf);
         rspnInf.setPrcPty("");
+        REP_BASE repBase = null;
         try {
-            forwardToPmtsService.sendToPmtsRtnWait(beps352);
+            repBase = forwardToPmtsService.sendToPmtsRtnWait(beps352);
         } catch (SysTradeExecuteException e) {
             myLog.error(logger, "与人行系统通讯异常", e);
             throw e;
         }
+        //只能收到正常回执报文，异常的990和911都会抛出异常
+        myLog.info(logger,"收到的报文类型:"+repBase.getMesgType());
 
         return repDto;
     }

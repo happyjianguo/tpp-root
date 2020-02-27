@@ -12,9 +12,11 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"GrpHdr", "OrgnlGrpHdr", "CmonConfInf"})
-public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
+public class CCMS_900_001_02_CmonConf extends REP_BASE implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = 7763154310187493781L;
+
+    private static final String MESGTYPE = "ccms.900.001.02";
 
     private GrpHdr GrpHdr = new GrpHdr();
     private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
@@ -23,6 +25,10 @@ public class CCMS_900_001_02_CmonConf implements Serializable, SIGN_DATA {
     @Override
     public String toString() {
         return "通用处理确认报文[CCMS_900_001_02][" + this.GrpHdr.getMsgId() + "][" + this.CmonConfInf.getPrcCd() + "][" + this.CmonConfInf.getRjctInf() + "]";
+    }
+
+    public CCMS_900_001_02_CmonConf(){
+        super.mesgType = MESGTYPE;
     }
 
     public CCMS_900_001_02_CmonConf.GrpHdr getGrpHdr() {

@@ -11,11 +11,13 @@ import java.io.Serializable;
 * @date 2020/2/21 10:12:54 
 *  
 */
-public class BEPS_352_001_01_ResFrPtcSn implements Serializable, SIGN_DATA {
+public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable, SIGN_DATA {
 
 	private static final long serialVersionUID = 145626186505490648L;
-	
-	private GrpHdr GrpHdr = new GrpHdr();
+
+    private static final String MESGTYPE = "beps.352.001.01";
+
+    private GrpHdr GrpHdr = new GrpHdr();
 	
 	private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
 	
@@ -24,6 +26,10 @@ public class BEPS_352_001_01_ResFrPtcSn implements Serializable, SIGN_DATA {
     @Override
     public String toString() {
         return "实时客户支付协议管理报文[BEPS_352_001_01][" + this.GrpHdr.getMsgId() + "][" + this.CtrctChngRspnInf.getRspnInf() + "][" + this.CtrctChngRspnInf.getCtrctNb() + "]";
+    }
+
+    public BEPS_352_001_01_ResFrPtcSn(){
+        super.mesgType = MESGTYPE;
     }
 	
     public BEPS_352_001_01_ResFrPtcSn.GrpHdr getGrpHdr() {

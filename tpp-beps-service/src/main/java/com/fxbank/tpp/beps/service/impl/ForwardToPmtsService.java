@@ -8,8 +8,10 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.tpp.beps.constant.CONST;
 import com.fxbank.tpp.beps.exception.PmtsTradeExecuteException;
 import com.fxbank.tpp.beps.mq.MqQaClient;
+import com.fxbank.tpp.beps.pmts.CCMS_911_001_02_DscrdMsgNtfctn;
 import com.fxbank.tpp.beps.pmts.CCMS_990_001_02_ComConf;
-import com.fxbank.tpp.beps.pmts.MODEL_BASE;
+import com.fxbank.tpp.beps.pmts.REP_BASE;
+import com.fxbank.tpp.beps.pmts.REQ_BASE;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
 import com.fxbank.tpp.beps.sync.SyncCom;
 import org.slf4j.Logger;
@@ -37,13 +39,13 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
     private HisuTSSCAPIForSecondPayment hisuTSSCAPIForSecondPayment;
 
     @Override
-    public Object sendToPmtsRtnWait(MODEL_BASE modelBase) throws SysTradeExecuteException {
+    public REP_BASE sendToPmtsRtnWait(REQ_BASE modelBase) throws SysTradeExecuteException {
         MyLog myLog = modelBase.getMylog();
         sendToPmts990Wait(modelBase);
 
         Integer timeout = 0;
         try (Jedis jedis = myJedis.connect()) {
-            String stimeout = jedis.get(CONST.PREFIX+CONST.TIMEOUT_RTN);
+            String stimeout = jedis.get(CONST.PREFIX + CONST.TIMEOUT_RTN);
             if (stimeout == null) {
                 timeout = 60;
             } else {
@@ -55,26 +57,33 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
                 }
             }
         }
-        Object obj = syncCom.get(myLog, "rtn_" + modelBase.getHead().getMesgID(), timeout,
+        REP_BASE rspBase = syncCom.get(myLog, "rtn_" + modelBase.getHead().getMesgID(), timeout,
                 TimeUnit.SECONDS);
+        if (rspBase.getMesgType().equals("ccms.911.001.02")) {
+            CCMS_911_001_02_DscrdMsgNtfctn dscrdMsgNtfctn = (CCMS_911_001_02_DscrdMsgNtfctn) rspBase;
+            String prcCd = dscrdMsgNtfctn.getDscrdInf().getPrcCd();
+            String rjctInf = dscrdMsgNtfctn.getDscrdInf().getRjctInf();
+            myLog.error(logger, "收到911报文丢弃通知[" + prcCd + "][" + rjctInf + "]");
+            throw new PmtsTradeExecuteException(prcCd, rjctInf);
+        }
 
-        return obj;
+        return rspBase;
     }
 
 
     @Override
-    public Object sendToPmts990Wait(MODEL_BASE modelBase) throws SysTradeExecuteException {
+    public REP_BASE sendToPmts990Wait(REQ_BASE modelBase) throws SysTradeExecuteException {
         MyLog myLog = modelBase.getMylog();
         sendToPmtsNoWait(modelBase);
         CCMS_990_001_02_ComConf ccms990ComConf = waitPmts990(modelBase);
         return ccms990ComConf;
     }
 
-    private CCMS_990_001_02_ComConf waitPmts990(MODEL_BASE modelBase) throws SysTradeExecuteException {
+    private CCMS_990_001_02_ComConf waitPmts990(REQ_BASE modelBase) throws SysTradeExecuteException {
         MyLog myLog = modelBase.getMylog();
         Integer timeout = 0;
         try (Jedis jedis = myJedis.connect()) {
-            String stimeout = jedis.get(CONST.PREFIX+CONST.TIMEOUT_990);
+            String stimeout = jedis.get(CONST.PREFIX + CONST.TIMEOUT_990);
             if (stimeout == null) {
                 timeout = 60;
             } else {
@@ -98,7 +107,7 @@ public class ForwardToPmtsService implements IForwardToPmtsService {
     }
 
     @Override
-    public void sendToPmtsNoWait(MODEL_BASE modelBase) throws SysTradeExecuteException {
+    public void sendToPmtsNoWait(REQ_BASE modelBase) throws SysTradeExecuteException {
         MyLog myLog = modelBase.getMylog();
 
         modelBase.getHead().setOrigSendDate(modelBase.getSysDate());

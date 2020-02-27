@@ -14,17 +14,23 @@ import java.util.List;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"GrpHdr", "CtrctChngInf"})
-public class BEPS_351_001_01_PtcSnReq implements Serializable, SIGN_DATA {
+public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = -2107007006054449808L;
 
-    private GrpHdr GrpHdr;
+    private static final String MESGTYPE = "beps.351.001.01";
+
+    private GrpHdr GrpHdr = new GrpHdr();
 
     private CtrctChngInf CtrctChngInf = new CtrctChngInf();
 
     @Override
     public String toString() {
         return "通用处理确认报文[BEPS_351_001_01][" + this.GrpHdr.getMsgId() + "][" + this.CtrctChngInf.getCstmrId() + "][" + this.CtrctChngInf.getCstmrNm() + "]";
+    }
+
+    public BEPS_351_001_01_PtcSnReq(){
+        super.mesgType = MESGTYPE;
     }
 
     public GrpHdr getGrpHdr() {

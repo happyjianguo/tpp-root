@@ -15,12 +15,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 */
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class BEPS_351_001_01 extends MODEL_BASE {
+public class BEPS_351_001_01 extends REQ_BASE {
 	
 	private static final long serialVersionUID = -8355675423783779001L;
 	
-    private static final String MESGTYPE = "beps.351.001.01";
-    //TODO XMLNS  是不是用beps urn:cnaps:std:beps
     private static final String XMLNS = "urn:cnaps:std:beps:2010:tech:xsd:beps.351.001.01";
     private static final String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
     
@@ -32,7 +30,7 @@ public class BEPS_351_001_01 extends MODEL_BASE {
 	
     public BEPS_351_001_01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
-        super.mesgType = MESGTYPE;
+        super.mesgType = ptcSnReq.getMesgType();
         super.XMLNS = XMLNS;
         super.XMLNS_XSI = XMLNS_XSI;
         ptcSnReq.getGrpHdr().setMsgId(super.msgId());

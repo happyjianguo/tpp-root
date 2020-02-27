@@ -6,7 +6,6 @@ import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.beps.constant.CONST;
 import com.fxbank.tpp.beps.pmts.BEPS_351_001_01;
 import com.fxbank.tpp.beps.pmts.BEPS_351_001_01_PtcSnReq;
-import com.fxbank.tpp.beps.pmts.GrpHdr;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
 import org.junit.After;
 import org.junit.Before;
@@ -96,8 +95,7 @@ public class P35101Test {
         ctrctChngInf.setCycDdctnLmt("CNY650000.00");
         ctrctChngInf.setCtrctAddtlInf("协议附加数据");
         ptcSnReq.setCtrctChngInf(ctrctChngInf);
-        GrpHdr grpHdr = new GrpHdr(CONST.SABKNO,CONST.SABKNO,"000000000000","0000000000");
-        beps351.getPtcSnReq().setGrpHdr(grpHdr);
+        beps351.getPtcSnReq().getGrpHdr().fill(CONST.SABKNO,CONST.SABKNO,"000000000000","0000000000");
         forwardToPmtsService.sendToPmtsNoWait(beps351);
     }
 

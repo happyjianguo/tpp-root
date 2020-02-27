@@ -12,11 +12,17 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"ConfInf"})
-public class CCMS_990_001_02_ComConf implements Serializable, SIGN_DATA {
+public class CCMS_990_001_02_ComConf extends REP_BASE implements SIGN_DATA {
 
     private static final long serialVersionUID = 2612342428152631207L;
 
+    private static final String MESGTYPE = "ccms.990.001.02";
+
     private ConfInf ConfInf = new ConfInf();
+
+    public CCMS_990_001_02_ComConf(){
+        super.mesgType = MESGTYPE;
+    }
 
     @Override
     public String toString() {

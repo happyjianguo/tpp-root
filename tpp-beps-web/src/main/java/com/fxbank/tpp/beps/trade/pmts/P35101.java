@@ -40,6 +40,9 @@ public class P35101 extends TradeBase implements TradeExecutionStrategy {
         //TODO 登记数据库 insert
 
         REQ_TP35101A01 taskReqDto = new REQ_TP35101A01();
+        taskReqDto.setSysDate(dto.getSysDate());
+        taskReqDto.setSysTime(dto.getSysTime());
+        taskReqDto.setSysTraceno(dto.getSysTraceno());
         List<DATA_JSON> dataList = new ArrayList<DATA_JSON>();
         DATA_JSON dataJson = new DATA_JSON();
         //TODO 正常传递日期、流水

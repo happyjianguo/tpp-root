@@ -12,11 +12,17 @@ import java.io.Serializable;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"DscrdInf"})
-public class CCMS_911_001_02_DscrdMsgNtfctn implements Serializable, SIGN_DATA {
+public class CCMS_911_001_02_DscrdMsgNtfctn extends REP_BASE implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = 6344404911792166373L;
 
+    private static final String MESGTYPE = "ccms.911.001.02";
+
     private DscrdInf DscrdInf = new DscrdInf();
+
+    public CCMS_911_001_02_DscrdMsgNtfctn(){
+        super.mesgType = MESGTYPE;
+    }
 
     @Override
     public String toString() {

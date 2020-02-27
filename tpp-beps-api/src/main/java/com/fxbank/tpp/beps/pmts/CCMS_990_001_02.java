@@ -13,11 +13,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CCMS_990_001_02 extends MODEL_BASE {
+public class CCMS_990_001_02 extends REQ_BASE {
 
     private static final long serialVersionUID = -7575351098905821390L;
 
-    private static final String MESGTYPE = "ccms.990.001.02";
     private static final String XMLNS = "urn:cnaps:std:ccms:2010:tech:xsd:ccms.990.001.02";
     private static final String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
 
@@ -29,7 +28,7 @@ public class CCMS_990_001_02 extends MODEL_BASE {
 
     public CCMS_990_001_02(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
-        super.mesgType = MESGTYPE;
+        super.mesgType = ComConf.getMesgType();
         super.XMLNS = XMLNS;
         super.XMLNS_XSI = XMLNS_XSI;
     }
