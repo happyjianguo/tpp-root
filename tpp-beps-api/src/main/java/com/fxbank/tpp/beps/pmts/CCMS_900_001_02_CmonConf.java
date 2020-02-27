@@ -22,7 +22,23 @@ public class CCMS_900_001_02_CmonConf extends REP_BASE implements Serializable, 
     private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
     private CmonConfInf CmonConfInf = new CmonConfInf();
 
-    @Override
+    public GrpHdr getGrpHdr() {
+		return GrpHdr;
+	}
+
+	public void setGrpHdr(GrpHdr grpHdr) {
+		GrpHdr = grpHdr;
+	}
+
+	public OrgnlGrpHdr getOrgnlGrpHdr() {
+		return OrgnlGrpHdr;
+	}
+
+	public void setOrgnlGrpHdr(OrgnlGrpHdr orgnlGrpHdr) {
+		OrgnlGrpHdr = orgnlGrpHdr;
+	}
+
+	@Override
     public String toString() {
         return "通用处理确认报文[CCMS_900_001_02][" + this.GrpHdr.getMsgId() + "][" + this.CmonConfInf.getPrcCd() + "][" + this.CmonConfInf.getRjctInf() + "]";
     }
@@ -31,21 +47,7 @@ public class CCMS_900_001_02_CmonConf extends REP_BASE implements Serializable, 
         super.mesgType = MESGTYPE;
     }
 
-    public CCMS_900_001_02_CmonConf.GrpHdr getGrpHdr() {
-        return GrpHdr;
-    }
 
-    public void setGrpHdr(CCMS_900_001_02_CmonConf.GrpHdr grpHdr) {
-        GrpHdr = grpHdr;
-    }
-
-    public CCMS_900_001_02_CmonConf.OrgnlGrpHdr getOrgnlGrpHdr() {
-        return OrgnlGrpHdr;
-    }
-
-    public void setOrgnlGrpHdr(CCMS_900_001_02_CmonConf.OrgnlGrpHdr orgnlGrpHdr) {
-        OrgnlGrpHdr = orgnlGrpHdr;
-    }
 
     public CCMS_900_001_02_CmonConf.CmonConfInf getCmonConfInf() {
         return CmonConfInf;
@@ -55,154 +57,6 @@ public class CCMS_900_001_02_CmonConf extends REP_BASE implements Serializable, 
         CmonConfInf = cmonConfInf;
     }
 
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = {"MsgId", "CreDtTm", "InstgPty", "InstdPty", "SysCd", "Rmk"})
-    public static class GrpHdr implements Serializable {
-
-        private static final long serialVersionUID = 695741942804747894L;
-
-        private String MsgId;
-        private String CreDtTm;
-        private String SysCd;
-        private String Rmk;
-        private InstgPty InstgPty = new InstgPty();
-        private InstdPty InstdPty = new InstdPty();
-
-        public String getMsgId() {
-            return MsgId;
-        }
-
-        public void setMsgId(String msgId) {
-            this.MsgId = msgId;
-        }
-
-        public String getCreDtTm() {
-            return CreDtTm;
-        }
-
-        public void setCreDtTm(String creDtTm) {
-            this.CreDtTm = creDtTm;
-        }
-
-        public String getSysCd() {
-            return SysCd;
-        }
-
-        public void setSysCd(String sysCd) {
-            this.SysCd = sysCd;
-        }
-
-        public String getRmk() {
-            return Rmk;
-        }
-
-        public void setRmk(String rmk) {
-            this.Rmk = rmk;
-        }
-
-        public InstgPty getInstgPty() {
-            return InstgPty;
-        }
-
-        public void setInstgPty(InstgPty instgPty) {
-            this.InstgPty = instgPty;
-        }
-
-        public InstdPty getInstdPty() {
-            return InstdPty;
-        }
-
-        public void setInstdPty(InstdPty instdPty) {
-            this.InstdPty = instdPty;
-        }
-
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "GrpHdr.InstgPty")
-        public static class InstgPty implements Serializable {
-
-            private static final long serialVersionUID = -814496645868794191L;
-
-            private String InstgDrctPty;
-            private String InstgPty;
-
-            public String getInstgDrctPty() {
-                return InstgDrctPty;
-            }
-
-            public void setInstgDrctPty(String instgDrctPty) {
-                this.InstgDrctPty = instgDrctPty;
-            }
-
-            public String getInstgPty() {
-                return InstgPty;
-            }
-
-            public void setInstgPty(String instgPty) {
-                this.InstgPty = instgPty;
-            }
-        }
-
-        @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "GrpHdr.InstdPty")
-        public static class InstdPty implements Serializable {
-
-            private static final long serialVersionUID = -9137860962783022375L;
-
-            private String InstdDrctPty;
-            private String InstdPty;
-
-            public String getInstdDrctPty() {
-                return InstdDrctPty;
-            }
-
-            public void setInstdDrctPty(String instdDrctPty) {
-                this.InstdDrctPty = instdDrctPty;
-            }
-
-            public String getInstdPty() {
-                return InstdPty;
-            }
-
-            public void setInstdPty(String instdPty) {
-                this.InstdPty = instdPty;
-            }
-        }
-    }
-
-    @XmlAccessorType(XmlAccessType.FIELD)
-    @XmlType(propOrder = {"OrgnlMsgId", "OrgnlInstgPty", "OrgnlMT"})
-    public static class OrgnlGrpHdr implements Serializable {
-
-        private static final long serialVersionUID = -4212364067523875173L;
-
-        private String OrgnlMsgId;
-        private String OrgnlInstgPty;
-        private String OrgnlMT;
-
-        public String getOrgnlMsgId() {
-            return OrgnlMsgId;
-        }
-
-        public void setOrgnlMsgId(String orgnlMsgId) {
-            this.OrgnlMsgId = orgnlMsgId;
-        }
-
-        public String getOrgnlInstgPty() {
-            return OrgnlInstgPty;
-        }
-
-        public void setOrgnlInstgPty(String orgnlInstgPty) {
-            this.OrgnlInstgPty = orgnlInstgPty;
-        }
-
-        public String getOrgnlMT() {
-            return OrgnlMT;
-        }
-
-        public void setOrgnlMT(String orgnlMT) {
-            this.OrgnlMT = orgnlMT;
-        }
-    }
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(propOrder = {"PrcSts", "PrcCd", "PtyId", "PtyPrcCd", "RjctInf", "PrcDt", "NetgRnd"})

@@ -102,7 +102,14 @@ public class CCMS_990_001_02_ComConf extends REP_BASE implements SIGN_DATA {
 
     @Override
     public String signData() {
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getConfInf().getOrigSndr() == null ? "" : this.getConfInf().getOrigSndr() + "|");
+        sb.append(this.getConfInf().getOrigSndDt() == null ? "" : this.getConfInf().getOrigSndDt() + "|");
+        sb.append(this.getConfInf().getMT() == null ? "" : this.getConfInf().getMT() + "|");
+        sb.append(this.getConfInf().getMsgId() == null ? "" : this.getConfInf().getMsgId() + "|");
+        sb.append(this.getConfInf().getMsgRefId() == null ? "" : this.getConfInf().getMsgRefId() + "|");
+        sb.append(this.getConfInf().getMsgPrcCd() == null ? "" : this.getConfInf().getMsgPrcCd() + "|");
+        return sb.toString();
     }
 
 }

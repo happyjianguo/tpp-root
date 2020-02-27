@@ -111,7 +111,15 @@ public class CCMS_911_001_02_DscrdMsgNtfctn extends REP_BASE implements Serializ
 
     @Override
     public String signData() {
-        return null;
+        StringBuffer sb = new StringBuffer();
+        sb.append(this.getDscrdInf().getOrigSndr() == null ? "" : this.getDscrdInf().getOrigSndr() + "|");
+        sb.append(this.getDscrdInf().getOrigSndDt() == null ? "" : this.getDscrdInf().getOrigSndDt() + "|");
+        sb.append(this.getDscrdInf().getMT() == null ? "" : this.getDscrdInf().getMT() + "|");
+        sb.append(this.getDscrdInf().getMsgId() == null ? "" : this.getDscrdInf().getMsgId() + "|");
+        sb.append(this.getDscrdInf().getMsgRefId() == null ? "" : this.getDscrdInf().getMsgRefId() + "|");
+        sb.append(this.getDscrdInf().getPrcCd() == null ? "" : this.getDscrdInf().getPrcCd() + "|");
+        sb.append(this.getDscrdInf().getRjctInf() == null ? "" : this.getDscrdInf().getRjctInf() + "|");
+        return sb.toString();
     }
 
 }
