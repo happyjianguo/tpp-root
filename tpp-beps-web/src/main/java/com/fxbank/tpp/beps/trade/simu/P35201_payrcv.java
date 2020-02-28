@@ -1,13 +1,5 @@
 package com.fxbank.tpp.beps.trade.simu;
 
-import java.util.Random;
-
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -17,14 +9,14 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.beps.constant.CONST;
 import com.fxbank.tpp.beps.dto.pmts.BEPS_352_001_01;
-import com.fxbank.tpp.beps.pmts.CCMS_900_001_02;
-import com.fxbank.tpp.beps.pmts.CCMS_900_001_02_CmonConf;
-import com.fxbank.tpp.beps.pmts.CCMS_911_001_02;
-import com.fxbank.tpp.beps.pmts.CCMS_990_001_02;
-import com.fxbank.tpp.beps.pmts.GrpHdr;
-import com.fxbank.tpp.beps.pmts.OrgnlGrpHdr;
+import com.fxbank.tpp.beps.pmts.*;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
 import com.fxbank.tpp.beps.trade.pmts.TradeBase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 
 @Service("BEPS_352_001_01")
@@ -64,7 +56,8 @@ public class P35201_payrcv extends TradeBase implements TradeExecutionStrategy {
             throw e;
         }
 
-        if (new Random().nextBoolean()) {
+        //if (new Random().nextBoolean()) {
+        if (true){
             CCMS_900_001_02 ccms900 = new CCMS_900_001_02(myLog, sysDate, sysTime, sysTraceno);
             GrpHdr grpHdr = ccms900.getCmonConf().getGrpHdr();
             grpHdr.getInstgPty().setInstgPty("000000000000");

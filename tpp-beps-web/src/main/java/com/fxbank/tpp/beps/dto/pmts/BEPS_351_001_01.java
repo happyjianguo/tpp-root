@@ -21,18 +21,18 @@ public class BEPS_351_001_01 extends DTO_BASE {
         super.txDesc = "客户支付协议管理报文";
     }
 
-    private BEPS_351_001_01_PtcSnReq ptcSnReq = new BEPS_351_001_01_PtcSnReq();
+    private BEPS_351_001_01_PtcSnReq PtcSnReq = new BEPS_351_001_01_PtcSnReq();
 
     public BEPS_351_001_01_PtcSnReq getPtcSnReq() {
-        return ptcSnReq;
+        return PtcSnReq;
     }
 
     public void setPtcSnReq(BEPS_351_001_01_PtcSnReq ptcSnReq) {
-        this.ptcSnReq = ptcSnReq;
+        PtcSnReq = ptcSnReq;
     }
 
     @Override
     public String signData() {
-        return ptcSnReq.signData();
+        return PtcSnReq.signData();
     }
 }

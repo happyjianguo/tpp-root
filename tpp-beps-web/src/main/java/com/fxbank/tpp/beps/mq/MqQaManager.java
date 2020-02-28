@@ -39,6 +39,8 @@ public class MqQaManager {
         prop.put(MQC.HOST_NAME_PROPERTY, this.hostname);
         prop.put(MQC.CHANNEL_PROPERTY, this.channel);
         prop.put(MQC.CCSID_PROPERTY, this.ccsid);
+        //prop.put(MQC.USER_ID_PROPERTY,"alice");
+        //prop.put(MQC.PASSWORD_PROPERTY,"passw0rd");
         try {
             this.qMgr = new MQQueueManager(this.QManager, prop);
             logger.info("创建队列管理器连接成功."+this);

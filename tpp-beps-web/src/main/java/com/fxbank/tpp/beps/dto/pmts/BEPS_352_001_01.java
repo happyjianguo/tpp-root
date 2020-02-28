@@ -22,18 +22,18 @@ public class BEPS_352_001_01 extends DTO_BASE {
         super.txDesc = "客户支付协议管理应答报文";
     }
 
-    private BEPS_352_001_01_ResFrPtcSn resFrPtcSn = new BEPS_352_001_01_ResFrPtcSn();
+    private BEPS_352_001_01_ResFrPtcSn ResFrPtcSn = new BEPS_352_001_01_ResFrPtcSn();
 
     public BEPS_352_001_01_ResFrPtcSn getResFrPtcSn() {
-        return resFrPtcSn;
+        return ResFrPtcSn;
     }
 
     public void setResFrPtcSn(BEPS_352_001_01_ResFrPtcSn resFrPtcSn) {
-        this.resFrPtcSn = resFrPtcSn;
+        ResFrPtcSn = resFrPtcSn;
     }
 
     @Override
     public String signData() {
-        return resFrPtcSn.signData();
+        return ResFrPtcSn.signData();
     }
 }

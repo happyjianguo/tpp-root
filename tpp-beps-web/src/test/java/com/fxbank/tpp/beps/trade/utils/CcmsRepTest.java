@@ -1,13 +1,13 @@
 package com.fxbank.tpp.beps.trade.utils;
 
-import java.beans.IntrospectionException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fxbank.tpp.beps.pmts.CCMS_900_001_02;
 import com.fxbank.tpp.beps.pmts.CCMS_911_001_02;
 import com.fxbank.tpp.beps.pmts.CCMS_990_001_02;
+import com.fxbank.tpp.beps.utils.BeanUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.beans.IntrospectionException;
 
 /** 
  * @author 叶浦亮

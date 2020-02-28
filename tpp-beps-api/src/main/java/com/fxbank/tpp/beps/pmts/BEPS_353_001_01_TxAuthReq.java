@@ -1,11 +1,10 @@
 package com.fxbank.tpp.beps.pmts;
 
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-
-import com.fxbank.cip.base.anno.EsbSimuAnno;
-
 import java.io.Serializable;
 
 /**
@@ -13,6 +12,8 @@ import java.io.Serializable;
  * @Description: 客户身份认证回执报文
  * @date 2020/2/21 10:12:54
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = {"GrpHdr", "OrgnlGrpHdr","CtrctChngRspnInf"})
 public class BEPS_353_001_01_TxAuthReq extends REP_BASE implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = 7027401474114391377L;

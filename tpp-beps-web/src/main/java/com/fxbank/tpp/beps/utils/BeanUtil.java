@@ -1,4 +1,4 @@
-package com.fxbank.tpp.beps.trade.utils;
+package com.fxbank.tpp.beps.utils;
 
 import com.fxbank.cip.base.anno.EsbSimuAnno;
 import com.fxbank.tpp.beps.pmts.BEPS_351_001_01;

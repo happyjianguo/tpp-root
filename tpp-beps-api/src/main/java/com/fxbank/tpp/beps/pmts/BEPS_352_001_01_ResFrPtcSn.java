@@ -1,12 +1,11 @@
 package com.fxbank.tpp.beps.pmts;
 
-import java.io.Serializable;
+import com.fxbank.cip.base.anno.EsbSimuAnno;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-
-import com.fxbank.cip.base.anno.EsbSimuAnno;
+import java.io.Serializable;
 
 
 /**
@@ -14,6 +13,8 @@ import com.fxbank.cip.base.anno.EsbSimuAnno;
  * @Description: 实时客户支付协议管理回执报文
  * @date 2020/2/21 10:12:54
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = {"GrpHdr", "OrgnlGrpHdr","CtrctChngRspnInf"})
 public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable, SIGN_DATA {
 
     private static final long serialVersionUID = 145626186505490648L;
@@ -80,7 +81,7 @@ public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable
         private String AuthMd;
         @EsbSimuAnno.EsbField(type = "String", value = "AH00")
         private String AuthChl;
-        @EsbSimuAnno.EsbField(type = "String", value = "www.baidu.com/s?ie=UTF-8URL")
+        @EsbSimuAnno.EsbField(type = "String", value = "www")
         private String AuthUrl;
         @EsbSimuAnno.EsbField(type = "String", value = "备注")
         private String Rmk;

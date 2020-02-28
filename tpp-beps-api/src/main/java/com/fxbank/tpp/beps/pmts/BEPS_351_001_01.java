@@ -22,7 +22,7 @@ public class BEPS_351_001_01 extends REQ_BASE {
     private static final String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
 
     @EsbSimuAnno.EsbField(type="Object")
-    private BEPS_351_001_01_PtcSnReq ptcSnReq = new BEPS_351_001_01_PtcSnReq();
+    private BEPS_351_001_01_PtcSnReq PtcSnReq = new BEPS_351_001_01_PtcSnReq();
 
     public BEPS_351_001_01() {
         super(null, 0, 0, 0);
@@ -30,23 +30,23 @@ public class BEPS_351_001_01 extends REQ_BASE {
 
     public BEPS_351_001_01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
-        super.mesgType = ptcSnReq.getMesgType();
+        super.mesgType = PtcSnReq.getMesgType();
         super.XMLNS = XMLNS;
         super.XMLNS_XSI = XMLNS_XSI;
-        ptcSnReq.getGrpHdr().setMsgId(super.msgId());
-        ptcSnReq.getGrpHdr().setCreDtTm(super.creDtTm());
+        PtcSnReq.getGrpHdr().setMsgId(super.msgId());
+        PtcSnReq.getGrpHdr().setCreDtTm(super.creDtTm());
     }
 
     public BEPS_351_001_01_PtcSnReq getPtcSnReq() {
-        return ptcSnReq;
+        return PtcSnReq;
     }
 
     public void setPtcSnReq(BEPS_351_001_01_PtcSnReq ptcSnReq) {
-        this.ptcSnReq = ptcSnReq;
+        this.PtcSnReq = ptcSnReq;
     }
 
     @Override
     public String signData() {
-        return ptcSnReq.signData();
+        return PtcSnReq.signData();
     }
 }

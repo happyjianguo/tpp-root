@@ -5,7 +5,7 @@ import com.fxbank.cip.base.log.MyLog;
 import com.fxbank.cip.pub.service.IPublicService;
 import com.fxbank.tpp.beps.pmts.BEPS_351_001_01;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
-import com.fxbank.tpp.beps.trade.utils.BeanUtil;
+import com.fxbank.tpp.beps.utils.BeanUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,9 +42,10 @@ public class P35101Test {
     }
 
     @Test
-    public void payOk() throws Exception {
+    public void P35101() throws Exception {
         BEPS_351_001_01 beps351 = new BEPS_351_001_01(new MyLog(), publicService.getSysDate("CIP"), publicService.getSysTime(), publicService.getSysTraceno());
         BeanUtil.fillBean(beps351);
+        beps351.getHead().setOrigSender(beps351.getPtcSnReq().getGrpHdr().getInstgPty().getInstgDrctPty());
         forwardToPmtsService.sendToPmtsNoWait(beps351);
     }
 
