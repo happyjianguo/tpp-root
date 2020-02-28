@@ -1,11 +1,5 @@
 package com.fxbank.tpp.beps.trade.task;
 
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.fxbank.cip.base.common.LogPool;
 import com.fxbank.cip.base.dto.DataTransObject;
@@ -15,12 +9,13 @@ import com.fxbank.cip.base.route.trade.TradeExecutionStrategy;
 import com.fxbank.tpp.beps.constant.CONST;
 import com.fxbank.tpp.beps.dto.task.REP_TP35101A01;
 import com.fxbank.tpp.beps.dto.task.REQ_TP35101A01;
-import com.fxbank.tpp.beps.pmts.BEPS_352_001_01;
-import com.fxbank.tpp.beps.pmts.BEPS_352_001_01_ResFrPtcSn;
-import com.fxbank.tpp.beps.pmts.GrpHdr;
-import com.fxbank.tpp.beps.pmts.OrgnlGrpHdr;
-import com.fxbank.tpp.beps.pmts.REP_BASE;
+import com.fxbank.tpp.beps.pmts.*;
 import com.fxbank.tpp.beps.service.IForwardToPmtsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author : 周勇沩
@@ -71,7 +66,8 @@ public class TP35101A extends TradeBase implements TradeExecutionStrategy {
             throw e;
         }
         //只能收到正常回执报文，异常的990和911都会抛出异常
-        myLog.info(logger,"收到的报文类型:"+repBase.getMesgType());
+        myLog.info(logger,"收到的报文:"+repBase);
+        //根据900的回执状态返回给请求方
 
         return repDto;
     }

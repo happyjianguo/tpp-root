@@ -136,7 +136,6 @@ public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable
         }
 
         @XmlAccessorType(XmlAccessType.FIELD)
-        @XmlType(name = "CtrctChngRspnInf.RspnInf")
         public static class RspnInf implements Serializable {
 
             private static final long serialVersionUID = 7938983447603213901L;
