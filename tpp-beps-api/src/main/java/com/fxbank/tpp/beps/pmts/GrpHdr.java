@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -16,11 +19,16 @@ public class GrpHdr implements Serializable {
 
     private static final long serialVersionUID = 5625503162408830155L;
 
+    @EsbSimuAnno.EsbField(type="String",len=3)
     private String MsgId;
+    @EsbSimuAnno.EsbField(type="Date",value="yyyyMMdd")
     private String CreDtTm;
+    @EsbSimuAnno.EsbField(type="Object")
     private InstgPty InstgPty = new InstgPty();
+    @EsbSimuAnno.EsbField(type="Object")
     private InstdPty InstdPty = new InstdPty();
     private String SysCd = "BEPS";
+    @EsbSimuAnno.EsbField(type="String",value="备注")
     private String Rmk;
 
     public void fill(String sndsabkno, String sndbankno, String rcvsabkno, String rcvbankno) {
@@ -83,8 +91,9 @@ public class GrpHdr implements Serializable {
     public static class InstgPty implements Serializable {
 
         private static final long serialVersionUID = -6877011574990490256L;
-
+        @EsbSimuAnno.EsbField(type="String",len=6)
         private String InstgDrctPty;
+        @EsbSimuAnno.EsbField(type="String",len=6)
         private String InstgPty;
 
         public String getInstgDrctPty() {
@@ -110,7 +119,9 @@ public class GrpHdr implements Serializable {
 
         private static final long serialVersionUID = 8084891028404642070L;
 
+        @EsbSimuAnno.EsbField(type="String",len=6)
         private String InstdDrctPty;
+        @EsbSimuAnno.EsbField(type="String",len=6)
         private String InstdPty;
 
         public String getInstdDrctPty() {

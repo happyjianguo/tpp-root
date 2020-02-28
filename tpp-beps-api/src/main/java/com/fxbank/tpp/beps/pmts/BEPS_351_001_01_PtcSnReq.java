@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,8 +22,10 @@ public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, 
 
     private static final String MESGTYPE = "beps.351.001.01";
 
+    @EsbSimuAnno.EsbField(type="Object")
     private GrpHdr GrpHdr = new GrpHdr();
 
+    @EsbSimuAnno.EsbField(type="Object")
     private CtrctChngInf CtrctChngInf = new CtrctChngInf();
 
     @Override
@@ -58,34 +63,63 @@ public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, 
 
         private static final long serialVersionUID = -6681513355015101594L;
 
+        @EsbSimuAnno.EsbField(type="String",value="CC00")
         private String ChngTp;
+        @EsbSimuAnno.EsbField(type="String",value="CO00")
         private String CtrctTp;
+        @EsbSimuAnno.EsbField(type="String",len=10)
         private String CstmrId;
+        @EsbSimuAnno.EsbField(type="Enum",value="110000,310000,330100")
         private String RegId;
+        @EsbSimuAnno.EsbField(type="String",value="张三")
         private String CstmrNm;
+        @EsbSimuAnno.EsbField(type="String",len=10)
         private String UniSocCdtCd;
+        @EsbSimuAnno.EsbField(type="String",value="1")
         private String NbOfPmtItms;
+        @EsbSimuAnno.EsbField(type="Object")
         private PmtItms PmtItms = new PmtItms();
+        @EsbSimuAnno.EsbField(type="String",len=16)
         private String CtrctNb;
+        @EsbSimuAnno.EsbField(type="String",len=16)
         private String ReqId;
+        @EsbSimuAnno.EsbField(type="String",value="313229000008")
         private String Issr;
+        @EsbSimuAnno.EsbField(type="String",value="AO00")
         private String CstmrAcctType;
+        @EsbSimuAnno.EsbField(type="Enum",value="6228480049085072475,621226041000408000,6217000730028446116")
         private String AcctId;
+        @EsbSimuAnno.EsbField(type="String",value="CNY650000.00")
         private String OncDdctnLmt;
+        @EsbSimuAnno.EsbField(type="String",value="5")
         private String CycDdctnNumLmt;
+        @EsbSimuAnno.EsbField(type="Date",value="yyyyMMdd")
         private String CtrctDueDt;
+        @EsbSimuAnno.EsbField(type="Date",value="yyyyMMdd")
         private String CtrctSgnDt;
+        @EsbSimuAnno.EsbField(type="Date",value="yyyyMMdd")
         private String EctDt;
+        @EsbSimuAnno.EsbField(type="Object")
         private PyrInf PyrInf = new PyrInf();
+        @EsbSimuAnno.EsbField(type="Enum",value="13133334444,13255556666,13377778888")
         private String TelNb;
+        @EsbSimuAnno.EsbField(type="String",value="地址地址地址")
         private String AdrLine;
+        @EsbSimuAnno.EsbField(type="String",value="备注备注备注")
         private String Rmk;
+        @EsbSimuAnno.EsbField(type="String",value="AM00")
         private String AuthMd;
+        @EsbSimuAnno.EsbField(type="String",value="TU00")
         private String TmUt;
+        @EsbSimuAnno.EsbField(type="String",value="1")
         private String TmSp;
+        @EsbSimuAnno.EsbField(type="String",value="扣款时间描述")
         private String TmDc;
+        @EsbSimuAnno.EsbField(type="String",value="CNY650000.00")
         private String CycDdctnLmt;
+        @EsbSimuAnno.EsbField(type="String",value="协议附加数据")
         private String CtrctAddtlInf;
+        
 
         public String getChngTp() {
             return ChngTp;
@@ -316,7 +350,8 @@ public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, 
         public static class PmtItms implements Serializable {
 
             private static final long serialVersionUID = -6773638064390328019L;
-
+            
+            @EsbSimuAnno.EsbField(type="List",len=1)
             private List<String> PmtItmCd;
 
             public List<String> getPmtItmCd() {
@@ -334,11 +369,11 @@ public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, 
         public static class PyrInf implements Serializable {
 
             private static final long serialVersionUID = -7559196732322207266L;
-
+            @EsbSimuAnno.EsbField(type="String",value="张三")
             private String Nm;
-
+            @EsbSimuAnno.EsbField(type="String",value="IC00")
             private String IdTp;
-
+            @EsbSimuAnno.EsbField(type="String",value="110000201912151234")
             private String Id;
 
             public String getNm() {

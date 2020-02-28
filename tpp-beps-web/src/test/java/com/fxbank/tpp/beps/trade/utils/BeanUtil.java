@@ -1,6 +1,9 @@
 package com.fxbank.tpp.beps.trade.utils;
 
 import com.fxbank.cip.base.anno.EsbSimuAnno;
+import com.fxbank.tpp.beps.pmts.BEPS_351_001_01;
+import com.fxbank.tpp.beps.pmts.BEPS_351_001_01_PtcSnReq;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -237,5 +240,12 @@ public class BeanUtil {
         }
         return sb.toString();
     }
+    
+    public static void main(String[] args) {
+    	BEPS_351_001_01 beps351 = toBean(BEPS_351_001_01.class);
+    	logger.info(beps351.signData());
+        BEPS_351_001_01_PtcSnReq ptcSnReq = toBean(BEPS_351_001_01_PtcSnReq.class);
+        logger.info(ptcSnReq.signData());
+	}
 
 }

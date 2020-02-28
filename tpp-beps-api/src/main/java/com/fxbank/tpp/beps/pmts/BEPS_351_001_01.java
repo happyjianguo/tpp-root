@@ -1,5 +1,6 @@
 package com.fxbank.tpp.beps.pmts;
 
+import com.fxbank.cip.base.anno.EsbSimuAnno;
 import com.fxbank.cip.base.log.MyLog;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,6 +21,7 @@ public class BEPS_351_001_01 extends REQ_BASE {
     private static final String XMLNS = "urn:cnaps:std:beps:2010:tech:xsd:beps.351.001.01";
     private static final String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
 
+    @EsbSimuAnno.EsbField(type="Object")
     private BEPS_351_001_01_PtcSnReq ptcSnReq = new BEPS_351_001_01_PtcSnReq();
 
     public BEPS_351_001_01() {
