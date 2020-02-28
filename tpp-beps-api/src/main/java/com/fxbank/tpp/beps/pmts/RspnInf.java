@@ -12,40 +12,47 @@ import javax.xml.bind.annotation.XmlType;
  * @Date : 2020/2/27 15:29
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = {"Sts", "RjctCd", "RjctInf","PrcPty"})
+@XmlType(propOrder = {"Sts", "RjctCd", "RjctInf", "PrcPty"})
 public class RspnInf implements Serializable {
- 
-	private static final long serialVersionUID = -6977892675725560801L;
-	
-	private String Sts;
+
+    private static final long serialVersionUID = -6977892675725560801L;
+
+    private String Sts;
     private String RjctCd;
     private String RjctInf;
     private String PrcPty;
-    
-	public String getSts() {
-		return Sts;
-	}
-	public void setSts(String sts) {
-		Sts = sts;
-	}
-	public String getRjctCd() {
-		return RjctCd;
-	}
-	public void setRjctCd(String rjctCd) {
-		RjctCd = rjctCd;
-	}
-	public String getRjctInf() {
-		return RjctInf;
-	}
-	public void setRjctInf(String rjctInf) {
-		RjctInf = rjctInf;
-	}
-	public String getPrcPty() {
-		return PrcPty;
-	}
-	public void setPrcPty(String prcPty) {
-		PrcPty = prcPty;
-	}
 
-    
+    public String getSts() {
+        return Sts;
+    }
+
+    public void setSts(String sts) {
+        Sts = sts;
+    }
+
+    public String getRjctCd() {
+        return RjctCd;
+    }
+
+    public void setRjctCd(String rjctCd) {
+        RjctCd = rjctCd;
+    }
+
+    public String getRjctInf() {
+        return RjctInf;
+    }
+
+    public void setRjctInf(String rjctInf) {
+        RjctInf = rjctInf;
+    }
+
+    public String getPrcPty() {
+        return PrcPty;
+    }
+
+    public void setPrcPty(String prcPty) {
+        PrcPty = prcPty;
+    }
+
+
 }

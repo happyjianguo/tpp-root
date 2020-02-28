@@ -7,10 +7,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author YePuLiang
- * @ClassName: BEPS_351_001_01_PtcSnReq
- * @Description: 通用处理确认报文
- * @date 2020年2月21日 下午3:55:57
+ * @author : 周勇沩
+ * @description: 实时客户支付协议管理报文
+ * @Date : 2020/2/28 08:07
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = {"GrpHdr", "CtrctChngInf"})
@@ -26,10 +25,10 @@ public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, 
 
     @Override
     public String toString() {
-        return "通用处理确认报文[BEPS_351_001_01][" + this.GrpHdr.getMsgId() + "][" + this.CtrctChngInf.getCstmrId() + "][" + this.CtrctChngInf.getCstmrNm() + "]";
+        return "实时客户支付协议管理报文[BEPS_351_001_01][" + this.GrpHdr.getMsgId() + "][" + this.CtrctChngInf.getCstmrId() + "][" + this.CtrctChngInf.getCstmrNm() + "]";
     }
 
-    public BEPS_351_001_01_PtcSnReq(){
+    public BEPS_351_001_01_PtcSnReq() {
         super.mesgType = MESGTYPE;
     }
 

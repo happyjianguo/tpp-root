@@ -1,10 +1,9 @@
 package com.fxbank.tpp.beps.pmts;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 
 /**
  * @author : 周勇沩
@@ -15,35 +14,42 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = {"InstgIndrctPty", "InstdIndrctPty", "OrgnlTxId", "OrgnlTxTpCd"})
 public class OrgnlTx implements Serializable {
 
-	private static final long serialVersionUID = 923672394179013622L;
-	
+    private static final long serialVersionUID = 923672394179013622L;
+
     private String InstgIndrctPty;
     private String InstdIndrctPty;
     private String OrgnlTxId;
     private String OrgnlTxTpCd;
-    
-	public String getInstgIndrctPty() {
-		return InstgIndrctPty;
-	}
-	public void setInstgIndrctPty(String instgIndrctPty) {
-		InstgIndrctPty = instgIndrctPty;
-	}
-	public String getInstdIndrctPty() {
-		return InstdIndrctPty;
-	}
-	public void setInstdIndrctPty(String instdIndrctPty) {
-		InstdIndrctPty = instdIndrctPty;
-	}
-	public String getOrgnlTxId() {
-		return OrgnlTxId;
-	}
-	public void setOrgnlTxId(String orgnlTxId) {
-		OrgnlTxId = orgnlTxId;
-	}
-	public String getOrgnlTxTpCd() {
-		return OrgnlTxTpCd;
-	}
-	public void setOrgnlTxTpCd(String orgnlTxTpCd) {
-		OrgnlTxTpCd = orgnlTxTpCd;
-	}
+
+    public String getInstgIndrctPty() {
+        return InstgIndrctPty;
+    }
+
+    public void setInstgIndrctPty(String instgIndrctPty) {
+        InstgIndrctPty = instgIndrctPty;
+    }
+
+    public String getInstdIndrctPty() {
+        return InstdIndrctPty;
+    }
+
+    public void setInstdIndrctPty(String instdIndrctPty) {
+        InstdIndrctPty = instdIndrctPty;
+    }
+
+    public String getOrgnlTxId() {
+        return OrgnlTxId;
+    }
+
+    public void setOrgnlTxId(String orgnlTxId) {
+        OrgnlTxId = orgnlTxId;
+    }
+
+    public String getOrgnlTxTpCd() {
+        return OrgnlTxTpCd;
+    }
+
+    public void setOrgnlTxTpCd(String orgnlTxTpCd) {
+        OrgnlTxTpCd = orgnlTxTpCd;
+    }
 }

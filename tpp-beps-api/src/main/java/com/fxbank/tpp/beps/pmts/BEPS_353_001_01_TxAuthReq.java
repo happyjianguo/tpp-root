@@ -22,7 +22,7 @@ public class BEPS_353_001_01_TxAuthReq extends REP_BASE implements Serializable,
 
     private CtrctChngRspnInf CtrctChngRspnInf = new CtrctChngRspnInf();
 
-    public BEPS_353_001_01_TxAuthReq(){
+    public BEPS_353_001_01_TxAuthReq() {
         super.mesgType = MESGTYPE;
     }
 

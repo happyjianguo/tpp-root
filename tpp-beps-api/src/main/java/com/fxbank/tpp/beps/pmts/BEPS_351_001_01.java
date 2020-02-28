@@ -6,28 +6,26 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/** 
-* @ClassName: BEPS_351_001_01 
-* @Description: 实时客户支付协议管理报文 
-* @author YePuLiang
-* @date 2020年2月21日 下午3:48:34 
-*  
-*/
+/**
+ * @author : 周勇沩
+ * @description: 实时客户支付协议管理报文
+ * @Date : 2020/2/28 08:07
+ */
 @XmlRootElement(name = "Document")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BEPS_351_001_01 extends REQ_BASE {
-	
-	private static final long serialVersionUID = -8355675423783779001L;
-	
+
+    private static final long serialVersionUID = -8355675423783779001L;
+
     private static final String XMLNS = "urn:cnaps:std:beps:2010:tech:xsd:beps.351.001.01";
     private static final String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
-    
+
     private BEPS_351_001_01_PtcSnReq ptcSnReq = new BEPS_351_001_01_PtcSnReq();
 
-	public BEPS_351_001_01() {
+    public BEPS_351_001_01() {
         super(null, 0, 0, 0);
     }
-	
+
     public BEPS_351_001_01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
         super.mesgType = ptcSnReq.getMesgType();

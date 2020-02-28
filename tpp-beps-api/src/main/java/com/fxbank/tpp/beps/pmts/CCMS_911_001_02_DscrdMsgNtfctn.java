@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author : 周勇沩
- * @description: 报文丢弃通知报文主节点
+ * @description: 报文丢弃通知报文
  * @Date : 2019/4/25 10:26
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -20,13 +20,13 @@ public class CCMS_911_001_02_DscrdMsgNtfctn extends REP_BASE implements Serializ
 
     private DscrdInf DscrdInf = new DscrdInf();
 
-    public CCMS_911_001_02_DscrdMsgNtfctn(){
+    public CCMS_911_001_02_DscrdMsgNtfctn() {
         super.mesgType = MESGTYPE;
     }
 
     @Override
     public String toString() {
-        return "报文丢弃通知[CCMS_911_001_02][" + this.DscrdInf.getMsgId() + "][" + this.DscrdInf.getPrcCd() + "][" + this.DscrdInf.getRjctInf() + "]";
+        return "报文丢弃通知报文[CCMS_911_001_02][" + this.DscrdInf.getMsgId() + "][" + this.DscrdInf.getPrcCd() + "][" + this.DscrdInf.getRjctInf() + "]";
     }
 
     public DscrdInf getDscrdInf() {

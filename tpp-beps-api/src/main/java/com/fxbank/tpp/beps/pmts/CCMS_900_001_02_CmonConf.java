@@ -23,30 +23,29 @@ public class CCMS_900_001_02_CmonConf extends REP_BASE implements Serializable, 
     private CmonConfInf CmonConfInf = new CmonConfInf();
 
     public GrpHdr getGrpHdr() {
-		return GrpHdr;
-	}
+        return GrpHdr;
+    }
 
-	public void setGrpHdr(GrpHdr grpHdr) {
-		GrpHdr = grpHdr;
-	}
+    public void setGrpHdr(GrpHdr grpHdr) {
+        GrpHdr = grpHdr;
+    }
 
-	public OrgnlGrpHdr getOrgnlGrpHdr() {
-		return OrgnlGrpHdr;
-	}
+    public OrgnlGrpHdr getOrgnlGrpHdr() {
+        return OrgnlGrpHdr;
+    }
 
-	public void setOrgnlGrpHdr(OrgnlGrpHdr orgnlGrpHdr) {
-		OrgnlGrpHdr = orgnlGrpHdr;
-	}
+    public void setOrgnlGrpHdr(OrgnlGrpHdr orgnlGrpHdr) {
+        OrgnlGrpHdr = orgnlGrpHdr;
+    }
 
-	@Override
+    @Override
     public String toString() {
         return "通用处理确认报文[CCMS_900_001_02][" + this.GrpHdr.getMsgId() + "][" + this.CmonConfInf.getPrcCd() + "][" + this.CmonConfInf.getRjctInf() + "]";
     }
 
-    public CCMS_900_001_02_CmonConf(){
+    public CCMS_900_001_02_CmonConf() {
         super.mesgType = MESGTYPE;
     }
-
 
 
     public CCMS_900_001_02_CmonConf.CmonConfInf getCmonConfInf() {

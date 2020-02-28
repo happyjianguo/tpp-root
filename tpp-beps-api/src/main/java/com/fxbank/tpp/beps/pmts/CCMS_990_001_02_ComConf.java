@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author : 周勇沩
- * @description: 通讯级确认应答报文主节点
+ * @description: 通讯级确认报文
  * @Date : 2019/4/23 20:41
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -20,13 +20,13 @@ public class CCMS_990_001_02_ComConf extends REP_BASE implements SIGN_DATA {
 
     private ConfInf ConfInf = new ConfInf();
 
-    public CCMS_990_001_02_ComConf(){
+    public CCMS_990_001_02_ComConf() {
         super.mesgType = MESGTYPE;
     }
 
     @Override
     public String toString() {
-        return "通用处理确认[CCMS_990_001_02][" + this.ConfInf.getMsgId() + "][" + this.ConfInf.getMsgPrcCd() + "]";
+        return "通讯级确认报文[CCMS_990_001_02][" + this.ConfInf.getMsgId() + "][" + this.ConfInf.getMsgPrcCd() + "]";
     }
 
     public ConfInf getConfInf() {

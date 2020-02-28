@@ -1,10 +1,9 @@
 package com.fxbank.tpp.beps.pmts;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 
 /**
  * @author : 周勇沩
@@ -15,9 +14,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = {"OrgnlMsgId", "OrgnlInstgPty", "OrgnlMT"})
 public class OrgnlGrpHdr implements Serializable {
 
-	private static final long serialVersionUID = 8418712474124260362L;
-	
-	private String OrgnlMsgId;
+    private static final long serialVersionUID = 8418712474124260362L;
+
+    private String OrgnlMsgId;
     private String OrgnlInstgPty;
     private String OrgnlMT;
 
