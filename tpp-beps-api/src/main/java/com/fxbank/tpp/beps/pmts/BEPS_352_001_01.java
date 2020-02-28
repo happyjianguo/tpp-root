@@ -1,5 +1,6 @@
 package com.fxbank.tpp.beps.pmts;
 
+import com.fxbank.cip.base.anno.EsbSimuAnno;
 import com.fxbank.cip.base.log.MyLog;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -20,7 +21,8 @@ public class BEPS_352_001_01 extends REQ_BASE {
     private static final String XMLNS = "urn:cnaps:std:beps:2010:tech:xsd:beps.352.001.01";
     private static final String XMLNS_XSI = "http://www.w3.org/2001/XMLSchema-instance";
 
-    private BEPS_352_001_01_ResFrPtcSn resFrPtcSn = new BEPS_352_001_01_ResFrPtcSn();
+    @EsbSimuAnno.EsbField(type = "Object")
+    private BEPS_352_001_01_ResFrPtcSn ResFrPtcSn = new BEPS_352_001_01_ResFrPtcSn();
 
     public BEPS_352_001_01() {
         super(null, 0, 0, 0);
@@ -28,24 +30,24 @@ public class BEPS_352_001_01 extends REQ_BASE {
 
     public BEPS_352_001_01(MyLog mylog, Integer sysDate, Integer sysTime, Integer sysTraceno) {
         super(mylog, sysDate, sysTime, sysTraceno);
-        super.mesgType = resFrPtcSn.getMesgType();
+        super.mesgType = ResFrPtcSn.getMesgType();
         super.XMLNS = XMLNS;
         super.XMLNS_XSI = XMLNS_XSI;
-        resFrPtcSn.getGrpHdr().setMsgId(super.msgId());
-        resFrPtcSn.getGrpHdr().setCreDtTm(super.creDtTm());
+        ResFrPtcSn.getGrpHdr().setMsgId(super.msgId());
+        ResFrPtcSn.getGrpHdr().setCreDtTm(super.creDtTm());
     }
 
     public BEPS_352_001_01_ResFrPtcSn getResFrPtcSn() {
-        return resFrPtcSn;
+        return ResFrPtcSn;
     }
 
-    public void setResFrPtcSn(BEPS_352_001_01_ResFrPtcSn resFrPtcSn) {
-        this.resFrPtcSn = resFrPtcSn;
+    public void setResFrPtcSn(BEPS_352_001_01_ResFrPtcSn ResFrPtcSn) {
+        this.ResFrPtcSn = ResFrPtcSn;
     }
 
     @Override
     public String signData() {
-        return resFrPtcSn.signData();
+        return ResFrPtcSn.signData();
     }
 }
 

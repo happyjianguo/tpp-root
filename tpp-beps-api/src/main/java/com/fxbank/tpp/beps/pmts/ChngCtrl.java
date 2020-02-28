@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -15,10 +18,13 @@ import java.io.Serializable;
 public class ChngCtrl implements Serializable {
 
     private static final long serialVersionUID = -1464250703054134241L;
-
+    @EsbSimuAnno.EsbField(type = "String", value = "CC00")
     private String ChngTp;
+    @EsbSimuAnno.EsbField(type = "String", value = "EF00")
     private String FctvTp;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
     private String FctvDt;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
     private String IfctvDt;
 
     public String getChngTp() {

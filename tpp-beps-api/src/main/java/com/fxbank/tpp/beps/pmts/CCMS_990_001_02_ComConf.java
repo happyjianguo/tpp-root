@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -18,6 +21,7 @@ public class CCMS_990_001_02_ComConf extends REP_BASE implements SIGN_DATA {
 
     private static final String MESGTYPE = "ccms.990.001.02";
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private ConfInf ConfInf = new ConfInf();
 
     public CCMS_990_001_02_ComConf() {
@@ -42,12 +46,17 @@ public class CCMS_990_001_02_ComConf extends REP_BASE implements SIGN_DATA {
     public static class ConfInf implements Serializable {
 
         private static final long serialVersionUID = -901278219681758441L;
-
+        @EsbSimuAnno.EsbField(type = "String", len = 10)
         private String OrigSndr;
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMdd")
         private String OrigSndDt;
+        @EsbSimuAnno.EsbField(type = "String", value = "hvps.111.001.01")
         private String MT;
+        @EsbSimuAnno.EsbField(type = "String", len = 12)
         private String MsgId;
+        @EsbSimuAnno.EsbField(type = "String", len = 20)
         private String MsgRefId;
+        @EsbSimuAnno.EsbField(type = "String", value = "0000")
         private String MsgPrcCd;
 
         public String getOrigSndr() {

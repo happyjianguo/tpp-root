@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -15,14 +18,20 @@ import java.io.Serializable;
 public class NPCPrcInf implements Serializable {
 
     private static final long serialVersionUID = 8596137135886958221L;
-
+    @EsbSimuAnno.EsbField(type = "String", value = "PR03")
     private String PrcSts;
+    @EsbSimuAnno.EsbField(type = "String", value = "CB1I0000")
     private String PrcCd;
     private String RjctInf;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
     private String NetgDt;
+    @EsbSimuAnno.EsbField(type = "value", value = "1")
     private String NetgRnd;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
     private String SttlmDt;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd HH:mm:ss")
     private String RcvTm;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd HH:mm:ss")
     private String TrnsmtTm;
 
     public String getPrcSts() {

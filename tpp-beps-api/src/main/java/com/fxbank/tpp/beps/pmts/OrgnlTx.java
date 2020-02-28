@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -15,10 +18,13 @@ import java.io.Serializable;
 public class OrgnlTx implements Serializable {
 
     private static final long serialVersionUID = 923672394179013622L;
-
+    @EsbSimuAnno.EsbField(type = "String", value = "313131000016")
     private String InstgIndrctPty;
+    @EsbSimuAnno.EsbField(type = "String", value = "313131000016")
     private String InstdIndrctPty;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
     private String OrgnlTxId;
+    @EsbSimuAnno.EsbField(type = "String", len = 2)
     private String OrgnlTxTpCd;
 
     public String getInstgIndrctPty() {

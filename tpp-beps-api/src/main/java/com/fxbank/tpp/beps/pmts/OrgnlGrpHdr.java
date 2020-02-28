@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -15,9 +18,11 @@ import java.io.Serializable;
 public class OrgnlGrpHdr implements Serializable {
 
     private static final long serialVersionUID = 8418712474124260362L;
-
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
     private String OrgnlMsgId;
+    @EsbSimuAnno.EsbField(type = "String", value = "313229000008")
     private String OrgnlInstgPty;
+    @EsbSimuAnno.EsbField(type = "String", value = "BEPS")
     private String OrgnlMT;
 
     public String getOrgnlMsgId() {

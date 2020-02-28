@@ -1,9 +1,13 @@
 package com.fxbank.tpp.beps.pmts;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
-import java.io.Serializable;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 
 /**
  * @author 周勇沩
@@ -16,10 +20,13 @@ public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable
 
     private static final String MESGTYPE = "beps.352.001.01";
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private GrpHdr GrpHdr = new GrpHdr();
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private CtrctChngRspnInf CtrctChngRspnInf = new CtrctChngRspnInf();
 
     @Override
@@ -61,14 +68,21 @@ public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable
     public static class CtrctChngRspnInf implements Serializable {
 
         private static final long serialVersionUID = -5865956041555846419L;
-
+        @EsbSimuAnno.EsbField(type = "Object")
         private RspnInf RspnInf = new RspnInf();
+        @EsbSimuAnno.EsbField(type = "String", value = "RE00")
         private String CtrctRtrFlg;
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
         private String CtrctNb;
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
         private String OrgnlReqId;
+        @EsbSimuAnno.EsbField(type = "String", value = "AM00")
         private String AuthMd;
+        @EsbSimuAnno.EsbField(type = "String", value = "AH00")
         private String AuthChl;
+        @EsbSimuAnno.EsbField(type = "String", value = "www.baidu.com/s?ie=UTF-8URL")
         private String AuthUrl;
+        @EsbSimuAnno.EsbField(type = "String", value = "备注")
         private String Rmk;
 
         public RspnInf getRspnInf() {
@@ -135,50 +149,6 @@ public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable
             Rmk = rmk;
         }
 
-        @XmlAccessorType(XmlAccessType.FIELD)
-        public static class RspnInf implements Serializable {
-
-            private static final long serialVersionUID = 7938983447603213901L;
-
-            private String Sts;
-            private String RjctCd;
-            private String RjctInf;
-            private String PrcPty;
-
-            public String getSts() {
-                return Sts;
-            }
-
-            public void setSts(String sts) {
-                Sts = sts;
-            }
-
-            public String getRjctCd() {
-                return RjctCd;
-            }
-
-            public void setRjctCd(String rjctCd) {
-                RjctCd = rjctCd;
-            }
-
-            public String getRjctInf() {
-                return RjctInf;
-            }
-
-            public void setRjctInf(String rjctInf) {
-                RjctInf = rjctInf;
-            }
-
-            public String getPrcPty() {
-                return PrcPty;
-            }
-
-            public void setPrcPty(String prcPty) {
-                PrcPty = prcPty;
-            }
-
-        }
-
     }
 
     @Override
@@ -211,5 +181,6 @@ public class BEPS_352_001_01_ResFrPtcSn extends REP_BASE implements Serializable
         sb.append(this.CtrctChngRspnInf.getRmk() == null ? "" : this.CtrctChngRspnInf.getRmk() + "|");
         return sb.toString();
     }
+    
 
 }

@@ -78,9 +78,9 @@ public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, 
         private String NbOfPmtItms;
         @EsbSimuAnno.EsbField(type = "Object")
         private PmtItms PmtItms = new PmtItms();
-        @EsbSimuAnno.EsbField(type = "String", len = 16)
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
         private String CtrctNb;
-        @EsbSimuAnno.EsbField(type = "String", len = 16)
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
         private String ReqId;
         @EsbSimuAnno.EsbField(type = "String", value = "313229000008")
         private String Issr;
@@ -92,11 +92,11 @@ public class BEPS_351_001_01_PtcSnReq extends REP_BASE implements Serializable, 
         private String OncDdctnLmt;
         @EsbSimuAnno.EsbField(type = "String", value = "5")
         private String CycDdctnNumLmt;
-        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMdd")
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
         private String CtrctDueDt;
-        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMdd")
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
         private String CtrctSgnDt;
-        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMdd")
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
         private String EctDt;
         @EsbSimuAnno.EsbField(type = "Object")
         private PyrInf PyrInf = new PyrInf();

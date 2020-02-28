@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 /**
  * @author : 周勇沩
  * @description: 业务应答信息报文
@@ -17,6 +19,7 @@ public class RspnInf implements Serializable {
 
     private static final long serialVersionUID = -6977892675725560801L;
 
+    @EsbSimuAnno.EsbField(type = "String", value = "PR00")
     private String Sts;
     private String RjctCd;
     private String RjctInf;

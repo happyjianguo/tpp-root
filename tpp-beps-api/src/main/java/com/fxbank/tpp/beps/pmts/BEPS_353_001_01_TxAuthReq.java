@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -16,10 +19,13 @@ public class BEPS_353_001_01_TxAuthReq extends REP_BASE implements Serializable,
 
     private static final String MESGTYPE = "beps.353.001.01";
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private GrpHdr GrpHdr = new GrpHdr();
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private CtrctChngRspnInf CtrctChngRspnInf = new CtrctChngRspnInf();
 
     public BEPS_353_001_01_TxAuthReq() {
@@ -60,10 +66,13 @@ public class BEPS_353_001_01_TxAuthReq extends REP_BASE implements Serializable,
     public static class CtrctChngRspnInf implements Serializable {
 
         private static final long serialVersionUID = -3564252489098769732L;
-
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
         private String CtrctNb;
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
         private String OrgnlReqId;
+        @EsbSimuAnno.EsbField(type = "String", len = 12)
         private String AuthCnt;
+        @EsbSimuAnno.EsbField(type = "String", value = "353客户身份认证回执报文备注")
         private String Rmk;
 
         public String getCtrctNb() {

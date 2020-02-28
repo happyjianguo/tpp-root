@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -15,9 +18,11 @@ import java.io.Serializable;
 public class Prttn implements Serializable {
 
     private static final long serialVersionUID = 2794349176112940263L;
-
+    @EsbSimuAnno.EsbField(type = "value", value = "2")
     private String TtlNb;
+    @EsbSimuAnno.EsbField(type = "value", value = "0")
     private String StartNb;
+    @EsbSimuAnno.EsbField(type = "value", value = "1")
     private String EndNb;
 
     public String getTtlNb() {

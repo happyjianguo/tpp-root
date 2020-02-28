@@ -55,7 +55,7 @@ public class TP35101A extends TradeBase implements TradeExecutionStrategy {
         orgnlGrpHdr.setOrgnlMsgId("msgid");
         orgnlGrpHdr.setOrgnlMT("mt");
         BEPS_352_001_01_ResFrPtcSn.CtrctChngRspnInf ctrctChngRspnInf = resFrPtcSn.getCtrctChngRspnInf();
-        BEPS_352_001_01_ResFrPtcSn.CtrctChngRspnInf.RspnInf rspnInf = new BEPS_352_001_01_ResFrPtcSn.CtrctChngRspnInf.RspnInf();
+        RspnInf rspnInf = new RspnInf();
         ctrctChngRspnInf.setRspnInf(rspnInf);
         rspnInf.setPrcPty("");
         REP_BASE repBase = null;

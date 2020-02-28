@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 /**
  * @author : 周勇沩
  * @description: 批量包组头组件报文
@@ -16,14 +18,21 @@ import javax.xml.bind.annotation.XmlType;
 public class PKGGrpHdr implements Serializable {
 
     private static final long serialVersionUID = -5708344033132677204L;
-
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyyMMddhhmmss")
     private String MsgId;
+    @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd HH:mm:ss")
     private String CreDtTm;
+    @EsbSimuAnno.EsbField(type = "String", value = "313131000016")
     private InstgPty InstgPty;
+    @EsbSimuAnno.EsbField(type = "String", value = "313131000016")
     private InstdPty InstdPty;
+    @EsbSimuAnno.EsbField(type = "String", value = "1")
     private String NbOfTxs;
+    @EsbSimuAnno.EsbField(type = "String", value = "1.00")
     private String CtrlSum;
+    @EsbSimuAnno.EsbField(type = "String", value = "SAPS")
     private String SysCd;
+    @EsbSimuAnno.EsbField(type = "String", value = "备注")
     private String Rmk;
 
     public String getMsgId() {

@@ -3,6 +3,9 @@ package com.fxbank.tpp.beps.pmts;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+
+import com.fxbank.cip.base.anno.EsbSimuAnno;
+
 import java.io.Serializable;
 
 /**
@@ -18,8 +21,11 @@ public class CCMS_900_001_02_CmonConf extends REP_BASE implements Serializable, 
 
     private static final String MESGTYPE = "ccms.900.001.02";
 
+    @EsbSimuAnno.EsbField(type = "Object")
     private GrpHdr GrpHdr = new GrpHdr();
+    @EsbSimuAnno.EsbField(type = "Object")
     private OrgnlGrpHdr OrgnlGrpHdr = new OrgnlGrpHdr();
+    @EsbSimuAnno.EsbField(type = "Object")
     private CmonConfInf CmonConfInf = new CmonConfInf();
 
     public GrpHdr getGrpHdr() {
@@ -63,12 +69,16 @@ public class CCMS_900_001_02_CmonConf extends REP_BASE implements Serializable, 
 
         private static final long serialVersionUID = 5485526951875655276L;
 
-        private String PrcSts;
+        @EsbSimuAnno.EsbField(type = "String", value = "PR03")
+        private String PrcSts;      
         private String PtyId;
         private String PtyPrcCd;
+        @EsbSimuAnno.EsbField(type = "String", value = "CB1I0000")
         private String PrcCd;
         private String RjctInf;
+        @EsbSimuAnno.EsbField(type = "Date", value = "yyyy-MM-dd")
         private String PrcDt;
+        @EsbSimuAnno.EsbField(type = "String", value = "03")
         private String NetgRnd;
 
         public String getPrcSts() {
